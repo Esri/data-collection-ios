@@ -13,12 +13,18 @@
 // limitations under the License.
 
 import UIKit
+import ArcGIS
 
 class ViewController: UIViewController {
 
+    @IBOutlet weak var mapView: AGSMapView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+        
+        let map = AGSMap(basemap: AGSBasemap.streetsVector())
+        mapView.map = map
+        mapView.map?.load(completion: { (error) in })
     }
 
     override func didReceiveMemoryWarning() {
