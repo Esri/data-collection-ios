@@ -14,6 +14,7 @@
 		94FA8B2D207BF2CD00972C75 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 94FA8B2B207BF2CD00972C75 /* LaunchScreen.storyboard */; };
 		94FA8B38207BF2CD00972C75 /* data_collectionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94FA8B37207BF2CD00972C75 /* data_collectionTests.swift */; };
 		94FA8B43207BF2CD00972C75 /* data_collectionUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94FA8B42207BF2CD00972C75 /* data_collectionUITests.swift */; };
+		94FA8B51207BF2FD00972C75 /* ArcGIS.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 94FA8B50207BF2FC00972C75 /* ArcGIS.bundle */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -47,6 +48,7 @@
 		94FA8B3E207BF2CD00972C75 /* data-collectionUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "data-collectionUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		94FA8B42207BF2CD00972C75 /* data_collectionUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = data_collectionUITests.swift; sourceTree = "<group>"; };
 		94FA8B44207BF2CD00972C75 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		94FA8B50207BF2FC00972C75 /* ArcGIS.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = ArcGIS.bundle; path = ../../../../../../../../Library/SDKs/ArcGIS/iOS/Frameworks/Static/ArcGIS.framework/Versions/Current/Resources/ArcGIS.bundle; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -97,6 +99,7 @@
 		94FA8B21207BF2CD00972C75 /* data-collection */ = {
 			isa = PBXGroup;
 			children = (
+				94FA8B50207BF2FC00972C75 /* ArcGIS.bundle */,
 				94FA8B22207BF2CD00972C75 /* AppDelegate.swift */,
 				94FA8B24207BF2CD00972C75 /* ViewController.swift */,
 				94FA8B26207BF2CD00972C75 /* Main.storyboard */,
@@ -234,6 +237,7 @@
 			files = (
 				94FA8B2D207BF2CD00972C75 /* LaunchScreen.storyboard in Resources */,
 				94FA8B2A207BF2CD00972C75 /* Assets.xcassets in Resources */,
+				94FA8B51207BF2FD00972C75 /* ArcGIS.bundle in Resources */,
 				94FA8B28207BF2CD00972C75 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -427,8 +431,16 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				FRAMEWORK_SEARCH_PATHS = $HOME/Library/SDKs/ArcGIS/iOS/Frameworks/Static/;
 				INFOPLIST_FILE = "data-collection/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					"-framework",
+					ArcGIS,
+					"-l",
+					"c++",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.esri.arcgisruntime.exampleapps.data-collection";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
@@ -441,8 +453,16 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				FRAMEWORK_SEARCH_PATHS = $HOME/Library/SDKs/ArcGIS/iOS/Frameworks/Static/;
 				INFOPLIST_FILE = "data-collection/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					"-framework",
+					ArcGIS,
+					"-l",
+					"c++",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.esri.arcgisruntime.exampleapps.data-collection";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
