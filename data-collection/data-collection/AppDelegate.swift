@@ -13,40 +13,91 @@
 // limitations under the License.
 
 import UIKit
+import ArcGIS
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
-
+    
     var window: UIWindow?
-
-
+    
+    internal let reachabilityManager: NetworkReachabilityManager = {
+        let manager = NetworkReachabilityManager(host: AppConfiguration.basePortalDomain)
+        assert(manager != nil, "Network Reachability Manager must be constructed a valid service url.")
+        return manager!
+    }()
+    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
+        
+        // Begin listening to Network Status Changes
+        AppDelegate.beginListeningToNetworkStatusChanges()
+        
+        // Enable credential cache auto sync
+        AppDelegate.configCredentialCacheAutoSyncToKeychain()
+        
+        // Configure oAuth redirect URL
+        AppDelegate.configOAuthRedirectURL()
+        
+        // Set UIAppearance Defaults
+        AppDelegate.setAppAppearance()
+        
+        // Attempt to login from previously stored credentials
+        appContext.attemptLoginToPortalFromCredentials()
+        
+        // Configure file documents directories for offline usage
+        FileManager.buildOfflineDirectories()
+        
         return true
     }
+}
 
-    func applicationWillResignActive(_ application: UIApplication) {
-        // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
-        // Use this method to pause ongoing tasks, disable timers, and invalidate graphics rendering callbacks. Games should use this method to pause the game.
+extension AppDelegate {
+    
+    // NOTE: Mostly Nick's Code, URLComponents API has changed in Swift4
+    // MARK: OAuth
+    func application(_ app: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any] = [:]) -> Bool {
+        // Handle OAuth callback from application(app,url,options) when the app's URL schema is called.
+        //
+        // See also AppSettings and AppContext.setupAndLoadPortal() to see how the AGSPortal is configured
+        // to handle OAuth and call back to this application.
+        if let urlComponents = URLComponents(url: url, resolvingAgainstBaseURL: false), urlComponents.scheme == AppConfiguration.urlScheme, urlComponents.host == AppConfiguration.urlAuthPath {
+            
+            // Pass the OAuth callback through to the ArcGIS Runtime helper function
+            AGSApplicationDelegate.shared().application(app, open: url, options: options)
+        }
+        return true
     }
-
-    func applicationDidEnterBackground(_ application: UIApplication) {
-        // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
-        // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
+    
+    static func beginListeningToNetworkStatusChanges() {
+        
+        appDelegate.reachabilityManager.listener = { status in
+            print("[Reachability] Network status changed: \(status)")
+            appNotificationCenter.post(AppNotifications.reachabilityChanged)
+        }
+        
+        appDelegate.reachabilityManager.startListening()
     }
-
-    func applicationWillEnterForeground(_ application: UIApplication) {
-        // Called as part of the transition from the background to the active state; here you can undo many of the changes made on entering the background.
+    
+    static func configCredentialCacheAutoSyncToKeychain() {
+        AGSAuthenticationManager.shared().credentialCache.enableAutoSyncToKeychain(withIdentifier: AppConfiguration.keychainIdentifier, accessGroup: nil, acrossDevices: false)
     }
-
-    func applicationDidBecomeActive(_ application: UIApplication) {
-        // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+    
+    static func configOAuthRedirectURL() {
+        
+        let oauthConfig = AGSOAuthConfiguration(portalURL: AppConfiguration.basePortalURL!,
+                                                clientID: AppConfiguration.clientID,
+                                                redirectURL: AppConfiguration.oAuthRedirectURLString)
+        
+        AGSAuthenticationManager.shared().oAuthConfigurations.add(oauthConfig)
     }
+}
 
-    func applicationWillTerminate(_ application: UIApplication) {
-        // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+extension AppDelegate {
+    
+    static func setAppAppearance() {
+        UINavigationBar.appearance().tintColor = .white
+        UINavigationBar.appearance().titleTextAttributes = [.foregroundColor : UIColor.white]
+        
+        UIApplication.shared.statusBarStyle = .lightContent
     }
-
-
 }
 
