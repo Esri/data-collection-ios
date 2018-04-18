@@ -13,17 +13,28 @@
 // limitations under the License.
 
 import Foundation
+import ArcGIS
 
-extension MapViewController {
+extension AGSPopupManager {
     
-    func setupMapView() {
-        mapView.touchDelegate = self
-        mapView.releaseHardwareResourcesWhenBackgrounded = true
-        mapView.interactionOptions.isMagnifierEnabled = true
+    public func nextFieldStringValue(idx: inout Int) -> String? {
+        
+        guard displayFields.count >= idx + 1 else {
+            return nil
+        }
+        
+        let field = displayFields[idx]
+        let value = formattedValue(for: field)
+        
+        idx += 1
+        return value
     }
     
-    func setupMapViewAttributionBarAutoLayoutConstraints() {
-        featureDetailViewBottomConstraint = mapView.attributionTopAnchor.constraint(equalTo: popupsContainerView.bottomAnchor, constant: 8)
-        featureDetailViewBottomConstraint.isActive = true
+    var table: AGSFeatureTable? {
+        return (popup.geoElement as? AGSArcGISFeature)?.featureTable
+    }
+    
+    var tableName: String? {
+        return table?.tableName
     }
 }

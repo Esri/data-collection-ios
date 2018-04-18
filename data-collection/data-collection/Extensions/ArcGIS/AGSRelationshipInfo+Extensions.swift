@@ -13,17 +13,15 @@
 // limitations under the License.
 
 import Foundation
+import ArcGIS
 
-extension MapViewController {
+extension AGSRelationshipInfo {
     
-    func setupMapView() {
-        mapView.touchDelegate = self
-        mapView.releaseHardwareResourcesWhenBackgrounded = true
-        mapView.interactionOptions.isMagnifierEnabled = true
+    public var isManyToOne: Bool {
+        return cardinality == .oneToMany && role == .destination
     }
     
-    func setupMapViewAttributionBarAutoLayoutConstraints() {
-        featureDetailViewBottomConstraint = mapView.attributionTopAnchor.constraint(equalTo: popupsContainerView.bottomAnchor, constant: 8)
-        featureDetailViewBottomConstraint.isActive = true
+    public var isOneToMany: Bool {
+        return cardinality == .oneToMany && role == .origin
     }
 }

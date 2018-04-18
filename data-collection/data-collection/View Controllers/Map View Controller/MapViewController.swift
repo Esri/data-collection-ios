@@ -15,12 +15,12 @@
 import UIKit
 import ArcGIS
 
-class MapViewController: AppContextAwareController {
+class MapViewController: AppContextAwareController, PopupsViewControllerEmbeddable {    
 
     var delegate: MapViewControllerDelegate?
     
     @IBOutlet weak var mapView: AGSMapView!
-    @IBOutlet weak var smallPopupView: UIView!
+    @IBOutlet weak var popupsContainerView: UIView!
     @IBOutlet weak var selectView: UIView!
     @IBOutlet weak var pinDropView: PinDropView!
     @IBOutlet weak var activityBarView: ActivityBarView!
@@ -31,13 +31,22 @@ class MapViewController: AppContextAwareController {
     @IBOutlet weak var selectViewHeaderLabel: UILabel!
     @IBOutlet weak var selectViewSubheaderLabel: UILabel!
     
+    var smallPopupViewController: SmallPopupViewController?
+    
     var featureDetailViewBottomConstraint: NSLayoutConstraint!
     
     var observeDrawStatus: NSKeyValueObservation?
     var observeLocationAuthorization: NSKeyValueObservation?
     var observeCurrentMap: NSKeyValueObservation?
     
-    var mapViewMode: MapViewMode = .`default` {
+    var currentPopup: AGSPopup? {
+        didSet {
+            smallPopupViewController?.popup = currentPopup
+            mapViewMode = currentPopup != nil ? .selectedFeature : .`default`
+        }
+    }
+    
+    var mapViewMode: MapViewMode = MapViewMode.selectedFeature {
         didSet {
             adjustForMapViewMode()
         }
@@ -57,6 +66,9 @@ class MapViewController: AppContextAwareController {
         
         // SETUPS
         setupMapViewAttributionBarAutoLayoutConstraints()
+        
+        // SMALL POPUP
+        setupSmallPopupViewController()
         
         // OBSERVERS
         setupObservers()
@@ -79,6 +91,19 @@ class MapViewController: AppContextAwareController {
         // Load Map and Services
         appContext.loadOfflineMobileMapPackageAndSetBestMap()
     }
+    
+    // MARK: SMALL POPUP
+    
+    func setupSmallPopupViewController() {
+        
+        smallPopupViewController = embedPopupsSmallViewController()
+
+        (popupsContainerView as! ShrinkingView).actionClosure = {
+            print("[Map View Controller] did tap small popup view")
+        }
+    }
+
+    //
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)

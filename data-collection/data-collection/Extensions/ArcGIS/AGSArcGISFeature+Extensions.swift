@@ -15,6 +15,27 @@
 import Foundation
 import ArcGIS
 
+extension AGSArcGISFeature {
+    
+    var asPopup: AGSPopup? {
+        guard let popupDefinition = featureTable?.popupDefinition else {
+            return nil
+        }
+        return AGSPopup(geoElement: self, popupDefinition: popupDefinition)
+    }
+    
+    var asPopupManager: AGSPopupManager? {
+        guard let popup = asPopup else {
+            return nil
+        }
+        return AGSPopupManager(popup: popup)
+    }
+    
+    var popupDefinition: AGSPopupDefinition? {
+        return featureTable?.popupDefinition
+    }
+}
+
 extension Collection where Iterator.Element == AGSArcGISFeature {
 
     /**

@@ -13,17 +13,11 @@
 // limitations under the License.
 
 import Foundation
+import ArcGIS
 
-extension MapViewController {
+extension AGSFeatureTable {
     
-    func setupMapView() {
-        mapView.touchDelegate = self
-        mapView.releaseHardwareResourcesWhenBackgrounded = true
-        mapView.interactionOptions.isMagnifierEnabled = true
-    }
-    
-    func setupMapViewAttributionBarAutoLayoutConstraints() {
-        featureDetailViewBottomConstraint = mapView.attributionTopAnchor.constraint(equalTo: popupsContainerView.bottomAnchor, constant: 8)
-        featureDetailViewBottomConstraint.isActive = true
+    var isPopupActuallyEnabled: Bool {
+        return isPopupEnabled && popupDefinition != nil
     }
 }

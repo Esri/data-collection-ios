@@ -30,7 +30,8 @@ extension MapViewController {
         
         let smallPopViewVisible: (Bool) -> UIViewAnimations = { [unowned mvc = self] (visible) in
             return {
-                mvc.smallPopupView.alpha = visible.asAlpha
+                mvc.popupsContainerView.alpha = visible.asAlpha
+                mvc.smallPopupViewController?.view.alpha = visible.asAlpha
                 mvc.featureDetailViewBottomConstraint.constant = visible ? 8 : 28
             }
         }

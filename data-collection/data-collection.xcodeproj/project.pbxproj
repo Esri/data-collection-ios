@@ -14,6 +14,16 @@
 		9465690C2087FCCE00599E55 /* MapViewController+Setup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9465690B2087FCCE00599E55 /* MapViewController+Setup.swift */; };
 		9465690E208800A200599E55 /* MapViewController+Delegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9465690D208800A200599E55 /* MapViewController+Delegate.swift */; };
 		94656910208800E100599E55 /* MapViewController+TouchDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9465690F208800E100599E55 /* MapViewController+TouchDelegate.swift */; };
+		946569122088020F00599E55 /* AGSPopup+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 946569112088020F00599E55 /* AGSPopup+Extensions.swift */; };
+		946569142088023600599E55 /* AGSPopupManager+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 946569132088023600599E55 /* AGSPopupManager+Extensions.swift */; };
+		946569162088026100599E55 /* AGSRelatedFeatureQueryResult+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 946569152088026100599E55 /* AGSRelatedFeatureQueryResult+Extensions.swift */; };
+		9465691A2088028E00599E55 /* AGSRelationshipInfo+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 946569192088028E00599E55 /* AGSRelationshipInfo+Extensions.swift */; };
+		9465691C208802AE00599E55 /* AGSFeatureLayer+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9465691B208802AE00599E55 /* AGSFeatureLayer+Extensions.swift */; };
+		9465691E208802CE00599E55 /* AGSFeatureTable+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9465691D208802CE00599E55 /* AGSFeatureTable+Extensions.swift */; };
+		94656920208802EE00599E55 /* AGSServiceFeatureTable+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9465691F208802EE00599E55 /* AGSServiceFeatureTable+Extensions.swift */; };
+		946569232088036C00599E55 /* PopupsViewControllerEmbeddable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 946569222088036C00599E55 /* PopupsViewControllerEmbeddable.swift */; };
+		94656925208803AE00599E55 /* SmallPopupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94656924208803AE00599E55 /* SmallPopupViewController.swift */; };
+		946569272088042400599E55 /* SmallPopup.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 946569262088042400599E55 /* SmallPopup.storyboard */; };
 		94B375BC207E8D5600691F2A /* AddressLocator.locb in Resources */ = {isa = PBXBuildFile; fileRef = 94B37598207E8D5600691F2A /* AddressLocator.locb */; };
 		94B375BD207E8D5600691F2A /* AddressLocator.loc.xml in Resources */ = {isa = PBXBuildFile; fileRef = 94B37599207E8D5600691F2A /* AddressLocator.loc.xml */; };
 		94B375BE207E8D5600691F2A /* AddressLocator.lox in Resources */ = {isa = PBXBuildFile; fileRef = 94B3759A207E8D5600691F2A /* AddressLocator.lox */; };
@@ -106,6 +116,16 @@
 		9465690B2087FCCE00599E55 /* MapViewController+Setup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MapViewController+Setup.swift"; sourceTree = "<group>"; };
 		9465690D208800A200599E55 /* MapViewController+Delegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MapViewController+Delegate.swift"; sourceTree = "<group>"; };
 		9465690F208800E100599E55 /* MapViewController+TouchDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MapViewController+TouchDelegate.swift"; sourceTree = "<group>"; };
+		946569112088020F00599E55 /* AGSPopup+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AGSPopup+Extensions.swift"; sourceTree = "<group>"; };
+		946569132088023600599E55 /* AGSPopupManager+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AGSPopupManager+Extensions.swift"; sourceTree = "<group>"; };
+		946569152088026100599E55 /* AGSRelatedFeatureQueryResult+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AGSRelatedFeatureQueryResult+Extensions.swift"; sourceTree = "<group>"; };
+		946569192088028E00599E55 /* AGSRelationshipInfo+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AGSRelationshipInfo+Extensions.swift"; sourceTree = "<group>"; };
+		9465691B208802AE00599E55 /* AGSFeatureLayer+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AGSFeatureLayer+Extensions.swift"; sourceTree = "<group>"; };
+		9465691D208802CE00599E55 /* AGSFeatureTable+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AGSFeatureTable+Extensions.swift"; sourceTree = "<group>"; };
+		9465691F208802EE00599E55 /* AGSServiceFeatureTable+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AGSServiceFeatureTable+Extensions.swift"; sourceTree = "<group>"; };
+		946569222088036C00599E55 /* PopupsViewControllerEmbeddable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupsViewControllerEmbeddable.swift; sourceTree = "<group>"; };
+		94656924208803AE00599E55 /* SmallPopupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmallPopupViewController.swift; sourceTree = "<group>"; };
+		946569262088042400599E55 /* SmallPopup.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = SmallPopup.storyboard; sourceTree = "<group>"; };
 		94B37598207E8D5600691F2A /* AddressLocator.locb */ = {isa = PBXFileReference; lastKnownFileType = file; path = AddressLocator.locb; sourceTree = "<group>"; };
 		94B37599207E8D5600691F2A /* AddressLocator.loc.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = AddressLocator.loc.xml; sourceTree = "<group>"; };
 		94B3759A207E8D5600691F2A /* AddressLocator.lox */ = {isa = PBXFileReference; lastKnownFileType = file; path = AddressLocator.lox; sourceTree = "<group>"; };
@@ -210,6 +230,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		946569212088033700599E55 /* Embed Popup View Controller */ = {
+			isa = PBXGroup;
+			children = (
+				946569222088036C00599E55 /* PopupsViewControllerEmbeddable.swift */,
+				94656924208803AE00599E55 /* SmallPopupViewController.swift */,
+			);
+			path = "Embed Popup View Controller";
+			sourceTree = "<group>";
+		};
 		94B37597207E8D5600691F2A /* Locator */ = {
 			isa = PBXGroup;
 			children = (
@@ -320,6 +349,13 @@
 				94B375DF207E8E4800691F2A /* AGSPortal+Extensions.swift */,
 				94B375E1207E8E4800691F2A /* AGSDrawStatus+Extensions.swift */,
 				94B375E2207E8E4800691F2A /* AGSArcGISFeature+Extensions.swift */,
+				946569112088020F00599E55 /* AGSPopup+Extensions.swift */,
+				946569132088023600599E55 /* AGSPopupManager+Extensions.swift */,
+				946569152088026100599E55 /* AGSRelatedFeatureQueryResult+Extensions.swift */,
+				946569192088028E00599E55 /* AGSRelationshipInfo+Extensions.swift */,
+				9465691B208802AE00599E55 /* AGSFeatureLayer+Extensions.swift */,
+				9465691D208802CE00599E55 /* AGSFeatureTable+Extensions.swift */,
+				9465691F208802EE00599E55 /* AGSServiceFeatureTable+Extensions.swift */,
 			);
 			path = ArcGIS;
 			sourceTree = "<group>";
@@ -465,6 +501,7 @@
 		94FA8B54207BF5DF00972C75 /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				946569212088033700599E55 /* Embed Popup View Controller */,
 				94D544CF208511FB00ED0D04 /* Map View Controller */,
 				94D544B5207FC15D00ED0D04 /* App Container */,
 				94D544BA207FC15D00ED0D04 /* AppContextAwareController.swift */,
@@ -478,6 +515,7 @@
 		94FA8B55207BF5EC00972C75 /* UI */ = {
 			isa = PBXGroup;
 			children = (
+				946569262088042400599E55 /* SmallPopup.storyboard */,
 				94D544D020852A5100ED0D04 /* Views */,
 				94FA8B26207BF2CD00972C75 /* MapViewController.storyboard */,
 			);
@@ -600,6 +638,7 @@
 				94B375CF207E8D5600691F2A /* LICENSE.txt in Resources */,
 				94B375BF207E8D5600691F2A /* AddressLocator.loc in Resources */,
 				94B375BC207E8D5600691F2A /* AddressLocator.locb in Resources */,
+				946569272088042400599E55 /* SmallPopup.storyboard in Resources */,
 				94B375BE207E8D5600691F2A /* AddressLocator.lox in Resources */,
 				94D544CA207FC67B00ED0D04 /* AppIcon.xcassets in Resources */,
 			);
@@ -629,7 +668,9 @@
 				94D544BE207FC15D00ED0D04 /* AppContainerViewController+DrawerDelegate.swift in Sources */,
 				94B375D7207E8DD600691F2A /* EditType.swift in Sources */,
 				94B375CB207E8D5600691F2A /* NetworkReachabilityManager.swift in Sources */,
+				94656920208802EE00599E55 /* AGSServiceFeatureTable+Extensions.swift in Sources */,
 				94B3760C207EAE4700691F2A /* AppDelegate.swift in Sources */,
+				94656925208803AE00599E55 /* SmallPopupViewController.swift in Sources */,
 				94D544D820852A5100ED0D04 /* ShrinkingView.swift in Sources */,
 				94B375C2207E8D5600691F2A /* AppOfflineMapJob.swift in Sources */,
 				94B375FA207E8E4800691F2A /* UIViewController+Extensions.swift in Sources */,
@@ -648,6 +689,7 @@
 				94B375F6207E8E4800691F2A /* AGSPortal+Extensions.swift in Sources */,
 				94B375CC207E8D5600691F2A /* SVRadialGradientLayer.m in Sources */,
 				94D544D620852A5100ED0D04 /* NotificationBarLabel.swift in Sources */,
+				946569122088020F00599E55 /* AGSPopup+Extensions.swift in Sources */,
 				94B375F4207E8E4800691F2A /* AGSJobStatus+Extensions.swift in Sources */,
 				94B375CE207E8D5600691F2A /* SVProgressHUD.m in Sources */,
 				9465690E208800A200599E55 /* MapViewController+Delegate.swift in Sources */,
@@ -661,10 +703,12 @@
 				946569042087FB5000599E55 /* MapViewController+LocationSelection.swift in Sources */,
 				9465690A2087FC5800599E55 /* MapViewController+Observers.swift in Sources */,
 				94FA8B25207BF2CD00972C75 /* MapViewController.swift in Sources */,
+				9465691A2088028E00599E55 /* AGSRelationshipInfo+Extensions.swift in Sources */,
 				94B375C1207E8D5600691F2A /* AppConfiguration.swift in Sources */,
 				946569062087FBF700599E55 /* MapViewController+UserLocation.swift in Sources */,
 				94B375CA207E8D5600691F2A /* AppGlobals.swift in Sources */,
 				94B375C5207E8D5600691F2A /* AppNotifications.swift in Sources */,
+				946569142088023600599E55 /* AGSPopupManager+Extensions.swift in Sources */,
 				9465690C2087FCCE00599E55 /* MapViewController+Setup.swift in Sources */,
 				94B375FC207E8E4800691F2A /* UIView+Extensions.swift in Sources */,
 				94D544C2207FC15D00ED0D04 /* AppContextAwareController.swift in Sources */,
@@ -674,7 +718,10 @@
 				94B375C4207E8D5600691F2A /* AppErrors.swift in Sources */,
 				94B375F5207E8E4800691F2A /* AGSMapView+Extensions.swift in Sources */,
 				94B375FF207E8E4800691F2A /* UIStoryboardSegue+Extensions.swift in Sources */,
+				9465691E208802CE00599E55 /* AGSFeatureTable+Extensions.swift in Sources */,
+				946569232088036C00599E55 /* PopupsViewControllerEmbeddable.swift in Sources */,
 				94B375F3207E8E4800691F2A /* AGSQueryParameter+Extensions.swift in Sources */,
+				9465691C208802AE00599E55 /* AGSFeatureLayer+Extensions.swift in Sources */,
 				94B375C8207E8D5600691F2A /* AppContext+WorkMode.swift in Sources */,
 				94D544BD207FC15D00ED0D04 /* DrawerViewController.swift in Sources */,
 				94D544DA20852A5100ED0D04 /* ActivityBarView.swift in Sources */,
@@ -684,6 +731,7 @@
 				94B375C7207E8D5600691F2A /* AppContext+Login.swift in Sources */,
 				94B375CD207E8D5600691F2A /* SVProgressAnimatedView.m in Sources */,
 				94656910208800E100599E55 /* MapViewController+TouchDelegate.swift in Sources */,
+				946569162088026100599E55 /* AGSRelatedFeatureQueryResult+Extensions.swift in Sources */,
 				94B37603207E8E4800691F2A /* CGGeometry+Extensions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -13,17 +13,19 @@
 // limitations under the License.
 
 import Foundation
+import ArcGIS
 
-extension MapViewController {
+extension AGSFeatureLayer {
     
-    func setupMapView() {
-        mapView.touchDelegate = self
-        mapView.releaseHardwareResourcesWhenBackgrounded = true
-        mapView.interactionOptions.isMagnifierEnabled = true
-    }
-    
-    func setupMapViewAttributionBarAutoLayoutConstraints() {
-        featureDetailViewBottomConstraint = mapView.attributionTopAnchor.constraint(equalTo: popupsContainerView.bottomAnchor, constant: 8)
-        featureDetailViewBottomConstraint.isActive = true
+    var isIdentifiable: Bool {
+        guard
+            isVisible,
+            let featureTable = featureTable,
+            featureTable.isEditable,
+            featureTable.geometryType == .point,
+            featureTable.isPopupActuallyEnabled else {
+                return false
+        }
+        return true
     }
 }
