@@ -1,0 +1,63 @@
+//// Copyright 2018 Esri
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//   http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+import Foundation
+import ArcGIS
+
+extension MapViewController {
+    
+    func setupObservers() {
+        beginObservingLocationAuthStatus()
+        beginMonitoringMapviewLayerViewStateChanges()
+        beginObservingCurrentMap()
+    }
+    
+    private func beginObservingLocationAuthStatus() {
+        observeLocationAuthorization = AppLocation.shared.observe(\.locationAuthorized, options:[.new, .old]) { [weak self] (appLocation, _) in
+            print("[Location Authorization] is authorized: \(appLocation.locationAuthorized)")
+            self?.adjustForLocationAuthorizationStatus()
+        }
+    }
+    
+    private func beginMonitoringMapviewLayerViewStateChanges() {
+        mapView.layerViewStateChangedHandler = { (layer:AGSLayer, state:AGSLayerViewState) in
+            print("[Layer View State] \(state) - \(layer.name)")
+        }
+    }
+    
+    private func beginObservingCurrentMap() {
+        observeCurrentMap = appContext.observe(\.currentMap, options:[.new, .old]) { [weak self] (appContext, _) in
+            self?.mapView.map = appContext.currentMap
+            if let map = appContext.currentMap {
+                print("[Current Map] \(map)")
+            }
+            else {
+                print("[Current Map] nil")
+            }
+        }
+    }
+    
+    func invalidateAndReleaseObservations() {
+        
+        // Invalidate and release KVO observations
+        observeDrawStatus?.invalidate()
+        observeDrawStatus = nil
+        
+        observeLocationAuthorization?.invalidate()
+        observeLocationAuthorization = nil
+        
+        observeCurrentMap?.invalidate()
+        observeCurrentMap = nil
+    }
+}

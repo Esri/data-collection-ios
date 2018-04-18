@@ -17,6 +17,12 @@ import ArcGIS
 
 extension MapViewController {
     
+    func prepareMapMaskViewForOfflineDownloadArea() {
+        
+        presentMapMaskViewForOfflineDownloadArea()
+        mapViewMode = .offlineMask
+    }
+    
     func presentMapMaskViewForOfflineDownloadArea() {
         
         guard let locationSelectionView = view.viewWithTag(1001), let maskView = view.viewWithTag(1002) else {

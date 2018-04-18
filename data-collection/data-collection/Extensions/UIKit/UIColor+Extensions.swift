@@ -78,10 +78,7 @@ extension UIColor {
     
     func removeBrightness(_ val: CGFloat, resultAlpha alpha: CGFloat? = nil) -> UIColor {
         
-        var h: CGFloat = 0
-        var s: CGFloat = 0
-        var b: CGFloat = 0
-        var a: CGFloat = 0
+        var h: CGFloat = 0, s: CGFloat = 0, b: CGFloat = 0, a: CGFloat = 0
         
         guard getHue(&h, saturation: &s, brightness: &b, alpha: &a) else {
             return self
@@ -92,10 +89,7 @@ extension UIColor {
     
     func addBrightness(_ val: CGFloat, resultAlpha alpha: CGFloat? = nil) -> UIColor {
         
-        var h: CGFloat = 0
-        var s: CGFloat = 0
-        var b: CGFloat = 0
-        var a: CGFloat = 0
+        var h: CGFloat = 0, s: CGFloat = 0, b: CGFloat = 0, a: CGFloat = 0
         
         guard getHue(&h, saturation: &s, brightness: &b, alpha: &a) else {
             return self

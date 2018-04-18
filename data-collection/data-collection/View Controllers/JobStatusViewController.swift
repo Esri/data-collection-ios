@@ -85,8 +85,12 @@ class JobStatusViewController: AppContextAwareController {
     
     var jobStatusProgress: Float = 0.0 {
         didSet {
-            jobStatusProgressView?.progress = max(min(jobStatusProgress, 1.0), 0.0)
+            jobStatusProgressView?.progress = status(jobStatusProgress, upperBounds: 1.0, lowerBounds: 0.0)
         }
+    }
+    
+    func status(_ status: Float, upperBounds: Float, lowerBounds: Float) -> Float {
+        return max(min(status, upperBounds), lowerBounds)
     }
     
     @IBAction func userDidTapCancelJob(_ sender: Any) {

@@ -7,6 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		946569022087FAE700599E55 /* MapViewController+MapViewMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 946569012087FAE700599E55 /* MapViewController+MapViewMode.swift */; };
+		946569042087FB5000599E55 /* MapViewController+LocationSelection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 946569032087FB5000599E55 /* MapViewController+LocationSelection.swift */; };
+		946569062087FBF700599E55 /* MapViewController+UserLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 946569052087FBF700599E55 /* MapViewController+UserLocation.swift */; };
+		9465690A2087FC5800599E55 /* MapViewController+Observers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 946569092087FC5800599E55 /* MapViewController+Observers.swift */; };
+		9465690C2087FCCE00599E55 /* MapViewController+Setup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9465690B2087FCCE00599E55 /* MapViewController+Setup.swift */; };
+		9465690E208800A200599E55 /* MapViewController+Delegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9465690D208800A200599E55 /* MapViewController+Delegate.swift */; };
+		94656910208800E100599E55 /* MapViewController+TouchDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9465690F208800E100599E55 /* MapViewController+TouchDelegate.swift */; };
 		94B375BC207E8D5600691F2A /* AddressLocator.locb in Resources */ = {isa = PBXBuildFile; fileRef = 94B37598207E8D5600691F2A /* AddressLocator.locb */; };
 		94B375BD207E8D5600691F2A /* AddressLocator.loc.xml in Resources */ = {isa = PBXBuildFile; fileRef = 94B37599207E8D5600691F2A /* AddressLocator.loc.xml */; };
 		94B375BE207E8D5600691F2A /* AddressLocator.lox in Resources */ = {isa = PBXBuildFile; fileRef = 94B3759A207E8D5600691F2A /* AddressLocator.lox */; };
@@ -92,6 +99,13 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		946569012087FAE700599E55 /* MapViewController+MapViewMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MapViewController+MapViewMode.swift"; sourceTree = "<group>"; };
+		946569032087FB5000599E55 /* MapViewController+LocationSelection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MapViewController+LocationSelection.swift"; sourceTree = "<group>"; };
+		946569052087FBF700599E55 /* MapViewController+UserLocation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MapViewController+UserLocation.swift"; sourceTree = "<group>"; };
+		946569092087FC5800599E55 /* MapViewController+Observers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MapViewController+Observers.swift"; sourceTree = "<group>"; };
+		9465690B2087FCCE00599E55 /* MapViewController+Setup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MapViewController+Setup.swift"; sourceTree = "<group>"; };
+		9465690D208800A200599E55 /* MapViewController+Delegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MapViewController+Delegate.swift"; sourceTree = "<group>"; };
+		9465690F208800E100599E55 /* MapViewController+TouchDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MapViewController+TouchDelegate.swift"; sourceTree = "<group>"; };
 		94B37598207E8D5600691F2A /* AddressLocator.locb */ = {isa = PBXFileReference; lastKnownFileType = file; path = AddressLocator.locb; sourceTree = "<group>"; };
 		94B37599207E8D5600691F2A /* AddressLocator.loc.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = AddressLocator.loc.xml; sourceTree = "<group>"; };
 		94B3759A207E8D5600691F2A /* AddressLocator.lox */ = {isa = PBXFileReference; lastKnownFileType = file; path = AddressLocator.lox; sourceTree = "<group>"; };
@@ -355,8 +369,15 @@
 		94D544CF208511FB00ED0D04 /* Map View Controller */ = {
 			isa = PBXGroup;
 			children = (
-				94D544C5207FC20700ED0D04 /* MapViewController+Mask.swift */,
 				94FA8B24207BF2CD00972C75 /* MapViewController.swift */,
+				9465690D208800A200599E55 /* MapViewController+Delegate.swift */,
+				9465690F208800E100599E55 /* MapViewController+TouchDelegate.swift */,
+				94D544C5207FC20700ED0D04 /* MapViewController+Mask.swift */,
+				946569012087FAE700599E55 /* MapViewController+MapViewMode.swift */,
+				946569032087FB5000599E55 /* MapViewController+LocationSelection.swift */,
+				946569052087FBF700599E55 /* MapViewController+UserLocation.swift */,
+				946569092087FC5800599E55 /* MapViewController+Observers.swift */,
+				9465690B2087FCCE00599E55 /* MapViewController+Setup.swift */,
 			);
 			path = "Map View Controller";
 			sourceTree = "<group>";
@@ -612,6 +633,7 @@
 				94D544D820852A5100ED0D04 /* ShrinkingView.swift in Sources */,
 				94B375C2207E8D5600691F2A /* AppOfflineMapJob.swift in Sources */,
 				94B375FA207E8E4800691F2A /* UIViewController+Extensions.swift in Sources */,
+				946569022087FAE700599E55 /* MapViewController+MapViewMode.swift in Sources */,
 				94D544C1207FC15D00ED0D04 /* AppContainerViewController+JobStatusDelegate.swift in Sources */,
 				94D544C6207FC20700ED0D04 /* MapViewController+Mask.swift in Sources */,
 				94D544C0207FC15D00ED0D04 /* AppContainerViewController+MapDelegate.swift in Sources */,
@@ -628,6 +650,7 @@
 				94D544D620852A5100ED0D04 /* NotificationBarLabel.swift in Sources */,
 				94B375F4207E8E4800691F2A /* AGSJobStatus+Extensions.swift in Sources */,
 				94B375CE207E8D5600691F2A /* SVProgressHUD.m in Sources */,
+				9465690E208800A200599E55 /* MapViewController+Delegate.swift in Sources */,
 				94B375F8207E8E4800691F2A /* AGSDrawStatus+Extensions.swift in Sources */,
 				94B37602207E8E4800691F2A /* BasicTypes+Extensions.swift in Sources */,
 				94B375FD207E8E4800691F2A /* UIColor+Extensions.swift in Sources */,
@@ -635,10 +658,14 @@
 				94B375F2207E8E4800691F2A /* AGSLoadStatus+Extensions.swift in Sources */,
 				94B375FE207E8E4800691F2A /* UIImage+Extensions.swift in Sources */,
 				94B37600207E8E4800691F2A /* UIAlertController+Extensions.swift in Sources */,
+				946569042087FB5000599E55 /* MapViewController+LocationSelection.swift in Sources */,
+				9465690A2087FC5800599E55 /* MapViewController+Observers.swift in Sources */,
 				94FA8B25207BF2CD00972C75 /* MapViewController.swift in Sources */,
 				94B375C1207E8D5600691F2A /* AppConfiguration.swift in Sources */,
+				946569062087FBF700599E55 /* MapViewController+UserLocation.swift in Sources */,
 				94B375CA207E8D5600691F2A /* AppGlobals.swift in Sources */,
 				94B375C5207E8D5600691F2A /* AppNotifications.swift in Sources */,
+				9465690C2087FCCE00599E55 /* MapViewController+Setup.swift in Sources */,
 				94B375FC207E8E4800691F2A /* UIView+Extensions.swift in Sources */,
 				94D544C2207FC15D00ED0D04 /* AppContextAwareController.swift in Sources */,
 				94B375D0207E8D5600691F2A /* SVIndefiniteAnimatedView.m in Sources */,
@@ -656,6 +683,7 @@
 				94B375F9207E8E4800691F2A /* AGSArcGISFeature+Extensions.swift in Sources */,
 				94B375C7207E8D5600691F2A /* AppContext+Login.swift in Sources */,
 				94B375CD207E8D5600691F2A /* SVProgressAnimatedView.m in Sources */,
+				94656910208800E100599E55 /* MapViewController+TouchDelegate.swift in Sources */,
 				94B37603207E8E4800691F2A /* CGGeometry+Extensions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
