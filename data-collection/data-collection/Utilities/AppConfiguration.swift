@@ -18,7 +18,7 @@ typealias Config = AppConfiguration
 
 class AppConfiguration {
     
-    static let itemID = "50d6a6aa2d334f1e9e0828edeb61c32f"
+    static let itemID = "1eabfa0e397448b487892441f86de273"
     static let basePortalDomain = "www.arcgis.com"
     static let basePortalURLString = "https://\(basePortalDomain)"
     static let basePortalURL: URL? = URL(string: basePortalURLString)

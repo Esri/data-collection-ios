@@ -39,6 +39,8 @@ class MapViewController: AppContextAwareController, PopupsViewControllerEmbeddab
     var observeLocationAuthorization: NSKeyValueObservation?
     var observeCurrentMap: NSKeyValueObservation?
     
+    var identifyTask: AGSCancelable?
+    
     var currentPopup: AGSPopup? {
         didSet {
             smallPopupViewController?.popup = currentPopup
@@ -46,7 +48,7 @@ class MapViewController: AppContextAwareController, PopupsViewControllerEmbeddab
         }
     }
     
-    var mapViewMode: MapViewMode = MapViewMode.selectedFeature {
+    var mapViewMode: MapViewMode = MapViewMode.`default` {
         didSet {
             adjustForMapViewMode()
         }

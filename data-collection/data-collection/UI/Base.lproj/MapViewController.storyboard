@@ -102,7 +102,7 @@
                                             <segue destination="Kcg-Md-S5T" kind="embed" id="8zs-AU-eEO"/>
                                         </connections>
                                     </containerView>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oTP-jM-5tK" customClass="ShrinkingView" customModule="data_collection" customModuleProvider="target">
+                                    <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oTP-jM-5tK" customClass="ShrinkingView" customModule="data_collection" customModuleProvider="target">
                                         <rect key="frame" x="8" y="646" width="359" height="80"/>
                                         <color key="backgroundColor" white="1" alpha="0.80000000000000004" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>

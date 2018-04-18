@@ -26,8 +26,58 @@ extension MapViewController: AGSGeoViewTouchDelegate {
     }
     
     private func query(_ geoView: AGSGeoView, atScreenPoint screenPoint: CGPoint, mapPoint: AGSPoint) {
-        
+
         print("[Touch Delegate] will identify at \(mapPoint)")
+
+        currentPopup?.clearSelection()
+        
+        identifyTask?.cancel()
+        identifyTask = nil
+        
+        identifyTask = geoView.identifyLayers(atScreenPoint: screenPoint, tolerance: 8, returnPopupsOnly: true, maximumResultsPerLayer: 5) { [unowned mvc = self] (result, error) in
+            
+            if let error = error {
+                print("[Error] identifying layers", error.localizedDescription)
+                mvc.currentPopup = nil
+                return
+            }
+            
+            guard let identifyResults = result else {
+                print("[Error] identifying layers, missing results")
+                mvc.currentPopup = nil
+                return
+            }
+            
+            var firstIdentifiableResult: AGSIdentifyLayerResult?
+            
+            for identifyResult in identifyResults {
+                
+                guard
+                    let featureLayer = identifyResult.layerContent as? AGSFeatureLayer,
+                    featureLayer.isIdentifiable
+                    else {
+                        continue
+                }
+                
+                firstIdentifiableResult = identifyResult
+                break
+            }
+            
+            guard let identifyResult = firstIdentifiableResult else {
+                print("[Error] no found feature layer meets criteria")
+                mvc.currentPopup = nil
+                return
+            }
+            
+            guard identifyResult.popups.count > 0 else {
+                print("[Identify Layer] Found no results")
+                mvc.currentPopup = nil
+                return
+            }
+            
+            mvc.currentPopup = identifyResult.popups.popupNearestTo(mapPoint: mapPoint)
+            mvc.currentPopup?.select()
+        }
         
 //        guard let map = mapView.map, map.loadStatus == .loaded, newTreeUIVisible == false, let treeManager = appTreesManager else {
 //            return
