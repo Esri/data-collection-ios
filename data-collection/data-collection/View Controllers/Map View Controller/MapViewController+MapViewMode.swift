@@ -20,13 +20,17 @@ enum MapViewMode {
     case selectedFeature
     case selectingFeature
     case offlineMask
-    case offlineDownload
-    case noMap
 }
 
 extension MapViewController {
     
-    func adjustForMapViewMode() {
+    func adjustForMapViewMode(from: MapViewMode?, to: MapViewMode) {
+        
+        if let from = from {
+            guard from != to else {
+                return
+            }
+        }
         
         let smallPopViewVisible: (Bool) -> UIViewAnimations = { [unowned mvc = self] (visible) in
             return {
@@ -43,9 +47,40 @@ extension MapViewController {
             }
         }
         
+        let mapViewVisible: (Bool) -> UIViewAnimations = { [unowned mvc = self] (visible) in
+            return {
+                mvc.mapView.alpha = visible ? 1.0 : 0.5
+            }
+        }
+        
         var animations = [UIViewAnimations]()
         
-        switch mapViewMode {
+        if let from = from {
+            switch from {
+            case .offlineMask:
+                hideMapMaskViewForOfflineDownloadArea()
+            case .disabled:
+                animations.append( mapViewVisible(true) )
+                view.isUserInteractionEnabled = true
+                break
+            default:
+                break
+            }
+        }
+        
+        switch to {
+            
+        case .`default`:
+            pinDropView.pinDropped = false
+            animations.append( selectViewVisible(false) )
+            animations.append( smallPopViewVisible(false) )
+
+        case .disabled:
+            pinDropView.pinDropped = false
+            animations.append( selectViewVisible(false) )
+            animations.append( smallPopViewVisible(false) )
+            animations.append( mapViewVisible(false) )
+            view.isUserInteractionEnabled = false
             
         case .selectingFeature:
             pinDropView.pinDropped = true
@@ -63,11 +98,7 @@ extension MapViewController {
             animations.append( selectViewVisible(true) )
             animations.append( smallPopViewVisible(false) )
             locationSelectionType = .offlineExtent
-            
-        default:
-            pinDropView.pinDropped = false
-            animations.append( selectViewVisible(false) )
-            animations.append( smallPopViewVisible(false) )
+            presentMapMaskViewForOfflineDownloadArea()
         }
         
         UIView.animate(withDuration: 0.2) { [unowned mvc = self] in

@@ -35,7 +35,6 @@ class MapViewController: AppContextAwareController, PopupsViewControllerEmbeddab
     
     var featureDetailViewBottomConstraint: NSLayoutConstraint!
     
-    var observeDrawStatus: NSKeyValueObservation?
     var observeLocationAuthorization: NSKeyValueObservation?
     var observeCurrentMap: NSKeyValueObservation?
     
@@ -50,7 +49,7 @@ class MapViewController: AppContextAwareController, PopupsViewControllerEmbeddab
     
     var mapViewMode: MapViewMode = MapViewMode.`default` {
         didSet {
-            adjustForMapViewMode()
+            adjustForMapViewMode(from: oldValue, to: mapViewMode)
         }
     }
     
@@ -76,7 +75,7 @@ class MapViewController: AppContextAwareController, PopupsViewControllerEmbeddab
         setupObservers()
 
         // MAPVIEWMODE
-        adjustForMapViewMode()
+        adjustForMapViewMode(from: nil, to: mapViewMode)
         
         // LOCATION SELECTION TYPE
         adjustForLocationSelectionType()

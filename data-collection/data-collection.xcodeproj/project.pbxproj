@@ -24,6 +24,7 @@
 		946569232088036C00599E55 /* PopupsViewControllerEmbeddable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 946569222088036C00599E55 /* PopupsViewControllerEmbeddable.swift */; };
 		94656925208803AE00599E55 /* SmallPopupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94656924208803AE00599E55 /* SmallPopupViewController.swift */; };
 		946569272088042400599E55 /* SmallPopup.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 946569262088042400599E55 /* SmallPopup.storyboard */; };
+		946569292089066800599E55 /* MapViewController+Map.swift in Sources */ = {isa = PBXBuildFile; fileRef = 946569282089066800599E55 /* MapViewController+Map.swift */; };
 		94B375BC207E8D5600691F2A /* AddressLocator.locb in Resources */ = {isa = PBXBuildFile; fileRef = 94B37598207E8D5600691F2A /* AddressLocator.locb */; };
 		94B375BD207E8D5600691F2A /* AddressLocator.loc.xml in Resources */ = {isa = PBXBuildFile; fileRef = 94B37599207E8D5600691F2A /* AddressLocator.loc.xml */; };
 		94B375BE207E8D5600691F2A /* AddressLocator.lox in Resources */ = {isa = PBXBuildFile; fileRef = 94B3759A207E8D5600691F2A /* AddressLocator.lox */; };
@@ -126,6 +127,7 @@
 		946569222088036C00599E55 /* PopupsViewControllerEmbeddable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupsViewControllerEmbeddable.swift; sourceTree = "<group>"; };
 		94656924208803AE00599E55 /* SmallPopupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmallPopupViewController.swift; sourceTree = "<group>"; };
 		946569262088042400599E55 /* SmallPopup.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = SmallPopup.storyboard; sourceTree = "<group>"; };
+		946569282089066800599E55 /* MapViewController+Map.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MapViewController+Map.swift"; sourceTree = "<group>"; };
 		94B37598207E8D5600691F2A /* AddressLocator.locb */ = {isa = PBXFileReference; lastKnownFileType = file; path = AddressLocator.locb; sourceTree = "<group>"; };
 		94B37599207E8D5600691F2A /* AddressLocator.loc.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = AddressLocator.loc.xml; sourceTree = "<group>"; };
 		94B3759A207E8D5600691F2A /* AddressLocator.lox */ = {isa = PBXFileReference; lastKnownFileType = file; path = AddressLocator.lox; sourceTree = "<group>"; };
@@ -414,6 +416,7 @@
 				946569052087FBF700599E55 /* MapViewController+UserLocation.swift */,
 				946569092087FC5800599E55 /* MapViewController+Observers.swift */,
 				9465690B2087FCCE00599E55 /* MapViewController+Setup.swift */,
+				946569282089066800599E55 /* MapViewController+Map.swift */,
 			);
 			path = "Map View Controller";
 			sourceTree = "<group>";
@@ -713,6 +716,7 @@
 				94B375FC207E8E4800691F2A /* UIView+Extensions.swift in Sources */,
 				94D544C2207FC15D00ED0D04 /* AppContextAwareController.swift in Sources */,
 				94B375D0207E8D5600691F2A /* SVIndefiniteAnimatedView.m in Sources */,
+				946569292089066800599E55 /* MapViewController+Map.swift in Sources */,
 				94B375C6207E8D5600691F2A /* AppLocation.swift in Sources */,
 				94B37601207E8E4800691F2A /* DispatchGroup+Extensions.swift in Sources */,
 				94B375C4207E8D5600691F2A /* AppErrors.swift in Sources */,

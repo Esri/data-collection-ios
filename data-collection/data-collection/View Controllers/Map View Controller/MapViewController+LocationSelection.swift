@@ -13,6 +13,7 @@
 // limitations under the License.
 
 import Foundation
+import ArcGIS
 
 enum LocationSelectionViewType {
     
@@ -42,11 +43,50 @@ extension MapViewController {
     
     func userRequestsAddNewFeature() {
         
-        // 1 User must be logged in, prompt if not.
-        guard appContext.isLoggedIn else {
-            present(loginAlertMessage: "You must log in to add a Tree.")
+        guard mapViewMode != .disabled else {
             return
         }
+        
+        guard appContext.isLoggedIn else {
+            present(loginAlertMessage: "You must log in to add a Feature.")
+            return
+        }
+        
+        guard let map = mapView.map, let operationalLayers = map.operationalLayers as? [AGSFeatureLayer], let layers = operationalLayers.featureAddableLayers else {
+            present(simpleAlertMessage: "No eligible feature layer that you can add to.")
+            return
+        }
+        
+        guard layers.count > 1 else {
+            addNewFeatureFor(featureLayer: layers.first!)
+            return
+        }
+        
+        let action = UIAlertController(title: nil, message: "Add to feature layer:", preferredStyle: .actionSheet)
+        
+        for layer in layers {
+            
+            guard let featureTable = layer.featureTable as? AGSArcGISFeatureTable else {
+                continue
+            }
+            
+            let addFeature = UIAlertAction(title: featureTable.tableName, style: .`default`, handler: { [weak self] (action) in
+                self?.addNewFeatureFor(featureLayer: layer)
+            })
+            
+            action.addAction(addFeature)
+        }
+        
+        let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        action.addAction(cancel)
+        
+        present(action, animated: true, completion: nil)
+    }
+    
+    private func addNewFeatureFor(featureLayer: AGSFeatureLayer) {
+        
+        currentPopup?.clearSelection()
+        currentPopup = nil
         
         mapViewMode = .selectingFeature
     }

@@ -19,7 +19,6 @@ extension MapViewController {
     
     func setupObservers() {
         beginObservingLocationAuthStatus()
-        beginMonitoringMapviewLayerViewStateChanges()
         beginObservingCurrentMap()
     }
     
@@ -30,30 +29,16 @@ extension MapViewController {
         }
     }
     
-    private func beginMonitoringMapviewLayerViewStateChanges() {
-        mapView.layerViewStateChangedHandler = { (layer:AGSLayer, state:AGSLayerViewState) in
-            print("[Layer View State] \(state) - \(layer.name)")
-        }
-    }
-    
     private func beginObservingCurrentMap() {
         observeCurrentMap = appContext.observe(\.currentMap, options:[.new, .old]) { [weak self] (appContext, _) in
             self?.mapView.map = appContext.currentMap
-            if let map = appContext.currentMap {
-                print("[Current Map] \(map)")
-            }
-            else {
-                print("[Current Map] nil")
-            }
+            self?.updateForMap()
         }
     }
     
     func invalidateAndReleaseObservations() {
         
         // Invalidate and release KVO observations
-        observeDrawStatus?.invalidate()
-        observeDrawStatus = nil
-        
         observeLocationAuthorization?.invalidate()
         observeLocationAuthorization = nil
         

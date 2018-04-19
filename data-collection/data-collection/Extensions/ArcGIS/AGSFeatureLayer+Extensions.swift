@@ -28,4 +28,26 @@ extension AGSFeatureLayer {
         }
         return true
     }
+    
+    var isAddable: Bool {
+        guard
+            let featureTable = featureTable,
+            featureTable.isEditable,
+            featureTable.canAddFeature,
+            featureTable.geometryType == .point,
+            featureTable.isPopupActuallyEnabled else {
+                return false
+        }
+        return true
+    }
+}
+
+extension Collection where Iterator.Element == AGSFeatureLayer {
+    
+    var featureAddableLayers: [AGSFeatureLayer]? {
+        
+        return filter { (layer) -> Bool in
+            return layer.isAddable
+        }
+    }
 }

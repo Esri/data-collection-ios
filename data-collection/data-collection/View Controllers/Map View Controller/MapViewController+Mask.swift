@@ -19,7 +19,6 @@ extension MapViewController {
     
     func prepareMapMaskViewForOfflineDownloadArea() {
         
-        presentMapMaskViewForOfflineDownloadArea()
         mapViewMode = .offlineMask
     }
     
@@ -34,25 +33,6 @@ extension MapViewController {
         view.bringSubview(toFront: locationSelectionView)
     }
     
-    func prepareForOfflineMapDownloadJob() {
-
-        guard let mask = view.viewWithTag(1003) else {
-            return
-        }
-
-        hideMapMaskViewForOfflineDownloadArea()
-
-        let nw = mask.frame.origin
-        let se = CGPoint(x: mask.frame.maxX, y: mask.frame.maxY)
-
-        let agsNW = mapView.screen(toLocation: nw)
-        let agsSE = mapView.screen(toLocation: se)
-
-        let envelope = AGSEnvelope(min: agsNW, max: agsSE)
-
-        delegate?.mapViewController(self, didSelect: envelope)
-    }
-    
     func hideMapMaskViewForOfflineDownloadArea() {
         
         guard let maskView = view.viewWithTag(1002) else {
@@ -61,5 +41,22 @@ extension MapViewController {
         
         maskView.isHidden = true
         view.sendSubview(toBack: maskView)
+    }
+    
+    func prepareForOfflineMapDownloadJob() {
+        
+        guard let mask = view.viewWithTag(1003) else {
+            return
+        }
+        
+        let nw = mask.frame.origin
+        let se = CGPoint(x: mask.frame.maxX, y: mask.frame.maxY)
+        
+        let agsNW = mapView.screen(toLocation: nw)
+        let agsSE = mapView.screen(toLocation: se)
+        
+        let envelope = AGSEnvelope(min: agsNW, max: agsSE)
+        
+        delegate?.mapViewController(self, didSelect: envelope)
     }
 }

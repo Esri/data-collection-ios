@@ -83,7 +83,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="RcR-zv-Wnv" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1780" y="-262"/>
+            <point key="canvasLocation" x="1781" y="-480"/>
         </scene>
         <!--Tree Survey-->
         <scene sceneID="wNI-U7-vXk">
@@ -179,7 +179,7 @@
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="ruY-A6-U6F">
                                                 <rect key="frame" x="82" y="11.333333333333336" width="212" height="39.666666666666664"/>
                                                 <subviews>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="Choose the tree location" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="0RV-ls-fbV">
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="Choose the location" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="0RV-ls-fbV">
                                                         <rect key="frame" x="0.0" y="0.0" width="212" height="24"/>
                                                         <fontDescription key="fontDescription" style="UICTFontTextStyleTitle2"/>
                                                         <color key="textColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -194,7 +194,7 @@
                                                 </subviews>
                                             </stackView>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" reversesTitleShadowWhenHighlighted="YES" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="txj-eN-kUn">
-                                                <rect key="frame" x="321.66666666666669" y="8" width="45.333333333333314" height="46"/>
+                                                <rect key="frame" x="322" y="8" width="45" height="46"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" relation="lessThanOrEqual" constant="46" id="ZHn-BY-bHA"/>
                                                 </constraints>
@@ -243,7 +243,7 @@
                                 </constraints>
                             </view>
                         </subviews>
-                        <color key="backgroundColor" red="0.6588235294" green="0.81176470590000005" blue="0.40000000000000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="L7K-qp-Vqi" firstAttribute="centerY" secondItem="3gQ-pY-vhI" secondAttribute="centerY" id="Gg6-63-MIS"/>
                             <constraint firstItem="3gQ-pY-vhI" firstAttribute="top" secondItem="fMM-1d-niq" secondAttribute="top" id="LWC-iI-Ve4"/>
@@ -274,7 +274,7 @@
             </objects>
             <point key="canvasLocation" x="1782" y="416"/>
         </scene>
-        <!--Tree Survey-->
+        <!--Data Collection-->
         <scene sceneID="kjr-Uq-KXN">
             <objects>
                 <viewController id="gv8-gM-I2q" customClass="AppContainerViewController" customModule="data_collection" customModuleProvider="target" sceneMemberID="viewController">
@@ -324,14 +324,14 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="y4d-m7-pvI"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Tree Survey" id="Sig-Uc-vuA">
+                    <navigationItem key="navigationItem" title="Data Collection" id="Sig-Uc-vuA">
                         <barButtonItem key="leftBarButtonItem" image="Hamburger" id="Edn-bQ-dxc">
                             <connections>
                                 <action selector="userRequestsToggleDrawer:" destination="gv8-gM-I2q" id="sfq-m3-IDr"/>
                             </connections>
                         </barButtonItem>
                         <rightBarButtonItems>
-                            <barButtonItem systemItem="add" id="kzH-BP-lEk">
+                            <barButtonItem enabled="NO" systemItem="add" id="kzH-BP-lEk">
                                 <connections>
                                     <action selector="userTapsRightButton:" destination="gv8-gM-I2q" id="aDP-Qy-iNH"/>
                                 </connections>
@@ -614,7 +614,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hFh-1g-2lg" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1707" y="1117"/>
+            <point key="canvasLocation" x="1735" y="1371"/>
         </scene>
     </scenes>
     <resources>

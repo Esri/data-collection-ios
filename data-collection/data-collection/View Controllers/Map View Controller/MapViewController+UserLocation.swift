@@ -18,6 +18,11 @@ import ArcGIS
 extension MapViewController {
     
     func userRequestsZoomOnUserLocation() {
+        
+        guard mapViewMode != .disabled else {
+            return
+        }
+        
         if AppLocation.shared.locationAuthorized {
             guard mapView.locationDisplay.showLocation == true, let location = mapView.locationDisplay.location, let position = location.position else {
                 return

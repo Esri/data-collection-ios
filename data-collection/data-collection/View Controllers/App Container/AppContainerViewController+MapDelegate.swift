@@ -33,4 +33,12 @@ extension AppContainerViewController: MapViewControllerDelegate {
         EphemeralCache.set(object: offlineJob, forKey: AppOfflineMapJob.ephemeralCacheKey)
         performSegue(withIdentifier: "presentJobStatusViewController", sender: nil)
     }
+    
+    func mapViewController(_ mapViewController: MapViewController, shouldAllowNewFeature should: Bool) {
+        showAddTreeBarButton = should
+    }
+    
+    func mapViewController(_ mapViewController: MapViewController, didUpdateTitle title: String) {
+        self.title = title
+    }
 }

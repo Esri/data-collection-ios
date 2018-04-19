@@ -26,6 +26,10 @@ extension MapViewController: AGSGeoViewTouchDelegate {
     }
     
     private func query(_ geoView: AGSGeoView, atScreenPoint screenPoint: CGPoint, mapPoint: AGSPoint) {
+        
+        guard mapViewMode != .disabled else {
+            return
+        }
 
         print("[Touch Delegate] will identify at \(mapPoint)")
 
