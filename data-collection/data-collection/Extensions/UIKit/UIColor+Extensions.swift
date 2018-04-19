@@ -31,7 +31,7 @@ extension UIColor {
 //    static var houseOrange: UIColor {
 //        return UIColor(red:0.93, green:0.54, blue:0.01, alpha:1.00)
 //    }
-//    
+//
 //    static var houseEdit: UIColor {
 //        return .orange
 //    }

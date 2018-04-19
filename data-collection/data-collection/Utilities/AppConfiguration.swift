@@ -34,6 +34,11 @@ class AppConfiguration {
     static let colors = AppColors()
 }
 
+enum AppColorsTheme {
+    case light
+    case dark
+}
+
 struct AppColors {
     
     static var primary: UIColor = UIColor(red:0.66, green:0.81, blue:0.40, alpha:1.00)
@@ -43,4 +48,6 @@ struct AppColors {
     static var offline: UIColor = .darkGray
     static var offlineLight: UIColor = .gray
     static var offlineDark: UIColor = .black
+    
+    static var accent: UIColor = UIColor(red:0.93, green:0.54, blue:0.01, alpha:1.00)
 }
