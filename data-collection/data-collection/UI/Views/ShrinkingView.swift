@@ -34,8 +34,7 @@ class ShrinkingView: UIView {
     }
     
     override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
-        touchesCancelled(touches, with: event)
-        
+        super.touchesCancelled(touches, with: event)
         // animate
         UIView.animate(withDuration: 0.06) {
             self.transform = CGAffineTransform(scaleX: self.fullScale, y: self.fullScale)

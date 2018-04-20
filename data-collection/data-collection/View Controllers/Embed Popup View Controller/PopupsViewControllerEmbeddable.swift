@@ -49,7 +49,7 @@ extension PopupsViewControllerEmbeddable {
     private func embedChildViewController(_ controller: UIViewController) -> UIViewController {
         
         self.addChildViewController(controller)
-        self.view.addSubview(controller.view)
+        self.popupsContainerView.addSubview(controller.view)
         
         NSLayoutConstraint.activate([
             controller.view.leadingAnchor.constraint(equalTo: popupsContainerView.leadingAnchor, constant: 0),

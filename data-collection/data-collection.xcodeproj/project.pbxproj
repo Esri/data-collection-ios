@@ -232,6 +232,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		9419C798208A97630060D104 /* Storyboards */ = {
+			isa = PBXGroup;
+			children = (
+				94FA8B26207BF2CD00972C75 /* MapViewController.storyboard */,
+				946569262088042400599E55 /* SmallPopup.storyboard */,
+			);
+			path = Storyboards;
+			sourceTree = "<group>";
+		};
 		946569212088033700599E55 /* Embed Popup View Controller */ = {
 			isa = PBXGroup;
 			children = (
@@ -518,9 +527,8 @@
 		94FA8B55207BF5EC00972C75 /* UI */ = {
 			isa = PBXGroup;
 			children = (
-				946569262088042400599E55 /* SmallPopup.storyboard */,
+				9419C798208A97630060D104 /* Storyboards */,
 				94D544D020852A5100ED0D04 /* Views */,
-				94FA8B26207BF2CD00972C75 /* MapViewController.storyboard */,
 			);
 			path = UI;
 			sourceTree = "<group>";
