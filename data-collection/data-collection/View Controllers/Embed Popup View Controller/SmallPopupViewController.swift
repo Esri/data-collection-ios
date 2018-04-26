@@ -28,11 +28,11 @@ class SmallPopupViewController: UIViewController {
         }
     }
     
-    private var popupManager: AGSPopupManager? {
+    private var popupManager: AGSPopupManager? /*{
         didSet {
             popuplateViewWithBestContent()
         }
-    }
+    }*/
     
     /**
      The small popup view controller (spvc) is concerned primarly with displaying content to do with related records.
@@ -42,7 +42,7 @@ class SmallPopupViewController: UIViewController {
      Should the feature of interest not contain tables with this specific related table relationships, the spvc populates itself with content derived from itself's feature of interest
      */
     
-    func popuplateViewWithBestContent() {
+    func popuplateViewWithBestContent(_ complete: @escaping ()->Void ) {
         
         guard
             let popupManager = popupManager,
@@ -50,105 +50,111 @@ class SmallPopupViewController: UIViewController {
             let featureTable = feature.featureTable as? AGSArcGISFeatureTable
             else {
                 clearLabels()
+                complete()
                 return
         }
         
-        var oneToManyDestination: AGSRelationshipInfo?
-        var oneToManyOrigin: AGSRelationshipInfo?
+        var manyToOneRelationship: AGSRelationshipInfo?
+        var oneToManyRelationship: AGSRelationshipInfo?
         
         let queryCompletion: ([AGSRelatedFeatureQueryResult]?, Error?) -> Void = { [weak self] (results, error) in
             
             guard error == nil else {
                 self?.clearLabels()
                 print("[Error] querying for related records", error!.localizedDescription)
+                complete()
                 return
             }
             
             guard let results = results else {
                 self?.clearLabels()
                 print("[Error] querying for related records, results are nil")
+                complete()
                 return
             }
             
-            var destinationPopupManager: AGSPopupManager?
-            var originPopupManagers: [AGSPopupManager]?
+            var manyToOneManager: AGSPopupManager?
+            var oneToManyManagers: [AGSPopupManager]?
             
             for result in results {
                 
-                if let destination = oneToManyDestination, let info = result.relationshipInfo, destination.name == info.name {
-                    destinationPopupManager = result.firstFeatureAsPopupManager
+                if let manyToOne = manyToOneRelationship, let info = result.relationshipInfo, manyToOne.name == info.name {
+                    manyToOneManager = result.firstFeatureAsPopupManager
                     continue
                 }
                 
-                if let origin = oneToManyOrigin, let info = result.relationshipInfo, origin.name == info.name {
-                    originPopupManagers = result.featuresAsPopupManagers
+                if let oneToMany = oneToManyRelationship, let info = result.relationshipInfo, oneToMany.name == info.name {
+                    oneToManyManagers = result.featuresAsPopupManagers
                     continue
                 }
             }
             
             var popupIndex = 0
             
-            if let destination = destinationPopupManager {
+            if let manyToOne = manyToOneManager {
                 
                 var destinationIndex = 0
-                self?.relatedRecordHeaderLabel.text = destination.nextFieldStringValue(idx: &destinationIndex) ?? popupManager.nextFieldStringValue(idx: &popupIndex)
-                self?.relatedRecordSubheaderLabel.text = destination.nextFieldStringValue(idx: &destinationIndex) ?? popupManager.nextFieldStringValue(idx: &popupIndex)
+                self?.relatedRecordHeaderLabel.text = manyToOne.nextFieldStringValue(idx: &destinationIndex) ?? popupManager.nextFieldStringValue(idx: &popupIndex)
+                self?.relatedRecordSubheaderLabel.text = manyToOne.nextFieldStringValue(idx: &destinationIndex) ?? popupManager.nextFieldStringValue(idx: &popupIndex)
             }
             else {
                 self?.relatedRecordHeaderLabel.text = popupManager.nextFieldStringValue(idx: &popupIndex)
                 self?.relatedRecordSubheaderLabel.text = popupManager.nextFieldStringValue(idx: &popupIndex)
             }
             
-            if let origin = originPopupManagers {
+            if let oneToMany = oneToManyManagers {
                 
-                let n = origin.count
-                let name = origin.first?.tableName ?? "Records"
+                let n = oneToMany.count
+                let name = oneToMany.first?.tableName ?? "Records"
                 self?.relatedRecordsNLabel.text = "\(n) \(name)"
             }
             else {
                 self?.relatedRecordsNLabel.text = popupManager.nextFieldStringValue(idx: &popupIndex)
             }
+            
+            complete()
         }
         
-        guard let relationshipInfos = featureTable.layerInfo?.relationshipInfos else {
+        guard let relationshipInfos = featureTable.layerInfo?.relationshipInfos, let map = appContext.currentMap else {
             queryCompletion([AGSRelatedFeatureQueryResult](), nil)
+            complete()
             return
         }
         
         // TODO Solve the ordering of tables
-//        let sortedRelationshipInfos = relationshipInfos.sorted { (a, b) -> Bool in
-//            return a.relatedTableID < b.relatedTableID
-//        }
-        
+        let sortedRelationshipInfos = relationshipInfos.sorted { (a, b) -> Bool in
+            return a.relatedTableID < b.relatedTableID
+        }
+
         // TODO check on popup information.
-        for info in relationshipInfos {
+        for info in sortedRelationshipInfos {
             
             // Find top most table relationship where item of interest is one of many
-            if info.cardinality == .oneToMany, info.role == .destination, oneToManyDestination == nil {
-                oneToManyDestination = info
+            if manyToOneRelationship == nil, info.isManyToOne, map.isPopupEnabledFor(relationshipInfo: info) {
+                manyToOneRelationship = info
                 continue
             }
                 
                 // Find top most table relationship where item of interest contains a collection
-            else if info.cardinality == .oneToMany, info.role == .origin, oneToManyOrigin == nil {
-                oneToManyOrigin = info
+            else if oneToManyRelationship == nil, info.isOneToMany, map.isPopupEnabledFor(relationshipInfo: info) {
+                oneToManyRelationship = info
                 continue
             }
             
             // escape early if we've found both top most tables
-            if oneToManyDestination != nil && oneToManyOrigin != nil {
+            if manyToOneRelationship != nil && oneToManyRelationship != nil {
                 break
             }
         }
         
         var relationships = [AGSRelationshipInfo]()
         
-        if let destinationRelationship = oneToManyDestination {
-            relationships.append(destinationRelationship)
+        if let manyToOne = manyToOneRelationship {
+            relationships.append(manyToOne)
         }
         
-        if let originRelationship = oneToManyOrigin {
-            relationships.append(originRelationship)
+        if let oneToMany = oneToManyRelationship {
+            relationships.append(oneToMany)
         }
         
         // Online Table

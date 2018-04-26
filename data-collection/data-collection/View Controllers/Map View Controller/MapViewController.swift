@@ -43,7 +43,17 @@ class MapViewController: AppContextAwareController, PopupsViewControllerEmbeddab
     var currentPopup: AGSPopup? {
         didSet {
             smallPopupViewController?.popup = currentPopup
-            mapViewMode = currentPopup != nil ? .selectedFeature : .`default`
+            guard currentPopup != nil else {
+                mapViewMode = .`default`
+                return
+            }
+            smallPopupViewController?.popuplateViewWithBestContent { [weak self] in
+                guard let _ = self?.currentPopup else {
+                    self?.mapViewMode = .`default`
+                    return
+                }
+                self?.mapViewMode = .selectedFeature
+            }
         }
     }
     

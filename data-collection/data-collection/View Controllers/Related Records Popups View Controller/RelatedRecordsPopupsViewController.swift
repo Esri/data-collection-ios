@@ -71,10 +71,10 @@ class RelatedRecordsPopupsViewController: UIViewController {
         
         // Kick off load of related records
         var preloadedRelatedRecords = [RelatedRecordsManager]()
-        if let feature = popup.geoElement as? AGSArcGISFeature, let relatedRecordsInfos = feature.relatedRecordsInfos {
+        if let feature = popup.geoElement as? AGSArcGISFeature, let relatedRecordsInfos = feature.relatedRecordsInfos, let map = appContext.currentMap {
             for info in relatedRecordsInfos {
                 // TODO restrict to rules set out
-                if let relatedRecord = RelatedRecordsManager(relationshipInfo: info, feature: feature) {
+                if map.isPopupEnabledFor(relationshipInfo: info), let relatedRecord = RelatedRecordsManager(relationshipInfo: info, feature: feature) {
                     preloadedRelatedRecords.append(relatedRecord)
                 }
             }

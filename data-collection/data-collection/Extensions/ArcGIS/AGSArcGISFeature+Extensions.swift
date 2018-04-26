@@ -50,23 +50,25 @@ extension AGSArcGISFeature {
     }
 }
 
-extension Collection where Iterator.Element == AGSArcGISFeature {
+// TODO REMOVE
+//extension Collection where Iterator.Element == AGSArcGISFeature {
+//
+//    /**
+//     This function is used to find the nearest point in a collection of points to another point.
+//
+//     Querying a feature layer returns a collection of features, the order for which was in the order
+//     the feature was discovered in traverse by the backing service as opposed to distance from the query's point.
+//     */
+////    func featureNearestTo(mapPoint: AGSPoint) -> AGSArcGISFeature? {
+////        guard count > 0 else {
+////            return nil
+////        }
+////        let sorted = self.sorted(by: { (featureA, featureB) -> Bool in
+////            let deltaA = AGSGeometryEngine.distanceBetweenGeometry1(mapPoint, geometry2: featureA.geometry!)
+////            let deltaB = AGSGeometryEngine.distanceBetweenGeometry1(mapPoint, geometry2: featureB.geometry!)
+////            return deltaA < deltaB
+////        })
+////        return sorted.first
+////    }
+//}
 
-    /**
-     This function is used to find the nearest point in a collection of points to another point.
-     
-     Querying a feature layer returns a collection of features, the order for which was in the order
-     the feature was discovered in traverse by the backing service as opposed to distance from the query's point.
-     */
-//    func featureNearestTo(mapPoint: AGSPoint) -> AGSArcGISFeature? {
-//        guard count > 0 else {
-//            return nil
-//        }
-//        let sorted = self.sorted(by: { (featureA, featureB) -> Bool in
-//            let deltaA = AGSGeometryEngine.distanceBetweenGeometry1(mapPoint, geometry2: featureA.geometry!)
-//            let deltaB = AGSGeometryEngine.distanceBetweenGeometry1(mapPoint, geometry2: featureB.geometry!)
-//            return deltaA < deltaB
-//        })
-//        return sorted.first
-//    }
-}
