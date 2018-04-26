@@ -42,6 +42,10 @@ extension AGSPopup {
         
         layer.select(feature)
     }
+    
+    var asManager: AGSPopupManager {
+        return AGSPopupManager(popup: self)
+    }
 }
 
 extension Collection where Iterator.Element == AGSPopup {

@@ -115,6 +115,11 @@ class SmallPopupViewController: UIViewController {
             return
         }
         
+        // TODO Solve the ordering of tables
+//        let sortedRelationshipInfos = relationshipInfos.sorted { (a, b) -> Bool in
+//            return a.relatedTableID < b.relatedTableID
+//        }
+        
         // TODO check on popup information.
         for info in relationshipInfos {
             

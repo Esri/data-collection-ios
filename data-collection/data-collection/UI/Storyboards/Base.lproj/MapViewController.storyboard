@@ -13,6 +13,14 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
+        <!--RelatedRecordsPopup-->
+        <scene sceneID="RIj-qS-kM8">
+            <objects>
+                <viewControllerPlaceholder storyboardName="RelatedRecordsPopup" id="xXs-ie-lHH" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="P9E-s1-xtc" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1781" y="814"/>
+        </scene>
         <!--Job Status View Controller-->
         <scene sceneID="xJo-D4-D5d">
             <objects>
@@ -268,6 +276,7 @@
                         <outlet property="selectViewHeaderLabel" destination="0RV-ls-fbV" id="QEP-Jd-6pC"/>
                         <outlet property="selectViewSubheaderLabel" destination="Boa-60-22n" id="IfU-ML-ZA7"/>
                         <outlet property="selectViewTopConstraint" destination="YuR-Qi-ll6" id="POl-kr-yJ1"/>
+                        <segue destination="xXs-ie-lHH" kind="presentation" identifier="modallyPresentRelatedRecordsPopupViewController" id="7WV-oH-I70"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5cR-Q3-zAa" sceneMemberID="firstResponder"/>

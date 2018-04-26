@@ -25,6 +25,9 @@
 		94656925208803AE00599E55 /* SmallPopupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94656924208803AE00599E55 /* SmallPopupViewController.swift */; };
 		946569272088042400599E55 /* SmallPopup.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 946569262088042400599E55 /* SmallPopup.storyboard */; };
 		946569292089066800599E55 /* MapViewController+Map.swift in Sources */ = {isa = PBXBuildFile; fileRef = 946569282089066800599E55 /* MapViewController+Map.swift */; };
+		948066332091474F00A398EA /* RelatedRecordsPopup.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 948066322091474F00A398EA /* RelatedRecordsPopup.storyboard */; };
+		948066362091483600A398EA /* RelatedRecordsPopupsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 948066352091483600A398EA /* RelatedRecordsPopupsViewController.swift */; };
+		948066382091595200A398EA /* RelatedRecordsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 948066372091595200A398EA /* RelatedRecordsManager.swift */; };
 		94B375BC207E8D5600691F2A /* AddressLocator.locb in Resources */ = {isa = PBXBuildFile; fileRef = 94B37598207E8D5600691F2A /* AddressLocator.locb */; };
 		94B375BD207E8D5600691F2A /* AddressLocator.loc.xml in Resources */ = {isa = PBXBuildFile; fileRef = 94B37599207E8D5600691F2A /* AddressLocator.loc.xml */; };
 		94B375BE207E8D5600691F2A /* AddressLocator.lox in Resources */ = {isa = PBXBuildFile; fileRef = 94B3759A207E8D5600691F2A /* AddressLocator.lox */; };
@@ -128,6 +131,9 @@
 		94656924208803AE00599E55 /* SmallPopupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmallPopupViewController.swift; sourceTree = "<group>"; };
 		946569262088042400599E55 /* SmallPopup.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = SmallPopup.storyboard; sourceTree = "<group>"; };
 		946569282089066800599E55 /* MapViewController+Map.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MapViewController+Map.swift"; sourceTree = "<group>"; };
+		948066322091474F00A398EA /* RelatedRecordsPopup.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = RelatedRecordsPopup.storyboard; sourceTree = "<group>"; };
+		948066352091483600A398EA /* RelatedRecordsPopupsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RelatedRecordsPopupsViewController.swift; sourceTree = "<group>"; };
+		948066372091595200A398EA /* RelatedRecordsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RelatedRecordsManager.swift; sourceTree = "<group>"; };
 		94B37598207E8D5600691F2A /* AddressLocator.locb */ = {isa = PBXFileReference; lastKnownFileType = file; path = AddressLocator.locb; sourceTree = "<group>"; };
 		94B37599207E8D5600691F2A /* AddressLocator.loc.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = AddressLocator.loc.xml; sourceTree = "<group>"; };
 		94B3759A207E8D5600691F2A /* AddressLocator.lox */ = {isa = PBXFileReference; lastKnownFileType = file; path = AddressLocator.lox; sourceTree = "<group>"; };
@@ -237,6 +243,7 @@
 			children = (
 				94FA8B26207BF2CD00972C75 /* MapViewController.storyboard */,
 				946569262088042400599E55 /* SmallPopup.storyboard */,
+				948066322091474F00A398EA /* RelatedRecordsPopup.storyboard */,
 			);
 			path = Storyboards;
 			sourceTree = "<group>";
@@ -248,6 +255,15 @@
 				94656924208803AE00599E55 /* SmallPopupViewController.swift */,
 			);
 			path = "Embed Popup View Controller";
+			sourceTree = "<group>";
+		};
+		94806634209147CE00A398EA /* Related Records Popups View Controller */ = {
+			isa = PBXGroup;
+			children = (
+				948066352091483600A398EA /* RelatedRecordsPopupsViewController.swift */,
+				948066372091595200A398EA /* RelatedRecordsManager.swift */,
+			);
+			path = "Related Records Popups View Controller";
 			sourceTree = "<group>";
 		};
 		94B37597207E8D5600691F2A /* Locator */ = {
@@ -513,6 +529,7 @@
 		94FA8B54207BF5DF00972C75 /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				94806634209147CE00A398EA /* Related Records Popups View Controller */,
 				946569212088033700599E55 /* Embed Popup View Controller */,
 				94D544CF208511FB00ED0D04 /* Map View Controller */,
 				94D544B5207FC15D00ED0D04 /* App Container */,
@@ -643,6 +660,7 @@
 				94FA8B2D207BF2CD00972C75 /* LaunchScreen.storyboard in Resources */,
 				94B375D1207E8D5600691F2A /* SVProgressHUD.bundle in Resources */,
 				94B375BD207E8D5600691F2A /* AddressLocator.loc.xml in Resources */,
+				948066332091474F00A398EA /* RelatedRecordsPopup.storyboard in Resources */,
 				94B3760E207EAEA100691F2A /* ArcGIS.bundle in Resources */,
 				94D544C9207FC67B00ED0D04 /* Assets.xcassets in Resources */,
 				94FA8B28207BF2CD00972C75 /* MapViewController.storyboard in Resources */,
@@ -678,6 +696,7 @@
 			files = (
 				94D544BE207FC15D00ED0D04 /* AppContainerViewController+DrawerDelegate.swift in Sources */,
 				94B375D7207E8DD600691F2A /* EditType.swift in Sources */,
+				948066382091595200A398EA /* RelatedRecordsManager.swift in Sources */,
 				94B375CB207E8D5600691F2A /* NetworkReachabilityManager.swift in Sources */,
 				94656920208802EE00599E55 /* AGSServiceFeatureTable+Extensions.swift in Sources */,
 				94B3760C207EAE4700691F2A /* AppDelegate.swift in Sources */,
@@ -700,6 +719,7 @@
 				94B375F6207E8E4800691F2A /* AGSPortal+Extensions.swift in Sources */,
 				94B375CC207E8D5600691F2A /* SVRadialGradientLayer.m in Sources */,
 				94D544D620852A5100ED0D04 /* NotificationBarLabel.swift in Sources */,
+				948066362091483600A398EA /* RelatedRecordsPopupsViewController.swift in Sources */,
 				946569122088020F00599E55 /* AGSPopup+Extensions.swift in Sources */,
 				94B375F4207E8E4800691F2A /* AGSJobStatus+Extensions.swift in Sources */,
 				94B375CE207E8D5600691F2A /* SVProgressHUD.m in Sources */,

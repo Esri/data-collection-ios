@@ -80,9 +80,6 @@ class MapViewController: AppContextAwareController, PopupsViewControllerEmbeddab
         // LOCATION SELECTION TYPE
         adjustForLocationSelectionType()
         
-        // SETUP Shrinking View Action
-        //..
-        
         // COMPASS
         compassView.mapView = mapView
         
@@ -99,8 +96,18 @@ class MapViewController: AppContextAwareController, PopupsViewControllerEmbeddab
         
         smallPopupViewController = embedPopupsSmallViewController()
 
-        (popupsContainerView as! ShrinkingView).actionClosure = {
-            print("[Map View Controller] did tap small popup view")
+        (popupsContainerView as! ShrinkingView).actionClosure = { [weak self] in
+            
+            guard let strongSelf = self, strongSelf.currentPopup != nil else {
+                return
+            }
+            strongSelf.performSegue(withIdentifier: "modallyPresentRelatedRecordsPopupViewController", sender: nil)
+        }
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let destination = segue.navigationDestination as? RelatedRecordsPopupsViewController {
+            destination.popup = currentPopup!
         }
     }
 

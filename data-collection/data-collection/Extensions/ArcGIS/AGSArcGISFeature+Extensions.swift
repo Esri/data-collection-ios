@@ -34,6 +34,20 @@ extension AGSArcGISFeature {
     var popupDefinition: AGSPopupDefinition? {
         return featureTable?.popupDefinition
     }
+    
+    var relatedRecordsInfos: [AGSRelationshipInfo]? {
+        guard let table = featureTable as? AGSServiceFeatureTable, let layerInfo = table.layerInfo else {
+            return nil
+        }
+        return layerInfo.relationshipInfos.filter({ (info) -> Bool in info.cardinality == .oneToMany })
+    }
+    
+    var relatedRecordsCount: Int {
+        guard let infos = relatedRecordsInfos else {
+            return 0
+        }
+        return infos.count
+    }
 }
 
 extension Collection where Iterator.Element == AGSArcGISFeature {

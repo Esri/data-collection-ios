@@ -57,4 +57,22 @@ extension AGSServiceFeatureTable {
             completion(finalResults, finalError)
         }
     }
+    
+    func queryOneToManyRelatedFeatures(`for` feature: AGSArcGISFeature, withRelationship relationship: AGSRelationshipInfo, queryFeatureFields: AGSQueryFeatureFields = .loadAll, completion: @escaping ([AGSArcGISFeature]?, Error?) -> Void) {
+        
+        queryRelatedFeatures(for: feature, withRelationships: [relationship], queryFeatureFields: queryFeatureFields) { (results, error) in
+            
+            guard error == nil else {
+                completion(nil, error!)
+                return
+            }
+            
+            guard let result = results?.first, let features = result.featureEnumerator().allObjects as? [AGSArcGISFeature] else {
+                completion(nil, NSError(domain: "com.domain.esri", code: 1002, userInfo: [NSLocalizedDescriptionKey : "Query returned no results"]))
+                return
+            }
+            
+            completion(features, nil)
+        }
+    }
 }
