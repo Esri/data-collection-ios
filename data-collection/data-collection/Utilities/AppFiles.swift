@@ -15,9 +15,6 @@
 import Foundation
 import ArcGIS
 
-enum AppFilesError: Error {
-    case cannotBuildPath(String)
-}
 
 extension FileManager {
     

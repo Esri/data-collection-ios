@@ -20,8 +20,7 @@ extension AGSServiceFeatureTable {
     func queryRelatedFeatures(`for` feature: AGSArcGISFeature, queryFeatureFields: AGSQueryFeatureFields, completion: @escaping ([AGSRelatedFeatureQueryResult]?, Error?) -> Void) {
         
         guard let relationshipInfos = layerInfo?.relationshipInfos else {
-            let error = NSError(domain: "com.esri.runtime.data-collection", code: 1000, userInfo: [NSLocalizedDescriptionKey : "LayerInfo contains no relationshipInfos."])
-            completion(nil, error)
+            completion(nil, ServiceFeatureTableError.missingRelationshipInfos)
             return
         }
         
@@ -42,7 +41,7 @@ extension AGSServiceFeatureTable {
             queryRelatedFeatures(for: feature, parameters: parameters, queryFeatureFields: queryFeatureFields) { results, error in
                 
                 if error != nil {
-                    finalError = NSError(domain: "com.esri.runtime.data-collection", code: 1001, userInfo: [NSLocalizedDescriptionKey : "Error Querying Related Records"])
+                    finalError = ServiceFeatureTableError.multipleQueriesFailure as NSError
                 }
                 
                 if let additionalResults = results {
@@ -68,7 +67,7 @@ extension AGSServiceFeatureTable {
             }
             
             guard let result = results?.first, let features = result.featureEnumerator().allObjects as? [AGSArcGISFeature] else {
-                completion(nil, NSError(domain: "com.domain.esri", code: 1002, userInfo: [NSLocalizedDescriptionKey : "Query returned no results"]))
+                completion(nil, ServiceFeatureTableError.queryResultsMissingFeatures)
                 return
             }
             

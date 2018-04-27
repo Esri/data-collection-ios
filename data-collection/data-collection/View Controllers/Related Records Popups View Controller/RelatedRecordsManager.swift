@@ -69,11 +69,11 @@ class RelatedRecordsManager: AGSLoadableBase {
         
         popups.removeAll()
         
-        guard let feature = self.feature, let featureTable = feature.featureTable as? AGSServiceFeatureTable, let relationshipInfo = self.relationshipInfo else {
-            // TODO redo all Errors
-            loadDidFinishWithError(NSError(domain: "com.esri.redo.me", code: 0, userInfo: [NSLocalizedDescriptionKey : "Feature does not belong to a feature table"]))
-            return
-        }
+        guard let feature = self.feature else { loadDidFinishWithError(ServiceFeatureTableError.missingFeature); return }
+        
+        guard let featureTable = feature.featureTable as? AGSServiceFeatureTable else { loadDidFinishWithError(ServiceFeatureTableError.missingFeatureTable); return }
+        
+        guard let relationshipInfo = self.relationshipInfo else { loadDidFinishWithError(ServiceFeatureTableError.missingRelationshipInfos); return }
         
         featureTable.queryOneToManyRelatedFeatures(for: feature, withRelationship: relationshipInfo, queryFeatureFields: .loadAll, completion: { [weak self] (features, error) in
             
@@ -83,7 +83,7 @@ class RelatedRecordsManager: AGSLoadableBase {
             }
             
             guard let features = features else {
-                self?.loadDidFinishWithError(NSError(domain: "com.esri.redo.me", code: 1, userInfo: [NSLocalizedDescriptionKey : "Missing Features in results"]))
+                self?.loadDidFinishWithError(ServiceFeatureTableError.queryResultsMissingFeatures)
                 return
             }
             

@@ -14,22 +14,114 @@
 
 import Foundation
 
-enum AGSPortalError: Error {
-    case invalidPortalURL
-    case invalidPortalJSON
-}
-
-enum AuthenticationError: Error {
-    case badCredentials
+enum AppFilesError: Error, CustomNSError, LocalizedError  {
+    
+    case cannotBuildPath(String)
+    
+    var errorCode: Int {
+        switch self {
+        case .cannotBuildPath(_):
+            return 0001
+        }
+    }
+    
+    var errorUserInfo: [String : Any] {
+        switch self {
+        case .cannotBuildPath(let path):
+            return [NSLocalizedDescriptionKey: "Cannot build path \(path)"]
+        }
+    }
+    
+    var localizedDescription: String {
+        return errorUserInfo[NSLocalizedDescriptionKey] as! String
+    }
 }
 
 enum AssetsError: Error {
+    
     case missingAsset(String)
     
-    var localizedDescription: String {
+    var errorCode: Int {
+        switch self {
+        case .missingAsset(_):
+            return 1001
+        }
+    }
+    
+    var errorUserInfo: [String : Any] {
         switch self {
         case .missingAsset(let name):
-            return "Missing local asset named \(name)"
+            return [NSLocalizedDescriptionKey: "Asset missing for name \(name)"]
         }
+    }
+    
+    var localizedDescription: String {
+        return errorUserInfo[NSLocalizedDescriptionKey] as! String
+    }
+}
+
+enum RelatedRecordsManagerError: Error, CustomNSError, LocalizedError {
+    
+    case featureMissingTable
+    
+    var errorCode: Int {
+        switch self {
+        case .featureMissingTable:
+            return 2001
+        }
+    }
+
+    var errorUserInfo: [String : Any] {
+        switch self {
+        case .featureMissingTable:
+            return [NSLocalizedDescriptionKey: "Feature does not belong to a feature table"]
+        }
+    }
+
+    var localizedDescription: String {
+        return errorUserInfo[NSLocalizedDescriptionKey] as! String
+    }
+}
+
+enum ServiceFeatureTableError: Error, CustomNSError, LocalizedError {
+    
+    case missingFeature
+    case missingFeatureTable
+    case missingRelationshipInfos
+    case multipleQueriesFailure
+    case queryResultsMissingFeatures
+    
+    var errorCode: Int {
+        switch self {
+        case .missingFeature:
+            return 3001
+        case .missingFeatureTable:
+            return 3002
+        case .missingRelationshipInfos:
+            return 3003
+        case .multipleQueriesFailure:
+            return 3004
+        case .queryResultsMissingFeatures:
+            return 3005
+        }
+    }
+    
+    var errorUserInfo: [String : Any] {
+        switch self {
+        case .missingFeature:
+            return [NSLocalizedDescriptionKey: "Missing feature"]
+        case .missingFeatureTable:
+            return [NSLocalizedDescriptionKey: "Missing feature table"]
+        case .missingRelationshipInfos:
+            return [NSLocalizedDescriptionKey: "Feature does not belong to a feature table."]
+        case .multipleQueriesFailure:
+            return [NSLocalizedDescriptionKey: "Attempt to query table multiple times failed."]
+        case .queryResultsMissingFeatures:
+            return [NSLocalizedDescriptionKey: "Query result is missing features."]
+        }
+    }
+    
+    var localizedDescription: String {
+        return errorUserInfo[NSLocalizedDescriptionKey] as! String
     }
 }

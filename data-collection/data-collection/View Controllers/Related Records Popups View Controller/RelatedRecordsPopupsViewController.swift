@@ -73,7 +73,6 @@ class RelatedRecordsPopupsViewController: UIViewController {
         var preloadedRelatedRecords = [RelatedRecordsManager]()
         if let feature = popup.geoElement as? AGSArcGISFeature, let relatedRecordsInfos = feature.relatedRecordsInfos, let map = appContext.currentMap {
             for info in relatedRecordsInfos {
-                // TODO restrict to rules set out
                 if map.isPopupEnabledFor(relationshipInfo: info), let relatedRecord = RelatedRecordsManager(relationshipInfo: info, feature: feature) {
                     preloadedRelatedRecords.append(relatedRecord)
                 }
@@ -239,6 +238,7 @@ class RelatedRecordCell: UITableViewCell {
     
     weak var relationshipInfo: AGSRelationshipInfo?
     
+    // TODO build repro case
     public var popup: AGSPopup? {
         didSet {
             guard let feature = popup?.geoElement as? AGSArcGISFeature else {

@@ -22,7 +22,7 @@ extension AGSMap {
         let operativeID = relationshipInfo.relatedTableID
         
         for layer in operationalLayers {
-            guard let featureLayer = layer as? AGSFeatureLayer, let featureTable = featureLayer.featureTable as? AGSServiceFeatureTable else {
+            guard let featureLayer = layer as? AGSFeatureLayer, let featureTable = featureLayer.featureTable as? AGSArcGISFeatureTable else {
                 continue
             }
             if featureTable.serviceLayerID == operativeID {
@@ -30,7 +30,7 @@ extension AGSMap {
             }
         }
         for table in tables {
-            guard let featureTable = table as? AGSServiceFeatureTable else {
+            guard let featureTable = table as? AGSArcGISFeatureTable else {
                 continue
             }
             if featureTable.serviceLayerID == operativeID {
