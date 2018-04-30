@@ -16,7 +16,7 @@ import UIKit
 import ArcGIS
 
 protocol PopupsViewControllerEmbeddable where Self: UIViewController {
-    weak var popupsContainerView: UIView! { get }
+    var popupsContainerView: UIView! { get }
 }
 
 extension PopupsViewControllerEmbeddable {

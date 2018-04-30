@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		940DA9722097825700AB4BF6 /* UILabel+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 940DA9712097825700AB4BF6 /* UILabel+Extensions.swift */; };
+		940DA9752097942000AB4BF6 /* PopupFieldCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 940DA9742097942000AB4BF6 /* PopupFieldCell.swift */; };
+		940DA977209794E200AB4BF6 /* PopupTextFieldCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 940DA976209794E200AB4BF6 /* PopupTextFieldCell.swift */; };
+		940DA9792097951000AB4BF6 /* PopupTextViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 940DA9782097951000AB4BF6 /* PopupTextViewCell.swift */; };
 		946569022087FAE700599E55 /* MapViewController+MapViewMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 946569012087FAE700599E55 /* MapViewController+MapViewMode.swift */; };
 		946569042087FB5000599E55 /* MapViewController+LocationSelection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 946569032087FB5000599E55 /* MapViewController+LocationSelection.swift */; };
 		946569062087FBF700599E55 /* MapViewController+UserLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 946569052087FBF700599E55 /* MapViewController+UserLocation.swift */; };
@@ -114,6 +118,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		940DA9712097825700AB4BF6 /* UILabel+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+Extensions.swift"; sourceTree = "<group>"; };
+		940DA9742097942000AB4BF6 /* PopupFieldCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupFieldCell.swift; sourceTree = "<group>"; };
+		940DA976209794E200AB4BF6 /* PopupTextFieldCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupTextFieldCell.swift; sourceTree = "<group>"; };
+		940DA9782097951000AB4BF6 /* PopupTextViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupTextViewCell.swift; sourceTree = "<group>"; };
 		946569012087FAE700599E55 /* MapViewController+MapViewMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MapViewController+MapViewMode.swift"; sourceTree = "<group>"; };
 		946569032087FB5000599E55 /* MapViewController+LocationSelection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MapViewController+LocationSelection.swift"; sourceTree = "<group>"; };
 		946569052087FBF700599E55 /* MapViewController+UserLocation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MapViewController+UserLocation.swift"; sourceTree = "<group>"; };
@@ -240,6 +248,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		940DA9732097939A00AB4BF6 /* Field Cells */ = {
+			isa = PBXGroup;
+			children = (
+				940DA9742097942000AB4BF6 /* PopupFieldCell.swift */,
+				940DA976209794E200AB4BF6 /* PopupTextFieldCell.swift */,
+				940DA9782097951000AB4BF6 /* PopupTextViewCell.swift */,
+			);
+			path = "Field Cells";
+			sourceTree = "<group>";
+		};
 		9419C798208A97630060D104 /* Storyboards */ = {
 			isa = PBXGroup;
 			children = (
@@ -262,6 +280,7 @@
 		94806634209147CE00A398EA /* Related Records Popups View Controller */ = {
 			isa = PBXGroup;
 			children = (
+				940DA9732097939A00AB4BF6 /* Field Cells */,
 				948066352091483600A398EA /* RelatedRecordsPopupsViewController.swift */,
 				948066372091595200A398EA /* RelatedRecordsManager.swift */,
 			);
@@ -400,6 +419,7 @@
 				94B375E8207E8E4800691F2A /* UIImage+Extensions.swift */,
 				94B375E9207E8E4800691F2A /* UIStoryboardSegue+Extensions.swift */,
 				94B375EA207E8E4800691F2A /* UIAlertController+Extensions.swift */,
+				940DA9712097825700AB4BF6 /* UILabel+Extensions.swift */,
 			);
 			path = UIKit;
 			sourceTree = "<group>";
@@ -708,6 +728,7 @@
 				94B375C2207E8D5600691F2A /* AppOfflineMapJob.swift in Sources */,
 				94B375FA207E8E4800691F2A /* UIViewController+Extensions.swift in Sources */,
 				946569022087FAE700599E55 /* MapViewController+MapViewMode.swift in Sources */,
+				940DA9752097942000AB4BF6 /* PopupFieldCell.swift in Sources */,
 				94D544C1207FC15D00ED0D04 /* AppContainerViewController+JobStatusDelegate.swift in Sources */,
 				94D544C6207FC20700ED0D04 /* MapViewController+Mask.swift in Sources */,
 				94D544C0207FC15D00ED0D04 /* AppContainerViewController+MapDelegate.swift in Sources */,
@@ -720,6 +741,7 @@
 				94D544D720852A5100ED0D04 /* CompassView.swift in Sources */,
 				94B375FB207E8E4800691F2A /* UIButton+Extensions.swift in Sources */,
 				94B375F6207E8E4800691F2A /* AGSPortal+Extensions.swift in Sources */,
+				940DA977209794E200AB4BF6 /* PopupTextFieldCell.swift in Sources */,
 				94B375CC207E8D5600691F2A /* SVRadialGradientLayer.m in Sources */,
 				94D544D620852A5100ED0D04 /* NotificationBarLabel.swift in Sources */,
 				948066362091483600A398EA /* RelatedRecordsPopupsViewController.swift in Sources */,
@@ -738,8 +760,10 @@
 				9465690A2087FC5800599E55 /* MapViewController+Observers.swift in Sources */,
 				94FA8B25207BF2CD00972C75 /* MapViewController.swift in Sources */,
 				9465691A2088028E00599E55 /* AGSRelationshipInfo+Extensions.swift in Sources */,
+				940DA9722097825700AB4BF6 /* UILabel+Extensions.swift in Sources */,
 				94B375C1207E8D5600691F2A /* AppConfiguration.swift in Sources */,
 				946569062087FBF700599E55 /* MapViewController+UserLocation.swift in Sources */,
+				940DA9792097951000AB4BF6 /* PopupTextViewCell.swift in Sources */,
 				94B375CA207E8D5600691F2A /* AppGlobals.swift in Sources */,
 				94B375C5207E8D5600691F2A /* AppNotifications.swift in Sources */,
 				946569142088023600599E55 /* AGSPopupManager+Extensions.swift in Sources */,

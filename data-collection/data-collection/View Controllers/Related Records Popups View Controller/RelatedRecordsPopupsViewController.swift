@@ -35,12 +35,6 @@ class RelatedRecordsPopupsViewController: UIViewController {
     
     weak var previousPopup: AGSPopup?
     
-    var editMode: Bool = false {
-        didSet {
-            //
-        }
-    }
-    
     var manyToOneRecords = [RelatedRecordsManager]()
     var oneToManyRecords = [RelatedRecordsManager]()
     
@@ -62,6 +56,12 @@ class RelatedRecordsPopupsViewController: UIViewController {
             self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: image, style: .done, target: self, action: #selector(RelatedRecordsPopupsViewController.exitRR(_:)))
         }
     }
+    
+//    override func viewDidAppear(_ animated: Bool) {
+//        super.viewDidAppear(animated)
+//        
+//        tableView.isEditing = true
+//    }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -129,6 +129,7 @@ extension RelatedRecordsPopupsViewController: UITableViewDelegate {
         guard !indexPathWithinAttributes(indexPath) else {
             return
         }
+        
         if let cell = tableView.cellForRow(at: indexPath) as? RelatedRecordCell {
             if let rrvc = storyboard?.instantiateViewController(withIdentifier: "RelatedRecordsPopupsViewController") as? RelatedRecordsPopupsViewController {
                 rrvc.popup = cell.popup
@@ -139,9 +140,11 @@ extension RelatedRecordsPopupsViewController: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        
         guard section == 0, loadingRelatedRecords else {
             return 0.0
         }
+        
         return 35.0
     }
     
@@ -162,6 +165,29 @@ extension RelatedRecordsPopupsViewController: UITableViewDelegate {
         activity.center = container.convert(container.center, from:container.superview)
         return container
     }
+    
+    func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCellEditingStyle {
+        return .none
+    }
+    
+//    func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
+//
+//        guard indexPath.section > 0 else {
+//            return nil
+//        }
+//
+//        let editAction = UITableViewRowAction(style: UITableViewRowActionStyle.default, title: "Edit") { [weak self] (action, indexPath) in
+//            print("Will Edit Inspection")
+//        }
+//        editAction.backgroundColor = .orange
+//
+//        let deleteAction = UITableViewRowAction(style: UITableViewRowActionStyle.default, title: "Delete") { [weak self] (action, indexPath) in
+//            print("Will Delete Inspection")
+//        }
+//        deleteAction.backgroundColor = .red
+//
+//        return [deleteAction, editAction]
+//    }
 }
 
 extension RelatedRecordsPopupsViewController: UITableViewDataSource {
@@ -303,21 +329,22 @@ class RelatedRecordCell: UITableViewCell {
             
             while attributes.count != nAttributes {
                 
-                let title = UILabel()
-                title.font = UIFont.preferredFont(forTextStyle: .footnote)
-                title.textColor = .gray
-                title.sizeToFit()
-                NSLayoutConstraint.activate([ title.heightAnchor.constraint(equalToConstant: title.font.lineHeight) ])
-                stackView.addArrangedSubview(title)
+                let titleLabel = UILabel()
+                titleLabel.font = UIFont.preferredFont(forTextStyle: .footnote)
+                titleLabel.textColor = .gray
+                titleLabel.sizeToFit()
+                NSLayoutConstraint.activate([ titleLabel.heightAnchor.constraint(equalToConstant: titleLabel.font.lineHeight) ])
+                stackView.addArrangedSubview(titleLabel)
                 
-                let value = UILabel()
-                value.numberOfLines = 0
-                value.font = UIFont.preferredFont(forTextStyle: .body)
-                value.sizeToFit()
-                NSLayoutConstraint.activate([ value.heightAnchor.constraint(greaterThanOrEqualToConstant: value.font.lineHeight) ])
-                stackView.addArrangedSubview(value)
+                let valueLabel = UILabel()
+                valueLabel.numberOfLines = 0
+                valueLabel.font = UIFont.preferredFont(forTextStyle: .body)
+                valueLabel.sizeToFit()
+                NSLayoutConstraint.activate([ valueLabel.heightAnchor.constraint(greaterThanOrEqualToConstant: valueLabel.font.lineHeight) ])
+
+                stackView.addArrangedSubview(valueLabel)
                 
-                attributes.append((title, value))
+                attributes.append((titleLabel, valueLabel))
             }
         }
         else if attributes.count > nAttributes {
@@ -340,82 +367,15 @@ class RelatedRecordCell: UITableViewCell {
         var popupIndex = 0
         
         for attribute in attributes {
-            let title = attribute.0
-            title.text = manager.labelTitle(idx: popupIndex)
-            let value = attribute.1
-            value.text = manager.nextFieldStringValue(idx: &popupIndex)
+            
+            let titleLabel = attribute.0
+            titleLabel.text = manager.labelTitle(idx: popupIndex)
+            let valueLabel = attribute.1
+            valueLabel.text = manager.nextFieldStringValue(idx: &popupIndex)
+            
+            titleLabel.considerEmptyStringForStackView()
+            valueLabel.considerEmptyStringForStackView()
         }
     }
 }
 
-final class PopupTextFieldCell: PopupFieldCell<UITextField> { }
-final class PopupTextViewCell: PopupFieldCell<UITextView> { }
-
-class PopupFieldCell<K: UIView>: UITableViewCell {
-    
-    var field: AGSPopupField! {
-        didSet {
-            updateForPopupField()
-        }
-    }
-    
-    weak var popupManager: AGSPopupManager?
-    
-    private var stackView = UIStackView()
-    private var titleLabel = UILabel()
-    private var valueLabel = UILabel()
-    private var valueEditView: K?
-    
-    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
-        
-        stackView.layoutMargins = UIEdgeInsets(top: 16, left: 16, bottom: 16, right: 16)
-        stackView.isLayoutMarginsRelativeArrangement = true
-        stackView.axis = .vertical
-        stackView.alignment = .fill
-        stackView.spacing = 6.0
-        contentView.addSubview(stackView)
-        contentView.constrainToBounds(stackView)
-        
-        titleLabel.textColor = .gray
-        titleLabel.font = UIFont.preferredFont(forTextStyle: .footnote)
-        titleLabel.sizeToFit()
-        NSLayoutConstraint.activate([ titleLabel.heightAnchor.constraint(equalToConstant: titleLabel.font.lineHeight) ])
-        stackView.addArrangedSubview(titleLabel)
-        
-        valueLabel.numberOfLines = 0
-        valueLabel.font = UIFont.preferredFont(forTextStyle: .body)
-        valueLabel.sizeToFit()
-        NSLayoutConstraint.activate([ valueLabel.heightAnchor.constraint(greaterThanOrEqualToConstant: valueLabel.font.lineHeight) ])
-        stackView.addArrangedSubview(valueLabel)
-    }
-
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        
-        // updates to subviews
-    }
-    
-    public func updateForPopupField() {
-        
-        titleLabel.text = field.label
-        valueLabel.text = popupManager?.formattedValue(for: field)
-    }
-}
-
-extension UIView {
-    
-    func constrainToBounds(_ view: UIView) {
-        view.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0),
-            trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0),
-            topAnchor.constraint(equalTo: view.topAnchor, constant: 0),
-            bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0)
-            ])
-    }
-}

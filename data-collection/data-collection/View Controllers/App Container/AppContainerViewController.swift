@@ -16,7 +16,7 @@ import UIKit
 import ArcGIS
 
 protocol DrawerViewReferencable {
-    weak var drawerView: AppContainerViewController? { get set }
+    var drawerView: AppContainerViewController? { get set }
 }
 
 class AppContainerViewController: AppContextAwareController {

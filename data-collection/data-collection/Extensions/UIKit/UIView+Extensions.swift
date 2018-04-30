@@ -49,3 +49,16 @@ extension UIView {
 //    }
 }
 
+extension UIView {
+    
+    func constrainToBounds(_ view: UIView) {
+        view.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0),
+            trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0),
+            topAnchor.constraint(equalTo: view.topAnchor, constant: 0),
+            bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0)
+            ])
+    }
+}
+

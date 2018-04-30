@@ -14,7 +14,6 @@
 
 import UIKit
 
-typealias Config = AppConfiguration
 
 class AppConfiguration {
     
@@ -32,11 +31,6 @@ class AppConfiguration {
     static let clientID: String = "AaXxKoHH3piT1fe3"
     
     static let colors = AppColors()
-}
-
-enum AppColorsTheme {
-    case light
-    case dark
 }
 
 struct AppColors {
