@@ -89,11 +89,11 @@ import ArcGIS
         isAnimating = true
         alpha = 1.0
         isHidden = false
-        UIView.animate(withDuration: 0.1, animations: { [unowned activity = self] in
-            activity.frame = activity.rect(forVisible: true)
-        }, completion: { [unowned activity = self] (completion) in
+        UIView.animate(withDuration: 0.1, animations: { [weak self] in
+            self?.setNewFrame(forVisible: true)
+        }, completion: { [weak self] (completion) in
             UIView.animate(withDuration: 0.2, delay: 0.0, options: [.autoreverse, .`repeat`], animations: {
-                activity.backgroundColor = activity.backgroundColor == activity.colorA ? activity.colorB : activity.colorA
+                self?.swapBackgroundColor()
             })
         })
     }
@@ -101,13 +101,25 @@ import ArcGIS
     public func stopProgressAnimation() {
         layer.removeAllAnimations()
         resetBackgroundColor()
-        UIView.animate(withDuration: 0.1, animations: { [unowned activity = self] in
-            activity.layer.frame = activity.rect(forVisible: false)
-        }, completion: { [unowned activity = self] (completion) in
-            activity.alpha = 0.0
-            activity.isHidden = true
-            activity.layer.removeAllAnimations()
+        UIView.animate(withDuration: 0.1, animations: { [weak self] in
+            self?.setNewFrame(forVisible: false)
+        }, completion: { [weak self] (completion) in
+            self?.removeAnimations()
         })
+    }
+    
+    private func removeAnimations() {
+        alpha = 0.0
+        isHidden = true
+        layer.removeAllAnimations()
+    }
+    
+    private func setNewFrame(forVisible: Bool) {
+        frame = rect(forVisible: forVisible)
+    }
+    
+    private func swapBackgroundColor() {
+        backgroundColor = backgroundColor == colorA ? colorB : colorA
     }
     
     private func rect(forVisible visible: Bool) -> CGRect {

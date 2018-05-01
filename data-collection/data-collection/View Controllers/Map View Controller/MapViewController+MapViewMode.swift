@@ -33,24 +33,27 @@ extension MapViewController {
             }
         }
         
-        let smallPopViewVisible: (Bool) -> UIViewAnimations = { [unowned mvc = self] (visible) in
+        let smallPopViewVisible: (Bool) -> UIViewAnimations = { [weak self] (visible) in
             return {
-                mvc.popupsContainerView.alpha = visible.asAlpha
-                mvc.smallPopupViewController?.view.alpha = visible.asAlpha
-                mvc.featureDetailViewBottomConstraint.constant = visible ? 8 : 28
+                self?.popupsContainerView.alpha = visible.asAlpha
+                self?.smallPopupViewController?.view.alpha = visible.asAlpha
+                self?.featureDetailViewBottomConstraint.constant = visible ? 8 : 28
             }
         }
         
-        let selectViewVisible: (Bool) -> UIViewAnimations = { [unowned mvc = self] (visible) in
+        let selectViewVisible: (Bool) -> UIViewAnimations = { [weak self] (visible) in
             return {
-                mvc.selectViewTopConstraint.constant = visible ? 0 : -mvc.selectView.frame.height
-                mvc.selectView.alpha = visible.asAlpha
+                self?.selectView.alpha = visible.asAlpha
+                guard let selectView = self?.selectView else {
+                    return
+                }
+                self?.selectViewTopConstraint.constant = visible ? 0 : selectView.frame.height
             }
         }
         
-        let mapViewVisible: (Bool) -> UIViewAnimations = { [unowned mvc = self] (visible) in
+        let mapViewVisible: (Bool) -> UIViewAnimations = { [weak self] (visible) in
             return {
-                mvc.mapView.alpha = visible ? 1.0 : 0.5
+                self?.mapView.alpha = visible ? 1.0 : 0.5
             }
         }
         
@@ -102,9 +105,9 @@ extension MapViewController {
             presentMapMaskViewForOfflineDownloadArea()
         }
         
-        UIView.animate(withDuration: 0.2) { [unowned mvc = self] in
+        UIView.animate(withDuration: 0.2) { [weak self] in
             for animation in animations { animation() }
-            mvc.view.layoutIfNeeded()
+            self?.view.layoutIfNeeded()
         }
     }
 }

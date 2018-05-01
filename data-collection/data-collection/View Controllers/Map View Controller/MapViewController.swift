@@ -38,8 +38,7 @@ class MapViewController: AppContextAwareController, PopupsViewControllerEmbeddab
     var observeLocationAuthorization: NSKeyValueObservation?
     var observeCurrentMap: NSKeyValueObservation?
     
-    // TODO consider identifyOperation
-    var identifyTask: AGSCancelable?
+    var identifyOperation: AGSCancelable?
     
     var currentPopup: AGSPopup? {
         didSet {

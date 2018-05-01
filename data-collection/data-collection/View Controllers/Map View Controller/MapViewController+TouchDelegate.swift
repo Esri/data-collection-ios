@@ -35,20 +35,20 @@ extension MapViewController: AGSGeoViewTouchDelegate {
 
         currentPopup?.clearSelection()
         
-        identifyTask?.cancel()
-        identifyTask = nil
+        identifyOperation?.cancel()
+        identifyOperation = nil
         
-        identifyTask = geoView.identifyLayers(atScreenPoint: screenPoint, tolerance: 8, returnPopupsOnly: true, maximumResultsPerLayer: 5) { [unowned mvc = self] (result, error) in
+        identifyOperation = geoView.identifyLayers(atScreenPoint: screenPoint, tolerance: 8, returnPopupsOnly: true, maximumResultsPerLayer: 5) { [weak self] (result, error) in
             
             if let error = error {
                 print("[Error] identifying layers", error.localizedDescription)
-                mvc.currentPopup = nil
+                self?.currentPopup = nil
                 return
             }
             
             guard let identifyResults = result else {
                 print("[Error] identifying layers, missing results")
-                mvc.currentPopup = nil
+                self?.currentPopup = nil
                 return
             }
             
@@ -56,6 +56,7 @@ extension MapViewController: AGSGeoViewTouchDelegate {
             
             for identifyResult in identifyResults {
                 
+                // TODO introduce rules
                 guard
                     let featureLayer = identifyResult.layerContent as? AGSFeatureLayer,
                     featureLayer.isIdentifiable
@@ -68,66 +69,21 @@ extension MapViewController: AGSGeoViewTouchDelegate {
             }
             
             guard let identifyResult = firstIdentifiableResult else {
-                // TODO introduce alert label message
                 print("[Error] no found feature layer meets criteria")
-                mvc.currentPopup = nil
+                self?.notificationBar.showLabel(withNotificationMessage: "Found no results.", forDuration: 2.0)
+                self?.currentPopup = nil
                 return
             }
             
             guard identifyResult.popups.count > 0 else {
-                // TODO introduce alert label message
                 print("[Identify Layer] Found no results")
-                mvc.currentPopup = nil
+                self?.notificationBar.showLabel(withNotificationMessage: "Found no results.", forDuration: 2.0)
+                self?.currentPopup = nil
                 return
             }
             
-            mvc.currentPopup = identifyResult.popups.popupNearestTo(mapPoint: mapPoint)
-            mvc.currentPopup?.select()
+            self?.currentPopup = identifyResult.popups.popupNearestTo(mapPoint: mapPoint)
+            self?.currentPopup?.select()
         }
-        
-//        guard let map = mapView.map, map.loadStatus == .loaded, newTreeUIVisible == false, let treeManager = appTreesManager else {
-//            return
-//        }
-//
-//        selectedTreeDetailViewLoading = true
-//
-//        queryForTreeAtMapPoint?.cancel()
-//        queryForTreeAtMapPoint = nil
-//
-//        // Extension bridge between AGSGeoView identifyTree(::::::) with ArcGIS runtime feature service layers.
-//        // See: AGSGeoView+Extensions.swift
-//        queryForTreeAtMapPoint = geoView.identifyTree(atScreenPoint: screenPoint, tolerance: 8, returnPopupsOnly: false, maximumResults: 8)  { [weak self] (result) in
-//
-//            treeManager.clearSelections()
-//
-//            guard let queryResult = result else {
-//                self?.selectedTree = nil
-//                self?.queryForTreeAtMapPoint = nil
-//                return
-//            }
-//
-//            guard
-//                let features = queryResult.geoElements as? [AGSArcGISFeature],
-//                let feature = features.featureNearestTo(mapPoint: mapPoint)
-//                else {
-//
-//                    self?.mapViewNotificationBarLabel.showLabel(withNotificationMessage: "Did not find a tree at that location.", forDuration: 2.0)
-//                    self?.selectedTree = nil
-//                    self?.queryForTreeAtMapPoint = nil
-//                    return
-//            }
-//
-//            treeManager.tree(forSelectedFeature: feature) { (tree) in
-//
-//                self?.selectedTree = tree
-//                self?.queryForTreeAtMapPoint = nil
-//
-//                if let point = feature.geometry as? AGSPoint, let scale = self?.mapView.mapScale {
-//
-//                    let viewpoint = AGSViewpoint(center: point, scale: scale)
-//                    self?.mapView.setViewpoint(viewpoint, duration: 1.2, completion: nil)
-//                }
-//            }
-//        }
     }
 }
