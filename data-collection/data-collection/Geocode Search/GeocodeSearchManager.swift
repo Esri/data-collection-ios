@@ -33,7 +33,9 @@ class ReverseGeocoderManager: AGSLoadableBase {
     }()
     
     override func doCancelLoading() {
-        loadDidFinishWithError(NSUserCancelledError as? Error)
+        
+        onlineLocatorTask.cancelLoad()
+        offlineLocatorTask.cancelLoad()
     }
     
     override func doStartLoading(_ retrying: Bool) {
@@ -47,7 +49,6 @@ class ReverseGeocoderManager: AGSLoadableBase {
             if error != nil {
                 print("[Error] Online Locator Task error", error!.localizedDescription)
                 loadError = error
-                return
             }
             dispatchGroup.leave()
         }
@@ -56,7 +57,6 @@ class ReverseGeocoderManager: AGSLoadableBase {
             if error != nil {
                 print("[Error] Offline Locator Task error", error!.localizedDescription)
                 loadError = error
-                return
             }
             dispatchGroup.leave()
         }
@@ -67,7 +67,7 @@ class ReverseGeocoderManager: AGSLoadableBase {
     }
     
     internal func reverseGeocode(forPoint point: AGSPoint, completion: @escaping (String?)->Void) {
-        
+        // TODO: consider calling load
         guard loadStatus == .loaded else {
             completion(nil)
             return
@@ -82,7 +82,13 @@ class ReverseGeocoderManager: AGSLoadableBase {
             locatorTask = offlineLocatorTask
         }
         
-        locatorTask!.reverseGeocode(withLocation: point) { (geoCodeResults: [AGSGeocodeResult]?, error: Error?) in
+        guard let selectedLocatorTask = locatorTask else {
+            completion(nil)
+            return
+        }
+        
+        selectedLocatorTask.reverseGeocode(withLocation: point) { (geoCodeResults: [AGSGeocodeResult]?, error: Error?) in
+
             guard error == nil else {
                 print("[Error] reverse geocoder error", error!.localizedDescription)
                 completion(nil)

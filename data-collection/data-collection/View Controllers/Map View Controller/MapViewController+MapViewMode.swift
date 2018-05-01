@@ -15,6 +15,7 @@
 import UIKit
 
 enum MapViewMode {
+    // TODO consider backticks
     case `default`
     case disabled
     case selectedFeature

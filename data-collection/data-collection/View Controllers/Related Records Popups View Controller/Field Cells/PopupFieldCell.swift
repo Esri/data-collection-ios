@@ -41,14 +41,15 @@ class PopupFieldCell<K: UIView>: UITableViewCell {
         contentView.addSubview(stackView)
         contentView.constrainToBounds(stackView)
         
-        titleLabel.textColor = .gray
-        titleLabel.font = UIFont.preferredFont(forTextStyle: .footnote)
+        titleLabel.textColor = AppConfiguration.appColors.tableCellTitle
+        titleLabel.font = AppConfiguration.appFonts.tableCellTitle
         titleLabel.sizeToFit()
         NSLayoutConstraint.activate([ titleLabel.heightAnchor.constraint(equalToConstant: titleLabel.font.lineHeight) ])
         stackView.addArrangedSubview(titleLabel)
         
+        valueLabel.textColor = AppConfiguration.appColors.tableCellValue
+        valueLabel.font = AppConfiguration.appFonts.tableCellValue
         valueLabel.numberOfLines = 0
-        valueLabel.font = UIFont.preferredFont(forTextStyle: .body)
         valueLabel.sizeToFit()
         NSLayoutConstraint.activate([ valueLabel.heightAnchor.constraint(greaterThanOrEqualToConstant: valueLabel.font.lineHeight) ])
         stackView.addArrangedSubview(valueLabel)

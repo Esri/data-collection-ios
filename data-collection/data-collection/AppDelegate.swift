@@ -93,6 +93,7 @@ extension AppDelegate {
 
 extension AppDelegate {
     
+    // TODO conform to AppColors and AppFonts
     static func setAppAppearance() {
         UINavigationBar.appearance().tintColor = .white
         UINavigationBar.appearance().titleTextAttributes = [.foregroundColor : UIColor.white]

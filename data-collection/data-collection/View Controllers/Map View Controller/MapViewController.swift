@@ -38,6 +38,7 @@ class MapViewController: AppContextAwareController, PopupsViewControllerEmbeddab
     var observeLocationAuthorization: NSKeyValueObservation?
     var observeCurrentMap: NSKeyValueObservation?
     
+    // TODO consider identifyOperation
     var identifyTask: AGSCancelable?
     
     var currentPopup: AGSPopup? {
@@ -139,9 +140,9 @@ class MapViewController: AppContextAwareController, PopupsViewControllerEmbeddab
         super.appWorkModeDidChange()
         
         DispatchQueue.main.async { [weak self] in
-            self?.activityBarView.colorA = (appContext.workMode == .online) ? AppColors.primaryLight : AppColors.offlineLight
-            self?.activityBarView.colorB = (appContext.workMode == .online) ? AppColors.primaryDark : AppColors.offlineDark
-            self?.notificationBar.backgroundColor = (appContext.workMode == .online) ? AppColors.offlineLight : AppColors.offlineDark
+            self?.activityBarView.colorA = (appContext.workMode == .online) ? AppConfiguration.appColors.primary.lighter : AppConfiguration.appColors.offlineLight
+            self?.activityBarView.colorB = (appContext.workMode == .online) ? AppConfiguration.appColors.primary.darker : AppConfiguration.appColors.offlineDark
+            self?.notificationBar.backgroundColor = (appContext.workMode == .online) ? AppConfiguration.appColors.primary.lighter : AppConfiguration.appColors.offlineDark
         }
     }
     

@@ -18,12 +18,9 @@ import UIKit
 extension UILabel {
     
     func considerEmptyStringForStackView() {
-        guard let labelText = text else {
+        guard let labelText = text, !labelText.isEmpty else {
             text = " "
             return
-        }
-        if labelText == "" {
-            text = " "
         }
     }
 }

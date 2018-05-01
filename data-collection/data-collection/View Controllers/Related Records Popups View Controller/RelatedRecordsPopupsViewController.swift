@@ -40,6 +40,30 @@ class RelatedRecordsPopupsViewController: UIViewController {
     
     var loadingRelatedRecords = false
     
+    func loadRelatedRecordsIntoTableView() {
+        
+        // TODO make swifty ?
+        
+        var rows = [IndexPath]()
+        for i in 0..<manyToOneRecords.count {
+            rows.append( IndexPath(row: i+popupManager.displayFields.count, section: 0) )
+        }
+        
+        for i in 0..<oneToManyRecords.count {
+            let manager = oneToManyRecords[i]
+            for j in 0..<manager.popups.count {
+                rows.append( IndexPath(row: j, section: i+1) )
+            }
+        }
+        
+        let sections = IndexSet(integersIn: 1...oneToManyRecords.count)
+        
+        tableView.beginUpdates()
+        tableView.insertSections(sections, with: UITableViewRowAnimation.top)
+        tableView.insertRows(at: rows, with: UITableViewRowAnimation.top)
+        tableView.endUpdates()
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -73,6 +97,7 @@ class RelatedRecordsPopupsViewController: UIViewController {
         var preloadedRelatedRecords = [RelatedRecordsManager]()
         if let feature = popup.geoElement as? AGSArcGISFeature, let relatedRecordsInfos = feature.relatedRecordsInfos, let map = appContext.currentMap {
             for info in relatedRecordsInfos {
+                // TODO work this rule into AppRules
                 if map.isPopupEnabledFor(relationshipInfo: info), let relatedRecord = RelatedRecordsManager(relationshipInfo: info, feature: feature) {
                     preloadedRelatedRecords.append(relatedRecord)
                 }
@@ -88,7 +113,7 @@ class RelatedRecordsPopupsViewController: UIViewController {
                 self?.oneToManyRecords = preloadedRelatedRecords.oneToManyLoaded
                 self?.manyToOneRecords = preloadedRelatedRecords.manyToOneLoaded
                 self?.loadingRelatedRecords = false
-                self?.tableView.reloadData()
+                self?.loadRelatedRecordsIntoTableView()
             }
         }
         
@@ -153,7 +178,7 @@ extension RelatedRecordsPopupsViewController: UITableViewDelegate {
         guard section == 0, loadingRelatedRecords else {
             return nil
         }
-        print("~")
+
         let containerHeight: CGFloat = 35.0
         let container = UIView(frame: CGRect(x: 0.0, y: 0.0, width: tableView.frame.size.width, height: containerHeight))
         container.backgroundColor = .clear
@@ -264,7 +289,6 @@ class RelatedRecordCell: UITableViewCell {
     
     weak var relationshipInfo: AGSRelationshipInfo?
     
-    // TODO build repro case
     public var popup: AGSPopup? {
         didSet {
             guard let feature = popup?.geoElement as? AGSArcGISFeature else {
@@ -357,6 +381,8 @@ class RelatedRecordCell: UITableViewCell {
                 
                 let last = attributes.removeLast()
                 
+                // TODO consider how removing Auto Layout constraints
+                
                 stackView.removeArrangedSubview(last.0)
                 last.0.removeFromSuperview()
                 stackView.removeArrangedSubview(last.1)
@@ -373,6 +399,7 @@ class RelatedRecordCell: UITableViewCell {
             let valueLabel = attribute.1
             valueLabel.text = manager.nextFieldStringValue(idx: &popupIndex)
             
+            // TODO workout constraints issue
             titleLabel.considerEmptyStringForStackView()
             valueLabel.considerEmptyStringForStackView()
         }

@@ -57,7 +57,7 @@ extension AGSServiceFeatureTable {
         }
     }
     
-    func queryOneToManyRelatedFeatures(`for` feature: AGSArcGISFeature, withRelationship relationship: AGSRelationshipInfo, queryFeatureFields: AGSQueryFeatureFields = .loadAll, completion: @escaping ([AGSArcGISFeature]?, Error?) -> Void) {
+    func queryOneToManyRelatedFeatures(`for` feature: AGSArcGISFeature, withRelationship relationship:  AGSRelationshipInfo, queryFeatureFields: AGSQueryFeatureFields = .loadAll, completion: @escaping ([AGSArcGISFeature]?, Error?) -> Void) {
         
         queryRelatedFeatures(for: feature, withRelationships: [relationship], queryFeatureFields: queryFeatureFields) { (results, error) in
             

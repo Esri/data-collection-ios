@@ -18,7 +18,7 @@ import ArcGIS
 extension AGSArcGISFeature {
     
     var asPopup: AGSPopup? {
-        guard let popupDefinition = featureTable?.popupDefinition else {
+        guard let featureTable = featureTable, featureTable.isPopupActuallyEnabled, let popupDefinition = featureTable.popupDefinition else {
             return nil
         }
         return AGSPopup(geoElement: self, popupDefinition: popupDefinition)

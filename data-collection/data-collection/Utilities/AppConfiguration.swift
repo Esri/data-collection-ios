@@ -30,18 +30,45 @@ class AppConfiguration {
     static let licenseKey: String = "fake_license_key"
     static let clientID: String = "AaXxKoHH3piT1fe3"
     
-    static let colors = AppColors()
+    static let config = AppConfiguration()
+    
+    // Colors
+    static var appColors: AppColors {
+        return config.colors
+    }
+    
+    private let colors = AppColors()
+    
+    // Fonts
+    static var appFonts: AppFonts {
+        return config.fonts
+    }
+    
+    private let fonts = AppFonts()
 }
 
 struct AppColors {
     
-    static var primary: UIColor = UIColor(red:0.66, green:0.81, blue:0.40, alpha:1.00)
-    static var primaryLight: UIColor = { return primary.lighter }()
-    static var primaryDark: UIColor = { return primary.darker }()
+    // UIAppearance conformance
     
-    static var offline: UIColor = .darkGray
-    static var offlineLight: UIColor = .gray
-    static var offlineDark: UIColor = .black
+    let primary: UIColor = UIColor(red:0.66, green:0.81, blue:0.40, alpha:1.00)
+//    let primaryLight: UIColor = { return primary.lighter }()
+//    let primaryDark: UIColor = { return primary.darker }()
     
-    static var accent: UIColor = UIColor(red:0.93, green:0.54, blue:0.01, alpha:1.00)
+    let offline: UIColor = .darkGray
+    let offlineLight: UIColor = .gray
+    let offlineDark: UIColor = .black
+    
+    let accent: UIColor = UIColor(red:0.93, green:0.54, blue:0.01, alpha:1.00)
+    
+    let tableCellTitle: UIColor = .gray
+    let tableCellValue: UIColor = .black
+}
+
+struct AppFonts {
+    
+    // TODO app configuration fonts .. UIAppearance
+    
+    let tableCellTitle: UIFont = UIFont.preferredFont(forTextStyle: .footnote)
+    let tableCellValue: UIFont = UIFont.preferredFont(forTextStyle: .body)
 }
