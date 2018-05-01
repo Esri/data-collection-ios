@@ -11,6 +11,7 @@
 		940DA9752097942000AB4BF6 /* PopupFieldCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 940DA9742097942000AB4BF6 /* PopupFieldCell.swift */; };
 		940DA977209794E200AB4BF6 /* PopupTextFieldCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 940DA976209794E200AB4BF6 /* PopupTextFieldCell.swift */; };
 		940DA9792097951000AB4BF6 /* PopupTextViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 940DA9782097951000AB4BF6 /* PopupTextViewCell.swift */; };
+		940DA97B2098E1C600AB4BF6 /* AGSArcGISFeatureTable+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 940DA97A2098E1C600AB4BF6 /* AGSArcGISFeatureTable+Extensions.swift */; };
 		946569022087FAE700599E55 /* MapViewController+MapViewMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 946569012087FAE700599E55 /* MapViewController+MapViewMode.swift */; };
 		946569042087FB5000599E55 /* MapViewController+LocationSelection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 946569032087FB5000599E55 /* MapViewController+LocationSelection.swift */; };
 		946569062087FBF700599E55 /* MapViewController+UserLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 946569052087FBF700599E55 /* MapViewController+UserLocation.swift */; };
@@ -24,7 +25,6 @@
 		9465691A2088028E00599E55 /* AGSRelationshipInfo+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 946569192088028E00599E55 /* AGSRelationshipInfo+Extensions.swift */; };
 		9465691C208802AE00599E55 /* AGSFeatureLayer+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9465691B208802AE00599E55 /* AGSFeatureLayer+Extensions.swift */; };
 		9465691E208802CE00599E55 /* AGSFeatureTable+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9465691D208802CE00599E55 /* AGSFeatureTable+Extensions.swift */; };
-		94656920208802EE00599E55 /* AGSServiceFeatureTable+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9465691F208802EE00599E55 /* AGSServiceFeatureTable+Extensions.swift */; };
 		946569232088036C00599E55 /* PopupsViewControllerEmbeddable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 946569222088036C00599E55 /* PopupsViewControllerEmbeddable.swift */; };
 		94656925208803AE00599E55 /* SmallPopupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94656924208803AE00599E55 /* SmallPopupViewController.swift */; };
 		946569272088042400599E55 /* SmallPopup.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 946569262088042400599E55 /* SmallPopup.storyboard */; };
@@ -122,6 +122,7 @@
 		940DA9742097942000AB4BF6 /* PopupFieldCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupFieldCell.swift; sourceTree = "<group>"; };
 		940DA976209794E200AB4BF6 /* PopupTextFieldCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupTextFieldCell.swift; sourceTree = "<group>"; };
 		940DA9782097951000AB4BF6 /* PopupTextViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupTextViewCell.swift; sourceTree = "<group>"; };
+		940DA97A2098E1C600AB4BF6 /* AGSArcGISFeatureTable+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AGSArcGISFeatureTable+Extensions.swift"; sourceTree = "<group>"; };
 		946569012087FAE700599E55 /* MapViewController+MapViewMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MapViewController+MapViewMode.swift"; sourceTree = "<group>"; };
 		946569032087FB5000599E55 /* MapViewController+LocationSelection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MapViewController+LocationSelection.swift"; sourceTree = "<group>"; };
 		946569052087FBF700599E55 /* MapViewController+UserLocation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MapViewController+UserLocation.swift"; sourceTree = "<group>"; };
@@ -135,7 +136,6 @@
 		946569192088028E00599E55 /* AGSRelationshipInfo+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AGSRelationshipInfo+Extensions.swift"; sourceTree = "<group>"; };
 		9465691B208802AE00599E55 /* AGSFeatureLayer+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AGSFeatureLayer+Extensions.swift"; sourceTree = "<group>"; };
 		9465691D208802CE00599E55 /* AGSFeatureTable+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AGSFeatureTable+Extensions.swift"; sourceTree = "<group>"; };
-		9465691F208802EE00599E55 /* AGSServiceFeatureTable+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AGSServiceFeatureTable+Extensions.swift"; sourceTree = "<group>"; };
 		946569222088036C00599E55 /* PopupsViewControllerEmbeddable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupsViewControllerEmbeddable.swift; sourceTree = "<group>"; };
 		94656924208803AE00599E55 /* SmallPopupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmallPopupViewController.swift; sourceTree = "<group>"; };
 		946569262088042400599E55 /* SmallPopup.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = SmallPopup.storyboard; sourceTree = "<group>"; };
@@ -403,7 +403,7 @@
 				946569192088028E00599E55 /* AGSRelationshipInfo+Extensions.swift */,
 				9465691B208802AE00599E55 /* AGSFeatureLayer+Extensions.swift */,
 				9465691D208802CE00599E55 /* AGSFeatureTable+Extensions.swift */,
-				9465691F208802EE00599E55 /* AGSServiceFeatureTable+Extensions.swift */,
+				940DA97A2098E1C600AB4BF6 /* AGSArcGISFeatureTable+Extensions.swift */,
 				94BB89BD2092388A006D829F /* AGSMap+Extensions.swift */,
 			);
 			path = ArcGIS;
@@ -721,9 +721,9 @@
 				94B375D7207E8DD600691F2A /* EditType.swift in Sources */,
 				948066382091595200A398EA /* RelatedRecordsManager.swift in Sources */,
 				94B375CB207E8D5600691F2A /* NetworkReachabilityManager.swift in Sources */,
-				94656920208802EE00599E55 /* AGSServiceFeatureTable+Extensions.swift in Sources */,
 				94B3760C207EAE4700691F2A /* AppDelegate.swift in Sources */,
 				94656925208803AE00599E55 /* SmallPopupViewController.swift in Sources */,
+				940DA97B2098E1C600AB4BF6 /* AGSArcGISFeatureTable+Extensions.swift in Sources */,
 				94D544D820852A5100ED0D04 /* ShrinkingView.swift in Sources */,
 				94B375C2207E8D5600691F2A /* AppOfflineMapJob.swift in Sources */,
 				94B375FA207E8E4800691F2A /* UIViewController+Extensions.swift in Sources */,

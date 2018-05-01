@@ -113,7 +113,10 @@ class RelatedRecordsPopupsViewController: UIViewController {
                 self?.oneToManyRecords = preloadedRelatedRecords.oneToManyLoaded
                 self?.manyToOneRecords = preloadedRelatedRecords.manyToOneLoaded
                 self?.loadingRelatedRecords = false
-                self?.loadRelatedRecordsIntoTableView()
+                self?.tableView.reloadData()
+                
+                // TODO : make this work
+//                self?.loadRelatedRecordsIntoTableView()
             }
         }
         

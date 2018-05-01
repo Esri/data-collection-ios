@@ -36,7 +36,7 @@ extension AGSArcGISFeature {
     }
     
     var relatedRecordsInfos: [AGSRelationshipInfo]? {
-        guard let table = featureTable as? AGSServiceFeatureTable, let layerInfo = table.layerInfo else {
+        guard let table = featureTable as? AGSArcGISFeatureTable, let layerInfo = table.layerInfo else {
             return nil
         }
         return layerInfo.relationshipInfos.filter({ (info) -> Bool in info.cardinality == .oneToMany })
@@ -47,6 +47,37 @@ extension AGSArcGISFeature {
             return 0
         }
         return infos.count
+    }
+}
+
+extension Collection where Iterator.Element == AGSArcGISFeature {
+    
+    var asPopups: [AGSPopup]? {
+        
+        guard let first = first, let firstFeatureTable = first.featureTable, firstFeatureTable.isPopupActuallyEnabled else {
+            return nil
+        }
+        
+        var popups = [AGSPopup]()
+
+        for feature in self {
+            
+            guard let featureTable = feature.featureTable else {
+                return nil
+            }
+            
+            guard featureTable == firstFeatureTable else {
+                // TODO Note that all features must be of the same table
+                print("NOT OF THE SAME TABLE")
+                return nil
+            }
+            
+            if let popup = feature.asPopup {
+                popups.append(popup)
+            }
+        }
+
+        return popups
     }
 }
 

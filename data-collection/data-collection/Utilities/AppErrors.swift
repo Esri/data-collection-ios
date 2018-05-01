@@ -83,14 +83,17 @@ enum RelatedRecordsManagerError: Error, CustomNSError, LocalizedError {
     }
 }
 
-enum ServiceFeatureTableError: Error, CustomNSError, LocalizedError {
+enum FeatureTableError: Error, CustomNSError, LocalizedError {
     
     case missingFeature
     case missingFeatureTable
     case missingRelationshipInfos
     case multipleQueriesFailure
     case queryResultsMissingFeatures
-    
+    case queryResultsMissingPopups
+    case isNotArcGISFeatureTable
+    case isNotPopupEnabled
+
     var errorCode: Int {
         switch self {
         case .missingFeature:
@@ -103,6 +106,12 @@ enum ServiceFeatureTableError: Error, CustomNSError, LocalizedError {
             return 3004
         case .queryResultsMissingFeatures:
             return 3005
+        case .queryResultsMissingPopups:
+            return 3006
+        case .isNotArcGISFeatureTable:
+            return 3007
+        case .isNotPopupEnabled:
+            return 3008
         }
     }
     
@@ -118,6 +127,12 @@ enum ServiceFeatureTableError: Error, CustomNSError, LocalizedError {
             return [NSLocalizedDescriptionKey: "Attempt to query table multiple times failed."]
         case .queryResultsMissingFeatures:
             return [NSLocalizedDescriptionKey: "Query result is missing features."]
+        case .queryResultsMissingPopups:
+            return [NSLocalizedDescriptionKey: "Query result is missing popups."]
+        case .isNotArcGISFeatureTable:
+            return [NSLocalizedDescriptionKey: "Feature table is not of type AGSServiceFeatureTable or AGSGeodatabaseFeatureTable."]
+        case .isNotPopupEnabled:
+            return [NSLocalizedDescriptionKey: "Feature table is not popup enabled."]
         }
     }
     

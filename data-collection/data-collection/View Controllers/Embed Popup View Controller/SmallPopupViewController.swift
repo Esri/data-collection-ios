@@ -28,11 +28,7 @@ class SmallPopupViewController: UIViewController {
         }
     }
     
-    private var popupManager: AGSPopupManager? /*{
-        didSet {
-            popuplateViewWithBestContent()
-        }
-    }*/
+    private var popupManager: AGSPopupManager?
     
     /**
      The small popup view controller (spvc) is concerned primarly with displaying content to do with related records.
@@ -157,18 +153,7 @@ class SmallPopupViewController: UIViewController {
             relationships.append(oneToMany)
         }
         
-        // Online Table
-        if let serviceFeatureTable = featureTable as? AGSServiceFeatureTable {
-            serviceFeatureTable.queryRelatedFeatures(for: feature, withRelationships: relationships, queryFeatureFields: .loadAll, completion: queryCompletion)
-        }
-            // Offline Table :: TODO Check
-        else if let geodatabaseFeatureTable = featureTable as? AGSGeodatabaseFeatureTable {
-            geodatabaseFeatureTable.queryRelatedFeatures(for: feature, completion: queryCompletion)
-        }
-            // Unknown
-        else {
-            clearLabels()
-        }
+        featureTable.queryRelatedFeatures(forFeature: feature, relationships: relationships, completion: queryCompletion)
     }
     
     private func clearLabels() {

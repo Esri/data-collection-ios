@@ -68,12 +68,14 @@ extension MapViewController: AGSGeoViewTouchDelegate {
             }
             
             guard let identifyResult = firstIdentifiableResult else {
+                // TODO introduce alert label message
                 print("[Error] no found feature layer meets criteria")
                 mvc.currentPopup = nil
                 return
             }
             
             guard identifyResult.popups.count > 0 else {
+                // TODO introduce alert label message
                 print("[Identify Layer] Found no results")
                 mvc.currentPopup = nil
                 return

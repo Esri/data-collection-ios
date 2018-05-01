@@ -69,32 +69,37 @@ class RelatedRecordsManager: AGSLoadableBase {
         
         popups.removeAll()
         
-        guard let feature = self.feature else { loadDidFinishWithError(ServiceFeatureTableError.missingFeature); return }
+        guard let feature = self.feature else {
+            loadDidFinishWithError(FeatureTableError.missingFeature)
+            return
+        }
         
-        guard let featureTable = feature.featureTable as? AGSServiceFeatureTable else { loadDidFinishWithError(ServiceFeatureTableError.missingFeatureTable); return }
+        guard let featureTable = feature.featureTable as? AGSArcGISFeatureTable else {
+            loadDidFinishWithError(FeatureTableError.missingFeatureTable)
+            return
+        }
         
-        guard let relationshipInfo = self.relationshipInfo else { loadDidFinishWithError(ServiceFeatureTableError.missingRelationshipInfos); return }
+        guard let info = self.relationshipInfo else {
+            loadDidFinishWithError(FeatureTableError.missingRelationshipInfos)
+            return
+        }
         
-        featureTable.queryOneToManyRelatedFeatures(for: feature, withRelationship: relationshipInfo, queryFeatureFields: .loadAll, completion: { [weak self] (features, error) in
+        featureTable.queryRelatedFeaturesAsPopups(forFeature: feature, relationship: info) { [weak self] (popups, error) in
             
             guard error == nil else {
                 self?.loadDidFinishWithError(error!)
                 return
             }
             
-            guard let features = features else {
-                self?.loadDidFinishWithError(ServiceFeatureTableError.queryResultsMissingFeatures)
+            guard let popups = popups else {
+                self?.loadDidFinishWithError(FeatureTableError.queryResultsMissingPopups)
                 return
             }
             
-            for feature in features {
-                if let popup = feature.asPopup {
-                    self?.popups.append(popup)
-                }
-            }
+            self?.popups = popups
             
             self?.loadDidFinishWithError(nil)
-        })
+        }
     }
 }
 
