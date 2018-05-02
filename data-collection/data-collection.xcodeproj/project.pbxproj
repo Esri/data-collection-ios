@@ -12,6 +12,9 @@
 		940DA977209794E200AB4BF6 /* PopupTextFieldCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 940DA976209794E200AB4BF6 /* PopupTextFieldCell.swift */; };
 		940DA9792097951000AB4BF6 /* PopupTextViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 940DA9782097951000AB4BF6 /* PopupTextViewCell.swift */; };
 		940DA97B2098E1C600AB4BF6 /* AGSArcGISFeatureTable+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 940DA97A2098E1C600AB4BF6 /* AGSArcGISFeatureTable+Extensions.swift */; };
+		9412D213209937950031F9EB /* RelatedRecordCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9412D212209937950031F9EB /* RelatedRecordCell.swift */; };
+		9412D215209937E50031F9EB /* RelatedRecordsPopupsViewController+Delegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9412D214209937E50031F9EB /* RelatedRecordsPopupsViewController+Delegate.swift */; };
+		9412D2172099382C0031F9EB /* RelatedRecordsPopupsViewController+DataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9412D2162099382C0031F9EB /* RelatedRecordsPopupsViewController+DataSource.swift */; };
 		946569022087FAE700599E55 /* MapViewController+MapViewMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 946569012087FAE700599E55 /* MapViewController+MapViewMode.swift */; };
 		946569042087FB5000599E55 /* MapViewController+LocationSelection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 946569032087FB5000599E55 /* MapViewController+LocationSelection.swift */; };
 		946569062087FBF700599E55 /* MapViewController+UserLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 946569052087FBF700599E55 /* MapViewController+UserLocation.swift */; };
@@ -38,7 +41,7 @@
 		94B375BF207E8D5600691F2A /* AddressLocator.loc in Resources */ = {isa = PBXBuildFile; fileRef = 94B3759B207E8D5600691F2A /* AddressLocator.loc */; };
 		94B375C0207E8D5600691F2A /* AppFiles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94B3759E207E8D5600691F2A /* AppFiles.swift */; };
 		94B375C1207E8D5600691F2A /* AppConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94B3759F207E8D5600691F2A /* AppConfiguration.swift */; };
-		94B375C2207E8D5600691F2A /* AppOfflineMapJob.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94B375A0207E8D5600691F2A /* AppOfflineMapJob.swift */; };
+		94B375C2207E8D5600691F2A /* AppOfflineMapJobConstruct.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94B375A0207E8D5600691F2A /* AppOfflineMapJobConstruct.swift */; };
 		94B375C3207E8D5600691F2A /* AppDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94B375A1207E8D5600691F2A /* AppDefaults.swift */; };
 		94B375C4207E8D5600691F2A /* AppErrors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94B375A2207E8D5600691F2A /* AppErrors.swift */; };
 		94B375C5207E8D5600691F2A /* AppNotifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94B375A3207E8D5600691F2A /* AppNotifications.swift */; };
@@ -123,6 +126,9 @@
 		940DA976209794E200AB4BF6 /* PopupTextFieldCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupTextFieldCell.swift; sourceTree = "<group>"; };
 		940DA9782097951000AB4BF6 /* PopupTextViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupTextViewCell.swift; sourceTree = "<group>"; };
 		940DA97A2098E1C600AB4BF6 /* AGSArcGISFeatureTable+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AGSArcGISFeatureTable+Extensions.swift"; sourceTree = "<group>"; };
+		9412D212209937950031F9EB /* RelatedRecordCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RelatedRecordCell.swift; sourceTree = "<group>"; };
+		9412D214209937E50031F9EB /* RelatedRecordsPopupsViewController+Delegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RelatedRecordsPopupsViewController+Delegate.swift"; sourceTree = "<group>"; };
+		9412D2162099382C0031F9EB /* RelatedRecordsPopupsViewController+DataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RelatedRecordsPopupsViewController+DataSource.swift"; sourceTree = "<group>"; };
 		946569012087FAE700599E55 /* MapViewController+MapViewMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MapViewController+MapViewMode.swift"; sourceTree = "<group>"; };
 		946569032087FB5000599E55 /* MapViewController+LocationSelection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MapViewController+LocationSelection.swift"; sourceTree = "<group>"; };
 		946569052087FBF700599E55 /* MapViewController+UserLocation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MapViewController+UserLocation.swift"; sourceTree = "<group>"; };
@@ -149,7 +155,7 @@
 		94B3759B207E8D5600691F2A /* AddressLocator.loc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = AddressLocator.loc; sourceTree = "<group>"; };
 		94B3759E207E8D5600691F2A /* AppFiles.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppFiles.swift; sourceTree = "<group>"; };
 		94B3759F207E8D5600691F2A /* AppConfiguration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppConfiguration.swift; sourceTree = "<group>"; };
-		94B375A0207E8D5600691F2A /* AppOfflineMapJob.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppOfflineMapJob.swift; sourceTree = "<group>"; };
+		94B375A0207E8D5600691F2A /* AppOfflineMapJobConstruct.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppOfflineMapJobConstruct.swift; sourceTree = "<group>"; };
 		94B375A1207E8D5600691F2A /* AppDefaults.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDefaults.swift; sourceTree = "<group>"; };
 		94B375A2207E8D5600691F2A /* AppErrors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppErrors.swift; sourceTree = "<group>"; };
 		94B375A3207E8D5600691F2A /* AppNotifications.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppNotifications.swift; sourceTree = "<group>"; };
@@ -258,6 +264,15 @@
 			path = "Field Cells";
 			sourceTree = "<group>";
 		};
+		9412D211209937760031F9EB /* Related Records Cells */ = {
+			isa = PBXGroup;
+			children = (
+				948066372091595200A398EA /* RelatedRecordsManager.swift */,
+				9412D212209937950031F9EB /* RelatedRecordCell.swift */,
+			);
+			path = "Related Records Cells";
+			sourceTree = "<group>";
+		};
 		9419C798208A97630060D104 /* Storyboards */ = {
 			isa = PBXGroup;
 			children = (
@@ -280,9 +295,11 @@
 		94806634209147CE00A398EA /* Related Records Popups View Controller */ = {
 			isa = PBXGroup;
 			children = (
+				9412D211209937760031F9EB /* Related Records Cells */,
 				940DA9732097939A00AB4BF6 /* Field Cells */,
 				948066352091483600A398EA /* RelatedRecordsPopupsViewController.swift */,
-				948066372091595200A398EA /* RelatedRecordsManager.swift */,
+				9412D214209937E50031F9EB /* RelatedRecordsPopupsViewController+Delegate.swift */,
+				9412D2162099382C0031F9EB /* RelatedRecordsPopupsViewController+DataSource.swift */,
 			);
 			path = "Related Records Popups View Controller";
 			sourceTree = "<group>";
@@ -303,7 +320,7 @@
 			children = (
 				94B3759E207E8D5600691F2A /* AppFiles.swift */,
 				94B3759F207E8D5600691F2A /* AppConfiguration.swift */,
-				94B375A0207E8D5600691F2A /* AppOfflineMapJob.swift */,
+				94B375A0207E8D5600691F2A /* AppOfflineMapJobConstruct.swift */,
 				94B375A1207E8D5600691F2A /* AppDefaults.swift */,
 				94B375A2207E8D5600691F2A /* AppErrors.swift */,
 				94B375A3207E8D5600691F2A /* AppNotifications.swift */,
@@ -725,7 +742,7 @@
 				94656925208803AE00599E55 /* SmallPopupViewController.swift in Sources */,
 				940DA97B2098E1C600AB4BF6 /* AGSArcGISFeatureTable+Extensions.swift in Sources */,
 				94D544D820852A5100ED0D04 /* ShrinkingView.swift in Sources */,
-				94B375C2207E8D5600691F2A /* AppOfflineMapJob.swift in Sources */,
+				94B375C2207E8D5600691F2A /* AppOfflineMapJobConstruct.swift in Sources */,
 				94B375FA207E8E4800691F2A /* UIViewController+Extensions.swift in Sources */,
 				946569022087FAE700599E55 /* MapViewController+MapViewMode.swift in Sources */,
 				940DA9752097942000AB4BF6 /* PopupFieldCell.swift in Sources */,
@@ -758,6 +775,7 @@
 				94B37600207E8E4800691F2A /* UIAlertController+Extensions.swift in Sources */,
 				946569042087FB5000599E55 /* MapViewController+LocationSelection.swift in Sources */,
 				9465690A2087FC5800599E55 /* MapViewController+Observers.swift in Sources */,
+				9412D213209937950031F9EB /* RelatedRecordCell.swift in Sources */,
 				94FA8B25207BF2CD00972C75 /* MapViewController.swift in Sources */,
 				9465691A2088028E00599E55 /* AGSRelationshipInfo+Extensions.swift in Sources */,
 				940DA9722097825700AB4BF6 /* UILabel+Extensions.swift in Sources */,
@@ -767,6 +785,7 @@
 				94B375CA207E8D5600691F2A /* AppGlobals.swift in Sources */,
 				94B375C5207E8D5600691F2A /* AppNotifications.swift in Sources */,
 				946569142088023600599E55 /* AGSPopupManager+Extensions.swift in Sources */,
+				9412D2172099382C0031F9EB /* RelatedRecordsPopupsViewController+DataSource.swift in Sources */,
 				94BB89BE2092388A006D829F /* AGSMap+Extensions.swift in Sources */,
 				9465690C2087FCCE00599E55 /* MapViewController+Setup.swift in Sources */,
 				94B375FC207E8E4800691F2A /* UIView+Extensions.swift in Sources */,
@@ -781,6 +800,7 @@
 				9465691E208802CE00599E55 /* AGSFeatureTable+Extensions.swift in Sources */,
 				946569232088036C00599E55 /* PopupsViewControllerEmbeddable.swift in Sources */,
 				94B375F3207E8E4800691F2A /* AGSQueryParameter+Extensions.swift in Sources */,
+				9412D215209937E50031F9EB /* RelatedRecordsPopupsViewController+Delegate.swift in Sources */,
 				9465691C208802AE00599E55 /* AGSFeatureLayer+Extensions.swift in Sources */,
 				94B375C8207E8D5600691F2A /* AppContext+WorkMode.swift in Sources */,
 				94D544BD207FC15D00ED0D04 /* DrawerViewController.swift in Sources */,

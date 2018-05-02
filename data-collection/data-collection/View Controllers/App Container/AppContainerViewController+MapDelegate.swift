@@ -29,8 +29,8 @@ extension AppContainerViewController: MapViewControllerDelegate {
         
         let scale = mapViewController.mapView.mapScale
         
-        let offlineJob = AppOfflineMapJob.downloadMapOffline(map, directory, extent, scale)
-        EphemeralCache.set(object: offlineJob, forKey: AppOfflineMapJob.ephemeralCacheKey)
+        let offlineJob = AppOfflineMapJobConstruct.downloadMapOffline(map, directory, extent, scale)
+        EphemeralCache.set(object: offlineJob, forKey: AppOfflineMapJobConstruct.ephemeralCacheKey)
         performSegue(withIdentifier: "presentJobStatusViewController", sender: nil)
     }
     

@@ -32,9 +32,9 @@ class JobStatusViewController: AppContextAwareController {
     
     var delegate: JobStatusViewControllerDelegate?
     
-    var offlineMapJob: AppOfflineMapJob? {
+    var jobConstruct: AppOfflineMapJobConstruct? {
         didSet {
-            mapJob = offlineMapJob?.generateJob()
+            mapJob = jobConstruct?.generateJob()
         }
     }
     
@@ -47,7 +47,7 @@ class JobStatusViewController: AppContextAwareController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        jobStatusLabel.text = offlineMapJob?.message ?? "Unknown Error"
+        jobStatusLabel.text = jobConstruct?.message ?? "Unknown Error"
         
         UIApplication.shared.isIdleTimerDisabled = true
     }
@@ -64,16 +64,16 @@ class JobStatusViewController: AppContextAwareController {
         }) { (result, error) in
             guard error == nil else {
                 if let nserror = error as NSError?, nserror.code == 3072 {
-                    self.jobStatusLabel.text = self.offlineMapJob?.cancelMessage
+                    self.jobStatusLabel.text = self.jobConstruct?.cancelMessage
                 }
                 else {
-                    self.jobStatusLabel.text = self.offlineMapJob?.errorMessage
+                    self.jobStatusLabel.text = self.jobConstruct?.errorMessage
                 }
                 self.delegate?.jobStatusViewController(self, didEndWithError: error!)
                 return
             }
             if let result = result {
-                self.jobStatusLabel.text = self.offlineMapJob?.successMessage
+                self.jobStatusLabel.text = self.jobConstruct?.successMessage
                 self.delegate?.jobStatusViewController(self, didEndWithResult: result)
             }
         }

@@ -101,7 +101,7 @@ class AppContainerViewController: AppContextAwareController {
             drawerViewController = destination
         }
         else if let destination = segue.destination as? JobStatusViewController {
-            destination.offlineMapJob = EphemeralCache.get(objectForKey: AppOfflineMapJob.ephemeralCacheKey) as? AppOfflineMapJob
+            destination.jobConstruct = EphemeralCache.get(objectForKey: AppOfflineMapJobConstruct.ephemeralCacheKey) as? AppOfflineMapJobConstruct
             destination.delegate = self
             jobStatusViewController = destination
         }
