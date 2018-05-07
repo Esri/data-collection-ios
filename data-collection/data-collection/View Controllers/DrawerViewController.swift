@@ -155,9 +155,14 @@ class DrawerViewController: AppContextAwareController {
     
     func adjustContextDrawerUI() {
         
-        UIView.animate(withDuration: 0.1, delay: 0.1, options: .curveEaseOut, animations: {
-            self.workModeHighlightView.frame = appContext.workMode == .online ? self.workOnlineButton.frame : self.workOfflineButton.frame
-        }, completion: nil)
+        let workModeIndicatorAnimation:()->Void = { [weak self] in
+            guard let online = self?.workOnlineButton.frame, let offline = self?.workOfflineButton.frame else {
+                return
+            }
+            self?.workModeHighlightView.frame = appContext.workMode == .online ? online : offline
+        }
+        
+        UIView.animate(withDuration: 0.1, delay: 0.1, options: .curveEaseOut, animations: workModeIndicatorAnimation, completion: nil)
         
         workOnlineButton.isEnabled = appReachability.isReachable
         workOnlineButton.isSelected = appContext.workMode == .online

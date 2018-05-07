@@ -17,7 +17,7 @@ import UIKit
 
 class AppConfiguration {
     
-    static let itemID = "1eabfa0e397448b487892441f86de273"
+    static let itemID = "fcc7fc65bb96464c9c0986576c119a92" // "1eabfa0e397448b487892441f86de273"
     static let basePortalDomain = "www.arcgis.com"
     static let basePortalURLString = "https://\(basePortalDomain)"
     static let basePortalURL: URL? = URL(string: basePortalURLString)

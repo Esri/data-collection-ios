@@ -47,7 +47,7 @@ extension MapViewController {
                 guard let selectView = self?.selectView else {
                     return
                 }
-                self?.selectViewTopConstraint.constant = visible ? 0 : selectView.frame.height
+                self?.selectViewTopConstraint.constant = visible ? 0 : -selectView.frame.height
             }
         }
         

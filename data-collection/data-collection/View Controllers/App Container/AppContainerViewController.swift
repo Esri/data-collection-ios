@@ -116,6 +116,7 @@ class AppContainerViewController: AppContextAwareController {
         
         drawerLeadingLayoutConstraint.constant = drawerShowing ? 0.0 : -contextView.frame.size.width
         
+        // TODO made memory safe, abstract out into blocks
         UIView.animate(withDuration: 0.2, delay: 0.0, options: .curveEaseOut, animations: {
             self.view.layoutIfNeeded()
             self.visualEffectView.effect = self.drawerShowing ? UIBlurEffect(style: .light) : nil

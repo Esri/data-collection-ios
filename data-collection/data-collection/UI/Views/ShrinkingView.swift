@@ -29,6 +29,7 @@ class ShrinkingView: UIView {
         }
         // animate
         UIView.animate(withDuration: 0.06) {
+            // TODO make memory safe
             self.transform = CGAffineTransform(scaleX: self.shrinkScale, y: self.shrinkScale)
         }
     }
@@ -37,6 +38,7 @@ class ShrinkingView: UIView {
         super.touchesCancelled(touches, with: event)
         // animate
         UIView.animate(withDuration: 0.06) {
+            // TODO make memory safe
             self.transform = CGAffineTransform(scaleX: self.fullScale, y: self.fullScale)
         }
     }
@@ -49,6 +51,7 @@ class ShrinkingView: UIView {
         }
         // animate
         UIView.animate(withDuration: 0.06) {
+            // TODO make memory safe
             self.transform = CGAffineTransform(scaleX: self.fullScale, y: self.fullScale)
         }
         

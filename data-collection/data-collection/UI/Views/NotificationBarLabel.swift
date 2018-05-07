@@ -35,6 +35,8 @@ class NotificationBarLabel: UILabel {
         alpha = 1.0
         isHidden = false
         frame = rect(forVisible: false)
+        
+        // TODO abstract out and make memory safe
         UIView.animate(withDuration: NotificationBarLabel.slideAnimationDuration,
                        delay: 0.0,
                        options: .curveEaseOut,
@@ -51,6 +53,7 @@ class NotificationBarLabel: UILabel {
     }
     
     public func hideLabel() {
+        // TODO abstract out and make memory safe
         UIView.animate(withDuration: NotificationBarLabel.slideAnimationDuration,
                        delay: 0.0,
                        options: .curveEaseOut,

@@ -76,6 +76,7 @@ class CompassView: UIButton {
         if mapView.isNorthFacingUp {
             compassFadeTriggerTimer?.invalidate()
             compassFadeTriggerTimer = nil
+            // TODO make memory safe
             compassFadeTriggerTimer = Timer.scheduledTimer(withTimeInterval: 3.0, repeats: false, block: { (_) in
                 UIView.animate(withDuration: 0.6, delay: 0.0, options: .curveEaseOut, animations: { self.alpha = Alpha.hidden }, completion: nil)
             })
