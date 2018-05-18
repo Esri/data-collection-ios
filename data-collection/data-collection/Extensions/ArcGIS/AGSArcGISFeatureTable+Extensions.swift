@@ -17,6 +17,23 @@ import ArcGIS
 
 extension AGSArcGISFeatureTable {
     
+    func isPopupEnabledFor(relationshipInfo: AGSRelationshipInfo) -> Bool {
+        
+        guard let relatedTables = relatedTables() else {
+            return false
+        }
+        
+        let operativeID = relationshipInfo.relatedTableID
+        
+        for table in relatedTables {
+            if table.serviceLayerID == operativeID {
+                return table.isPopupActuallyEnabled
+            }
+        }
+        
+        return false
+    }
+    
     func queryRelatedFeatures(forFeature feature: AGSArcGISFeature, relationship: AGSRelationshipInfo, completion: @escaping ([AGSRelatedFeatureQueryResult]?, Error?)->()) {
         
         let fields = AGSQueryFeatureFields.loadAll

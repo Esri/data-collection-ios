@@ -16,7 +16,7 @@ import UIKit
 
 enum MapViewMode {
     // TODO consider backticks
-    case `default`
+    case defaultView
     case disabled
     case selectedFeature
     case selectingFeature
@@ -74,7 +74,7 @@ extension MapViewController {
         
         switch to {
             
-        case .`default`:
+        case .defaultView:
             pinDropView.pinDropped = false
             animations.append( selectViewVisible(false) )
             animations.append( smallPopViewVisible(false) )

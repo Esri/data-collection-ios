@@ -39,13 +39,14 @@ class JobStatusViewController: AppContextAwareController {
     }
     
     private var mapJob: AGSJob?
-        
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         jobStatusLabel.text = "Preparing"
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        
         super.viewWillAppear(animated)
         jobStatusLabel.text = jobConstruct?.message ?? "Unknown Error"
         
@@ -53,15 +54,18 @@ class JobStatusViewController: AppContextAwareController {
     }
     
     override func viewDidAppear(_ animated: Bool) {
+        
         guard let job = mapJob else {
             delegate?.jobStatusViewController(didEndAbruptly: self)
             return
         }
+        
         job.start(statusHandler: { [weak self] (status) in
             if let job = self?.mapJob, let progressView = self?.jobStatusProgressView {
                 progressView.progress = Float(job.progress.fractionCompleted)
             }
         }) { (result, error) in
+            
             guard error == nil else {
                 if let nserror = error as NSError?, nserror.code == 3072 {
                     self.jobStatusLabel.text = self.jobConstruct?.cancelMessage

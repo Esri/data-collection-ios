@@ -87,14 +87,14 @@ class RelatedRecordCell: UITableViewCell {
                 titleLabel.font = UIFont.preferredFont(forTextStyle: .footnote)
                 titleLabel.textColor = .gray
                 titleLabel.sizeToFit()
-                NSLayoutConstraint.activate([ titleLabel.heightAnchor.constraint(equalToConstant: titleLabel.font.lineHeight) ])
+                titleLabel.heightAnchor.constraint(equalToConstant: titleLabel.font.lineHeight).isActive = true
                 stackView.addArrangedSubview(titleLabel)
                 
                 let valueLabel = UILabel()
                 valueLabel.numberOfLines = 0
                 valueLabel.font = UIFont.preferredFont(forTextStyle: .body)
                 valueLabel.sizeToFit()
-                NSLayoutConstraint.activate([ valueLabel.heightAnchor.constraint(greaterThanOrEqualToConstant: valueLabel.font.lineHeight) ])
+                valueLabel.heightAnchor.constraint(greaterThanOrEqualToConstant: valueLabel.font.lineHeight).isActive = true
                 
                 stackView.addArrangedSubview(valueLabel)
                 

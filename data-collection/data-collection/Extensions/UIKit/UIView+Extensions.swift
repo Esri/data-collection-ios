@@ -19,19 +19,7 @@ import UIKit
 // UIView Animation Callback
 typealias UIViewAnimations = () -> Void
 
-// MARK: Gestures
-
-extension UIView {
-    func removeGestures() {
-        if let gestures = gestureRecognizers {
-            for gesture in gestures {
-                removeGestureRecognizer(gesture)
-            }
-        }
-    }
-}
-
-// Core Graphcs
+// MARK: Core Graphics
 extension UIView {
     var boundsCenter: CGPoint {
         return CGPoint(x: bounds.size.width/2.0, y: bounds.size.height/2.0)
@@ -48,6 +36,8 @@ extension UIView {
 //        clipsToBounds = true
 //    }
 }
+
+// MARK: Autolayout
 
 extension UIView {
     

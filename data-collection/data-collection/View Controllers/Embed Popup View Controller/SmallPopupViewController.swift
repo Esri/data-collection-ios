@@ -111,7 +111,7 @@ class SmallPopupViewController: UIViewController {
             complete()
         }
         
-        guard let relationshipInfos = featureTable.layerInfo?.relationshipInfos, let map = appContext.currentMap else {
+        guard let relationshipInfos = featureTable.layerInfo?.relationshipInfos else {
             queryCompletion([AGSRelatedFeatureQueryResult](), nil)
             complete()
             return
@@ -122,17 +122,16 @@ class SmallPopupViewController: UIViewController {
             return a.relatedTableID < b.relatedTableID
         }
 
-        // TODO check on popup information.
         for info in sortedRelationshipInfos {
             
             // Find top most table relationship where item of interest is one of many
-            if manyToOneRelationship == nil, info.isManyToOne, map.isPopupEnabledFor(relationshipInfo: info) {
+            if manyToOneRelationship == nil, info.isManyToOne, featureTable.isPopupEnabledFor(relationshipInfo: info) {
                 manyToOneRelationship = info
                 continue
             }
                 
-                // Find top most table relationship where item of interest contains a collection
-            else if oneToManyRelationship == nil, info.isOneToMany, map.isPopupEnabledFor(relationshipInfo: info) {
+            // Find top most table relationship where item of interest contains a collection
+            else if oneToManyRelationship == nil, info.isOneToMany, featureTable.isPopupEnabledFor(relationshipInfo: info) {
                 oneToManyRelationship = info
                 continue
             }

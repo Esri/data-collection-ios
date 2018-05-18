@@ -23,12 +23,16 @@ class PopupFieldCell<K: UIView>: UITableViewCell {
         }
     }
     
-    weak var popupManager: AGSPopupManager?
+    weak var popupManager: AGSPopupManager!
     
-    private var stackView = UIStackView()
-    private var titleLabel = UILabel()
-    private var valueLabel = UILabel()
-    private var valueEditView: K?
+    var fieldType: AGSFieldType {
+        return popupManager.fieldType(for: field)
+    }
+    
+    internal var stackView = UIStackView()
+    internal var titleLabel = UILabel()
+    internal var valueLabel = UILabel()
+    internal var valueEditView: K?
     
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -44,19 +48,30 @@ class PopupFieldCell<K: UIView>: UITableViewCell {
         titleLabel.textColor = AppConfiguration.appColors.tableCellTitle
         titleLabel.font = AppConfiguration.appFonts.tableCellTitle
         titleLabel.sizeToFit()
-        NSLayoutConstraint.activate([ titleLabel.heightAnchor.constraint(equalToConstant: titleLabel.font.lineHeight) ])
+        titleLabel.heightAnchor.constraint(equalToConstant: titleLabel.font.lineHeight).isActive = true
         stackView.addArrangedSubview(titleLabel)
         
         valueLabel.textColor = AppConfiguration.appColors.tableCellValue
         valueLabel.font = AppConfiguration.appFonts.tableCellValue
         valueLabel.numberOfLines = 0
         valueLabel.sizeToFit()
-        NSLayoutConstraint.activate([ valueLabel.heightAnchor.constraint(greaterThanOrEqualToConstant: valueLabel.font.lineHeight) ])
+        valueLabel.heightAnchor.constraint(greaterThanOrEqualToConstant: valueLabel.font.lineHeight).isActive = true
+        stackView.addArrangedSubview(valueLabel)
+    }
+    
+    public func removeValueLabel() {
+        
+        stackView.removeArrangedSubview(valueLabel)
+        valueLabel.removeFromSuperview()
+    }
+    
+    public func addValueLabel() {
+        
         stackView.addArrangedSubview(valueLabel)
     }
     
     required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        fatalError("Popup Field Cells do not support init from Storyboards.")
     }
     
     override func layoutSubviews() {
@@ -65,10 +80,14 @@ class PopupFieldCell<K: UIView>: UITableViewCell {
         // updates to subviews
     }
     
+    public var keyboardType: UIKeyboardType {
+        return .default
+    }
+    
     public func updateForPopupField() {
         
         titleLabel.text = field.label
-        valueLabel.text = popupManager?.formattedValue(for: field)
+        valueLabel.text = popupManager.formattedValue(for: field)
         
         titleLabel.considerEmptyStringForStackView()
         valueLabel.considerEmptyStringForStackView()

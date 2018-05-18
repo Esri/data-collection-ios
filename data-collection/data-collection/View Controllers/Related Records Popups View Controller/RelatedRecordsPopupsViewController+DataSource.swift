@@ -32,7 +32,6 @@ extension RelatedRecordsPopupsViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
         // Section 0
         if indexPathWithinAttributes(indexPath) {
             let cell = tableView.dequeueReusableCell(withIdentifier: ReuseIdentifiers.popupTextField, for: indexPath) as! PopupTextFieldCell
@@ -50,7 +49,7 @@ extension RelatedRecordsPopupsViewController: UITableViewDataSource {
             cell.maxAttributes = 2
             return cell
         }
-            // Section 1..n
+        // Section 1..n
         else {
             // 1:M Related Records
             let cell = tableView.dequeueReusableCell(withIdentifier: ReuseIdentifiers.relatedRecordCell, for: indexPath) as! RelatedRecordCell

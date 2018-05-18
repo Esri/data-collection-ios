@@ -38,7 +38,7 @@ extension RelatedRecordsPopupsViewController: UITableViewDelegate {
         if let cell = tableView.cellForRow(at: indexPath) as? RelatedRecordCell {
             if let rrvc = storyboard?.instantiateViewController(withIdentifier: "RelatedRecordsPopupsViewController") as? RelatedRecordsPopupsViewController {
                 rrvc.popup = cell.popup
-                rrvc.previousPopup = self.popup
+                rrvc.parentPopup = self.popup
                 self.navigationController?.pushViewController(rrvc, animated: true )
             }
         }

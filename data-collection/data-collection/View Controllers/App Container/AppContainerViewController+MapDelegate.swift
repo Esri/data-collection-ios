@@ -18,7 +18,7 @@ import ArcGIS
 extension AppContainerViewController: MapViewControllerDelegate {
     
     func mapViewController(_ mapViewController: MapViewController, didSelect extent: AGSEnvelope) {
-        
+                
         guard
             let directory = FileManager.offlineMapDirectoryURL,
             let map = mapViewController.mapView.map

@@ -67,8 +67,7 @@ extension Collection where Iterator.Element == AGSArcGISFeature {
             }
             
             guard featureTable == firstFeatureTable else {
-                // TODO Note that all features must be of the same table
-                print("NOT OF THE SAME TABLE")
+                print("[Error] all features must be of the same table")
                 return nil
             }
             

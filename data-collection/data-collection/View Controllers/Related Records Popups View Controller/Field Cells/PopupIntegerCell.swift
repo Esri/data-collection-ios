@@ -12,15 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import Foundation
 import UIKit
-import ArcGIS
 
-class PopupTextFieldCell: PopupFieldCell<UITextField> {
+class PopupIntegerCell: PopupTextFieldCell {
     
-    func startEdit() {
-        
-        // TODO: consider isEditing
-        
-        
+    override var keyboardType: UIKeyboardType {
+        return .numberPad
     }
 }

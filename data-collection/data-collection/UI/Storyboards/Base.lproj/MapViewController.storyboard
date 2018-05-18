@@ -67,7 +67,7 @@
                         </subviews>
                         <color key="tintColor" red="0.56600448749999999" green="0.69739838649999997" blue="0.34364558169999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="MG1-Rz-Edy" firstAttribute="trailing" secondItem="5iz-1K-VO3" secondAttribute="trailing" id="3yg-H9-HML"/>
+                            <constraint firstItem="MG1-Rz-Edy" firstAttribute="trailing" secondItem="Nr6-ee-grA" secondAttribute="trailing" id="3yg-H9-HML"/>
                             <constraint firstAttribute="bottom" secondItem="MG1-Rz-Edy" secondAttribute="bottom" id="8V2-Ve-z1j"/>
                             <constraint firstItem="5iz-1K-VO3" firstAttribute="trailing" secondItem="0kB-mJ-DGu" secondAttribute="trailing" constant="16" id="A2o-3W-bvp"/>
                             <constraint firstItem="aVd-9W-zlV" firstAttribute="centerX" secondItem="Nr6-ee-grA" secondAttribute="centerX" id="G9Z-g6-v4L"/>
@@ -77,7 +77,7 @@
                             <constraint firstItem="0kB-mJ-DGu" firstAttribute="leading" secondItem="5iz-1K-VO3" secondAttribute="leading" constant="16" id="XP9-OS-VgB"/>
                             <constraint firstItem="hWp-hB-5fr" firstAttribute="centerX" secondItem="Nr6-ee-grA" secondAttribute="centerX" id="g61-IT-eZn"/>
                             <constraint firstItem="hWp-hB-5fr" firstAttribute="top" secondItem="0kB-mJ-DGu" secondAttribute="bottom" constant="16" id="ge7-cc-1Ov"/>
-                            <constraint firstItem="MG1-Rz-Edy" firstAttribute="leading" secondItem="5iz-1K-VO3" secondAttribute="leading" id="pma-8U-vsL"/>
+                            <constraint firstItem="MG1-Rz-Edy" firstAttribute="leading" secondItem="Nr6-ee-grA" secondAttribute="leading" id="pma-8U-vsL"/>
                             <constraint firstItem="hWp-hB-5fr" firstAttribute="leading" secondItem="Nr6-ee-grA" secondAttribute="leadingMargin" id="tkf-uI-e5v"/>
                             <constraint firstItem="MG1-Rz-Edy" firstAttribute="top" secondItem="Nr6-ee-grA" secondAttribute="top" id="zUG-Ay-bek"/>
                         </constraints>

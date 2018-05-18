@@ -19,7 +19,7 @@ extension MapViewController {
     
     func updateForMap() {
         
-        mapViewMode = appContext.currentMap != nil ? .`default` : .disabled
+        mapViewMode = appContext.currentMap != nil ? .defaultView : .disabled
 
         guard let map = mapView.map else {
             delegate?.mapViewController(self, didUpdateTitle: "No Map")

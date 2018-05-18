@@ -92,26 +92,27 @@ extension MapViewController {
     }
     
     @IBAction func userDidSelectLocation(_ sender: Any) {
-        
-        guard let initialViewpoint = mapView.map?.initialViewpoint else {
-            present(simpleAlertMessage: "No map viewpoint set. Contact map publisher.")
-            return
-        }
-        
-        guard let centerPoint = AGSGeometryEngine.projectGeometry(mapView.centerAGSPoint(), to: AGSSpatialReference.wgs84()), AGSGeometryEngine.geometry(centerPoint, within: initialViewpoint.targetGeometry) else {
-            present(simpleAlertMessage: "Can't add feature, you are outside the bounds of your map.")
-            return
-        }
-        
+
         switch locationSelectionType {
         case .newFeature:
+            
+            guard let initialViewpoint = mapView.map?.initialViewpoint else {
+                present(simpleAlertMessage: "No map viewpoint set. Contact map publisher.")
+                return
+            }
+            
+            guard let centerPoint = AGSGeometryEngine.projectGeometry(mapView.centerAGSPoint(), to: AGSSpatialReference.wgs84()), AGSGeometryEngine.geometry(centerPoint, within: initialViewpoint.targetGeometry) else {
+                present(simpleAlertMessage: "Can't add feature, you are outside the bounds of your map.")
+                return
+            }
+            
             break
         case .offlineExtent:
             prepareForOfflineMapDownloadJob()
             break
         }
         
-        mapViewMode = .`default`
+        mapViewMode = .defaultView
     }
     
     @IBAction func userDidCancelSelectLocation(_ sender: Any) {
@@ -124,7 +125,7 @@ extension MapViewController {
             break
         }
         
-        mapViewMode = .`default`
+        mapViewMode = .defaultView
     }
     
     func adjustForLocationSelectionType() {

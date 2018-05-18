@@ -44,12 +44,12 @@ class MapViewController: AppContextAwareController, PopupsViewControllerEmbeddab
         didSet {
             smallPopupViewController?.popup = currentPopup
             guard currentPopup != nil else {
-                mapViewMode = .`default`
+                mapViewMode = .defaultView
                 return
             }
             smallPopupViewController?.popuplateViewWithBestContent { [weak self] in
                 guard let _ = self?.currentPopup else {
-                    self?.mapViewMode = .`default`
+                    self?.mapViewMode = .defaultView
                     return
                 }
                 self?.mapViewMode = .selectedFeature
@@ -57,7 +57,7 @@ class MapViewController: AppContextAwareController, PopupsViewControllerEmbeddab
         }
     }
     
-    var mapViewMode: MapViewMode = MapViewMode.`default` {
+    var mapViewMode: MapViewMode = .defaultView {
         didSet {
             adjustForMapViewMode(from: oldValue, to: mapViewMode)
         }
@@ -145,11 +145,7 @@ class MapViewController: AppContextAwareController, PopupsViewControllerEmbeddab
         }
     }
     
-    deinit {
-        // Remove gestures
-        // TODO: needed?
-        mapView.removeGestures()
-        
+    deinit {        
         // Invalidate and release KVO observations
         invalidateAndReleaseObservations()
     }

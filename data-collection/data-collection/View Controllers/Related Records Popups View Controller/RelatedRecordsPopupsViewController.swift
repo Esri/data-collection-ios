@@ -15,7 +15,6 @@
 import Foundation
 import ArcGIS
 
-
 class RelatedRecordsPopupsViewController: UIViewController {
     
     struct ReuseIdentifiers {
@@ -25,6 +24,8 @@ class RelatedRecordsPopupsViewController: UIViewController {
     
     @IBOutlet weak var tableView: UITableView!
     
+    weak var parentPopup: AGSPopup?
+
     var popup: AGSPopup! {
         didSet {
             popupManager = AGSPopupManager(popup: popup)
@@ -33,41 +34,14 @@ class RelatedRecordsPopupsViewController: UIViewController {
     
     var popupManager: AGSPopupManager!
     
-    weak var previousPopup: AGSPopup?
-    
     var isRootPopup: Bool {
-        return previousPopup == nil
+        return parentPopup == nil
     }
     
     var manyToOneRecords = [RelatedRecordsManager]()
     var oneToManyRecords = [RelatedRecordsManager]()
     
     var loadingRelatedRecords = false
-    
-    func loadRelatedRecordsIntoTableView() {
-        
-        // TODO make swifty ?
-        // TODO fix
-        
-        var rows = [IndexPath]()
-        for i in 0..<manyToOneRecords.count {
-            rows.append( IndexPath(row: i+popupManager.displayFields.count, section: 0) )
-        }
-        
-        for i in 0..<oneToManyRecords.count {
-            let manager = oneToManyRecords[i]
-            for j in 0..<manager.popups.count {
-                rows.append( IndexPath(row: j, section: i+1) )
-            }
-        }
-        
-        let sections = IndexSet(integersIn: 1...oneToManyRecords.count)
-        
-        tableView.beginUpdates()
-        tableView.insertSections(sections, with: UITableViewRowAnimation.top)
-        tableView.insertRows(at: rows, with: UITableViewRowAnimation.top)
-        tableView.endUpdates()
-    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -79,10 +53,10 @@ class RelatedRecordsPopupsViewController: UIViewController {
         // Is root popup view controller?
         if isRootPopup {
             guard let image = UIImage(named: "Cancel") else {
-                self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Exit", style: .done, target: self, action: #selector(RelatedRecordsPopupsViewController.exitRR(_:)))
+                self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Exit", style: .done, target: self, action: #selector(RelatedRecordsPopupsViewController.dismissRelatedRecordsPopupsViewController(_:)))
                 return
             }
-            self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: image, style: .done, target: self, action: #selector(RelatedRecordsPopupsViewController.exitRR(_:)))
+            self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: image, style: .done, target: self, action: #selector(RelatedRecordsPopupsViewController.dismissRelatedRecordsPopupsViewController(_:)))
         }
     }
     
@@ -100,10 +74,10 @@ class RelatedRecordsPopupsViewController: UIViewController {
         
         // Kick off load of related records
         var preloadedRelatedRecords = [RelatedRecordsManager]()
-        if let feature = popup.geoElement as? AGSArcGISFeature, let relatedRecordsInfos = feature.relatedRecordsInfos, let map = appContext.currentMap {
+        if let feature = popup.geoElement as? AGSArcGISFeature, let relatedRecordsInfos = feature.relatedRecordsInfos, let featureTable = feature.featureTable as? AGSArcGISFeatureTable {
             for info in relatedRecordsInfos {
                 // TODO work this rule into AppRules
-                if map.isPopupEnabledFor(relationshipInfo: info), let relatedRecord = RelatedRecordsManager(relationshipInfo: info, feature: feature) {
+                if featureTable.isPopupEnabledFor(relationshipInfo: info), let relatedRecord = RelatedRecordsManager(relationshipInfo: info, feature: feature) {
                     preloadedRelatedRecords.append(relatedRecord)
                 }
             }
@@ -119,9 +93,6 @@ class RelatedRecordsPopupsViewController: UIViewController {
                 self?.manyToOneRecords = preloadedRelatedRecords.manyToOneLoaded
                 self?.loadingRelatedRecords = false
                 self?.tableView.reloadData()
-                
-                // TODO : make this work
-//                self?.loadRelatedRecordsIntoTableView()
             }
         }
         
@@ -138,7 +109,7 @@ class RelatedRecordsPopupsViewController: UIViewController {
         return false
     }
     
-    @objc func exitRR(_ sender: AnyObject?) {
+    @objc func dismissRelatedRecordsPopupsViewController(_ sender: AnyObject?) {
         dismiss(animated: true, completion: nil)
     }
 }

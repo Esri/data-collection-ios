@@ -15,4 +15,6 @@
 import UIKit
 import ArcGIS
 
-final class PopupTextViewCell: PopupFieldCell<UITextView> { }
+class PopupTextViewCell: PopupFieldCell<UITextView> {
+    
+}

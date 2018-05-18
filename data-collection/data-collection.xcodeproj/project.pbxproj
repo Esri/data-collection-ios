@@ -35,6 +35,7 @@
 		948066332091474F00A398EA /* RelatedRecordsPopup.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 948066322091474F00A398EA /* RelatedRecordsPopup.storyboard */; };
 		948066362091483600A398EA /* RelatedRecordsPopupsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 948066352091483600A398EA /* RelatedRecordsPopupsViewController.swift */; };
 		948066382091595200A398EA /* RelatedRecordsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 948066372091595200A398EA /* RelatedRecordsManager.swift */; };
+		94A8101D20AA1D7C00D4BC68 /* PopupIntegerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94A8101C20AA1D7C00D4BC68 /* PopupIntegerCell.swift */; };
 		94B375BC207E8D5600691F2A /* AddressLocator.locb in Resources */ = {isa = PBXBuildFile; fileRef = 94B37598207E8D5600691F2A /* AddressLocator.locb */; };
 		94B375BD207E8D5600691F2A /* AddressLocator.loc.xml in Resources */ = {isa = PBXBuildFile; fileRef = 94B37599207E8D5600691F2A /* AddressLocator.loc.xml */; };
 		94B375BE207E8D5600691F2A /* AddressLocator.lox in Resources */ = {isa = PBXBuildFile; fileRef = 94B3759A207E8D5600691F2A /* AddressLocator.lox */; };
@@ -79,7 +80,6 @@
 		94B37603207E8E4800691F2A /* CGGeometry+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94B375EF207E8E4800691F2A /* CGGeometry+Extensions.swift */; };
 		94B3760C207EAE4700691F2A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94B3760B207EAE4600691F2A /* AppDelegate.swift */; };
 		94B3760E207EAEA100691F2A /* ArcGIS.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 94B3760D207EAEA100691F2A /* ArcGIS.bundle */; };
-		94BB89BE2092388A006D829F /* AGSMap+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94BB89BD2092388A006D829F /* AGSMap+Extensions.swift */; };
 		94D544BD207FC15D00ED0D04 /* DrawerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94D544B4207FC15C00ED0D04 /* DrawerViewController.swift */; };
 		94D544BE207FC15D00ED0D04 /* AppContainerViewController+DrawerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94D544B6207FC15D00ED0D04 /* AppContainerViewController+DrawerDelegate.swift */; };
 		94D544BF207FC15D00ED0D04 /* AppContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94D544B7207FC15D00ED0D04 /* AppContainerViewController.swift */; };
@@ -149,6 +149,7 @@
 		948066322091474F00A398EA /* RelatedRecordsPopup.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = RelatedRecordsPopup.storyboard; sourceTree = "<group>"; };
 		948066352091483600A398EA /* RelatedRecordsPopupsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RelatedRecordsPopupsViewController.swift; sourceTree = "<group>"; };
 		948066372091595200A398EA /* RelatedRecordsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RelatedRecordsManager.swift; sourceTree = "<group>"; };
+		94A8101C20AA1D7C00D4BC68 /* PopupIntegerCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupIntegerCell.swift; sourceTree = "<group>"; };
 		94B37598207E8D5600691F2A /* AddressLocator.locb */ = {isa = PBXFileReference; lastKnownFileType = file; path = AddressLocator.locb; sourceTree = "<group>"; };
 		94B37599207E8D5600691F2A /* AddressLocator.loc.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = AddressLocator.loc.xml; sourceTree = "<group>"; };
 		94B3759A207E8D5600691F2A /* AddressLocator.lox */ = {isa = PBXFileReference; lastKnownFileType = file; path = AddressLocator.lox; sourceTree = "<group>"; };
@@ -199,7 +200,6 @@
 		94B375EF207E8E4800691F2A /* CGGeometry+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CGGeometry+Extensions.swift"; sourceTree = "<group>"; };
 		94B3760B207EAE4600691F2A /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		94B3760D207EAEA100691F2A /* ArcGIS.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = ArcGIS.bundle; path = ../../../../../../../../Library/SDKs/ArcGIS/iOS/Frameworks/Static/ArcGIS.framework/Versions/Current/Resources/ArcGIS.bundle; sourceTree = "<group>"; };
-		94BB89BD2092388A006D829F /* AGSMap+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AGSMap+Extensions.swift"; sourceTree = "<group>"; };
 		94D544B4207FC15C00ED0D04 /* DrawerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DrawerViewController.swift; sourceTree = "<group>"; };
 		94D544B6207FC15D00ED0D04 /* AppContainerViewController+DrawerDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AppContainerViewController+DrawerDelegate.swift"; sourceTree = "<group>"; };
 		94D544B7207FC15D00ED0D04 /* AppContainerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppContainerViewController.swift; sourceTree = "<group>"; };
@@ -260,6 +260,7 @@
 				940DA9742097942000AB4BF6 /* PopupFieldCell.swift */,
 				940DA976209794E200AB4BF6 /* PopupTextFieldCell.swift */,
 				940DA9782097951000AB4BF6 /* PopupTextViewCell.swift */,
+				94A8101C20AA1D7C00D4BC68 /* PopupIntegerCell.swift */,
 			);
 			path = "Field Cells";
 			sourceTree = "<group>";
@@ -421,7 +422,6 @@
 				9465691B208802AE00599E55 /* AGSFeatureLayer+Extensions.swift */,
 				9465691D208802CE00599E55 /* AGSFeatureTable+Extensions.swift */,
 				940DA97A2098E1C600AB4BF6 /* AGSArcGISFeatureTable+Extensions.swift */,
-				94BB89BD2092388A006D829F /* AGSMap+Extensions.swift */,
 			);
 			path = ArcGIS;
 			sourceTree = "<group>";
@@ -755,6 +755,7 @@
 				94B375D2207E8D5600691F2A /* EphemeralCache.swift in Sources */,
 				94B375C0207E8D5600691F2A /* AppFiles.swift in Sources */,
 				94D544BF207FC15D00ED0D04 /* AppContainerViewController.swift in Sources */,
+				94A8101D20AA1D7C00D4BC68 /* PopupIntegerCell.swift in Sources */,
 				94D544D720852A5100ED0D04 /* CompassView.swift in Sources */,
 				94B375FB207E8E4800691F2A /* UIButton+Extensions.swift in Sources */,
 				94B375F6207E8E4800691F2A /* AGSPortal+Extensions.swift in Sources */,
@@ -786,7 +787,6 @@
 				94B375C5207E8D5600691F2A /* AppNotifications.swift in Sources */,
 				946569142088023600599E55 /* AGSPopupManager+Extensions.swift in Sources */,
 				9412D2172099382C0031F9EB /* RelatedRecordsPopupsViewController+DataSource.swift in Sources */,
-				94BB89BE2092388A006D829F /* AGSMap+Extensions.swift in Sources */,
 				9465690C2087FCCE00599E55 /* MapViewController+Setup.swift in Sources */,
 				94B375FC207E8E4800691F2A /* UIView+Extensions.swift in Sources */,
 				94D544C2207FC15D00ED0D04 /* AppContextAwareController.swift in Sources */,
