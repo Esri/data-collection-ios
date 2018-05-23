@@ -17,13 +17,6 @@ import UIKit
 
 extension RelatedRecordsPopupsViewController: UITableViewDelegate {
     
-    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        
-        if let fieldCell = cell as? PopupFieldCell {
-            fieldCell.updateForPopupField()
-        }
-    }
-    
     func tableView(_ tableView: UITableView, shouldHighlightRowAt indexPath: IndexPath) -> Bool {
         
         return !indexPathWithinAttributes(indexPath)

@@ -46,6 +46,32 @@ extension AGSPopup {
     var asManager: AGSPopupManager {
         return AGSPopupManager(popup: self)
     }
+    
+    func loadRelatedRecords(_ completion: @escaping ([RelatedRecordsManager]?)->Void) {
+        
+        // Kick off load of related records
+        var preloadedRelatedRecords = [RelatedRecordsManager]()
+        guard
+            let feature = geoElement as? AGSArcGISFeature,
+            let relatedRecordsInfos = feature.relatedRecordsInfos,
+            let featureTable = feature.featureTable as? AGSArcGISFeatureTable
+            else {
+                completion(nil)
+                return
+        }
+        
+        // TODO work this rule into AppRules
+        for info in relatedRecordsInfos {
+            if featureTable.isPopupEnabledFor(relationshipInfo: info), let relatedRecord = RelatedRecordsManager(relationshipInfo: info, feature: feature) {
+                preloadedRelatedRecords.append(relatedRecord)
+            }
+        }
+        
+        AGSLoadObjects(preloadedRelatedRecords) { (_) in
+            completion(preloadedRelatedRecords)
+            return
+        }
+    }
 }
 
 extension Collection where Iterator.Element == AGSPopup {

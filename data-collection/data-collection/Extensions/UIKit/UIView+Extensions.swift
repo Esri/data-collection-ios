@@ -17,10 +17,13 @@ import UIKit
 // MARK: UIView Animation
 
 // UIView Animation Callback
+
 typealias UIViewAnimations = () -> Void
 
 // MARK: Core Graphics
+
 extension UIView {
+    
     var boundsCenter: CGPoint {
         return CGPoint(x: bounds.size.width/2.0, y: bounds.size.height/2.0)
     }
@@ -29,12 +32,13 @@ extension UIView {
 // MARK: Style
 
 extension UIView {
-//    func stylizeBorder() {
-//        layer.borderColor = UIColor.lightGray.withAlphaComponent(0.2).cgColor
-//        layer.borderWidth = 1
-//        layer.cornerRadius = 5
-//        clipsToBounds = true
-//    }
+    
+    func stylizeBorder() {
+        layer.borderColor = UIColor.lightGray.withAlphaComponent(0.2).cgColor
+        layer.borderWidth = 1
+        layer.cornerRadius = 5
+        clipsToBounds = true
+    }
 }
 
 // MARK: Autolayout

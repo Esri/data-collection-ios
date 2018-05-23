@@ -12,15 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import UIKit
+import Foundation
 import ArcGIS
 
-class PopupTextFieldCell: PopupFieldCell<UITextField> {
+extension RelatedRecordsPopupsViewController: AGSPopupManagerDelegate {
     
-    func startEdit() {
-        
-        // TODO: consider isEditing
-        
-        
+    func popupManager(_ popupManager: AGSPopupManager, validityDidChange geoElementValid: Bool) {
+        _ = validatePopup()
     }
 }

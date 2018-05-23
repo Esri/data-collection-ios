@@ -18,11 +18,20 @@ import ArcGIS
 class RelatedRecordsPopupsViewController: UIViewController {
     
     struct ReuseIdentifiers {
-        static let popupTextField = "PopupTextFieldReuseID"
+        static let popupIntegerCell = "PopupIntegerCellReuseIdentifier"
+        static let popupFloatCell = "PopupFloatCellReuseIdentifier"
+        static let popupLongStringCell = "PopupLongTextCellReuseIdentifier"
+        static let popupShortStringCell = "PopupShortTextCellReuseIdentifier"
+        static let popupDateCell = "PopupDateCellReuseIdentifier"
+        static let popupIDCell = "PopupIDCellReuseIdentifier"
         static let relatedRecordCell = "RelatedRecordCellReuseID"
     }
     
     @IBOutlet weak var tableView: UITableView!
+    
+    @IBOutlet weak var popupModeButton: UIBarButtonItem!
+    
+    @IBOutlet weak var adjustableBottomConstraint: NSLayoutConstraint!
     
     weak var parentPopup: AGSPopup?
 
@@ -32,7 +41,15 @@ class RelatedRecordsPopupsViewController: UIViewController {
         }
     }
     
-    var popupManager: AGSPopupManager!
+    var popupManager: AGSPopupManager! {
+        didSet {
+            popupManager.delegate = self
+            
+            for field in popupManager.editableDisplayFields {
+                print(popupManager.fieldType(for: field))
+            }
+        }
+    }
     
     var isRootPopup: Bool {
         return parentPopup == nil
@@ -41,56 +58,53 @@ class RelatedRecordsPopupsViewController: UIViewController {
     var manyToOneRecords = [RelatedRecordsManager]()
     var oneToManyRecords = [RelatedRecordsManager]()
     
-    var loadingRelatedRecords = false
+    var loadingRelatedRecords = false {
+        didSet {
+            popupModeButton.isEnabled = !loadingRelatedRecords
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        tableView.register(PopupTextFieldCell.self, forCellReuseIdentifier: ReuseIdentifiers.popupTextField)
+        tableView.register(PopupIntegerCell.self, forCellReuseIdentifier: ReuseIdentifiers.popupIntegerCell)
+        tableView.register(PopupFloatCell.self, forCellReuseIdentifier: ReuseIdentifiers.popupFloatCell)
+        tableView.register(PopupLongStringCell.self, forCellReuseIdentifier: ReuseIdentifiers.popupLongStringCell)
+        tableView.register(PopupShortStringCell.self, forCellReuseIdentifier: ReuseIdentifiers.popupShortStringCell)
+        tableView.register(PopupDateCell.self, forCellReuseIdentifier: ReuseIdentifiers.popupDateCell)
+        tableView.register(PopupIDCell.self, forCellReuseIdentifier: ReuseIdentifiers.popupIDCell)
         tableView.register(RelatedRecordCell.self, forCellReuseIdentifier: ReuseIdentifiers.relatedRecordCell)
+        
         tableView.rowHeight = UITableViewAutomaticDimension
         
         // Is root popup view controller?
         if isRootPopup {
-            guard let image = UIImage(named: "Cancel") else {
-                self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Exit", style: .done, target: self, action: #selector(RelatedRecordsPopupsViewController.dismissRelatedRecordsPopupsViewController(_:)))
-                return
-            }
-            self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: image, style: .done, target: self, action: #selector(RelatedRecordsPopupsViewController.dismissRelatedRecordsPopupsViewController(_:)))
+            self.addBackButton(withSelector: #selector(RelatedRecordsPopupsViewController.dismissRelatedRecordsPopupsViewController(_:)))
         }
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(RelatedRecordsPopupsViewController.adjustKeyboardVisible(notification:)), name: .UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(RelatedRecordsPopupsViewController.adjustKeyboardHidden(notification:)), name: .UIKeyboardWillHide, object: nil)
     }
-    
-//    override func viewDidAppear(_ animated: Bool) {
-//        super.viewDidAppear(animated)
-//        
-//        tableView.isEditing = true
-//    }
-    
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
         // Set Title
         title = popupManager.title
-        
-        // Kick off load of related records
-        var preloadedRelatedRecords = [RelatedRecordsManager]()
-        if let feature = popup.geoElement as? AGSArcGISFeature, let relatedRecordsInfos = feature.relatedRecordsInfos, let featureTable = feature.featureTable as? AGSArcGISFeatureTable {
-            for info in relatedRecordsInfos {
-                // TODO work this rule into AppRules
-                if featureTable.isPopupEnabledFor(relationshipInfo: info), let relatedRecord = RelatedRecordsManager(relationshipInfo: info, feature: feature) {
-                    preloadedRelatedRecords.append(relatedRecord)
-                }
-            }
-        }
-        
+
         // Is root popup?
         if isRootPopup {
             
             loadingRelatedRecords = true
             
-            AGSLoadObjects(preloadedRelatedRecords) { [weak self] (loaded) in
-                self?.oneToManyRecords = preloadedRelatedRecords.oneToManyLoaded
-                self?.manyToOneRecords = preloadedRelatedRecords.manyToOneLoaded
+            popup.loadRelatedRecords { [weak self] (relatedRecords) in
+                
+                guard let records = relatedRecords else {
+                    return
+                }
+
+                self?.oneToManyRecords = records.oneToManyLoaded
+                self?.manyToOneRecords = records.manyToOneLoaded
                 self?.loadingRelatedRecords = false
                 self?.tableView.reloadData()
             }
@@ -101,16 +115,88 @@ class RelatedRecordsPopupsViewController: UIViewController {
     }
     
     func indexPathWithinAttributes(_ indexPath: IndexPath) -> Bool {
+        
         if indexPath.section == 0 {
             guard indexPath.row >= popupManager.displayFields.count else {
                 return true
             }
         }
+        
         return false
+    }
+    
+    @IBAction func togglePopupMode(_ sender: Any) {
+        
+        guard !loadingRelatedRecords else {
+            return
+        }
+        
+        // TODO: ensure mode can be alternated
+
+        if popupManager.isEditing {
+            
+            if let invalids = validatePopup(), invalids.count > 1 {
+                print("Invalid fields!")
+                // Alert User that popup is invalid.
+                for invalid in invalids {
+                    print(invalid)
+                }
+                print("~")
+                return
+            }
+            
+            popupManager.cancelEditing()
+        }
+        else {
+            guard popupManager.shouldAllowEdit else {
+                return 
+            }
+            popupManager.startEditing()
+        }
+        
+        popupModeButton.title = popupManager.actionButtonTitle
+        tableView.reloadData()
+    }
+    
+    func validatePopup() -> [Error]? {
+        
+        guard popupManager.isEditing else {
+            return nil
+        }
+        
+        var invalids = [Error]()
+        
+        for field in popupManager.editableDisplayFields {
+            if let error = popupManager.validationError(for: field) {
+                invalids.append(error)
+            }
+        }
+        
+        // TODO enforce M:1 relationships exist.
+        
+        return invalids
     }
     
     @objc func dismissRelatedRecordsPopupsViewController(_ sender: AnyObject?) {
         dismiss(animated: true, completion: nil)
+    }
+    
+    @objc func adjustKeyboardVisible(notification: NSNotification) {
+        print("[Keyboard] \(notification.name.rawValue)")
+        if let keyboardFrame: NSValue = notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? NSValue {
+            let heightDelta = keyboardFrame.cgRectValue.height
+            adjustableBottomConstraint.constant = -heightDelta
+        }
+    }
+    
+    @objc func adjustKeyboardHidden(notification: NSNotification) {
+        print("[Keyboard] \(notification.name.rawValue)")
+        adjustableBottomConstraint.constant = 0
+    }
+    
+    deinit {
+        // Remove All Observers
+        NotificationCenter.default.removeObserver(self)
     }
 }
 

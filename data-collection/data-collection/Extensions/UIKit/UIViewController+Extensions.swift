@@ -61,3 +61,14 @@ extension UIViewController {
         present(alert, animated: animated, completion: completion)
     }
 }
+
+extension UIViewController {
+    
+    func addBackButton(withSelector selector: Selector) {
+        guard let image = UIImage(named: "Cancel") else {
+            self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Exit", style: .done, target: self, action: selector)
+            return
+        }
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: image, style: .done, target: self, action: selector)
+    }
+}

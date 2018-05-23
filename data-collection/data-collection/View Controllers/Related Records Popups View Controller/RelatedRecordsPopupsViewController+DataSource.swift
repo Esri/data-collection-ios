@@ -31,13 +31,45 @@ extension RelatedRecordsPopupsViewController: UITableViewDataSource {
         }
     }
     
+    // TODO Will remove cell
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         // Section 0
         if indexPathWithinAttributes(indexPath) {
-            let cell = tableView.dequeueReusableCell(withIdentifier: ReuseIdentifiers.popupTextField, for: indexPath) as! PopupTextFieldCell
+            
+            let field = popupManager.displayFields[indexPath.row]
+            let fieldType = popupManager.fieldType(for: field)
+            
+            let cell: PopupFieldCellProtocol!
+            
+            switch fieldType {
+            case .int16, .int32:
+                cell = tableView.dequeueReusableCell(withIdentifier: ReuseIdentifiers.popupIntegerCell, for: indexPath) as! PopupIntegerCell
+            case .float, .double:
+                cell = tableView.dequeueReusableCell(withIdentifier: ReuseIdentifiers.popupFloatCell, for: indexPath) as! PopupFloatCell
+            case .text:
+                switch field.stringFieldOption {
+                case .singleLine, .unknown:
+                    cell = tableView.dequeueReusableCell(withIdentifier: ReuseIdentifiers.popupShortStringCell, for: indexPath) as! PopupShortStringCell
+                case .multiLine:
+                    cell = tableView.dequeueReusableCell(withIdentifier: ReuseIdentifiers.popupLongStringCell, for: indexPath) as! PopupLongStringCell
+                case .richText:
+                    cell = tableView.dequeueReusableCell(withIdentifier: ReuseIdentifiers.popupLongStringCell, for: indexPath) as! PopupLongStringCell
+                    (cell as! PopupLongStringCell).isRichText = true
+                }
+            case .date:
+                cell = tableView.dequeueReusableCell(withIdentifier: ReuseIdentifiers.popupDateCell, for: indexPath) as! PopupDateCell
+            case .GUID, .OID, .globalID:
+                cell = tableView.dequeueReusableCell(withIdentifier: ReuseIdentifiers.popupIDCell, for: indexPath) as! PopupIDCell
+            default:
+                cell = tableView.dequeueReusableCell(withIdentifier: ReuseIdentifiers.popupShortStringCell, for: indexPath) as! PopupShortStringCell
+            }
+
             cell.popupManager = popupManager
-            cell.field = popupManager.displayFields[indexPath.row]
-            return cell
+            cell.field = field
+            cell.updateCell()
+            
+            return cell as! UITableViewCell
         }
         else if indexPath.section == 0 {
             // M:1 Related Records

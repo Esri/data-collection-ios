@@ -102,3 +102,10 @@ class RelatedRecordsManager: AGSLoadableBase {
         }
     }
 }
+
+class ManyToOneRelatedRecordsManager: RelatedRecordsManager {
+    
+    var popup: AGSPopup? {
+        return popups.first
+    }
+}

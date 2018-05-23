@@ -12,9 +12,19 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import Foundation
 import UIKit
-import ArcGIS
 
-class PopupTextViewCell: PopupFieldCell<UITextView> {
+final class PopupLongStringCell: PopupTextViewCell<String> {
     
+    override var keyboardType: UIKeyboardType {
+        return .asciiCapable
+    }
+}
+
+final class PopupShortStringCell: PopupTextFieldCell<String> {
+    
+    override var keyboardType: UIKeyboardType {
+        return .asciiCapable
+    }
 }

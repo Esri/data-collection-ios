@@ -15,9 +15,29 @@
 import Foundation
 import UIKit
 
-class PopupIntegerCell: PopupTextFieldCell {
+protocol FloatType: StringInitializable {}
+
+extension Float: FloatType {
+    init?(fromString string: String) {
+        guard let float = Float(string) else {
+            return nil
+        }
+        self = float
+    }
+}
+
+extension Double: FloatType {
+    init?(fromString string: String) {
+        guard let float = Double(string) else {
+            return nil
+        }
+        self = float
+    }
+}
+
+final class PopupFloatCell: PopupTextFieldCell<FloatType> {
     
     override var keyboardType: UIKeyboardType {
-        return .numberPad
+        return .decimalPad
     }
 }
