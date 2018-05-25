@@ -83,7 +83,7 @@ class RelatedRecordsManager: AGSLoadableBase {
             loadDidFinishWithError(FeatureTableError.missingRelationshipInfos)
             return
         }
-        
+                
         featureTable.queryRelatedFeaturesAsPopups(forFeature: feature, relationship: info) { [weak self] (popups, error) in
             
             guard error == nil else {

@@ -36,22 +36,50 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="ydy-QP-vAT"/>
                     </view>
-                    <navigationItem key="navigationItem" id="wNb-31-se5">
-                        <barButtonItem key="rightBarButtonItem" title="Edit" id="Xg2-IN-Ddc">
-                            <connections>
-                                <action selector="togglePopupMode:" destination="3xf-Fd-tkl" id="Lax-Mb-v9W"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" id="wNb-31-se5"/>
                     <connections>
                         <outlet property="adjustableBottomConstraint" destination="Z02-eV-r8G" id="blo-tJ-BPH"/>
-                        <outlet property="popupModeButton" destination="Xg2-IN-Ddc" id="lRb-hw-TlM"/>
                         <outlet property="tableView" destination="trp-mI-VCz" id="NMn-Te-vB7"/>
+                        <segue destination="L4M-Nb-VuU" kind="show" identifier="selectRelatedRecordSegue" id="TlH-VR-qRT"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="I9z-Yd-2oZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="590" y="43"/>
+        </scene>
+        <!--Related Records List View Controller-->
+        <scene sceneID="EzW-im-wuY">
+            <objects>
+                <viewController id="L4M-Nb-VuU" customClass="RelatedRecordsListViewController" customModule="data_collection" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="aRU-US-eIU">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="YyG-qD-pvO">
+                                <rect key="frame" x="0.0" y="88" width="375" height="724"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <connections>
+                                    <outlet property="dataSource" destination="L4M-Nb-VuU" id="mtR-rZ-2Dj"/>
+                                    <outlet property="delegate" destination="L4M-Nb-VuU" id="Utf-sg-LgH"/>
+                                </connections>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="YyG-qD-pvO" firstAttribute="top" secondItem="en2-Jj-Q3Y" secondAttribute="top" id="O80-WE-hym"/>
+                            <constraint firstItem="YyG-qD-pvO" firstAttribute="leading" secondItem="en2-Jj-Q3Y" secondAttribute="leading" id="aQh-3Q-p18"/>
+                            <constraint firstAttribute="bottom" secondItem="YyG-qD-pvO" secondAttribute="bottom" id="fDe-x0-och"/>
+                            <constraint firstItem="YyG-qD-pvO" firstAttribute="trailing" secondItem="en2-Jj-Q3Y" secondAttribute="trailing" id="vTn-Vo-Z5v"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="en2-Jj-Q3Y"/>
+                    </view>
+                    <connections>
+                        <outlet property="tableView" destination="YyG-qD-pvO" id="g78-V6-TsX"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="YGD-6k-CKo" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1376.8" y="42.857142857142861"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="VO7-AK-tPa">

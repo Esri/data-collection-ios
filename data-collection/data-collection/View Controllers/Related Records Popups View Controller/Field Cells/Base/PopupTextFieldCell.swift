@@ -15,7 +15,7 @@
 import UIKit
 import ArcGIS
 
-class PopupTextFieldCell<ValueType>: PopupFieldCell<UITextField, ValueType> {
+class PopupTextFieldCell: PopupEditableFieldCell<UITextField> {
     
     public override func insertValueEditView() {
         
@@ -28,7 +28,8 @@ class PopupTextFieldCell<ValueType>: PopupFieldCell<UITextField, ValueType> {
             valueEditView?.borderStyle = .roundedRect
             valueEditView?.keyboardType = keyboardType
         }
-        
+
+        valueEditView?.isEnabled = isValueEditable
         valueEditView?.addTarget(self, action: #selector(PopupTextFieldCell.textFieldDidChange(_:)), for: .editingChanged)
         valueEditView?.heightAnchor.constraint(greaterThanOrEqualToConstant: valueEditView?.frame.size.height ?? 25.0).isActive = true
 
@@ -56,8 +57,7 @@ class PopupTextFieldCell<ValueType>: PopupFieldCell<UITextField, ValueType> {
     }
     
     @objc func textFieldDidChange(_ textField: UITextField) {
-        //
-        print("Text field did change.")
-        valueEditable = textField.text as? ValueType
+
+        updateValue(textField.text)
     }
 }

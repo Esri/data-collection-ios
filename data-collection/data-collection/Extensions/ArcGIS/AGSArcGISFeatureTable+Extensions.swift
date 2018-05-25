@@ -129,4 +129,52 @@ extension AGSArcGISFeatureTable {
             completion(finalResults, finalError)
         }
     }
+    
+    func queryAllFeatures(_ completion: @escaping (AGSFeatureQueryResult?, Error?) -> Void) {
+        
+        // Online
+        if let serviceFeatureTable = self as? AGSServiceFeatureTable {
+            serviceFeatureTable.queryFeatures(with: AGSQueryParameters.all(), queryFeatureFields: .loadAll, completion: completion)
+        }
+        // Offline
+        else if let geodatabaseFeatureTable = self as? AGSGeodatabaseFeatureTable {
+            geodatabaseFeatureTable.queryFeatures(with: AGSQueryParameters.all(), completion: completion)
+        }
+        // Unknown
+        else {
+            completion(nil, FeatureTableError.isNotArcGISFeatureTable)
+            return
+        }
+    }
+    
+    func queryAllFeaturesAsPopups(_ completion: @escaping ([AGSPopup]?, Error?) -> Void) {
+        
+        self.queryAllFeatures { (result, error) in
+            
+            guard error == nil else {
+                print("[Error: Service Feature Table Query]", error!.localizedDescription)
+                completion(nil, error!)
+                return
+            }
+            
+            guard let result = result else {
+                print("[Error: Service Feature Table Query] unknown error")
+                completion(nil, FeatureTableError.queryResultsMissingFeatures)
+                return
+            }
+            
+            guard let features = result.featureEnumerator().allObjects as? [AGSArcGISFeature] else {
+                completion(nil, FeatureTableError.queryResultsMissingFeatures)
+                return
+            }
+            
+            guard let popups = features.asPopups else {
+                completion(nil, FeatureTableError.isNotPopupEnabled)
+                return
+            }
+
+            completion(popups, nil)
+            return
+        }
+    }
 }

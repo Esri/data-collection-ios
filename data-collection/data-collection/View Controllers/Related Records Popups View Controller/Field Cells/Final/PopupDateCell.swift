@@ -15,7 +15,7 @@
 import Foundation
 import UIKit
 
-final class PopupDateCell: PopupTextFieldCell<Date> {
+final class PopupDateCell: PopupTextFieldCell {
     
     public override func insertValueEditView() {
         
@@ -34,8 +34,12 @@ final class PopupDateCell: PopupTextFieldCell<Date> {
     
     @objc func datePickerValueChanged(sender: UIDatePicker) {
         
+        updateValue(sender.date)
+
+        // Update Field
         guard let dateFormatter = field?.format?.dateFormat.dateFormatter else {
             print("[Error: Date Formatter] could not build formatter")
+            valueEditView?.text = sender.date.formattedString
             return
         }
         

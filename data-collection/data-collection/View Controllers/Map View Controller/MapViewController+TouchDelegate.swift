@@ -31,8 +31,6 @@ extension MapViewController: AGSGeoViewTouchDelegate {
             return
         }
 
-        print("[Touch Delegate] will identify at \(mapPoint)")
-
         currentPopup?.clearSelection()
         
         identifyOperation?.cancel()

@@ -13,31 +13,13 @@
 // limitations under the License.
 
 import Foundation
-import UIKit
+import ArcGIS
 
-protocol FloatType: StringInitializable {}
-
-extension Float: FloatType {
-    init?(fromString string: String) {
-        guard let float = Float(string) else {
-            return nil
-        }
-        self = float
-    }
-}
-
-extension Double: FloatType {
-    init?(fromString string: String) {
-        guard let float = Double(string) else {
-            return nil
-        }
-        self = float
-    }
-}
-
-final class PopupFloatCell: PopupTextFieldCell<FloatType> {
+extension AGSQueryParameters {
     
-    override var keyboardType: UIKeyboardType {
-        return .decimalPad
+    static func all() -> AGSQueryParameters {
+        let query = AGSQueryParameters()
+        query.whereClause = "1 = 1"
+        return query
     }
 }

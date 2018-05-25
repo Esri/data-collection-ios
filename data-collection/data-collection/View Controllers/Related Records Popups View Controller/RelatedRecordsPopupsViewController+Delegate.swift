@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import Foundation
 import UIKit
+import ArcGIS
 
 extension RelatedRecordsPopupsViewController: UITableViewDelegate {
     
@@ -28,12 +28,24 @@ extension RelatedRecordsPopupsViewController: UITableViewDelegate {
             return
         }
         
-        if let cell = tableView.cellForRow(at: indexPath) as? RelatedRecordCell {
-            if let rrvc = storyboard?.instantiateViewController(withIdentifier: "RelatedRecordsPopupsViewController") as? RelatedRecordsPopupsViewController {
-                rrvc.popup = cell.popup
-                rrvc.parentPopup = self.popup
-                self.navigationController?.pushViewController(rrvc, animated: true )
-            }
+        guard let cell = tableView.cellForRow(at: indexPath) as? RelatedRecordCell, let childPopup = cell.popup else {
+            return
+        }
+        
+        if indexPath.section == 0, popupManager.isEditing {
+            EphemeralCache.set(object: childPopup, forKey: RelatedRecordsPopupsViewController.ephemeralCacheKey)
+            performSegue(withIdentifier: "selectRelatedRecordSegue", sender: self)
+        }
+        else if popupManager.isEditing {
+            // TODO Alert!
+            self.present(simpleAlertMessage: "You must save first!")
+            // TODO (Save & Present) or (Cancel)
+            return
+        }
+        else if let rrvc = storyboard?.instantiateViewController(withIdentifier: "RelatedRecordsPopupsViewController") as? RelatedRecordsPopupsViewController {
+            rrvc.popup = childPopup
+            rrvc.parentPopup = self.popup
+            self.navigationController?.pushViewController(rrvc, animated: true )
         }
     }
     

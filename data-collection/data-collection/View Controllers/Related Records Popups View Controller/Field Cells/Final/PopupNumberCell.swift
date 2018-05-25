@@ -15,6 +15,20 @@
 import Foundation
 import UIKit
 
-final class PopupIDCell: PopupTextFieldCell/*<UUID>*/ {
+final class PopupNumberCell: PopupTextFieldCell {
     
+    override var keyboardType: UIKeyboardType {
+        
+        guard let type = fieldType else {
+            return .decimalPad
+        }
+        
+        switch type {
+        case .int32, .int16:
+            return .numberPad
+        default:
+            return .decimalPad
+        }
+    }
 }
+

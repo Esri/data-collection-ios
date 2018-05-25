@@ -29,6 +29,13 @@ extension MapViewController {
         
         map.load { [weak self] (error) in
             
+////             TODO REMOVE
+//            let ref = AGSSpatialReference.webMercator()
+//            let envelope = AGSEnvelope(xMin: -13654697.240103, yMin: 5705739.420356, xMax: -13654697.240103, yMax: 5705739.420356, spatialReference: ref)
+//            let viewpoint = AGSViewpoint(targetExtent: envelope)
+//            self?.mapView.setViewpoint(viewpoint)
+////             \ REMOVE
+            
             guard error == nil else {
                 print("[Error: Map Load]", error!.localizedDescription)
                 return

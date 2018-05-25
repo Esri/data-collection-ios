@@ -18,7 +18,7 @@ import ArcGIS
 class MapViewController: AppContextAwareController, PopupsViewControllerEmbeddable {    
 
     var delegate: MapViewControllerDelegate?
-    
+
     @IBOutlet weak var mapView: AGSMapView!
     @IBOutlet weak var popupsContainerView: UIView!
     @IBOutlet weak var selectView: UIView!

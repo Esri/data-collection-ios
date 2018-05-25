@@ -57,6 +57,7 @@ extension AGSPopupDateFormat {
         default:
             return nil
         }
+        
         let formatter = DateFormatter()
         formatter.dateFormat = formattedString
         

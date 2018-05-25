@@ -15,9 +15,13 @@
 import UIKit
 import ArcGIS
 
-class PopupTextViewCell<ValueType>: PopupFieldCell<UITextView, ValueType>, UITextViewDelegate {
+class PopupTextViewCell: PopupEditableFieldCell<UITextView>, UITextViewDelegate {
     
     var isRichText: Bool = false
+    
+    var viewHeight: CGFloat {
+        return 60.0
+    }
     
     public override func insertValueEditView() {
         
@@ -30,9 +34,10 @@ class PopupTextViewCell<ValueType>: PopupFieldCell<UITextView, ValueType>, UITex
             valueEditView?.stylizeBorder()
             valueEditView?.keyboardType = keyboardType
         }
-        
+
+        valueEditView?.isEditable = isValueEditable
         valueEditView?.delegate = self
-        valueEditView?.heightAnchor.constraint(greaterThanOrEqualToConstant: 60.0).isActive = true
+        valueEditView?.heightAnchor.constraint(greaterThanOrEqualToConstant: viewHeight).isActive = true
 
         super.insertValueEditView()
     }
@@ -40,7 +45,7 @@ class PopupTextViewCell<ValueType>: PopupFieldCell<UITextView, ValueType>, UITex
     public override func removeValueEditView() {
         
         valueEditView?.delegate = nil
-        valueEditView?.heightAnchor.constraint(greaterThanOrEqualToConstant: 60.0).isActive = false
+        valueEditView?.heightAnchor.constraint(greaterThanOrEqualToConstant: viewHeight).isActive = false
         
         super.removeValueEditView()
     }
@@ -70,6 +75,7 @@ class PopupTextViewCell<ValueType>: PopupFieldCell<UITextView, ValueType>, UITex
     
     func textViewDidChange(_ textView: UITextView) {
         print(textView.text)
-        valueEditable = textView.text as? ValueType
+        // TODO change
+//        value = textView.text as? ValueType
     }
 }

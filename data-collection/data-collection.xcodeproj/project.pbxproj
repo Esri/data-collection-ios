@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		940DA9722097825700AB4BF6 /* UILabel+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 940DA9712097825700AB4BF6 /* UILabel+Extensions.swift */; };
-		940DA9752097942000AB4BF6 /* PopupFieldCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 940DA9742097942000AB4BF6 /* PopupFieldCell.swift */; };
+		940DA9752097942000AB4BF6 /* PopupFieldCellProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 940DA9742097942000AB4BF6 /* PopupFieldCellProtocol.swift */; };
 		940DA977209794E200AB4BF6 /* PopupTextFieldCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 940DA976209794E200AB4BF6 /* PopupTextFieldCell.swift */; };
 		940DA9792097951000AB4BF6 /* PopupTextViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 940DA9782097951000AB4BF6 /* PopupTextViewCell.swift */; };
 		940DA97B2098E1C600AB4BF6 /* AGSArcGISFeatureTable+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 940DA97A2098E1C600AB4BF6 /* AGSArcGISFeatureTable+Extensions.swift */; };
@@ -35,14 +35,19 @@
 		948066332091474F00A398EA /* RelatedRecordsPopup.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 948066322091474F00A398EA /* RelatedRecordsPopup.storyboard */; };
 		948066362091483600A398EA /* RelatedRecordsPopupsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 948066352091483600A398EA /* RelatedRecordsPopupsViewController.swift */; };
 		948066382091595200A398EA /* RelatedRecordsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 948066372091595200A398EA /* RelatedRecordsManager.swift */; };
-		94A8101D20AA1D7C00D4BC68 /* PopupIntegerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94A8101C20AA1D7C00D4BC68 /* PopupIntegerCell.swift */; };
+		94A8101D20AA1D7C00D4BC68 /* PopupNumberCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94A8101C20AA1D7C00D4BC68 /* PopupNumberCell.swift */; };
 		94A8102520AFA01F00D4BC68 /* PopupAttributesManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94A8102420AFA01F00D4BC68 /* PopupAttributesManager.swift */; };
-		94A8102920B33B2700D4BC68 /* PopupFloatCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94A8102820B33B2700D4BC68 /* PopupFloatCell.swift */; };
 		94A8102B20B33B9200D4BC68 /* PopupStringCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94A8102A20B33B9200D4BC68 /* PopupStringCell.swift */; };
 		94A8102D20B33C0E00D4BC68 /* PopupDateCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94A8102C20B33C0E00D4BC68 /* PopupDateCell.swift */; };
 		94A8102F20B33C3B00D4BC68 /* PopupIDCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94A8102E20B33C3B00D4BC68 /* PopupIDCell.swift */; };
 		94A8103120B35A9100D4BC68 /* RelatedRecordsPopupsViewController+PopupManagerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94A8103020B35A9100D4BC68 /* RelatedRecordsPopupsViewController+PopupManagerDelegate.swift */; };
 		94A8103320B4BF8800D4BC68 /* AGSPopupDateFormat+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94A8103220B4BF8800D4BC68 /* AGSPopupDateFormat+Extensions.swift */; };
+		94A8103720B6306600D4BC68 /* RelatedRecordsListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94A8103620B6306600D4BC68 /* RelatedRecordsListViewController.swift */; };
+		94A8103920B6333000D4BC68 /* FeatureTableRecordsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94A8103820B6333000D4BC68 /* FeatureTableRecordsManager.swift */; };
+		94A8103B20B635A000D4BC68 /* AGSQueryParameters+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94A8103A20B635A000D4BC68 /* AGSQueryParameters+Extensions.swift */; };
+		94AB310120B76A16003540D2 /* PopupReadonlyFieldCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94AB310020B76A16003540D2 /* PopupReadonlyFieldCell.swift */; };
+		94AB310320B76A62003540D2 /* PopupEditableFieldCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94AB310220B76A62003540D2 /* PopupEditableFieldCell.swift */; };
+		94AB310520B7731A003540D2 /* PopupCodedValueCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94AB310420B7731A003540D2 /* PopupCodedValueCell.swift */; };
 		94B375BC207E8D5600691F2A /* AddressLocator.locb in Resources */ = {isa = PBXBuildFile; fileRef = 94B37598207E8D5600691F2A /* AddressLocator.locb */; };
 		94B375BD207E8D5600691F2A /* AddressLocator.loc.xml in Resources */ = {isa = PBXBuildFile; fileRef = 94B37599207E8D5600691F2A /* AddressLocator.loc.xml */; };
 		94B375BE207E8D5600691F2A /* AddressLocator.lox in Resources */ = {isa = PBXBuildFile; fileRef = 94B3759A207E8D5600691F2A /* AddressLocator.lox */; };
@@ -129,7 +134,7 @@
 
 /* Begin PBXFileReference section */
 		940DA9712097825700AB4BF6 /* UILabel+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+Extensions.swift"; sourceTree = "<group>"; };
-		940DA9742097942000AB4BF6 /* PopupFieldCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupFieldCell.swift; sourceTree = "<group>"; };
+		940DA9742097942000AB4BF6 /* PopupFieldCellProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupFieldCellProtocol.swift; sourceTree = "<group>"; };
 		940DA976209794E200AB4BF6 /* PopupTextFieldCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupTextFieldCell.swift; sourceTree = "<group>"; };
 		940DA9782097951000AB4BF6 /* PopupTextViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupTextViewCell.swift; sourceTree = "<group>"; };
 		940DA97A2098E1C600AB4BF6 /* AGSArcGISFeatureTable+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AGSArcGISFeatureTable+Extensions.swift"; sourceTree = "<group>"; };
@@ -156,14 +161,19 @@
 		948066322091474F00A398EA /* RelatedRecordsPopup.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = RelatedRecordsPopup.storyboard; sourceTree = "<group>"; };
 		948066352091483600A398EA /* RelatedRecordsPopupsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RelatedRecordsPopupsViewController.swift; sourceTree = "<group>"; };
 		948066372091595200A398EA /* RelatedRecordsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RelatedRecordsManager.swift; sourceTree = "<group>"; };
-		94A8101C20AA1D7C00D4BC68 /* PopupIntegerCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupIntegerCell.swift; sourceTree = "<group>"; };
+		94A8101C20AA1D7C00D4BC68 /* PopupNumberCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupNumberCell.swift; sourceTree = "<group>"; };
 		94A8102420AFA01F00D4BC68 /* PopupAttributesManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupAttributesManager.swift; sourceTree = "<group>"; };
-		94A8102820B33B2700D4BC68 /* PopupFloatCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupFloatCell.swift; sourceTree = "<group>"; };
 		94A8102A20B33B9200D4BC68 /* PopupStringCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupStringCell.swift; sourceTree = "<group>"; };
 		94A8102C20B33C0E00D4BC68 /* PopupDateCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupDateCell.swift; sourceTree = "<group>"; };
 		94A8102E20B33C3B00D4BC68 /* PopupIDCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupIDCell.swift; sourceTree = "<group>"; };
 		94A8103020B35A9100D4BC68 /* RelatedRecordsPopupsViewController+PopupManagerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RelatedRecordsPopupsViewController+PopupManagerDelegate.swift"; sourceTree = "<group>"; };
 		94A8103220B4BF8800D4BC68 /* AGSPopupDateFormat+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AGSPopupDateFormat+Extensions.swift"; sourceTree = "<group>"; };
+		94A8103620B6306600D4BC68 /* RelatedRecordsListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RelatedRecordsListViewController.swift; sourceTree = "<group>"; };
+		94A8103820B6333000D4BC68 /* FeatureTableRecordsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeatureTableRecordsManager.swift; sourceTree = "<group>"; };
+		94A8103A20B635A000D4BC68 /* AGSQueryParameters+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AGSQueryParameters+Extensions.swift"; sourceTree = "<group>"; };
+		94AB310020B76A16003540D2 /* PopupReadonlyFieldCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupReadonlyFieldCell.swift; sourceTree = "<group>"; };
+		94AB310220B76A62003540D2 /* PopupEditableFieldCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupEditableFieldCell.swift; sourceTree = "<group>"; };
+		94AB310420B7731A003540D2 /* PopupCodedValueCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupCodedValueCell.swift; sourceTree = "<group>"; };
 		94B37598207E8D5600691F2A /* AddressLocator.locb */ = {isa = PBXFileReference; lastKnownFileType = file; path = AddressLocator.locb; sourceTree = "<group>"; };
 		94B37599207E8D5600691F2A /* AddressLocator.loc.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = AddressLocator.loc.xml; sourceTree = "<group>"; };
 		94B3759A207E8D5600691F2A /* AddressLocator.lox */ = {isa = PBXFileReference; lastKnownFileType = file; path = AddressLocator.lox; sourceTree = "<group>"; };
@@ -271,9 +281,8 @@
 		940DA9732097939A00AB4BF6 /* Field Cells */ = {
 			isa = PBXGroup;
 			children = (
-				94A8102720B33B0C00D4BC68 /* Final */,
 				94A8102620B33AFF00D4BC68 /* Base */,
-				94A8102420AFA01F00D4BC68 /* PopupAttributesManager.swift */,
+				94A8102720B33B0C00D4BC68 /* Final */,
 			);
 			path = "Field Cells";
 			sourceTree = "<group>";
@@ -283,6 +292,7 @@
 			children = (
 				948066372091595200A398EA /* RelatedRecordsManager.swift */,
 				9412D212209937950031F9EB /* RelatedRecordCell.swift */,
+				94A8103820B6333000D4BC68 /* FeatureTableRecordsManager.swift */,
 			);
 			path = "Related Records Cells";
 			sourceTree = "<group>";
@@ -311,10 +321,12 @@
 			children = (
 				9412D211209937760031F9EB /* Related Records Cells */,
 				940DA9732097939A00AB4BF6 /* Field Cells */,
+				94A8102420AFA01F00D4BC68 /* PopupAttributesManager.swift */,
 				948066352091483600A398EA /* RelatedRecordsPopupsViewController.swift */,
 				94A8103020B35A9100D4BC68 /* RelatedRecordsPopupsViewController+PopupManagerDelegate.swift */,
 				9412D214209937E50031F9EB /* RelatedRecordsPopupsViewController+Delegate.swift */,
 				9412D2162099382C0031F9EB /* RelatedRecordsPopupsViewController+DataSource.swift */,
+				94A8103620B6306600D4BC68 /* RelatedRecordsListViewController.swift */,
 			);
 			path = "Related Records Popups View Controller";
 			sourceTree = "<group>";
@@ -322,7 +334,9 @@
 		94A8102620B33AFF00D4BC68 /* Base */ = {
 			isa = PBXGroup;
 			children = (
-				940DA9742097942000AB4BF6 /* PopupFieldCell.swift */,
+				940DA9742097942000AB4BF6 /* PopupFieldCellProtocol.swift */,
+				94AB310020B76A16003540D2 /* PopupReadonlyFieldCell.swift */,
+				94AB310220B76A62003540D2 /* PopupEditableFieldCell.swift */,
 				940DA976209794E200AB4BF6 /* PopupTextFieldCell.swift */,
 				940DA9782097951000AB4BF6 /* PopupTextViewCell.swift */,
 			);
@@ -332,8 +346,8 @@
 		94A8102720B33B0C00D4BC68 /* Final */ = {
 			isa = PBXGroup;
 			children = (
-				94A8101C20AA1D7C00D4BC68 /* PopupIntegerCell.swift */,
-				94A8102820B33B2700D4BC68 /* PopupFloatCell.swift */,
+				94AB310420B7731A003540D2 /* PopupCodedValueCell.swift */,
+				94A8101C20AA1D7C00D4BC68 /* PopupNumberCell.swift */,
 				94A8102A20B33B9200D4BC68 /* PopupStringCell.swift */,
 				94A8102C20B33C0E00D4BC68 /* PopupDateCell.swift */,
 				94A8102E20B33C3B00D4BC68 /* PopupIDCell.swift */,
@@ -459,6 +473,7 @@
 				9465691D208802CE00599E55 /* AGSFeatureTable+Extensions.swift */,
 				940DA97A2098E1C600AB4BF6 /* AGSArcGISFeatureTable+Extensions.swift */,
 				94A8103220B4BF8800D4BC68 /* AGSPopupDateFormat+Extensions.swift */,
+				94A8103A20B635A000D4BC68 /* AGSQueryParameters+Extensions.swift */,
 			);
 			path = ArcGIS;
 			sourceTree = "<group>";
@@ -782,9 +797,9 @@
 				94B375C2207E8D5600691F2A /* AppOfflineMapJobConstruct.swift in Sources */,
 				94B375FA207E8E4800691F2A /* UIViewController+Extensions.swift in Sources */,
 				946569022087FAE700599E55 /* MapViewController+MapViewMode.swift in Sources */,
-				94A8102920B33B2700D4BC68 /* PopupFloatCell.swift in Sources */,
+				94AB310320B76A62003540D2 /* PopupEditableFieldCell.swift in Sources */,
 				94A8102D20B33C0E00D4BC68 /* PopupDateCell.swift in Sources */,
-				940DA9752097942000AB4BF6 /* PopupFieldCell.swift in Sources */,
+				940DA9752097942000AB4BF6 /* PopupFieldCellProtocol.swift in Sources */,
 				94D544C1207FC15D00ED0D04 /* AppContainerViewController+JobStatusDelegate.swift in Sources */,
 				94D544C6207FC20700ED0D04 /* MapViewController+Mask.swift in Sources */,
 				94D544C0207FC15D00ED0D04 /* AppContainerViewController+MapDelegate.swift in Sources */,
@@ -792,9 +807,10 @@
 				94D544D920852A5100ED0D04 /* PinDropView.swift in Sources */,
 				94B375C9207E8D5600691F2A /* AppContext.swift in Sources */,
 				94B375D2207E8D5600691F2A /* EphemeralCache.swift in Sources */,
+				94AB310520B7731A003540D2 /* PopupCodedValueCell.swift in Sources */,
 				94B375C0207E8D5600691F2A /* AppFiles.swift in Sources */,
 				94D544BF207FC15D00ED0D04 /* AppContainerViewController.swift in Sources */,
-				94A8101D20AA1D7C00D4BC68 /* PopupIntegerCell.swift in Sources */,
+				94A8101D20AA1D7C00D4BC68 /* PopupNumberCell.swift in Sources */,
 				94D544D720852A5100ED0D04 /* CompassView.swift in Sources */,
 				94B375FB207E8E4800691F2A /* UIButton+Extensions.swift in Sources */,
 				94B375F6207E8E4800691F2A /* AGSPortal+Extensions.swift in Sources */,
@@ -811,6 +827,7 @@
 				94B37602207E8E4800691F2A /* BasicTypes+Extensions.swift in Sources */,
 				94B375FD207E8E4800691F2A /* UIColor+Extensions.swift in Sources */,
 				94D544C3207FC15D00ED0D04 /* DownloadMaskViewController.swift in Sources */,
+				94AB310120B76A16003540D2 /* PopupReadonlyFieldCell.swift in Sources */,
 				94B375F2207E8E4800691F2A /* AGSLoadStatus+Extensions.swift in Sources */,
 				94B375FE207E8E4800691F2A /* UIImage+Extensions.swift in Sources */,
 				94B37600207E8E4800691F2A /* UIAlertController+Extensions.swift in Sources */,
@@ -843,15 +860,18 @@
 				9465691E208802CE00599E55 /* AGSFeatureTable+Extensions.swift in Sources */,
 				94A8102520AFA01F00D4BC68 /* PopupAttributesManager.swift in Sources */,
 				946569232088036C00599E55 /* PopupsViewControllerEmbeddable.swift in Sources */,
+				94A8103920B6333000D4BC68 /* FeatureTableRecordsManager.swift in Sources */,
 				94B375F3207E8E4800691F2A /* AGSQueryParameter+Extensions.swift in Sources */,
 				9412D215209937E50031F9EB /* RelatedRecordsPopupsViewController+Delegate.swift in Sources */,
 				9465691C208802AE00599E55 /* AGSFeatureLayer+Extensions.swift in Sources */,
+				94A8103720B6306600D4BC68 /* RelatedRecordsListViewController.swift in Sources */,
 				94B375C8207E8D5600691F2A /* AppContext+WorkMode.swift in Sources */,
 				94D544BD207FC15D00ED0D04 /* DrawerViewController.swift in Sources */,
 				94D544DA20852A5100ED0D04 /* ActivityBarView.swift in Sources */,
 				94B375D6207E8DD600691F2A /* GeocodeSearchManager.swift in Sources */,
 				94B375C3207E8D5600691F2A /* AppDefaults.swift in Sources */,
 				94B375F9207E8E4800691F2A /* AGSArcGISFeature+Extensions.swift in Sources */,
+				94A8103B20B635A000D4BC68 /* AGSQueryParameters+Extensions.swift in Sources */,
 				94B375C7207E8D5600691F2A /* AppContext+Login.swift in Sources */,
 				94B375CD207E8D5600691F2A /* SVProgressAnimatedView.m in Sources */,
 				94656910208800E100599E55 /* MapViewController+TouchDelegate.swift in Sources */,

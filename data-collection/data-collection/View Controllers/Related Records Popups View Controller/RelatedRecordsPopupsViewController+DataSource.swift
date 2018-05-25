@@ -14,6 +14,7 @@
 
 import Foundation
 import UIKit
+import ArcGIS
 
 extension RelatedRecordsPopupsViewController: UITableViewDataSource {
     
@@ -37,36 +38,41 @@ extension RelatedRecordsPopupsViewController: UITableViewDataSource {
         // Section 0
         if indexPathWithinAttributes(indexPath) {
             
-            let field = popupManager.displayFields[indexPath.row]
+            let field: AGSPopupField!
+            
+            if popupManager.isEditing {
+                field = popupManager.editableDisplayFields[indexPath.row]
+            }
+            else {
+                field = popupManager.displayFields[indexPath.row]
+            }
+            
             let fieldType = popupManager.fieldType(for: field)
             
             let cell: PopupFieldCellProtocol!
             
-            switch fieldType {
-            case .int16, .int32:
-                cell = tableView.dequeueReusableCell(withIdentifier: ReuseIdentifiers.popupIntegerCell, for: indexPath) as! PopupIntegerCell
-            case .float, .double:
-                cell = tableView.dequeueReusableCell(withIdentifier: ReuseIdentifiers.popupFloatCell, for: indexPath) as! PopupFloatCell
-            case .text:
-                switch field.stringFieldOption {
-                case .singleLine, .unknown:
-                    cell = tableView.dequeueReusableCell(withIdentifier: ReuseIdentifiers.popupShortStringCell, for: indexPath) as! PopupShortStringCell
-                case .multiLine:
-                    cell = tableView.dequeueReusableCell(withIdentifier: ReuseIdentifiers.popupLongStringCell, for: indexPath) as! PopupLongStringCell
-                case .richText:
-                    cell = tableView.dequeueReusableCell(withIdentifier: ReuseIdentifiers.popupLongStringCell, for: indexPath) as! PopupLongStringCell
-                    (cell as! PopupLongStringCell).isRichText = true
-                }
-            case .date:
-                cell = tableView.dequeueReusableCell(withIdentifier: ReuseIdentifiers.popupDateCell, for: indexPath) as! PopupDateCell
-            case .GUID, .OID, .globalID:
-                cell = tableView.dequeueReusableCell(withIdentifier: ReuseIdentifiers.popupIDCell, for: indexPath) as! PopupIDCell
-            default:
-                cell = tableView.dequeueReusableCell(withIdentifier: ReuseIdentifiers.popupShortStringCell, for: indexPath) as! PopupShortStringCell
+            if let _ = popupManager.domain(for: field) as? AGSCodedValueDomain {
+                cell = tableView.dequeueReusableCell(withIdentifier: ReuseIdentifiers.codedValueCell, for: indexPath) as! PopupCodedValueCell
             }
+            else {
+                switch fieldType {
+                case .int16, .int32, .float, .double:
+                    cell = tableView.dequeueReusableCell(withIdentifier: ReuseIdentifiers.popupNumberCell, for: indexPath) as! PopupNumberCell
+                case .text:
+                    cell = tableView.dequeueReusableCell(withIdentifier: ReuseIdentifiers.popupTextCell, for: indexPath) as! PopupStringCell
+                case .date:
+                    cell = tableView.dequeueReusableCell(withIdentifier: ReuseIdentifiers.popupDateCell, for: indexPath) as! PopupDateCell
+                case .GUID, .OID, .globalID:
+                    cell = tableView.dequeueReusableCell(withIdentifier: ReuseIdentifiers.popupIDCell, for: indexPath) as! PopupIDCell
+                default:
+                    cell = tableView.dequeueReusableCell(withIdentifier: ReuseIdentifiers.popupReadonlyCell, for: indexPath) as! PopupReadonlyFieldCell
+                }
+            }
+
 
             cell.popupManager = popupManager
             cell.field = field
+            
             cell.updateCell()
             
             return cell as! UITableViewCell
@@ -95,19 +101,24 @@ extension RelatedRecordsPopupsViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         
-        if indexPath.section > 0 {
-            guard let relatedRecordCell = cell as? RelatedRecordCell else {
-                return
-            }
-            // TODO CLEAN CELL?
-            relatedRecordCell.popup = nil
-        }
+//        if indexPath.section > 0 {
+//            guard let relatedRecordCell = cell as? RelatedRecordCell else {
+//                return
+//            }
+//            // TODO CLEAN CELL?
+//            relatedRecordCell.popup = nil
+//        }
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
         if section == 0 {
-            return popupManager.displayFields.count + manyToOneRecords.count
+            if popupManager.isEditing {
+                return popupManager.editableDisplayFields.count + manyToOneRecords.count
+            }
+            else {
+                return popupManager.displayFields.count + manyToOneRecords.count
+            }
         }
         else {
             let relationship = oneToManyRecords[section-1]

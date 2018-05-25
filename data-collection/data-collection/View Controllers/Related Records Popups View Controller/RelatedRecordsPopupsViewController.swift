@@ -15,21 +15,16 @@
 import Foundation
 import ArcGIS
 
-class RelatedRecordsPopupsViewController: UIViewController {
+class RelatedRecordsPopupsViewController: UIViewController, EphemeralCacheCacheable {
     
-    struct ReuseIdentifiers {
-        static let popupIntegerCell = "PopupIntegerCellReuseIdentifier"
-        static let popupFloatCell = "PopupFloatCellReuseIdentifier"
-        static let popupLongStringCell = "PopupLongTextCellReuseIdentifier"
-        static let popupShortStringCell = "PopupShortTextCellReuseIdentifier"
-        static let popupDateCell = "PopupDateCellReuseIdentifier"
-        static let popupIDCell = "PopupIDCellReuseIdentifier"
-        static let relatedRecordCell = "RelatedRecordCellReuseID"
+    // TODO rework ephemeralCacheKey to be owned by the object sent in.
+    static var ephemeralCacheKey: String {
+        return "EphemeralCache.RelatedRecordsPopupsViewController.TableList.Key"
     }
     
     @IBOutlet weak var tableView: UITableView!
     
-    @IBOutlet weak var popupModeButton: UIBarButtonItem!
+    var popupModeButton: UIBarButtonItem!
     
     @IBOutlet weak var adjustableBottomConstraint: NSLayoutConstraint!
     
@@ -66,24 +61,39 @@ class RelatedRecordsPopupsViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        tableView.register(PopupIntegerCell.self, forCellReuseIdentifier: ReuseIdentifiers.popupIntegerCell)
-        tableView.register(PopupFloatCell.self, forCellReuseIdentifier: ReuseIdentifiers.popupFloatCell)
-        tableView.register(PopupLongStringCell.self, forCellReuseIdentifier: ReuseIdentifiers.popupLongStringCell)
-        tableView.register(PopupShortStringCell.self, forCellReuseIdentifier: ReuseIdentifiers.popupShortStringCell)
+
+        tableView.register(PopupReadonlyFieldCell.self, forCellReuseIdentifier: ReuseIdentifiers.popupReadonlyCell)
+        tableView.register(PopupNumberCell.self, forCellReuseIdentifier: ReuseIdentifiers.popupNumberCell)
+        tableView.register(PopupStringCell.self, forCellReuseIdentifier: ReuseIdentifiers.popupTextCell)
         tableView.register(PopupDateCell.self, forCellReuseIdentifier: ReuseIdentifiers.popupDateCell)
         tableView.register(PopupIDCell.self, forCellReuseIdentifier: ReuseIdentifiers.popupIDCell)
+        tableView.register(PopupCodedValueCell.self, forCellReuseIdentifier: ReuseIdentifiers.codedValueCell)
         tableView.register(RelatedRecordCell.self, forCellReuseIdentifier: ReuseIdentifiers.relatedRecordCell)
         
         tableView.rowHeight = UITableViewAutomaticDimension
         
         // Is root popup view controller?
         if isRootPopup {
-            self.addBackButton(withSelector: #selector(RelatedRecordsPopupsViewController.dismissRelatedRecordsPopupsViewController(_:)))
+            adjustBackButton()
+        }
+        
+        // TODO Inject Edit Button only if Editing is enabled
+        if popupManager.shouldAllowEdit {
+            popupModeButton = UIBarButtonItem(title: "Edit", style: .plain, target: self, action: #selector(RelatedRecordsPopupsViewController.togglePopupMode(_:)))
+            self.navigationItem.rightBarButtonItem = popupModeButton
         }
         
         NotificationCenter.default.addObserver(self, selector: #selector(RelatedRecordsPopupsViewController.adjustKeyboardVisible(notification:)), name: .UIKeyboardWillShow, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(RelatedRecordsPopupsViewController.adjustKeyboardHidden(notification:)), name: .UIKeyboardWillHide, object: nil)
+    }
+    
+    private func adjustBackButton() {
+        if popupManager.isEditing {
+            self.addCancelButton(withSelector: #selector(RelatedRecordsPopupsViewController.cancelPopupEditMode(_:)))
+        }
+        else {
+            self.addBackButton(withSelector: #selector(RelatedRecordsPopupsViewController.dismissRelatedRecordsPopupsViewController(_:)))
+        }
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -114,6 +124,18 @@ class RelatedRecordsPopupsViewController: UIViewController {
         tableView.reloadData()
     }
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let destination = segue.destination as? RelatedRecordsListViewController {
+            if
+                let popup = EphemeralCache.get(objectForKey: RelatedRecordsPopupsViewController.ephemeralCacheKey) as? AGSPopup,
+                let feature = popup.geoElement as? AGSArcGISFeature,
+                let table = feature.featureTable as? AGSArcGISFeatureTable {
+                destination.featureTable = table
+                destination.delegate = self
+            }
+        }
+    }
+    
     func indexPathWithinAttributes(_ indexPath: IndexPath) -> Bool {
         
         if indexPath.section == 0 {
@@ -121,43 +143,62 @@ class RelatedRecordsPopupsViewController: UIViewController {
                 return true
             }
         }
-        
         return false
     }
     
-    @IBAction func togglePopupMode(_ sender: Any) {
+    @objc func cancelPopupEditMode(_ sender: Any?) {
         
-        guard !loadingRelatedRecords else {
+        popupManager.cancelEditing()
+        
+        adjustUI()
+    }
+    
+    @objc func togglePopupMode(_ sender: Any) {
+        
+        guard !loadingRelatedRecords, popupManager.shouldAllowEdit else {
             return
         }
         
-        // TODO: ensure mode can be alternated
-
         if popupManager.isEditing {
             
-            if let invalids = validatePopup(), invalids.count > 1 {
-                print("Invalid fields!")
-                // Alert User that popup is invalid.
-                for invalid in invalids {
-                    print(invalid)
-                }
-                print("~")
+            guard let invalids = validatePopup() else {
                 return
             }
             
-            popupManager.cancelEditing()
+            guard invalids.count == 0 else {
+                self.present(simpleAlertMessage: "You cannot save this \(popupManager.title ?? "feature"). There \(invalids.count == 1 ? "is" : "are") \(invalids.count) invalid field\(invalids.count == 1 ? "" : "s").")
+                return
+            }
+            
+            popupManager.finishEditing { [weak self] (error) in
+                
+                if let err = error {
+                    print("[Error: Validating Feature]", err.localizedDescription)
+                }
+                
+                self?.adjustUI()
+            }
         }
         else {
+            
             guard popupManager.shouldAllowEdit else {
                 return 
             }
+            
             popupManager.startEditing()
+            
+            adjustUI()
         }
+    }
+    
+    func adjustUI() {
         
         popupModeButton.title = popupManager.actionButtonTitle
         tableView.reloadData()
+        adjustBackButton()
     }
     
+    // TODO Move Into RelatedRecordsPopupManager
     func validatePopup() -> [Error]? {
         
         guard popupManager.isEditing else {
@@ -178,6 +219,12 @@ class RelatedRecordsPopupsViewController: UIViewController {
     }
     
     @objc func dismissRelatedRecordsPopupsViewController(_ sender: AnyObject?) {
+        guard !popupManager.isEditing else {
+            // TODO Alert!
+            self.present(simpleAlertMessage: "You must save first!")
+            // TODO Save
+            return
+        }
         dismiss(animated: true, completion: nil)
     }
     
@@ -200,3 +247,9 @@ class RelatedRecordsPopupsViewController: UIViewController {
     }
 }
 
+extension RelatedRecordsPopupsViewController: RelatedRecordsListViewControllerDelegate {
+    
+    func relatedRecordsListViewController(_ viewController: RelatedRecordsListViewController, didSelectPopup popup: AGSPopup) {
+        print("New related record", popup)
+    }
+}

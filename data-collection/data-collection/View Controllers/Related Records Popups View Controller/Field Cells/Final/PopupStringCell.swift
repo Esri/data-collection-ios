@@ -15,16 +15,32 @@
 import Foundation
 import UIKit
 
-final class PopupLongStringCell: PopupTextViewCell<String> {
-    
-    override var keyboardType: UIKeyboardType {
-        return .asciiCapable
-    }
-}
 
-final class PopupShortStringCell: PopupTextFieldCell<String> {
+final class PopupStringCell: PopupTextViewCell {
+
+    override var viewHeight: CGFloat {
+        
+        guard let field = field else {
+            return super.viewHeight
+        }
+
+        let lineHeight = CGFloat(30.0)
+        
+        switch field.stringFieldOption {
+        case .singleLine, .unknown:
+            return lineHeight
+        case .multiLine, .richText:
+            return lineHeight * 3.0
+        }
+    }
     
-    override var keyboardType: UIKeyboardType {
-        return .asciiCapable
+    override func textViewDidChange(_ textView: UITextView) {
+        
+        guard let field = field, field.stringFieldOption == .richText else {
+            updateValue(textView.text)
+            return
+        }
+        
+        updateValue(textView.attributedText)
     }
 }
