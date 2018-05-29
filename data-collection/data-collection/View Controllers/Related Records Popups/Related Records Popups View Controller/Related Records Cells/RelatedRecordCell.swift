@@ -64,6 +64,8 @@ class RelatedRecordCell: UITableViewCell {
         update()
     }
     
+    // TODO validity
+    
     private func update() {
         
         guard let manager = popup?.asManager else {

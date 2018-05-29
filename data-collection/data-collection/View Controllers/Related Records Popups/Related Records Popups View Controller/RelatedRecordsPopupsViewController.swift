@@ -53,7 +53,8 @@ class RelatedRecordsPopupsViewController: UIViewController, EphemeralCacheCachea
 
         tableView.register(PopupReadonlyFieldCell.self, forCellReuseIdentifier: ReuseIdentifiers.popupReadonlyCell)
         tableView.register(PopupNumberCell.self, forCellReuseIdentifier: ReuseIdentifiers.popupNumberCell)
-        tableView.register(PopupStringCell.self, forCellReuseIdentifier: ReuseIdentifiers.popupTextCell)
+        tableView.register(PopupShortStringCell.self, forCellReuseIdentifier: ReuseIdentifiers.popupShortTextCell)
+        tableView.register(PopupLongStringCell.self, forCellReuseIdentifier: ReuseIdentifiers.popupLongTextCell)
         tableView.register(PopupDateCell.self, forCellReuseIdentifier: ReuseIdentifiers.popupDateCell)
         tableView.register(PopupIDCell.self, forCellReuseIdentifier: ReuseIdentifiers.popupIDCell)
         tableView.register(PopupCodedValueCell.self, forCellReuseIdentifier: ReuseIdentifiers.codedValueCell)
@@ -208,6 +209,9 @@ class RelatedRecordsPopupsViewController: UIViewController, EphemeralCacheCachea
 extension RelatedRecordsPopupsViewController: RelatedRecordsListViewControllerDelegate {
     
     func relatedRecordsListViewController(_ viewController: RelatedRecordsListViewController, didSelectPopup popup: AGSPopup) {
-        print("New related record", popup)
+        
+        _ = navigationController?.popViewController(animated: true)
+        
+        recordsManager.update(manyToOne: popup, forRelationship: <#T##AGSRelationshipInfo#>)
     }
 }

@@ -16,22 +16,18 @@ import Foundation
 import UIKit
 
 
-final class PopupStringCell: PopupTextViewCell {
+final class PopupShortStringCell: PopupTextFieldCell {
+    
+    @objc override func textFieldDidChange(_ textField: UITextField) {
 
+        updateValue(textField.text)
+    }
+}
+
+final class PopupLongStringCell: PopupTextViewCell {
+    
     override var viewHeight: CGFloat {
-        
-        guard let field = field else {
-            return super.viewHeight
-        }
-
-        let lineHeight = CGFloat(30.0)
-        
-        switch field.stringFieldOption {
-        case .singleLine, .unknown:
-            return lineHeight
-        case .multiLine, .richText:
-            return lineHeight * 3.0
-        }
+        return 150.0
     }
     
     override func textViewDidChange(_ textView: UITextView) {

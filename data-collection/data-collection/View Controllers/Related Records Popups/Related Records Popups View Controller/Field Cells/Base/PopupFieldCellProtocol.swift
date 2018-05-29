@@ -18,7 +18,7 @@ import UIKit
 protocol PopupFieldCellProtocol {
     
     var field: AGSPopupField? { get set }
-    var popupManager: AGSPopupManager? { get set }
+    var popupManager: PopupRelatedRecordsManager? { get set }
     
     func refreshCell()
 }
@@ -57,7 +57,8 @@ extension PopupFieldCellProtocol {
 struct ReuseIdentifiers {
 
     static let popupNumberCell = "PopupNumberCellReuseIdentifier"
-    static let popupTextCell = "PopupTextCellReuseIdentifier"
+    static let popupShortTextCell = "PopupShortTextCellReuseIdentifier"
+    static let popupLongTextCell = "PopupLongTextCellReuseIdentifier"
     static let popupDateCell = "PopupDateCellReuseIdentifier"
     static let popupIDCell = "PopupIDCellReuseIdentifier"
     static let popupReadonlyCell = "PopupReadonlyCellReuseIdentifier"

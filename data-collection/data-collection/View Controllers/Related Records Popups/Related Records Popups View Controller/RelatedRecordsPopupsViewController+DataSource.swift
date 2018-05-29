@@ -46,7 +46,12 @@ extension RelatedRecordsPopupsViewController: UITableViewDataSource {
                 case .int16, .int32, .float, .double:
                     cell = tableView.dequeueReusableCell(withIdentifier: ReuseIdentifiers.popupNumberCell, for: indexPath) as! PopupNumberCell
                 case .text:
-                    cell = tableView.dequeueReusableCell(withIdentifier: ReuseIdentifiers.popupTextCell, for: indexPath) as! PopupStringCell
+                    if field.stringFieldOption.isLong {
+                        cell = tableView.dequeueReusableCell(withIdentifier: ReuseIdentifiers.popupLongTextCell, for: indexPath) as! PopupLongStringCell
+                    }
+                    else {
+                        cell = tableView.dequeueReusableCell(withIdentifier: ReuseIdentifiers.popupShortTextCell, for: indexPath) as! PopupShortStringCell
+                    }
                 case .date:
                     cell = tableView.dequeueReusableCell(withIdentifier: ReuseIdentifiers.popupDateCell, for: indexPath) as! PopupDateCell
                 case .GUID, .OID, .globalID:

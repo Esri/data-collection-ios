@@ -68,37 +68,6 @@ extension AGSPopup {
         }
         feature.unrelate(to: relatedFeature)
     }
-    
-    func loadRelatedRecords(_ completion: @escaping ([OneToManyRelatedRecordsManager]?)->Void) {
-        
-        // Kick off load of related records
-        var preloadedRelatedRecords = [OneToManyRelatedRecordsManager]()
-        guard
-            let feature = geoElement as? AGSArcGISFeature,
-            let relatedRecordsInfos = feature.relatedRecordsInfos,
-            let featureTable = feature.featureTable as? AGSArcGISFeatureTable
-            else {
-                completion(nil)
-                return
-        }
-        
-        // TODO work this rule into AppRules
-        for info in relatedRecordsInfos {
-            if featureTable.isPopupEnabledFor(relationshipInfo: info) {
-                if info.isManyToOne, let relatedRecord = ManyToOneRelatedRecordsManager(relationshipInfo: info, feature: feature) {
-                    preloadedRelatedRecords.append(relatedRecord)
-                }
-                else if let relatedRecord = OneToManyRelatedRecordsManager(relationshipInfo: info, feature: feature) {
-                    preloadedRelatedRecords.append(relatedRecord)
-                }
-            }
-        }
-        
-        AGSLoadObjects(preloadedRelatedRecords) { (_) in
-            completion(preloadedRelatedRecords)
-            return
-        }
-    }
 }
 
 extension Collection where Iterator.Element == AGSPopup {
