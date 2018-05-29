@@ -36,7 +36,6 @@
 		948066362091483600A398EA /* RelatedRecordsPopupsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 948066352091483600A398EA /* RelatedRecordsPopupsViewController.swift */; };
 		948066382091595200A398EA /* RelatedRecordsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 948066372091595200A398EA /* RelatedRecordsManager.swift */; };
 		94A8101D20AA1D7C00D4BC68 /* PopupNumberCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94A8101C20AA1D7C00D4BC68 /* PopupNumberCell.swift */; };
-		94A8102520AFA01F00D4BC68 /* PopupAttributesManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94A8102420AFA01F00D4BC68 /* PopupAttributesManager.swift */; };
 		94A8102B20B33B9200D4BC68 /* PopupStringCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94A8102A20B33B9200D4BC68 /* PopupStringCell.swift */; };
 		94A8102D20B33C0E00D4BC68 /* PopupDateCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94A8102C20B33C0E00D4BC68 /* PopupDateCell.swift */; };
 		94A8102F20B33C3B00D4BC68 /* PopupIDCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94A8102E20B33C3B00D4BC68 /* PopupIDCell.swift */; };
@@ -162,7 +161,6 @@
 		948066352091483600A398EA /* RelatedRecordsPopupsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RelatedRecordsPopupsViewController.swift; sourceTree = "<group>"; };
 		948066372091595200A398EA /* RelatedRecordsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RelatedRecordsManager.swift; sourceTree = "<group>"; };
 		94A8101C20AA1D7C00D4BC68 /* PopupNumberCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupNumberCell.swift; sourceTree = "<group>"; };
-		94A8102420AFA01F00D4BC68 /* PopupAttributesManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupAttributesManager.swift; sourceTree = "<group>"; };
 		94A8102A20B33B9200D4BC68 /* PopupStringCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupStringCell.swift; sourceTree = "<group>"; };
 		94A8102C20B33C0E00D4BC68 /* PopupDateCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupDateCell.swift; sourceTree = "<group>"; };
 		94A8102E20B33C3B00D4BC68 /* PopupIDCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupIDCell.swift; sourceTree = "<group>"; };
@@ -321,7 +319,6 @@
 			children = (
 				9412D211209937760031F9EB /* Related Records Cells */,
 				940DA9732097939A00AB4BF6 /* Field Cells */,
-				94A8102420AFA01F00D4BC68 /* PopupAttributesManager.swift */,
 				948066352091483600A398EA /* RelatedRecordsPopupsViewController.swift */,
 				94A8103020B35A9100D4BC68 /* RelatedRecordsPopupsViewController+PopupManagerDelegate.swift */,
 				9412D214209937E50031F9EB /* RelatedRecordsPopupsViewController+Delegate.swift */,
@@ -858,7 +855,6 @@
 				94B375F5207E8E4800691F2A /* AGSMapView+Extensions.swift in Sources */,
 				94B375FF207E8E4800691F2A /* UIStoryboardSegue+Extensions.swift in Sources */,
 				9465691E208802CE00599E55 /* AGSFeatureTable+Extensions.swift in Sources */,
-				94A8102520AFA01F00D4BC68 /* PopupAttributesManager.swift in Sources */,
 				946569232088036C00599E55 /* PopupsViewControllerEmbeddable.swift in Sources */,
 				94A8103920B6333000D4BC68 /* FeatureTableRecordsManager.swift in Sources */,
 				94B375F3207E8E4800691F2A /* AGSQueryParameter+Extensions.swift in Sources */,
@@ -1043,8 +1039,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = "";
 				FRAMEWORK_SEARCH_PATHS = $HOME/Library/SDKs/ArcGIS/iOS/Frameworks/Static/;
 				INFOPLIST_FILE = "$(SRCROOT)/Resources/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
 					"-ObjC",
@@ -1065,8 +1063,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = "";
 				FRAMEWORK_SEARCH_PATHS = $HOME/Library/SDKs/ArcGIS/iOS/Frameworks/Static/;
 				INFOPLIST_FILE = "$(SRCROOT)/Resources/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
 					"-ObjC",

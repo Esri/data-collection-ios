@@ -19,39 +19,26 @@ import ArcGIS
 extension RelatedRecordsPopupsViewController: UITableViewDataSource {
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return oneToManyRecords.count + 1
+        
+        return recordsManager.numberOfSections()
     }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         
-        if section == 0 {
-            return nil
-        }
-        else {
-            return oneToManyRecords[section-1].name
-        }
+        return recordsManager.header(forSection: section)
     }
     
     // TODO Will remove cell
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        // Section 0
-        if indexPathWithinAttributes(indexPath) {
+        
+        if let field = recordsManager.field(forIndexPath: indexPath) {
             
-            let field: AGSPopupField!
-            
-            if popupManager.isEditing {
-                field = popupManager.editableDisplayFields[indexPath.row]
-            }
-            else {
-                field = popupManager.displayFields[indexPath.row]
-            }
-            
-            let fieldType = popupManager.fieldType(for: field)
+            let fieldType = recordsManager.fieldType(for: field)
             
             let cell: PopupFieldCellProtocol!
             
-            if let _ = popupManager.domain(for: field) as? AGSCodedValueDomain {
+            if let _ = recordsManager.domain(for: field) as? AGSCodedValueDomain {
                 cell = tableView.dequeueReusableCell(withIdentifier: ReuseIdentifiers.codedValueCell, for: indexPath) as! PopupCodedValueCell
             }
             else {
@@ -68,62 +55,32 @@ extension RelatedRecordsPopupsViewController: UITableViewDataSource {
                     cell = tableView.dequeueReusableCell(withIdentifier: ReuseIdentifiers.popupReadonlyCell, for: indexPath) as! PopupReadonlyFieldCell
                 }
             }
-
-
-            cell.popupManager = popupManager
+            
+            cell.popupManager = recordsManager
             cell.field = field
             
-            cell.updateCell()
+            cell.refreshCell()
             
             return cell as! UITableViewCell
+
         }
-        else if indexPath.section == 0 {
-            // M:1 Related Records
-            let cell = tableView.dequeueReusableCell(withIdentifier: ReuseIdentifiers.relatedRecordCell, for: indexPath) as! RelatedRecordCell
-            let recordIndex = indexPath.row - popupManager.displayFields.count
-            let record = manyToOneRecords[recordIndex]
-            let popup = record.popups.first
-            cell.popup = popup
-            cell.maxAttributes = 2
-            return cell
-        }
-        // Section 1..n
         else {
-            // 1:M Related Records
+            let popup = recordsManager.popup(forIndexPath: indexPath)
             let cell = tableView.dequeueReusableCell(withIdentifier: ReuseIdentifiers.relatedRecordCell, for: indexPath) as! RelatedRecordCell
-            let record = oneToManyRecords[indexPath.section-1]
-            let popup = record.popups[indexPath.row]
             cell.popup = popup
-            cell.maxAttributes = 3
+            cell.maxAttributes = recordsManager.maxAttributes(forSection: indexPath.section)
             return cell
         }
     }
     
     func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         
-//        if indexPath.section > 0 {
-//            guard let relatedRecordCell = cell as? RelatedRecordCell else {
-//                return
-//            }
-//            // TODO CLEAN CELL?
-//            relatedRecordCell.popup = nil
-//        }
+        // TODO clean cell?
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-        if section == 0 {
-            if popupManager.isEditing {
-                return popupManager.editableDisplayFields.count + manyToOneRecords.count
-            }
-            else {
-                return popupManager.displayFields.count + manyToOneRecords.count
-            }
-        }
-        else {
-            let relationship = oneToManyRecords[section-1]
-            return relationship.popups.count
-        }
+        return recordsManager.numberOfRows(inSection: section)
     }
 }
 

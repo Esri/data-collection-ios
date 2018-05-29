@@ -67,6 +67,11 @@ extension RelatedRecordsListViewController: UITableViewDelegate {
         }
         
         delegate.relatedRecordsListViewController(self, didSelectPopup: popup)
+        
+        self.dismiss(animated: true) { [weak self] in
+            self?.featureTable = nil
+            self?.featureTableRecordsManager = nil
+        }
     }
 }
 

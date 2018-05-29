@@ -63,11 +63,17 @@ enum AssetsError: Error {
 enum RelatedRecordsManagerError: Error, CustomNSError, LocalizedError {
     
     case featureMissingTable
-    
+    case missingManyToOneRelationship(String)
+    case invalidPopup
+
     var errorCode: Int {
         switch self {
         case .featureMissingTable:
             return 2001
+        case .missingManyToOneRelationship(_):
+            return 2002
+        case .invalidPopup:
+            return 2003
         }
     }
 
@@ -75,6 +81,10 @@ enum RelatedRecordsManagerError: Error, CustomNSError, LocalizedError {
         switch self {
         case .featureMissingTable:
             return [NSLocalizedDescriptionKey: "Feature does not belong to a feature table"]
+        case .missingManyToOneRelationship(let str):
+            return [NSLocalizedDescriptionKey: "Missing value for many to one relationship \(str)"]
+        case .invalidPopup:
+            return [NSLocalizedDescriptionKey: "Popup with related records in invalid."]
         }
     }
 

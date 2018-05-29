@@ -47,10 +47,32 @@ extension AGSPopup {
         return AGSPopupManager(popup: self)
     }
     
-    func loadRelatedRecords(_ completion: @escaping ([RelatedRecordsManager]?)->Void) {
+    func relate(toPopup popup: AGSPopup, relationshipInfo info: AGSRelationshipInfo) {
+        
+        guard
+            let feature = geoElement as? AGSArcGISFeature,
+            let relatedFeature = popup.geoElement as? AGSArcGISFeature
+            else {
+                return
+        }
+        feature.relate(to: relatedFeature, relationshipInfo: info)
+    }
+    
+    func unrelate(toPopup popup: AGSPopup) {
+        
+        guard
+            let feature = geoElement as? AGSArcGISFeature,
+            let relatedFeature = popup.geoElement as? AGSArcGISFeature
+            else {
+                return
+        }
+        feature.unrelate(to: relatedFeature)
+    }
+    
+    func loadRelatedRecords(_ completion: @escaping ([OneToManyRelatedRecordsManager]?)->Void) {
         
         // Kick off load of related records
-        var preloadedRelatedRecords = [RelatedRecordsManager]()
+        var preloadedRelatedRecords = [OneToManyRelatedRecordsManager]()
         guard
             let feature = geoElement as? AGSArcGISFeature,
             let relatedRecordsInfos = feature.relatedRecordsInfos,
@@ -62,8 +84,13 @@ extension AGSPopup {
         
         // TODO work this rule into AppRules
         for info in relatedRecordsInfos {
-            if featureTable.isPopupEnabledFor(relationshipInfo: info), let relatedRecord = RelatedRecordsManager(relationshipInfo: info, feature: feature) {
-                preloadedRelatedRecords.append(relatedRecord)
+            if featureTable.isPopupEnabledFor(relationshipInfo: info) {
+                if info.isManyToOne, let relatedRecord = ManyToOneRelatedRecordsManager(relationshipInfo: info, feature: feature) {
+                    preloadedRelatedRecords.append(relatedRecord)
+                }
+                else if let relatedRecord = OneToManyRelatedRecordsManager(relationshipInfo: info, feature: feature) {
+                    preloadedRelatedRecords.append(relatedRecord)
+                }
             }
         }
         

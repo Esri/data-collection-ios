@@ -25,7 +25,7 @@ class PopupEditableFieldCell<ViewType: UIView>: PopupReadonlyFieldCell {
         field = nil
         popupManager = nil
         
-        updateCell()
+        refreshCell()
     }
     
     func updateValue(_ value: Any?) {
@@ -34,25 +34,38 @@ class PopupEditableFieldCell<ViewType: UIView>: PopupReadonlyFieldCell {
             return
         }
         
-        var isValid: Bool = true
-        
-        defer {
-            titleLabel.textColor = isValid ? AppConfiguration.appColors.tableCellTitle : .red
-        }
-        
-        do {
-            try popupManager.updateValue(value, field: field)
-        }
-        catch {
-            print(error)
-            isValid = false
-        }
+        try? popupManager.updateValue(value, field: field)
+
+        checkCellValidity()
     }
     
-    override func updateCell() {
+    override func refreshCell() {
         
         layoutSubviews()
         popuplateCellForPopupField()
+    }
+    
+    override public func popuplateCellForPopupField() {
+        
+        super.popuplateCellForPopupField()
+        
+        checkCellValidity()
+    }
+    
+    public func checkCellValidity() {
+        
+        guard let popupManager = popupManager, let field = field else {
+            return
+        }
+        
+        if let _ /*error*/ = popupManager.validationError(for: field) {
+            // TODO figure out if I want to display the error
+            // TODO make configurable
+            titleLabel.textColor = .red
+        }
+        else {
+            titleLabel.textColor = AppConfiguration.appColors.tableCellTitle
+        }
     }
     
     public func removeValueLabel() {

@@ -18,13 +18,13 @@ import ArcGIS
 extension RelatedRecordsPopupsViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, shouldHighlightRowAt indexPath: IndexPath) -> Bool {
-        
-        return !indexPathWithinAttributes(indexPath)
+
+        return !recordsManager.indexPathWithinAttributes(indexPath)
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        guard !indexPathWithinAttributes(indexPath) else {
+        guard !recordsManager.indexPathWithinAttributes(indexPath) else {
             return
         }
         
@@ -32,11 +32,11 @@ extension RelatedRecordsPopupsViewController: UITableViewDelegate {
             return
         }
         
-        if indexPath.section == 0, popupManager.isEditing {
+        if indexPath.section == 0, recordsManager.isEditing {
             EphemeralCache.set(object: childPopup, forKey: RelatedRecordsPopupsViewController.ephemeralCacheKey)
             performSegue(withIdentifier: "selectRelatedRecordSegue", sender: self)
         }
-        else if popupManager.isEditing {
+        else if recordsManager.isEditing {
             // TODO Alert!
             self.present(simpleAlertMessage: "You must save first!")
             // TODO (Save & Present) or (Cancel)

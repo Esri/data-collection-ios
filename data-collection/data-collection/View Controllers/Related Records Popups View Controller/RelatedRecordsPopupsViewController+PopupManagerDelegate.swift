@@ -18,6 +18,6 @@ import ArcGIS
 extension RelatedRecordsPopupsViewController: AGSPopupManagerDelegate {
     
     func popupManager(_ popupManager: AGSPopupManager, validityDidChange geoElementValid: Bool) {
-        _ = validatePopup()
+        _ = recordsManager.validatePopup()
     }
 }

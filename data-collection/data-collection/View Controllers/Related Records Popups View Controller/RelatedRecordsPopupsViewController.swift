@@ -32,26 +32,15 @@ class RelatedRecordsPopupsViewController: UIViewController, EphemeralCacheCachea
 
     var popup: AGSPopup! {
         didSet {
-            popupManager = AGSPopupManager(popup: popup)
+            recordsManager = PopupRelatedRecordsManager(popup: popup)
         }
     }
     
-    var popupManager: AGSPopupManager! {
-        didSet {
-            popupManager.delegate = self
-            
-            for field in popupManager.editableDisplayFields {
-                print(popupManager.fieldType(for: field))
-            }
-        }
-    }
+    var recordsManager: PopupRelatedRecordsManager!
     
     var isRootPopup: Bool {
         return parentPopup == nil
     }
-    
-    var manyToOneRecords = [RelatedRecordsManager]()
-    var oneToManyRecords = [RelatedRecordsManager]()
     
     var loadingRelatedRecords = false {
         didSet {
@@ -78,7 +67,7 @@ class RelatedRecordsPopupsViewController: UIViewController, EphemeralCacheCachea
         }
         
         // TODO Inject Edit Button only if Editing is enabled
-        if popupManager.shouldAllowEdit {
+        if recordsManager.shouldAllowEdit {
             popupModeButton = UIBarButtonItem(title: "Edit", style: .plain, target: self, action: #selector(RelatedRecordsPopupsViewController.togglePopupMode(_:)))
             self.navigationItem.rightBarButtonItem = popupModeButton
         }
@@ -88,7 +77,7 @@ class RelatedRecordsPopupsViewController: UIViewController, EphemeralCacheCachea
     }
     
     private func adjustBackButton() {
-        if popupManager.isEditing {
+        if recordsManager.isEditing {
             self.addCancelButton(withSelector: #selector(RelatedRecordsPopupsViewController.cancelPopupEditMode(_:)))
         }
         else {
@@ -100,21 +89,15 @@ class RelatedRecordsPopupsViewController: UIViewController, EphemeralCacheCachea
         super.viewWillAppear(animated)
         
         // Set Title
-        title = popupManager.title
+        title = recordsManager.title
 
         // Is root popup?
         if isRootPopup {
             
             loadingRelatedRecords = true
-            
-            popup.loadRelatedRecords { [weak self] (relatedRecords) in
-                
-                guard let records = relatedRecords else {
-                    return
-                }
 
-                self?.oneToManyRecords = records.oneToManyLoaded
-                self?.manyToOneRecords = records.manyToOneLoaded
+            recordsManager.loadRelatedRecords { [weak self] in
+                
                 self?.loadingRelatedRecords = false
                 self?.tableView.reloadData()
             }
@@ -125,6 +108,7 @@ class RelatedRecordsPopupsViewController: UIViewController, EphemeralCacheCachea
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
         if let destination = segue.destination as? RelatedRecordsListViewController {
             if
                 let popup = EphemeralCache.get(objectForKey: RelatedRecordsPopupsViewController.ephemeralCacheKey) as? AGSPopup,
@@ -136,41 +120,31 @@ class RelatedRecordsPopupsViewController: UIViewController, EphemeralCacheCachea
         }
     }
     
-    func indexPathWithinAttributes(_ indexPath: IndexPath) -> Bool {
-        
-        if indexPath.section == 0 {
-            guard indexPath.row >= popupManager.displayFields.count else {
-                return true
-            }
-        }
-        return false
-    }
-    
     @objc func cancelPopupEditMode(_ sender: Any?) {
         
-        popupManager.cancelEditing()
+        recordsManager.cancelEditing()
         
         adjustUI()
     }
     
     @objc func togglePopupMode(_ sender: Any) {
         
-        guard !loadingRelatedRecords, popupManager.shouldAllowEdit else {
+        guard !loadingRelatedRecords, recordsManager.shouldAllowEdit else {
             return
         }
         
-        if popupManager.isEditing {
+        if recordsManager.isEditing {
             
-            guard let invalids = validatePopup() else {
+            guard let invalids = recordsManager.validatePopup() else {
                 return
             }
             
             guard invalids.count == 0 else {
-                self.present(simpleAlertMessage: "You cannot save this \(popupManager.title ?? "feature"). There \(invalids.count == 1 ? "is" : "are") \(invalids.count) invalid field\(invalids.count == 1 ? "" : "s").")
+                self.present(simpleAlertMessage: "You cannot save this \(recordsManager.title ?? "feature"). There \(invalids.count == 1 ? "is" : "are") \(invalids.count) invalid field\(invalids.count == 1 ? "" : "s").")
                 return
             }
             
-            popupManager.finishEditing { [weak self] (error) in
+            recordsManager.finishEditing { [weak self] (error) in
                 
                 if let err = error {
                     print("[Error: Validating Feature]", err.localizedDescription)
@@ -181,11 +155,14 @@ class RelatedRecordsPopupsViewController: UIViewController, EphemeralCacheCachea
         }
         else {
             
-            guard popupManager.shouldAllowEdit else {
+            guard recordsManager.shouldAllowEdit else {
                 return 
             }
             
-            popupManager.startEditing()
+            guard recordsManager.startEditing() else {
+                // TODO Inform user that the session couldn't start
+                return
+            }
             
             adjustUI()
         }
@@ -193,33 +170,13 @@ class RelatedRecordsPopupsViewController: UIViewController, EphemeralCacheCachea
     
     func adjustUI() {
         
-        popupModeButton.title = popupManager.actionButtonTitle
+        popupModeButton.title = recordsManager.actionButtonTitle
         tableView.reloadData()
         adjustBackButton()
     }
     
-    // TODO Move Into RelatedRecordsPopupManager
-    func validatePopup() -> [Error]? {
-        
-        guard popupManager.isEditing else {
-            return nil
-        }
-        
-        var invalids = [Error]()
-        
-        for field in popupManager.editableDisplayFields {
-            if let error = popupManager.validationError(for: field) {
-                invalids.append(error)
-            }
-        }
-        
-        // TODO enforce M:1 relationships exist.
-        
-        return invalids
-    }
-    
     @objc func dismissRelatedRecordsPopupsViewController(_ sender: AnyObject?) {
-        guard !popupManager.isEditing else {
+        guard !recordsManager.isEditing else {
             // TODO Alert!
             self.present(simpleAlertMessage: "You must save first!")
             // TODO Save
@@ -247,6 +204,7 @@ class RelatedRecordsPopupsViewController: UIViewController, EphemeralCacheCachea
     }
 }
 
+// TODO wrap within RelatedRecordsManager
 extension RelatedRecordsPopupsViewController: RelatedRecordsListViewControllerDelegate {
     
     func relatedRecordsListViewController(_ viewController: RelatedRecordsListViewController, didSelectPopup popup: AGSPopup) {
