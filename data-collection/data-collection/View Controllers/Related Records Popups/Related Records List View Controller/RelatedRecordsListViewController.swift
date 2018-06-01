@@ -31,11 +31,11 @@ class RelatedRecordsListViewController: UIViewController {
                 featureTableRecordsManager = nil
                 return
             }
-            featureTableRecordsManager = FeatureTableRecordsManager(featureTable: table)
+            featureTableRecordsManager = RelatedRecordsTableManager(featureTable: table)
         }
     }
     
-    var featureTableRecordsManager: FeatureTableRecordsManager?
+    var featureTableRecordsManager: RelatedRecordsTableManager?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -61,12 +61,12 @@ extension RelatedRecordsListViewController: UITableViewDelegate {
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        guard let relatedRecordCell = tableView.cellForRow(at: indexPath) as? RelatedRecordCell, let popup = relatedRecordCell.popup, let delegate = delegate else {
+        guard let relatedRecordCell = tableView.cellForRow(at: indexPath) as? RelatedRecordCell, let popup = relatedRecordCell.popup else {
             // TODO dismiss with unknown error
             return
         }
         
-        delegate.relatedRecordsListViewController(self, didSelectPopup: popup)
+        delegate?.relatedRecordsListViewController(self, didSelectPopup: popup)
     }
 }
 

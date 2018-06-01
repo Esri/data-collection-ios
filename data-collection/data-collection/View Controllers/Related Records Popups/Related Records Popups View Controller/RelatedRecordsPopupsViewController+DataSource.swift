@@ -28,7 +28,7 @@ extension RelatedRecordsPopupsViewController: UITableViewDataSource {
         return recordsManager.header(forSection: section)
     }
     
-    // TODO Will remove cell
+    // TODO Will remove cell function
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
@@ -46,7 +46,7 @@ extension RelatedRecordsPopupsViewController: UITableViewDataSource {
                 case .int16, .int32, .float, .double:
                     cell = tableView.dequeueReusableCell(withIdentifier: ReuseIdentifiers.popupNumberCell, for: indexPath) as! PopupNumberCell
                 case .text:
-                    if field.stringFieldOption.isLong {
+                    if field.stringFieldOption == .multiLine || field.stringFieldOption == .richText {
                         cell = tableView.dequeueReusableCell(withIdentifier: ReuseIdentifiers.popupLongTextCell, for: indexPath) as! PopupLongStringCell
                     }
                     else {

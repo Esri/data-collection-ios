@@ -65,6 +65,7 @@ enum RelatedRecordsManagerError: Error, CustomNSError, LocalizedError {
     case featureMissingTable
     case missingManyToOneRelationship(String)
     case invalidPopup
+    case cannotRelateFeatures
 
     var errorCode: Int {
         switch self {
@@ -74,6 +75,8 @@ enum RelatedRecordsManagerError: Error, CustomNSError, LocalizedError {
             return 2002
         case .invalidPopup:
             return 2003
+        case .cannotRelateFeatures:
+            return 2004
         }
     }
 
@@ -85,6 +88,8 @@ enum RelatedRecordsManagerError: Error, CustomNSError, LocalizedError {
             return [NSLocalizedDescriptionKey: "Missing value for many to one relationship \(str)"]
         case .invalidPopup:
             return [NSLocalizedDescriptionKey: "Popup with related records in invalid."]
+        case .cannotRelateFeatures:
+            return [NSLocalizedDescriptionKey: "Features or Relationship Info missing."]
         }
     }
 
@@ -103,6 +108,7 @@ enum FeatureTableError: Error, CustomNSError, LocalizedError {
     case queryResultsMissingPopups
     case isNotArcGISFeatureTable
     case isNotPopupEnabled
+    case cannotEditFeature
 
     var errorCode: Int {
         switch self {
@@ -122,6 +128,8 @@ enum FeatureTableError: Error, CustomNSError, LocalizedError {
             return 3007
         case .isNotPopupEnabled:
             return 3008
+        case .cannotEditFeature:
+            return 3009
         }
     }
     
@@ -143,6 +151,8 @@ enum FeatureTableError: Error, CustomNSError, LocalizedError {
             return [NSLocalizedDescriptionKey: "Feature table is not of type AGSServiceFeatureTable or AGSGeodatabaseFeatureTable."]
         case .isNotPopupEnabled:
             return [NSLocalizedDescriptionKey: "Feature table is not popup enabled."]
+        case .cannotEditFeature:
+            return [NSLocalizedDescriptionKey: "Feature table cannot edit (add/update) feature."]
         }
     }
     

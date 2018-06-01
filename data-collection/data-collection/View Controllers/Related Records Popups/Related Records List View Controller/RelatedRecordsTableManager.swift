@@ -15,7 +15,7 @@
 import Foundation
 import ArcGIS
 
-class FeatureTableRecordsManager: AGSLoadableBase {
+class RelatedRecordsTableManager: AGSLoadableBase {
     
     weak var featureTable: AGSArcGISFeatureTable?
     
@@ -38,7 +38,13 @@ class FeatureTableRecordsManager: AGSLoadableBase {
             return
         }
         
-        featureTable.queryAllFeaturesAsPopups { [weak self] (popups, error) in
+        var sorted: AGSOrderBy?
+        
+        if let definition = featureTable.popupDefinition, let field = definition.fields.first {
+            sorted = AGSOrderBy(fieldName: field.fieldName, sortOrder: .ascending)
+        }
+        
+        featureTable.queryAllFeaturesAsPopups(sorted: sorted) { [weak self] (popups, error) in
             
             guard error == nil else {
                 self?.loadDidFinishWithError(error!)
@@ -50,20 +56,7 @@ class FeatureTableRecordsManager: AGSLoadableBase {
                 return
             }
             
-            self?.popups = popups/*.sorted(by: { (a, b) -> Bool in
-                guard
-                let featureA = a.geoElement as? AGSArcGISFeature,
-                let featureB = b.geoElement as? AGSArcGISFeature,
-                featureA.attributes.count > 0,
-                featureB.attributes.count > 0,
-                let comparableA = featureA.attributes[0] as? Equatable,
-                let comparableB = featureB.attributes[0] as? Equatable
-                    else {
-                        return true
-                }
-                return comparableA < comparableB
-            })*/
-            
+            self?.popups = popups
             self?.loadDidFinishWithError(nil)
         }
     }

@@ -36,6 +36,7 @@ extension RelatedRecordsPopupsViewController: UITableViewDelegate {
             EphemeralCache.set(object: childPopup, forKey: RelatedRecordsPopupsViewController.ephemeralCacheKey)
             performSegue(withIdentifier: "selectRelatedRecordSegue", sender: self)
         }
+            
         else if recordsManager.isEditing {
             // TODO Alert!
             self.present(simpleAlertMessage: "You must save first!")

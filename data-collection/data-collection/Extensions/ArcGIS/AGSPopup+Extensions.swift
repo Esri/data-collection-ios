@@ -68,6 +68,31 @@ extension AGSPopup {
         }
         feature.unrelate(to: relatedFeature)
     }
+    
+    func relationship(withPopup popup: AGSPopup) -> AGSRelationshipInfo? {
+        
+        guard
+            let feature = geoElement as? AGSArcGISFeature,
+            let relationships = feature.relatedRecordsInfos,
+            let relatedFeature = popup.geoElement as? AGSArcGISFeature,
+            let relatedFeatureTable = relatedFeature.featureTable as? AGSArcGISFeatureTable
+            else {
+                return nil
+        }
+        
+        return relationships.first { (info) -> Bool in
+            return info.relatedTableID == relatedFeatureTable.serviceLayerID
+        }
+    }
+    
+    var isAddedToTable: Bool {
+        
+        guard let feature = geoElement as? AGSArcGISFeature else {
+            return false
+        }
+        
+        return feature.objectID != nil
+    }
 }
 
 extension Collection where Iterator.Element == AGSPopup {

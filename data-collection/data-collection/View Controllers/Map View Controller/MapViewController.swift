@@ -42,18 +42,22 @@ class MapViewController: AppContextAwareController, PopupsViewControllerEmbeddab
     
     var currentPopup: AGSPopup? {
         didSet {
-            smallPopupViewController?.popup = currentPopup
-            guard currentPopup != nil else {
-                mapViewMode = .defaultView
+            updateUIForCurrentTree()
+        }
+    }
+    
+    func updateUIForCurrentTree() {
+        smallPopupViewController?.popup = currentPopup
+        guard currentPopup != nil else {
+            mapViewMode = .defaultView
+            return
+        }
+        smallPopupViewController?.popuplateViewWithBestContent { [weak self] in
+            guard let _ = self?.currentPopup else {
+                self?.mapViewMode = .defaultView
                 return
             }
-            smallPopupViewController?.popuplateViewWithBestContent { [weak self] in
-                guard let _ = self?.currentPopup else {
-                    self?.mapViewMode = .defaultView
-                    return
-                }
-                self?.mapViewMode = .selectedFeature
-            }
+            self?.mapViewMode = .selectedFeature
         }
     }
     
@@ -108,6 +112,7 @@ class MapViewController: AppContextAwareController, PopupsViewControllerEmbeddab
 
         (popupsContainerView as! ShrinkingView).actionClosure = { [weak self] in
             
+            // todo change strongSElf
             guard let strongSelf = self, strongSelf.currentPopup != nil else {
                 return
             }
@@ -117,7 +122,14 @@ class MapViewController: AppContextAwareController, PopupsViewControllerEmbeddab
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let destination = segue.navigationDestination as? RelatedRecordsPopupsViewController {
-            destination.popup = currentPopup!
+            if let newPopup = EphemeralCache.get(objectForKey: "MapViewController.newFeature.spatial") as? AGSPopup {
+                destination.popup = newPopup
+                destination.editingPopup = true
+                // TODO : Toggle Bool for edit mode
+            }
+            else {
+                destination.popup = currentPopup!
+            }
         }
     }
 
@@ -127,6 +139,7 @@ class MapViewController: AppContextAwareController, PopupsViewControllerEmbeddab
         super.viewWillAppear(animated)
         
         adjustForLocationAuthorizationStatus()
+        updateUIForCurrentTree()
     }
 
     override func didReceiveMemoryWarning() {

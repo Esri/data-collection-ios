@@ -48,6 +48,18 @@ extension AGSArcGISFeature {
         }
         return infos.count
     }
+    
+    var objectID: Int64? {
+        
+        guard
+            let featureTable = featureTable as? AGSArcGISFeatureTable,
+            let oid = attributes[featureTable.objectIDField] as? Int64
+            else {
+            return nil
+        }
+        
+        return oid
+    }
 }
 
 extension Collection where Iterator.Element == AGSArcGISFeature {

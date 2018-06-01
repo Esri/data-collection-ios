@@ -130,15 +130,21 @@ extension AGSArcGISFeatureTable {
         }
     }
     
-    func queryAllFeatures(_ completion: @escaping (AGSFeatureQueryResult?, Error?) -> Void) {
+    func queryAllFeatures(sorted: AGSOrderBy? = nil, completion: @escaping (AGSFeatureQueryResult?, Error?) -> Void) {
         
+        let queryParams = AGSQueryParameters.all()
+        
+        if let sort = sorted {
+            queryParams.orderByFields.append(sort)
+        }
+
         // Online
         if let serviceFeatureTable = self as? AGSServiceFeatureTable {
-            serviceFeatureTable.queryFeatures(with: AGSQueryParameters.all(), queryFeatureFields: .loadAll, completion: completion)
+            serviceFeatureTable.queryFeatures(with: queryParams, queryFeatureFields: .loadAll, completion: completion)
         }
         // Offline
         else if let geodatabaseFeatureTable = self as? AGSGeodatabaseFeatureTable {
-            geodatabaseFeatureTable.queryFeatures(with: AGSQueryParameters.all(), completion: completion)
+            geodatabaseFeatureTable.queryFeatures(with: queryParams, completion: completion)
         }
         // Unknown
         else {
@@ -147,9 +153,9 @@ extension AGSArcGISFeatureTable {
         }
     }
     
-    func queryAllFeaturesAsPopups(_ completion: @escaping ([AGSPopup]?, Error?) -> Void) {
+    func queryAllFeaturesAsPopups(sorted: AGSOrderBy? = nil, completion: @escaping ([AGSPopup]?, Error?) -> Void) {
         
-        self.queryAllFeatures { (result, error) in
+        self.queryAllFeatures(sorted: sorted) { (result, error) in
             
             guard error == nil else {
                 print("[Error: Service Feature Table Query]", error!.localizedDescription)
@@ -172,9 +178,49 @@ extension AGSArcGISFeatureTable {
                 completion(nil, FeatureTableError.isNotPopupEnabled)
                 return
             }
-
+            
             completion(popups, nil)
             return
+        }
+    }
+    
+    func edit(feature: AGSArcGISFeature, completion: @escaping (Error?)->Void) {
+        
+        let editClosure:((Error?)->Void)? = { error in
+            
+            guard error == nil else {
+                print("[Error: Feature Service Table] could not edit", error!.localizedDescription)
+                completion(error!)
+                return
+            }
+            
+            // If online, apply edits.
+            guard let serviceFeatureTable = self as? AGSServiceFeatureTable else {
+                completion(nil)
+                return
+            }
+            
+            serviceFeatureTable.applyEdits(completion: { (results, error) in
+                guard error == nil else {
+                    print("[Error: Feature Service Table] could not apply edits", error!.localizedDescription)
+                    completion(error!)
+                    return
+                }
+                feature.refreshObjectID()
+                completion(nil)
+            })
+        }
+        
+        // Update
+        if canUpdate(feature) {
+            update(feature, completion: editClosure)
+        }
+        // Add
+        else if canAddFeature {
+            add(feature, completion: editClosure)
+        }
+        else {
+            completion(FeatureTableError.cannotEditFeature)
         }
     }
 }

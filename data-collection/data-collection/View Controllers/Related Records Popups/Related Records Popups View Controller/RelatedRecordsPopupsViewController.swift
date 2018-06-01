@@ -38,6 +38,68 @@ class RelatedRecordsPopupsViewController: UIViewController, EphemeralCacheCachea
     
     var recordsManager: PopupRelatedRecordsManager!
     
+    var editingPopup: Bool {
+        get {
+            return recordsManager.isEditing
+        }
+        set {
+            if recordsManager.isEditing {
+                
+                // Will return nil if not editing
+                guard let invalids = recordsManager.validatePopup() else {
+                    return
+                }
+                
+                // 1. Check Validity
+                guard invalids.count == 0 else {
+                    self.present(simpleAlertMessage: "You cannot save this \(recordsManager.title ?? "feature"). There \(invalids.count == 1 ? "is" : "are") \(invalids.count) invalid field\(invalids.count == 1 ? "" : "s").")
+                    return
+                }
+                
+                // 2. Finish Editing
+                recordsManager.finishEditing { [weak self] (error) in
+                    
+                    guard error == nil else {
+                        print("[Error: Validating Feature]", error!.localizedDescription)
+                        return
+                    }
+                    
+                    guard
+                        let feature = self?.popup.geoElement as? AGSArcGISFeature,
+                        let featureTable = feature.featureTable as? AGSArcGISFeatureTable
+                        else {
+                            // somethign went very wrong
+                            // TODO alert
+                            return
+                    }
+                    
+                    featureTable.edit(feature: feature, completion: { [weak self] (error) in
+                        
+                        if error != nil {
+                            print("[Error] feature table edit error", error!.localizedDescription)
+                        }
+                        
+                        self?.adjustUI()
+                    })
+                }
+            }
+            else {
+                
+                guard appContext.isLoggedIn else {
+                    // TODO login
+                    return
+                }
+                
+                guard recordsManager.shouldAllowEdit, recordsManager.startEditing() else {
+                    // TODO Inform user that the session couldn't start
+                    return
+                }
+                
+                adjustUI()
+            }
+        }
+    }
+    
     var isRootPopup: Bool {
         return parentPopup == nil
     }
@@ -62,11 +124,6 @@ class RelatedRecordsPopupsViewController: UIViewController, EphemeralCacheCachea
         
         tableView.rowHeight = UITableViewAutomaticDimension
         
-        // Is root popup view controller?
-        if isRootPopup {
-            adjustBackButton()
-        }
-        
         // TODO Inject Edit Button only if Editing is enabled
         if recordsManager.shouldAllowEdit {
             popupModeButton = UIBarButtonItem(title: "Edit", style: .plain, target: self, action: #selector(RelatedRecordsPopupsViewController.togglePopupMode(_:)))
@@ -75,28 +132,15 @@ class RelatedRecordsPopupsViewController: UIViewController, EphemeralCacheCachea
         
         NotificationCenter.default.addObserver(self, selector: #selector(RelatedRecordsPopupsViewController.adjustKeyboardVisible(notification:)), name: .UIKeyboardWillShow, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(RelatedRecordsPopupsViewController.adjustKeyboardHidden(notification:)), name: .UIKeyboardWillHide, object: nil)
-    }
-    
-    private func adjustBackButton() {
-        if recordsManager.isEditing {
-            self.addCancelButton(withSelector: #selector(RelatedRecordsPopupsViewController.cancelPopupEditMode(_:)))
-        }
-        else {
-            self.addBackButton(withSelector: #selector(RelatedRecordsPopupsViewController.dismissRelatedRecordsPopupsViewController(_:)))
-        }
-    }
-
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
         
         // Set Title
         title = recordsManager.title
-
+        
         // Is root popup?
         if isRootPopup {
             
             loadingRelatedRecords = true
-
+            
             recordsManager.loadRelatedRecords { [weak self] in
                 
                 self?.loadingRelatedRecords = false
@@ -104,15 +148,26 @@ class RelatedRecordsPopupsViewController: UIViewController, EphemeralCacheCachea
             }
         }
         
-        // Finally, load table
-        tableView.reloadData()
+        // Adjust UI for state
+        adjustUI()
+    }
+    
+    // TODO: reorganize
+    private func adjustBackButton() {
+        if isRootPopup {
+            if recordsManager.isEditing {
+                self.addCancelButton(withSelector: #selector(RelatedRecordsPopupsViewController.cancelPopupEditMode(_:)))
+            }
+            else {
+                self.addBackButton(withSelector: #selector(RelatedRecordsPopupsViewController.dismissRelatedRecordsPopupsViewController(_:)))
+            }
+        }
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
         if let destination = segue.destination as? RelatedRecordsListViewController {
-            if
-                let popup = EphemeralCache.get(objectForKey: RelatedRecordsPopupsViewController.ephemeralCacheKey) as? AGSPopup,
+            if  let popup = EphemeralCache.get(objectForKey: RelatedRecordsPopupsViewController.ephemeralCacheKey) as? AGSPopup,
                 let feature = popup.geoElement as? AGSArcGISFeature,
                 let table = feature.featureTable as? AGSArcGISFeatureTable {
                 destination.featureTable = table
@@ -123,56 +178,37 @@ class RelatedRecordsPopupsViewController: UIViewController, EphemeralCacheCachea
     
     @objc func cancelPopupEditMode(_ sender: Any?) {
         
-        recordsManager.cancelEditing()
+        let alert: UIAlertController!
         
-        adjustUI()
+        if popup.isAddedToTable {
+            alert = UIAlertController.multiAlert(title: nil, message: "Discard changes?", actionTitle: "Discard", action: { [weak self] (_) in
+                self?.recordsManager.cancelEditing()
+                self?.adjustUI()
+                }, cancelTitle: "Cancel", cancel: nil)
+        }
+        else {
+            alert = UIAlertController.multiAlert(title: nil, message: "Discard changes?", actionTitle: "Discard", action: { [weak self] (_) in
+                self?.dismiss(animated: true, completion: nil)
+                }, cancelTitle: "Cancel", cancel: nil)
+        }
+        
+        present(alert, animated: true, completion: nil)
     }
     
     @objc func togglePopupMode(_ sender: Any) {
-        
-        guard !loadingRelatedRecords, recordsManager.shouldAllowEdit else {
-            return
-        }
-        
-        if recordsManager.isEditing {
-            
-            guard let invalids = recordsManager.validatePopup() else {
-                return
-            }
-            
-            guard invalids.count == 0 else {
-                self.present(simpleAlertMessage: "You cannot save this \(recordsManager.title ?? "feature"). There \(invalids.count == 1 ? "is" : "are") \(invalids.count) invalid field\(invalids.count == 1 ? "" : "s").")
-                return
-            }
-            
-            recordsManager.finishEditing { [weak self] (error) in
-                
-                if let err = error {
-                    print("[Error: Validating Feature]", err.localizedDescription)
-                }
-                
-                self?.adjustUI()
-            }
-        }
-        else {
-            
-            guard recordsManager.shouldAllowEdit else {
-                return 
-            }
-            
-            guard recordsManager.startEditing() else {
-                // TODO Inform user that the session couldn't start
-                return
-            }
-            
-            adjustUI()
-        }
+        editingPopup = !editingPopup
     }
     
     func adjustUI() {
         
-        popupModeButton.title = recordsManager.actionButtonTitle
-        tableView.reloadData()
+        if popupModeButton != nil {
+            popupModeButton.title = recordsManager.actionButtonTitle
+        }
+        
+        if tableView != nil {
+            tableView.reloadData()
+        }
+        
         adjustBackButton()
     }
     
@@ -208,10 +244,16 @@ class RelatedRecordsPopupsViewController: UIViewController, EphemeralCacheCachea
 // TODO wrap within RelatedRecordsManager
 extension RelatedRecordsPopupsViewController: RelatedRecordsListViewControllerDelegate {
     
-    func relatedRecordsListViewController(_ viewController: RelatedRecordsListViewController, didSelectPopup popup: AGSPopup) {
+    func relatedRecordsListViewController(_ viewController: RelatedRecordsListViewController, didSelectPopup relatedPopup: AGSPopup) {
         
         _ = navigationController?.popViewController(animated: true)
         
-        recordsManager.update(manyToOne: popup, forRelationship: <#T##AGSRelationshipInfo#>)
+        guard let info = self.popup.relationship(withPopup: relatedPopup) else {
+            return
+        }
+        
+        recordsManager.update(manyToOne: relatedPopup, forRelationship: info)
+        
+        tableView.reloadData()
     }
 }

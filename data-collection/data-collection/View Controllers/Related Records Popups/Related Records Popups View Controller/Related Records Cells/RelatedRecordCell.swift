@@ -21,13 +21,8 @@ class RelatedRecordCell: UITableViewCell {
     
     public var popup: AGSPopup? {
         didSet {
-            guard let feature = popup?.geoElement as? AGSArcGISFeature else {
-                update()
-                return
-            }
-            feature.load { [weak self] (error) in
-                self?.update()
-            }
+            // TODO: Check no need to .load
+            update()
         }
     }
     

@@ -88,6 +88,19 @@ extension MapViewController {
         currentPopup?.clearSelection()
         currentPopup = nil
         
+        guard
+            let featureTable = featureLayer.featureTable as? AGSArcGISFeatureTable,
+            featureTable.canAddFeature,
+            let feature = featureTable.createFeature() as? AGSArcGISFeature,
+            let popupDefinition = featureTable.popupDefinition
+            else {
+            // TODO notify user
+            return
+        }
+        
+        let newPopup = AGSPopup(geoElement: feature, popupDefinition: popupDefinition)
+        EphemeralCache.set(object: newPopup, forKey: "MapViewController.newFeature.nonspatial")
+
         mapViewMode = .selectingFeature
     }
     
@@ -105,6 +118,16 @@ extension MapViewController {
                 present(simpleAlertMessage: "Can't add feature, you are outside the bounds of your map.")
                 return
             }
+            
+            guard let newPopup = EphemeralCache.get(objectForKey: "MapViewController.newFeature.nonspatial") as? AGSPopup else {
+                // TODO notify
+                return
+            }
+            
+            newPopup.geoElement.geometry = centerPoint
+            EphemeralCache.set(object: newPopup, forKey: "MapViewController.newFeature.spatial")
+            
+            performSegue(withIdentifier: "modallyPresentRelatedRecordsPopupViewController", sender: nil)
             
             break
         case .offlineExtent:
