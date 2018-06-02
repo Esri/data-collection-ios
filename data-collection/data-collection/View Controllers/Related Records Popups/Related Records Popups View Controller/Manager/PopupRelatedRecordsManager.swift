@@ -32,7 +32,7 @@ class PopupRelatedRecordsManager: AGSPopupManager {
             manager.cancelChange()
         }
         
-        // TODO 2. One To Many ?
+        // 2. Cancel Session
         
         super.cancelEditing()
     }
@@ -41,7 +41,7 @@ class PopupRelatedRecordsManager: AGSPopupManager {
         
         // 1. Many To One
         
-        var manyToOneError: Error?
+        var relatedRecordsError: Error?
         
         do {
             for manager in manyToOne {
@@ -49,16 +49,14 @@ class PopupRelatedRecordsManager: AGSPopupManager {
             }
         }
         catch {
-            manyToOneError = error
+            relatedRecordsError = error
         }
-
-        // TODO 2. One To Many?
         
-        // 3. Validate Fields
+        // 2. Validate Fields
         
-        super.finishEditing { [weak self] (error) in
+        super.finishEditing { (error) in
             
-            guard self?.validatePopup() == nil, manyToOneError == nil else {
+            guard error == nil, relatedRecordsError == nil else {
                 completion(RelatedRecordsManagerError.invalidPopup)
                 return
             }
@@ -76,9 +74,9 @@ class PopupRelatedRecordsManager: AGSPopupManager {
         }
         
         var invalids = [Error]()
-        
+
         // 1. enforce M:1 relationships exist
-        
+        // TODO make swifty
         for manager in manyToOne {
             if manager.relatedPopup == nil {
                 let error = RelatedRecordsManagerError.missingManyToOneRelationship(manager.name ?? "Unknown")
@@ -87,7 +85,7 @@ class PopupRelatedRecordsManager: AGSPopupManager {
         }
         
         // 2. enforce validity on all popup fields
-        
+        // TODO make swifty
         for field in editableDisplayFields {
             if let error = validationError(for: field) {
                 invalids.append(error)
@@ -164,11 +162,11 @@ class PopupRelatedRecordsManager: AGSPopupManager {
     }
     
     // MARK: Many To One
-    // TODO throws
-    func update(manyToOne popup: AGSPopup?, forRelationship info: AGSRelationshipInfo) {
+
+    func update(manyToOne popup: AGSPopup?, forRelationship info: AGSRelationshipInfo) throws {
         
         guard isEditing else {
-            return 
+            throw RelatedRecordsManagerError.cannotRelateFeatures
         }
 
         var foundManager: ManyToOneManager?
@@ -186,19 +184,18 @@ class PopupRelatedRecordsManager: AGSPopupManager {
         }
         
         guard let manager = foundManager else {
-            // TODO consider throw
-            return
+            throw RelatedRecordsManagerError.cannotRelateFeatures
         }
         
         manager.relatedPopup = popup
     }
     
     // MARK: One To Many
-    // TODO throws
-    func add(oneToMany popup: AGSPopup, forRelationship info: AGSRelationshipInfo) {
+    
+    func add(oneToMany popup: AGSPopup, forRelationship info: AGSRelationshipInfo) throws {
         
         guard !isEditing else {
-            return
+            throw RelatedRecordsManagerError.cannotRelateFeatures
         }
 
         var foundManager: OneToManyManager?
@@ -216,20 +213,23 @@ class PopupRelatedRecordsManager: AGSPopupManager {
         }
 
         guard let manager = foundManager else {
-            // TODO consider throw
-            return
+            throw RelatedRecordsManagerError.cannotRelateFeatures
         }
 
         do {
             try manager.addPopup(popup)
         }
         catch {
-            print("[Error] adding related record", error.localizedDescription)
+            throw error
         }
     }
-    // TODO throws
-    func delete(oneToMany popup: AGSPopup, forRelationship info: AGSRelationshipInfo) {
+    
+    func delete(oneToMany popup: AGSPopup, forRelationship info: AGSRelationshipInfo) throws {
 
+        guard !isEditing else {
+            throw RelatedRecordsManagerError.cannotRelateFeatures
+        }
+        
         var foundManager: OneToManyManager?
 
         for manager in oneToMany {
@@ -245,15 +245,14 @@ class PopupRelatedRecordsManager: AGSPopupManager {
         }
 
         guard let manager = foundManager else {
-            // TODO consider throw
-            return
+            throw RelatedRecordsManagerError.cannotRelateFeatures
         }
 
         do {
             try manager.deletePopup(popup)
         }
         catch {
-            print("[Error] deleting related record", error.localizedDescription)
+            throw error
         }
     }
 }

@@ -15,7 +15,6 @@
 import UIKit
 
 enum MapViewMode {
-    // TODO consider backticks
     case defaultView
     case disabled
     case selectedFeature
@@ -44,10 +43,10 @@ extension MapViewController {
         let selectViewVisible: (Bool) -> UIViewAnimations = { [weak self] (visible) in
             return {
                 self?.selectView.alpha = visible.asAlpha
-                guard let selectView = self?.selectView else {
+                guard let selectViewHeight = self?.selectView.frame.height else {
                     return
                 }
-                self?.selectViewTopConstraint.constant = visible ? 0 : -selectView.frame.height
+                self?.selectViewTopConstraint.constant = visible ? 0 : -selectViewHeight
             }
         }
         
@@ -66,7 +65,6 @@ extension MapViewController {
             case .disabled:
                 animations.append( mapViewVisible(true) )
                 view.isUserInteractionEnabled = true
-                break
             default:
                 break
             }

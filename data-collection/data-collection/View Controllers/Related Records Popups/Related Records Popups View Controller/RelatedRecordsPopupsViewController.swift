@@ -36,7 +36,13 @@ class RelatedRecordsPopupsViewController: UIViewController, EphemeralCacheCachea
         }
     }
     
-    var recordsManager: PopupRelatedRecordsManager!
+    var recordsManager: PopupRelatedRecordsManager! {
+        didSet {
+            recordsTableManager = PopupRelatedRecordsTableManager(withRecordsManager: recordsManager)
+        }
+    }
+    
+    var recordsTableManager: PopupRelatedRecordsTableManager!
     
     var editingPopup: Bool {
         get {
@@ -147,8 +153,11 @@ class RelatedRecordsPopupsViewController: UIViewController, EphemeralCacheCachea
                 self?.tableView.reloadData()
             }
         }
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         
-        // Adjust UI for state
         adjustUI()
     }
     
@@ -241,7 +250,6 @@ class RelatedRecordsPopupsViewController: UIViewController, EphemeralCacheCachea
     }
 }
 
-// TODO wrap within RelatedRecordsManager
 extension RelatedRecordsPopupsViewController: RelatedRecordsListViewControllerDelegate {
     
     func relatedRecordsListViewController(_ viewController: RelatedRecordsListViewController, didSelectPopup relatedPopup: AGSPopup) {
@@ -249,10 +257,17 @@ extension RelatedRecordsPopupsViewController: RelatedRecordsListViewControllerDe
         _ = navigationController?.popViewController(animated: true)
         
         guard let info = self.popup.relationship(withPopup: relatedPopup) else {
+            // TODO alert user
             return
         }
         
-        recordsManager.update(manyToOne: relatedPopup, forRelationship: info)
+        do {
+            try recordsManager.update(manyToOne: relatedPopup, forRelationship: info)
+        }
+        catch {
+            print("[Error] couldn't update related record", error.localizedDescription)
+            // TODO alert user
+        }
         
         tableView.reloadData()
     }

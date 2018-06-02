@@ -19,12 +19,12 @@ extension RelatedRecordsPopupsViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, shouldHighlightRowAt indexPath: IndexPath) -> Bool {
 
-        return !recordsManager.indexPathWithinAttributes(indexPath)
+        return !indexPathWithinAttributes(indexPath)
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        guard !recordsManager.indexPathWithinAttributes(indexPath) else {
+        guard !indexPathWithinAttributes(indexPath) else {
             return
         }
         
@@ -83,20 +83,64 @@ extension RelatedRecordsPopupsViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
         
+        // TODO NO ACTIONS FOR NON EDITABLE ROWS
+        
         guard indexPath.section > 0 else {
             return nil
         }
         
         let editAction = UITableViewRowAction(style: UITableViewRowActionStyle.default, title: "Edit") { [weak self] (action, indexPath) in
+            
+            // TODO MUST SAVE CURRENT POPUP FIRST
             print("Will Edit Inspection")
+
+            let editPopupClosure: () -> Void = { [weak self] in
+                
+                guard
+                    let cell = tableView.cellForRow(at: indexPath) as? RelatedRecordCell,
+                    let childPopup = cell.popup,
+                    let rrvc = self?.storyboard?.instantiateViewController(withIdentifier: "RelatedRecordsPopupsViewController") as? RelatedRecordsPopupsViewController
+                    else {
+                        // TODO inform user
+                        return
+                }
+                
+                rrvc.popup = childPopup
+                rrvc.parentPopup = self?.popup
+                rrvc.editingPopup = true
+                
+                self?.navigationController?.pushViewController(rrvc, animated: true)
+            }
+
+            editPopupClosure()
         }
+        
         editAction.backgroundColor = .orange
         
         let deleteAction = UITableViewRowAction(style: UITableViewRowActionStyle.default, title: "Delete") { [weak self] (action, indexPath) in
+            
+            // TODO MUST SAVE CURRENT POPUP FIRST
             print("Will Delete Inspection")
+            
+            let deletePopupClosure: () -> Void = { [weak self] in
+                
+            }
+            
+            deletePopupClosure()
         }
         deleteAction.backgroundColor = .red
         
         return [deleteAction, editAction]
+    }
+    
+    func indexPathWithinAttributes(_ indexPath: IndexPath) -> Bool {
+        
+        guard indexPath.section == 0 else {
+            return false
+        }
+        
+        let nFields = recordsManager.isEditing ? recordsManager.editableDisplayFields.count : recordsManager.displayFields.count
+        
+        return indexPath.row < nFields
     }
 }

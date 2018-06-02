@@ -68,6 +68,7 @@ class OneToManyManager: RelatedRecordsManager {
     
     internal private(set) var relatedPopups = [AGSPopup]()
     
+    // TODO modify to get tableName from Relationship Info
     var name: String? {
         return (relatedPopups.first?.geoElement as? AGSArcGISFeature)?.featureTable?.tableName
     }
@@ -159,6 +160,7 @@ class ManyToOneManager: RelatedRecordsManager {
     
     private var stagedRelatedPopup: AGSPopup?
     
+    // TODO modify to get tableName from Relationship Info
     var name: String? {
         return (relatedPopup?.geoElement as? AGSArcGISFeature)?.featureTable?.tableName
     }

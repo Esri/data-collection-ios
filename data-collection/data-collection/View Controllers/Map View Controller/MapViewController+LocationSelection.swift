@@ -109,12 +109,18 @@ extension MapViewController {
         switch locationSelectionType {
         case .newFeature:
             
-            guard let initialViewpoint = mapView.map?.initialViewpoint else {
+            guard
+                let initialViewpoint = mapView.map?.initialViewpoint,
+                let spatialRef = initialViewpoint.targetGeometry.spatialReference
+                else {
                 present(simpleAlertMessage: "No map viewpoint set. Contact map publisher.")
                 return
             }
             
-            guard let centerPoint = AGSGeometryEngine.projectGeometry(mapView.centerAGSPoint(), to: AGSSpatialReference.wgs84()), AGSGeometryEngine.geometry(centerPoint, within: initialViewpoint.targetGeometry) else {
+            guard
+                let centerPoint = AGSGeometryEngine.projectGeometry(mapView.centerAGSPoint(), to: spatialRef),
+                AGSGeometryEngine.geometry(centerPoint, within: initialViewpoint.targetGeometry)
+                else {
                 present(simpleAlertMessage: "Can't add feature, you are outside the bounds of your map.")
                 return
             }
@@ -142,6 +148,7 @@ extension MapViewController {
         
         switch locationSelectionType {
         case .newFeature:
+            _ = EphemeralCache.get(objectForKey: "MapViewController.newFeature.nonspatial")
             break
         case .offlineExtent:
             hideMapMaskViewForOfflineDownloadArea()

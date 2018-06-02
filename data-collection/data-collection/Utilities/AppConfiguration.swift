@@ -53,8 +53,6 @@ struct AppColors {
     // UIAppearance conformance
     
     let primary: UIColor = UIColor(red:0.66, green:0.81, blue:0.40, alpha:1.00)
-//    let primaryLight: UIColor = { return primary.lighter }()
-//    let primaryDark: UIColor = { return primary.darker }()
     
     let offline: UIColor = .darkGray
     let offlineLight: UIColor = .gray

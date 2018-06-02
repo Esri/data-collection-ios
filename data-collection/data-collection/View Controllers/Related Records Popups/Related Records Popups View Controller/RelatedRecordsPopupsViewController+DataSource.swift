@@ -20,19 +20,25 @@ extension RelatedRecordsPopupsViewController: UITableViewDataSource {
     
     func numberOfSections(in tableView: UITableView) -> Int {
         
-        return recordsManager.numberOfSections()
+        return 1 + recordsManager.manyToOne.count
     }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         
-        return recordsManager.header(forSection: section)
+        guard section > 0 else {
+            return nil
+        }
+        
+        let offset = section - 1
+        
+        return recordsManager.oneToMany[offset].name
     }
     
     // TODO Will remove cell function
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        if let field = recordsManager.field(forIndexPath: indexPath) {
+        if let field = recordsTableManager.field(forIndexPath: indexPath) {
             
             let fieldType = recordsManager.fieldType(for: field)
             
@@ -70,10 +76,14 @@ extension RelatedRecordsPopupsViewController: UITableViewDataSource {
 
         }
         else {
-            let popup = recordsManager.popup(forIndexPath: indexPath)
+            let popup = recordsTableManager.popup(forIndexPath: indexPath)
             let cell = tableView.dequeueReusableCell(withIdentifier: ReuseIdentifiers.relatedRecordCell, for: indexPath) as! RelatedRecordCell
             cell.popup = popup
-            cell.maxAttributes = recordsManager.maxAttributes(forSection: indexPath.section)
+            
+            // TODO make AppConfigurable
+            let maxAttributes = indexPath.section == 0 ? 2 : 3
+            
+            cell.maxAttributes = maxAttributes
             return cell
         }
     }
@@ -85,7 +95,17 @@ extension RelatedRecordsPopupsViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-        return recordsManager.numberOfRows(inSection: section)
+        if section == 0 {
+            let nFields = recordsManager.isEditing ? recordsManager.editableDisplayFields.count : recordsManager.displayFields.count
+            return nFields + recordsManager.manyToOne.count
+        }
+        else {
+            let idx = section - 1
+            guard recordsManager.oneToMany.count > idx else {
+                return 0
+            }
+            return recordsManager.oneToMany[idx].relatedPopups.count
+        }
     }
 }
 

@@ -15,52 +15,12 @@
 import Foundation
 import ArcGIS
 
-extension PopupRelatedRecordsManager {
+class PopupRelatedRecordsTableManager {
     
-    func indexPathWithinAttributes(_ indexPath: IndexPath) -> Bool {
-        
-        guard indexPath.section == 0 else {
-            return false
-        }
-        
-        let nFields = isEditing ? editableDisplayFields.count : displayFields.count
-        
-        return indexPath.row < nFields
-    }
+    var recordsManager: PopupRelatedRecordsManager
     
-    func numberOfSections() -> Int {
-        return 1 + manyToOne.count
-    }
-    
-    func numberOfRows(inSection section: Int) -> Int {
-        
-        if section == 0 {
-            let nFields = isEditing ? editableDisplayFields.count : displayFields.count
-            return nFields + manyToOne.count
-        }
-        else {
-            let idx = section - 1
-            guard oneToMany.count > idx else {
-                return 0
-            }
-            return oneToMany[idx].relatedPopups.count
-        }
-    }
-    
-    func maxAttributes(forSection section: Int) -> Int {
-        // TODO make AppConfigurable
-        return section == 0 ? 2 : 3
-    }
-    
-    func header(forSection section: Int) -> String? {
-        
-        guard section > 0 else {
-            return nil
-        }
-        
-        let offset = section - 1
-        
-        return oneToMany[offset].name
+    init(withRecordsManager: PopupRelatedRecordsManager) {
+        self.recordsManager = withRecordsManager
     }
     
     func field(forIndexPath indexPath: IndexPath) -> AGSPopupField? {
@@ -69,7 +29,7 @@ extension PopupRelatedRecordsManager {
             return nil
         }
         
-        let fields = isEditing ? editableDisplayFields : displayFields
+        let fields = recordsManager.isEditing ? recordsManager.editableDisplayFields : recordsManager.displayFields
         
         guard indexPath.row < fields.count else {
             return nil
@@ -82,9 +42,9 @@ extension PopupRelatedRecordsManager {
         
         // Many To One
         if indexPath.section == 0 {
-            let offset = isEditing ? editableDisplayFields.count : displayFields.count
+            let offset = recordsManager.isEditing ? recordsManager.editableDisplayFields.count : recordsManager.displayFields.count
             let idx = indexPath.row - offset
-            let manager = manyToOne[idx]
+            let manager = recordsManager.manyToOne[idx]
             return manager.relatedPopup
         }
             
@@ -92,7 +52,7 @@ extension PopupRelatedRecordsManager {
         else {
             let offset = 1
             let idx = indexPath.section - offset
-            let manager = oneToMany[idx]
+            let manager = recordsManager.oneToMany[idx]
             guard manager.relatedPopups.count > indexPath.row else {
                 return nil
             }

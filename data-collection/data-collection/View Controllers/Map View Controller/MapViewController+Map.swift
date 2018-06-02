@@ -29,42 +29,27 @@ extension MapViewController {
         
         map.load { [weak self] (error) in
             
-////             TODO REMOVE
-//            let ref = AGSSpatialReference.webMercator()
-//            let envelope = AGSEnvelope(xMin: -13654697.240103, yMin: 5705739.420356, xMax: -13654697.240103, yMax: 5705739.420356, spatialReference: ref)
-//            let viewpoint = AGSViewpoint(targetExtent: envelope)
-//            self?.mapView.setViewpoint(viewpoint)
-////             \ REMOVE
-            
             guard error == nil else {
                 print("[Error: Map Load]", error!.localizedDescription)
                 return
             }
             
-            guard let weakSelf = self else {
-                return
-            }
-            
             // 1 set map title from map definition
-            weakSelf.delegate?.mapViewController(weakSelf, didUpdateTitle: map.item?.title ?? "Map")
+            self?.delegate?.mapViewController(self!, didUpdateTitle: map.item?.title ?? "Map")
             
             guard let operationalLayers = map.operationalLayers as? [AGSFeatureLayer] else {
-                weakSelf.delegate?.mapViewController(weakSelf, shouldAllowNewFeature: false)
+                self?.delegate?.mapViewController(self!, shouldAllowNewFeature: false)
                 return
             }
             
             AGSLoadObjects(operationalLayers, { [weak self] (completion) in
                 
-                guard let weakSelf = self else {
-                    return
-                }
-                
                 guard let addableLayers = operationalLayers.featureAddableLayers, addableLayers.count > 0 else {
-                    weakSelf.delegate?.mapViewController(weakSelf, shouldAllowNewFeature: false)
+                    self?.delegate?.mapViewController(self!, shouldAllowNewFeature: false)
                     return
                 }
                 
-                weakSelf.delegate?.mapViewController(weakSelf, shouldAllowNewFeature: true)
+                self?.delegate?.mapViewController(self!, shouldAllowNewFeature: true)
             })
         }
     }

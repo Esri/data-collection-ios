@@ -298,12 +298,12 @@
 		9416A18D20BDFF93001377ED /* Related Records Popups View Controller */ = {
 			isa = PBXGroup;
 			children = (
-				9416A19120BF3283001377ED /* Manager */,
-				9412D211209937760031F9EB /* Related Records Cells */,
-				940DA9732097939A00AB4BF6 /* Field Cells */,
 				948066352091483600A398EA /* RelatedRecordsPopupsViewController.swift */,
 				9412D214209937E50031F9EB /* RelatedRecordsPopupsViewController+Delegate.swift */,
 				9412D2162099382C0031F9EB /* RelatedRecordsPopupsViewController+DataSource.swift */,
+				9416A19120BF3283001377ED /* Manager */,
+				9412D211209937760031F9EB /* Related Records Cells */,
+				940DA9732097939A00AB4BF6 /* Field Cells */,
 			);
 			path = "Related Records Popups View Controller";
 			sourceTree = "<group>";

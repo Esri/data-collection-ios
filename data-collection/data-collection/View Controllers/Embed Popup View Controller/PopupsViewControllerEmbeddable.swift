@@ -51,12 +51,7 @@ extension PopupsViewControllerEmbeddable {
         self.addChildViewController(controller)
         self.popupsContainerView.addSubview(controller.view)
         
-        NSLayoutConstraint.activate([
-            controller.view.leadingAnchor.constraint(equalTo: popupsContainerView.leadingAnchor, constant: 0),
-            controller.view.trailingAnchor.constraint(equalTo: popupsContainerView.trailingAnchor, constant: 0),
-            controller.view.topAnchor.constraint(equalTo: popupsContainerView.topAnchor, constant: 0),
-            controller.view.bottomAnchor.constraint(equalTo: popupsContainerView.bottomAnchor, constant: 0)
-            ])
+        controller.view.constrainToBounds(popupsContainerView)
         
         controller.view.translatesAutoresizingMaskIntoConstraints = false
         controller.willMove(toParentViewController: self)

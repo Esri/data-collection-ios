@@ -36,10 +36,10 @@ extension AGSArcGISFeatureTable {
     
     func queryRelatedFeatures(forFeature feature: AGSArcGISFeature, relationship: AGSRelationshipInfo, completion: @escaping ([AGSRelatedFeatureQueryResult]?, Error?)->()) {
         
-        let fields = AGSQueryFeatureFields.loadAll
         let parameters = AGSRelatedQueryParameters(relationshipInfo: relationship)
         
         if let serviceFeatureTable = self as? AGSServiceFeatureTable {
+            let fields = AGSQueryFeatureFields.loadAll
             serviceFeatureTable.queryRelatedFeatures(for: feature, parameters: parameters, queryFeatureFields: fields, completion: completion)
         }
         else if let geodatabaseFeatureTable = self as? AGSGeodatabaseFeatureTable {
@@ -216,7 +216,7 @@ extension AGSArcGISFeatureTable {
             update(feature, completion: editClosure)
         }
         // Add
-        else if canAddFeature {
+        else if canAddFeature { // TODO check if of same table type?
             add(feature, completion: editClosure)
         }
         else {

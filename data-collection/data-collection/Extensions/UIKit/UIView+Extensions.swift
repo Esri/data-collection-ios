@@ -25,7 +25,7 @@ typealias UIViewAnimations = () -> Void
 extension UIView {
     
     var boundsCenter: CGPoint {
-        return CGPoint(x: bounds.size.width/2.0, y: bounds.size.height/2.0)
+        return CGPoint(x: bounds.midX, y: bounds.midY)
     }
 }
 
