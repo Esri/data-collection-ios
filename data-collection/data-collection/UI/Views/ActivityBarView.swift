@@ -81,8 +81,10 @@ import ArcGIS
     }
     
     public func resetBackgroundColor() {
-        isAnimating = false
-        backgroundColor = colorA
+        DispatchQueue.main.async { [weak self] in
+            self?.isAnimating = false
+            self?.backgroundColor = self?.colorA
+        }
     }
     
     public func startProgressAnimation() {
@@ -99,13 +101,15 @@ import ArcGIS
     }
     
     public func stopProgressAnimation() {
-        layer.removeAllAnimations()
-        resetBackgroundColor()
-        UIView.animate(withDuration: 0.1, animations: { [weak self] in
-            self?.setNewFrame(forVisible: false)
-        }, completion: { [weak self] (completion) in
-            self?.removeAnimations()
-        })
+        DispatchQueue.main.async { [weak self] in
+            self?.layer.removeAllAnimations()
+            self?.resetBackgroundColor()
+            UIView.animate(withDuration: 0.1, animations: { [weak self] in
+                self?.setNewFrame(forVisible: false)
+                }, completion: { [weak self] (completion) in
+                    self?.removeAnimations()
+            })
+        }
     }
     
     private func removeAnimations() {
@@ -115,15 +119,18 @@ import ArcGIS
     }
     
     private func setNewFrame(forVisible: Bool) {
-        frame = rect(forVisible: forVisible)
+        DispatchQueue.main.async { [weak self] in
+            self?.adjustRect(forVisible: forVisible)
+        }
     }
     
     private func swapBackgroundColor() {
         backgroundColor = backgroundColor == colorA ? colorB : colorA
     }
     
-    private func rect(forVisible visible: Bool) -> CGRect {
+    private func adjustRect(forVisible visible: Bool) {
         let y = visible ? 0.0 : -frame.size.height
-        return CGRect(x: 0.0, y: y, width: frame.size.width, height: frame.size.height)
+        let rect = CGRect(x: 0.0, y: y, width: frame.size.width, height: frame.size.height)
+        self.frame = rect
     }
 }

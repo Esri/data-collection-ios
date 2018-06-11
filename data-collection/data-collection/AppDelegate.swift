@@ -46,6 +46,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Configure file documents directories for offline usage
         FileManager.buildOfflineDirectories()
         
+        AGSRequestConfiguration.global().debugLogRequests = AppConfiguration.logRequests
+        
         return true
     }
 }

@@ -186,7 +186,7 @@ extension AGSArcGISFeatureTable {
     
     func edit(feature: AGSArcGISFeature, completion: @escaping (Error?)->Void) {
         
-        let editClosure:((Error?)->Void)? = { error in
+        let editClosure:(Error?) -> Void = { error in
             
             guard error == nil else {
                 print("[Error: Feature Service Table] could not edit", error!.localizedDescription)
@@ -216,8 +216,44 @@ extension AGSArcGISFeatureTable {
             update(feature, completion: editClosure)
         }
         // Add
-        else if canAddFeature { // TODO check if of same table type?
+        else if canAddFeature {
             add(feature, completion: editClosure)
+        }
+        else {
+            completion(FeatureTableError.cannotEditFeature)
+        }
+    }
+    
+    // TODO refactor above with this.
+    func deleteRelated(feature: AGSArcGISFeature, completion: @escaping (Error?)->Void) {
+        
+        let editClosure:(Error?) -> Void = { error in
+            
+            guard error == nil else {
+                print("[Error: Feature Service Table] could not edit", error!.localizedDescription)
+                completion(error!)
+                return
+            }
+            
+            // If online, apply edits.
+            guard let serviceFeatureTable = self as? AGSServiceFeatureTable else {
+                completion(nil)
+                return
+            }
+            
+            serviceFeatureTable.applyEdits(completion: { (results, error) in
+                guard error == nil else {
+                    print("[Error: Feature Service Table] could not apply edits", error!.localizedDescription)
+                    completion(error!)
+                    return
+                }
+                feature.refreshObjectID()
+                completion(nil)
+            })
+        }
+        
+        if canDelete(feature) {
+            delete(feature, completion: editClosure)
         }
         else {
             completion(FeatureTableError.cannotEditFeature)

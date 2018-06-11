@@ -47,6 +47,10 @@ extension AGSPopup {
         return AGSPopupManager(popup: self)
     }
     
+    var isEditable: Bool {
+        return asManager.shouldAllowEdit
+    }
+    
     func relate(toPopup popup: AGSPopup, relationshipInfo info: AGSRelationshipInfo) {
         
         guard
@@ -92,6 +96,10 @@ extension AGSPopup {
         }
         
         return feature.objectID != nil
+    }
+    
+    var tableName: String? {
+        return (geoElement as? AGSArcGISFeature)?.featureTable?.tableName
     }
 }
 

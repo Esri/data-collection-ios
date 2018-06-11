@@ -41,20 +41,21 @@
 		94A8102B20B33B9200D4BC68 /* PopupShortStringCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94A8102A20B33B9200D4BC68 /* PopupShortStringCell.swift */; };
 		94A8102D20B33C0E00D4BC68 /* PopupDateCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94A8102C20B33C0E00D4BC68 /* PopupDateCell.swift */; };
 		94A8102F20B33C3B00D4BC68 /* PopupIDCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94A8102E20B33C3B00D4BC68 /* PopupIDCell.swift */; };
-		94A8103320B4BF8800D4BC68 /* AGSPopupDateFormat+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94A8103220B4BF8800D4BC68 /* AGSPopupDateFormat+Extensions.swift */; };
 		94A8103720B6306600D4BC68 /* RelatedRecordsListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94A8103620B6306600D4BC68 /* RelatedRecordsListViewController.swift */; };
 		94A8103920B6333000D4BC68 /* RelatedRecordsTableManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94A8103820B6333000D4BC68 /* RelatedRecordsTableManager.swift */; };
 		94A8103B20B635A000D4BC68 /* AGSQueryParameters+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94A8103A20B635A000D4BC68 /* AGSQueryParameters+Extensions.swift */; };
 		94AB310120B76A16003540D2 /* PopupReadonlyFieldCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94AB310020B76A16003540D2 /* PopupReadonlyFieldCell.swift */; };
 		94AB310320B76A62003540D2 /* PopupEditableFieldCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94AB310220B76A62003540D2 /* PopupEditableFieldCell.swift */; };
 		94AB310520B7731A003540D2 /* PopupCodedValueCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94AB310420B7731A003540D2 /* PopupCodedValueCell.swift */; };
+		94B0D32B20C84B010075EA7A /* RelatedRecordsPopupsViewController+RelatedRecordsListDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94B0D32A20C84B010075EA7A /* RelatedRecordsPopupsViewController+RelatedRecordsListDelegate.swift */; };
+		94B0D32D20C84C390075EA7A /* UINavigationController+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94B0D32C20C84C390075EA7A /* UINavigationController+Extensions.swift */; };
 		94B375BC207E8D5600691F2A /* AddressLocator.locb in Resources */ = {isa = PBXBuildFile; fileRef = 94B37598207E8D5600691F2A /* AddressLocator.locb */; };
 		94B375BD207E8D5600691F2A /* AddressLocator.loc.xml in Resources */ = {isa = PBXBuildFile; fileRef = 94B37599207E8D5600691F2A /* AddressLocator.loc.xml */; };
 		94B375BE207E8D5600691F2A /* AddressLocator.lox in Resources */ = {isa = PBXBuildFile; fileRef = 94B3759A207E8D5600691F2A /* AddressLocator.lox */; };
 		94B375BF207E8D5600691F2A /* AddressLocator.loc in Resources */ = {isa = PBXBuildFile; fileRef = 94B3759B207E8D5600691F2A /* AddressLocator.loc */; };
 		94B375C0207E8D5600691F2A /* AppFiles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94B3759E207E8D5600691F2A /* AppFiles.swift */; };
 		94B375C1207E8D5600691F2A /* AppConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94B3759F207E8D5600691F2A /* AppConfiguration.swift */; };
-		94B375C2207E8D5600691F2A /* AppOfflineMapJobConstruct.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94B375A0207E8D5600691F2A /* AppOfflineMapJobConstruct.swift */; };
+		94B375C2207E8D5600691F2A /* AppOfflineMapJobConstructionInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94B375A0207E8D5600691F2A /* AppOfflineMapJobConstructionInfo.swift */; };
 		94B375C3207E8D5600691F2A /* AppDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94B375A1207E8D5600691F2A /* AppDefaults.swift */; };
 		94B375C4207E8D5600691F2A /* AppErrors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94B375A2207E8D5600691F2A /* AppErrors.swift */; };
 		94B375C5207E8D5600691F2A /* AppNotifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94B375A3207E8D5600691F2A /* AppNotifications.swift */; };
@@ -92,6 +93,7 @@
 		94B37603207E8E4800691F2A /* CGGeometry+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94B375EF207E8E4800691F2A /* CGGeometry+Extensions.swift */; };
 		94B3760C207EAE4700691F2A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94B3760B207EAE4600691F2A /* AppDelegate.swift */; };
 		94B3760E207EAEA100691F2A /* ArcGIS.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 94B3760D207EAEA100691F2A /* ArcGIS.bundle */; };
+		94D2713B20CEF04F00304E27 /* RelatedRecordsPopupsViewController+EditingSessions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94D2713A20CEF04F00304E27 /* RelatedRecordsPopupsViewController+EditingSessions.swift */; };
 		94D544BD207FC15D00ED0D04 /* DrawerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94D544B4207FC15C00ED0D04 /* DrawerViewController.swift */; };
 		94D544BE207FC15D00ED0D04 /* AppContainerViewController+DrawerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94D544B6207FC15D00ED0D04 /* AppContainerViewController+DrawerDelegate.swift */; };
 		94D544BF207FC15D00ED0D04 /* AppContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94D544B7207FC15D00ED0D04 /* AppContainerViewController.swift */; };
@@ -167,20 +169,21 @@
 		94A8102A20B33B9200D4BC68 /* PopupShortStringCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupShortStringCell.swift; sourceTree = "<group>"; };
 		94A8102C20B33C0E00D4BC68 /* PopupDateCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupDateCell.swift; sourceTree = "<group>"; };
 		94A8102E20B33C3B00D4BC68 /* PopupIDCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupIDCell.swift; sourceTree = "<group>"; };
-		94A8103220B4BF8800D4BC68 /* AGSPopupDateFormat+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AGSPopupDateFormat+Extensions.swift"; sourceTree = "<group>"; };
 		94A8103620B6306600D4BC68 /* RelatedRecordsListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RelatedRecordsListViewController.swift; sourceTree = "<group>"; };
 		94A8103820B6333000D4BC68 /* RelatedRecordsTableManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RelatedRecordsTableManager.swift; sourceTree = "<group>"; };
 		94A8103A20B635A000D4BC68 /* AGSQueryParameters+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AGSQueryParameters+Extensions.swift"; sourceTree = "<group>"; };
 		94AB310020B76A16003540D2 /* PopupReadonlyFieldCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupReadonlyFieldCell.swift; sourceTree = "<group>"; };
 		94AB310220B76A62003540D2 /* PopupEditableFieldCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupEditableFieldCell.swift; sourceTree = "<group>"; };
 		94AB310420B7731A003540D2 /* PopupCodedValueCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupCodedValueCell.swift; sourceTree = "<group>"; };
+		94B0D32A20C84B010075EA7A /* RelatedRecordsPopupsViewController+RelatedRecordsListDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RelatedRecordsPopupsViewController+RelatedRecordsListDelegate.swift"; sourceTree = "<group>"; };
+		94B0D32C20C84C390075EA7A /* UINavigationController+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UINavigationController+Extensions.swift"; sourceTree = "<group>"; };
 		94B37598207E8D5600691F2A /* AddressLocator.locb */ = {isa = PBXFileReference; lastKnownFileType = file; path = AddressLocator.locb; sourceTree = "<group>"; };
 		94B37599207E8D5600691F2A /* AddressLocator.loc.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = AddressLocator.loc.xml; sourceTree = "<group>"; };
 		94B3759A207E8D5600691F2A /* AddressLocator.lox */ = {isa = PBXFileReference; lastKnownFileType = file; path = AddressLocator.lox; sourceTree = "<group>"; };
 		94B3759B207E8D5600691F2A /* AddressLocator.loc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = AddressLocator.loc; sourceTree = "<group>"; };
 		94B3759E207E8D5600691F2A /* AppFiles.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppFiles.swift; sourceTree = "<group>"; };
 		94B3759F207E8D5600691F2A /* AppConfiguration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppConfiguration.swift; sourceTree = "<group>"; };
-		94B375A0207E8D5600691F2A /* AppOfflineMapJobConstruct.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppOfflineMapJobConstruct.swift; sourceTree = "<group>"; };
+		94B375A0207E8D5600691F2A /* AppOfflineMapJobConstructionInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppOfflineMapJobConstructionInfo.swift; sourceTree = "<group>"; };
 		94B375A1207E8D5600691F2A /* AppDefaults.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDefaults.swift; sourceTree = "<group>"; };
 		94B375A2207E8D5600691F2A /* AppErrors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppErrors.swift; sourceTree = "<group>"; };
 		94B375A3207E8D5600691F2A /* AppNotifications.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppNotifications.swift; sourceTree = "<group>"; };
@@ -224,6 +227,7 @@
 		94B375EF207E8E4800691F2A /* CGGeometry+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CGGeometry+Extensions.swift"; sourceTree = "<group>"; };
 		94B3760B207EAE4600691F2A /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		94B3760D207EAEA100691F2A /* ArcGIS.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = ArcGIS.bundle; path = ../../../../../../../../Library/SDKs/ArcGIS/iOS/Frameworks/Static/ArcGIS.framework/Versions/Current/Resources/ArcGIS.bundle; sourceTree = "<group>"; };
+		94D2713A20CEF04F00304E27 /* RelatedRecordsPopupsViewController+EditingSessions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RelatedRecordsPopupsViewController+EditingSessions.swift"; sourceTree = "<group>"; };
 		94D544B4207FC15C00ED0D04 /* DrawerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DrawerViewController.swift; sourceTree = "<group>"; };
 		94D544B6207FC15D00ED0D04 /* AppContainerViewController+DrawerDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AppContainerViewController+DrawerDelegate.swift"; sourceTree = "<group>"; };
 		94D544B7207FC15D00ED0D04 /* AppContainerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppContainerViewController.swift; sourceTree = "<group>"; };
@@ -299,8 +303,10 @@
 			isa = PBXGroup;
 			children = (
 				948066352091483600A398EA /* RelatedRecordsPopupsViewController.swift */,
+				94D2713A20CEF04F00304E27 /* RelatedRecordsPopupsViewController+EditingSessions.swift */,
 				9412D214209937E50031F9EB /* RelatedRecordsPopupsViewController+Delegate.swift */,
 				9412D2162099382C0031F9EB /* RelatedRecordsPopupsViewController+DataSource.swift */,
+				94B0D32A20C84B010075EA7A /* RelatedRecordsPopupsViewController+RelatedRecordsListDelegate.swift */,
 				9416A19120BF3283001377ED /* Manager */,
 				9412D211209937760031F9EB /* Related Records Cells */,
 				940DA9732097939A00AB4BF6 /* Field Cells */,
@@ -395,7 +401,7 @@
 			children = (
 				94B3759E207E8D5600691F2A /* AppFiles.swift */,
 				94B3759F207E8D5600691F2A /* AppConfiguration.swift */,
-				94B375A0207E8D5600691F2A /* AppOfflineMapJobConstruct.swift */,
+				94B375A0207E8D5600691F2A /* AppOfflineMapJobConstructionInfo.swift */,
 				94B375A1207E8D5600691F2A /* AppDefaults.swift */,
 				94B375A2207E8D5600691F2A /* AppErrors.swift */,
 				94B375A3207E8D5600691F2A /* AppNotifications.swift */,
@@ -496,7 +502,6 @@
 				9465691B208802AE00599E55 /* AGSFeatureLayer+Extensions.swift */,
 				9465691D208802CE00599E55 /* AGSFeatureTable+Extensions.swift */,
 				940DA97A2098E1C600AB4BF6 /* AGSArcGISFeatureTable+Extensions.swift */,
-				94A8103220B4BF8800D4BC68 /* AGSPopupDateFormat+Extensions.swift */,
 				94A8103A20B635A000D4BC68 /* AGSQueryParameters+Extensions.swift */,
 			);
 			path = ArcGIS;
@@ -513,6 +518,7 @@
 				94B375E9207E8E4800691F2A /* UIStoryboardSegue+Extensions.swift */,
 				94B375EA207E8E4800691F2A /* UIAlertController+Extensions.swift */,
 				940DA9712097825700AB4BF6 /* UILabel+Extensions.swift */,
+				94B0D32C20C84C390075EA7A /* UINavigationController+Extensions.swift */,
 			);
 			path = UIKit;
 			sourceTree = "<group>";
@@ -818,7 +824,7 @@
 				94656925208803AE00599E55 /* SmallPopupViewController.swift in Sources */,
 				940DA97B2098E1C600AB4BF6 /* AGSArcGISFeatureTable+Extensions.swift in Sources */,
 				94D544D820852A5100ED0D04 /* ShrinkingView.swift in Sources */,
-				94B375C2207E8D5600691F2A /* AppOfflineMapJobConstruct.swift in Sources */,
+				94B375C2207E8D5600691F2A /* AppOfflineMapJobConstructionInfo.swift in Sources */,
 				94B375FA207E8E4800691F2A /* UIViewController+Extensions.swift in Sources */,
 				946569022087FAE700599E55 /* MapViewController+MapViewMode.swift in Sources */,
 				94AB310320B76A62003540D2 /* PopupEditableFieldCell.swift in Sources */,
@@ -857,7 +863,6 @@
 				94B37600207E8E4800691F2A /* UIAlertController+Extensions.swift in Sources */,
 				946569042087FB5000599E55 /* MapViewController+LocationSelection.swift in Sources */,
 				9465690A2087FC5800599E55 /* MapViewController+Observers.swift in Sources */,
-				94A8103320B4BF8800D4BC68 /* AGSPopupDateFormat+Extensions.swift in Sources */,
 				9412D213209937950031F9EB /* RelatedRecordCell.swift in Sources */,
 				94FA8B25207BF2CD00972C75 /* MapViewController.swift in Sources */,
 				9465691A2088028E00599E55 /* AGSRelationshipInfo+Extensions.swift in Sources */,
@@ -870,6 +875,8 @@
 				94B375C5207E8D5600691F2A /* AppNotifications.swift in Sources */,
 				946569142088023600599E55 /* AGSPopupManager+Extensions.swift in Sources */,
 				9412D2172099382C0031F9EB /* RelatedRecordsPopupsViewController+DataSource.swift in Sources */,
+				94B0D32D20C84C390075EA7A /* UINavigationController+Extensions.swift in Sources */,
+				94D2713B20CEF04F00304E27 /* RelatedRecordsPopupsViewController+EditingSessions.swift in Sources */,
 				9465690C2087FCCE00599E55 /* MapViewController+Setup.swift in Sources */,
 				94B375FC207E8E4800691F2A /* UIView+Extensions.swift in Sources */,
 				94D544C2207FC15D00ED0D04 /* AppContextAwareController.swift in Sources */,
@@ -890,6 +897,7 @@
 				9465691C208802AE00599E55 /* AGSFeatureLayer+Extensions.swift in Sources */,
 				94A8103720B6306600D4BC68 /* RelatedRecordsListViewController.swift in Sources */,
 				94B375C8207E8D5600691F2A /* AppContext+WorkMode.swift in Sources */,
+				94B0D32B20C84B010075EA7A /* RelatedRecordsPopupsViewController+RelatedRecordsListDelegate.swift in Sources */,
 				94D544BD207FC15D00ED0D04 /* DrawerViewController.swift in Sources */,
 				94D544DA20852A5100ED0D04 /* ActivityBarView.swift in Sources */,
 				94B375D6207E8DD600691F2A /* GeocodeSearchManager.swift in Sources */,
@@ -1081,6 +1089,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.esri.arcgisruntime.exampleapps.data-collection";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "data-collection/3rd Party/SVProgressHUD/data-collection-Bridging-Header.h";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -1105,6 +1114,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.esri.arcgisruntime.exampleapps.data-collection";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "data-collection/3rd Party/SVProgressHUD/data-collection-Bridging-Header.h";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

@@ -29,13 +29,13 @@ extension AppContainerViewController: MapViewControllerDelegate {
         
         let scale = mapViewController.mapView.mapScale
         
-        let offlineJob = AppOfflineMapJobConstruct.downloadMapOffline(map, directory, extent, scale)
-        EphemeralCache.set(object: offlineJob, forKey: AppOfflineMapJobConstruct.ephemeralCacheKey)
+        let offlineJob = AppOfflineMapJobConstructionInfo.downloadMapOffline(map, directory, extent, scale)
+        EphemeralCache.set(object: offlineJob, forKey: AppOfflineMapJobConstructionInfo.ephemeralCacheKey)
         performSegue(withIdentifier: "presentJobStatusViewController", sender: nil)
     }
     
-    func mapViewController(_ mapViewController: MapViewController, shouldAllowNewFeature should: Bool) {
-        showAddTreeBarButton = should
+    func mapViewController(_ mapViewController: MapViewController, shouldAllowNewFeature: Bool) {
+        showAddFeatureBarButton = shouldAllowNewFeature
     }
     
     func mapViewController(_ mapViewController: MapViewController, didUpdateTitle title: String) {

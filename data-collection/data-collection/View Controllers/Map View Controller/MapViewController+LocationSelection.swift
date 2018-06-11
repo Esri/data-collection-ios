@@ -94,7 +94,7 @@ extension MapViewController {
             let feature = featureTable.createFeature() as? AGSArcGISFeature,
             let popupDefinition = featureTable.popupDefinition
             else {
-            // TODO notify user
+                present(simpleAlertMessage: "Uh Oh! You are unable to add a new feature.")
             return
         }
         
@@ -126,7 +126,7 @@ extension MapViewController {
             }
             
             guard let newPopup = EphemeralCache.get(objectForKey: "MapViewController.newFeature.nonspatial") as? AGSPopup else {
-                // TODO notify
+                present(simpleAlertMessage: "Uh Oh! You are unable to add a new feature.")
                 return
             }
             

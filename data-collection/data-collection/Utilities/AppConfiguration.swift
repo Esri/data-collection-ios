@@ -30,6 +30,10 @@ class AppConfiguration {
     static let licenseKey: String = "fake_license_key"
     static let clientID: String = "AaXxKoHH3piT1fe3"
     
+    static let logRequests: Bool = false
+    
+    // MARK: UI Config
+    
     static let config = AppConfiguration()
     
     // Colors
@@ -62,6 +66,8 @@ struct AppColors {
     
     let tableCellTitle: UIColor = .gray
     let tableCellValue: UIColor = .black
+    
+    let invalid: UIColor = .red
 }
 
 // TODO build into .xcassets

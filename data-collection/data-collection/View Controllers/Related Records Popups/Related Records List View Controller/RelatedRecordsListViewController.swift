@@ -17,6 +17,7 @@ import ArcGIS
 
 protocol RelatedRecordsListViewControllerDelegate {
     func relatedRecordsListViewController(_ viewController: RelatedRecordsListViewController, didSelectPopup popup: AGSPopup)
+    func relatedRecordsListViewControllerDidCancel(_ viewController: RelatedRecordsListViewController)
 }
 
 class RelatedRecordsListViewController: UIViewController {
@@ -42,6 +43,15 @@ class RelatedRecordsListViewController: UIViewController {
         
         tableView.register(RelatedRecordCell.self, forCellReuseIdentifier: ReuseIdentifiers.relatedRecordCell)
         
+        title = featureTable?.tableName
+        
+        loadRecords()
+    }
+    
+    func loadRecords() {
+        
+        SVProgressHUD.show(withStatus: "Loading Records...")
+        
         featureTableRecordsManager?.load { [weak self] (error) in
             
             guard error == nil else {
@@ -50,11 +60,9 @@ class RelatedRecordsListViewController: UIViewController {
             }
             
             self?.tableView.reloadData()
+            SVProgressHUD.dismiss()
         }
-        
-        title = featureTable?.tableName
     }
-    
 }
 
 extension RelatedRecordsListViewController: UITableViewDelegate {
@@ -62,7 +70,10 @@ extension RelatedRecordsListViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         guard let relatedRecordCell = tableView.cellForRow(at: indexPath) as? RelatedRecordCell, let popup = relatedRecordCell.popup else {
-            // TODO dismiss with unknown error
+            let alert = UIAlertController.simpleAlert(title: nil, message: "Uh Oh! An unknown error occurred.", actionTitle: "OK") { [weak self] (_) in
+                self?.delegate?.relatedRecordsListViewControllerDidCancel(self!)
+            }
+            present(alert, animated: true, completion: nil)
             return
         }
         
@@ -85,6 +96,7 @@ extension RelatedRecordsListViewController: UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: ReuseIdentifiers.relatedRecordCell, for: indexPath) as! RelatedRecordCell
         cell.popup = featureTableRecordsManager?.popups[indexPath.row]
         cell.maxAttributes = 2
+        cell.updateCellContent()
         return cell
     }
 }

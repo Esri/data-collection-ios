@@ -24,29 +24,55 @@ extension RelatedRecordsPopupsViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        guard !indexPathWithinAttributes(indexPath) else {
+        // We only want to allow selection of related records
+        guard let cell = tableView.cellForRow(at: indexPath) as? RelatedRecordCell else {
             return
         }
         
-        guard let cell = tableView.cellForRow(at: indexPath) as? RelatedRecordCell, let childPopup = cell.popup else {
-            return
-        }
-        
+        // Should edit M:1 Related Record
         if indexPath.section == 0, recordsManager.isEditing {
-            EphemeralCache.set(object: childPopup, forKey: RelatedRecordsPopupsViewController.ephemeralCacheKey)
-            performSegue(withIdentifier: "selectRelatedRecordSegue", sender: self)
-        }
             
-        else if recordsManager.isEditing {
-            // TODO Alert!
-            self.present(simpleAlertMessage: "You must save first!")
-            // TODO (Save & Present) or (Cancel)
+            guard let table = recordsTableManager.table(forIndexPath: indexPath) else {
+                return
+            }
+            EphemeralCache.set(object: table, forKey: RelatedRecordsPopupsViewController.ephemeralCacheKey)
+            performSegue(withIdentifier: "selectRelatedRecordSegue", sender: self)
+            
             return
         }
-        else if let rrvc = storyboard?.instantiateViewController(withIdentifier: "RelatedRecordsPopupsViewController") as? RelatedRecordsPopupsViewController {
+        
+        // Should edit existing 1:M Related Record
+        if indexPath.section > 0, let childPopup = cell.popup, recordsManager.isEditing {
+            
+            closeEditingSessionAndBeginEditing(childPopup: childPopup)
+            
+            return
+        }
+        
+        // Should add new 1:M Related Record
+        if indexPath.section > 0, cell.popup == nil {
+            
+            guard let table = cell.table, table.canAddFeature, let popupDefinition = table.popupDefinition else {
+                // TODO inform user
+                return
+            }
+            
+            let newFeature = table.createFeature()
+            let newPopup = AGSPopup(geoElement: newFeature, popupDefinition: popupDefinition)
+            
+            closeEditingSessionAndBeginEditing(childPopup: newPopup)
+            
+            return
+        }
+        
+        // Requesting view popup
+        if let rrvc = storyboard?.instantiateViewController(withIdentifier: "RelatedRecordsPopupsViewController") as? RelatedRecordsPopupsViewController, let childPopup = cell.popup, let parentRecordsManager = recordsManager {
+            
             rrvc.popup = childPopup
-            rrvc.parentPopup = self.popup
-            self.navigationController?.pushViewController(rrvc, animated: true )
+            rrvc.parentPopupManager = parentRecordsManager
+            self.navigationController?.pushViewController(rrvc, animated: true)
+            
+            return
         }
     }
     
@@ -83,51 +109,28 @@ extension RelatedRecordsPopupsViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
         
-        // TODO NO ACTIONS FOR NON EDITABLE ROWS
-        
-        guard indexPath.section > 0 else {
+        guard
+            indexPath.section > 0,
+            let cell = tableView.cellForRow(at: indexPath) as? RelatedRecordCell,
+            let relationshipInfo = cell.relationshipInfo,
+            let childPopup = cell.popup,
+            childPopup.isEditable
+            else {
             return nil
         }
         
         let editAction = UITableViewRowAction(style: UITableViewRowActionStyle.default, title: "Edit") { [weak self] (action, indexPath) in
-            
-            // TODO MUST SAVE CURRENT POPUP FIRST
-            print("Will Edit Inspection")
-
-            let editPopupClosure: () -> Void = { [weak self] in
-                
-                guard
-                    let cell = tableView.cellForRow(at: indexPath) as? RelatedRecordCell,
-                    let childPopup = cell.popup,
-                    let rrvc = self?.storyboard?.instantiateViewController(withIdentifier: "RelatedRecordsPopupsViewController") as? RelatedRecordsPopupsViewController
-                    else {
-                        // TODO inform user
-                        return
-                }
-                
-                rrvc.popup = childPopup
-                rrvc.parentPopup = self?.popup
-                rrvc.editingPopup = true
-                
-                self?.navigationController?.pushViewController(rrvc, animated: true)
-            }
-
-            editPopupClosure()
+            self?.closeEditingSessionAndBeginEditing(childPopup: childPopup)
         }
         
         editAction.backgroundColor = .orange
         
         let deleteAction = UITableViewRowAction(style: UITableViewRowActionStyle.default, title: "Delete") { [weak self] (action, indexPath) in
-            
-            // TODO MUST SAVE CURRENT POPUP FIRST
-            print("Will Delete Inspection")
-            
-            let deletePopupClosure: () -> Void = { [weak self] in
-                
-            }
-            
-            deletePopupClosure()
+            self?.present(confirmationAlertMessage: "Are you sure you want to delete this \(childPopup.tableName ?? "record")?", confirmationTitle: "Delete", confirmationAction: { [weak self] (_) in
+                self?.closeEditingSessionAndDelete(childPopup: childPopup, forRelationshipInfo: relationshipInfo)
+            })
         }
+        
         deleteAction.backgroundColor = .red
         
         return [deleteAction, editAction]

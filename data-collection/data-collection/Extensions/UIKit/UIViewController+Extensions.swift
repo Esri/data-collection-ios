@@ -56,6 +56,7 @@ extension UIViewController {
         present(alert, animated: animated, completion: completion)
     }
 
+    // TODO integrate
     func present(confirmationAlertMessage message: String, confirmationTitle: String, confirmationAction:((UIAlertAction)->Void)?, animated: Bool = true, completion: (() -> Void)? = nil) {
         let alert = UIAlertController.multiAlert(message: message, actionTitle: confirmationTitle, action: confirmationAction)
         present(alert, animated: animated, completion: completion)
@@ -64,12 +65,8 @@ extension UIViewController {
 
 extension UIViewController {
     
-    func addBackButton(withSelector selector: Selector) {
-        guard let image = UIImage(named: "Cancel") else {
-            self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Exit", style: .done, target: self, action: selector)
-            return
-        }
-        self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: image, style: .done, target: self, action: selector)
+    func addDismissButton(withSelector selector: Selector) {
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Dismiss", style: .done, target: self, action: selector)
     }
     
     func addCancelButton(withSelector selector: Selector) {

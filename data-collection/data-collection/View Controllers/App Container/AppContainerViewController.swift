@@ -53,7 +53,7 @@ class AppContainerViewController: AppContextAwareController {
         }
     }
     
-    var showAddTreeBarButton: Bool = true {
+    var showAddFeatureBarButton: Bool = true {
         didSet {
             adjustNavigationBarButtons()
         }
@@ -101,7 +101,7 @@ class AppContainerViewController: AppContextAwareController {
             drawerViewController = destination
         }
         else if let destination = segue.destination as? JobStatusViewController {
-            destination.jobConstruct = EphemeralCache.get(objectForKey: AppOfflineMapJobConstruct.ephemeralCacheKey) as? AppOfflineMapJobConstruct
+            destination.jobConstruct = EphemeralCache.get(objectForKey: AppOfflineMapJobConstructionInfo.ephemeralCacheKey) as? AppOfflineMapJobConstructionInfo
             destination.delegate = self
             jobStatusViewController = destination
         }
@@ -116,7 +116,6 @@ class AppContainerViewController: AppContextAwareController {
         
         drawerLeadingLayoutConstraint.constant = drawerShowing ? 0.0 : -contextView.frame.size.width
         
-        // TODO made memory safe, abstract out into blocks
         UIView.animate(withDuration: 0.2, delay: 0.0, options: .curveEaseOut, animations: {
             self.view.layoutIfNeeded()
             self.visualEffectView.effect = self.drawerShowing ? UIBlurEffect(style: .light) : nil
@@ -127,7 +126,7 @@ class AppContainerViewController: AppContextAwareController {
     
     func adjustNavigationBarButtons() {
         
-        rightBarButton?.isEnabled = !drawerShowing && showAddTreeBarButton
+        rightBarButton?.isEnabled = !drawerShowing && showAddFeatureBarButton
         secondRightBarButton?.isEnabled = !drawerShowing && showZoomToLocationBarButton
         leftBarButton?.isEnabled = showProfileBarButton
     }

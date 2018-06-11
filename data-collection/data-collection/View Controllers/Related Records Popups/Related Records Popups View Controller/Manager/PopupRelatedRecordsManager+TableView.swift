@@ -38,25 +38,65 @@ class PopupRelatedRecordsTableManager {
         return fields[indexPath.row]
     }
     
-    func popup(forIndexPath indexPath: IndexPath) -> AGSPopup? {
+    func popup(forIndexPath indexPath: IndexPath) -> (popup: AGSPopup?, relationshipInfo: AGSRelationshipInfo?) {
+        
+        // Many To One
+        if indexPath.section == 0 {
+            let sectionOffsest = recordsManager.isEditing ? recordsManager.editableDisplayFields.count : recordsManager.displayFields.count
+            let idx = indexPath.row - sectionOffsest
+            let manager = recordsManager.manyToOne[idx]
+            return (manager.relatedPopup, manager.relationshipInfo)
+        }
+            
+        // One To Many
+        else {
+            let sectionOffsest = 1
+            let rowOffset = 1
+            let sectionIDX = indexPath.section - sectionOffsest
+            let rowIDX = indexPath.row - rowOffset
+            let manager = recordsManager.oneToMany[sectionIDX]
+            guard indexPath.row >= rowOffset else {
+                return (nil, manager.relationshipInfo)
+            }
+            guard manager.relatedPopups.count > rowIDX else {
+                return (nil, nil)
+            }
+            return (manager.relatedPopups[rowIDX], manager.relationshipInfo)
+        }
+    }
+    
+    func table(forIndexPath indexPath: IndexPath) -> AGSArcGISFeatureTable? {
+        // Many To One
+        if indexPath.section == 0 {
+            let offset = recordsManager.isEditing ? recordsManager.editableDisplayFields.count : recordsManager.displayFields.count
+            let idx = indexPath.row - offset
+            let manager = recordsManager.manyToOne[idx]
+            return manager.relatedTable
+        }
+            // One To Many
+        else {
+            let offset = 1
+            let idx = indexPath.section - offset
+            let manager = recordsManager.oneToMany[idx]
+            return manager.relatedTable
+        }
+    }
+    
+    func tableName(forIndexPath indexPath: IndexPath) -> String? {
         
         // Many To One
         if indexPath.section == 0 {
             let offset = recordsManager.isEditing ? recordsManager.editableDisplayFields.count : recordsManager.displayFields.count
             let idx = indexPath.row - offset
             let manager = recordsManager.manyToOne[idx]
-            return manager.relatedPopup
+            return manager.name
         }
-            
         // One To Many
         else {
             let offset = 1
             let idx = indexPath.section - offset
             let manager = recordsManager.oneToMany[idx]
-            guard manager.relatedPopups.count > indexPath.row else {
-                return nil
-            }
-            return manager.relatedPopups[indexPath.row]
+            return manager.name
         }
     }
 }

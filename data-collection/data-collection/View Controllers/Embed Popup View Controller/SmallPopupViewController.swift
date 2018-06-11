@@ -38,6 +38,13 @@ class SmallPopupViewController: UIViewController {
      Should the feature of interest not contain tables with this specific related table relationships, the spvc populates itself with content derived from itself's feature of interest
      */
     
+    
+    // TODO
+    /*
+     The queryCompletion declaration is long and distracts from the rest of the logic of populateViewWithBestContent.
+     
+     I bet that pulling that into a separate function that returns a tuple of (manyToOneRelationship, oneToManyRelantionship,queryCompletion) would work nicely.
+    */
     func popuplateViewWithBestContent(_ complete: @escaping ()->Void ) {
         
         guard
@@ -113,7 +120,6 @@ class SmallPopupViewController: UIViewController {
         
         guard let relationshipInfos = featureTable.layerInfo?.relationshipInfos else {
             queryCompletion([AGSRelatedFeatureQueryResult](), nil)
-            complete()
             return
         }
         

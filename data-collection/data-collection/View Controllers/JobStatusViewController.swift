@@ -32,7 +32,7 @@ class JobStatusViewController: AppContextAwareController {
     
     var delegate: JobStatusViewControllerDelegate?
     
-    var jobConstruct: AppOfflineMapJobConstruct? {
+    var jobConstruct: AppOfflineMapJobConstructionInfo? {
         didSet {
             mapJob = jobConstruct?.generateJob()
         }

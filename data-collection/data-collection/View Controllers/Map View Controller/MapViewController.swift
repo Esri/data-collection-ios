@@ -112,11 +112,10 @@ class MapViewController: AppContextAwareController, PopupsViewControllerEmbeddab
 
         (popupsContainerView as! ShrinkingView).actionClosure = { [weak self] in
             
-            // todo change strongSElf
-            guard let strongSelf = self, strongSelf.currentPopup != nil else {
+            guard self?.currentPopup != nil else {
                 return
             }
-            strongSelf.performSegue(withIdentifier: "modallyPresentRelatedRecordsPopupViewController", sender: nil)
+            self?.performSegue(withIdentifier: "modallyPresentRelatedRecordsPopupViewController", sender: nil)
         }
     }
     
@@ -124,16 +123,13 @@ class MapViewController: AppContextAwareController, PopupsViewControllerEmbeddab
         if let destination = segue.navigationDestination as? RelatedRecordsPopupsViewController {
             if let newPopup = EphemeralCache.get(objectForKey: "MapViewController.newFeature.spatial") as? AGSPopup {
                 destination.popup = newPopup
-                destination.editingPopup = true
-                // TODO : Toggle Bool for edit mode
+                destination.editPopup(true)
             }
             else {
                 destination.popup = currentPopup!
             }
         }
     }
-
-    //
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)

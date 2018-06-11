@@ -15,7 +15,7 @@
 import Foundation
 import ArcGIS
 
-enum AppOfflineMapJobConstruct: EphemeralCacheCacheable {
+enum AppOfflineMapJobConstructionInfo: EphemeralCacheCacheable {
     
     case downloadMapOffline(AGSMap, URL, AGSEnvelope, Double)
     case syncOfflineMap(AGSMap)

@@ -60,8 +60,7 @@ class PopupEditableFieldCell<ViewType: UIView>: PopupReadonlyFieldCell {
         
         if let _ /*error*/ = popupManager.validationError(for: field) {
             // TODO figure out if I want to display the error
-            // TODO make configurable
-            titleLabel.textColor = .red
+            titleLabel.textColor = AppConfiguration.appColors.invalid
         }
         else {
             titleLabel.textColor = AppConfiguration.appColors.tableCellTitle

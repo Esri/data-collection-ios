@@ -19,14 +19,16 @@ class RelatedRecordsManager {
     
     weak internal private(set) var popup: AGSPopup?
     weak var relationshipInfo: AGSRelationshipInfo?
+    weak var relatedTable: AGSArcGISFeatureTable?
     
-    init?(relationshipInfo info: AGSRelationshipInfo, popup: AGSPopup) {
+    init?(relationshipInfo info: AGSRelationshipInfo, table: AGSArcGISFeatureTable?, popup: AGSPopup) {
         
         guard info.cardinality == .oneToMany else {
             return nil
         }
         
         self.relationshipInfo = info
+        self.relatedTable = table
         self.popup = popup
     }
     
@@ -62,16 +64,15 @@ class RelatedRecordsManager {
             completion(popups, nil)
         }
     }
+    
+    var name: String? {
+        return relatedTable?.tableName
+    }
 }
 
 class OneToManyManager: RelatedRecordsManager {
     
     internal private(set) var relatedPopups = [AGSPopup]()
-    
-    // TODO modify to get tableName from Relationship Info
-    var name: String? {
-        return (relatedPopups.first?.geoElement as? AGSArcGISFeature)?.featureTable?.tableName
-    }
     
     func load(records completion: @escaping (Error?) -> Void) {
         
@@ -105,7 +106,9 @@ class OneToManyManager: RelatedRecordsManager {
         
         feature.relate(to: relatedFeature, relationshipInfo: info)
         
-        relatedPopups.append(newRelatedPopup)
+        if !relatedPopups.contains(newRelatedPopup) {
+            relatedPopups.append(newRelatedPopup)
+        }
     }
     
     func deletePopup(_ removedRelatedPopup: AGSPopup) throws {
@@ -160,11 +163,6 @@ class ManyToOneManager: RelatedRecordsManager {
     
     private var stagedRelatedPopup: AGSPopup?
     
-    // TODO modify to get tableName from Relationship Info
-    var name: String? {
-        return (relatedPopup?.geoElement as? AGSArcGISFeature)?.featureTable?.tableName
-    }
-    
     func load(records completion: @escaping (Error?) -> Void) {
         
         super.load { [weak self] (popupsResults, error) in
@@ -192,14 +190,20 @@ class ManyToOneManager: RelatedRecordsManager {
     
     func commitChange() throws {
         
+        guard let info = relationshipInfo else {
+            throw RelatedRecordsManagerError.cannotRelateFeatures
+        }
+        
         guard let newRelatedPopup = stagedRelatedPopup else {
+            if info.isComposite {
+                throw RelatedRecordsManagerError.invalidPopup
+            }
             return
         }
         
         guard
             let feature = popup?.geoElement as? AGSArcGISFeature,
-            let relatedFeature = newRelatedPopup.geoElement as? AGSArcGISFeature,
-            let info = relationshipInfo
+            let relatedFeature = newRelatedPopup.geoElement as? AGSArcGISFeature
             else {
             throw RelatedRecordsManagerError.cannotRelateFeatures
         }

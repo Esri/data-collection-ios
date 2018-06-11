@@ -66,12 +66,16 @@ extension Collection where Iterator.Element == AGSArcGISFeature {
     
     var asPopups: [AGSPopup]? {
         
-        guard let first = first, let firstFeatureTable = first.featureTable, firstFeatureTable.isPopupActuallyEnabled else {
+        var popups = [AGSPopup]()
+
+        guard let first = first else {
+            return popups
+        }
+        
+        guard let firstFeatureTable = first.featureTable, firstFeatureTable.isPopupActuallyEnabled else {
             return nil
         }
         
-        var popups = [AGSPopup]()
-
         for feature in self {
             
             guard let featureTable = feature.featureTable, featureTable == firstFeatureTable else {

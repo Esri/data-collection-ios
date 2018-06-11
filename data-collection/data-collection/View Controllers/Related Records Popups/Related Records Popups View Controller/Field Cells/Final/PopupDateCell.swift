@@ -36,13 +36,11 @@ final class PopupDateCell: PopupTextFieldCell {
         
         updateValue(sender.date)
 
-        // Update Field
-        guard let dateFormatter = field?.format?.dateFormat.dateFormatter else {
-            print("[Error: Date Formatter] could not build formatter")
+        guard let field = field else {
             valueEditView?.text = sender.date.formattedString
             return
         }
         
-        valueEditView?.text = dateFormatter.string(from: sender.date)
+        valueEditView?.text = popupManager?.formattedValue(for: field) ?? sender.date.formattedString
     }
 }

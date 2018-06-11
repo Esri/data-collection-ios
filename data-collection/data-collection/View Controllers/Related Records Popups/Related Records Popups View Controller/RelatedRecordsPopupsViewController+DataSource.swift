@@ -48,19 +48,16 @@ extension RelatedRecordsPopupsViewController: UITableViewDataSource {
                 cell = tableView.dequeueReusableCell(withIdentifier: ReuseIdentifiers.codedValueCell, for: indexPath) as! PopupCodedValueCell
             }
             else {
-                switch fieldType {
-                case .int16, .int32, .float, .double:
+                switch (fieldType, field.stringFieldOption) {
+                case (.int16, _), (.int32, _), (.float, _), (.double, _):
                     cell = tableView.dequeueReusableCell(withIdentifier: ReuseIdentifiers.popupNumberCell, for: indexPath) as! PopupNumberCell
-                case .text:
-                    if field.stringFieldOption == .multiLine || field.stringFieldOption == .richText {
-                        cell = tableView.dequeueReusableCell(withIdentifier: ReuseIdentifiers.popupLongTextCell, for: indexPath) as! PopupLongStringCell
-                    }
-                    else {
-                        cell = tableView.dequeueReusableCell(withIdentifier: ReuseIdentifiers.popupShortTextCell, for: indexPath) as! PopupShortStringCell
-                    }
-                case .date:
+                case (.text, .multiLine), (.text, .richText):
+                    cell = tableView.dequeueReusableCell(withIdentifier: ReuseIdentifiers.popupLongTextCell, for: indexPath) as! PopupLongStringCell
+                case (.text, .singleLine), (.text, .unknown):
+                    cell = tableView.dequeueReusableCell(withIdentifier: ReuseIdentifiers.popupShortTextCell, for: indexPath) as! PopupShortStringCell
+                case (.date, _):
                     cell = tableView.dequeueReusableCell(withIdentifier: ReuseIdentifiers.popupDateCell, for: indexPath) as! PopupDateCell
-                case .GUID, .OID, .globalID:
+                case (.GUID, _), (.OID, _), (.globalID, _):
                     cell = tableView.dequeueReusableCell(withIdentifier: ReuseIdentifiers.popupIDCell, for: indexPath) as! PopupIDCell
                 default:
                     cell = tableView.dequeueReusableCell(withIdentifier: ReuseIdentifiers.popupReadonlyCell, for: indexPath) as! PopupReadonlyFieldCell
@@ -73,17 +70,16 @@ extension RelatedRecordsPopupsViewController: UITableViewDataSource {
             cell.refreshCell()
             
             return cell as! UITableViewCell
-
         }
         else {
-            let popup = recordsTableManager.popup(forIndexPath: indexPath)
+            
             let cell = tableView.dequeueReusableCell(withIdentifier: ReuseIdentifiers.relatedRecordCell, for: indexPath) as! RelatedRecordCell
-            cell.popup = popup
-            
+            cell.table = recordsTableManager.table(forIndexPath: indexPath)
+            (cell.popup, cell.relationshipInfo) = recordsTableManager.popup(forIndexPath: indexPath)
             // TODO make AppConfigurable
-            let maxAttributes = indexPath.section == 0 ? 2 : 3
+            cell.maxAttributes = indexPath.section == 0 ? 2 : 3
+            cell.updateCellContent()
             
-            cell.maxAttributes = maxAttributes
             return cell
         }
     }
@@ -102,9 +98,9 @@ extension RelatedRecordsPopupsViewController: UITableViewDataSource {
         else {
             let idx = section - 1
             guard recordsManager.oneToMany.count > idx else {
-                return 0
+                return 1
             }
-            return recordsManager.oneToMany[idx].relatedPopups.count
+            return recordsManager.oneToMany[idx].relatedPopups.count + 1
         }
     }
 }

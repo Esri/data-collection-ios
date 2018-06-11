@@ -15,12 +15,11 @@
 import Foundation
 import ArcGIS
 
-// TODO hook in services
 // TODO thread safe?
 class PopupRelatedRecordsManager: AGSPopupManager {
     
-    internal var oneToMany = [OneToManyManager]()
     internal var manyToOne = [ManyToOneManager]()
+    internal var oneToMany = [OneToManyManager]()
     
     // MARK: Popup Manager Editing Session
     
@@ -74,21 +73,18 @@ class PopupRelatedRecordsManager: AGSPopupManager {
         }
         
         var invalids = [Error]()
-
-        // 1. enforce M:1 relationships exist
-        // TODO make swifty
-        for manager in manyToOne {
-            if manager.relatedPopup == nil {
-                let error = RelatedRecordsManagerError.missingManyToOneRelationship(manager.name ?? "Unknown")
-                invalids.append(error)
-            }
-        }
+        
+        // 1. enforce M:1 relationships if composite
+        invalids += manyToOne
+            .filter { return ($0.relationshipInfo != nil) ? false : $0.relationshipInfo!.isComposite ? $0.relatedPopup == nil : false }
+            .map    { return RelatedRecordsManagerError.missingManyToOneRelationship($0.name ?? "Unknown") as Error }
         
         // 2. enforce validity on all popup fields
-        // TODO make swifty
-        for field in editableDisplayFields {
+        invalids += editableDisplayFields.compactMap { return validationError(for: $0) }
+        
+        for field in displayFields {
             if let error = validationError(for: field) {
-                invalids.append(error)
+                print(error, "for field", field.fieldName, field.label)
             }
         }
         
@@ -97,8 +93,8 @@ class PopupRelatedRecordsManager: AGSPopupManager {
     
     func loadRelatedRecords(_ completion: @escaping ()->Void) {
         
-        oneToMany.removeAll()
         manyToOne.removeAll()
+        oneToMany.removeAll()
         
         guard
             let feature = popup.geoElement as? AGSArcGISFeature,
@@ -118,7 +114,18 @@ class PopupRelatedRecordsManager: AGSPopupManager {
                 continue
             }
             
-            if info.isManyToOne, let manager = ManyToOneManager(relationshipInfo: info, popup: popup) {
+            var foundRelatedTable: AGSArcGISFeatureTable?
+            
+            if let relatedTables = featureTable.relatedTables() {
+                for relatedTable in relatedTables {
+                    if relatedTable.serviceLayerID == info.relatedTableID {
+                        foundRelatedTable = relatedTable
+                        break
+                    }
+                }
+            }
+
+            if info.isManyToOne, let manager = ManyToOneManager(relationshipInfo: info, table: foundRelatedTable, popup: popup) {
                 
                 dispatchGroup.enter()
                 
@@ -136,7 +143,7 @@ class PopupRelatedRecordsManager: AGSPopupManager {
                     self?.manyToOne.append(manager)
                 }
             }
-            else if info.isOneToMany, let manager = OneToManyManager(relationshipInfo: info, popup: popup) {
+            else if info.isOneToMany, let manager = OneToManyManager(relationshipInfo: info, table: foundRelatedTable, popup: popup) {
                 
                 dispatchGroup.enter()
                 

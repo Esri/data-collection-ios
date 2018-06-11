@@ -18,23 +18,15 @@ import ArcGIS
 class RelatedRecordCell: UITableViewCell {
     
     weak var relationshipInfo: AGSRelationshipInfo?
+    weak var table: AGSArcGISFeatureTable?
     
-    public var popup: AGSPopup? {
-        didSet {
-            // TODO: Check no need to .load
-            update()
-        }
-    }
-    
-    public var maxAttributes: Int = 3 {
-        didSet {
-            update()
-        }
-    }
-    
-    private var attributes = [(UILabel, UILabel)]()
+    public var popup: AGSPopup?
+    public var maxAttributes: Int = 3
     
     private var stackView = UIStackView()
+
+    private var attributes = [(title: UILabel, value: UILabel)]()
+    private var emptyCellLabel: UILabel?
     
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -54,34 +46,50 @@ class RelatedRecordCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        update()
-    }
+//    override func layoutSubviews() {
+//        super.layoutSubviews()
+//        updateCellContent()
+//    }
     
     // TODO validity
     
-    private func update() {
+    func setAccessoryViewDisclosureIndicator() {
+        accessoryType = .disclosureIndicator
+        accessoryView = nil
+    }
+    
+    func setAccessoryViewAddIndicator() {
+        let button = UIButton(type: .contactAdd)
+        button.tintColor = AppConfiguration.appColors.primary
+        button.isUserInteractionEnabled = false
+        accessoryView = button
+    }
+    
+    func updateCellContent() {
         
         guard let manager = popup?.asManager else {
-            for attribute in attributes {
-                stackView.removeArrangedSubview(attribute.0)
-                attribute.0.removeFromSuperview()
-                stackView.removeArrangedSubview(attribute.1)
-                attribute.1.removeFromSuperview()
-            }
-            attributes.removeAll()
+            updateEmptyCellContent()
             return
         }
         
+        // 0. Clear empty cell label
+        if emptyCellLabel != nil {
+            stackView.removeArrangedSubview(emptyCellLabel!)
+            emptyCellLabel!.removeFromSuperview()
+            emptyCellLabel = nil
+        }
+        
+        // 1. Determin n attributes not to exceed max attributes
         let nAttributes = min(maxAttributes, manager.displayFields.count)
         
+        // 2. Adjust for correct n attributes
         if attributes.count < nAttributes {
             
             while attributes.count != nAttributes {
                 
                 let titleLabel = UILabel()
                 titleLabel.font = UIFont.preferredFont(forTextStyle: .footnote)
+                // TODO app config colors
                 titleLabel.textColor = .gray
                 titleLabel.sizeToFit()
                 titleLabel.heightAnchor.constraint(equalToConstant: titleLabel.font.lineHeight).isActive = true
@@ -110,25 +118,72 @@ class RelatedRecordCell: UITableViewCell {
                 
                 // TODO consider how removing Auto Layout constraints
                 
-                stackView.removeArrangedSubview(last.0)
-                last.0.removeFromSuperview()
-                stackView.removeArrangedSubview(last.1)
-                last.1.removeFromSuperview()
+                stackView.removeArrangedSubview(last.title)
+                last.title.removeFromSuperview()
+                stackView.removeArrangedSubview(last.value)
+                last.value.removeFromSuperview()
             }
         }
         
+        // 3. Populate attribute labels with content from popup (manager)
         var popupIndex = 0
         
         for attribute in attributes {
             
-            let titleLabel = attribute.0
+            let titleLabel = attribute.title
             titleLabel.text = manager.labelTitle(idx: popupIndex)
-            let valueLabel = attribute.1
+            let valueLabel = attribute.value
             valueLabel.text = manager.nextFieldStringValue(idx: &popupIndex)
             
             // TODO workout constraints issue
             titleLabel.considerEmptyStringForStackView()
             valueLabel.considerEmptyStringForStackView()
+        }
+        
+        setAccessoryViewDisclosureIndicator()
+
+    }
+    
+    private func updateEmptyCellContent() {
+        
+        for attribute in attributes {
+            stackView.removeArrangedSubview(attribute.title)
+            attribute.title.removeFromSuperview()
+            stackView.removeArrangedSubview(attribute.value)
+            attribute.value.removeFromSuperview()
+        }
+        
+        attributes.removeAll()
+        
+        if emptyCellLabel == nil {
+            emptyCellLabel = UILabel()
+            emptyCellLabel!.heightAnchor.constraint(equalToConstant: emptyCellLabel!.font.lineHeight).isActive = true
+            stackView.addArrangedSubview(emptyCellLabel!)
+        }
+        
+        emptyCellLabel?.font = UIFont.preferredFont(forTextStyle: .footnote)
+        emptyCellLabel?.sizeToFit()
+        
+        guard let info = relationshipInfo else {
+            emptyCellLabel?.textColor = AppConfiguration.appColors.tableCellTitle
+            setAccessoryViewDisclosureIndicator()
+            return
+        }
+        
+        if info.isManyToOne {
+            setAccessoryViewDisclosureIndicator()
+            emptyCellLabel?.textColor = info.isComposite ? AppConfiguration.appColors.invalid : AppConfiguration.appColors.tableCellTitle
+            emptyCellLabel?.text = "Select \(table?.tableName ?? "related record")"
+        }
+        else {
+            if popup == nil {
+                setAccessoryViewAddIndicator()
+            }
+            else {
+                setAccessoryViewDisclosureIndicator()
+            }
+            emptyCellLabel?.textColor = AppConfiguration.appColors.primary
+            emptyCellLabel?.text = "Add \(table?.tableName ?? "related record")"
         }
     }
 }
