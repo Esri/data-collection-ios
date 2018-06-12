@@ -41,6 +41,44 @@ enum LocationSelectionViewType {
 
 extension MapViewController {
     
+    @IBAction func userDidSelectLocation(_ sender: Any) {
+
+        switch locationSelectionType {
+            
+        case .newFeature:
+            prepareNewFeatureForEdit()
+            break
+            
+        case .offlineExtent:
+            prepareForOfflineMapDownloadJob()
+            break
+        }
+        
+        mapViewMode = .defaultView
+    }
+    
+    @IBAction func userDidCancelSelectLocation(_ sender: Any) {
+        
+        switch locationSelectionType {
+        case .newFeature:
+            _ = EphemeralCache.get(objectForKey: "MapViewController.newFeature.nonspatial")
+            break
+        case .offlineExtent:
+            hideMapMaskViewForOfflineDownloadArea()
+            break
+        }
+        
+        mapViewMode = .defaultView
+    }
+    
+    func adjustForLocationSelectionType() {
+        
+        selectViewHeaderLabel.text = locationSelectionType.headerText
+        selectViewSubheaderLabel.text = locationSelectionType.subheaderText
+    }
+    
+    // MARK : New Feature
+    
     func userRequestsAddNewFeature() {
         
         guard mapViewMode != .disabled else {
@@ -95,72 +133,99 @@ extension MapViewController {
             let popupDefinition = featureTable.popupDefinition
             else {
                 present(simpleAlertMessage: "Uh Oh! You are unable to add a new feature.")
-            return
+                return
         }
         
         let newPopup = AGSPopup(geoElement: feature, popupDefinition: popupDefinition)
         EphemeralCache.set(object: newPopup, forKey: "MapViewController.newFeature.nonspatial")
-
+        
         mapViewMode = .selectingFeature
     }
     
-    @IBAction func userDidSelectLocation(_ sender: Any) {
-
-        switch locationSelectionType {
-        case .newFeature:
-            
-            guard
-                let initialViewpoint = mapView.map?.initialViewpoint,
-                let spatialRef = initialViewpoint.targetGeometry.spatialReference
-                else {
-                present(simpleAlertMessage: "No map viewpoint set. Contact map publisher.")
+    private func prepareNewFeatureForEdit() {
+        
+        guard let newPopup = EphemeralCache.get(objectForKey: "MapViewController.newFeature.nonspatial") as? AGSPopup else {
+            present(simpleAlertMessage: "Uh Oh! You are unable to add a new record.")
+            return
+        }
+        
+        SVProgressHUD.show(withStatus: "Preparing new \(newPopup.tableName ?? "record").")
+        
+        guard
+            let initialViewpoint = mapView.map?.initialViewpoint,
+            let spatialRef = initialViewpoint.targetGeometry.spatialReference,
+            let centerPoint = AGSGeometryEngine.projectGeometry(mapView.centerAGSPoint(), to: spatialRef) as? AGSPoint,
+            AGSGeometryEngine.geometry(centerPoint, within: initialViewpoint.targetGeometry)
+            else {
+                SVProgressHUD.dismiss()
+                present(simpleAlertMessage: "Can't add new \(newPopup.tableName ?? "record") here.")
                 return
-            }
-            
-            guard
-                let centerPoint = AGSGeometryEngine.projectGeometry(mapView.centerAGSPoint(), to: spatialRef),
-                AGSGeometryEngine.geometry(centerPoint, within: initialViewpoint.targetGeometry)
-                else {
-                present(simpleAlertMessage: "Can't add feature, you are outside the bounds of your map.")
-                return
-            }
-            
-            guard let newPopup = EphemeralCache.get(objectForKey: "MapViewController.newFeature.nonspatial") as? AGSPopup else {
-                present(simpleAlertMessage: "Uh Oh! You are unable to add a new feature.")
-                return
-            }
+        }
+        
+        // Custom Behavior
+        
+        let proceedAfterCustomBehavior: () -> Void = { [weak self] in
             
             newPopup.geoElement.geometry = centerPoint
             EphemeralCache.set(object: newPopup, forKey: "MapViewController.newFeature.spatial")
             
-            performSegue(withIdentifier: "modallyPresentRelatedRecordsPopupViewController", sender: nil)
+            SVProgressHUD.dismiss()
             
-            break
-        case .offlineExtent:
-            prepareForOfflineMapDownloadJob()
-            break
+            self?.performSegue(withIdentifier: "modallyPresentRelatedRecordsPopupViewController", sender: nil)
         }
         
-        mapViewMode = .defaultView
+        if shouldEnactCustomBehavior {
+            enrich(popup: newPopup, withReverseGeocodedDataForPoint: centerPoint) {
+                proceedAfterCustomBehavior()
+            }
+        }
+        else {
+            proceedAfterCustomBehavior()
+        }
     }
     
-    @IBAction func userDidCancelSelectLocation(_ sender: Any) {
+    // MARK : Offline Mask
+    
+    func prepareMapMaskViewForOfflineDownloadArea() {
         
-        switch locationSelectionType {
-        case .newFeature:
-            _ = EphemeralCache.get(objectForKey: "MapViewController.newFeature.nonspatial")
-            break
-        case .offlineExtent:
-            hideMapMaskViewForOfflineDownloadArea()
-            break
+        mapViewMode = .offlineMask
+    }
+    
+    func presentMapMaskViewForOfflineDownloadArea() {
+        
+        guard let locationSelectionView = view.viewWithTag(1001), let maskView = view.viewWithTag(1002) else {
+            return
         }
         
-        mapViewMode = .defaultView
+        maskView.isHidden = false
+        view.bringSubview(toFront: maskView)
+        view.bringSubview(toFront: locationSelectionView)
     }
     
-    func adjustForLocationSelectionType() {
+    func hideMapMaskViewForOfflineDownloadArea() {
         
-        selectViewHeaderLabel.text = locationSelectionType.headerText
-        selectViewSubheaderLabel.text = locationSelectionType.subheaderText
+        guard let maskView = view.viewWithTag(1002) else {
+            return
+        }
+        
+        maskView.isHidden = true
+        view.sendSubview(toBack: maskView)
+    }
+    
+    func prepareForOfflineMapDownloadJob() {
+        
+        guard let mask = view.viewWithTag(1003) else {
+            return
+        }
+        
+        let nw = mask.frame.origin
+        let se = CGPoint(x: mask.frame.maxX, y: mask.frame.maxY)
+        
+        let agsNW = mapView.screen(toLocation: nw)
+        let agsSE = mapView.screen(toLocation: se)
+        
+        let envelope = AGSEnvelope(min: agsNW, max: agsSE)
+        
+        delegate?.mapViewController(self, didSelect: envelope)
     }
 }

@@ -69,8 +69,18 @@ class RelatedRecordsPopupsViewController: UIViewController, EphemeralCacheCachea
         tableView.rowHeight = UITableViewAutomaticDimension
         
         if recordsManager.shouldAllowEdit {
-            popupModeButton = UIBarButtonItem(title: "Edit", style: .plain, target: self, action: #selector(RelatedRecordsPopupsViewController.userRequestsTogglePopupMode(_:)))
+            popupModeButton = UIBarButtonItem(title: "Edit",
+                                              style: .plain,
+                                              target: self,
+                                              action: #selector(RelatedRecordsPopupsViewController.userRequestsTogglePopupMode(_:)))
             self.navigationItem.rightBarButtonItem = popupModeButton
+        }
+        
+        if isRootPopup {
+            self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Cancel",
+                                                                    style: .plain,
+                                                                    target: self,
+                                                                    action: #selector(RelatedRecordsPopupsViewController.userTappedRootLeftBarButton(_:)))
         }
         
         NotificationCenter.default.addObserver(self, selector: #selector(RelatedRecordsPopupsViewController.adjustKeyboardVisible(notification:)), name: .UIKeyboardWillShow, object: nil)
@@ -112,8 +122,8 @@ class RelatedRecordsPopupsViewController: UIViewController, EphemeralCacheCachea
         let shouldPop = !recordsManager.isEditing
         
         if !shouldPop {
-            endPopupEditMode() {
-                _ = self.navigationController?.popViewController(animated: true)
+            endPopupEditMode() { [weak self] _ in
+                self?.popDismiss()
             }
         }
         
@@ -134,12 +144,21 @@ class RelatedRecordsPopupsViewController: UIViewController, EphemeralCacheCachea
     
     // MARK : Editing Popup UI
     
-    @objc func userRequestsEndPopupEditMode(_ sender: Any?) {
+    @objc func userTappedRootLeftBarButton(_ sender: Any?) {
         
-        endPopupEditMode()
+        if recordsManager.isEditing {
+            endPopupEditMode() { [weak self] (shouldDismiss) in
+                if shouldDismiss {
+                    self?.popDismiss()
+                }
+            }
+        }
+        else {
+            popDismiss()
+        }
     }
     
-    func endPopupEditMode(_ completion: (() -> Void)? = nil) {
+    func endPopupEditMode(_ completion: ((_ shouldDismiss: Bool) -> Void)? = nil) {
 
         var action: ((UIAlertAction) -> Void)!
         
@@ -147,12 +166,12 @@ class RelatedRecordsPopupsViewController: UIViewController, EphemeralCacheCachea
             action = { [weak self] (_) in
                 self?.recordsManager.cancelEditing()
                 self?.adjustViewControllerForEditState()
-                completion?()
+                completion?(false)
             }
         }
         else {
             action = { (_) in
-                completion?()
+                completion?(true)
             }
         }
         present(confirmationAlertMessage: "Discard changes?", confirmationTitle: "Discard", confirmationAction: action)
@@ -175,10 +194,12 @@ class RelatedRecordsPopupsViewController: UIViewController, EphemeralCacheCachea
         }
         
         if recordsManager.isEditing {
-            self.addCancelButton(withSelector: #selector(RelatedRecordsPopupsViewController.userRequestsEndPopupEditMode(_:)))
+            self.navigationItem.leftBarButtonItem?.style = .plain
+            self.navigationItem.leftBarButtonItem?.title = "Cancel"
         }
         else {
-            self.addDismissButton(withSelector: #selector(RelatedRecordsPopupsViewController.userRequestsDismissRelatedRecordsPopupsViewController(_:)))
+            self.navigationItem.leftBarButtonItem?.style = .done
+            self.navigationItem.leftBarButtonItem?.title = "Dismiss"
         }
     }
     

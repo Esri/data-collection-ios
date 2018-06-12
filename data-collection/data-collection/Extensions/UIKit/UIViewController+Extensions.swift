@@ -62,13 +62,3 @@ extension UIViewController {
     }
 }
 
-extension UIViewController {
-    
-    func addDismissButton(withSelector selector: Selector) {
-        self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Dismiss", style: .done, target: self, action: selector)
-    }
-    
-    func addCancelButton(withSelector selector: Selector) {
-        self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: selector)
-    }
-}
