@@ -15,5 +15,10 @@
 import Foundation
 
 var shouldEnactCustomBehavior: Bool {
-    return true
+    
+    guard let itemID = appContext.currentMap?.item?.itemID else {
+        return false
+    }
+    
+    return itemID == "fcc7fc65bb96464c9c0986576c119a92"
 }
