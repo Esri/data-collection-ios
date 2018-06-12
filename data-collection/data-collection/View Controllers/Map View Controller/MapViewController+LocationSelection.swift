@@ -175,8 +175,21 @@ extension MapViewController {
         }
         
         if shouldEnactCustomBehavior {
-            enrich(popup: newPopup, withReverseGeocodedDataForPoint: centerPoint) {
+            
+            let dispatchGroup = DispatchGroup()
+            
+            dispatchGroup.enter(n: 2)
+            
+            dispatchGroup.notify(queue: OperationQueue.current?.underlyingQueue ?? .main) {
                 proceedAfterCustomBehavior()
+            }
+            
+            enrich(popup: newPopup, withReverseGeocodedDataForPoint: centerPoint) {
+                dispatchGroup.leave()
+            }
+            
+            enrich(popup: newPopup, withNeighborhoodIdentifyForPoint: centerPoint) {
+                dispatchGroup.leave()
             }
         }
         else {

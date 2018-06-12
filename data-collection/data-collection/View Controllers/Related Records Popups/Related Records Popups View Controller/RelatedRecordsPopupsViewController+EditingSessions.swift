@@ -62,59 +62,50 @@ extension RelatedRecordsPopupsViewController {
                 
                 guard error == nil else {
                     print("[Error: Validating Feature]", error!.localizedDescription)
+                    self?.present(simpleAlertMessage: "Could not edit record!")
                     completion?(true)
                     return
                 }
+                
                 guard
                     let feature = self?.popup.geoElement as? AGSArcGISFeature,
                     let featureTable = feature.featureTable as? AGSArcGISFeatureTable
                     else {
-                        // somethign went very wrong
-                        // TODO alert
+                        self?.present(simpleAlertMessage: "Could not edit record!")
                         completion?(true)
                         return
                 }
                 
                 SVProgressHUD.show(withStatus: "Saving \(self?.recordsManager.title ?? "Record")...")
                 
-                // TODO make this into an extension
-                if
-                    let parentPopupManager = self?.parentPopupManager,
-                    let parentFeature = parentPopupManager.popup.geoElement as? AGSArcGISFeature,
-                    let relatedRecordInfos = parentFeature.relatedRecordsInfos,
-                    let thisFeature = self?.popup.geoElement as? AGSArcGISFeature,
-                    let thisFeatureTable = thisFeature.featureTable as? AGSArcGISFeatureTable
-                {
+                if let childPopup = self?.popup, let relationship = self?.parentPopupManager?.popup.relationship(withPopup: childPopup), relationship.isOneToMany {
                     
-                    var foundRelationshipInfo: AGSRelationshipInfo?
-                
-                    for info in relatedRecordInfos {
-                        if info.relatedTableID == thisFeatureTable.serviceLayerID {
-                            foundRelationshipInfo = info
-                            break
-                        }
+                    guard let manager = self?.parentPopupManager else {
+                        SVProgressHUD.dismiss()
+                        self?.present(simpleAlertMessage: "Unexpected error, you couldn't edit this \(self?.recordsManager?.popup.title ?? "record").")
+                        return
                     }
                     
-                    if let relationshipInfo = foundRelationshipInfo, relationshipInfo.isOneToMany {
-                        do {
-                            //TODO make safe
-                            try self?.parentPopupManager?.add(oneToMany: self!.popup, forRelationship: relationshipInfo)
-                        }
-                        catch {
-                            SVProgressHUD.dismiss()
-                            // TODO alert user
-                            print("[Error: Records Manager]", error.localizedDescription)
-                            return
-                        }
+                    do {
+                        try manager.add(oneToMany: self!.popup, forRelationship: relationship)
+                    }
+                    catch {
+                        SVProgressHUD.dismiss()
+                        self?.present(simpleAlertMessage: "Unexpected error, you couldn't edit this \(self?.recordsManager?.popup.title ?? "record").")
+                        print("[Error: Records Manager]", error.localizedDescription)
+                        return
                     }
                 }
                 
                 featureTable.performEdit(feature: feature, completion: { [weak self] (error) in
                     
                     SVProgressHUD.dismiss()
+                    
                     if error != nil {
+                        self?.present(simpleAlertMessage: "Unexpected error, you couldn't edit this \(self?.recordsManager?.popup.title ?? "record").")
                         print("[Error] feature table edit error", error!.localizedDescription)
                     }
+                    
                     self?.adjustViewControllerForEditState()
                     completion?(true)
                 })

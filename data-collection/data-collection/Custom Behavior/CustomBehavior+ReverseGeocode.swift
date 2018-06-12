@@ -28,7 +28,6 @@ func enrich(popup: AGSPopup, withReverseGeocodedDataForPoint point: AGSPoint, co
             return key == addressKey
         })
         {
-            // TODO neighborhood
             popup.geoElement.attributes[addressKey] = address
         }
         

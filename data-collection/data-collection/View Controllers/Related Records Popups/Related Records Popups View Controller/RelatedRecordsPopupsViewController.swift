@@ -42,6 +42,7 @@ class RelatedRecordsPopupsViewController: UIViewController, EphemeralCacheCachea
         }
     }
     
+    // TODO CHANGE ?? 
     var recordsTableManager: PopupRelatedRecordsTableManager!
     
     var isRootPopup: Bool {
