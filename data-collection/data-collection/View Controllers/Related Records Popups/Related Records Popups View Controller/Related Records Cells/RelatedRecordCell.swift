@@ -38,6 +38,7 @@ class RelatedRecordCell: UITableViewCell {
         stackView.axis = .vertical
         stackView.alignment = .fill
         stackView.spacing = 6.0
+        
         contentView.addSubview(stackView)
         contentView.constrainToBounds(stackView)
     }
@@ -45,11 +46,6 @@ class RelatedRecordCell: UITableViewCell {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
-//    override func layoutSubviews() {
-//        super.layoutSubviews()
-//        updateCellContent()
-//    }
     
     // TODO validity
     

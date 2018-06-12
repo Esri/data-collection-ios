@@ -184,48 +184,32 @@ extension AGSArcGISFeatureTable {
         }
     }
     
-    func edit(feature: AGSArcGISFeature, completion: @escaping (Error?)->Void) {
-        
-        let editClosure:(Error?) -> Void = { error in
-            
-            guard error == nil else {
-                print("[Error: Feature Service Table] could not edit", error!.localizedDescription)
-                completion(error!)
-                return
-            }
-            
-            // If online, apply edits.
-            guard let serviceFeatureTable = self as? AGSServiceFeatureTable else {
-                completion(nil)
-                return
-            }
-            
-            serviceFeatureTable.applyEdits(completion: { (results, error) in
-                guard error == nil else {
-                    print("[Error: Feature Service Table] could not apply edits", error!.localizedDescription)
-                    completion(error!)
-                    return
-                }
-                feature.refreshObjectID()
-                completion(nil)
-            })
-        }
+    func performEdit(feature: AGSArcGISFeature, completion: @escaping (Error?)->Void) {
         
         // Update
         if canUpdate(feature) {
-            update(feature, completion: editClosure)
+            performEdit(type: .update, forFeature: feature, completion: completion)
         }
         // Add
         else if canAddFeature {
-            add(feature, completion: editClosure)
+            performEdit(type: .add, forFeature: feature, completion: completion)
         }
         else {
             completion(FeatureTableError.cannotEditFeature)
         }
     }
     
-    // TODO refactor above with this.
-    func deleteRelated(feature: AGSArcGISFeature, completion: @escaping (Error?)->Void) {
+    func performDelete(feature: AGSArcGISFeature, completion: @escaping (Error?)->Void) {
+        
+        if canDelete(feature) {
+            performEdit(type: .delete, forFeature: feature, completion: completion)
+        }
+        else {
+            completion(FeatureTableError.cannotEditFeature)
+        }
+    }
+    
+    private func performEdit(type: EditType, forFeature feature: AGSArcGISFeature, completion: @escaping (Error?)->Void) {
         
         let editClosure:(Error?) -> Void = { error in
             
@@ -252,8 +236,14 @@ extension AGSArcGISFeatureTable {
             })
         }
         
-        if canDelete(feature) {
+        if type == .update {
+            update(feature, completion: editClosure)
+        }
+        else if type == .delete {
             delete(feature, completion: editClosure)
+        }
+        else if type == .add {
+            add(feature, completion: editClosure)
         }
         else {
             completion(FeatureTableError.cannotEditFeature)

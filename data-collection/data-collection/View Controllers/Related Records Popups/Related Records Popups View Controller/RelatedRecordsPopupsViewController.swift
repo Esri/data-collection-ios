@@ -109,15 +109,15 @@ class RelatedRecordsPopupsViewController: UIViewController, EphemeralCacheCachea
     
     func interceptNavigationBackActionShouldPopViewController() -> Bool {
         
-        let should = !recordsManager.isEditing
+        let shouldPop = !recordsManager.isEditing
         
-        if !should {
+        if !shouldPop {
             endPopupEditMode() {
                 _ = self.navigationController?.popViewController(animated: true)
             }
         }
         
-        return should
+        return shouldPop
     }
     
     // MARK : View / Edit Mode
@@ -147,17 +147,12 @@ class RelatedRecordsPopupsViewController: UIViewController, EphemeralCacheCachea
             action = { [weak self] (_) in
                 self?.recordsManager.cancelEditing()
                 self?.adjustViewControllerForEditState()
+                completion?()
             }
         }
         else {
-            action = { [weak self] (_) in
-                // Figure out how to abstract this.
-                if self?.parentPopupManager == nil {
-                    self?.dismiss(animated: true, completion: nil)
-                }
-                else {
-                    _ = self?.navigationController?.popViewController(animated: true)
-                }
+            action = { (_) in
+                completion?()
             }
         }
         present(confirmationAlertMessage: "Discard changes?", confirmationTitle: "Discard", confirmationAction: action)
@@ -175,19 +170,29 @@ class RelatedRecordsPopupsViewController: UIViewController, EphemeralCacheCachea
             tableView.reloadData()
         }
         
-        if isRootPopup {
-            // TODO refactor for single button change title?
-            if recordsManager.isEditing {
-                self.addCancelButton(withSelector: #selector(RelatedRecordsPopupsViewController.userRequestsEndPopupEditMode(_:)))
-            }
-            else {
-                self.addDismissButton(withSelector: #selector(RelatedRecordsPopupsViewController.userRequestsDismissRelatedRecordsPopupsViewController(_:)))
-            }
+        guard isRootPopup else {
+            return
+        }
+        
+        if recordsManager.isEditing {
+            self.addCancelButton(withSelector: #selector(RelatedRecordsPopupsViewController.userRequestsEndPopupEditMode(_:)))
+        }
+        else {
+            self.addDismissButton(withSelector: #selector(RelatedRecordsPopupsViewController.userRequestsDismissRelatedRecordsPopupsViewController(_:)))
         }
     }
     
     @objc func userRequestsDismissRelatedRecordsPopupsViewController(_ sender: AnyObject?) {
         dismiss(animated: true, completion: nil)
+    }
+    
+    func popDismiss(animated: Bool = true) {
+        if isRootPopup {
+            dismiss(animated: animated, completion: nil)
+        }
+        else {
+            navigationController?.popViewController(animated: animated)
+        }
     }
     
     @objc func adjustKeyboardVisible(notification: NSNotification) {

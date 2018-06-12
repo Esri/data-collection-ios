@@ -15,7 +15,6 @@
 import UIKit
 import ArcGIS
 
-
 class PopupEditableFieldCell<ViewType: UIView>: PopupReadonlyFieldCell {
     
     internal var valueEditView: ViewType?

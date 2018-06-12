@@ -16,9 +16,7 @@ import Foundation
 import ArcGIS
 
 extension AppContext {
-    
-    // TODO consider a chain of startup events with this function before loading a local map
-    
+        
     // MARK: Portal Auth
     /**
      We want to try to log in to the portal with cached credentials from our last session.

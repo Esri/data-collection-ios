@@ -54,7 +54,7 @@ class AppConfiguration {
 // TODO build into .xcassets
 struct AppColors {
     
-    // UIAppearance conformance
+    // TODO UIAppearance conformance
     
     let primary: UIColor = UIColor(red:0.66, green:0.81, blue:0.40, alpha:1.00)
     

@@ -86,7 +86,15 @@ extension RelatedRecordsPopupsViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         
-        // TODO clean cell?
+        if var fieldCell = cell as? PopupFieldCellProtocol {
+            fieldCell.popupManager = nil
+            fieldCell.field = nil
+        }
+        else if let relatedRecordCell = cell as? RelatedRecordCell {
+            relatedRecordCell.table = nil
+            relatedRecordCell.popup = nil
+            relatedRecordCell.relationshipInfo = nil
+        }
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -97,10 +105,18 @@ extension RelatedRecordsPopupsViewController: UITableViewDataSource {
         }
         else {
             let idx = section - 1
+
             guard recordsManager.oneToMany.count > idx else {
-                return 1
+                return 0
             }
-            return recordsManager.oneToMany[idx].relatedPopups.count + 1
+            
+            var nRows = recordsManager.oneToMany[idx].relatedPopups.count
+            
+            if let table = recordsManager.oneToMany[idx].relatedTable, table.canAddFeature {
+                nRows += 1
+            }
+            
+            return nRows
         }
     }
 }

@@ -19,7 +19,7 @@ extension RelatedRecordsPopupsViewController: RelatedRecordsListViewControllerDe
     
     func relatedRecordsListViewController(_ viewController: RelatedRecordsListViewController, didSelectPopup relatedPopup: AGSPopup) {
         
-        _ = navigationController?.popViewController(animated: true)
+        navigationController?.popViewController(animated: true)
         
         guard let info = self.popup.relationship(withPopup: relatedPopup) else {
             present(simpleAlertMessage: "Uh Oh! An unknown error occurred.")
@@ -39,6 +39,6 @@ extension RelatedRecordsPopupsViewController: RelatedRecordsListViewControllerDe
     
     func relatedRecordsListViewControllerDidCancel(_ viewController: RelatedRecordsListViewController) {
         
-        _ = navigationController?.popViewController(animated: true)
+        navigationController?.popViewController(animated: true)
     }
 }

@@ -56,7 +56,6 @@ extension UIViewController {
         present(alert, animated: animated, completion: completion)
     }
 
-    // TODO integrate
     func present(confirmationAlertMessage message: String, confirmationTitle: String, confirmationAction:((UIAlertAction)->Void)?, animated: Bool = true, completion: (() -> Void)? = nil) {
         let alert = UIAlertController.multiAlert(message: message, actionTitle: confirmationTitle, action: confirmationAction)
         present(alert, animated: animated, completion: completion)

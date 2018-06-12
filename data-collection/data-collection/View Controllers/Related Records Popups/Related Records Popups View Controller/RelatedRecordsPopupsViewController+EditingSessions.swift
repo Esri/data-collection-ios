@@ -107,7 +107,7 @@ extension RelatedRecordsPopupsViewController {
                     }
                 }
                 
-                featureTable.edit(feature: feature, completion: { [weak self] (error) in
+                featureTable.performEdit(feature: feature, completion: { [weak self] (error) in
                     
                     SVProgressHUD.dismiss()
                     if error != nil {
@@ -162,7 +162,7 @@ extension RelatedRecordsPopupsViewController {
                 return
             }
             
-            featureTable.deleteRelated(feature: feature) { error in
+            featureTable.performDelete(feature: feature) { error in
                 
                 defer {
                     self?.tableView.reloadData()

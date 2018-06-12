@@ -51,10 +51,13 @@ class PopupRelatedRecordsTableManager {
         // One To Many
         else {
             let sectionOffsest = 1
-            let rowOffset = 1
             let sectionIDX = indexPath.section - sectionOffsest
-            let rowIDX = indexPath.row - rowOffset
             let manager = recordsManager.oneToMany[sectionIDX]
+            var rowOffset = 0
+            if let table = manager.relatedTable, table.canAddFeature {
+                rowOffset += 1
+            }
+            let rowIDX = indexPath.row - rowOffset
             guard indexPath.row >= rowOffset else {
                 return (nil, manager.relationshipInfo)
             }
