@@ -37,8 +37,10 @@ extension MapViewController {
     }
     
     func adjustForLocationAuthorizationStatus() {
+        
         mapView.locationDisplay.showLocation = AppLocation.shared.locationAuthorized
         mapView.locationDisplay.showAccuracy = AppLocation.shared.locationAuthorized
+        
         if AppLocation.shared.locationAuthorized {
             mapView.locationDisplay.start { (err) in
                 if let error = err {

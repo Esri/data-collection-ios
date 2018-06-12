@@ -96,6 +96,8 @@
 		94D2713B20CEF04F00304E27 /* RelatedRecordsPopupsViewController+EditingSessions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94D2713A20CEF04F00304E27 /* RelatedRecordsPopupsViewController+EditingSessions.swift */; };
 		94D2713E20D030D900304E27 /* CustomBehavior+ReverseGeocode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94D2713D20D030D900304E27 /* CustomBehavior+ReverseGeocode.swift */; };
 		94D2714020D0315900304E27 /* CustomBehavior+Map.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94D2713F20D0315900304E27 /* CustomBehavior+Map.swift */; };
+		94D2714320D0578000304E27 /* OneToManyManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94D2714220D0578000304E27 /* OneToManyManager.swift */; };
+		94D2714520D0578C00304E27 /* ManyToOneManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94D2714420D0578C00304E27 /* ManyToOneManager.swift */; };
 		94D544BD207FC15D00ED0D04 /* DrawerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94D544B4207FC15C00ED0D04 /* DrawerViewController.swift */; };
 		94D544BE207FC15D00ED0D04 /* AppContainerViewController+DrawerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94D544B6207FC15D00ED0D04 /* AppContainerViewController+DrawerDelegate.swift */; };
 		94D544BF207FC15D00ED0D04 /* AppContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94D544B7207FC15D00ED0D04 /* AppContainerViewController.swift */; };
@@ -231,6 +233,8 @@
 		94D2713A20CEF04F00304E27 /* RelatedRecordsPopupsViewController+EditingSessions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RelatedRecordsPopupsViewController+EditingSessions.swift"; sourceTree = "<group>"; };
 		94D2713D20D030D900304E27 /* CustomBehavior+ReverseGeocode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CustomBehavior+ReverseGeocode.swift"; sourceTree = "<group>"; };
 		94D2713F20D0315900304E27 /* CustomBehavior+Map.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CustomBehavior+Map.swift"; sourceTree = "<group>"; };
+		94D2714220D0578000304E27 /* OneToManyManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OneToManyManager.swift; sourceTree = "<group>"; };
+		94D2714420D0578C00304E27 /* ManyToOneManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManyToOneManager.swift; sourceTree = "<group>"; };
 		94D544B4207FC15C00ED0D04 /* DrawerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DrawerViewController.swift; sourceTree = "<group>"; };
 		94D544B6207FC15D00ED0D04 /* AppContainerViewController+DrawerDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AppContainerViewController+DrawerDelegate.swift"; sourceTree = "<group>"; };
 		94D544B7207FC15D00ED0D04 /* AppContainerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppContainerViewController.swift; sourceTree = "<group>"; };
@@ -330,7 +334,7 @@
 			children = (
 				948066372091595200A398EA /* PopupRelatedRecordsManager.swift */,
 				9416A19420BF375B001377ED /* PopupRelatedRecordsManager+TableView.swift */,
-				9416A19220BF3334001377ED /* RelatedRecordsManager.swift */,
+				94D2714120D0575A00304E27 /* Related Records Manager */,
 			);
 			path = Manager;
 			sourceTree = "<group>";
@@ -549,6 +553,16 @@
 				94D2713D20D030D900304E27 /* CustomBehavior+ReverseGeocode.swift */,
 			);
 			path = "Custom Behavior";
+			sourceTree = "<group>";
+		};
+		94D2714120D0575A00304E27 /* Related Records Manager */ = {
+			isa = PBXGroup;
+			children = (
+				9416A19220BF3334001377ED /* RelatedRecordsManager.swift */,
+				94D2714220D0578000304E27 /* OneToManyManager.swift */,
+				94D2714420D0578C00304E27 /* ManyToOneManager.swift */,
+			);
+			path = "Related Records Manager";
 			sourceTree = "<group>";
 		};
 		94D544B5207FC15D00ED0D04 /* App Container */ = {
@@ -865,6 +879,7 @@
 				94B375CE207E8D5600691F2A /* SVProgressHUD.m in Sources */,
 				9465690E208800A200599E55 /* MapViewController+Delegate.swift in Sources */,
 				94B375F8207E8E4800691F2A /* AGSDrawStatus+Extensions.swift in Sources */,
+				94D2714520D0578C00304E27 /* ManyToOneManager.swift in Sources */,
 				94B37602207E8E4800691F2A /* BasicTypes+Extensions.swift in Sources */,
 				94B375FD207E8E4800691F2A /* UIColor+Extensions.swift in Sources */,
 				94D544C3207FC15D00ED0D04 /* DownloadMaskViewController.swift in Sources */,
@@ -879,6 +894,7 @@
 				9465691A2088028E00599E55 /* AGSRelationshipInfo+Extensions.swift in Sources */,
 				9416A19320BF3334001377ED /* RelatedRecordsManager.swift in Sources */,
 				940DA9722097825700AB4BF6 /* UILabel+Extensions.swift in Sources */,
+				94D2714320D0578000304E27 /* OneToManyManager.swift in Sources */,
 				94B375C1207E8D5600691F2A /* AppConfiguration.swift in Sources */,
 				946569062087FBF700599E55 /* MapViewController+UserLocation.swift in Sources */,
 				940DA9792097951000AB4BF6 /* PopupTextViewCell.swift in Sources */,
