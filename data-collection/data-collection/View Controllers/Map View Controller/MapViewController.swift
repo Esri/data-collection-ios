@@ -44,7 +44,7 @@ class MapViewController: AppContextAwareController, PopupsViewControllerEmbeddab
     
     var currentPopup: AGSPopup? {
         didSet {
-            updateUIForCurrentTree()
+            updateUIForCurrentPopup()
         }
     }
     
@@ -106,7 +106,7 @@ class MapViewController: AppContextAwareController, PopupsViewControllerEmbeddab
         }
     }
     
-    func updateUIForCurrentTree() {
+    func updateUIForCurrentPopup() {
         
         smallPopupViewController?.popup = currentPopup
         
@@ -178,7 +178,7 @@ class MapViewController: AppContextAwareController, PopupsViewControllerEmbeddab
         super.viewWillAppear(animated)
         
         adjustForLocationAuthorizationStatus()
-        updateUIForCurrentTree()
+        updateUIForCurrentPopup()
     }
 
     override func didReceiveMemoryWarning() {

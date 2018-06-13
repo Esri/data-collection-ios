@@ -92,10 +92,10 @@
             </objects>
             <point key="canvasLocation" x="1781" y="-480"/>
         </scene>
-        <!--Tree Survey-->
+        <!--Map-->
         <scene sceneID="wNI-U7-vXk">
             <objects>
-                <viewController title="Tree Survey" id="bkd-X1-VO3" customClass="MapViewController" customModule="data_collection" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="Map" id="bkd-X1-VO3" customClass="MapViewController" customModule="data_collection" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="ggT-C7-mGm">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -294,7 +294,7 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="fMM-1d-niq"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Tree Survey" id="u0f-9h-oKY"/>
+                    <navigationItem key="navigationItem" title="Map" id="u0f-9h-oKY"/>
                     <connections>
                         <outlet property="activityBarView" destination="jZi-hv-8o5" id="gLz-aO-700"/>
                         <outlet property="addPopupRelatedRecordButton" destination="YLl-vb-3IY" id="TPz-a1-cOH"/>

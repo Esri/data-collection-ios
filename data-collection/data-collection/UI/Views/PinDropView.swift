@@ -76,27 +76,27 @@ class PinDropView: UIView {
     private func buildSublayers() throws {
         let scale = UIScreen.main.scale
         
-        guard let treePinImage = UIImage(named: AssetName.pin)?.cgImage else {
+        guard let pinImage = UIImage(named: AssetName.pin)?.cgImage else {
             throw AssetsError.missingAsset(AssetName.pin)
         }
         
-        guard let treeShadowImage = UIImage(named: AssetName.shadow)?.cgImage else {
+        guard let pinShadowImage = UIImage(named: AssetName.shadow)?.cgImage else {
             throw AssetsError.missingAsset(AssetName.shadow)
         }
         
         // establish origin
         let origin = CGPoint(x: 0.0, y: 0.0)
         
-        // build tree shadow
-        let treeShadowSize = CGSize(width: CGFloat(treeShadowImage.width)/scale, height: CGFloat(treeShadowImage.height)/scale)
-        shadowLayer.frame = CGRect(origin: origin, size: treeShadowSize)
-        shadowLayer.contents = treeShadowImage
+        // build pin shadow
+        let pinShadowSize = CGSize(width: CGFloat(pinShadowImage.width)/scale, height: CGFloat(pinShadowImage.height)/scale)
+        shadowLayer.frame = CGRect(origin: origin, size: pinShadowSize)
+        shadowLayer.contents = pinShadowImage
         layer.addSublayer(shadowLayer)
         
-        // build tree pin
-        let treePinSize = CGSize(width: CGFloat(treePinImage.width)/scale, height: CGFloat(treePinImage.height)/scale)
-        pinLayer.frame = CGRect(origin: origin, size: treePinSize)
-        pinLayer.contents = treePinImage
+        // build pin
+        let pinSize = CGSize(width: CGFloat(pinImage.width)/scale, height: CGFloat(pinImage.height)/scale)
+        pinLayer.frame = CGRect(origin: origin, size: pinSize)
+        pinLayer.contents = pinImage
         layer.addSublayer(pinLayer)
     }
     
