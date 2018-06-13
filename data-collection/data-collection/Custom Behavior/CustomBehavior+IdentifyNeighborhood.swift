@@ -15,7 +15,6 @@
 import Foundation
 import ArcGIS
 
-// TODO finish
 func enrich(popup: AGSPopup, withNeighborhoodIdentifyForPoint point: AGSPoint, completion: @escaping () -> Void) {
     
     guard let map = appContext.currentMap else {

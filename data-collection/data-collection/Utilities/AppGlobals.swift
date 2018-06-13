@@ -34,7 +34,6 @@ var appNotificationCenter: NotificationCenter {
     return NotificationCenter.default
 }
 
-// TODO, reintroduced Geocoder.
 var appReverseGeocoder: ReverseGeocoderManager {
     return appContext.reverseGeocoderManager
 }

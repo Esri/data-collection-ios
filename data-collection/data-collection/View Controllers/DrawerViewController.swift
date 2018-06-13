@@ -186,7 +186,7 @@ class DrawerViewController: AppContextAwareController {
             print("[Authentication] user is", appContext.isLoggedIn ? "logged in." : "logged out.")
             
             if let currentUser = appContext.user {
-                self?.loginButton.setTitle("Logout", for: .normal)
+                self?.loginButton.setTitle("Log out", for: .normal)
                 let fallbackProfileImage = UIImage(named: "MissingProfile")!.withRenderingMode(.alwaysOriginal)
                 guard let image = currentUser.thumbnail else {
                     self?.loginButton.setImage(fallbackProfileImage, for: .normal)
@@ -206,7 +206,7 @@ class DrawerViewController: AppContextAwareController {
                 })
             }
             else {
-                self?.loginButton.setTitle("Login", for: .normal)
+                self?.loginButton.setTitle("Log in", for: .normal)
                 self?.loginButton.setImage(UIImage(named: "UserLoginIcon"), for: .normal)
             }
         }
