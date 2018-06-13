@@ -16,7 +16,7 @@ import Foundation
 import UIKit
 import ArcGIS
 
-class SmallPopupViewController: UIViewController {
+class SmallPopupViewController: AppContextAwareController {
     
     @IBOutlet weak var relatedRecordHeaderLabel: UILabel!
     @IBOutlet weak var relatedRecordSubheaderLabel: UILabel!

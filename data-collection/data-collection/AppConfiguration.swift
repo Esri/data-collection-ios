@@ -36,6 +36,12 @@ class AppConfiguration {
     
     static let config = AppConfiguration()
     
+    static var relatedRecordPrefs: RelatedRecordsPreferences {
+        return config.prefs
+    }
+    
+    private var prefs = RelatedRecordsPreferences()
+    
     // Colors
     static var appColors: AppColors {
         return config.colors
@@ -49,6 +55,12 @@ class AppConfiguration {
     }
     
     private let fonts = AppFonts()
+}
+
+struct RelatedRecordsPreferences {
+    
+    let manyToOneCellAttributeCount = 2
+    let oneToManyCellAttributeCount = 3
 }
 
 // TODO build into .xcassets

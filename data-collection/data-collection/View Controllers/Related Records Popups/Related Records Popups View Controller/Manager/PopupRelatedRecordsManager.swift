@@ -15,7 +15,6 @@
 import Foundation
 import ArcGIS
 
-// TODO thread safe?
 class PopupRelatedRecordsManager: AGSPopupManager {
     
     internal var manyToOne = [ManyToOneManager]()

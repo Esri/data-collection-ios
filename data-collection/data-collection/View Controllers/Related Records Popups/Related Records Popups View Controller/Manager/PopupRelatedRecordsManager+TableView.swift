@@ -76,30 +76,12 @@ class PopupRelatedRecordsTableManager {
             let manager = recordsManager.manyToOne[idx]
             return manager.relatedTable
         }
-            // One To Many
-        else {
-            let offset = 1
-            let idx = indexPath.section - offset
-            let manager = recordsManager.oneToMany[idx]
-            return manager.relatedTable
-        }
-    }
-    
-    func tableName(forIndexPath indexPath: IndexPath) -> String? {
-        
-        // Many To One
-        if indexPath.section == 0 {
-            let offset = recordsManager.isEditing ? recordsManager.editableDisplayFields.count : recordsManager.displayFields.count
-            let idx = indexPath.row - offset
-            let manager = recordsManager.manyToOne[idx]
-            return manager.name
-        }
         // One To Many
         else {
             let offset = 1
             let idx = indexPath.section - offset
             let manager = recordsManager.oneToMany[idx]
-            return manager.name
+            return manager.relatedTable
         }
     }
 }

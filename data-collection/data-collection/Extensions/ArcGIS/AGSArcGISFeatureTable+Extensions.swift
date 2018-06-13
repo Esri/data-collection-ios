@@ -226,12 +226,14 @@ extension AGSArcGISFeatureTable {
             }
             
             serviceFeatureTable.applyEdits(completion: { (results, error) in
+                
                 guard error == nil else {
                     print("[Error: Feature Service Table] could not apply edits", error!.localizedDescription)
                     completion(error!)
                     return
                 }
                 feature.refreshObjectID()
+                
                 completion(nil)
             })
         }

@@ -15,7 +15,7 @@
 import Foundation
 import ArcGIS
 
-class RelatedRecordsPopupsViewController: UIViewController, EphemeralCacheCacheable, BackButtonDelegate {
+class RelatedRecordsPopupsViewController: AppContextAwareController, EphemeralCacheCacheable, BackButtonDelegate {
     
     // TODO rework ephemeralCacheKey to be owned by the object sent in.
     static var ephemeralCacheKey: String {

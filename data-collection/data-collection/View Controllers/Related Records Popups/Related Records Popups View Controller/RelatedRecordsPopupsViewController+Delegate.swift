@@ -32,9 +32,8 @@ extension RelatedRecordsPopupsViewController: UITableViewDelegate {
         // Should edit M:1 Related Record
         if indexPath.section == 0, recordsManager.isEditing {
             
-            guard let table = recordsTableManager.table(forIndexPath: indexPath) else {
-                return
-            }
+            guard let table = cell.table else { return }
+            
             EphemeralCache.set(object: table, forKey: RelatedRecordsPopupsViewController.ephemeralCacheKey)
             performSegue(withIdentifier: "selectRelatedRecordSegue", sender: self)
             

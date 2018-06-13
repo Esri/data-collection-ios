@@ -71,17 +71,18 @@ extension RelatedRecordsPopupsViewController: UITableViewDataSource {
             
             return cell as! UITableViewCell
         }
-        else {
-            
-            let cell = tableView.dequeueReusableCell(withIdentifier: ReuseIdentifiers.relatedRecordCell, for: indexPath) as! RelatedRecordCell
-            cell.table = recordsTableManager.table(forIndexPath: indexPath)
-            (cell.popup, cell.relationshipInfo) = recordsTableManager.popup(forIndexPath: indexPath)
-            // TODO make AppConfigurable
-            cell.maxAttributes = indexPath.section == 0 ? 2 : 3
-            cell.updateCellContent()
-            
-            return cell
-        }
+        
+        let cell = tableView.dequeueReusableCell(withIdentifier: ReuseIdentifiers.relatedRecordCell, for: indexPath) as! RelatedRecordCell
+        cell.table = recordsTableManager.table(forIndexPath: indexPath)
+        (cell.popup, cell.relationshipInfo) = recordsTableManager.popup(forIndexPath: indexPath)
+        
+        cell.maxAttributes = indexPath.section == 0 ?
+            AppConfiguration.relatedRecordPrefs.manyToOneCellAttributeCount :
+            AppConfiguration.relatedRecordPrefs.oneToManyCellAttributeCount
+        
+        cell.updateCellContent()
+        
+        return cell
     }
     
     func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
