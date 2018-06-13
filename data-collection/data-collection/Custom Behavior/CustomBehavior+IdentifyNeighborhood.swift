@@ -41,7 +41,7 @@ func enrich(popup: AGSPopup, withNeighborhoodIdentifyForPoint point: AGSPoint, c
     
     let query = AGSQueryParameters()
     query.geometry = point
-    query.maxFeatures = 1
+//    query.maxFeatures = 1
     query.spatialRelationship = .within
     
     neighborhoodFeatureTable.queryFeatures(with: query, completion: { (result, error) in
@@ -57,9 +57,18 @@ func enrich(popup: AGSPopup, withNeighborhoodIdentifyForPoint point: AGSPoint, c
             completion()
             return
         }
-        print(feature)
         
-        // TODO set attribute for popup
+        let neighbohoodKey = "NAME"
+        let treeKey = "Neighborhood"
+        
+        if
+            let neighbhorhoodKeys = feature.attributes.allKeys as? [String],
+            neighbhorhoodKeys.contains(neighbohoodKey),
+            let treeLayerKeys = popup.geoElement.attributes.allKeys as? [String],
+            treeLayerKeys.contains(treeKey) {
+            
+            popup.geoElement.attributes[treeKey] = feature.attributes[neighbohoodKey]
+        }
         
         completion()
     })
