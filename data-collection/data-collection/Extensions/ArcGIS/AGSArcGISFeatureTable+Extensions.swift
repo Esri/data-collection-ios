@@ -251,4 +251,13 @@ extension AGSArcGISFeatureTable {
             completion(FeatureTableError.cannotEditFeature)
         }
     }
+    
+    func createPopup() -> AGSPopup? {
+        
+        guard canAddFeature, let feature = createFeature() as? AGSArcGISFeature, let popupDefinition = popupDefinition else {
+                return nil
+        }
+        
+        return AGSPopup(geoElement: feature, popupDefinition: popupDefinition)
+    }
 }

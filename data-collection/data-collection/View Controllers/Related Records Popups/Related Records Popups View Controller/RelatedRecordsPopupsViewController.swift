@@ -34,7 +34,7 @@ class RelatedRecordsPopupsViewController: AppContextAwareController, EphemeralCa
         }
     }
     
-    weak var parentPopupManager: PopupRelatedRecordsManager?
+    var parentPopupManager: PopupRelatedRecordsManager?
     
     var recordsManager: PopupRelatedRecordsManager! {
         didSet {
@@ -45,8 +45,15 @@ class RelatedRecordsPopupsViewController: AppContextAwareController, EphemeralCa
     // TODO CHANGE ?? 
     var recordsTableManager: PopupRelatedRecordsTableManager!
     
-    var isRootPopup: Bool {
-        return parentPopupManager == nil
+    var isChildPopup: Bool {
+        return parentPopupManager != nil
+    }
+    
+    var isRootViewController: Bool {
+        guard let n = navigationController?.viewControllers.count else {
+            return true
+        }
+        return n == 1
     }
     
     var loadingRelatedRecords = false {
@@ -77,7 +84,8 @@ class RelatedRecordsPopupsViewController: AppContextAwareController, EphemeralCa
             self.navigationItem.rightBarButtonItem = popupModeButton
         }
         
-        if isRootPopup {
+//        if isRootPopup {
+        if let n = navigationController?.viewControllers.count, n == 1 {
             self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Cancel",
                                                                     style: .plain,
                                                                     target: self,
@@ -99,7 +107,7 @@ class RelatedRecordsPopupsViewController: AppContextAwareController, EphemeralCa
     }
     
     private func loadRelatedRecords() {
-        if isRootPopup {
+        if !isChildPopup {
             loadingRelatedRecords = true
             recordsManager.loadRelatedRecords { [weak self] in
                 self?.loadingRelatedRecords = false
@@ -190,7 +198,7 @@ class RelatedRecordsPopupsViewController: AppContextAwareController, EphemeralCa
             tableView.reloadData()
         }
         
-        guard isRootPopup else {
+        guard isRootViewController else {
             return
         }
         
@@ -209,7 +217,7 @@ class RelatedRecordsPopupsViewController: AppContextAwareController, EphemeralCa
     }
     
     func popDismiss(animated: Bool = true) {
-        if isRootPopup {
+        if isRootViewController {
             dismiss(animated: animated, completion: nil)
         }
         else {

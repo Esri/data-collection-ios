@@ -18,7 +18,7 @@
                 <viewControllerPlaceholder storyboardName="RelatedRecordsPopup" id="xXs-ie-lHH" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="P9E-s1-xtc" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1781" y="814"/>
+            <point key="canvasLocation" x="2065" y="995"/>
         </scene>
         <!--Job Status View Controller-->
         <scene sceneID="xJo-D4-D5d">
@@ -109,17 +109,48 @@
                                             <segue destination="Kcg-Md-S5T" kind="embed" id="8zs-AU-eEO"/>
                                         </connections>
                                     </containerView>
-                                    <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oTP-jM-5tK" customClass="ShrinkingView" customModule="data_collection" customModuleProvider="target">
-                                        <rect key="frame" x="8" y="646" width="359" height="80"/>
-                                        <color key="backgroundColor" white="1" alpha="0.80000000000000004" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oTP-jM-5tK" customClass="ShrinkingView" customModule="data_collection" customModuleProvider="target">
+                                        <rect key="frame" x="8" y="632" width="359" height="94"/>
+                                        <subviews>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7z9-bF-yLj">
+                                                <rect key="frame" x="0.0" y="15" width="359" height="79"/>
+                                                <color key="backgroundColor" white="1" alpha="0.80000000000000004" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <userDefinedRuntimeAttributes>
+                                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                        <integer key="value" value="8"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                </userDefinedRuntimeAttributes>
+                                            </view>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YLl-vb-3IY">
+                                                <rect key="frame" x="297" y="4" width="46" height="46"/>
+                                                <color key="backgroundColor" red="0.6588235294" green="0.81176470590000005" blue="0.40000000000000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="46" id="Hcr-p3-xtq"/>
+                                                    <constraint firstAttribute="width" constant="46" id="V01-Eh-del"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" type="system" pointSize="32"/>
+                                                <state key="normal" title="+">
+                                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                </state>
+                                                <userDefinedRuntimeAttributes>
+                                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                        <integer key="value" value="23"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                </userDefinedRuntimeAttributes>
+                                                <connections>
+                                                    <action selector="userRequestsAddNewRelatedRecord:" destination="bkd-X1-VO3" eventType="touchUpInside" id="Efj-lt-gEf"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="80" id="wa1-Bg-jvU"/>
+                                            <constraint firstItem="7z9-bF-yLj" firstAttribute="leading" secondItem="oTP-jM-5tK" secondAttribute="leading" id="9sn-Kr-Po6"/>
+                                            <constraint firstAttribute="bottom" secondItem="7z9-bF-yLj" secondAttribute="bottom" id="Eal-Bz-Wuo"/>
+                                            <constraint firstAttribute="trailing" secondItem="YLl-vb-3IY" secondAttribute="trailing" constant="16" id="NNV-1h-HyV"/>
+                                            <constraint firstAttribute="trailing" secondItem="7z9-bF-yLj" secondAttribute="trailing" id="Vln-op-01E"/>
+                                            <constraint firstItem="7z9-bF-yLj" firstAttribute="top" secondItem="oTP-jM-5tK" secondAttribute="top" constant="15" id="eeQ-uT-cg6"/>
+                                            <constraint firstItem="YLl-vb-3IY" firstAttribute="top" secondItem="oTP-jM-5tK" secondAttribute="top" constant="4" id="lgX-tR-m39"/>
+                                            <constraint firstAttribute="height" constant="94" id="wa1-Bg-jvU"/>
                                         </constraints>
-                                        <userDefinedRuntimeAttributes>
-                                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                                                <integer key="value" value="8"/>
-                                            </userDefinedRuntimeAttribute>
-                                        </userDefinedRuntimeAttributes>
                                     </view>
                                     <view opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="L7K-qp-Vqi" customClass="PinDropView" customModule="data_collection" customModuleProvider="target">
                                         <rect key="frame" x="167.33333333333334" y="363.66666666666669" width="42" height="42"/>
@@ -266,21 +297,23 @@
                     <navigationItem key="navigationItem" title="Tree Survey" id="u0f-9h-oKY"/>
                     <connections>
                         <outlet property="activityBarView" destination="jZi-hv-8o5" id="gLz-aO-700"/>
+                        <outlet property="addPopupRelatedRecordButton" destination="YLl-vb-3IY" id="TPz-a1-cOH"/>
                         <outlet property="compassView" destination="grA-PX-pq9" id="suW-Kc-voR"/>
                         <outlet property="mapView" destination="3gQ-pY-vhI" id="Ycy-Ti-Oko"/>
                         <outlet property="notificationBar" destination="HuO-Rv-Bbl" id="mtD-OH-hLb"/>
                         <outlet property="pinDropView" destination="L7K-qp-Vqi" id="64O-4P-VqP"/>
-                        <outlet property="popupsContainerView" destination="oTP-jM-5tK" id="3lb-RH-9Cr"/>
+                        <outlet property="popupsContainerView" destination="7z9-bF-yLj" id="X5f-ZJ-SP3"/>
                         <outlet property="selectView" destination="E5I-XT-6kh" id="iED-SD-qUy"/>
                         <outlet property="selectViewHeaderLabel" destination="0RV-ls-fbV" id="QEP-Jd-6pC"/>
                         <outlet property="selectViewSubheaderLabel" destination="Boa-60-22n" id="IfU-ML-ZA7"/>
                         <outlet property="selectViewTopConstraint" destination="YuR-Qi-ll6" id="POl-kr-yJ1"/>
+                        <outlet property="smallPopupView" destination="oTP-jM-5tK" id="N0p-2K-T9w"/>
                         <segue destination="xXs-ie-lHH" kind="presentation" identifier="modallyPresentRelatedRecordsPopupViewController" id="7WV-oH-I70"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5cR-Q3-zAa" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1782" y="416"/>
+            <point key="canvasLocation" x="1781.5" y="415"/>
         </scene>
         <!--Data Collection-->
         <scene sceneID="kjr-Uq-KXN">

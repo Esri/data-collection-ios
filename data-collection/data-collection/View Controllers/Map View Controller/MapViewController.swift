@@ -20,7 +20,9 @@ class MapViewController: AppContextAwareController, PopupsViewControllerEmbeddab
     var delegate: MapViewControllerDelegate?
 
     @IBOutlet weak var mapView: AGSMapView!
+    @IBOutlet weak var smallPopupView: ShrinkingView!
     @IBOutlet weak var popupsContainerView: UIView!
+    @IBOutlet weak var addPopupRelatedRecordButton: UIButton!
     @IBOutlet weak var selectView: UIView!
     @IBOutlet weak var pinDropView: PinDropView!
     @IBOutlet weak var activityBarView: ActivityBarView!
@@ -43,21 +45,6 @@ class MapViewController: AppContextAwareController, PopupsViewControllerEmbeddab
     var currentPopup: AGSPopup? {
         didSet {
             updateUIForCurrentTree()
-        }
-    }
-    
-    func updateUIForCurrentTree() {
-        smallPopupViewController?.popup = currentPopup
-        guard currentPopup != nil else {
-            mapViewMode = .defaultView
-            return
-        }
-        smallPopupViewController?.popuplateViewWithBestContent { [weak self] in
-            guard let _ = self?.currentPopup else {
-                self?.mapViewMode = .defaultView
-                return
-            }
-            self?.mapViewMode = .selectedFeature
         }
     }
     
@@ -110,7 +97,7 @@ class MapViewController: AppContextAwareController, PopupsViewControllerEmbeddab
         
         smallPopupViewController = embedPopupsSmallViewController()
 
-        (popupsContainerView as! ShrinkingView).actionClosure = { [weak self] in
+        smallPopupView.actionClosure = { [weak self] in
             
             guard self?.currentPopup != nil else {
                 return
@@ -119,10 +106,66 @@ class MapViewController: AppContextAwareController, PopupsViewControllerEmbeddab
         }
     }
     
+    func updateUIForCurrentTree() {
+        
+        smallPopupViewController?.popup = currentPopup
+        
+        guard currentPopup != nil else {
+            mapViewMode = .defaultView
+            return
+        }
+        
+        smallPopupViewController?.popuplateViewWithBestContent { [weak self] in
+            
+            self?.addPopupRelatedRecordButton.isHidden = false
+
+            if let canAdd = self?.smallPopupViewController?.oneToManyRelatedRecordTable?.canAddFeature {
+                self?.addPopupRelatedRecordButton.isHidden = !canAdd
+            }
+            
+            guard let _ = self?.currentPopup else {
+                self?.mapViewMode = .defaultView
+                return
+            }
+            
+            self?.mapViewMode = .selectedFeature
+        }
+    }
+    
+    @IBAction func userRequestsAddNewRelatedRecord(_ sender: Any) {
+        
+        guard appContext.isLoggedIn else {
+            self.present(loginAlertMessage: "You must log in to add a related record.")
+            return
+        }
+        
+        guard
+            let parentPopup = currentPopup,
+            let featureTable = smallPopupViewController?.oneToManyRelatedRecordTable,
+            let childPopup = featureTable.createPopup()
+            else {
+            present(simpleAlertMessage: "Uh Oh! You are unable to add a new related record.")
+            return
+        }
+        
+        SVProgressHUD.show(withStatus: "Creating new \(childPopup.title ?? "related record").")
+        let parentPopupManager = PopupRelatedRecordsManager(popup: parentPopup)
+        parentPopupManager.loadRelatedRecords { [weak self] in
+            EphemeralCache.set(object: (parentPopupManager, childPopup), forKey: "MapViewController.newRelatedRecord")
+            SVProgressHUD.dismiss()
+            self?.performSegue(withIdentifier: "modallyPresentRelatedRecordsPopupViewController", sender: nil)
+        }
+    }
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let destination = segue.navigationDestination as? RelatedRecordsPopupsViewController {
             if let newPopup = EphemeralCache.get(objectForKey: "MapViewController.newFeature.spatial") as? AGSPopup {
                 destination.popup = newPopup
+                destination.editPopup(true)
+            }
+            else if let (parentPopupManager, childPopup) = EphemeralCache.get(objectForKey: "MapViewController.newRelatedRecord") as? (PopupRelatedRecordsManager, AGSPopup) {
+                destination.parentPopupManager = parentPopupManager
+                destination.popup = childPopup
                 destination.editPopup(true)
             }
             else {

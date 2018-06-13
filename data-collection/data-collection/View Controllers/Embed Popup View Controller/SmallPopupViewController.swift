@@ -30,6 +30,8 @@ class SmallPopupViewController: AppContextAwareController {
     
     private var popupManager: AGSPopupManager?
     
+    weak var oneToManyRelatedRecordTable: AGSArcGISFeatureTable?
+    
     /**
      The small popup view controller (spvc) is concerned primarly with displaying content to do with related records.
      Specifically, the spvc is concerned with two related record types.
@@ -46,6 +48,8 @@ class SmallPopupViewController: AppContextAwareController {
      I bet that pulling that into a separate function that returns a tuple of (manyToOneRelationship, oneToManyRelantionship,queryCompletion) would work nicely.
     */
     func popuplateViewWithBestContent(_ complete: @escaping ()->Void ) {
+        
+        oneToManyRelatedRecordTable = nil
         
         guard
             let popupManager = popupManager,
@@ -105,14 +109,17 @@ class SmallPopupViewController: AppContextAwareController {
                 self?.relatedRecordSubheaderLabel.text = popupManager.nextFieldStringValue(idx: &popupIndex)
             }
             
+            
             if let oneToMany = oneToManyManagers {
                 
                 let n = oneToMany.count
                 let name = oneToMany.first?.tableName ?? "Records"
                 self?.relatedRecordsNLabel.text = "\(n) \(name)"
+                self?.oneToManyRelatedRecordTable = oneToMany.first?.table as? AGSArcGISFeatureTable
             }
             else {
                 self?.relatedRecordsNLabel.text = popupManager.nextFieldStringValue(idx: &popupIndex)
+                self?.oneToManyRelatedRecordTable = nil
             }
             
             complete()
