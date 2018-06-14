@@ -17,8 +17,6 @@ import ArcGIS
 
 final class PopupCodedValueCell: PopupTextFieldCell, UIPickerViewDelegate, UIPickerViewDataSource {
     
-    // TODO init with value
-    
     public override func insertValueEditView() {
         
         super.insertValueEditView()
@@ -66,6 +64,16 @@ final class PopupCodedValueCell: PopupTextFieldCell, UIPickerViewDelegate, UIPic
         updateCellValue(codedValueDomain.codedValues[row].code)
         
         valueEditView?.text = codedValueDomain.codedValues[row].name
+    }
+    
+    // TODO init with value?
+    func selectRow(index: Int, animated: Bool = true) {
+        
+        guard let pickerView = valueEditView?.inputView as? UIPickerView else {
+            return
+        }
+        
+        pickerView.selectRow(index, inComponent: 0, animated: true)
     }
 }
 

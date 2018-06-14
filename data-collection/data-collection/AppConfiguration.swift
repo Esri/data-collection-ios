@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import UIKit
-
+import ArcGIS
 
 class AppConfiguration {
     
@@ -29,8 +29,6 @@ class AppConfiguration {
     static let keychainIdentifier: String = "\(appBundleID).keychain"
     static let licenseKey: String = "fake_license_key"
     static let clientID: String = "AaXxKoHH3piT1fe3"
-    
-    static let logRequests: Bool = false
     
     // MARK: UI Config
     
@@ -63,10 +61,9 @@ struct RelatedRecordsPreferences {
     let oneToManyCellAttributeCount = 3
 }
 
-// TODO build into .xcassets
+// TODO consider how UIAppearance can be leveraged?
+
 struct AppColors {
-    
-    // TODO UIAppearance conformance
     
     let primary: UIColor = UIColor(red:0.66, green:0.81, blue:0.40, alpha:1.00)
     
@@ -82,11 +79,31 @@ struct AppColors {
     let invalid: UIColor = .red
 }
 
-// TODO build into .xcassets
 struct AppFonts {
-    
-    // TODO app configuration fonts .. UIAppearance
     
     let tableCellTitle: UIFont = UIFont.preferredFont(forTextStyle: .footnote)
     let tableCellValue: UIFont = UIFont.preferredFont(forTextStyle: .body)
+}
+
+// MARK: Debug Request Logging
+
+extension AppConfiguration {
+    
+    static var logRequests: Bool {
+        set {
+            #if DEBUG
+            AGSRequestConfiguration.global().debugLogRequests = newValue
+            #else
+            print("Debug log requests disabled in release.")
+            #endif
+        }
+        get {
+            #if DEBUG
+            return AGSRequestConfiguration.global().debugLogRequests
+            #else
+            return false
+            print("Debug log requests disabled in release.")
+            #endif
+        }
+    }
 }
