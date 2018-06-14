@@ -34,7 +34,7 @@ extension RelatedRecordsPopupsViewController: UITableViewDelegate {
             
             guard let table = cell.table else { return }
             
-            EphemeralCache.set(object: table, forKey: RelatedRecordsPopupsViewController.ephemeralCacheKey)
+            EphemeralCache.set(object: table, forKey: EphemeralCacheKeys.tableList)
             performSegue(withIdentifier: "selectRelatedRecordSegue", sender: self)
             
             return

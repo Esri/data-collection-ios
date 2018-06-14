@@ -15,7 +15,11 @@
 import Foundation
 import ArcGIS
 
-enum AppOfflineMapJobConstructionInfo: EphemeralCacheCacheable {
+enum AppOfflineMapJobConstructionInfo {
+    
+    struct EphemeralCacheKeys {
+        static let offlineMapJob = "EphemeralCache.AppOfflineMapJob.Key"
+    }
     
     case downloadMapOffline(AGSMap, URL, AGSEnvelope, Double)
     case syncOfflineMap(AGSMap)
@@ -65,9 +69,5 @@ enum AppOfflineMapJobConstructionInfo: EphemeralCacheCacheable {
             
             return offlineMapSyncJob
         }
-    }
-    
-    static var ephemeralCacheKey: String {
-        return "EphemeralCache.AppOfflineMapJob.Key"
     }
 }

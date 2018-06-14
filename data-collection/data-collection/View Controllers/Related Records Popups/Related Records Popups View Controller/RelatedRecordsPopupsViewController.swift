@@ -15,11 +15,10 @@
 import Foundation
 import ArcGIS
 
-class RelatedRecordsPopupsViewController: AppContextAwareController, EphemeralCacheCacheable, BackButtonDelegate {
+class RelatedRecordsPopupsViewController: AppContextAwareController, BackButtonDelegate {
     
-    // TODO rework ephemeralCacheKey to be owned by the object sent in.
-    static var ephemeralCacheKey: String {
-        return "EphemeralCache.RelatedRecordsPopupsViewController.TableList.Key"
+    struct EphemeralCacheKeys {
+        static let tableList = "EphemeralCache.RelatedRecordsPopupsViewController.TableList.Key"
     }
     
     @IBOutlet weak var tableView: UITableView!
@@ -84,8 +83,7 @@ class RelatedRecordsPopupsViewController: AppContextAwareController, EphemeralCa
             self.navigationItem.rightBarButtonItem = popupModeButton
         }
         
-//        if isRootPopup {
-        if let n = navigationController?.viewControllers.count, n == 1 {
+        if isRootViewController {
             self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Cancel",
                                                                     style: .plain,
                                                                     target: self,
@@ -119,7 +117,7 @@ class RelatedRecordsPopupsViewController: AppContextAwareController, EphemeralCa
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
         if let destination = segue.destination as? RelatedRecordsListViewController {
-            if let table = EphemeralCache.get(objectForKey: RelatedRecordsPopupsViewController.ephemeralCacheKey) as? AGSArcGISFeatureTable {
+            if let table = EphemeralCache.get(objectForKey: EphemeralCacheKeys.tableList) as? AGSArcGISFeatureTable {
                 destination.featureTable = table
                 destination.delegate = self
             }

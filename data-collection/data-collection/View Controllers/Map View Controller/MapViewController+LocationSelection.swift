@@ -61,7 +61,7 @@ extension MapViewController {
         
         switch locationSelectionType {
         case .newFeature:
-            _ = EphemeralCache.get(objectForKey: "MapViewController.newFeature.nonspatial")
+            _ = EphemeralCache.get(objectForKey: EphemeralCacheKeys.newNonSpatialFeature)
             break
         case .offlineExtent:
             hideMapMaskViewForOfflineDownloadArea()
@@ -134,14 +134,14 @@ extension MapViewController {
                 return
         }
         
-        EphemeralCache.set(object: newPopup, forKey: "MapViewController.newFeature.nonspatial")
+        EphemeralCache.set(object: newPopup, forKey: EphemeralCacheKeys.newNonSpatialFeature)
         
         mapViewMode = .selectingFeature
     }
     
     private func prepareNewFeatureForEdit() {
         
-        guard let newPopup = EphemeralCache.get(objectForKey: "MapViewController.newFeature.nonspatial") as? AGSPopup else {
+        guard let newPopup = EphemeralCache.get(objectForKey: EphemeralCacheKeys.newNonSpatialFeature) as? AGSPopup else {
             present(simpleAlertMessage: "Uh Oh! You are unable to add a new record.")
             return
         }
@@ -164,7 +164,7 @@ extension MapViewController {
         let proceedAfterCustomBehavior: () -> Void = { [weak self] in
             
             newPopup.geoElement.geometry = centerPoint
-            EphemeralCache.set(object: newPopup, forKey: "MapViewController.newFeature.spatial")
+            EphemeralCache.set(object: newPopup, forKey: EphemeralCacheKeys.newSpatialFeature)
             
             SVProgressHUD.dismiss()
             

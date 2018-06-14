@@ -61,7 +61,7 @@ extension AppContainerViewController: DrawerViewControllerDelegate {
         }
         
         let offlineJob = AppOfflineMapJobConstructionInfo.syncOfflineMap(map)
-        EphemeralCache.set(object: offlineJob, forKey: AppOfflineMapJobConstructionInfo.ephemeralCacheKey)
+        EphemeralCache.set(object: offlineJob, forKey: AppOfflineMapJobConstructionInfo.EphemeralCacheKeys.offlineMapJob)
         performSegue(withIdentifier: "presentJobStatusViewController", sender: nil)
     }
     

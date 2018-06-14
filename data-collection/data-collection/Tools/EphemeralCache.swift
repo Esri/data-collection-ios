@@ -14,9 +14,9 @@
 
 import Foundation
 
-protocol EphemeralCacheCacheable {
-    static var ephemeralCacheKey: String { get }
-}
+//protocol EphemeralCacheCacheable {
+//    static var ephemeralCacheKey: String { get }
+//}
 
 class EphemeralCache {
     

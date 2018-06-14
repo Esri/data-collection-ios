@@ -15,7 +15,13 @@
 import UIKit
 import ArcGIS
 
-class MapViewController: AppContextAwareController, PopupsViewControllerEmbeddable {    
+class MapViewController: AppContextAwareController, PopupsViewControllerEmbeddable {
+    
+    struct EphemeralCacheKeys {
+        static let newSpatialFeature = "MapViewController.newFeature.spatial"
+        static let newNonSpatialFeature = "MapViewController.newFeature.nonspatial"
+        static let newRelatedRecord = "MapViewController.newRelatedRecord"
+    }
 
     var delegate: MapViewControllerDelegate?
 
@@ -151,7 +157,7 @@ class MapViewController: AppContextAwareController, PopupsViewControllerEmbeddab
         SVProgressHUD.show(withStatus: "Creating new \(childPopup.title ?? "related record").")
         let parentPopupManager = PopupRelatedRecordsManager(popup: parentPopup)
         parentPopupManager.loadRelatedRecords { [weak self] in
-            EphemeralCache.set(object: (parentPopupManager, childPopup), forKey: "MapViewController.newRelatedRecord")
+            EphemeralCache.set(object: (parentPopupManager, childPopup), forKey: EphemeralCacheKeys.newRelatedRecord)
             SVProgressHUD.dismiss()
             self?.performSegue(withIdentifier: "modallyPresentRelatedRecordsPopupViewController", sender: nil)
         }
@@ -159,11 +165,11 @@ class MapViewController: AppContextAwareController, PopupsViewControllerEmbeddab
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let destination = segue.navigationDestination as? RelatedRecordsPopupsViewController {
-            if let newPopup = EphemeralCache.get(objectForKey: "MapViewController.newFeature.spatial") as? AGSPopup {
+            if let newPopup = EphemeralCache.get(objectForKey: EphemeralCacheKeys.newSpatialFeature) as? AGSPopup {
                 destination.popup = newPopup
                 destination.editPopup(true)
             }
-            else if let (parentPopupManager, childPopup) = EphemeralCache.get(objectForKey: "MapViewController.newRelatedRecord") as? (PopupRelatedRecordsManager, AGSPopup) {
+            else if let (parentPopupManager, childPopup) = EphemeralCache.get(objectForKey: EphemeralCacheKeys.newRelatedRecord) as? (PopupRelatedRecordsManager, AGSPopup) {
                 destination.parentPopupManager = parentPopupManager
                 destination.popup = childPopup
                 destination.editPopup(true)
