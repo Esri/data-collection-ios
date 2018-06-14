@@ -34,7 +34,7 @@ final class PopupDateCell: PopupTextFieldCell {
     
     @objc func datePickerValueChanged(sender: UIDatePicker) {
         
-        updateValue(sender.date)
+        updateCellValue(sender.date)
 
         guard let field = field else {
             valueEditView?.text = sender.date.formattedString

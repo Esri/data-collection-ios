@@ -58,6 +58,6 @@ class PopupTextFieldCell: PopupEditableFieldCell<UITextField> {
     
     @objc func textFieldDidChange(_ textField: UITextField) {
 
-        updateValue(textField.text)
+        updateCellValue(textField.text)
     }
 }

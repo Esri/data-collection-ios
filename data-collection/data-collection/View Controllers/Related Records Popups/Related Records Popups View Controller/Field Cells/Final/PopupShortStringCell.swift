@@ -20,7 +20,7 @@ final class PopupShortStringCell: PopupTextFieldCell {
     
     @objc override func textFieldDidChange(_ textField: UITextField) {
 
-        updateValue(textField.text)
+        updateCellValue(textField.text)
     }
 }
 
@@ -33,10 +33,10 @@ final class PopupLongStringCell: PopupTextViewCell {
     override func textViewDidChange(_ textView: UITextView) {
         
         guard let field = field, field.stringFieldOption == .richText else {
-            updateValue(textView.text)
+            updateCellValue(textView.text)
             return
         }
         
-        updateValue(textView.attributedText)
+        updateCellValue(textView.attributedText)
     }
 }

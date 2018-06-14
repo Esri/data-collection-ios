@@ -63,7 +63,7 @@ final class PopupCodedValueCell: PopupTextFieldCell, UIPickerViewDelegate, UIPic
             return
         }
         
-        updateValue(codedValueDomain.codedValues[row].code)
+        updateCellValue(codedValueDomain.codedValues[row].code)
         
         valueEditView?.text = codedValueDomain.codedValues[row].name
     }

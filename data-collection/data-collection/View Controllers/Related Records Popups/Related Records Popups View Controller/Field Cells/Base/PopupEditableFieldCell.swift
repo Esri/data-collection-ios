@@ -27,7 +27,7 @@ class PopupEditableFieldCell<ViewType: UIView>: PopupReadonlyFieldCell {
         refreshCell()
     }
     
-    func updateValue(_ value: Any?) {
+    func updateCellValue(_ value: Any?) {
         
         guard let popupManager = popupManager, let field = field else {
             return
@@ -57,12 +57,13 @@ class PopupEditableFieldCell<ViewType: UIView>: PopupReadonlyFieldCell {
             return
         }
         
-        if let _ /*error*/ = popupManager.validationError(for: field) {
-            // TODO figure out if I want to display the error
+        if let error = popupManager.validationError(for: field) {
             titleLabel.textColor = AppConfiguration.appColors.invalid
+            titleLabel.text = "\(field.label): \(error.localizedDescription)"
         }
         else {
             titleLabel.textColor = AppConfiguration.appColors.tableCellTitle
+            titleLabel.text = field.label
         }
     }
     
