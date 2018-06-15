@@ -75,6 +75,7 @@ struct AppColors {
     let tableCellValue: UIColor = .black
     
     let invalid: UIColor = .red
+    let missing: UIColor = .lightGray
 }
 
 struct AppFonts {

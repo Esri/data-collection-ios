@@ -80,6 +80,8 @@ extension RelatedRecordsPopupsViewController: UITableViewDataSource {
             AppConfiguration.relatedRecordPrefs.manyToOneCellAttributeCount :
             AppConfiguration.relatedRecordPrefs.oneToManyCellAttributeCount
         
+        cell.editingPopup = recordsManager.isEditing
+        
         cell.updateCellContent()
         
         return cell

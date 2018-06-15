@@ -22,6 +22,7 @@ class RelatedRecordCell: UITableViewCell {
     
     public var popup: AGSPopup?
     public var maxAttributes: Int = 3
+    public var editingPopup: Bool = false
     
     private var stackView = UIStackView()
 
@@ -47,7 +48,10 @@ class RelatedRecordCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    // TODO validity
+    func setAccessoryViewNone() {
+        accessoryType = .none
+        accessoryView = nil
+    }
     
     func setAccessoryViewDisclosureIndicator() {
         accessoryType = .disclosureIndicator
@@ -167,9 +171,16 @@ class RelatedRecordCell: UITableViewCell {
         }
         
         if info.isManyToOne {
-            setAccessoryViewDisclosureIndicator()
-            emptyCellLabel?.textColor = info.isComposite ? AppConfiguration.appColors.invalid : AppConfiguration.appColors.tableCellTitle
-            emptyCellLabel?.text = "Select \(table?.tableName ?? "related record")"
+            if editingPopup {
+                setAccessoryViewDisclosureIndicator()
+                emptyCellLabel?.textColor = info.isComposite ? AppConfiguration.appColors.invalid : AppConfiguration.appColors.tableCellTitle
+                emptyCellLabel?.text = "Select \(table?.tableName ?? "related record")"
+            }
+            else {
+                setAccessoryViewNone()
+                emptyCellLabel?.textColor = AppConfiguration.appColors.missing
+                emptyCellLabel?.text = "(Empty \(table?.tableName ?? "related") record)"
+            }
         }
         else {
             if popup == nil {

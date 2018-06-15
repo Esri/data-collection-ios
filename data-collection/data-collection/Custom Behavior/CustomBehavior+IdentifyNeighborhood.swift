@@ -40,10 +40,9 @@ func enrich(popup: AGSPopup, withNeighborhoodIdentifyForPoint point: AGSPoint, c
     
     let query = AGSQueryParameters()
     query.geometry = point
-//    query.maxFeatures = 1
     query.spatialRelationship = .within
     
-    neighborhoodFeatureTable.queryFeatures(with: query, completion: { (result, error) in
+    neighborhoodFeatureTable.queryFeatures(with: query) { (result, error) in
         
         guard error == nil else {
             print("[Error: Neighborhood Feature Table] can't query for feature:", error!.localizedDescription)
@@ -70,5 +69,5 @@ func enrich(popup: AGSPopup, withNeighborhoodIdentifyForPoint point: AGSPoint, c
         }
         
         completion()
-    })
+    }
 }

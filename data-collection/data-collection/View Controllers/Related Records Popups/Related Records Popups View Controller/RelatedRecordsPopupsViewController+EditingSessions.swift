@@ -15,11 +15,9 @@
 import Foundation
 import ArcGIS
 
-// TODO upon back add "Save" option
-
 extension RelatedRecordsPopupsViewController {
     
-    func editPopup(_ wantsEdit: Bool, completion: ((_ success: Bool) -> Void)? = nil) {
+    func editPopup(_ wantsEdit: Bool, completion: ((_ proceed: Bool) -> Void)? = nil) {
         
         if wantsEdit {
             
@@ -63,6 +61,7 @@ extension RelatedRecordsPopupsViewController {
                 guard error == nil else {
                     print("[Error: Validating Feature]", error!.localizedDescription)
                     self?.present(simpleAlertMessage: "Could not edit record!")
+                    self?.recordsManager.cancelEditing()
                     completion?(true)
                     return
                 }
@@ -72,6 +71,7 @@ extension RelatedRecordsPopupsViewController {
                     let featureTable = feature.featureTable as? AGSArcGISFeatureTable
                     else {
                         self?.present(simpleAlertMessage: "Could not edit record!")
+                        self?.recordsManager.cancelEditing()
                         completion?(true)
                         return
                 }

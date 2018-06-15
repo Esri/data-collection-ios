@@ -175,7 +175,7 @@ extension MapViewController {
             
             let dispatchGroup = DispatchGroup()
             
-            dispatchGroup.enter(n: 2)
+            dispatchGroup.enter(n: 3)
             
             dispatchGroup.notify(queue: OperationQueue.current?.underlyingQueue ?? .main) {
                 proceedAfterCustomBehavior()
@@ -186,6 +186,10 @@ extension MapViewController {
             }
             
             enrich(popup: newPopup, withNeighborhoodIdentifyForPoint: centerPoint) {
+                dispatchGroup.leave()
+            }
+            
+            configureDefaultCondition(forPopup: newPopup) {
                 dispatchGroup.leave()
             }
         }
