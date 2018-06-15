@@ -104,8 +104,8 @@ class PinDropView: UIView {
         
         /*  ._______  _  _
          *  |       |  |  |
-         *  |       |  |  |-Height of pin
-         *  !_______|  |  | _
+         *  |   O   |  |  |-Height of pin
+         *  !___|___|  |  | _
          *  |___.___|  | _|  |
          *  |_______|  |    _|-Height of shadow
          *  |       |  |

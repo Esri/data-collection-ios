@@ -21,7 +21,7 @@ class ShrinkingView: UIView {
         case shrink = 0.98
         case full = 1.0
         
-        var transformation: CGAffineTransform {
+        fileprivate var transformation: CGAffineTransform {
             return CGAffineTransform(scaleX: self.rawValue, y: self.rawValue)
         }
     }
