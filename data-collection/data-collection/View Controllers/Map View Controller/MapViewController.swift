@@ -121,7 +121,7 @@ class MapViewController: AppContextAwareController, PopupsViewControllerEmbeddab
             return
         }
         
-        smallPopupViewController?.popuplateViewWithBestContent { [weak self] in
+        smallPopupViewController?.populateWithRelatedRecordContent { [weak self] in
             
             self?.addPopupRelatedRecordButton.isHidden = false
 
