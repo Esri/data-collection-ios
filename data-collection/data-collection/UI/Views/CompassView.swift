@@ -25,6 +25,12 @@ import ArcGIS
         static let hidden: CGFloat = 0.0
     }
     
+    @IBInspectable var compassImage: UIImage = UIImage(named: "Compass")! {
+        didSet {
+            setBackgroundImage(compassImage, for: .normal)
+        }
+    }
+    
     weak var mapView: AGSMapView? {
         didSet {
             mapViewRotationObserver?.invalidate()
@@ -53,16 +59,32 @@ import ArcGIS
         }
     }
     
-    deinit {
-        mapViewRotationObserver?.invalidate()
-        mapViewRotationObserver = nil
-        mapView = nil
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        addButtonTouchEvent()
     }
     
-    @IBInspectable var compassImage: UIImage = UIImage(named: "Compass")! {
-        didSet {
-            setBackgroundImage(compassImage, for: .normal)
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        addButtonTouchEvent()
+    }
+    
+    override func prepareForInterfaceBuilder() {
+        super.prepareForInterfaceBuilder()
+        setBackgroundImage(compassImage, for: .normal)
+        setNeedsLayout()
+        setNeedsDisplay()
+    }
+    
+    @objc func didTapCompass(sender: UIButton) {
+        guard let mapView = mapView else {
+            return
         }
+        mapView.setViewpointRotation(0.0, completion: nil)
+    }
+    
+    private func addButtonTouchEvent() {
+        addTarget(self, action: #selector(CompassView.didTapCompass(sender:)), for: .touchUpInside)
     }
     
     private func transform(forRotation rotation: Double) {
@@ -84,32 +106,10 @@ import ArcGIS
             })
         }
     }
-
-    @objc func didTapCompass(sender: UIButton) {
-        guard let mapView = mapView else {
-            return
-        }
-        mapView.setViewpointRotation(0.0, completion: nil)
-    }
     
-    private func addButtonTouchEvent() {
-        addTarget(self, action: #selector(CompassView.didTapCompass(sender:)), for: .touchUpInside)
-    }
-    
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        addButtonTouchEvent()
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-        addButtonTouchEvent()
-    }
-    
-    override func prepareForInterfaceBuilder() {
-        super.prepareForInterfaceBuilder()
-        setBackgroundImage(compassImage, for: .normal)
-        setNeedsLayout()
-        setNeedsDisplay()
+    deinit {
+        mapViewRotationObserver?.invalidate()
+        mapViewRotationObserver = nil
+        mapView = nil
     }
 }
