@@ -15,7 +15,7 @@
 import UIKit
 import ArcGIS
 
-class CompassView: UIButton {
+@IBDesignable class CompassView: UIButton {
     
     var compassFadeTriggerTimer: Timer?
     private var mapViewRotationObserver: NSKeyValueObservation?
@@ -38,14 +38,17 @@ class CompassView: UIButton {
             
             mapViewRotationObserver = mapView.observe(\.rotation, options:[.new, .old]) { [weak self] (mapView, change) in
                 
-                self?.alpha = Alpha.present
-                
-                guard let rotationValue = change.newValue else {
-                    return
+                DispatchQueue.main.async { [weak self] in
+                    
+                    self?.alpha = Alpha.present
+                    
+                    guard let rotationValue = change.newValue else {
+                        return
+                    }
+                    
+                    self?.transform(forRotation: rotationValue)
+                    self?.adjustForNorth()
                 }
-                
-                self?.transform(forRotation: rotationValue)
-                self?.adjustForNorth()
             }
         }
     }
@@ -62,13 +65,13 @@ class CompassView: UIButton {
         }
     }
     
-    func transform(forRotation rotation: Double) {
+    private func transform(forRotation rotation: Double) {
         compassFadeTriggerTimer?.invalidate()
         compassFadeTriggerTimer = nil
         transform = CGAffineTransform(rotationAngle: CGFloat(-rotation.asRadians))
     }
     
-    func adjustForNorth() {
+    private func adjustForNorth() {
         
         guard let mapView = mapView else {
             return
@@ -89,7 +92,7 @@ class CompassView: UIButton {
         mapView.setViewpointRotation(0.0, completion: nil)
     }
     
-    func addButtonTouchEvent() {
+    private func addButtonTouchEvent() {
         addTarget(self, action: #selector(CompassView.didTapCompass(sender:)), for: .touchUpInside)
     }
     

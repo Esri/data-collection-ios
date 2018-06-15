@@ -61,8 +61,6 @@ struct RelatedRecordsPreferences {
     let oneToManyCellAttributeCount = 3
 }
 
-// TODO consider how UIAppearance can be leveraged?
-
 struct AppColors {
     
     let primary: UIColor = UIColor(red:0.66, green:0.81, blue:0.40, alpha:1.00)

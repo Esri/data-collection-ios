@@ -88,16 +88,18 @@ import ArcGIS
     }
     
     public func startProgressAnimation() {
-        isAnimating = true
-        alpha = 1.0
-        isHidden = false
-        UIView.animate(withDuration: 0.1, animations: { [weak self] in
-            self?.setNewFrame(forVisible: true)
-        }, completion: { [weak self] (completion) in
-            UIView.animate(withDuration: 0.2, delay: 0.0, options: [.autoreverse, .`repeat`], animations: {
-                self?.swapBackgroundColor()
+        DispatchQueue.main.async { [weak self] in
+            self?.isAnimating = true
+            self?.alpha = 1.0
+            self?.isHidden = false
+            UIView.animate(withDuration: 0.1, animations: { [weak self] in
+                self?.setNewFrame(forVisible: true)
+                }, completion: { [weak self] (completion) in
+                    UIView.animate(withDuration: 0.2, delay: 0.0, options: [.autoreverse, .`repeat`], animations: {
+                        self?.swapBackgroundColor()
+                    })
             })
-        })
+        }
     }
     
     public func stopProgressAnimation() {

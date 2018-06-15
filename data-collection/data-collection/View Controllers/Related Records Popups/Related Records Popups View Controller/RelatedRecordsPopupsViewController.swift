@@ -17,13 +17,15 @@ import ArcGIS
 
 class RelatedRecordsPopupsViewController: AppContextAwareController, BackButtonDelegate {
     
+    private typealias VC = RelatedRecordsPopupsViewController
+    
     struct EphemeralCacheKeys {
         static let tableList = "EphemeralCache.RelatedRecordsPopupsViewController.TableList.Key"
     }
     
     @IBOutlet weak var tableView: UITableView!
     
-    var popupModeButton: UIBarButtonItem!
+    var popupModeButton: UIBarButtonItem?
     
     @IBOutlet weak var adjustableBottomConstraint: NSLayoutConstraint!
     
@@ -44,8 +46,8 @@ class RelatedRecordsPopupsViewController: AppContextAwareController, BackButtonD
     // TODO CHANGE ?? 
     var recordsTableManager: PopupRelatedRecordsTableManager!
     
-    var isChildPopup: Bool {
-        return parentPopupManager != nil
+    var shouldLoadRelatedRecords: Bool {
+        return parentPopupManager == nil
     }
     
     var isRootViewController: Bool {
@@ -57,13 +59,18 @@ class RelatedRecordsPopupsViewController: AppContextAwareController, BackButtonD
     
     var loadingRelatedRecords = false {
         didSet {
-            popupModeButton.isEnabled = !loadingRelatedRecords
+            popupModeButton?.isEnabled = !loadingRelatedRecords
         }
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        title = recordsManager.title
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(VC.adjustKeyboardVisible(notification:)), name: .UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(VC.adjustKeyboardHidden(notification:)), name: .UIKeyboardWillHide, object: nil)
+        
         tableView.register(PopupReadonlyFieldCell.self, forCellReuseIdentifier: ReuseIdentifiers.popupReadonlyCell)
         tableView.register(PopupNumberCell.self, forCellReuseIdentifier: ReuseIdentifiers.popupNumberCell)
         tableView.register(PopupShortStringCell.self, forCellReuseIdentifier: ReuseIdentifiers.popupShortTextCell)
@@ -76,42 +83,27 @@ class RelatedRecordsPopupsViewController: AppContextAwareController, BackButtonD
         tableView.rowHeight = UITableViewAutomaticDimension
         
         if recordsManager.shouldAllowEdit {
-            popupModeButton = UIBarButtonItem(title: "Edit",
-                                              style: .plain,
-                                              target: self,
-                                              action: #selector(RelatedRecordsPopupsViewController.userRequestsTogglePopupMode(_:)))
+            popupModeButton = UIBarButtonItem(title: "Edit", style: .plain, target: self, action: #selector(VC.userRequestsTogglePopupMode(_:)))
             self.navigationItem.rightBarButtonItem = popupModeButton
         }
         
         if isRootViewController {
-            self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Cancel",
-                                                                    style: .plain,
-                                                                    target: self,
-                                                                    action: #selector(RelatedRecordsPopupsViewController.userTappedRootLeftBarButton(_:)))
+            self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(VC.userTappedRootLeftBarButton(_:)))
         }
         
-        NotificationCenter.default.addObserver(self, selector: #selector(RelatedRecordsPopupsViewController.adjustKeyboardVisible(notification:)), name: .UIKeyboardWillShow, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(RelatedRecordsPopupsViewController.adjustKeyboardHidden(notification:)), name: .UIKeyboardWillHide, object: nil)
-        
-        title = recordsManager.title
-        
-        loadRelatedRecords()
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
-        adjustViewControllerForEditState()
-    }
-    
-    private func loadRelatedRecords() {
-        if !isChildPopup {
+        if shouldLoadRelatedRecords {
             loadingRelatedRecords = true
             recordsManager.loadRelatedRecords { [weak self] in
                 self?.loadingRelatedRecords = false
                 self?.tableView.reloadData()
             }
         }
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        adjustViewControllerForEditState()
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -189,7 +181,7 @@ class RelatedRecordsPopupsViewController: AppContextAwareController, BackButtonD
     func adjustViewControllerForEditState() {
         
         if popupModeButton != nil {
-            popupModeButton.title = recordsManager.actionButtonTitle
+            popupModeButton?.title = recordsManager.actionButtonTitle
         }
         
         if tableView != nil {
