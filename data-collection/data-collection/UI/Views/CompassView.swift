@@ -17,10 +17,10 @@ import ArcGIS
 
 @IBDesignable class CompassView: UIButton {
     
-    var compassFadeTriggerTimer: Timer?
+    private var compassFadeTriggerTimer: Timer?
     private var mapViewRotationObserver: NSKeyValueObservation?
     
-    struct Alpha {
+    private struct Alpha {
         static let present: CGFloat = 1.0
         static let hidden: CGFloat = 0.0
     }
