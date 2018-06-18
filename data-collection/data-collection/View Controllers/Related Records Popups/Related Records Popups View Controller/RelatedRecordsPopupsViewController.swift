@@ -50,13 +50,6 @@ class RelatedRecordsPopupsViewController: AppContextAwareController, BackButtonD
         return parentPopupManager == nil
     }
     
-    var isRootViewController: Bool {
-        guard let n = navigationController?.viewControllers.count else {
-            return true
-        }
-        return n == 1
-    }
-    
     var loadingRelatedRecords = false {
         didSet {
             popupModeButton?.isEnabled = !loadingRelatedRecords

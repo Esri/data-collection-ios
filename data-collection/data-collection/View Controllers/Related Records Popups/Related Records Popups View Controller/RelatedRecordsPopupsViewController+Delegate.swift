@@ -112,29 +112,37 @@ extension RelatedRecordsPopupsViewController: UITableViewDelegate {
             indexPath.section > 0,
             let cell = tableView.cellForRow(at: indexPath) as? RelatedRecordCell,
             let relationshipInfo = cell.relationshipInfo,
-            let childPopup = cell.popup,
-            childPopup.isEditable
+            let childPopup = cell.popup
             else {
             return nil
         }
         
-        let editAction = UITableViewRowAction(style: UITableViewRowActionStyle.default, title: "Edit") { [weak self] (action, indexPath) in
-            self?.closeEditingSessionAndBeginEditing(childPopup: childPopup)
+        var actions = [UITableViewRowAction]()
+        
+        if childPopup.isEditable {
+            let editAction = UITableViewRowAction(style: UITableViewRowActionStyle.default, title: "Edit") { [weak self] (action, indexPath) in
+                self?.closeEditingSessionAndBeginEditing(childPopup: childPopup)
+            }
+            
+            editAction.backgroundColor = .orange
+            actions.append(editAction)
+        }
+
+        if let feature = childPopup.geoElement as? AGSArcGISFeature, let featureTable = feature.featureTable as? AGSArcGISFeatureTable, featureTable.canDelete(feature) {
+            let deleteAction = UITableViewRowAction(style: UITableViewRowActionStyle.default, title: "Delete") { [weak self] (action, indexPath) in
+                self?.present(confirmationAlertMessage: "Are you sure you want to delete this \(childPopup.tableName ?? "record")?", confirmationTitle: "Delete", confirmationAction: { [weak self] (_) in
+                    self?.closeEditingSessionAndDelete(childPopup: childPopup, forRelationshipInfo: relationshipInfo)
+                })
+            }
+            
+            deleteAction.backgroundColor = .red
+            actions.append(deleteAction)
         }
         
-        editAction.backgroundColor = .orange
-        
-        let deleteAction = UITableViewRowAction(style: UITableViewRowActionStyle.default, title: "Delete") { [weak self] (action, indexPath) in
-            self?.present(confirmationAlertMessage: "Are you sure you want to delete this \(childPopup.tableName ?? "record")?", confirmationTitle: "Delete", confirmationAction: { [weak self] (_) in
-                self?.closeEditingSessionAndDelete(childPopup: childPopup, forRelationshipInfo: relationshipInfo)
-            })
-        }
-        
-        deleteAction.backgroundColor = .red
-        
-        return [deleteAction, editAction]
+        return actions.count > 0 ? actions : nil
     }
     
+    // TODO move within related records manager
     func indexPathWithinAttributes(_ indexPath: IndexPath) -> Bool {
         
         guard indexPath.section == 0 else {

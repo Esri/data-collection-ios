@@ -232,7 +232,10 @@ extension AGSArcGISFeatureTable {
                     completion(error!)
                     return
                 }
-                feature.refreshObjectID()
+                
+                if type != .delete {
+                    feature.refreshObjectID()
+                }
                 
                 completion(nil)
             })

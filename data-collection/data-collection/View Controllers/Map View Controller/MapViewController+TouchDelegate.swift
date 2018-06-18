@@ -54,7 +54,6 @@ extension MapViewController: AGSGeoViewTouchDelegate {
             
             for identifyResult in identifyResults {
                 
-                // TODO introduce rules
                 guard
                     let featureLayer = identifyResult.layerContent as? AGSFeatureLayer,
                     featureLayer.isIdentifiable

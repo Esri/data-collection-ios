@@ -18,6 +18,20 @@ import ArcGIS
 
 extension FileManager {
     
+    private static var temporaryDocumentsDirectory: URL? {
+        return URL(string: NSTemporaryDirectory())
+    }
+    
+    private static var temporaryOfflineMapDirectoryURL: URL? {
+        
+        guard var path = temporaryDocumentsDirectory else {
+            print("[Error: AppFiles] failed to build url for temporary offline map documents directory.")
+            return nil
+        }
+        path.appendPathComponent("offlineMap")
+        return path
+    }
+    
     private static var baseDocumentsDirectoryURL: URL? {
         do {
             return try FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor:nil, create:false)
@@ -70,8 +84,13 @@ extension FileManager {
     }
     
     static func buildOfflineDirectories() {
+        buildTemporaryOfflineMapDirectory()
         buildOfflineMapDirectory()
         buildGeneratedAssetsDirectory()
+    }
+    
+    static func buildTemporaryOfflineMapDirectory() {
+        
     }
     
     static func buildOfflineMapDirectory() {

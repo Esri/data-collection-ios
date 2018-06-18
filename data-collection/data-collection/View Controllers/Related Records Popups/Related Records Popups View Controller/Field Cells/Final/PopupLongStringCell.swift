@@ -13,7 +13,5 @@
 // limitations under the License.
 
 import Foundation
-import UIKit
 
-
-final class PopupShortStringCell: PopupTextFieldCell { }
+final class PopupLongStringCell: PopupTextViewCell { }

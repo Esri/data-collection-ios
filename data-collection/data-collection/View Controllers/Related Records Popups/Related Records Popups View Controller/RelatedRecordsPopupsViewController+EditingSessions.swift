@@ -17,6 +17,30 @@ import ArcGIS
 
 extension RelatedRecordsPopupsViewController {
     
+    
+    // MARK: Delete Feature
+    
+    func deletePopup(_ completion: @escaping (Bool) -> Void) {
+        
+        guard let feature = popup.geoElement as? AGSArcGISFeature, let featureTable = feature.featureTable as? AGSArcGISFeatureTable, featureTable.canDelete(feature) else {
+            completion(false)
+            return
+        }
+        
+        SVProgressHUD.show(withStatus: "Deleting \(featureTable.tableName)")
+        
+        featureTable.performDelete(feature: feature) { (error) in
+            
+            guard error == nil else {
+                print("[Error: Feature Table Delete]", error!.localizedDescription)
+                completion(false)
+                return
+            }
+            
+            completion(true)
+        }
+    }
+    
     func editPopup(_ wantsEdit: Bool, completion: ((_ proceed: Bool) -> Void)? = nil) {
         
         if wantsEdit {
@@ -149,7 +173,7 @@ extension RelatedRecordsPopupsViewController {
                 return
             }
             
-            guard let feature = childPopup.geoElement as? AGSArcGISFeature, let featureTable = feature.featureTable as? AGSArcGISFeatureTable else {
+            guard let feature = childPopup.geoElement as? AGSArcGISFeature, let featureTable = feature.featureTable as? AGSArcGISFeatureTable, featureTable.canDelete(feature) else {
                 SVProgressHUD.dismiss()
                 self?.present(simpleAlertMessage: "Could not delete \(childPopup.tableName ?? "related record.")")
                 return

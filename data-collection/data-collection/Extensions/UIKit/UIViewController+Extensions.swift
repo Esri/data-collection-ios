@@ -29,6 +29,13 @@ extension UIViewController {
             self?.dismiss(animated: animated, completion: completion)
         }
     }
+    
+    var isRootViewController: Bool {
+        guard let n = navigationController?.viewControllers.count else {
+            return true
+        }
+        return n == 1
+    }
 }
 
 extension UIViewController {

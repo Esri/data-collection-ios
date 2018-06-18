@@ -64,4 +64,5 @@ struct ReuseIdentifiers {
     static let popupReadonlyCell = "PopupReadonlyCellReuseIdentifier"
     static let codedValueCell = "PopupCodedValueCellReuseIdentifier"
     static let relatedRecordCell = "RelatedRecordCellReuseID"
+    static let deletePopupCell = "DeleteFeatureCell"
 }

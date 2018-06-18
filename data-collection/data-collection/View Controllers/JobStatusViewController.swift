@@ -46,14 +46,15 @@ class JobStatusViewController: AppContextAwareController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        
         super.viewWillAppear(animated)
+        
         jobStatusLabel.text = jobConstruct?.message ?? "Unknown Error"
         
         UIApplication.shared.isIdleTimerDisabled = true
     }
     
     override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
         
         guard let job = mapJob else {
             delegate?.jobStatusViewController(didEndAbruptly: self)

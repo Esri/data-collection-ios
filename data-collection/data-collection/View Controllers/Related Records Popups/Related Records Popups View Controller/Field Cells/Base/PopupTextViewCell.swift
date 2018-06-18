@@ -20,7 +20,7 @@ class PopupTextViewCell: PopupEditableFieldCell<UITextView>, UITextViewDelegate 
     var isRichText: Bool = false
     
     var viewHeight: CGFloat {
-        return 60.0
+        return 120.0
     }
     
     public override func insertValueEditView() {
@@ -74,8 +74,12 @@ class PopupTextViewCell: PopupEditableFieldCell<UITextView>, UITextViewDelegate 
     }
     
     func textViewDidChange(_ textView: UITextView) {
-        print(textView.text)
-        // TODO change
-//        value = textView.text as? ValueType
+        
+        if let field = field, field.stringFieldOption == .richText {
+            updateCellValue(textView.attributedText)
+        }
+        else {
+            updateCellValue(textView.text)
+        }
     }
 }
