@@ -19,7 +19,8 @@ extension RelatedRecordsPopupsViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, shouldHighlightRowAt indexPath: IndexPath) -> Bool {
 
-        return !indexPathWithinAttributes(indexPath)
+        // We only want to highlight related records
+        return !recordsManager.indexPathWithinAttributes(indexPath)
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -140,17 +141,5 @@ extension RelatedRecordsPopupsViewController: UITableViewDelegate {
         }
         
         return actions.count > 0 ? actions : nil
-    }
-    
-    // TODO move within related records manager
-    func indexPathWithinAttributes(_ indexPath: IndexPath) -> Bool {
-        
-        guard indexPath.section == 0 else {
-            return false
-        }
-        
-        let nFields = recordsManager.isEditing ? recordsManager.editableDisplayFields.count : recordsManager.displayFields.count
-        
-        return indexPath.row < nFields
     }
 }

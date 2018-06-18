@@ -15,7 +15,7 @@
 import UIKit
 import ArcGIS
 
-@IBDesignable class ActivityBarView: UIView {
+class ActivityBarView: UIView {
     
     @IBInspectable var colorA: UIColor = .darkGray {
         didSet {

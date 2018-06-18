@@ -37,14 +37,7 @@ class RelatedRecordsPopupsViewController: AppContextAwareController, BackButtonD
     
     var parentPopupManager: PopupRelatedRecordsManager?
     
-    var recordsManager: PopupRelatedRecordsManager! {
-        didSet {
-            recordsTableManager = PopupRelatedRecordsTableManager(withRecordsManager: recordsManager)
-        }
-    }
-    
-    // TODO CHANGE ?? 
-    var recordsTableManager: PopupRelatedRecordsTableManager!
+    var recordsManager: PopupRelatedRecordsManager!
     
     var shouldLoadRelatedRecords: Bool {
         return parentPopupManager == nil

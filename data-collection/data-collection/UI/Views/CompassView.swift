@@ -15,7 +15,7 @@
 import UIKit
 import ArcGIS
 
-@IBDesignable class CompassView: UIButton {
+class CompassView: UIButton {
     
     private var compassFadeTriggerTimer: Timer?
     private var mapViewRotationObserver: NSKeyValueObservation?

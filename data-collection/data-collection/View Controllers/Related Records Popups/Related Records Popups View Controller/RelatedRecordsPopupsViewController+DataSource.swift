@@ -38,8 +38,11 @@ extension RelatedRecordsPopupsViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        if let field = recordsTableManager.field(forIndexPath: indexPath) {
+        let attributeFields = recordsManager.isEditing ? recordsManager.editableDisplayFields : recordsManager.displayFields
+        
+        if indexPath.section == 0, indexPath.row < attributeFields.count {
             
+            let field = attributeFields[indexPath.row]
             let fieldType = recordsManager.fieldType(for: field)
             
             let cell: PopupFieldCellProtocol!
@@ -71,20 +74,52 @@ extension RelatedRecordsPopupsViewController: UITableViewDataSource {
             
             return cell as! UITableViewCell
         }
-        
-        let cell = tableView.dequeueReusableCell(withIdentifier: ReuseIdentifiers.relatedRecordCell, for: indexPath) as! RelatedRecordCell
-        cell.table = recordsTableManager.table(forIndexPath: indexPath)
-        (cell.popup, cell.relationshipInfo) = recordsTableManager.popup(forIndexPath: indexPath)
-        
-        cell.maxAttributes = indexPath.section == 0 ?
-            AppConfiguration.relatedRecordPrefs.manyToOneCellAttributeCount :
-            AppConfiguration.relatedRecordPrefs.oneToManyCellAttributeCount
-        
-        cell.editingPopup = recordsManager.isEditing
-        
-        cell.updateCellContent()
-        
-        return cell
+        else {
+            let cell = tableView.dequeueReusableCell(withIdentifier: ReuseIdentifiers.relatedRecordCell, for: indexPath) as! RelatedRecordCell
+            
+            // Many To One
+            if indexPath.section == 0 {
+                let sectionOffset = recordsManager.isEditing ? recordsManager.editableDisplayFields.count : recordsManager.displayFields.count
+                let idx = indexPath.row - sectionOffset
+                let manager = recordsManager.manyToOne[idx]
+                cell.table = manager.relatedTable
+                cell.popup = manager.relatedPopup
+                cell.relationshipInfo = manager.relationshipInfo
+                cell.maxAttributes = AppConfiguration.relatedRecordPrefs.manyToOneCellAttributeCount
+            }
+            // One To Many
+            else {
+                let sectionOffset = 1
+                let sectionIDX = indexPath.section - sectionOffset
+                let manager = recordsManager.oneToMany[sectionIDX]
+                cell.table = manager.relatedTable
+                
+                var rowOffset = 0
+                if let table = manager.relatedTable, table.canAddFeature {
+                    rowOffset += 1
+                }
+                let rowIDX = indexPath.row - rowOffset
+                
+                if indexPath.row < rowOffset {
+                    cell.popup = nil
+                    cell.relationshipInfo = manager.relationshipInfo
+                }
+                else if manager.relatedPopups.count <= rowIDX {
+                    cell.popup = nil
+                    cell.relationshipInfo = nil
+                }
+                else {
+                    cell.popup = manager.relatedPopups[rowIDX]
+                    cell.relationshipInfo = manager.relationshipInfo
+                }
+                cell.maxAttributes = AppConfiguration.relatedRecordPrefs.oneToManyCellAttributeCount
+            }
+            
+            cell.editingPopup = recordsManager.isEditing
+            cell.updateCellContent()
+            
+            return cell
+        }
     }
     
     func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {

@@ -263,3 +263,16 @@ class PopupRelatedRecordsManager: AGSPopupManager {
     }
 }
 
+extension PopupRelatedRecordsManager {
+    
+    func indexPathWithinAttributes(_ indexPath: IndexPath) -> Bool {
+        
+        guard indexPath.section == 0 else {
+            return false
+        }
+        
+        let nFields = isEditing ? editableDisplayFields.count : displayFields.count
+        
+        return indexPath.row < nFields
+    }
+}

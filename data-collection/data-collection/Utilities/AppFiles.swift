@@ -22,7 +22,7 @@ extension FileManager {
         return URL(string: NSTemporaryDirectory())
     }
     
-    private static var temporaryOfflineMapDirectoryURL: URL? {
+    public static var temporaryOfflineMapDirectoryURL: URL? {
         
         guard var path = temporaryDocumentsDirectory else {
             print("[Error: AppFiles] failed to build url for temporary offline map documents directory.")
@@ -84,13 +84,22 @@ extension FileManager {
     }
     
     static func buildOfflineDirectories() {
-        buildTemporaryOfflineMapDirectory()
+        prepareTemporaryOfflineMapDirectory()
         buildOfflineMapDirectory()
         buildGeneratedAssetsDirectory()
     }
     
-    static func buildTemporaryOfflineMapDirectory() {
-        
+    static func prepareTemporaryOfflineMapDirectory() {
+        guard let path = temporaryOfflineMapDirectoryURL else {
+            print("[Error: AppFiles] failed to build url for temporary offline map documents directory.")
+            return
+        }
+        do {
+            try FileManager.default.removeItem(at: path)
+        }
+        catch {
+            print("[Error: AppFiles] could not create directory: \(path) with error:", error.localizedDescription)
+        }
     }
     
     static func buildOfflineMapDirectory() {
