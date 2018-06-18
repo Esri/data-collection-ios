@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="oez-ZN-b2G">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Small Popup View Controller-->
+        <scene sceneID="Nnr-Ca-XR1">
+            <objects>
+                <viewController id="oez-ZN-b2G" customClass="SmallPopupViewController" customModule="data_collection" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" userInteractionEnabled="NO" contentMode="scaleToFill" id="lxu-Iz-sHF">
+                        <rect key="frame" x="0.0" y="0.0" width="355" height="80"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" translatesAutoresizingMaskIntoConstraints="NO" id="8xU-y3-FZI">
+                                <rect key="frame" x="12" y="12" width="177.5" height="56"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Doo-tC-vd5">
+                                        <rect key="frame" x="0.0" y="0.0" width="177.5" height="30"/>
+                                        <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uOP-Kk-Oqt">
+                                        <rect key="frame" x="0.0" y="30" width="177.5" height="26"/>
+                                        <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                            </stackView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jB1-s4-r5o">
+                                <rect key="frame" x="189.5" y="50" width="153.5" height="18"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="18" id="ZFZ-5t-Zin"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleFootnote"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <constraints>
+                            <constraint firstItem="8xU-y3-FZI" firstAttribute="top" secondItem="rpZ-jW-ncl" secondAttribute="top" constant="12" id="IEg-92-VoD"/>
+                            <constraint firstItem="rpZ-jW-ncl" firstAttribute="bottom" secondItem="jB1-s4-r5o" secondAttribute="bottom" constant="12" id="Iew-E5-4tn"/>
+                            <constraint firstItem="8xU-y3-FZI" firstAttribute="width" secondItem="lxu-Iz-sHF" secondAttribute="width" multiplier="50:100" id="KwG-3O-UBh"/>
+                            <constraint firstItem="rpZ-jW-ncl" firstAttribute="trailing" secondItem="jB1-s4-r5o" secondAttribute="trailing" constant="12" id="MRR-TF-I0C"/>
+                            <constraint firstItem="rpZ-jW-ncl" firstAttribute="bottom" secondItem="8xU-y3-FZI" secondAttribute="bottom" constant="12" id="ac3-9s-rtW"/>
+                            <constraint firstItem="8xU-y3-FZI" firstAttribute="leading" secondItem="rpZ-jW-ncl" secondAttribute="leading" constant="12" id="ebv-p6-x6Y"/>
+                            <constraint firstItem="jB1-s4-r5o" firstAttribute="leading" secondItem="8xU-y3-FZI" secondAttribute="trailing" id="nOO-Ng-CjT"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="rpZ-jW-ncl"/>
+                    </view>
+                    <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+                    <size key="freeformSize" width="355" height="80"/>
+                    <connections>
+                        <outlet property="relatedRecordHeaderLabel" destination="Doo-tC-vd5" id="aJR-Rq-2ld"/>
+                        <outlet property="relatedRecordSubheaderLabel" destination="uOP-Kk-Oqt" id="Vow-EV-aFC"/>
+                        <outlet property="relatedRecordsNLabel" destination="jB1-s4-r5o" id="0vP-Vh-0Nd"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="nOo-Uz-Ae7" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-95.200000000000003" y="103.44827586206897"/>
+        </scene>
+    </scenes>
+</document>

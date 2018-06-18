@@ -31,7 +31,7 @@ extension UIColor {
 //    static var houseOrange: UIColor {
 //        return UIColor(red:0.93, green:0.54, blue:0.01, alpha:1.00)
 //    }
-//    
+//
 //    static var houseEdit: UIColor {
 //        return .orange
 //    }
@@ -78,10 +78,7 @@ extension UIColor {
     
     func removeBrightness(_ val: CGFloat, resultAlpha alpha: CGFloat? = nil) -> UIColor {
         
-        var h: CGFloat = 0
-        var s: CGFloat = 0
-        var b: CGFloat = 0
-        var a: CGFloat = 0
+        var h: CGFloat = 0, s: CGFloat = 0, b: CGFloat = 0, a: CGFloat = 0
         
         guard getHue(&h, saturation: &s, brightness: &b, alpha: &a) else {
             return self
@@ -92,10 +89,7 @@ extension UIColor {
     
     func addBrightness(_ val: CGFloat, resultAlpha alpha: CGFloat? = nil) -> UIColor {
         
-        var h: CGFloat = 0
-        var s: CGFloat = 0
-        var b: CGFloat = 0
-        var a: CGFloat = 0
+        var h: CGFloat = 0, s: CGFloat = 0, b: CGFloat = 0, a: CGFloat = 0
         
         guard getHue(&h, saturation: &s, brightness: &b, alpha: &a) else {
             return self

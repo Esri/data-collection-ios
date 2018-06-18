@@ -18,7 +18,7 @@ import ArcGIS
 extension AppContainerViewController: MapViewControllerDelegate {
     
     func mapViewController(_ mapViewController: MapViewController, didSelect extent: AGSEnvelope) {
-        
+                
         guard
             let directory = FileManager.offlineMapDirectoryURL,
             let map = mapViewController.mapView.map
@@ -29,8 +29,16 @@ extension AppContainerViewController: MapViewControllerDelegate {
         
         let scale = mapViewController.mapView.mapScale
         
-        let offlineJob = AppOfflineMapJob.downloadMapOffline(map, directory, extent, scale)
-        EphemeralCache.set(object: offlineJob, forKey: AppOfflineMapJob.ephemeralCacheKey)
+        let offlineJob = AppOfflineMapJobConstructionInfo.downloadMapOffline(map, directory, extent, scale)
+        EphemeralCache.set(object: offlineJob, forKey: AppOfflineMapJobConstructionInfo.EphemeralCacheKeys.offlineMapJob)
         performSegue(withIdentifier: "presentJobStatusViewController", sender: nil)
+    }
+    
+    func mapViewController(_ mapViewController: MapViewController, shouldAllowNewFeature: Bool) {
+        showAddFeatureBarButton = shouldAllowNewFeature
+    }
+    
+    func mapViewController(_ mapViewController: MapViewController, didUpdateTitle title: String) {
+        self.title = title
     }
 }

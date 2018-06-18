@@ -24,54 +24,60 @@ protocol JobStatusViewControllerDelegate {
 
 class JobStatusViewController: AppContextAwareController {
     
+    // TODO integrate toolkit
+    
     @IBOutlet weak var jobStatusLabel: UILabel!
     @IBOutlet weak var jobStatusProgressView: UIProgressView!
     @IBOutlet weak var cancelButton: UIButton!
     
     var delegate: JobStatusViewControllerDelegate?
     
-    var offlineMapJob: AppOfflineMapJob? {
+    var jobConstruct: AppOfflineMapJobConstructionInfo? {
         didSet {
-            mapJob = offlineMapJob?.generateJob()
+            mapJob = jobConstruct?.generateJob()
         }
     }
     
     private var mapJob: AGSJob?
-        
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         jobStatusLabel.text = "Preparing"
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        
         super.viewWillAppear(animated)
-        jobStatusLabel.text = offlineMapJob?.message ?? "Unknown Error"
+        jobStatusLabel.text = jobConstruct?.message ?? "Unknown Error"
         
         UIApplication.shared.isIdleTimerDisabled = true
     }
     
     override func viewDidAppear(_ animated: Bool) {
+        
         guard let job = mapJob else {
             delegate?.jobStatusViewController(didEndAbruptly: self)
             return
         }
+        
         job.start(statusHandler: { [weak self] (status) in
             if let job = self?.mapJob, let progressView = self?.jobStatusProgressView {
                 progressView.progress = Float(job.progress.fractionCompleted)
             }
         }) { (result, error) in
+            
             guard error == nil else {
                 if let nserror = error as NSError?, nserror.code == 3072 {
-                    self.jobStatusLabel.text = self.offlineMapJob?.cancelMessage
+                    self.jobStatusLabel.text = self.jobConstruct?.cancelMessage
                 }
                 else {
-                    self.jobStatusLabel.text = self.offlineMapJob?.errorMessage
+                    self.jobStatusLabel.text = self.jobConstruct?.errorMessage
                 }
                 self.delegate?.jobStatusViewController(self, didEndWithError: error!)
                 return
             }
             if let result = result {
-                self.jobStatusLabel.text = self.offlineMapJob?.successMessage
+                self.jobStatusLabel.text = self.jobConstruct?.successMessage
                 self.delegate?.jobStatusViewController(self, didEndWithResult: result)
             }
         }
@@ -85,8 +91,12 @@ class JobStatusViewController: AppContextAwareController {
     
     var jobStatusProgress: Float = 0.0 {
         didSet {
-            jobStatusProgressView?.progress = max(min(jobStatusProgress, 1.0), 0.0)
+            jobStatusProgressView?.progress = status(jobStatusProgress, upperBounds: 1.0, lowerBounds: 0.0)
         }
+    }
+    
+    func status(_ status: Float, upperBounds: Float, lowerBounds: Float) -> Float {
+        return max(min(status, upperBounds), lowerBounds)
     }
     
     @IBAction func userDidTapCancelJob(_ sender: Any) {

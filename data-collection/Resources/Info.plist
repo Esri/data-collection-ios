@@ -58,7 +58,7 @@
 		</dict>
 	</dict>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>Allow Data Collection to help find trees and take surveys near your location.</string>
+	<string>Allow Data Collection to collect data near your location.</string>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>

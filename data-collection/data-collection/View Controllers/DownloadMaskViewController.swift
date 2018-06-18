@@ -27,7 +27,7 @@ class DownloadMaskViewController: AppContextAwareController {
 
         borderView = UIView()
         borderView?.backgroundColor = .clear
-        borderView?.layer.borderColor = AppColors.primary.cgColor
+        borderView?.layer.borderColor = AppConfiguration.appColors.primary.cgColor
         borderView?.layer.borderWidth = borderWidth
         
         adjustFrameInset()

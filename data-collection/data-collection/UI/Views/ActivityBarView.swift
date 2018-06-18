@@ -81,37 +81,58 @@ import ArcGIS
     }
     
     public func resetBackgroundColor() {
-        isAnimating = false
-        backgroundColor = colorA
+        DispatchQueue.main.async { [weak self] in
+            self?.isAnimating = false
+            self?.backgroundColor = self?.colorA
+        }
     }
     
     public func startProgressAnimation() {
-        isAnimating = true
-        alpha = 1.0
-        isHidden = false
-        UIView.animate(withDuration: 0.1, animations: { [unowned activity = self] in
-            activity.frame = activity.rect(forVisible: true)
-        }, completion: { [unowned activity = self] (completion) in
-            UIView.animate(withDuration: 0.2, delay: 0.0, options: [.autoreverse, .`repeat`], animations: {
-                activity.backgroundColor = activity.backgroundColor == activity.colorA ? activity.colorB : activity.colorA
+        DispatchQueue.main.async { [weak self] in
+            self?.isAnimating = true
+            self?.alpha = 1.0
+            self?.isHidden = false
+            UIView.animate(withDuration: 0.1, animations: { [weak self] in
+                self?.setNewFrame(forVisible: true)
+                }, completion: { [weak self] (completion) in
+                    UIView.animate(withDuration: 0.2, delay: 0.0, options: [.autoreverse, .`repeat`], animations: {
+                        self?.swapBackgroundColor()
+                    })
             })
-        })
+        }
     }
     
     public func stopProgressAnimation() {
-        layer.removeAllAnimations()
-        resetBackgroundColor()
-        UIView.animate(withDuration: 0.1, animations: { [unowned activity = self] in
-            activity.layer.frame = activity.rect(forVisible: false)
-        }, completion: { [unowned activity = self] (completion) in
-            activity.alpha = 0.0
-            activity.isHidden = true
-            activity.layer.removeAllAnimations()
-        })
+        DispatchQueue.main.async { [weak self] in
+            self?.layer.removeAllAnimations()
+            self?.resetBackgroundColor()
+            UIView.animate(withDuration: 0.1, animations: { [weak self] in
+                self?.setNewFrame(forVisible: false)
+                }, completion: { [weak self] (completion) in
+                    self?.removeAnimations()
+            })
+        }
     }
     
-    private func rect(forVisible visible: Bool) -> CGRect {
+    private func removeAnimations() {
+        alpha = 0.0
+        isHidden = true
+        layer.removeAllAnimations()
+    }
+    
+    private func setNewFrame(forVisible: Bool) {
+        DispatchQueue.main.async { [weak self] in
+            self?.adjustRect(forVisible: forVisible)
+        }
+    }
+    
+    private func swapBackgroundColor() {
+        backgroundColor = backgroundColor == colorA ? colorB : colorA
+    }
+    
+    private func adjustRect(forVisible visible: Bool) {
         let y = visible ? 0.0 : -frame.size.height
-        return CGRect(x: 0.0, y: y, width: frame.size.width, height: frame.size.height)
+        let rect = CGRect(x: 0.0, y: y, width: frame.size.width, height: frame.size.height)
+        self.frame = rect
     }
 }

@@ -15,7 +15,7 @@
 import Foundation
 import ArcGIS
 
-// TODO improve
+// TODO improve: ? Swap and load online vs offline locators.
 class ReverseGeocoderManager: AGSLoadableBase {
     
     struct Keys {
@@ -33,7 +33,9 @@ class ReverseGeocoderManager: AGSLoadableBase {
     }()
     
     override func doCancelLoading() {
-        loadDidFinishWithError(NSUserCancelledError as? Error)
+        
+        onlineLocatorTask.cancelLoad()
+        offlineLocatorTask.cancelLoad()
     }
     
     override func doStartLoading(_ retrying: Bool) {
@@ -47,7 +49,6 @@ class ReverseGeocoderManager: AGSLoadableBase {
             if error != nil {
                 print("[Error] Online Locator Task error", error!.localizedDescription)
                 loadError = error
-                return
             }
             dispatchGroup.leave()
         }
@@ -56,7 +57,6 @@ class ReverseGeocoderManager: AGSLoadableBase {
             if error != nil {
                 print("[Error] Offline Locator Task error", error!.localizedDescription)
                 loadError = error
-                return
             }
             dispatchGroup.leave()
         }
@@ -68,35 +68,44 @@ class ReverseGeocoderManager: AGSLoadableBase {
     
     internal func reverseGeocode(forPoint point: AGSPoint, completion: @escaping (String?)->Void) {
         
-        guard loadStatus == .loaded else {
-            completion(nil)
-            return
-        }
-        
-        var locatorTask: AGSLocatorTask?
-        
-        if appContext.workMode == .online && appReachability.isReachable {
-            locatorTask = onlineLocatorTask
-        }
-        else {
-            locatorTask = offlineLocatorTask
-        }
-        
-        locatorTask!.reverseGeocode(withLocation: point) { (geoCodeResults: [AGSGeocodeResult]?, error: Error?) in
+        load { [weak self] error in
+
             guard error == nil else {
-                print("[Error] reverse geocoder error", error!.localizedDescription)
+                print("[Geocode Search manager] load error", error!.localizedDescription)
+                return
+            }
+            
+            var locatorTask: AGSLocatorTask?
+            
+            if appContext.workMode == .online && appReachability.isReachable {
+                locatorTask = self?.onlineLocatorTask
+            }
+            else {
+                locatorTask = self?.offlineLocatorTask
+            }
+            
+            guard let selectedLocatorTask = locatorTask else {
                 completion(nil)
                 return
             }
-            guard let results = geoCodeResults,
-                let first = results.first,
-                let attributesDict = first.attributes,
-                let address = attributesDict[Keys.address] as? String ?? attributesDict[Keys.matchAddress] as? String
-                else {
+            
+            selectedLocatorTask.reverseGeocode(withLocation: point) { (geoCodeResults: [AGSGeocodeResult]?, error: Error?) in
+                
+                guard error == nil else {
+                    print("[Error] reverse geocoder error", error!.localizedDescription)
                     completion(nil)
                     return
+                }
+                guard let results = geoCodeResults,
+                    let first = results.first,
+                    let attributesDict = first.attributes,
+                    let address = attributesDict[Keys.address] as? String ?? attributesDict[Keys.matchAddress] as? String
+                    else {
+                        completion(nil)
+                        return
+                }
+                completion(address)
             }
-            completion(address)
         }
     }
 }

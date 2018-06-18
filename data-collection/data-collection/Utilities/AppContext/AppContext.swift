@@ -39,6 +39,9 @@ import ArcGIS
                 if let error = error {
                     print("[Error: Portal Load Status]", error.localizedDescription)
                 }
+                else {
+                    print("[Portal] loaded")
+                }
                 appContext.user = self.portal.user
             }
         }
@@ -93,6 +96,20 @@ import ArcGIS
         }
     }
     
-    var reverseGeocoderManager = ReverseGeocoderManager()
+    var reverseGeocoderManager: ReverseGeocoderManager = {
+        
+        let geocoder = ReverseGeocoderManager()
+        
+        geocoder.load(completion: { (error) in
+            if let error = error {
+                print("[Reverse Geocoder Manager] loading error", error.localizedDescription)
+            }
+            else {
+                print("[Reverse Geocoder Manager] loaded")
+            }
+        })
+        
+        return geocoder
+    }()
 }
 

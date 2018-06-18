@@ -1,4 +1,4 @@
-//// Copyright 2017 Esri
+//// Copyright 2018 Esri
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -15,19 +15,9 @@
 import Foundation
 import ArcGIS
 
-extension AGSQueryParameters {
+extension AGSFeatureTable {
     
-//    static func all() -> AGSQueryParameters {
-//        let query = AGSQueryParameters()
-//        query.whereClause = "1 = 1"
-//        return query
-//    }
-    
-//    static func query(neighborhoodFor point: AGSPoint) -> AGSQueryParameters {
-//        let query = AGSQueryParameters()
-//        query.geometry = point
-//        query.maxFeatures = 1
-//        query.spatialRelationship = .within
-//        return query
-//    }
+    var isPopupActuallyEnabled: Bool {
+        return isPopupEnabled && popupDefinition != nil
+    }
 }

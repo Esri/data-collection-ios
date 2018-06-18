@@ -16,8 +16,25 @@ import UIKit
 
 class ShrinkingView: UIView {
     
-    public var shrinkScale: CGFloat = 0.98
-    private var fullScale: CGFloat = 1.0
+    enum ShrinkScale: CGFloat {
+        
+        case shrink = 0.98
+        case full = 1.0
+        
+        fileprivate var transformation: CGAffineTransform {
+            return CGAffineTransform(scaleX: self.rawValue, y: self.rawValue)
+        }
+    }
+    
+    var scale: ShrinkScale = .full {
+        didSet {
+            UIView.animate(withDuration: 0.06) { [weak self] in
+                if let transformation = self?.scale.transformation {
+                    self?.transform = transformation
+                }
+            }
+        }
+    }
     
     var actionClosure: (() -> Void)?
     
@@ -28,18 +45,13 @@ class ShrinkingView: UIView {
             return
         }
         // animate
-        UIView.animate(withDuration: 0.06) {
-            self.transform = CGAffineTransform(scaleX: self.shrinkScale, y: self.shrinkScale)
-        }
+        scale = .shrink
     }
     
     override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
-        touchesCancelled(touches, with: event)
-        
+        super.touchesCancelled(touches, with: event)
         // animate
-        UIView.animate(withDuration: 0.06) {
-            self.transform = CGAffineTransform(scaleX: self.fullScale, y: self.fullScale)
-        }
+        scale = .full
     }
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -49,9 +61,7 @@ class ShrinkingView: UIView {
             return
         }
         // animate
-        UIView.animate(withDuration: 0.06) {
-            self.transform = CGAffineTransform(scaleX: self.fullScale, y: self.fullScale)
-        }
+        scale = .full
         
         if let touch = touches.first, bounds.contains(touch.location(in: self)) {
             if let action = actionClosure, self.isUserInteractionEnabled == true {

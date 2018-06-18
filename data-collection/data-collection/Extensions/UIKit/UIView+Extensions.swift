@@ -17,35 +17,42 @@ import UIKit
 // MARK: UIView Animation
 
 // UIView Animation Callback
+
 typealias UIViewAnimations = () -> Void
 
-// MARK: Gestures
+// MARK: Core Graphics
 
 extension UIView {
-    func removeGestures() {
-        if let gestures = gestureRecognizers {
-            for gesture in gestures {
-                removeGestureRecognizer(gesture)
-            }
-        }
-    }
-}
-
-// Core Graphcs
-extension UIView {
+    
     var boundsCenter: CGPoint {
-        return CGPoint(x: bounds.size.width/2.0, y: bounds.size.height/2.0)
+        return CGPoint(x: bounds.midX, y: bounds.midY)
     }
 }
 
 // MARK: Style
 
 extension UIView {
-//    func stylizeBorder() {
-//        layer.borderColor = UIColor.lightGray.withAlphaComponent(0.2).cgColor
-//        layer.borderWidth = 1
-//        layer.cornerRadius = 5
-//        clipsToBounds = true
-//    }
+    
+    func stylizeBorder() {
+        layer.borderColor = UIColor.lightGray.withAlphaComponent(0.2).cgColor
+        layer.borderWidth = 1
+        layer.cornerRadius = 5
+        clipsToBounds = true
+    }
+}
+
+// MARK: Autolayout
+
+extension UIView {
+    
+    func constrainToBounds(_ view: UIView) {
+        view.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0),
+            trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0),
+            topAnchor.constraint(equalTo: view.topAnchor, constant: 0),
+            bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0)
+            ])
+    }
 }
 

@@ -16,7 +16,7 @@ import UIKit
 import ArcGIS
 
 protocol DrawerViewReferencable {
-    weak var drawerView: AppContainerViewController? { get set }
+    var drawerView: AppContainerViewController? { get set }
 }
 
 class AppContainerViewController: AppContextAwareController {
@@ -53,7 +53,7 @@ class AppContainerViewController: AppContextAwareController {
         }
     }
     
-    var showAddTreeBarButton: Bool = true {
+    var showAddFeatureBarButton: Bool = true {
         didSet {
             adjustNavigationBarButtons()
         }
@@ -101,7 +101,7 @@ class AppContainerViewController: AppContextAwareController {
             drawerViewController = destination
         }
         else if let destination = segue.destination as? JobStatusViewController {
-            destination.offlineMapJob = EphemeralCache.get(objectForKey: AppOfflineMapJob.ephemeralCacheKey) as? AppOfflineMapJob
+            destination.jobConstruct = EphemeralCache.get(objectForKey: AppOfflineMapJobConstructionInfo.EphemeralCacheKeys.offlineMapJob) as? AppOfflineMapJobConstructionInfo
             destination.delegate = self
             jobStatusViewController = destination
         }
@@ -126,7 +126,7 @@ class AppContainerViewController: AppContextAwareController {
     
     func adjustNavigationBarButtons() {
         
-        rightBarButton?.isEnabled = !drawerShowing && showAddTreeBarButton
+        rightBarButton?.isEnabled = !drawerShowing && showAddFeatureBarButton
         secondRightBarButton?.isEnabled = !drawerShowing && showZoomToLocationBarButton
         leftBarButton?.isEnabled = showProfileBarButton
     }

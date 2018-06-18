@@ -155,9 +155,14 @@ class DrawerViewController: AppContextAwareController {
     
     func adjustContextDrawerUI() {
         
-        UIView.animate(withDuration: 0.1, delay: 0.1, options: .curveEaseOut, animations: {
-            self.workModeHighlightView.frame = appContext.workMode == .online ? self.workOnlineButton.frame : self.workOfflineButton.frame
-        }, completion: nil)
+        let workModeIndicatorAnimation:()->Void = { [weak self] in
+            guard let online = self?.workOnlineButton.frame, let offline = self?.workOfflineButton.frame else {
+                return
+            }
+            self?.workModeHighlightView.frame = appContext.workMode == .online ? online : offline
+        }
+        
+        UIView.animate(withDuration: 0.1, delay: 0.1, options: .curveEaseOut, animations: workModeIndicatorAnimation, completion: nil)
         
         workOnlineButton.isEnabled = appReachability.isReachable
         workOnlineButton.isSelected = appContext.workMode == .online
@@ -181,7 +186,7 @@ class DrawerViewController: AppContextAwareController {
             print("[Authentication] user is", appContext.isLoggedIn ? "logged in." : "logged out.")
             
             if let currentUser = appContext.user {
-                self?.loginButton.setTitle("Logout", for: .normal)
+                self?.loginButton.setTitle("Log out", for: .normal)
                 let fallbackProfileImage = UIImage(named: "MissingProfile")!.withRenderingMode(.alwaysOriginal)
                 guard let image = currentUser.thumbnail else {
                     self?.loginButton.setImage(fallbackProfileImage, for: .normal)
@@ -201,7 +206,7 @@ class DrawerViewController: AppContextAwareController {
                 })
             }
             else {
-                self?.loginButton.setTitle("Login", for: .normal)
+                self?.loginButton.setTitle("Log in", for: .normal)
                 self?.loginButton.setImage(UIImage(named: "UserLoginIcon"), for: .normal)
             }
         }

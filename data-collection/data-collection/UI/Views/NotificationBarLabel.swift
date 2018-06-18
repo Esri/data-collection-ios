@@ -28,40 +28,36 @@ class NotificationBarLabel: UILabel {
         super.init(coder: aDecoder)
     }
 
-    public func showLabel(withNotificationMessage message: String, forDuration duration: TimeInterval? = nil) {
+    public func showLabel(withNotificationMessage message: String, forDuration duration: TimeInterval) {
+        
         text = message
         hideLabelTimer?.invalidate()
         hideLabelTimer = nil
         alpha = 1.0
         isHidden = false
         frame = rect(forVisible: false)
-        UIView.animate(withDuration: NotificationBarLabel.slideAnimationDuration,
-                       delay: 0.0,
-                       options: .curveEaseOut,
-                       animations: {
-                        self.frame = self.rect(forVisible: true)
-        },
-                       completion: { [weak self] (completion) in
-                        if let dismissAfter = duration {
-                            self?.hideLabelTimer = Timer.scheduledTimer(withTimeInterval: dismissAfter, repeats: false, block: { [weak self] (_) in
-                                self?.hideLabel()
-                            })
-                        }
+        
+        UIView.animate(withDuration: NotificationBarLabel.slideAnimationDuration, delay: 0.0, options: .curveEaseOut, animations: { [weak self] in
+            self?.setRect(forVisible: true)
+        }, completion: { [weak self] (completion) in
+            self?.hideLabelTimer = Timer.scheduledTimer(withTimeInterval: duration, repeats: false, block: { [weak self] (_) in
+                self?.hideLabel()
+            })
         })
     }
     
     public func hideLabel() {
-        UIView.animate(withDuration: NotificationBarLabel.slideAnimationDuration,
-                       delay: 0.0,
-                       options: .curveEaseOut,
-                       animations: {
-                        self.frame = self.rect(forVisible: false)
-                        
-        },
-                       completion: {(completion) in
-                        self.alpha = 0.0
-                        self.isHidden = true
+
+        UIView.animate(withDuration: NotificationBarLabel.slideAnimationDuration, delay: 0.0, options: .curveEaseOut, animations: { [weak self] in
+            self?.setRect(forVisible: false)
+        }, completion: {(completion) in
+            self.alpha = 0.0
+            self.isHidden = true
         })
+    }
+    
+    private func setRect(forVisible visible: Bool) {
+        frame = rect(forVisible: visible)
     }
     
     private func rect(forVisible visible: Bool) -> CGRect {
