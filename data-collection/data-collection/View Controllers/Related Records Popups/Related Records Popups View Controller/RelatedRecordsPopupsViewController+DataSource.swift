@@ -33,9 +33,7 @@ extension RelatedRecordsPopupsViewController: UITableViewDataSource {
         
         return recordsManager.oneToMany[offset].name
     }
-    
-    // TODO Will remove cell function
-    
+        
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let attributeFields = recordsManager.isEditing ? recordsManager.editableDisplayFields : recordsManager.displayFields
@@ -95,9 +93,11 @@ extension RelatedRecordsPopupsViewController: UITableViewDataSource {
                 cell.table = manager.relatedTable
                 
                 var rowOffset = 0
+                
                 if let table = manager.relatedTable, table.canAddFeature {
                     rowOffset += 1
                 }
+                
                 let rowIDX = indexPath.row - rowOffset
                 
                 if indexPath.row < rowOffset {
@@ -112,6 +112,7 @@ extension RelatedRecordsPopupsViewController: UITableViewDataSource {
                     cell.popup = manager.relatedPopups[rowIDX]
                     cell.relationshipInfo = manager.relationshipInfo
                 }
+                
                 cell.maxAttributes = AppConfiguration.relatedRecordPrefs.oneToManyCellAttributeCount
             }
             

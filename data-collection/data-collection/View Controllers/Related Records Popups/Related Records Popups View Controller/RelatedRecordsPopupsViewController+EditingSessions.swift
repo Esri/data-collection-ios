@@ -218,7 +218,7 @@ extension RelatedRecordsPopupsViewController {
         let beginEditing: (AGSPopup) -> Void = { [weak self] childPopup in
             
             guard let rrvc = self?.storyboard?.instantiateViewController(withIdentifier: "RelatedRecordsPopupsViewController") as? RelatedRecordsPopupsViewController, let parentRecordsManager = self?.recordsManager else {
-                // TODO inform user
+                self?.present(simpleAlertMessage: "An unknown error occurred!")
                 return
             }
             

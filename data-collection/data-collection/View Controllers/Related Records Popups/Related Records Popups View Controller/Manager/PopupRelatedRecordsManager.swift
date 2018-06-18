@@ -108,7 +108,6 @@ class PopupRelatedRecordsManager: AGSPopupManager {
 
         for info in relatedRecordsInfos {
             
-            // TODO work this rule into AppRules
             guard featureTable.isPopupEnabledFor(relationshipInfo: info) else {
                 continue
             }

@@ -88,19 +88,20 @@ class RelatedRecordCell: UITableViewCell {
             while attributes.count != nAttributes {
                 
                 let titleLabel = UILabel()
+                titleLabel.textColor = AppConfiguration.appColors.tableCellTitle
                 titleLabel.font = UIFont.preferredFont(forTextStyle: .footnote)
-                // TODO app config colors
-                titleLabel.textColor = .gray
                 titleLabel.sizeToFit()
                 titleLabel.heightAnchor.constraint(equalToConstant: titleLabel.font.lineHeight).isActive = true
+                titleLabel.translatesAutoresizingMaskIntoConstraints = false
                 stackView.addArrangedSubview(titleLabel)
                 
                 let valueLabel = UILabel()
                 valueLabel.numberOfLines = 0
+                titleLabel.textColor = AppConfiguration.appColors.tableCellValue
                 valueLabel.font = UIFont.preferredFont(forTextStyle: .body)
                 valueLabel.sizeToFit()
                 valueLabel.heightAnchor.constraint(greaterThanOrEqualToConstant: valueLabel.font.lineHeight).isActive = true
-                
+                valueLabel.translatesAutoresizingMaskIntoConstraints = false
                 stackView.addArrangedSubview(valueLabel)
                 
                 attributes.append((titleLabel, valueLabel))
@@ -157,7 +158,8 @@ class RelatedRecordCell: UITableViewCell {
         
         if emptyCellLabel == nil {
             emptyCellLabel = UILabel()
-            emptyCellLabel!.heightAnchor.constraint(equalToConstant: emptyCellLabel!.font.lineHeight).isActive = true
+            emptyCellLabel?.heightAnchor.constraint(equalToConstant: emptyCellLabel!.font.lineHeight).isActive = true
+            emptyCellLabel?.translatesAutoresizingMaskIntoConstraints = false
             stackView.addArrangedSubview(emptyCellLabel!)
         }
         

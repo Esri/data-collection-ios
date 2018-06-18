@@ -15,6 +15,4 @@
 import Foundation
 import UIKit
 
-final class PopupIDCell: PopupTextFieldCell/*<UUID>*/ {
-    
-}
+final class PopupIDCell: PopupTextFieldCell { }

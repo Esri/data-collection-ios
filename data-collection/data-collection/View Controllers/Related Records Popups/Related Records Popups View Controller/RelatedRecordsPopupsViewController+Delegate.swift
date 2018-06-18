@@ -53,7 +53,7 @@ extension RelatedRecordsPopupsViewController: UITableViewDelegate {
         if indexPath.section > 0, cell.popup == nil {
             
             guard let table = cell.table, table.canAddFeature, let popupDefinition = table.popupDefinition else {
-                // TODO inform user
+                present(simpleAlertMessage: "An unknown error occurred!")
                 return
             }
             

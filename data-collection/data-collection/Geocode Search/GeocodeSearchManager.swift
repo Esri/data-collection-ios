@@ -15,7 +15,6 @@
 import Foundation
 import ArcGIS
 
-// TODO improve: ? Swap and load online vs offline locators.
 class ReverseGeocoderManager: AGSLoadableBase {
     
     struct Keys {
