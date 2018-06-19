@@ -274,4 +274,12 @@ extension PopupRelatedRecordsManager {
         
         return indexPath.row < nFields
     }
+    
+    func indexPathWithinManyToOne(_ indexPath: IndexPath) -> Bool {
+        return false
+    }
+    
+    func indexPathWithinOneToMany(_ indexPath: IndexPath) -> Bool {
+        return false
+    }
 }

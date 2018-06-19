@@ -131,7 +131,7 @@ extension RelatedRecordsPopupsViewController: UITableViewDelegate {
 
         if let feature = childPopup.geoElement as? AGSArcGISFeature, let featureTable = feature.featureTable as? AGSArcGISFeatureTable, featureTable.canDelete(feature) {
             let deleteAction = UITableViewRowAction(style: UITableViewRowActionStyle.default, title: "Delete") { [weak self] (action, indexPath) in
-                self?.present(confirmationAlertMessage: "Are you sure you want to delete this \(childPopup.tableName ?? "record")?", confirmationTitle: "Delete", confirmationAction: { [weak self] (_) in
+                self?.present(confirmationAlertMessage: "Are you sure you want to delete this \(childPopup.title ?? "record")?", confirmationTitle: "Delete", confirmationAction: { [weak self] (_) in
                     self?.closeEditingSessionAndDelete(childPopup: childPopup, forRelationshipInfo: relationshipInfo)
                 })
             }

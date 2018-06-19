@@ -27,7 +27,7 @@ extension RelatedRecordsPopupsViewController {
             return
         }
         
-        SVProgressHUD.show(withStatus: "Deleting \(featureTable.tableName)")
+        SVProgressHUD.show(withStatus: "Deleting \(popup.title ?? "record")")
         
         featureTable.performDelete(feature: feature) { (error) in
             
@@ -157,11 +157,11 @@ extension RelatedRecordsPopupsViewController {
         let deletePopup: (AGSPopup, AGSRelationshipInfo) -> Void = { [weak self] childPopup, relationshipInfo in
             
             guard let manager = self?.recordsManager else {
-                self?.present(simpleAlertMessage: "Could not delete \(childPopup.tableName ?? "related record.")")
+                self?.present(simpleAlertMessage: "Could not delete \(childPopup.title ?? "related record.")")
                 return
             }
             
-            SVProgressHUD.show(withStatus: "Deleting \(childPopup.tableName ?? "related record.")")
+            SVProgressHUD.show(withStatus: "Deleting \(childPopup.title ?? "related record.")")
             
             do {
                 try manager.delete(oneToMany: childPopup, forRelationship: relationshipInfo)
@@ -169,13 +169,13 @@ extension RelatedRecordsPopupsViewController {
             catch {
                 print("[Error] deleting one to many child popup", error.localizedDescription)
                 SVProgressHUD.dismiss()
-                self?.present(simpleAlertMessage: "Could not delete \(childPopup.tableName ?? "related record.")")
+                self?.present(simpleAlertMessage: "Could not delete \(childPopup.title ?? "related record.")")
                 return
             }
             
             guard let feature = childPopup.geoElement as? AGSArcGISFeature, let featureTable = feature.featureTable as? AGSArcGISFeatureTable, featureTable.canDelete(feature) else {
                 SVProgressHUD.dismiss()
-                self?.present(simpleAlertMessage: "Could not delete \(childPopup.tableName ?? "related record.")")
+                self?.present(simpleAlertMessage: "Could not delete \(childPopup.title ?? "related record.")")
                 return
             }
             
@@ -189,7 +189,7 @@ extension RelatedRecordsPopupsViewController {
                 guard error == nil else {
                     print("[Error] deleting one to many child popup", error!.localizedDescription)
                     SVProgressHUD.dismiss()
-                    self?.present(simpleAlertMessage: "Could not delete \(childPopup.tableName ?? "related record.")")
+                    self?.present(simpleAlertMessage: "Could not delete \(childPopup.title ?? "related record.")")
                     return
                 }
             }
