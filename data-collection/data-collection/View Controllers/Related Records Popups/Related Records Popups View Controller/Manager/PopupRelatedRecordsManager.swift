@@ -170,7 +170,7 @@ class PopupRelatedRecordsManager: AGSPopupManager {
 
     func update(manyToOne popup: AGSPopup?, forRelationship info: AGSRelationshipInfo) throws {
         
-        guard isEditing else {
+        guard !isEditing else {
             throw RelatedRecordsManagerError.cannotRelateFeatures
         }
 
@@ -197,7 +197,7 @@ class PopupRelatedRecordsManager: AGSPopupManager {
     
     // MARK: One To Many
     
-    func add(oneToMany popup: AGSPopup, forRelationship info: AGSRelationshipInfo) throws {
+    func edit(oneToMany popup: AGSPopup, forRelationship info: AGSRelationshipInfo) throws {
         
         guard !isEditing else {
             throw RelatedRecordsManagerError.cannotRelateFeatures
@@ -222,7 +222,7 @@ class PopupRelatedRecordsManager: AGSPopupManager {
         }
 
         do {
-            try manager.addPopup(popup)
+            try manager.editPopup(popup)
         }
         catch {
             throw error
@@ -275,11 +275,26 @@ extension PopupRelatedRecordsManager {
         return indexPath.row < nFields
     }
     
-    func indexPathWithinManyToOne(_ indexPath: IndexPath) -> Bool {
-        return false
-    }
-    
-    func indexPathWithinOneToMany(_ indexPath: IndexPath) -> Bool {
-        return false
-    }
+    // TODO?
+//    func indexPathWithinManyToOne(_ indexPath: IndexPath) -> Bool {
+//
+//        guard indexPath.section == 0 else {
+//            return false
+//        }
+//
+//        let offset = isEditing ? editableDisplayFields.count : displayFields.count
+//        let offsetIDX = indexPath.row - offset
+//
+//        return manyToOne.count > offsetIDX
+//    }
+//
+//    func indexPathWithinOneToMany(_ indexPath: IndexPath) -> Bool {
+//
+//        guard indexPath.section > 0 else {
+//            return false
+//        }
+//
+//        let sectionOffset = 1
+//        let sectionIDX = indexPath.section - sectionOffset
+//    }
 }

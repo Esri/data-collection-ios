@@ -35,15 +35,17 @@ class OneToManyManager: RelatedRecordsManager {
             
             self?.relatedPopups = popups
             
+            self?.sortRelatedRecords()
+            
             completion(nil)
         }
     }
     
-    func addPopup(_ newRelatedPopup: AGSPopup) throws {
+    func editPopup(_ editedRelatedPopup: AGSPopup) throws {
         
         guard
             let feature = popup?.geoElement as? AGSArcGISFeature,
-            let relatedFeature = newRelatedPopup.geoElement as? AGSArcGISFeature,
+            let relatedFeature = editedRelatedPopup.geoElement as? AGSArcGISFeature,
             let info = relationshipInfo
             else {
                 throw RelatedRecordsManagerError.cannotRelateFeatures
@@ -51,10 +53,14 @@ class OneToManyManager: RelatedRecordsManager {
         
         feature.relate(to: relatedFeature, relationshipInfo: info)
         
-        if !relatedPopups.contains(newRelatedPopup) {
-            relatedPopups.append(newRelatedPopup)
+        if !relatedPopups.contains(editedRelatedPopup) {
+            relatedPopups.append(editedRelatedPopup)
         }
+        
+        sortRelatedRecords()
     }
+    
+    
     
     func deletePopup(_ removedRelatedPopup: AGSPopup) throws {
         
@@ -90,5 +96,14 @@ class OneToManyManager: RelatedRecordsManager {
         }
         
         relatedPopups.remove(at: idx)
+    }
+    
+    func sortRelatedRecords() {
+        do {
+            try relatedPopups.sortPopupsByFirstField(.descending)
+        }
+        catch {
+            print("[Error: Sorting AGSPopup]", error.localizedDescription)
+        }
     }
 }

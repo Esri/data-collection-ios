@@ -36,10 +36,10 @@ extension RelatedRecordsPopupsViewController: UITableViewDataSource {
         
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let attributeFields = recordsManager.isEditing ? recordsManager.editableDisplayFields : recordsManager.displayFields
         
-        if indexPath.section == 0, indexPath.row < attributeFields.count {
-            
+        if recordsManager.indexPathWithinAttributes(indexPath) {
+
+            let attributeFields = recordsManager.isEditing ? recordsManager.editableDisplayFields : recordsManager.displayFields
             let field = attributeFields[indexPath.row]
             let fieldType = recordsManager.fieldType(for: field)
             
@@ -77,8 +77,8 @@ extension RelatedRecordsPopupsViewController: UITableViewDataSource {
             
             // Many To One
             if indexPath.section == 0 {
-                let sectionOffset = recordsManager.isEditing ? recordsManager.editableDisplayFields.count : recordsManager.displayFields.count
-                let idx = indexPath.row - sectionOffset
+                let rowOffset = recordsManager.isEditing ? recordsManager.editableDisplayFields.count : recordsManager.displayFields.count
+                let idx = indexPath.row - rowOffset
                 let manager = recordsManager.manyToOne[idx]
                 cell.table = manager.relatedTable
                 cell.popup = manager.relatedPopup

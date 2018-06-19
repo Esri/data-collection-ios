@@ -104,6 +104,8 @@ extension RelatedRecordsPopupsViewController {
                 
                 if let childPopup = self?.popup, let relationship = self?.parentPopupManager?.popup.relationship(withPopup: childPopup), relationship.isOneToMany {
                     
+                    // TODO make threadsafe
+                    
                     guard let manager = self?.parentPopupManager else {
                         SVProgressHUD.dismiss()
                         self?.present(simpleAlertMessage: "Unexpected error, you couldn't edit this \(self?.recordsManager?.popup.title ?? "record").")
@@ -111,7 +113,7 @@ extension RelatedRecordsPopupsViewController {
                     }
                     
                     do {
-                        try manager.add(oneToMany: self!.popup, forRelationship: relationship)
+                        try manager.edit(oneToMany: self!.popup, forRelationship: relationship)
                     }
                     catch {
                         SVProgressHUD.dismiss()
