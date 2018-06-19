@@ -143,7 +143,7 @@ extension AGSPopup {
         
         do {
             return try autoreleasepool { () throws -> Bool in
-                print("POPUP < POPUP")
+                
                 let lhsManager = AGSPopupManager(popup: lhs)
                 let rhsManager = AGSPopupManager(popup: rhs)
                 
@@ -186,7 +186,7 @@ extension AGSPopup {
         
         do {
             return try autoreleasepool { () throws -> Bool in
-                print("POPUP > POPUP")
+                
                 let lhsManager = AGSPopupManager(popup: lhs)
                 let rhsManager = AGSPopupManager(popup: rhs)
                 

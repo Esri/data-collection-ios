@@ -79,7 +79,7 @@ class RelatedRecordCell: UITableViewCell {
             emptyCellLabel = nil
         }
         
-        // 1. Determin n attributes not to exceed max attributes
+        // 1. Determine n attributes not to exceed max attributes
         let nAttributes = min(maxAttributes, manager.displayFields.count)
         
         // 2. Adjust for correct n attributes
@@ -90,18 +90,12 @@ class RelatedRecordCell: UITableViewCell {
                 let titleLabel = UILabel()
                 titleLabel.textColor = AppConfiguration.appColors.tableCellTitle
                 titleLabel.font = UIFont.preferredFont(forTextStyle: .footnote)
-                titleLabel.sizeToFit()
-                titleLabel.heightAnchor.constraint(equalToConstant: titleLabel.font.lineHeight).isActive = true
-                titleLabel.translatesAutoresizingMaskIntoConstraints = false
                 stackView.addArrangedSubview(titleLabel)
                 
                 let valueLabel = UILabel()
                 valueLabel.numberOfLines = 0
-                titleLabel.textColor = AppConfiguration.appColors.tableCellValue
+                valueLabel.textColor = AppConfiguration.appColors.tableCellValue
                 valueLabel.font = UIFont.preferredFont(forTextStyle: .body)
-                valueLabel.sizeToFit()
-                valueLabel.heightAnchor.constraint(greaterThanOrEqualToConstant: valueLabel.font.lineHeight).isActive = true
-                valueLabel.translatesAutoresizingMaskIntoConstraints = false
                 stackView.addArrangedSubview(valueLabel)
                 
                 attributes.append((titleLabel, valueLabel))
@@ -142,7 +136,6 @@ class RelatedRecordCell: UITableViewCell {
         }
         
         setAccessoryViewDisclosureIndicator()
-
     }
     
     private func updateEmptyCellContent() {

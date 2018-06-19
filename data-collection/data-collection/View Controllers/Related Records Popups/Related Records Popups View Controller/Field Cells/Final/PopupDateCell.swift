@@ -30,6 +30,10 @@ final class PopupDateCell: PopupTextFieldCell {
         datePickerView.datePickerMode = .date
         valueEditView?.inputView = datePickerView
         datePickerView.addTarget(self, action: #selector(PopupDateCell.datePickerValueChanged(sender:)), for: .valueChanged)
+
+        if let popupManager = popupManager, let field = field, let date = popupManager.value(for: field) as? Date {
+            datePickerView.setDate(date, animated: false)
+        }
     }
     
     @objc func datePickerValueChanged(sender: UIDatePicker) {

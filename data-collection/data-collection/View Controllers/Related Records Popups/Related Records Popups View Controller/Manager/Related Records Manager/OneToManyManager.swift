@@ -98,7 +98,7 @@ class OneToManyManager: RelatedRecordsManager {
         relatedPopups.remove(at: idx)
     }
     
-    func sortRelatedRecords() {
+    private func sortRelatedRecords() {
         do {
             try relatedPopups.sortPopupsByFirstField(.descending)
         }
