@@ -102,18 +102,10 @@ extension RelatedRecordsPopupsViewController {
                 
                 SVProgressHUD.show(withStatus: "Saving \(self?.recordsManager.title ?? "Record")...")
                 
-                if let childPopup = self?.popup, let relationship = self?.parentPopupManager?.popup.relationship(withPopup: childPopup), relationship.isOneToMany {
-                    
-                    // TODO make threadsafe
-                    
-                    guard let manager = self?.parentPopupManager else {
-                        SVProgressHUD.dismiss()
-                        self?.present(simpleAlertMessage: "Unexpected error, you couldn't edit this \(self?.recordsManager?.popup.title ?? "record").")
-                        return
-                    }
+                if let childPopup = self?.popup, let manager = self?.parentPopupManager, let relationship = manager.popup.relationship(withPopup: childPopup), relationship.isOneToMany {
                     
                     do {
-                        try manager.edit(oneToMany: self!.popup, forRelationship: relationship)
+                        try manager.edit(oneToMany: childPopup, forRelationship: relationship)
                     }
                     catch {
                         SVProgressHUD.dismiss()
@@ -190,7 +182,6 @@ extension RelatedRecordsPopupsViewController {
                 
                 guard error == nil else {
                     print("[Error] deleting one to many child popup", error!.localizedDescription)
-                    SVProgressHUD.dismiss()
                     self?.present(simpleAlertMessage: "Could not delete \(childPopup.title ?? "related record.")")
                     return
                 }
