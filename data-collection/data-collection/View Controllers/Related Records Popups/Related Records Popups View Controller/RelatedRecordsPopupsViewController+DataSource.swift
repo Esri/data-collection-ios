@@ -72,42 +72,42 @@ extension RelatedRecordsPopupsViewController: UITableViewDataSource {
             
             return cell as! UITableViewCell
         }
-        else {
-            let cell = tableView.dequeueReusableCell(withIdentifier: ReuseIdentifiers.relatedRecordCell, for: indexPath) as! RelatedRecordCell
+        else if let cell = tableView.dequeueReusableCell(withIdentifier: ReuseIdentifiers.relatedRecordCell, for: indexPath) as? RelatedRecordCell {
             
             // Many To One
             if indexPath.section == 0 {
                 let rowOffset = recordsManager.isEditing ? recordsManager.editableDisplayFields.count : recordsManager.displayFields.count
-                let idx = indexPath.row - rowOffset
-                let manager = recordsManager.manyToOne[idx]
+                let rowIDX = indexPath.row - rowOffset
+                let manager = recordsManager.manyToOne[rowIDX]
                 cell.table = manager.relatedTable
                 cell.popup = manager.relatedPopup
                 cell.relationshipInfo = manager.relationshipInfo
                 cell.maxAttributes = AppConfiguration.relatedRecordPrefs.manyToOneCellAttributeCount
             }
             // One To Many
-            else {
+            else if indexPath.section <= recordsManager.oneToMany.count {
+                
+                // Determine which One To Many relationship we are concerned with
                 let sectionOffset = 1
                 let sectionIDX = indexPath.section - sectionOffset
                 let manager = recordsManager.oneToMany[sectionIDX]
                 cell.table = manager.relatedTable
                 
+                // Add an extra row at the top to add feature if that table permits it.
                 var rowOffset = 0
-                
                 if let table = manager.relatedTable, table.canAddFeature {
                     rowOffset += 1
                 }
                 
+                // Determine which One To Many record we'd like to display
                 let rowIDX = indexPath.row - rowOffset
                 
+                // Add feature row button
                 if indexPath.row < rowOffset {
                     cell.popup = nil
                     cell.relationshipInfo = manager.relationshipInfo
                 }
-                else if manager.relatedPopups.count <= rowIDX {
-                    cell.popup = nil
-                    cell.relationshipInfo = nil
-                }
+                // Display popup at index
                 else {
                     cell.popup = manager.relatedPopups[rowIDX]
                     cell.relationshipInfo = manager.relationshipInfo
@@ -120,6 +120,10 @@ extension RelatedRecordsPopupsViewController: UITableViewDataSource {
             cell.updateCellContent()
             
             return cell
+        }
+        else {
+            // TODO
+            return UITableViewCell()
         }
     }
     
