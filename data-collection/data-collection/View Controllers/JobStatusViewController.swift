@@ -62,8 +62,8 @@ class JobStatusViewController: AppContextAwareController {
         }
         
         job.start(statusHandler: { [weak self] (status) in
-            if let job = self?.mapJob, let progressView = self?.jobStatusProgressView {
-                progressView.progress = Float(job.progress.fractionCompleted)
+            if let job = self?.mapJob {
+                self?.jobStatusProgress = Float(job.progress.fractionCompleted)
             }
         }) { (result, error) in
             
