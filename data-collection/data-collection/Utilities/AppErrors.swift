@@ -160,3 +160,42 @@ enum FeatureTableError: Error, CustomNSError, LocalizedError {
         return errorUserInfo[NSLocalizedDescriptionKey] as! String
     }
 }
+
+enum PopupSortingError : Error, CustomNSError, LocalizedError {
+    
+    case missingFields
+    case badFields
+    case noValues
+    case invalidValueType
+    
+    var errorCode: Int {
+        switch self {
+        case .missingFields:
+            return 4001
+        case .badFields:
+            return 4002
+        case .noValues:
+            return 4003
+        case .invalidValueType:
+            return 4004
+        }
+    }
+    
+    var errorUserInfo: [String : Any] {
+        switch self {
+        case .missingFields:
+            return [NSLocalizedDescriptionKey: "A popup you are comparing does not have any fields."]
+        case .badFields:
+            return [NSLocalizedDescriptionKey: "Both popups fields must be of the same type."]
+        case .noValues:
+            return [NSLocalizedDescriptionKey: "A popup you are comparing contains a nil value."]
+        case .invalidValueType:
+            return [NSLocalizedDescriptionKey: "A popup you are comparing contains an invalid type."]
+        }
+    }
+    
+    var localizedDescription: String {
+        return errorUserInfo[NSLocalizedDescriptionKey] as! String
+    }
+}
+

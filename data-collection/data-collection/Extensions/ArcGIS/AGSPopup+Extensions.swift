@@ -126,13 +126,6 @@ extension Collection where Iterator.Element == AGSPopup {
 
 // MARK: Sorting
 
-enum PopupSortingError : Error {
-    case missingFields
-    case badFields
-    case noValues
-    case invalidValueType
-}
-
 extension AGSPopup {
     
     public static func < (lhs: AGSPopup, rhs: AGSPopup) throws -> Bool {
