@@ -170,7 +170,7 @@ class PopupRelatedRecordsManager: AGSPopupManager {
 
     func update(manyToOne popup: AGSPopup?, forRelationship info: AGSRelationshipInfo) throws {
         
-        guard !isEditing else {
+        guard isEditing else {
             throw RelatedRecordsManagerError.cannotRelateFeatures
         }
 

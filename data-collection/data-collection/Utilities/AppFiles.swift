@@ -21,9 +21,9 @@ extension FileManager {
 //    private static var temporaryDocumentsDirectory: URL? {
 //        return URL(string: NSTemporaryDirectory())
 //    }
-//    
+//
 //    public static var temporaryOfflineMapDirectoryURL: URL? {
-//        
+//
 //        guard var path = temporaryDocumentsDirectory else {
 //            print("[Error: AppFiles] failed to build url for temporary offline map documents directory.")
 //            return nil
