@@ -53,16 +53,3 @@ extension PopupFieldCellProtocol {
         return popupManager.domain(for: field)
     }
 }
-
-struct ReuseIdentifiers {
-
-    static let popupNumberCell = "PopupNumberCellReuseIdentifier"
-    static let popupShortTextCell = "PopupShortTextCellReuseIdentifier"
-    static let popupLongTextCell = "PopupLongTextCellReuseIdentifier"
-    static let popupDateCell = "PopupDateCellReuseIdentifier"
-    static let popupIDCell = "PopupIDCellReuseIdentifier"
-    static let popupReadonlyCell = "PopupReadonlyCellReuseIdentifier"
-    static let codedValueCell = "PopupCodedValueCellReuseIdentifier"
-    static let relatedRecordCell = "RelatedRecordCellReuseID"
-    static let deletePopupCell = "DeleteFeatureCell"
-}

@@ -15,6 +15,20 @@
 import Foundation
 import ArcGIS
 
+// TODO find a home for ReuseIdentifiers
+struct ReuseIdentifiers {
+    
+    static let popupNumberCell = "PopupNumberCellReuseIdentifier"
+    static let popupShortTextCell = "PopupShortTextCellReuseIdentifier"
+    static let popupLongTextCell = "PopupLongTextCellReuseIdentifier"
+    static let popupDateCell = "PopupDateCellReuseIdentifier"
+    static let popupIDCell = "PopupIDCellReuseIdentifier"
+    static let popupReadonlyCell = "PopupReadonlyCellReuseIdentifier"
+    static let codedValueCell = "PopupCodedValueCellReuseIdentifier"
+    static let relatedRecordCell = "RelatedRecordCellReuseID"
+    static let deletePopupCell = "DeleteFeatureCell"
+}
+
 class RelatedRecordsPopupsViewController: AppContextAwareController, BackButtonDelegate {
     
     private typealias VC = RelatedRecordsPopupsViewController
@@ -65,6 +79,7 @@ class RelatedRecordsPopupsViewController: AppContextAwareController, BackButtonD
         tableView.register(PopupIDCell.self, forCellReuseIdentifier: ReuseIdentifiers.popupIDCell)
         tableView.register(PopupCodedValueCell.self, forCellReuseIdentifier: ReuseIdentifiers.codedValueCell)
         tableView.register(RelatedRecordCell.self, forCellReuseIdentifier: ReuseIdentifiers.relatedRecordCell)
+        tableView.register(DeleteRecordCell.self, forCellReuseIdentifier: ReuseIdentifiers.deletePopupCell)
         
         tableView.rowHeight = UITableViewAutomaticDimension
         

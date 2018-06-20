@@ -25,7 +25,19 @@ extension RelatedRecordsPopupsViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        // We only want to allow selection of related records
+        tableView.deselectRow(at: indexPath, animated: true)
+        
+        // Wants to delete record
+        if let _ = tableView.cellForRow(at: indexPath) as? DeleteRecordCell {
+            guard appContext.isLoggedIn else {
+                present(loginAlertMessage: "You must log in to delete this record.")
+                return
+            }
+            print("wants to delete")
+            return
+        }
+        
+        // Any other action should only want to allow selection of related records
         guard let cell = tableView.cellForRow(at: indexPath) as? RelatedRecordCell else {
             return
         }
@@ -44,6 +56,11 @@ extension RelatedRecordsPopupsViewController: UITableViewDelegate {
         // Should edit existing 1:M Related Record
         if indexPath.section > 0, let childPopup = cell.popup, recordsManager.isEditing {
             
+            guard appContext.isLoggedIn else {
+                present(loginAlertMessage: "You must log in to make edits.")
+                return
+            }
+            
             closeEditingSessionAndBeginEditing(childPopup: childPopup)
             
             return
@@ -51,6 +68,11 @@ extension RelatedRecordsPopupsViewController: UITableViewDelegate {
         
         // Should add new 1:M Related Record
         if indexPath.section > 0, cell.popup == nil {
+            
+            guard appContext.isLoggedIn else {
+                present(loginAlertMessage: "You must log in to make edits.")
+                return
+            }
             
             guard let table = cell.table, table.canAddFeature, let popupDefinition = table.popupDefinition else {
                 present(simpleAlertMessage: "An unknown error occurred!")
@@ -110,7 +132,7 @@ extension RelatedRecordsPopupsViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
         
         guard
-            indexPath.section > 0,
+            recordsManager.indexPathWithinOneToMany(indexPath),
             let cell = tableView.cellForRow(at: indexPath) as? RelatedRecordCell,
             let relationshipInfo = cell.relationshipInfo,
             let childPopup = cell.popup

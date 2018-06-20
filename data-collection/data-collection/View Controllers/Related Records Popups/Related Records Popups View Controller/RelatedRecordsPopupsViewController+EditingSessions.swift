@@ -22,6 +22,8 @@ extension RelatedRecordsPopupsViewController {
     
     func deletePopup(_ completion: @escaping (Bool) -> Void) {
         
+        // TODO: Incorporate if parentPopupManager contains a 1:M relationship to this feature.
+        
         guard let feature = popup.geoElement as? AGSArcGISFeature, let featureTable = feature.featureTable as? AGSArcGISFeatureTable, featureTable.canDelete(feature) else {
             completion(false)
             return

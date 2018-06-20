@@ -275,26 +275,43 @@ extension PopupRelatedRecordsManager {
         return indexPath.row < nFields
     }
     
-    // TODO?
-//    func indexPathWithinManyToOne(_ indexPath: IndexPath) -> Bool {
-//
-//        guard indexPath.section == 0 else {
-//            return false
-//        }
-//
-//        let offset = isEditing ? editableDisplayFields.count : displayFields.count
-//        let offsetIDX = indexPath.row - offset
-//
-//        return manyToOne.count > offsetIDX
-//    }
-//
-//    func indexPathWithinOneToMany(_ indexPath: IndexPath) -> Bool {
-//
-//        guard indexPath.section > 0 else {
-//            return false
-//        }
-//
-//        let sectionOffset = 1
-//        let sectionIDX = indexPath.section - sectionOffset
-//    }
+    func indexPathWithinManyToOne(_ indexPath: IndexPath) -> Bool {
+
+        guard indexPath.section == 0 else {
+            return false
+        }
+
+        let rowOffset = isEditing ? editableDisplayFields.count : displayFields.count
+        let offsetIDX = indexPath.row - rowOffset
+
+        return manyToOne.count > offsetIDX
+    }
+
+    func indexPathWithinOneToMany(_ indexPath: IndexPath) -> Bool {
+
+        guard indexPath.section > 0 else {
+            return false
+        }
+
+        let sectionOffset = 1
+        let sectionIDX = indexPath.section - sectionOffset
+
+        guard oneToMany.count > sectionIDX else {
+            return false
+        }
+
+        let manager = oneToMany[sectionIDX]
+
+        var rowOffset = 0
+        if let table = manager.relatedTable, table.canAddFeature {
+            rowOffset += 1
+        }
+
+        return manager.relatedPopups.count > indexPath.row - rowOffset
+    }
+    
+    func indexPathWithinRelatedRecords(_ indexPath: IndexPath) -> Bool {
+        
+        return indexPathWithinManyToOne(indexPath) || indexPathWithinOneToMany(indexPath)
+    }
 }

@@ -18,6 +18,7 @@
 		9416A19320BF3334001377ED /* RelatedRecordsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9416A19220BF3334001377ED /* RelatedRecordsManager.swift */; };
 		9440D35120D4662E005ED582 /* CustomBehavior+NewTreeCondition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9440D35020D4662E005ED582 /* CustomBehavior+NewTreeCondition.swift */; };
 		9440D35520D479B5005ED582 /* PopupLongStringCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9440D35420D479B5005ED582 /* PopupLongStringCell.swift */; };
+		9440D35820DADBD0005ED582 /* DeleteRecordCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9440D35720DADBD0005ED582 /* DeleteRecordCell.swift */; };
 		9451EC5220D0705700792FFC /* CustomBehavior+IdentifyNeighborhood.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9451EC5120D0705700792FFC /* CustomBehavior+IdentifyNeighborhood.swift */; };
 		946569022087FAE700599E55 /* MapViewController+MapViewMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 946569012087FAE700599E55 /* MapViewController+MapViewMode.swift */; };
 		946569042087FB5000599E55 /* MapViewController+LocationSelection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 946569032087FB5000599E55 /* MapViewController+LocationSelection.swift */; };
@@ -150,6 +151,7 @@
 		9416A19220BF3334001377ED /* RelatedRecordsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RelatedRecordsManager.swift; sourceTree = "<group>"; };
 		9440D35020D4662E005ED582 /* CustomBehavior+NewTreeCondition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CustomBehavior+NewTreeCondition.swift"; sourceTree = "<group>"; };
 		9440D35420D479B5005ED582 /* PopupLongStringCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupLongStringCell.swift; sourceTree = "<group>"; };
+		9440D35720DADBD0005ED582 /* DeleteRecordCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteRecordCell.swift; sourceTree = "<group>"; };
 		9451EC5120D0705700792FFC /* CustomBehavior+IdentifyNeighborhood.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CustomBehavior+IdentifyNeighborhood.swift"; sourceTree = "<group>"; };
 		946569012087FAE700599E55 /* MapViewController+MapViewMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MapViewController+MapViewMode.swift"; sourceTree = "<group>"; };
 		946569032087FB5000599E55 /* MapViewController+LocationSelection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MapViewController+LocationSelection.swift"; sourceTree = "<group>"; };
@@ -299,12 +301,12 @@
 			path = "Field Cells";
 			sourceTree = "<group>";
 		};
-		9412D211209937760031F9EB /* Related Records Cells */ = {
+		9412D211209937760031F9EB /* Related Records Cell */ = {
 			isa = PBXGroup;
 			children = (
 				9412D212209937950031F9EB /* RelatedRecordCell.swift */,
 			);
-			path = "Related Records Cells";
+			path = "Related Records Cell";
 			sourceTree = "<group>";
 		};
 		9416A18D20BDFF93001377ED /* Related Records Popups View Controller */ = {
@@ -316,8 +318,9 @@
 				9412D2162099382C0031F9EB /* RelatedRecordsPopupsViewController+DataSource.swift */,
 				94B0D32A20C84B010075EA7A /* RelatedRecordsPopupsViewController+RelatedRecordsListDelegate.swift */,
 				9416A19120BF3283001377ED /* Manager */,
-				9412D211209937760031F9EB /* Related Records Cells */,
+				9412D211209937760031F9EB /* Related Records Cell */,
 				940DA9732097939A00AB4BF6 /* Field Cells */,
+				9440D35620DADB8E005ED582 /* Delete Cell */,
 			);
 			path = "Related Records Popups View Controller";
 			sourceTree = "<group>";
@@ -348,6 +351,14 @@
 				948066322091474F00A398EA /* RelatedRecordsPopup.storyboard */,
 			);
 			path = Storyboards;
+			sourceTree = "<group>";
+		};
+		9440D35620DADB8E005ED582 /* Delete Cell */ = {
+			isa = PBXGroup;
+			children = (
+				9440D35720DADBD0005ED582 /* DeleteRecordCell.swift */,
+			);
+			path = "Delete Cell";
 			sourceTree = "<group>";
 		};
 		946569212088033700599E55 /* Embed Popup View Controller */ = {
@@ -873,6 +884,7 @@
 				94B375FB207E8E4800691F2A /* UIButton+Extensions.swift in Sources */,
 				94B375F6207E8E4800691F2A /* AGSPortal+Extensions.swift in Sources */,
 				940DA977209794E200AB4BF6 /* PopupTextFieldCell.swift in Sources */,
+				9440D35820DADBD0005ED582 /* DeleteRecordCell.swift in Sources */,
 				94A8102F20B33C3B00D4BC68 /* PopupIDCell.swift in Sources */,
 				94B375CC207E8D5600691F2A /* SVRadialGradientLayer.m in Sources */,
 				94D544D620852A5100ED0D04 /* NotificationBarLabel.swift in Sources */,
