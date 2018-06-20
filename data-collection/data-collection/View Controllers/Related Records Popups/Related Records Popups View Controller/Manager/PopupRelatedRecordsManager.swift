@@ -264,6 +264,37 @@ class PopupRelatedRecordsManager: AGSPopupManager {
 
 extension PopupRelatedRecordsManager {
     
+    func attributeField(forIndexPath indexPath: IndexPath) -> AGSPopupField? {
+        
+        guard indexPathWithinAttributes(indexPath) else {
+            return nil
+        }
+        
+        let attributeFields = isEditing ? editableDisplayFields : displayFields
+        return attributeFields[indexPath.row]
+    }
+    
+    func relatedRecordManager(forIndexPath indexPath: IndexPath) -> RelatedRecordsManager? {
+        
+        if indexPathWithinManyToOne(indexPath) {
+            
+            let rowOffset = isEditing ? editableDisplayFields.count : displayFields.count
+            let rowIDX = indexPath.row - rowOffset
+            return manyToOne[rowIDX]
+        }
+        else if indexPathWithinOneToMany(indexPath) {
+            
+            let sectionOffset = 1
+            let sectionIDX = indexPath.section - sectionOffset
+            return oneToMany[sectionIDX]
+        }
+        
+        return nil
+    }
+}
+
+extension PopupRelatedRecordsManager {
+    
     func indexPathWithinAttributes(_ indexPath: IndexPath) -> Bool {
         
         guard indexPath.section == 0 else {

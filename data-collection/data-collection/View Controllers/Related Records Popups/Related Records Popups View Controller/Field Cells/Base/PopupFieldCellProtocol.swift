@@ -20,7 +20,7 @@ protocol PopupFieldCellProtocol {
     var field: AGSPopupField? { get set }
     var popupManager: PopupRelatedRecordsManager? { get set }
     
-    func refreshCell()
+    func updateCellContent()
 }
 
 extension PopupFieldCellProtocol {

@@ -61,7 +61,7 @@ class PopupReadonlyFieldCell: UITableViewCell, PopupFieldCellProtocol {
         }
     }
     
-    func refreshCell() {
+    func updateCellContent() {
         
         popuplateCellForPopupField()
     }

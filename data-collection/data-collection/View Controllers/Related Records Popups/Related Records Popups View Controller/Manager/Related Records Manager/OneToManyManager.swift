@@ -107,3 +107,27 @@ class OneToManyManager: RelatedRecordsManager {
         }
     }
 }
+
+extension OneToManyManager {
+    
+    func popup(forIndexPath indexPath: IndexPath) -> AGSPopup? {
+        
+        // Add an extra row at the top to add feature if that table permits it.
+        var rowOffset = 0
+        if let table = relatedTable, table.canAddFeature {
+            rowOffset += 1
+        }
+        
+        // Determine which One To Many record we'd like to display
+        let rowIDX = indexPath.row - rowOffset
+        
+        // Add feature row button
+        if indexPath.row < rowOffset {
+            return nil
+        }
+        // Display popup at index
+        else {
+            return relatedPopups[rowIDX]
+        }
+    }
+}

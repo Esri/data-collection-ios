@@ -24,7 +24,7 @@ class PopupEditableFieldCell<ViewType: UIView>: PopupReadonlyFieldCell {
         field = nil
         popupManager = nil
         
-        refreshCell()
+        updateCellContent()
     }
     
     func updateCellValue(_ value: Any?) {
@@ -38,7 +38,7 @@ class PopupEditableFieldCell<ViewType: UIView>: PopupReadonlyFieldCell {
         checkCellValidity()
     }
     
-    override func refreshCell() {
+    override func updateCellContent() {
         
         layoutSubviews()
         popuplateCellForPopupField()

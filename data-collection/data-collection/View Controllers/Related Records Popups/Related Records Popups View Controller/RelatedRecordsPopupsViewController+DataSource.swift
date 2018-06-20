@@ -48,11 +48,9 @@ extension RelatedRecordsPopupsViewController: UITableViewDataSource {
         
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        
         if recordsManager.indexPathWithinAttributes(indexPath) {
 
-            let attributeFields = recordsManager.isEditing ? recordsManager.editableDisplayFields : recordsManager.displayFields
-            let field = attributeFields[indexPath.row]
+            let field = recordsManager.attributeField(forIndexPath: indexPath)!
             let fieldType = recordsManager.fieldType(for: field)
             
             let cell: PopupFieldCellProtocol!
@@ -79,22 +77,18 @@ extension RelatedRecordsPopupsViewController: UITableViewDataSource {
             
             cell.popupManager = recordsManager
             cell.field = field
-            
-            cell.refreshCell()
+            cell.updateCellContent()
             
             return cell as! UITableViewCell
         }
         else if recordsManager.indexPathWithinManyToOne(indexPath) {
             
             let cell = tableView.dequeueReusableCell(withIdentifier: ReuseIdentifiers.relatedRecordCell, for: indexPath) as! RelatedRecordCell
-            let rowOffset = recordsManager.isEditing ? recordsManager.editableDisplayFields.count : recordsManager.displayFields.count
-            let rowIDX = indexPath.row - rowOffset
-            let manager = recordsManager.manyToOne[rowIDX]
+            let manager = recordsManager.relatedRecordManager(forIndexPath: indexPath) as! ManyToOneManager
             cell.table = manager.relatedTable
             cell.popup = manager.relatedPopup
             cell.relationshipInfo = manager.relationshipInfo
             cell.maxAttributes = AppConfiguration.relatedRecordPrefs.manyToOneCellAttributeCount
-            
             cell.editingPopup = recordsManager.isEditing
             cell.updateCellContent()
             
@@ -103,35 +97,11 @@ extension RelatedRecordsPopupsViewController: UITableViewDataSource {
         else if recordsManager.indexPathWithinOneToMany(indexPath) {
             
             let cell = tableView.dequeueReusableCell(withIdentifier: ReuseIdentifiers.relatedRecordCell, for: indexPath) as! RelatedRecordCell
-            
-            // Determine which One To Many relationship we are concerned with
-            let sectionOffset = 1
-            let sectionIDX = indexPath.section - sectionOffset
-            let manager = recordsManager.oneToMany[sectionIDX]
+            let manager = recordsManager.relatedRecordManager(forIndexPath: indexPath) as! OneToManyManager
             cell.table = manager.relatedTable
-            
-            // Add an extra row at the top to add feature if that table permits it.
-            var rowOffset = 0
-            if let table = manager.relatedTable, table.canAddFeature {
-                rowOffset += 1
-            }
-            
-            // Determine which One To Many record we'd like to display
-            let rowIDX = indexPath.row - rowOffset
-            
-            // Add feature row button
-            if indexPath.row < rowOffset {
-                cell.popup = nil
-                cell.relationshipInfo = manager.relationshipInfo
-            }
-                // Display popup at index
-            else {
-                cell.popup = manager.relatedPopups[rowIDX]
-                cell.relationshipInfo = manager.relationshipInfo
-            }
-            
+            cell.popup = manager.popup(forIndexPath: indexPath)
+            cell.relationshipInfo = manager.relationshipInfo
             cell.maxAttributes = AppConfiguration.relatedRecordPrefs.oneToManyCellAttributeCount
-            
             cell.editingPopup = recordsManager.isEditing
             cell.updateCellContent()
             
