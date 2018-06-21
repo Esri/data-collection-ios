@@ -20,6 +20,7 @@
 		9440D35520D479B5005ED582 /* PopupLongStringCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9440D35420D479B5005ED582 /* PopupLongStringCell.swift */; };
 		9440D35820DADBD0005ED582 /* DeleteRecordCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9440D35720DADBD0005ED582 /* DeleteRecordCell.swift */; };
 		9440D35A20DB2283005ED582 /* RelatedRecordsPopupsViewController+TableViewCellReuseIdentifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9440D35920DB2283005ED582 /* RelatedRecordsPopupsViewController+TableViewCellReuseIdentifiers.swift */; };
+		9440D35C20DC2809005ED582 /* CustomBehavior+TreeSymbology.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9440D35B20DC2809005ED582 /* CustomBehavior+TreeSymbology.swift */; };
 		9451EC5220D0705700792FFC /* CustomBehavior+IdentifyNeighborhood.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9451EC5120D0705700792FFC /* CustomBehavior+IdentifyNeighborhood.swift */; };
 		946569022087FAE700599E55 /* MapViewController+MapViewMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 946569012087FAE700599E55 /* MapViewController+MapViewMode.swift */; };
 		946569042087FB5000599E55 /* MapViewController+LocationSelection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 946569032087FB5000599E55 /* MapViewController+LocationSelection.swift */; };
@@ -154,6 +155,7 @@
 		9440D35420D479B5005ED582 /* PopupLongStringCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupLongStringCell.swift; sourceTree = "<group>"; };
 		9440D35720DADBD0005ED582 /* DeleteRecordCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteRecordCell.swift; sourceTree = "<group>"; };
 		9440D35920DB2283005ED582 /* RelatedRecordsPopupsViewController+TableViewCellReuseIdentifiers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RelatedRecordsPopupsViewController+TableViewCellReuseIdentifiers.swift"; sourceTree = "<group>"; };
+		9440D35B20DC2809005ED582 /* CustomBehavior+TreeSymbology.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CustomBehavior+TreeSymbology.swift"; sourceTree = "<group>"; };
 		9451EC5120D0705700792FFC /* CustomBehavior+IdentifyNeighborhood.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CustomBehavior+IdentifyNeighborhood.swift"; sourceTree = "<group>"; };
 		946569012087FAE700599E55 /* MapViewController+MapViewMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MapViewController+MapViewMode.swift"; sourceTree = "<group>"; };
 		946569032087FB5000599E55 /* MapViewController+LocationSelection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MapViewController+LocationSelection.swift"; sourceTree = "<group>"; };
@@ -569,6 +571,7 @@
 				94D2713D20D030D900304E27 /* CustomBehavior+ReverseGeocode.swift */,
 				9451EC5120D0705700792FFC /* CustomBehavior+IdentifyNeighborhood.swift */,
 				9440D35020D4662E005ED582 /* CustomBehavior+NewTreeCondition.swift */,
+				9440D35B20DC2809005ED582 /* CustomBehavior+TreeSymbology.swift */,
 			);
 			path = "Custom Behavior";
 			sourceTree = "<group>";
@@ -910,6 +913,7 @@
 				9465690A2087FC5800599E55 /* MapViewController+Observers.swift in Sources */,
 				9412D213209937950031F9EB /* RelatedRecordCell.swift in Sources */,
 				94FA8B25207BF2CD00972C75 /* MapViewController.swift in Sources */,
+				9440D35C20DC2809005ED582 /* CustomBehavior+TreeSymbology.swift in Sources */,
 				9465691A2088028E00599E55 /* AGSRelationshipInfo+Extensions.swift in Sources */,
 				9416A19320BF3334001377ED /* RelatedRecordsManager.swift in Sources */,
 				940DA9722097825700AB4BF6 /* UILabel+Extensions.swift in Sources */,

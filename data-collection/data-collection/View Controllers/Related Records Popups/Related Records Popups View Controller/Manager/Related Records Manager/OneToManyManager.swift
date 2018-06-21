@@ -41,7 +41,7 @@ class OneToManyManager: RelatedRecordsManager {
         }
     }
     
-    func editPopup(_ editedRelatedPopup: AGSPopup) throws {
+    func editRelatedPopup(_ editedRelatedPopup: AGSPopup) throws {
         
         guard
             let feature = popup?.geoElement as? AGSArcGISFeature,

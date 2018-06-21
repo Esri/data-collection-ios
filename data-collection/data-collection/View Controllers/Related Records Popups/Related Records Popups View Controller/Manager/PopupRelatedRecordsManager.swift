@@ -222,7 +222,7 @@ class PopupRelatedRecordsManager: AGSPopupManager {
         }
 
         do {
-            try manager.editPopup(popup)
+            try manager.editRelatedPopup(popup)
         }
         catch {
             throw error
