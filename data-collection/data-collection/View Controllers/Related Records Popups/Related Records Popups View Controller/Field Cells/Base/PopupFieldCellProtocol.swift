@@ -43,7 +43,6 @@ extension PopupFieldCellProtocol {
         return popupManager.fieldType(for: field)
     }
     
-    // TODO support
     var domain: AGSDomain? {
         
         guard let field = field, let popupManager = popupManager else {

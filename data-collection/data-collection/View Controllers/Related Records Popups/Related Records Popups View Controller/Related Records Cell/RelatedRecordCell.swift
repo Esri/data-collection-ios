@@ -159,10 +159,9 @@ class RelatedRecordCell: UITableViewCell {
         emptyCellLabel?.font = UIFont.preferredFont(forTextStyle: .footnote)
         emptyCellLabel?.sizeToFit()
         
-        // TODO: when will this happen?
         guard let info = relationshipInfo else {
-            emptyCellLabel?.textColor = AppConfiguration.appColors.tableCellTitle
-            setAccessoryViewDisclosureIndicator()
+            setAccessoryViewNone()
+            emptyCellLabel?.text = nil
             return
         }
         
