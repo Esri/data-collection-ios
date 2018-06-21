@@ -89,7 +89,7 @@ extension AGSPopup {
         }
     }
     
-    var isAddedToTable: Bool {
+    var isFeatureAddedToTable: Bool {
         
         guard let feature = geoElement as? AGSArcGISFeature else {
             return false

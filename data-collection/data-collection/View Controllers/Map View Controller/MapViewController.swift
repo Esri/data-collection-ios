@@ -49,6 +49,9 @@ class MapViewController: AppContextAwareController, PopupsViewControllerEmbeddab
     var identifyOperation: AGSCancelable?
     
     var currentPopup: AGSPopup? {
+        willSet {
+            currentPopup?.clearSelection()
+        }
         didSet {
             updateUIForCurrentPopup()
         }
@@ -121,6 +124,8 @@ class MapViewController: AppContextAwareController, PopupsViewControllerEmbeddab
             return
         }
         
+        currentPopup!.select()
+        
         smallPopupViewController?.populateWithRelatedRecordContent { [weak self] in
             
             self?.addPopupRelatedRecordButton.isHidden = false
@@ -166,6 +171,7 @@ class MapViewController: AppContextAwareController, PopupsViewControllerEmbeddab
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let destination = segue.navigationDestination as? RelatedRecordsPopupsViewController {
             if let newPopup = EphemeralCache.get(objectForKey: EphemeralCacheKeys.newSpatialFeature) as? AGSPopup {
+                currentPopup = newPopup
                 destination.popup = newPopup
                 destination.editPopup(true)
             }
@@ -184,6 +190,11 @@ class MapViewController: AppContextAwareController, PopupsViewControllerEmbeddab
         super.viewWillAppear(animated)
         
         adjustForLocationAuthorizationStatus()
+        
+        if let popup = currentPopup, !popup.isFeatureAddedToTable {
+            currentPopup = nil
+        }
+        
         updateUIForCurrentPopup()
     }
 

@@ -254,7 +254,7 @@ class PopupRelatedRecordsManager: AGSPopupManager {
         }
 
         do {
-            try manager.deletePopup(popup)
+            try manager.deleteRelatedPopup(popup)
         }
         catch {
             throw error

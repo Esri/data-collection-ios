@@ -89,7 +89,7 @@ class RelatedRecordsPopupsViewController: AppContextAwareController, BackButtonD
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
+        //tableView.reloadData()
         adjustViewControllerForEditState()
     }
     
@@ -148,7 +148,7 @@ class RelatedRecordsPopupsViewController: AppContextAwareController, BackButtonD
 
         var action: ((UIAlertAction) -> Void)!
         
-        if popup.isAddedToTable {
+        if popup.isFeatureAddedToTable {
             action = { [weak self] (_) in
                 self?.recordsManager.cancelEditing()
                 self?.adjustViewControllerForEditState()

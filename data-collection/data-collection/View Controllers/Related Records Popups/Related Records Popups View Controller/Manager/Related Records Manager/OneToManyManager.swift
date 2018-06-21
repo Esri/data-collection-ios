@@ -62,7 +62,7 @@ class OneToManyManager: RelatedRecordsManager {
     
     
     
-    func deletePopup(_ removedRelatedPopup: AGSPopup) throws {
+    func deleteRelatedPopup(_ removedRelatedPopup: AGSPopup) throws {
         
         guard
             let feature = popup?.geoElement as? AGSArcGISFeature,

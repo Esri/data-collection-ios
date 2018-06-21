@@ -31,7 +31,7 @@ extension MapViewController: AGSGeoViewTouchDelegate {
             return
         }
 
-        currentPopup?.clearSelection()
+        currentPopup = nil
         
         identifyOperation?.cancel()
         identifyOperation = nil
@@ -80,7 +80,6 @@ extension MapViewController: AGSGeoViewTouchDelegate {
             }
             
             self?.currentPopup = identifyResult.popups.popupNearestTo(mapPoint: mapPoint)
-            self?.currentPopup?.select()
         }
     }
 }

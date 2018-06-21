@@ -17,12 +17,41 @@ import ArcGIS
 
 extension RelatedRecordsPopupsViewController {
     
-    
     // MARK: Delete Feature
     
-    func deletePopup(_ completion: @escaping (Bool) -> Void) {
+    func deletePopupAndDismissViewController() {
         
-        // TODO: Incorporate if parentPopupManager contains a 1:M relationship to this feature.
+        present(confirmationAlertMessage: "Are you sure you want to delete \(popup.title ?? "this record")?", confirmationTitle: "Delete", confirmationAction: { [weak self] (_) in
+            
+            SVProgressHUD.show(withStatus: "Deleting \(self?.popup.title ?? "record").")
+            
+            self?.deletePopup { [weak self] (success) in
+                
+                SVProgressHUD.dismiss()
+                
+                if !success {
+                    self?.present(simpleAlertMessage: "Couldn't delete \(self?.popup.title ?? "record").")
+                }
+                
+                self?.popDismiss()
+            }
+            
+        }, animated: true, completion: nil)
+    }
+    
+    func deletePopup(_ completion: @escaping (Bool) -> Void) {
+                
+        if let parentManager = parentPopupManager, let relationship = parentManager.popup.relationship(withPopup: popup), relationship.isOneToMany {
+            
+            do {
+                try parentManager.delete(oneToMany: popup, forRelationship: relationship)
+            }
+            catch {
+                print("[Error: Delete Popup]", error.localizedDescription)
+                completion(false)
+                return
+            }
+        }
         
         guard let feature = popup.geoElement as? AGSArcGISFeature, let featureTable = feature.featureTable as? AGSArcGISFeatureTable, featureTable.canDelete(feature) else {
             completion(false)
@@ -150,7 +179,7 @@ extension RelatedRecordsPopupsViewController {
     
     func closeEditingSessionAndDelete(childPopup: AGSPopup, forRelationshipInfo relationshipInfo: AGSRelationshipInfo) {
         
-        let deletePopup: (AGSPopup, AGSRelationshipInfo) -> Void = { [weak self] childPopup, relationshipInfo in
+        let deleteChildPopup: (AGSPopup, AGSRelationshipInfo) -> Void = { [weak self] childPopup, relationshipInfo in
             
             guard let manager = self?.recordsManager else {
                 self?.present(simpleAlertMessage: "Could not delete \(childPopup.title ?? "related record.")")
@@ -200,11 +229,11 @@ extension RelatedRecordsPopupsViewController {
                     return
                 }
                 
-                deletePopup(childPopup, relationshipInfo)
+                deleteChildPopup(childPopup, relationshipInfo)
             }
         }
         else {
-            deletePopup(childPopup, relationshipInfo)
+            deleteChildPopup(childPopup, relationshipInfo)
         }
     }
     

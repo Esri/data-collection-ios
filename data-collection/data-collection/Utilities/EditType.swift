@@ -15,6 +15,7 @@
 import Foundation
 
 enum EditType: String {
+    
     case add, update, delete
     
     var asAction: String {

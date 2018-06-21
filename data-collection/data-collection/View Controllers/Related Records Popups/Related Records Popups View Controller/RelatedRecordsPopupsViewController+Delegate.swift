@@ -28,12 +28,15 @@ extension RelatedRecordsPopupsViewController: UITableViewDelegate {
         tableView.deselectRow(at: indexPath, animated: true)
         
         // Wants to delete record
-        if let _ = tableView.cellForRow(at: indexPath) as? DeleteRecordCell {
+        if tableView.cellForRow(at: indexPath) is DeleteRecordCell {
+            
             guard appContext.isLoggedIn else {
                 present(loginAlertMessage: "You must log in to delete this record.")
                 return
             }
-            print("wants to delete")
+            
+            deletePopupAndDismissViewController()
+            
             return
         }
         

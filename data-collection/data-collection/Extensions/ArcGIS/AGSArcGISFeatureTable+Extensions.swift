@@ -236,6 +236,9 @@ extension AGSArcGISFeatureTable {
                 if type != .delete {
                     feature.refreshObjectID()
                 }
+                else {
+                    feature.objectID = nil
+                }
                 
                 completion(nil)
             })

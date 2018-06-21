@@ -123,7 +123,6 @@ extension MapViewController {
     
     private func addNewFeatureFor(featureLayer: AGSFeatureLayer) {
         
-        currentPopup?.clearSelection()
         currentPopup = nil
         
         guard
