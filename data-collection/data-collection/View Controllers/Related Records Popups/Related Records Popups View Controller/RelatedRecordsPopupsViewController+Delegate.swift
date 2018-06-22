@@ -31,7 +31,7 @@ extension RelatedRecordsPopupsViewController: UITableViewDelegate {
         if tableView.cellForRow(at: indexPath) is DeleteRecordCell {
             
             guard appContext.isLoggedIn else {
-                present(loginAlertMessage: "You must log in to delete this record.")
+                present(loginAlertMessage: "You must log in to delete this \(popup.title ?? "record").")
                 return
             }
             
