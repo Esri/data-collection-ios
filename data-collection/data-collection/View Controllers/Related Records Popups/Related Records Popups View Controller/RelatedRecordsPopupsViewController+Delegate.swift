@@ -146,6 +146,10 @@ extension RelatedRecordsPopupsViewController: UITableViewDelegate {
         
         if childPopup.isEditable {
             let editAction = UITableViewRowAction(style: UITableViewRowActionStyle.default, title: "Edit") { [weak self] (action, indexPath) in
+                guard appContext.isLoggedIn else {
+                    self?.present(loginAlertMessage: "You must login to edit this \(self?.recordsManager.popup.title ?? "record").")
+                    return
+                }
                 self?.closeEditingSessionAndBeginEditing(childPopup: childPopup)
             }
             
@@ -155,6 +159,10 @@ extension RelatedRecordsPopupsViewController: UITableViewDelegate {
 
         if let feature = childPopup.geoElement as? AGSArcGISFeature, let featureTable = feature.featureTable as? AGSArcGISFeatureTable, featureTable.canDelete(feature) {
             let deleteAction = UITableViewRowAction(style: UITableViewRowActionStyle.default, title: "Delete") { [weak self] (action, indexPath) in
+                guard appContext.isLoggedIn else {
+                    self?.present(loginAlertMessage: "You must login to delete this \(self?.recordsManager.popup.title ?? "record").")
+                    return
+                }
                 self?.present(confirmationAlertMessage: "Are you sure you want to delete this \(childPopup.title ?? "record")?", confirmationTitle: "Delete", confirmationAction: { [weak self] (_) in
                     self?.closeEditingSessionAndDelete(childPopup: childPopup)
                 })

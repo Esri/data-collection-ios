@@ -27,7 +27,7 @@ extension RelatedRecordsPopupsViewController {
             }
             
             guard appContext.isLoggedIn else {
-                present(loginAlertMessage: "You must login to make edit this \(recordsManager.popup.title ?? "record").")
+                present(loginAlertMessage: "You must login to edit this \(recordsManager.popup.title ?? "record").")
                 completion?(false)
                 return
             }
