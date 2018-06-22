@@ -176,7 +176,7 @@ class MapViewController: AppContextAwareController, PopupsViewControllerEmbeddab
                 destination.editPopup(true)
             }
             else if let (parentPopupManager, childPopup) = EphemeralCache.get(objectForKey: EphemeralCacheKeys.newRelatedRecord) as? (PopupRelatedRecordsManager, AGSPopup) {
-                destination.parentPopupManager = parentPopupManager
+                destination.parentRecordsManager = parentPopupManager
                 destination.popup = childPopup
                 destination.editPopup(true)
             }

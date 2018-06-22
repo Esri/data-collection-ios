@@ -15,13 +15,13 @@
 import Foundation
 import ArcGIS
 
-func updateSymbology(forTreePopup tree: AGSPopup, withNewestInspection manager: PopupRelatedRecordsManager, completion: @escaping () -> Void) {
+func updateSymbology(withTreeManager treeManager: PopupRelatedRecordsManager, completion: @escaping () -> Void) {
     
     // This function will have been called only after the inspections array has been sorted by inspection date
 
     var foundInspectionsManager: OneToManyManager?
     
-    for manager in manager.oneToMany {
+    for manager in treeManager.oneToMany {
         
         if let name = manager.name, name == "Inspections" {
             foundInspectionsManager = manager
@@ -35,7 +35,7 @@ func updateSymbology(forTreePopup tree: AGSPopup, withNewestInspection manager: 
     }
     
     guard
-        let treeFeature = tree.geoElement as? AGSArcGISFeature,
+        let treeFeature = treeManager.popup.geoElement as? AGSArcGISFeature,
         let treeFeatureTable = treeFeature.featureTable as? AGSArcGISFeatureTable,
         treeFeatureTable.tableName == "Trees",
         let newestInspection = inspectionsManager.relatedPopups.first,
@@ -72,5 +72,34 @@ func updateSymbology(forTreePopup tree: AGSPopup, withNewestInspection manager: 
         }
         
         completion()
+    }
+}
+
+extension RelatedRecordsPopupsViewController {
+    
+    func customTreeBehavior(_ completion: @escaping () -> Void) {
+        
+        if shouldEnactCustomBehavior {
+            
+            let isTreeManager: (PopupRelatedRecordsManager) -> Bool = { manager in
+                guard let tableName = manager.tableName else {
+                    return false
+                }
+                return tableName == "Trees"
+            }
+            
+            if isTreeManager(recordsManager) {
+                updateSymbology(withTreeManager: recordsManager) { completion() }
+            }
+            else if let parentManager = parentRecordsManager, isTreeManager(parentManager) {
+                updateSymbology(withTreeManager: parentManager) { completion() }
+            }
+            else {
+                completion()
+            }
+        }
+        else {
+            completion()
+        }
     }
 }

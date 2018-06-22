@@ -17,61 +17,6 @@ import ArcGIS
 
 extension RelatedRecordsPopupsViewController {
     
-    // MARK: Delete Feature
-    
-    func deletePopupAndDismissViewController() {
-        
-        present(confirmationAlertMessage: "Are you sure you want to delete \(popup.title ?? "this record")?", confirmationTitle: "Delete", confirmationAction: { [weak self] (_) in
-            
-            SVProgressHUD.show(withStatus: "Deleting \(self?.popup.title ?? "record").")
-            
-            self?.deletePopup { [weak self] (success) in
-                
-                SVProgressHUD.dismiss()
-                
-                if !success {
-                    self?.present(simpleAlertMessage: "Couldn't delete \(self?.popup.title ?? "record").")
-                }
-                
-                self?.popDismiss()
-            }
-            
-        }, animated: true, completion: nil)
-    }
-    
-    func deletePopup(_ completion: @escaping (Bool) -> Void) {
-                
-        if let parentManager = parentPopupManager, let relationship = parentManager.popup.relationship(withPopup: popup), relationship.isOneToMany {
-            
-            do {
-                try parentManager.delete(oneToMany: popup, forRelationship: relationship)
-            }
-            catch {
-                print("[Error: Delete Popup]", error.localizedDescription)
-                completion(false)
-                return
-            }
-        }
-        
-        guard let feature = popup.geoElement as? AGSArcGISFeature, let featureTable = feature.featureTable as? AGSArcGISFeatureTable, featureTable.canDelete(feature) else {
-            completion(false)
-            return
-        }
-        
-        SVProgressHUD.show(withStatus: "Deleting \(popup.title ?? "record")")
-        
-        featureTable.performDelete(feature: feature) { (error) in
-            
-            guard error == nil else {
-                print("[Error: Feature Table Delete]", error!.localizedDescription)
-                completion(false)
-                return
-            }
-            
-            completion(true)
-        }
-    }
-    
     func editPopup(_ wantsEdit: Bool, completion: ((_ proceed: Bool) -> Void)? = nil) {
         
         if wantsEdit {
@@ -133,7 +78,7 @@ extension RelatedRecordsPopupsViewController {
                 
                 SVProgressHUD.show(withStatus: "Saving \(self?.recordsManager.title ?? "Record")...")
                 
-                if let childPopup = self?.popup, let manager = self?.parentPopupManager, let relationship = manager.popup.relationship(withPopup: childPopup), relationship.isOneToMany {
+                if let childPopup = self?.popup, let manager = self?.parentRecordsManager, let relationship = manager.popup.relationship(withPopup: childPopup), relationship.isOneToMany {
                     
                     do {
                         try manager.edit(oneToMany: childPopup, forRelationship: relationship)
@@ -156,7 +101,8 @@ extension RelatedRecordsPopupsViewController {
                     }
                     
                     self?.adjustViewControllerForEditState()
-                    completion?(true)
+                    
+                    self?.customTreeBehavior { completion?(true) }
                 })
             }
         }
@@ -177,44 +123,78 @@ extension RelatedRecordsPopupsViewController {
         })
     }
     
-    func closeEditingSessionAndDelete(childPopup: AGSPopup, forRelationshipInfo relationshipInfo: AGSRelationshipInfo) {
+    // MARK: Delete Feature
+    private func delete(popup: AGSPopup, parentPopupManager: PopupRelatedRecordsManager?, completion: @escaping (Bool) -> Void) {
         
-        let deleteChildPopup: (AGSPopup, AGSRelationshipInfo) -> Void = { [weak self] childPopup, relationshipInfo in
+        if let parentManager = parentPopupManager, let relationship = parentManager.popup.relationship(withPopup: popup), relationship.isOneToMany {
             
-            guard let manager = self?.recordsManager else {
-                self?.present(simpleAlertMessage: "Could not delete \(childPopup.title ?? "related record.")")
+            do {
+                try parentManager.delete(oneToMany: popup, forRelationship: relationship)
+            }
+            catch {
+                print("[Error: Delete Popup]", error.localizedDescription)
+                completion(false)
                 return
             }
+        }
+        
+        guard let feature = popup.geoElement as? AGSArcGISFeature, let featureTable = feature.featureTable as? AGSArcGISFeatureTable, featureTable.canDelete(feature) else {
+            completion(false)
+            return
+        }
+        
+        featureTable.performDelete(feature: feature) { [weak self] (error) in
+            
+            guard error == nil else {
+                print("[Error: Feature Table Delete]", error!.localizedDescription)
+                completion(false)
+                return
+            }
+            
+            self?.customTreeBehavior { completion(true) }
+        }
+    }
+    
+    func deletePopupAndDismissViewController() {
+        
+        present(confirmationAlertMessage: "Are you sure you want to delete \(popup.title ?? "this record")?", confirmationTitle: "Delete", confirmationAction: { [weak self] (_) in
+            
+            guard let popup = self?.popup else {
+                self?.present(simpleAlertMessage: "Something went wrong. Couldn't delete \(self?.popup.title ?? "record").")
+                return
+            }
+            
+            SVProgressHUD.show(withStatus: "Deleting \(self?.popup.title ?? "record").")
+            
+            self?.delete(popup: popup, parentPopupManager: self?.parentRecordsManager) { (success) in
+                
+                SVProgressHUD.dismiss()
+                
+                if !success {
+                    self?.present(simpleAlertMessage: "Couldn't delete \(self?.popup.title ?? "record").")
+                }
+                
+                self?.popDismiss()
+            }
+            
+            }, animated: true, completion: nil)
+    }
+    
+    func closeEditingSessionAndDelete(childPopup: AGSPopup) {
+        
+        let deletePopup: (AGSPopup) -> Void = { childPopup in
             
             SVProgressHUD.show(withStatus: "Deleting \(childPopup.title ?? "related record.")")
             
-            do {
-                try manager.delete(oneToMany: childPopup, forRelationship: relationshipInfo)
-            }
-            catch {
-                print("[Error] deleting one to many child popup", error.localizedDescription)
-                SVProgressHUD.dismiss()
-                self?.present(simpleAlertMessage: "Could not delete \(childPopup.title ?? "related record.")")
-                return
-            }
-            
-            guard let feature = childPopup.geoElement as? AGSArcGISFeature, let featureTable = feature.featureTable as? AGSArcGISFeatureTable, featureTable.canDelete(feature) else {
-                SVProgressHUD.dismiss()
-                self?.present(simpleAlertMessage: "Could not delete \(childPopup.title ?? "related record.")")
-                return
-            }
-            
-            featureTable.performDelete(feature: feature) { error in
+            self.delete(popup: childPopup, parentPopupManager: self.recordsManager) { (success) in
                 
                 defer {
-                    self?.tableView.reloadData()
                     SVProgressHUD.dismiss()
+                    self.tableView.reloadData()
                 }
                 
-                guard error == nil else {
-                    print("[Error] deleting one to many child popup", error!.localizedDescription)
-                    self?.present(simpleAlertMessage: "Could not delete \(childPopup.title ?? "related record.")")
-                    return
+                if !success {
+                    self.present(simpleAlertMessage: "Could not delete \(childPopup.title ?? "related record.")")
                 }
             }
         }
@@ -229,11 +209,11 @@ extension RelatedRecordsPopupsViewController {
                     return
                 }
                 
-                deleteChildPopup(childPopup, relationshipInfo)
+                deletePopup(childPopup)
             }
         }
         else {
-            deleteChildPopup(childPopup, relationshipInfo)
+            deletePopup(childPopup)
         }
     }
     
@@ -247,7 +227,7 @@ extension RelatedRecordsPopupsViewController {
             }
             
             rrvc.popup = childPopup
-            rrvc.parentPopupManager = parentRecordsManager
+            rrvc.parentRecordsManager = parentRecordsManager
             rrvc.editPopup(true)
             
             self?.navigationController?.pushViewController(rrvc, animated: true)

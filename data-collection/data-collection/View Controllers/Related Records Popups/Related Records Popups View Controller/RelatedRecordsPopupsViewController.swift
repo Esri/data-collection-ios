@@ -35,12 +35,12 @@ class RelatedRecordsPopupsViewController: AppContextAwareController, BackButtonD
         }
     }
     
-    var parentPopupManager: PopupRelatedRecordsManager?
+    var parentRecordsManager: PopupRelatedRecordsManager?
     
     var recordsManager: PopupRelatedRecordsManager!
     
     var shouldLoadRelatedRecords: Bool {
-        return parentPopupManager == nil
+        return parentRecordsManager == nil
     }
     
     var loadingRelatedRecords = false {
@@ -89,7 +89,7 @@ class RelatedRecordsPopupsViewController: AppContextAwareController, BackButtonD
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        //tableView.reloadData()
+
         adjustViewControllerForEditState()
     }
     

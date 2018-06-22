@@ -94,7 +94,7 @@ extension RelatedRecordsPopupsViewController: UITableViewDelegate {
         if let rrvc = storyboard?.instantiateViewController(withIdentifier: "RelatedRecordsPopupsViewController") as? RelatedRecordsPopupsViewController, let childPopup = cell.popup, let parentRecordsManager = recordsManager {
             
             rrvc.popup = childPopup
-            rrvc.parentPopupManager = parentRecordsManager
+            rrvc.parentRecordsManager = parentRecordsManager
             self.navigationController?.pushViewController(rrvc, animated: true)
             
             return
@@ -137,7 +137,6 @@ extension RelatedRecordsPopupsViewController: UITableViewDelegate {
         guard
             recordsManager.indexPathWithinOneToMany(indexPath),
             let cell = tableView.cellForRow(at: indexPath) as? RelatedRecordCell,
-            let relationshipInfo = cell.relationshipInfo,
             let childPopup = cell.popup
             else {
             return nil
@@ -157,7 +156,7 @@ extension RelatedRecordsPopupsViewController: UITableViewDelegate {
         if let feature = childPopup.geoElement as? AGSArcGISFeature, let featureTable = feature.featureTable as? AGSArcGISFeatureTable, featureTable.canDelete(feature) {
             let deleteAction = UITableViewRowAction(style: UITableViewRowActionStyle.default, title: "Delete") { [weak self] (action, indexPath) in
                 self?.present(confirmationAlertMessage: "Are you sure you want to delete this \(childPopup.title ?? "record")?", confirmationTitle: "Delete", confirmationAction: { [weak self] (_) in
-                    self?.closeEditingSessionAndDelete(childPopup: childPopup, forRelationshipInfo: relationshipInfo)
+                    self?.closeEditingSessionAndDelete(childPopup: childPopup)
                 })
             }
             
