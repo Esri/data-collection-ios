@@ -58,18 +58,12 @@ extension RelatedRecordsPopupsViewController {
             // 2. Finish Editing
             recordsManager.finishEditing { [weak self] (error) in
                 
-                guard error == nil else {
-                    print("[Error: Validating Feature]", error!.localizedDescription)
-                    self?.present(simpleAlertMessage: "Could not edit record!")
-                    self?.recordsManager.cancelEditing()
-                    completion?(true)
-                    return
-                }
-                
                 guard
+                    error == nil,
                     let feature = self?.popup.geoElement as? AGSArcGISFeature,
                     let featureTable = feature.featureTable as? AGSArcGISFeatureTable
                     else {
+                        print("[Error: Validating Feature]", error?.localizedDescription ?? "")
                         self?.present(simpleAlertMessage: "Could not edit record!")
                         self?.recordsManager.cancelEditing()
                         completion?(true)
