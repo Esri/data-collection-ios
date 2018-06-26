@@ -18,19 +18,13 @@ import ArcGIS
 
 extension FileManager {
     
-//    private static var temporaryDocumentsDirectory: URL? {
-//        return URL(string: NSTemporaryDirectory())
-//    }
-//
-//    public static var temporaryOfflineMapDirectoryURL: URL? {
-//
-//        guard var path = temporaryDocumentsDirectory else {
-//            print("[Error: AppFiles] failed to build url for temporary offline map documents directory.")
-//            return nil
-//        }
-//        path.appendPathComponent("offlineMap")
-//        return path
-//    }
+
+    public static var temporaryOfflineMapDirectoryURL: URL? {
+
+        let tmpDir = NSTemporaryDirectory()
+        let tmpURL = URL(fileURLWithPath: tmpDir).appendingPathComponent("data_collection").appendingPathComponent("offlineMap")
+        return tmpURL
+    }
     
     private static var baseDocumentsDirectoryURL: URL? {
         do {
@@ -84,23 +78,23 @@ extension FileManager {
     }
     
     static func buildOfflineDirectories() {
-//        prepareTemporaryOfflineMapDirectory()
         buildOfflineMapDirectory()
         buildGeneratedAssetsDirectory()
     }
     
-//    static func prepareTemporaryOfflineMapDirectory() {
-//        guard let path = temporaryOfflineMapDirectoryURL else {
-//            print("[Error: AppFiles] failed to build url for temporary offline map documents directory.")
-//            return
-//        }
-//        do {
-//            try FileManager.default.removeItem(at: path)
-//        }
-//        catch {
-//            print("[Error: AppFiles] could not create directory: \(path) with error:", error.localizedDescription)
-//        }
-//    }
+    static func prepareTemporaryOfflineMapDirectory() throws {
+        guard let path = temporaryOfflineMapDirectoryURL else {
+            print("[Error: AppFiles] failed to build url for temporary offline map documents directory.")
+            return
+        }
+        do {
+            try FileManager.default.createDirectory(at: path, withIntermediateDirectories: true, attributes: nil)
+            try FileManager.default.removeItem(at: path)
+        }
+        catch {
+            throw error
+        }
+    }
     
     static func buildOfflineMapDirectory() {
         guard let path = offlineMapDirectoryURL else {

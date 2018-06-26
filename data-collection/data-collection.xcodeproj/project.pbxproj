@@ -445,7 +445,6 @@
 				94B375A2207E8D5600691F2A /* AppErrors.swift */,
 				94B375A3207E8D5600691F2A /* AppNotifications.swift */,
 				94B375A4207E8D5600691F2A /* AppLocation.swift */,
-				94B375A5207E8D5600691F2A /* AppContext */,
 				94B375A9207E8D5600691F2A /* AppGlobals.swift */,
 			);
 			path = Utilities;
@@ -454,9 +453,9 @@
 		94B375A5207E8D5600691F2A /* AppContext */ = {
 			isa = PBXGroup;
 			children = (
+				94B375A8207E8D5600691F2A /* AppContext.swift */,
 				94B375A6207E8D5600691F2A /* AppContext+Login.swift */,
 				94B375A7207E8D5600691F2A /* AppContext+WorkMode.swift */,
-				94B375A8207E8D5600691F2A /* AppContext.swift */,
 			);
 			path = AppContext;
 			sourceTree = "<group>";
@@ -585,8 +584,8 @@
 		94D544B5207FC15D00ED0D04 /* App Container */ = {
 			isa = PBXGroup;
 			children = (
-				94D544B6207FC15D00ED0D04 /* AppContainerViewController+DrawerDelegate.swift */,
 				94D544B7207FC15D00ED0D04 /* AppContainerViewController.swift */,
+				94D544B6207FC15D00ED0D04 /* AppContainerViewController+DrawerDelegate.swift */,
 				94D544B8207FC15D00ED0D04 /* AppContainerViewController+MapDelegate.swift */,
 				94D544B9207FC15D00ED0D04 /* AppContainerViewController+JobStatusDelegate.swift */,
 			);
@@ -650,6 +649,7 @@
 				94B375D8207E8E4800691F2A /* Extensions */,
 				94B375D3207E8DD600691F2A /* Geocode Search */,
 				94D2713C20D02C0800304E27 /* Custom Behavior */,
+				94B375A5207E8D5600691F2A /* AppContext */,
 				94B3759D207E8D5600691F2A /* Utilities */,
 				94B375BA207E8D5600691F2A /* Tools */,
 				94FA8B54207BF5DF00972C75 /* View Controllers */,

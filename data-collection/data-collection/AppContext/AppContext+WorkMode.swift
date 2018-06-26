@@ -44,10 +44,10 @@ extension AppContext {
      **Note: it is possible for the app to retrieve, load and maintain a reference to an offline map even if the user defaults work mode is online.
      This is so that the user can switch between online and offline maps easily.
      */
-    func loadOfflineMobileMapPackageAndSetBestMap() {
+    func loadOfflineMobileMapPackageAndSetMapForCurrentWorkMode() {
         
-        let mmpk = AGSMobileMapPackage(fileURL: FileManager.offlineMapDirectoryURL!)
-        load(mobileMapPackage: mmpk) { [weak self] (map) in
+        loadOfflineMobileMapPackage { [weak self] (map) in
+            
             if appContext.workMode == .offline, let offlineMap = map {
                 self?.currentMap = offlineMap
                 self?.workMode = .offline
@@ -59,16 +59,51 @@ extension AppContext {
     }
     
     /**
-     This function is called after a successful `AGSGenerateOfflineMapJob` and sets the newly downloaded map and work mode appropriately
+     After a successful download we want to load the offline map if it exists and set it to `currentMap`.
      */
-    func loadDownloaded(mobileMapPackage: AGSMobileMapPackage?, completion: @escaping (AGSMap?)->Void) {
-        load(mobileMapPackage: mobileMapPackage) { [weak self] (map) in
-            self?.currentMap = map
-            self?.workMode = .offline
-            completion(map)
+    func loadOfflineMobileMapPackageAndSetMap() {
+        
+        loadOfflineMobileMapPackage { [weak self] (map) in
+            
+            if let offlineMap = map {
+                self?.currentMap = offlineMap
+                self?.workMode = .offline
+            }
+            else {
+                appContext.setWorkModeOnlineWithMapFromPortal()
+            }
         }
     }
     
+    /**
+     This private function handles loading the `AGSMobileMapPackage`, setting the kv-observable `hasOfflineMap` boolean property
+     and returning an AGSMap.
+     */
+    private func loadOfflineMobileMapPackage(_ completion: @escaping (AGSMap?) -> Void) {
+        
+        guard let offlineMapDirectory = FileManager.offlineMapDirectoryURL else {
+            print("Could not build offline map directory url.")
+            completion(nil)
+            return
+        }
+        
+        self.mobileMapPackage = AGSMobileMapPackage(fileURL: offlineMapDirectory)
+        
+        guard let mmpk = self.mobileMapPackage else {
+            hasOfflineMap = false
+            completion(nil)
+            return
+        }
+        
+        mmpk.load(completion: { [weak self] (error) in
+            if let error = error {
+                print("[Error: Mobile Map Package]", error.localizedDescription)
+            }
+            self?.hasOfflineMap = self?.offlineMap != nil
+            completion(self?.offlineMap)
+        })
+    }
+
     /**
      This function assumes `loadOfflineMobileMapPackageAndSetBestMap()` or `loadDownloaded(::)` has been previously called,
      calling this function at the moment a user wishes to swap maps from the online map to the offline mobile map package.
@@ -84,27 +119,23 @@ extension AppContext {
         return true
     }
     
-    /**
-     This private function handles loading the `AGSMobileMapPackage`, setting the kv-observable `hasOfflineMap` boolean property
-     and returning an AGSMap.
-     */
-    private func load(mobileMapPackage: AGSMobileMapPackage?, completion: @escaping (AGSMap?)->Void) {
+    @discardableResult
+    func moveDownloadedMapToOfflineMapDirectory() throws -> URL?  {
         
-        self.mobileMapPackage = mobileMapPackage
-        
-        guard let mmpk = self.mobileMapPackage else {
-            hasOfflineMap = false
-            completion(nil)
-            return
+        guard let temporaryDirectory = FileManager.temporaryOfflineMapDirectoryURL else {
+            throw AppFilesError.cannotBuildPath("Temporary Offline Map Download Directory")
         }
         
-        mmpk.load(completion: { [weak self] (error) in
-            if let error = error {
-                print("[Error: Mobile Map Package]", error.localizedDescription)
-            }
-            self?.hasOfflineMap = self?.offlineMap != nil
-            completion(self?.offlineMap)
-        })
+        guard let offlineMapDirectory = FileManager.offlineMapDirectoryURL else {
+            throw AppFilesError.cannotBuildPath("Offline Map Download Directory")
+        }
+        
+        do {
+            return try FileManager.default.replaceItemAt(offlineMapDirectory, withItemAt: temporaryDirectory)
+        }
+        catch {
+            throw error
+        }
     }
     
     /**

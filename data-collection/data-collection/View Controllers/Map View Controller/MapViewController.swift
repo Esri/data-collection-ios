@@ -97,7 +97,7 @@ class MapViewController: AppContextAwareController, PopupsViewControllerEmbeddab
         activityBarView.mapView = mapView
         
         // Load Map and Services
-        appContext.loadOfflineMobileMapPackageAndSetBestMap()
+        appContext.loadOfflineMobileMapPackageAndSetMapForCurrentWorkMode()
     }
     
     // MARK: SMALL POPUP

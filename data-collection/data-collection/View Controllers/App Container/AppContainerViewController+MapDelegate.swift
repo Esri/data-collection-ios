@@ -18,9 +18,18 @@ import ArcGIS
 extension AppContainerViewController: MapViewControllerDelegate {
     
     func mapViewController(_ mapViewController: MapViewController, didSelect extent: AGSEnvelope) {
-                
+        
+        do {
+            try FileManager.prepareTemporaryOfflineMapDirectory()
+        }
+        catch {
+            print("[Error]", error.localizedDescription)
+            present(simpleAlertMessage: "Something went wrong taking the map offline.")
+            return
+        }
+        
         guard
-            let directory = FileManager.offlineMapDirectoryURL,
+            let directory = FileManager.temporaryOfflineMapDirectoryURL,
             let map = mapViewController.mapView.map
             else {
                 present(simpleAlertMessage: "Something went wrong taking the map offline.")
