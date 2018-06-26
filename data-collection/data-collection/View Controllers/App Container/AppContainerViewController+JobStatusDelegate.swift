@@ -31,9 +31,17 @@ extension AppContainerViewController: JobStatusViewControllerDelegate {
         if let _ = result as? AGSOfflineMapSyncResult {
             print("[Offline Map Sync Result] success")
         }
-        else if let generateOfflineMapResult = result as? AGSGenerateOfflineMapResult {
+        else if let _ = result as? AGSGenerateOfflineMapResult {
             print("[Generate Offline Map Result] success")
-            appContext.loadDownloaded(mobileMapPackage: generateOfflineMapResult.mobileMapPackage) { (_) in }
+            do {
+                try appContext.moveDownloadedMapToOfflineMapDirectory()
+                appContext.loadOfflineMobileMapPackageAndSetMap()
+            }
+            catch {
+                print("[Error] Moving Downloaded Map", error.localizedDescription)
+                try? appContext.deleteOfflineMapAndAttemptToGoOnline()
+                return
+            }
         }
         jobStatusViewController.dismissAfter(1.2, animated: true, completion: nil)
     }

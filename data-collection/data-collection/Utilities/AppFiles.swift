@@ -15,117 +15,15 @@
 import Foundation
 import ArcGIS
 
-
 extension FileManager {
     
-//    private static var temporaryDocumentsDirectory: URL? {
-//        return URL(string: NSTemporaryDirectory())
-//    }
-//
-//    public static var temporaryOfflineMapDirectoryURL: URL? {
-//
-//        guard var path = temporaryDocumentsDirectory else {
-//            print("[Error: AppFiles] failed to build url for temporary offline map documents directory.")
-//            return nil
-//        }
-//        path.appendPathComponent("offlineMap")
-//        return path
-//    }
+    // MARK: Components and Extensions
     
-    private static var baseDocumentsDirectoryURL: URL? {
-        do {
-            return try FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor:nil, create:false)
-        }
-        catch {
-            print("[Error: AppFiles] failed to build url for base docs directory.", error.localizedDescription)
-            return nil
-        }
-    }
-    
-    private static var dataCollectionDocsDirectoryURL: URL? {
+    struct OfflineDirectoryComponents {
         
-        guard var path = baseDocumentsDirectoryURL else {
-            print("[Error: AppFiles] failed to build url for data collection documents directory.")
-            return nil
-        }
-        path.appendPathComponent("data_collection")
-        return path
-    }
-    
-    public static var offlineMapDirectoryURL: URL? {
-        
-        guard var path = dataCollectionDocsDirectoryURL else {
-            print("[Error: AppFiles] failed to build url for offline map documents directory.")
-            return nil
-        }
-        path.appendPathComponent("offlineMap")
-        return path
-    }
-    
-    private static var appGeneratedAssetsDirectoryURL: URL? {
-        
-        guard var path = dataCollectionDocsDirectoryURL else {
-            print("[Error: AppFiles] failed to build url for generated assets documents directory.")
-            return nil
-        }
-        path.appendPathComponent("generatedAssets")
-        return path
-    }
-    
-    private static var offlineExtentImageFileURL: URL? {
-        
-        guard var path = appGeneratedAssetsDirectoryURL else {
-            print("[Error: AppFiles] failed to build url for offline extent image file documents directory.")
-            return nil
-        }
-        path.appendPathComponent(OfflineExtentImage.fileName)
-        path.appendPathExtension(OfflineExtentImage.fileExtension)
-        return path
-    }
-    
-    static func buildOfflineDirectories() {
-//        prepareTemporaryOfflineMapDirectory()
-        buildOfflineMapDirectory()
-        buildGeneratedAssetsDirectory()
-    }
-    
-//    static func prepareTemporaryOfflineMapDirectory() {
-//        guard let path = temporaryOfflineMapDirectoryURL else {
-//            print("[Error: AppFiles] failed to build url for temporary offline map documents directory.")
-//            return
-//        }
-//        do {
-//            try FileManager.default.removeItem(at: path)
-//        }
-//        catch {
-//            print("[Error: AppFiles] could not create directory: \(path) with error:", error.localizedDescription)
-//        }
-//    }
-    
-    static func buildOfflineMapDirectory() {
-        guard let path = offlineMapDirectoryURL else {
-            print("[Error: AppFiles] failed to build url for offline map documents directory.")
-            return
-        }
-        do {
-            try FileManager.default.createDirectory(at: path, withIntermediateDirectories: true, attributes: nil)
-        }
-        catch {
-            print("[Error: AppFiles] could not create directory: \(path) with error:", error.localizedDescription)
-        }
-    }
-    
-    static func buildGeneratedAssetsDirectory() {
-        guard let path = appGeneratedAssetsDirectoryURL else {
-            print("[Error: AppFiles] failed to build url for generated assets documents directory.")
-            return 
-        }
-        do {
-            try FileManager.default.createDirectory(at: path, withIntermediateDirectories: true, attributes: nil)
-        }
-        catch {
-            print("[Error: AppFiles] could not create directory: \(path) with error:", error.localizedDescription)
-        }
+        static let dataCollection = "data_collection"
+        static let offlineMap = "offlineMap"
+        static let generatedAssets = "generatedAssets"
     }
     
     struct OfflineExtentImage {
@@ -139,6 +37,85 @@ extension FileManager {
             return UIImagePNGRepresentation(image)
         }
     }
+    
+    // MARK: Temporary Map Directory
+    
+    public static var temporaryOfflineMapDirectoryURL: URL {
+        let tmpDir = NSTemporaryDirectory()
+        return
+            URL(fileURLWithPath: tmpDir)
+            .appendingPathComponent(OfflineDirectoryComponents.dataCollection)
+            .appendingPathComponent(OfflineDirectoryComponents.offlineMap)
+    }
+    
+    static func prepareTemporaryOfflineMapDirectory() throws {
+        
+        let path = temporaryOfflineMapDirectoryURL
+        
+        do {
+            try FileManager.default.createDirectory(at: path, withIntermediateDirectories: true, attributes: nil)
+            try FileManager.default.removeItem(at: path)
+        }
+        catch {
+            throw error
+        }
+    }
+    
+    // MARK: URLs
+    
+    private static var baseDocumentsDirectoryURL: URL {
+        return FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
+    }
+    
+    private static var dataCollectionDocsDirectoryURL: URL {
+        return baseDocumentsDirectoryURL.appendingPathComponent(OfflineDirectoryComponents.dataCollection)
+    }
+    
+    public static var offlineMapDirectoryURL: URL {
+        return dataCollectionDocsDirectoryURL.appendingPathComponent(OfflineDirectoryComponents.offlineMap)
+    }
+    
+    private static var appGeneratedAssetsDirectoryURL: URL {
+        return dataCollectionDocsDirectoryURL.appendingPathComponent(OfflineDirectoryComponents.generatedAssets)
+    }
+    
+    private static var offlineExtentImageFileURL: URL {
+        return appGeneratedAssetsDirectoryURL.appendingPathComponent(OfflineExtentImage.fileName).appendingPathExtension(OfflineExtentImage.fileExtension)
+    }
+    
+    // MARK: Offline Directories
+    
+    static func buildOfflineDirectories() {
+        
+        buildOfflineMapDirectory()
+        buildGeneratedAssetsDirectory()
+    }
+    
+    static func buildOfflineMapDirectory() {
+        
+        let path = offlineMapDirectoryURL
+        
+        do {
+            try FileManager.default.createDirectory(at: path, withIntermediateDirectories: true, attributes: nil)
+        }
+        catch {
+            print("[Error: AppFiles] could not create directory: \(path) with error:", error.localizedDescription)
+        }
+    }
+    
+    static func buildGeneratedAssetsDirectory() {
+        
+        let path = appGeneratedAssetsDirectoryURL
+
+        do {
+            try FileManager.default.createDirectory(at: path, withIntermediateDirectories: true, attributes: nil)
+        }
+        catch {
+            print("[Error: AppFiles] could not create directory: \(path) with error:", error.localizedDescription)
+        }
+    }
+    
+    // MARK: Offline Extent Image
     
     // TODO incorporate
     // TODO string feedback for UI

@@ -18,19 +18,27 @@ import ArcGIS
 extension AppContainerViewController: MapViewControllerDelegate {
     
     func mapViewController(_ mapViewController: MapViewController, didSelect extent: AGSEnvelope) {
-                
-        guard
-            let directory = FileManager.offlineMapDirectoryURL,
-            let map = mapViewController.mapView.map
-            else {
-                present(simpleAlertMessage: "Something went wrong taking the map offline.")
-                return
+        
+        do {
+            try FileManager.prepareTemporaryOfflineMapDirectory()
+        }
+        catch {
+            print("[Error]", error.localizedDescription)
+            present(simpleAlertMessage: "Something went wrong taking the map offline.")
+            return
+        }
+        
+        guard let map = mapViewController.mapView.map else {
+            present(simpleAlertMessage: "Something went wrong taking the map offline.")
+            return
         }
         
         let scale = mapViewController.mapView.mapScale
-        
+        let directory = FileManager.temporaryOfflineMapDirectoryURL
         let offlineJob = AppOfflineMapJobConstructionInfo.downloadMapOffline(map, directory, extent, scale)
+        
         EphemeralCache.set(object: offlineJob, forKey: AppOfflineMapJobConstructionInfo.EphemeralCacheKeys.offlineMapJob)
+        
         performSegue(withIdentifier: "presentJobStatusViewController", sender: nil)
     }
     

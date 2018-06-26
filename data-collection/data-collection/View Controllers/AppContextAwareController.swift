@@ -49,6 +49,7 @@ class AppContextAwareController: UIViewController {
     }
     
     deinit {
-        appNotificationCenter.removeObserver(self)
+        appNotificationCenter.removeObserver(self, name: AppNotifications.reachabilityChanged.name, object: nil)
+        appNotificationCenter.removeObserver(self, name: AppNotifications.workModeChanged.name, object: nil)
     }
 }
