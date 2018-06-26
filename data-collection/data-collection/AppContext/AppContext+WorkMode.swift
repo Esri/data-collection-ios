@@ -81,13 +81,7 @@ extension AppContext {
      */
     private func loadOfflineMobileMapPackage(_ completion: @escaping (AGSMap?) -> Void) {
         
-        guard let offlineMapDirectory = FileManager.offlineMapDirectoryURL else {
-            print("Could not build offline map directory url.")
-            completion(nil)
-            return
-        }
-        
-        self.mobileMapPackage = AGSMobileMapPackage(fileURL: offlineMapDirectory)
+        self.mobileMapPackage = AGSMobileMapPackage(fileURL: FileManager.offlineMapDirectoryURL)
         
         guard let mmpk = self.mobileMapPackage else {
             hasOfflineMap = false
@@ -121,17 +115,9 @@ extension AppContext {
     
     @discardableResult
     func moveDownloadedMapToOfflineMapDirectory() throws -> URL?  {
-        
-        guard let temporaryDirectory = FileManager.temporaryOfflineMapDirectoryURL else {
-            throw AppFilesError.cannotBuildPath("Temporary Offline Map Download Directory")
-        }
-        
-        guard let offlineMapDirectory = FileManager.offlineMapDirectoryURL else {
-            throw AppFilesError.cannotBuildPath("Offline Map Download Directory")
-        }
-        
+
         do {
-            return try FileManager.default.replaceItemAt(offlineMapDirectory, withItemAt: temporaryDirectory)
+            return try FileManager.default.replaceItemAt(FileManager.offlineMapDirectoryURL, withItemAt: FileManager.temporaryOfflineMapDirectoryURL)
         }
         catch {
             throw error
@@ -147,12 +133,8 @@ extension AppContext {
         mobileMapPackage = nil
         hasOfflineMap = false
         
-        guard let offlineMapPath = FileManager.offlineMapDirectoryURL else {
-            throw AppFilesError.cannotBuildPath("Offline Map Directory URL")
-        }
-        
         do {
-            try FileManager.default.removeItem(at: offlineMapPath)
+            try FileManager.default.removeItem(at: FileManager.offlineMapDirectoryURL)
         }
         catch {
             throw error

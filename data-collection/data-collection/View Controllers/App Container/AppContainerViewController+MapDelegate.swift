@@ -28,18 +28,17 @@ extension AppContainerViewController: MapViewControllerDelegate {
             return
         }
         
-        guard
-            let directory = FileManager.temporaryOfflineMapDirectoryURL,
-            let map = mapViewController.mapView.map
-            else {
-                present(simpleAlertMessage: "Something went wrong taking the map offline.")
-                return
+        guard let map = mapViewController.mapView.map else {
+            present(simpleAlertMessage: "Something went wrong taking the map offline.")
+            return
         }
         
         let scale = mapViewController.mapView.mapScale
-        
+        let directory = FileManager.temporaryOfflineMapDirectoryURL
         let offlineJob = AppOfflineMapJobConstructionInfo.downloadMapOffline(map, directory, extent, scale)
+        
         EphemeralCache.set(object: offlineJob, forKey: AppOfflineMapJobConstructionInfo.EphemeralCacheKeys.offlineMapJob)
+        
         performSegue(withIdentifier: "presentJobStatusViewController", sender: nil)
     }
     
