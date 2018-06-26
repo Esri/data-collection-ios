@@ -15,7 +15,7 @@
 import UIKit
 import ArcGIS
 
-class MapViewController: AppContextAwareController, PopupsViewControllerEmbeddable {
+class MapViewController: AppContextAwareController {
     
     struct EphemeralCacheKeys {
         static let newSpatialFeature = "MapViewController.newFeature.spatial"
@@ -35,12 +35,14 @@ class MapViewController: AppContextAwareController, PopupsViewControllerEmbeddab
     @IBOutlet weak var notificationBar: NotificationBarLabel!
     @IBOutlet weak var compassView: CompassView!
     
+    @IBOutlet weak var relatedRecordHeaderLabel: UILabel!
+    @IBOutlet weak var relatedRecordSubheaderLabel: UILabel!
+    @IBOutlet weak var relatedRecordsNLabel: UILabel!
+    
     @IBOutlet weak var selectViewTopConstraint: NSLayoutConstraint!
     @IBOutlet weak var selectViewHeaderLabel: UILabel!
     @IBOutlet weak var selectViewSubheaderLabel: UILabel!
-    
-    var smallPopupViewController: SmallPopupViewController?
-    
+        
     var featureDetailViewBottomConstraint: NSLayoutConstraint!
     
     var observeLocationAuthorization: NSKeyValueObservation?
@@ -49,12 +51,25 @@ class MapViewController: AppContextAwareController, PopupsViewControllerEmbeddab
     var identifyOperation: AGSCancelable?
     
     var currentPopup: AGSPopup? {
+        set {
+            recordsManager = newValue != nil ? PopupRelatedRecordsManager(popup: newValue!) : nil
+        }
+        get {
+            return recordsManager?.popup
+        }
+    }
+    
+    internal private(set) var recordsManager: PopupRelatedRecordsManager? {
         willSet {
-            currentPopup?.clearSelection()
+            recordsManager?.popup.clearSelection()
         }
         didSet {
             updateUIForCurrentPopup()
         }
+    }
+    
+    var oneToManyRelatedRecordTable: AGSArcGISFeatureTable? {
+        return recordsManager?.oneToMany.first?.relatedTable
     }
     
     var mapViewMode: MapViewMode = .defaultView {
@@ -79,7 +94,7 @@ class MapViewController: AppContextAwareController, PopupsViewControllerEmbeddab
         setupMapViewAttributionBarAutoLayoutConstraints()
         
         // SMALL POPUP
-        setupSmallPopupViewController()
+        setupSmallPopupView()
         
         // OBSERVERS
         setupObservers()
@@ -102,41 +117,50 @@ class MapViewController: AppContextAwareController, PopupsViewControllerEmbeddab
     
     // MARK: SMALL POPUP
     
-    func setupSmallPopupViewController() {
-        
-        smallPopupViewController = embedPopupsSmallViewController()
-
-        smallPopupView.actionClosure = { [weak self] in
-            
-            guard self?.currentPopup != nil else {
-                return
-            }
-            self?.performSegue(withIdentifier: "modallyPresentRelatedRecordsPopupViewController", sender: nil)
-        }
-    }
-    
     func updateUIForCurrentPopup() {
         
-        smallPopupViewController?.popup = currentPopup
-        
-        guard currentPopup != nil else {
+        guard recordsManager != nil else {
+            
             mapViewMode = .defaultView
+            
+            relatedRecordHeaderLabel.text = nil
+            relatedRecordSubheaderLabel.text = nil
+            relatedRecordsNLabel.text = nil
+            
             return
         }
         
         currentPopup!.select()
         
-        smallPopupViewController?.populateWithRelatedRecordContent { [weak self] in
+        recordsManager!.loadRelatedRecords { [weak self] in
             
-            self?.addPopupRelatedRecordButton.isHidden = false
-
-            if let canAdd = self?.smallPopupViewController?.oneToManyRelatedRecordTable?.canAddFeature {
-                self?.addPopupRelatedRecordButton.isHidden = !canAdd
+            var fallbackIndex = 0
+            
+            let fallbackPopupManager = self?.currentPopup?.asManager
+            
+            if let manyToOneManager = self?.recordsManager?.manyToOne.first?.relatedPopup?.asManager {
+                var destinationIndex = 0
+                self?.relatedRecordHeaderLabel.text = manyToOneManager.nextFieldStringValue(idx: &destinationIndex) ?? fallbackPopupManager?.nextFieldStringValue(idx: &fallbackIndex)
+                self?.relatedRecordSubheaderLabel.text = manyToOneManager.nextFieldStringValue(idx: &destinationIndex) ?? fallbackPopupManager?.nextFieldStringValue(idx: &fallbackIndex)
+            }
+            else {
+                self?.relatedRecordHeaderLabel.text = fallbackPopupManager?.nextFieldStringValue(idx: &fallbackIndex)
+                self?.relatedRecordSubheaderLabel.text = fallbackPopupManager?.nextFieldStringValue(idx: &fallbackIndex)
             }
             
-            guard let _ = self?.currentPopup else {
-                self?.mapViewMode = .defaultView
-                return
+            if let oneToMany = self?.recordsManager?.oneToMany.first {
+                let n = oneToMany.relatedPopups.count
+                let name = oneToMany.relatedTable?.tableName ?? "Records"
+                self?.relatedRecordsNLabel.text = "\(n) \(name)"
+            }
+            else {
+                self?.relatedRecordsNLabel.text = fallbackPopupManager?.nextFieldStringValue(idx: &fallbackIndex)
+            }
+            
+            self?.addPopupRelatedRecordButton.isHidden = false
+            
+            if let canAdd = self?.oneToManyRelatedRecordTable?.canAddFeature {
+                self?.addPopupRelatedRecordButton.isHidden = !canAdd
             }
             
             self?.mapViewMode = .selectedFeature
@@ -152,7 +176,7 @@ class MapViewController: AppContextAwareController, PopupsViewControllerEmbeddab
         
         guard
             let parentPopup = currentPopup,
-            let featureTable = smallPopupViewController?.oneToManyRelatedRecordTable,
+            let featureTable = oneToManyRelatedRecordTable,
             let childPopup = featureTable.createPopup()
             else {
             present(simpleAlertMessage: "Uh Oh! You are unable to add a new related record.")
