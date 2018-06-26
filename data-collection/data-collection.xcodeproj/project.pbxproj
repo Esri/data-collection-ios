@@ -40,9 +40,6 @@
 		9465691A2088028E00599E55 /* AGSRelationshipInfo+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 946569192088028E00599E55 /* AGSRelationshipInfo+Extensions.swift */; };
 		9465691C208802AE00599E55 /* AGSFeatureLayer+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9465691B208802AE00599E55 /* AGSFeatureLayer+Extensions.swift */; };
 		9465691E208802CE00599E55 /* AGSFeatureTable+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9465691D208802CE00599E55 /* AGSFeatureTable+Extensions.swift */; };
-		946569232088036C00599E55 /* PopupsViewControllerEmbeddable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 946569222088036C00599E55 /* PopupsViewControllerEmbeddable.swift */; };
-		94656925208803AE00599E55 /* SmallPopupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94656924208803AE00599E55 /* SmallPopupViewController.swift */; };
-		946569272088042400599E55 /* SmallPopup.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 946569262088042400599E55 /* SmallPopup.storyboard */; };
 		946569292089066800599E55 /* MapViewController+Map.swift in Sources */ = {isa = PBXBuildFile; fileRef = 946569282089066800599E55 /* MapViewController+Map.swift */; };
 		948066332091474F00A398EA /* RelatedRecordsPopup.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 948066322091474F00A398EA /* RelatedRecordsPopup.storyboard */; };
 		948066362091483600A398EA /* RelatedRecordsPopupsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 948066352091483600A398EA /* RelatedRecordsPopupsViewController.swift */; };
@@ -179,9 +176,6 @@
 		946569192088028E00599E55 /* AGSRelationshipInfo+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AGSRelationshipInfo+Extensions.swift"; sourceTree = "<group>"; };
 		9465691B208802AE00599E55 /* AGSFeatureLayer+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AGSFeatureLayer+Extensions.swift"; sourceTree = "<group>"; };
 		9465691D208802CE00599E55 /* AGSFeatureTable+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AGSFeatureTable+Extensions.swift"; sourceTree = "<group>"; };
-		946569222088036C00599E55 /* PopupsViewControllerEmbeddable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupsViewControllerEmbeddable.swift; sourceTree = "<group>"; };
-		94656924208803AE00599E55 /* SmallPopupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmallPopupViewController.swift; sourceTree = "<group>"; };
-		946569262088042400599E55 /* SmallPopup.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = SmallPopup.storyboard; sourceTree = "<group>"; };
 		946569282089066800599E55 /* MapViewController+Map.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MapViewController+Map.swift"; sourceTree = "<group>"; };
 		948066322091474F00A398EA /* RelatedRecordsPopup.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = RelatedRecordsPopup.storyboard; sourceTree = "<group>"; };
 		948066352091483600A398EA /* RelatedRecordsPopupsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RelatedRecordsPopupsViewController.swift; sourceTree = "<group>"; };
@@ -350,7 +344,6 @@
 			isa = PBXGroup;
 			children = (
 				94FA8B26207BF2CD00972C75 /* MapViewController.storyboard */,
-				946569262088042400599E55 /* SmallPopup.storyboard */,
 				948066322091474F00A398EA /* RelatedRecordsPopup.storyboard */,
 			);
 			path = Storyboards;
@@ -379,15 +372,6 @@
 				945CEE7420DDC2AC00CD3E0D /* SVProgressAnimatedView.h */,
 			);
 			path = SVProgressHUD;
-			sourceTree = "<group>";
-		};
-		946569212088033700599E55 /* Embed Popup View Controller */ = {
-			isa = PBXGroup;
-			children = (
-				946569222088036C00599E55 /* PopupsViewControllerEmbeddable.swift */,
-				94656924208803AE00599E55 /* SmallPopupViewController.swift */,
-			);
-			path = "Embed Popup View Controller";
 			sourceTree = "<group>";
 		};
 		94806634209147CE00A398EA /* Related Records Popups */ = {
@@ -694,7 +678,6 @@
 			isa = PBXGroup;
 			children = (
 				94806634209147CE00A398EA /* Related Records Popups */,
-				946569212088033700599E55 /* Embed Popup View Controller */,
 				94D544CF208511FB00ED0D04 /* Map View Controller */,
 				94D544B5207FC15D00ED0D04 /* App Container */,
 				94D544BA207FC15D00ED0D04 /* AppContextAwareController.swift */,
@@ -830,7 +813,6 @@
 				94B375BF207E8D5600691F2A /* AddressLocator.loc in Resources */,
 				945CEE7920DDC2AC00CD3E0D /* SVProgressHUD.bundle in Resources */,
 				94B375BC207E8D5600691F2A /* AddressLocator.locb in Resources */,
-				946569272088042400599E55 /* SmallPopup.storyboard in Resources */,
 				94B375BE207E8D5600691F2A /* AddressLocator.lox in Resources */,
 				94D544CA207FC67B00ED0D04 /* AppIcon.xcassets in Resources */,
 			);
@@ -862,7 +844,6 @@
 				948066382091595200A398EA /* PopupRelatedRecordsManager.swift in Sources */,
 				94B375CB207E8D5600691F2A /* NetworkReachabilityManager.swift in Sources */,
 				94B3760C207EAE4700691F2A /* AppDelegate.swift in Sources */,
-				94656925208803AE00599E55 /* SmallPopupViewController.swift in Sources */,
 				940DA97B2098E1C600AB4BF6 /* AGSArcGISFeatureTable+Extensions.swift in Sources */,
 				94D544D820852A5100ED0D04 /* ShrinkingView.swift in Sources */,
 				94B375C2207E8D5600691F2A /* AppOfflineMapJobConstructionInfo.swift in Sources */,
@@ -937,7 +918,6 @@
 				94B375F5207E8E4800691F2A /* AGSMapView+Extensions.swift in Sources */,
 				94B375FF207E8E4800691F2A /* UIStoryboardSegue+Extensions.swift in Sources */,
 				9465691E208802CE00599E55 /* AGSFeatureTable+Extensions.swift in Sources */,
-				946569232088036C00599E55 /* PopupsViewControllerEmbeddable.swift in Sources */,
 				94A8103920B6333000D4BC68 /* RelatedRecordsTableManager.swift in Sources */,
 				9412D215209937E50031F9EB /* RelatedRecordsPopupsViewController+Delegate.swift in Sources */,
 				9465691C208802AE00599E55 /* AGSFeatureLayer+Extensions.swift in Sources */,
