@@ -117,9 +117,6 @@ extension FileManager {
     
     // MARK: Offline Extent Image
     
-    // TODO incorporate
-    // TODO string feedback for UI
-    
 //    static var offlineExtentImageFile: UIImage? {
 //        get {
 //            guard let path = offlineExtentImageFileURL else {

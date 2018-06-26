@@ -23,9 +23,7 @@ protocol JobStatusViewControllerDelegate {
 }
 
 class JobStatusViewController: AppContextAwareController {
-    
-    // TODO integrate toolkit
-    
+        
     @IBOutlet weak var jobStatusLabel: UILabel!
     @IBOutlet weak var jobStatusProgressView: UIProgressView!
     @IBOutlet weak var cancelButton: UIButton!

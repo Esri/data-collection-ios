@@ -64,7 +64,7 @@ class MapViewController: AppContextAwareController {
             recordsManager?.popup.clearSelection()
         }
         didSet {
-            updateUIForCurrentPopup()
+            updateSmallPopupViewForCurrentPopup()
         }
     }
     
@@ -115,56 +115,16 @@ class MapViewController: AppContextAwareController {
         appContext.loadOfflineMobileMapPackageAndSetMapForCurrentWorkMode()
     }
     
-    // MARK: SMALL POPUP
-    
-    func updateUIForCurrentPopup() {
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         
-        guard recordsManager != nil else {
-            
-            mapViewMode = .defaultView
-            
-            relatedRecordHeaderLabel.text = nil
-            relatedRecordSubheaderLabel.text = nil
-            relatedRecordsNLabel.text = nil
-            
-            return
+        adjustForLocationAuthorizationStatus()
+        
+        if let popup = currentPopup, !popup.isFeatureAddedToTable {
+            currentPopup = nil
         }
         
-        currentPopup!.select()
-        
-        recordsManager!.loadRelatedRecords { [weak self] in
-            
-            var fallbackIndex = 0
-            
-            let fallbackPopupManager = self?.currentPopup?.asManager
-            
-            if let manyToOneManager = self?.recordsManager?.manyToOne.first?.relatedPopup?.asManager {
-                var destinationIndex = 0
-                self?.relatedRecordHeaderLabel.text = manyToOneManager.nextFieldStringValue(idx: &destinationIndex) ?? fallbackPopupManager?.nextFieldStringValue(idx: &fallbackIndex)
-                self?.relatedRecordSubheaderLabel.text = manyToOneManager.nextFieldStringValue(idx: &destinationIndex) ?? fallbackPopupManager?.nextFieldStringValue(idx: &fallbackIndex)
-            }
-            else {
-                self?.relatedRecordHeaderLabel.text = fallbackPopupManager?.nextFieldStringValue(idx: &fallbackIndex)
-                self?.relatedRecordSubheaderLabel.text = fallbackPopupManager?.nextFieldStringValue(idx: &fallbackIndex)
-            }
-            
-            if let oneToMany = self?.recordsManager?.oneToMany.first {
-                let n = oneToMany.relatedPopups.count
-                let name = oneToMany.relatedTable?.tableName ?? "Records"
-                self?.relatedRecordsNLabel.text = "\(n) \(name)"
-            }
-            else {
-                self?.relatedRecordsNLabel.text = fallbackPopupManager?.nextFieldStringValue(idx: &fallbackIndex)
-            }
-            
-            self?.addPopupRelatedRecordButton.isHidden = false
-            
-            if let canAdd = self?.oneToManyRelatedRecordTable?.canAddFeature {
-                self?.addPopupRelatedRecordButton.isHidden = !canAdd
-            }
-            
-            self?.mapViewMode = .selectedFeature
-        }
+        updateSmallPopupViewForCurrentPopup()
     }
     
     @IBAction func userRequestsAddNewRelatedRecord(_ sender: Any) {
@@ -184,8 +144,11 @@ class MapViewController: AppContextAwareController {
         }
         
         SVProgressHUD.show(withStatus: "Creating new \(childPopup.title ?? "related record").")
+        
         let parentPopupManager = PopupRelatedRecordsManager(popup: parentPopup)
+        
         parentPopupManager.loadRelatedRecords { [weak self] in
+            
             EphemeralCache.set(object: (parentPopupManager, childPopup), forKey: EphemeralCacheKeys.newRelatedRecord)
             SVProgressHUD.dismiss()
             self?.performSegue(withIdentifier: "modallyPresentRelatedRecordsPopupViewController", sender: nil)
@@ -193,6 +156,7 @@ class MapViewController: AppContextAwareController {
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
         if let destination = segue.navigationDestination as? RelatedRecordsPopupsViewController {
             if let newPopup = EphemeralCache.get(objectForKey: EphemeralCacheKeys.newSpatialFeature) as? AGSPopup {
                 currentPopup = newPopup
@@ -208,18 +172,6 @@ class MapViewController: AppContextAwareController {
                 destination.popup = currentPopup!
             }
         }
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
-        adjustForLocationAuthorizationStatus()
-        
-        if let popup = currentPopup, !popup.isFeatureAddedToTable {
-            currentPopup = nil
-        }
-        
-        updateUIForCurrentPopup()
     }
 
     override func didReceiveMemoryWarning() {

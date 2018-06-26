@@ -76,6 +76,8 @@ struct AppColors {
     
     let invalid: UIColor = .red
     let missing: UIColor = .lightGray
+    
+    let tint: UIColor = .white
 }
 
 struct AppFonts {

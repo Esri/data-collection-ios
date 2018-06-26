@@ -27,6 +27,7 @@
 		945CEE7720DDC2AC00CD3E0D /* SVProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 945CEE7120DDC2AC00CD3E0D /* SVProgressHUD.m */; };
 		945CEE7820DDC2AC00CD3E0D /* SVIndefiniteAnimatedView.m in Sources */ = {isa = PBXBuildFile; fileRef = 945CEE7220DDC2AC00CD3E0D /* SVIndefiniteAnimatedView.m */; };
 		945CEE7920DDC2AC00CD3E0D /* SVProgressHUD.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 945CEE7320DDC2AC00CD3E0D /* SVProgressHUD.bundle */; };
+		945CEE7D20E2FAFE00CD3E0D /* MapViewController+SmallPopupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 945CEE7C20E2FAFE00CD3E0D /* MapViewController+SmallPopupView.swift */; };
 		946569022087FAE700599E55 /* MapViewController+MapViewMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 946569012087FAE700599E55 /* MapViewController+MapViewMode.swift */; };
 		946569042087FB5000599E55 /* MapViewController+LocationSelection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 946569032087FB5000599E55 /* MapViewController+LocationSelection.swift */; };
 		946569062087FBF700599E55 /* MapViewController+UserLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 946569052087FBF700599E55 /* MapViewController+UserLocation.swift */; };
@@ -163,6 +164,7 @@
 		945CEE7220DDC2AC00CD3E0D /* SVIndefiniteAnimatedView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVIndefiniteAnimatedView.m; sourceTree = "<group>"; };
 		945CEE7320DDC2AC00CD3E0D /* SVProgressHUD.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = SVProgressHUD.bundle; sourceTree = "<group>"; };
 		945CEE7420DDC2AC00CD3E0D /* SVProgressAnimatedView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVProgressAnimatedView.h; sourceTree = "<group>"; };
+		945CEE7C20E2FAFE00CD3E0D /* MapViewController+SmallPopupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MapViewController+SmallPopupView.swift"; sourceTree = "<group>"; };
 		946569012087FAE700599E55 /* MapViewController+MapViewMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MapViewController+MapViewMode.swift"; sourceTree = "<group>"; };
 		946569032087FB5000599E55 /* MapViewController+LocationSelection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MapViewController+LocationSelection.swift"; sourceTree = "<group>"; };
 		946569052087FBF700599E55 /* MapViewController+UserLocation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MapViewController+UserLocation.swift"; sourceTree = "<group>"; };
@@ -588,6 +590,7 @@
 				946569092087FC5800599E55 /* MapViewController+Observers.swift */,
 				9465690B2087FCCE00599E55 /* MapViewController+Setup.swift */,
 				946569282089066800599E55 /* MapViewController+Map.swift */,
+				945CEE7C20E2FAFE00CD3E0D /* MapViewController+SmallPopupView.swift */,
 			);
 			path = "Map View Controller";
 			sourceTree = "<group>";
@@ -890,6 +893,7 @@
 				9412D213209937950031F9EB /* RelatedRecordCell.swift in Sources */,
 				94FA8B25207BF2CD00972C75 /* MapViewController.swift in Sources */,
 				9440D35C20DC2809005ED582 /* CustomBehavior+TreeSymbology.swift in Sources */,
+				945CEE7D20E2FAFE00CD3E0D /* MapViewController+SmallPopupView.swift in Sources */,
 				9465691A2088028E00599E55 /* AGSRelationshipInfo+Extensions.swift in Sources */,
 				9416A19320BF3334001377ED /* RelatedRecordsManager.swift in Sources */,
 				940DA9722097825700AB4BF6 /* UILabel+Extensions.swift in Sources */,
