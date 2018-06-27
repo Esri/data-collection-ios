@@ -102,8 +102,8 @@ extension AppConfiguration {
             #if DEBUG
             return AGSRequestConfiguration.global().debugLogRequests
             #else
-            return false
             print("Debug log requests disabled in release.")
+            return false
             #endif
         }
     }
