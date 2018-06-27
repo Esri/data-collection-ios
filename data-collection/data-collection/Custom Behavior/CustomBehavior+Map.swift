@@ -13,12 +13,17 @@
 // limitations under the License.
 
 import Foundation
+import ArcGIS
 
 var shouldEnactCustomBehavior: Bool {
     
-    guard let itemID = appContext.currentMap?.item?.itemID else {
+    if let portalItem = appContext.currentMap?.item as? AGSPortalItem {
+        return portalItem.itemID == "fcc7fc65bb96464c9c0986576c119a92"
+    }
+    else if let localItem = appContext.currentMap?.item as? AGSLocalItem {
+        return true
+    }
+    else {
         return false
     }
-    
-    return itemID == "fcc7fc65bb96464c9c0986576c119a92"
 }
