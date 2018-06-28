@@ -14,7 +14,7 @@
 
 import UIKit
 
-class ShrinkingView: UIView {
+class ShrinkingView: UIControl {
     
     enum ShrinkScale: CGFloat {
         
@@ -36,8 +36,6 @@ class ShrinkingView: UIView {
         }
     }
     
-    var actionClosure: (() -> Void)?
-    
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         super.touchesBegan(touches, with: event)
         // must be accepting user interaction
@@ -46,6 +44,8 @@ class ShrinkingView: UIView {
         }
         // animate
         scale = .shrink
+        
+        sendActions(for: .touchDown)
     }
     
     override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -64,9 +64,10 @@ class ShrinkingView: UIView {
         scale = .full
         
         if let touch = touches.first, bounds.contains(touch.location(in: self)) {
-            if let action = actionClosure, self.isUserInteractionEnabled == true {
-                action()
-            }
+            sendActions(for: .touchUpInside)
+        }
+        else {
+            sendActions(for: .touchUpOutside)
         }
     }
 }

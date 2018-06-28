@@ -17,6 +17,11 @@ import ArcGIS
 
 extension MapViewController {
     
+    @objc func didTapSmallPopupView(_ sender: Any) {
+        guard currentPopup != nil else { return }
+        performSegue(withIdentifier: "modallyPresentRelatedRecordsPopupViewController", sender: nil)
+    }
+    
     func updateSmallPopupViewForCurrentPopup() {
         
         guard recordsManager != nil else {

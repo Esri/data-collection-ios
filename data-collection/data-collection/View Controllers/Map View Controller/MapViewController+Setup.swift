@@ -28,9 +28,6 @@ extension MapViewController {
     }
     
     func setupSmallPopupView() {
-        smallPopupView.actionClosure = { [weak self] in
-            guard self?.currentPopup != nil else { return }
-            self?.performSegue(withIdentifier: "modallyPresentRelatedRecordsPopupViewController", sender: nil)
-        }
+        smallPopupView.addTarget(self, action: #selector(MapViewController.didTapSmallPopupView(_:)), for: .touchUpInside)
     }
 }
