@@ -107,15 +107,10 @@ class AppContainerViewController: AppContextAwareController {
         }
     }
     
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        adjustForDrawerShowing()
-    }
-    
     func adjustForDrawerShowing() {
         
         drawerLeadingLayoutConstraint.constant = drawerShowing ? 0.0 : -contextView.frame.size.width
-        
+
         UIView.animate(withDuration: 0.2, delay: 0.0, options: .curveEaseOut, animations: {
             self.view.layoutIfNeeded()
             self.visualEffectView.effect = self.drawerShowing ? UIBlurEffect(style: .light) : nil

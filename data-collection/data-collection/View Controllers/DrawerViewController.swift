@@ -150,6 +150,7 @@ class DrawerViewController: AppContextAwareController {
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
+        
         adjustContextDrawerUI()
     }
     
