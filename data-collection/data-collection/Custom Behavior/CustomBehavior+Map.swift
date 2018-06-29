@@ -17,11 +17,13 @@ import ArcGIS
 
 var shouldEnactCustomBehavior: Bool {
     
+    let treesOfPortlandWebmapItemID = "fcc7fc65bb96464c9c0986576c119a92"
+    
     if let portalItem = appContext.currentMap?.item as? AGSPortalItem {
-        return portalItem.itemID == "fcc7fc65bb96464c9c0986576c119a92"
+        return portalItem.itemID == treesOfPortlandWebmapItemID
     }
     else if let localItem = appContext.currentMap?.item as? AGSLocalItem {
-        return true
+        return localItem.originalPortalItemID == treesOfPortlandWebmapItemID
     }
     else {
         return false
