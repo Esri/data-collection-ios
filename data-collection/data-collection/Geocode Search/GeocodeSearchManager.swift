@@ -88,7 +88,10 @@ class ReverseGeocoderManager: AGSLoadableBase {
                 return
             }
             
-            selectedLocatorTask.reverseGeocode(withLocation: point) { (geoCodeResults: [AGSGeocodeResult]?, error: Error?) in
+            let params = AGSReverseGeocodeParameters()
+            params.forStorage = true
+            
+            selectedLocatorTask.reverseGeocode(withLocation: point, parameters: params) { (geoCodeResults: [AGSGeocodeResult]?, error: Error?) in
                 
                 guard error == nil else {
                     print("[Error] reverse geocoder error", error!.localizedDescription)
