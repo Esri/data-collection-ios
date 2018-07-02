@@ -147,16 +147,7 @@ extension MapViewController {
         
         SVProgressHUD.show(withStatus: "Preparing new \(newPopup.tableName ?? "record").")
         
-        guard
-            let initialViewpoint = mapView.map?.initialViewpoint,
-            let spatialRef = initialViewpoint.targetGeometry.spatialReference,
-            let centerPoint = AGSGeometryEngine.projectGeometry(mapView.centerAGSPoint(), to: spatialRef) as? AGSPoint,
-            AGSGeometryEngine.geometry(centerPoint, within: initialViewpoint.targetGeometry)
-            else {
-                SVProgressHUD.dismiss()
-                present(simpleAlertMessage: "Can't add new \(newPopup.tableName ?? "record") here.")
-                return
-        }
+        let centerPoint = mapView.centerAGSPoint()
         
         // Custom Behavior
         
