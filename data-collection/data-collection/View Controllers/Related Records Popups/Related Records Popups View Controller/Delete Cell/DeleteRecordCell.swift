@@ -53,6 +53,12 @@ class DeleteRecordCell: UITableViewCell {
     }
     
     func configure(forPopup popup: AGSPopup) {
-        deleteLabel?.text = popup.title != nil ? "Delete \(popup.title!)" : "Delete"
+        
+        guard let feature = popup.geoElement as? AGSArcGISFeature, let featureTable = feature.featureTable as? AGSArcGISFeatureTable else {
+            deleteLabel?.text = "Delete"
+            return
+        }
+        
+        deleteLabel?.text = featureTable.featureLayer != nil ? "Delete Feature" : "Delete Record"
     }
 }
