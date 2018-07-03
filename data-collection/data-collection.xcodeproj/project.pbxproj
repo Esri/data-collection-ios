@@ -316,7 +316,6 @@
 				9412D2162099382C0031F9EB /* RelatedRecordsPopupsViewController+DataSource.swift */,
 				94B0D32A20C84B010075EA7A /* RelatedRecordsPopupsViewController+RelatedRecordsListDelegate.swift */,
 				9440D35920DB2283005ED582 /* RelatedRecordsPopupsViewController+TableViewCellReuseIdentifiers.swift */,
-				9416A19120BF3283001377ED /* Manager */,
 				9412D211209937760031F9EB /* Related Records Cell */,
 				940DA9732097939A00AB4BF6 /* Field Cells */,
 				9440D35620DADB8E005ED582 /* Delete Cell */,
@@ -333,13 +332,13 @@
 			path = "Related Records List View Controller";
 			sourceTree = "<group>";
 		};
-		9416A19120BF3283001377ED /* Manager */ = {
+		9416A19120BF3283001377ED /* Popup Related Records Manager */ = {
 			isa = PBXGroup;
 			children = (
 				948066372091595200A398EA /* PopupRelatedRecordsManager.swift */,
 				94D2714120D0575A00304E27 /* Related Records Manager */,
 			);
-			path = Manager;
+			path = "Popup Related Records Manager";
 			sourceTree = "<group>";
 		};
 		9419C798208A97630060D104 /* Storyboards */ = {
@@ -639,6 +638,7 @@
 				94B375A5207E8D5600691F2A /* AppContext */,
 				94B3759D207E8D5600691F2A /* Utilities */,
 				94B375BA207E8D5600691F2A /* Tools */,
+				9416A19120BF3283001377ED /* Popup Related Records Manager */,
 				94FA8B54207BF5DF00972C75 /* View Controllers */,
 				94FA8B55207BF5EC00972C75 /* UI */,
 				94B375AA207E8D5600691F2A /* 3rd Party */,
