@@ -37,6 +37,7 @@ func updateSymbology(withTreeManager treeManager: PopupRelatedRecordsManager, co
     guard
         let treeFeature = treeManager.popup.geoElement as? AGSArcGISFeature,
         let treeFeatureTable = treeFeature.featureTable as? AGSArcGISFeatureTable,
+        treeFeatureTable.canUpdate(treeFeature),
         treeFeatureTable.tableName == "Trees",
         let newestInspection = inspectionsManager.relatedPopups.first,
         let newestInspectionFeature = newestInspection.geoElement as? AGSArcGISFeature,
