@@ -38,6 +38,8 @@ class JobStatusViewController: AppContextAwareController {
     
     private var mapJob: AGSJob?
     
+    var progressObserver: NSKeyValueObservation?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         jobStatusLabel.text = "Preparing"
@@ -59,13 +61,16 @@ class JobStatusViewController: AppContextAwareController {
             return
         }
         
-        job.start(statusHandler: { [weak self] (status) in
-            if let job = self?.mapJob {
-                self?.jobStatusProgress = Float(job.progress.fractionCompleted)
+        progressObserver = job.progress.observe(\.fractionCompleted) { [weak self] (progress,_) in
+            DispatchQueue.main.async {
+                 self?.jobStatusProgress = Float(job.progress.fractionCompleted)
             }
-        }) { (result, error) in
+        }
+        
+        job.start(statusHandler: nil) { (result, error) in
             
             guard error == nil else {
+                
                 if let nserror = error as NSError?, nserror.code == 3072 {
                     self.jobStatusLabel.text = self.jobConstruct?.cancelMessage
                 }
@@ -75,7 +80,9 @@ class JobStatusViewController: AppContextAwareController {
                 self.delegate?.jobStatusViewController(self, didEndWithError: error!)
                 return
             }
+            
             if let result = result {
+                
                 self.jobStatusLabel.text = self.jobConstruct?.successMessage
                 self.delegate?.jobStatusViewController(self, didEndWithResult: result)
             }
