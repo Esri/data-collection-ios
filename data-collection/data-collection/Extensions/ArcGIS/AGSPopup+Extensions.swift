@@ -101,6 +101,19 @@ extension AGSPopup {
     var tableName: String? {
         return (geoElement as? AGSArcGISFeature)?.featureTable?.tableName
     }
+    
+    var recordType: ArcGISRecordType? {
+        
+        guard let feature = geoElement as? AGSArcGISFeature, let featureTable = feature.featureTable as? AGSArcGISFeatureTable else {
+            return nil
+        }
+        
+        return featureTable.featureLayer != nil ? .feature : .record
+    }
+}
+
+enum ArcGISRecordType: String {
+    case record, feature
 }
 
 extension Collection where Iterator.Element == AGSPopup {
