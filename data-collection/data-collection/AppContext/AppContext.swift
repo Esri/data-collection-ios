@@ -96,7 +96,7 @@ import ArcGIS
         }
     }
     
-    var reverseGeocoderManager: ReverseGeocoderManager = {
+    let reverseGeocoderManager: ReverseGeocoderManager = {
         
         let geocoder = ReverseGeocoderManager()
         
