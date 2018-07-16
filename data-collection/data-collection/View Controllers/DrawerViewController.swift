@@ -51,20 +51,20 @@ class DrawerViewController: AppContextAwareController {
     
     func setButtonImageTints() {
         
-        let workModeControlStateColors: [UIControlState: UIColor] = [.normal: .darkGray,
-                                                                     .highlighted: .lightGray,
-                                                                     .selected: .white,
-                                                                     .disabled: UIColor(white: 0.5, alpha: 0.5)]
+        let workModeControlStateColors: [UIControlState: UIColor] = [.normal: appColors.workModeNormal,
+                                                                     .highlighted: appColors.workModeHighlighted,
+                                                                     .selected: appColors.workModeSelected,
+                                                                     .disabled: appColors.workModeDisabled]
         
-        let secondaryButtonsControlStateColors: [UIControlState: UIColor] = [.normal: .darkGray,
-                                                                             .highlighted: .lightGray,
-                                                                             .selected: .lightGray,
-                                                                             .disabled: UIColor(white: 0.5, alpha: 0.5)]
+        let offlineActivityControlStateColors: [UIControlState: UIColor] = [.normal: appColors.offlineActivityNormal,
+                                                                             .highlighted: appColors.offlineActivityHighlighted,
+                                                                             .selected: appColors.offlineActivitySelected,
+                                                                             .disabled: appColors.offlineActivityDisabled]
         
         workOnlineButton.setTintColors(forControlStateColors: workModeControlStateColors)
         workOfflineButton.setTintColors(forControlStateColors: workModeControlStateColors)
-        synchronizeOfflineMapButton.setTintColors(forControlStateColors: secondaryButtonsControlStateColors)
-        deleteOfflineMapButton.setTintColors(forControlStateColors: secondaryButtonsControlStateColors)
+        synchronizeOfflineMapButton.setTintColors(forControlStateColors: offlineActivityControlStateColors)
+        deleteOfflineMapButton.setTintColors(forControlStateColors: offlineActivityControlStateColors)
     }
     
     override func viewWillAppear(_ animated: Bool) {

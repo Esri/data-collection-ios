@@ -32,4 +32,14 @@ struct AppColors {
     let missing: UIColor = .lightGray
     
     let tint: UIColor = .white
+    
+    let workModeNormal: UIColor = .darkGray
+    let workModeHighlighted: UIColor = .lightGray
+    let workModeSelected: UIColor = .white
+    let workModeDisabled: UIColor = UIColor(white: 0.5, alpha: 0.5)
+    
+    let offlineActivityNormal: UIColor = .darkGray
+    let offlineActivityHighlighted: UIColor = .lightGray
+    let offlineActivitySelected: UIColor = .lightGray
+    let offlineActivityDisabled: UIColor = UIColor(white: 0.5, alpha: 0.5)
 }
