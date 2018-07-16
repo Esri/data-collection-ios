@@ -184,9 +184,9 @@ class MapViewController: AppContextAwareController {
         super.appWorkModeDidChange()
         
         DispatchQueue.main.async { [weak self] in
-            self?.activityBarView.colorA = (appContext.workMode == .online) ? AppConfiguration.appColors.primary.lighter : AppConfiguration.appColors.offlineLight
-            self?.activityBarView.colorB = (appContext.workMode == .online) ? AppConfiguration.appColors.primary.darker : AppConfiguration.appColors.offlineDark
-            self?.notificationBar.backgroundColor = (appContext.workMode == .online) ? AppConfiguration.appColors.primary.lighter : AppConfiguration.appColors.offlineDark
+            self?.activityBarView.colorA = (appContext.workMode == .online) ? appColors.primary.lighter : appColors.offlineLight
+            self?.activityBarView.colorB = (appContext.workMode == .online) ? appColors.primary.darker : appColors.offlineDark
+            self?.notificationBar.backgroundColor = (appContext.workMode == .online) ? appColors.primary.lighter : appColors.offlineDark
         }
     }
     

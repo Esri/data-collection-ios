@@ -94,8 +94,8 @@ extension AppDelegate {
 extension AppDelegate {
     
     static func setAppAppearance() {
-        UINavigationBar.appearance().tintColor = AppConfiguration.appColors.tint
-        UINavigationBar.appearance().titleTextAttributes = [.foregroundColor : AppConfiguration.appColors.tint]
+        UINavigationBar.appearance().tintColor = appColors.tint
+        UINavigationBar.appearance().titleTextAttributes = [.foregroundColor : appColors.tint]
         
         UIApplication.shared.statusBarStyle = .lightContent
     }

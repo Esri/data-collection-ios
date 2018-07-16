@@ -40,13 +40,13 @@ class AppConfiguration {
     
     private var prefs = RelatedRecordsPreferences()
     
-    // Colors
-    static var appColors: AppColors {
-        return config.colors
-    }
-    
-    private let colors = AppColors()
-    
+//    // Colors
+//    static var appColors: AppColors {
+//        return config.colors
+//    }
+//    
+//    private let colors = AppColors()
+//    
     // Fonts
     static var appFonts: AppFonts {
         return config.fonts
@@ -59,25 +59,6 @@ struct RelatedRecordsPreferences {
     
     let manyToOneCellAttributeCount = 2
     let oneToManyCellAttributeCount = 3
-}
-
-struct AppColors {
-    
-    let primary: UIColor = UIColor(red:0.66, green:0.81, blue:0.40, alpha:1.00)
-    
-    let offline: UIColor = .darkGray
-    let offlineLight: UIColor = .gray
-    let offlineDark: UIColor = .black
-    
-    let accent: UIColor = UIColor(red:0.93, green:0.54, blue:0.01, alpha:1.00)
-    
-    let tableCellTitle: UIColor = .gray
-    let tableCellValue: UIColor = .black
-    
-    let invalid: UIColor = .red
-    let missing: UIColor = .lightGray
-    
-    let tint: UIColor = .white
 }
 
 struct AppFonts {

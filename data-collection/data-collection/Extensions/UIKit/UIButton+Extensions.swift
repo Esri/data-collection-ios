@@ -25,18 +25,14 @@ extension UIControlState: Hashable {
 extension UIButton {
     
     func setTintColors(forControlStateColors controlStateColors: [UIControlState: UIColor]) {
-
+        
         guard let normalImage = image(for: .normal) else {
             print("[Tint Color Error] no default image for control state normal.")
             return
         }
-        setImage(normalImage, forControlStateColors: controlStateColors)
-    }
-
-    func setImage(_ image: UIImage, forControlStateColors controlStateColors: [UIControlState: UIColor]) {
-
+        
         for controlStateColor in controlStateColors {
-            if let controlStateImage = image.renderImage(toMaskWithColor: controlStateColor.value) {
+            if let controlStateImage = normalImage.renderImage(toMaskWithColor: controlStateColor.value) {
                 setImage(controlStateImage, for: controlStateColor.key)
             }
         }

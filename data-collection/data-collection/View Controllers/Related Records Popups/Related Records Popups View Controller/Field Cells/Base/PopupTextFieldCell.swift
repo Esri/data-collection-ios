@@ -22,7 +22,7 @@ class PopupTextFieldCell: PopupEditableFieldCell<UITextField> {
         if valueEditView == nil {
             
             valueEditView = UITextField(frame: .zero)
-            valueEditView?.textColor = AppConfiguration.appColors.tableCellValue
+            valueEditView?.textColor = appColors.tableCellValue
             valueEditView?.font = AppConfiguration.appFonts.tableCellValue
             valueEditView?.sizeToFit()
             valueEditView?.borderStyle = .roundedRect

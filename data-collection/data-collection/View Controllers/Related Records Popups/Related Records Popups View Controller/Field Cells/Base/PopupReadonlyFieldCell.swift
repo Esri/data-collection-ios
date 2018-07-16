@@ -35,13 +35,13 @@ class PopupReadonlyFieldCell: UITableViewCell, PopupFieldCellProtocol {
         contentView.addSubview(stackView)
         contentView.constrainToBounds(stackView)
         
-        titleLabel.textColor = AppConfiguration.appColors.tableCellTitle
+        titleLabel.textColor = appColors.tableCellTitle
         titleLabel.font = AppConfiguration.appFonts.tableCellTitle
         titleLabel.sizeToFit()
         titleLabel.heightAnchor.constraint(equalToConstant: titleLabel.font.lineHeight).isActive = true
         stackView.addArrangedSubview(titleLabel)
         
-        valueLabel.textColor = AppConfiguration.appColors.tableCellValue
+        valueLabel.textColor = appColors.tableCellValue
         valueLabel.font = AppConfiguration.appFonts.tableCellValue
         valueLabel.numberOfLines = 0
         valueLabel.sizeToFit()

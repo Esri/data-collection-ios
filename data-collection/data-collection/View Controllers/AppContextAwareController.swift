@@ -45,7 +45,7 @@ class AppContextAwareController: UIViewController {
     }
     
     func appWorkModeDidChange() {
-        navigationController?.navigationBar.barTintColor = (appContext.workMode == .online) ? AppConfiguration.appColors.primary : AppConfiguration.appColors.offline
+        navigationController?.navigationBar.barTintColor = (appContext.workMode == .online) ? appColors.primary : appColors.offline
     }
     
     deinit {

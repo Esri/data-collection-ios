@@ -58,11 +58,11 @@ class PopupEditableFieldCell<ViewType: UIView>: PopupReadonlyFieldCell {
         }
         
         if let error = popupManager.validationError(for: field) {
-            titleLabel.textColor = AppConfiguration.appColors.invalid
+            titleLabel.textColor = appColors.invalid
             titleLabel.text = "\(field.label): \(error.localizedDescription)"
         }
         else {
-            titleLabel.textColor = AppConfiguration.appColors.tableCellTitle
+            titleLabel.textColor = appColors.tableCellTitle
             titleLabel.text = field.label
         }
     }

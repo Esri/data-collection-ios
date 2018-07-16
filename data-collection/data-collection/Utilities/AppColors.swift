@@ -1,4 +1,4 @@
-//// Copyright 2017 Esri
+//// Copyright 2018 Esri
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -12,30 +12,24 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import Foundation
 import UIKit
 
-var appDelegate: AppDelegate {
-    return UIApplication.shared.delegate as! AppDelegate
+struct AppColors {
+    
+    let primary: UIColor = UIColor(red:0.66, green:0.81, blue:0.40, alpha:1.00)
+    
+    let offline: UIColor = .darkGray
+    let offlineLight: UIColor = .gray
+    let offlineDark: UIColor = .black
+    
+    let accent: UIColor = UIColor(red:0.93, green:0.54, blue:0.01, alpha:1.00)
+    
+    let tableCellTitle: UIColor = .gray
+    let tableCellValue: UIColor = .black
+    
+    let invalid: UIColor = .red
+    let missing: UIColor = .lightGray
+    
+    let tint: UIColor = .white
 }
-
-var appReachability: NetworkReachabilityManager {
-    return appDelegate.reachabilityManager
-}
-
-var appContext: AppContext {
-    return AppContext.shared
-}
-
-var appBundleID: String {
-    return Bundle.main.bundleIdentifier!
-}
-
-var appNotificationCenter: NotificationCenter {
-    return NotificationCenter.default
-}
-
-var appReverseGeocoder: ReverseGeocoderManager {
-    return appContext.reverseGeocoderManager
-}
-
-var appColors = AppColors()

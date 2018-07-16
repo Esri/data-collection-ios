@@ -60,7 +60,7 @@ class RelatedRecordCell: UITableViewCell {
     
     func setAccessoryViewAddIndicator() {
         let button = UIButton(type: .contactAdd)
-        button.tintColor = AppConfiguration.appColors.primary
+        button.tintColor = appColors.primary
         button.isUserInteractionEnabled = false
         accessoryView = button
     }
@@ -88,13 +88,13 @@ class RelatedRecordCell: UITableViewCell {
             while attributes.count != nAttributes {
                 
                 let titleLabel = UILabel()
-                titleLabel.textColor = AppConfiguration.appColors.tableCellTitle
+                titleLabel.textColor = appColors.tableCellTitle
                 titleLabel.font = UIFont.preferredFont(forTextStyle: .footnote)
                 stackView.addArrangedSubview(titleLabel)
                 
                 let valueLabel = UILabel()
                 valueLabel.numberOfLines = 0
-                valueLabel.textColor = AppConfiguration.appColors.tableCellValue
+                valueLabel.textColor = appColors.tableCellValue
                 valueLabel.font = UIFont.preferredFont(forTextStyle: .body)
                 stackView.addArrangedSubview(valueLabel)
                 
@@ -168,12 +168,12 @@ class RelatedRecordCell: UITableViewCell {
         if info.isManyToOne {
             if editingPopup {
                 setAccessoryViewDisclosureIndicator()
-                emptyCellLabel?.textColor = info.isComposite ? AppConfiguration.appColors.invalid : AppConfiguration.appColors.tableCellTitle
+                emptyCellLabel?.textColor = info.isComposite ? appColors.invalid : appColors.tableCellTitle
                 emptyCellLabel?.text = "Select \(table?.tableName ?? "related record")"
             }
             else {
                 setAccessoryViewNone()
-                emptyCellLabel?.textColor = AppConfiguration.appColors.missing
+                emptyCellLabel?.textColor = appColors.missing
                 emptyCellLabel?.text = "(Empty \(table?.tableName ?? "related") record)"
             }
         }
@@ -184,7 +184,7 @@ class RelatedRecordCell: UITableViewCell {
             else {
                 setAccessoryViewDisclosureIndicator()
             }
-            emptyCellLabel?.textColor = AppConfiguration.appColors.primary
+            emptyCellLabel?.textColor = appColors.primary
             emptyCellLabel?.text = "Add \(table?.tableName ?? "related record")"
         }
     }
