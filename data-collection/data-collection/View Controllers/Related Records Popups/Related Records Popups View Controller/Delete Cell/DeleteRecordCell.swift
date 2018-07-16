@@ -34,7 +34,7 @@ class DeleteRecordCell: UITableViewCell {
         
         let containedDeleteLabel = UILabel()
         containedDeleteLabel.textColor = appColors.invalid
-        containedDeleteLabel.font = AppConfiguration.appFonts.tableCellValue
+        containedDeleteLabel.font = appFonts.tableCellValue
         containedDeleteLabel.textAlignment = .center
         containedDeleteLabel.numberOfLines = 1
         containedDeleteLabel.text = "Delete"

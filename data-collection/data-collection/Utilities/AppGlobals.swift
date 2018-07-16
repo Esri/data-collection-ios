@@ -39,3 +39,5 @@ var appReverseGeocoder: ReverseGeocoderManager {
 }
 
 var appColors = AppColors()
+
+var appFonts = AppFonts()

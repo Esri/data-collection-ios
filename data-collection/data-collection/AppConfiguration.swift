@@ -29,9 +29,7 @@ class AppConfiguration {
     static let keychainIdentifier: String = "\(appBundleID).keychain"
     static let licenseKey: String = "fake_license_key"
     static let clientID: String = "AaXxKoHH3piT1fe3"
-    
-    // MARK: UI Config
-    
+        
     static let config = AppConfiguration()
     
     static var relatedRecordPrefs: RelatedRecordsPreferences {
@@ -39,20 +37,6 @@ class AppConfiguration {
     }
     
     private var prefs = RelatedRecordsPreferences()
-    
-//    // Colors
-//    static var appColors: AppColors {
-//        return config.colors
-//    }
-//    
-//    private let colors = AppColors()
-//    
-    // Fonts
-    static var appFonts: AppFonts {
-        return config.fonts
-    }
-    
-    private let fonts = AppFonts()
 }
 
 struct RelatedRecordsPreferences {
@@ -61,11 +45,7 @@ struct RelatedRecordsPreferences {
     let oneToManyCellAttributeCount = 3
 }
 
-struct AppFonts {
-    
-    let tableCellTitle: UIFont = UIFont.preferredFont(forTextStyle: .footnote)
-    let tableCellValue: UIFont = UIFont.preferredFont(forTextStyle: .body)
-}
+
 
 // MARK: Debug Request Logging
 

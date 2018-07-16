@@ -29,7 +29,7 @@ class PopupTextViewCell: PopupEditableFieldCell<UITextView>, UITextViewDelegate 
             
             valueEditView = UITextView(frame: .zero)
             valueEditView?.textColor = appColors.tableCellValue
-            valueEditView?.font = AppConfiguration.appFonts.tableCellValue
+            valueEditView?.font = appFonts.tableCellValue
             valueEditView?.sizeToFit()
             valueEditView?.stylizeBorder()
             valueEditView?.keyboardType = keyboardType

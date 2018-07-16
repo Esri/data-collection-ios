@@ -95,6 +95,7 @@
 		94B3760C207EAE4700691F2A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94B3760B207EAE4600691F2A /* AppDelegate.swift */; };
 		94B3760E207EAEA100691F2A /* ArcGIS.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 94B3760D207EAEA100691F2A /* ArcGIS.bundle */; };
 		94BA7D3A20FD140500C78255 /* AppColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94BA7D3920FD140500C78255 /* AppColors.swift */; };
+		94BA7D3C20FD151A00C78255 /* AppFonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94BA7D3B20FD151A00C78255 /* AppFonts.swift */; };
 		94D2713B20CEF04F00304E27 /* RelatedRecordsPopupsViewController+EditingSessions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94D2713A20CEF04F00304E27 /* RelatedRecordsPopupsViewController+EditingSessions.swift */; };
 		94D2713E20D030D900304E27 /* CustomBehavior+ReverseGeocode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94D2713D20D030D900304E27 /* CustomBehavior+ReverseGeocode.swift */; };
 		94D2714020D0315900304E27 /* CustomBehavior+Map.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94D2713F20D0315900304E27 /* CustomBehavior+Map.swift */; };
@@ -234,6 +235,7 @@
 		94B3760B207EAE4600691F2A /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		94B3760D207EAEA100691F2A /* ArcGIS.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = ArcGIS.bundle; path = ../../../../../../../../Library/SDKs/ArcGIS/iOS/Frameworks/Static/ArcGIS.framework/Versions/Current/Resources/ArcGIS.bundle; sourceTree = "<group>"; };
 		94BA7D3920FD140500C78255 /* AppColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppColors.swift; sourceTree = "<group>"; };
+		94BA7D3B20FD151A00C78255 /* AppFonts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppFonts.swift; sourceTree = "<group>"; };
 		94D2713A20CEF04F00304E27 /* RelatedRecordsPopupsViewController+EditingSessions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RelatedRecordsPopupsViewController+EditingSessions.swift"; sourceTree = "<group>"; };
 		94D2713D20D030D900304E27 /* CustomBehavior+ReverseGeocode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CustomBehavior+ReverseGeocode.swift"; sourceTree = "<group>"; };
 		94D2713F20D0315900304E27 /* CustomBehavior+Map.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CustomBehavior+Map.swift"; sourceTree = "<group>"; };
@@ -434,6 +436,7 @@
 				94B375A4207E8D5600691F2A /* AppLocation.swift */,
 				94B375A9207E8D5600691F2A /* AppGlobals.swift */,
 				94BA7D3920FD140500C78255 /* AppColors.swift */,
+				94BA7D3B20FD151A00C78255 /* AppFonts.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -901,6 +904,7 @@
 				9465691A2088028E00599E55 /* AGSRelationshipInfo+Extensions.swift in Sources */,
 				9416A19320BF3334001377ED /* RelatedRecordsManager.swift in Sources */,
 				940DA9722097825700AB4BF6 /* UILabel+Extensions.swift in Sources */,
+				94BA7D3C20FD151A00C78255 /* AppFonts.swift in Sources */,
 				94D2714320D0578000304E27 /* OneToManyManager.swift in Sources */,
 				94B375C1207E8D5600691F2A /* AppConfiguration.swift in Sources */,
 				946569062087FBF700599E55 /* MapViewController+UserLocation.swift in Sources */,
