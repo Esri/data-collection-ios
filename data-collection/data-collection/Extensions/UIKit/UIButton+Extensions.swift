@@ -37,5 +37,45 @@ extension UIButton {
             }
         }
     }
+    
+    func setAttributedTitle(header: String, subheader: String? = nil, forControlStateColors controlStateColors: [UIControlState: UIColor], headerFont: UIFont, subheaderFont: UIFont? = nil) {
+        
+        let attributedTitle: NSMutableAttributedString!
+        
+        let headerLocation = 0
+        var headerLength = header.count
+        
+        let headerRange = NSRange(location: headerLocation, length: headerLength)
+        
+        if let subheader = subheader, let _ = subheaderFont {
+            let newline = "\n"
+            attributedTitle = NSMutableAttributedString(string: "\(header)\(newline)\(subheader)")
+            headerLength += newline.count
+        }
+        else {
+            attributedTitle = NSMutableAttributedString(string: header)
+        }
+        
+        for controlStateColor in controlStateColors {
+
+            attributedTitle.addAttributes([.foregroundColor : controlStateColor.value, .font: headerFont], range: headerRange)
+            
+            titleLabel?.numberOfLines = 1
+            
+            if let subheader = subheader, let subheaderFont = subheaderFont {
+                
+                let subheaderLocation = headerLength
+                let subheaderLength = subheader.count
+                
+                let subheaderRange = NSRange(location: subheaderLocation, length: subheaderLength)
+                
+                titleLabel?.numberOfLines = 2
+                
+                attributedTitle.addAttributes([.foregroundColor : controlStateColor.value, .font: subheaderFont], range: subheaderRange)
+            }
+            
+            setAttributedTitle(attributedTitle, for: controlStateColor.key)
+        }
+    }
 }
 

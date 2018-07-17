@@ -40,6 +40,20 @@ class DrawerViewController: AppContextAwareController {
     var observeCurrentUser: NSKeyValueObservation?
     var observeOfflineMap: NSKeyValueObservation?
     
+    let workModeControlStateColors: [UIControlState: UIColor] = {
+        return [.normal: appColors.workModeNormal,
+                .highlighted: appColors.workModeHighlighted,
+                .selected: appColors.workModeSelected,
+                .disabled: appColors.workModeDisabled]
+    }()
+    
+    let offlineActivityControlStateColors: [UIControlState: UIColor] = {
+        return [.normal: appColors.offlineActivityNormal,
+                .highlighted: appColors.offlineActivityHighlighted,
+                .selected: appColors.offlineActivitySelected,
+                .disabled: appColors.offlineActivityDisabled]
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -47,24 +61,23 @@ class DrawerViewController: AppContextAwareController {
         beginObservingOfflineMap()
         
         setButtonImageTints()
+//        setButtonAttributedTitles()
     }
     
     func setButtonImageTints() {
-        
-        let workModeControlStateColors: [UIControlState: UIColor] = [.normal: appColors.workModeNormal,
-                                                                     .highlighted: appColors.workModeHighlighted,
-                                                                     .selected: appColors.workModeSelected,
-                                                                     .disabled: appColors.workModeDisabled]
-        
-        let offlineActivityControlStateColors: [UIControlState: UIColor] = [.normal: appColors.offlineActivityNormal,
-                                                                             .highlighted: appColors.offlineActivityHighlighted,
-                                                                             .selected: appColors.offlineActivitySelected,
-                                                                             .disabled: appColors.offlineActivityDisabled]
         
         workOnlineButton.setTintColors(forControlStateColors: workModeControlStateColors)
         workOfflineButton.setTintColors(forControlStateColors: workModeControlStateColors)
         synchronizeOfflineMapButton.setTintColors(forControlStateColors: offlineActivityControlStateColors)
         deleteOfflineMapButton.setTintColors(forControlStateColors: offlineActivityControlStateColors)
+    }
+    
+    func setButtonAttributedTitles() {
+
+        workOnlineButton.setAttributedTitle(header: "Work Online", forControlStateColors: workModeControlStateColors, headerFont: appFonts.drawerButtonHeader)
+        workOfflineButton.setAttributedTitle(header: "Work Offline", forControlStateColors: workModeControlStateColors, headerFont: appFonts.drawerButtonHeader)
+        synchronizeOfflineMapButton.setAttributedTitle(header: "Synchronize Offline Map", subheader: "Last synchronized ..", forControlStateColors: offlineActivityControlStateColors, headerFont: appFonts.drawerButtonHeader, subheaderFont: appFonts.drawerButtonSubheader)
+        deleteOfflineMapButton.setAttributedTitle(header: "Delete Offline Map", forControlStateColors: offlineActivityControlStateColors, headerFont: appFonts.drawerButtonHeader)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -167,19 +180,15 @@ class DrawerViewController: AppContextAwareController {
         
         workOnlineButton.isEnabled = appReachability.isReachable
         workOnlineButton.isSelected = appContext.workMode == .online
-        workOnlineButton.tintColor = workOnlineButton.titleColor(for: workOnlineButton.state)
         
-        workOfflineButton.isEnabled = appContext.hasOfflineMap || (appReachability.isReachable && appContext.isLoggedIn)
+        workOfflineButton.isEnabled = appContext.hasOfflineMap || appReachability.isReachable
         workOfflineButton.isSelected = appContext.workMode == .offline
-        workOfflineButton.tintColor = workOfflineButton.titleColor(for: workOfflineButton.state)
         
-        synchronizeOfflineMapButton.isEnabled = appReachability.isReachable && appContext.hasOfflineMap && appContext.isLoggedIn
+        synchronizeOfflineMapButton.isEnabled = appContext.hasOfflineMap && appContext.isLoggedIn && appReachability.isReachable
         synchronizeOfflineMapButton.isSelected = false
-        synchronizeOfflineMapButton.tintColor = synchronizeOfflineMapButton.titleColor(for: synchronizeOfflineMapButton.state)
         
         deleteOfflineMapButton.isEnabled = appContext.hasOfflineMap && appContext.isLoggedIn
         deleteOfflineMapButton.isSelected = false
-        deleteOfflineMapButton.tintColor = deleteOfflineMapButton.titleColor(for: deleteOfflineMapButton.state)
     }
     
     private func beginObservingCurrentUser() {
