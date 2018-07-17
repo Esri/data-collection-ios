@@ -140,6 +140,8 @@ extension AppContext {
             throw error
         }
         
+        lastSync.clearLastSync()
+        
         FileManager.buildOfflineMapDirectory()
     }
     

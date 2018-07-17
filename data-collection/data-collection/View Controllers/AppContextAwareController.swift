@@ -28,6 +28,7 @@ class AppContextAwareController: UIViewController {
         super.viewDidLoad()
         appNotificationCenter.addObserver(self, selector: #selector(AppContextAwareController.recieveReachabilityNotification(notification:)), name: AppNotifications.reachabilityChanged.name, object: nil)
         appNotificationCenter.addObserver(self, selector: #selector(AppContextAwareController.recieveWorkModeNotification(notification:)), name: AppNotifications.workModeChanged.name, object: nil)
+        appNotificationCenter.addObserver(self, selector: #selector(AppContextAwareController.recieveLastSyncNotification(notification:)), name: AppNotifications.lastSyncChanged.name, object: nil)
         appReachabilityDidChange()
         appWorkModeDidChange()
     }
@@ -40,6 +41,10 @@ class AppContextAwareController: UIViewController {
         appWorkModeDidChange()
     }
     
+    @objc func recieveLastSyncNotification(notification: Notification) {
+        appLastSyncDidChange()
+    }
+    
     func appReachabilityDidChange() {
         
     }
@@ -48,8 +53,13 @@ class AppContextAwareController: UIViewController {
         navigationController?.navigationBar.barTintColor = (appContext.workMode == .online) ? appColors.primary : appColors.offline
     }
     
+    func appLastSyncDidChange() {
+
+    }
+    
     deinit {
         appNotificationCenter.removeObserver(self, name: AppNotifications.reachabilityChanged.name, object: nil)
         appNotificationCenter.removeObserver(self, name: AppNotifications.workModeChanged.name, object: nil)
+        appNotificationCenter.removeObserver(self, name: AppNotifications.lastSyncChanged.name, object: nil)
     }
 }

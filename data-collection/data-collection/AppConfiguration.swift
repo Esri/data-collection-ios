@@ -17,7 +17,7 @@ import ArcGIS
 
 class AppConfiguration {
     
-    static let itemID = "fcc7fc65bb96464c9c0986576c119a92"
+    static let itemID = "4f96349cc0cc41c098456160678963d1"//"fcc7fc65bb96464c9c0986576c119a92"
     static let basePortalDomain = "www.arcgis.com"
     static let basePortalURLString = "https://\(basePortalDomain)"
     static let basePortalURL: URL? = URL(string: basePortalURLString)

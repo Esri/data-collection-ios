@@ -29,12 +29,14 @@ extension AppContainerViewController: JobStatusViewControllerDelegate {
     
     func jobStatusViewController(_ jobStatusViewController: JobStatusViewController, didEndWithResult result: Any) {
         if let _ = result as? AGSOfflineMapSyncResult {
+            appContext.lastSync.setLastSyncNow()
             print("[Offline Map Sync Result] success")
         }
         else if let _ = result as? AGSGenerateOfflineMapResult {
             print("[Generate Offline Map Result] success")
             do {
                 try appContext.moveDownloadedMapToOfflineMapDirectory()
+                appContext.lastSync.setLastSyncNow()
                 appContext.loadOfflineMobileMapPackageAndSetMap()
             }
             catch {

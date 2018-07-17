@@ -187,6 +187,13 @@ class DrawerViewController: AppContextAwareController {
         synchronizeOfflineMapButton.isEnabled = appContext.hasOfflineMap && appContext.isLoggedIn && appReachability.isReachable
         synchronizeOfflineMapButton.isSelected = false
         
+        if let lastSynchronized = appContext.lastSync.date {
+            synchronizeOfflineMapButton.setAttributedTitle(header: "Synchronize Offline Map", subheader: "last synchronized \(lastSynchronized.formattedString)", forControlStateColors: offlineActivityControlStateColors, headerFont: appFonts.drawerButtonHeader, subheaderFont: appFonts.drawerButtonSubheader)
+        }
+        else {
+            synchronizeOfflineMapButton.setAttributedTitle(header: "Synchronize Offline Map", forControlStateColors: offlineActivityControlStateColors, headerFont: appFonts.drawerButtonHeader)
+        }
+        
         deleteOfflineMapButton.isEnabled = appContext.hasOfflineMap && appContext.isLoggedIn
         deleteOfflineMapButton.isSelected = false
     }
@@ -195,8 +202,13 @@ class DrawerViewController: AppContextAwareController {
         observeCurrentUser = appContext.observe(\.user, options: [.new, .old]) { [weak self] (context, _) in
             print("[Authentication] user is", appContext.isLoggedIn ? "logged in." : "logged out.")
             
+            // TODO update.
+            guard let colors = self?.workModeControlStateColors else {
+                return
+            }
+            
             if let currentUser = appContext.user {
-                self?.loginButton.setTitle("Log out", for: .normal)
+                self?.loginButton.setAttributedTitle(header: "Log out", subheader: currentUser.username, forControlStateColors: colors, headerFont: appFonts.drawerButtonHeader, subheaderFont: appFonts.drawerButtonSubheader)
                 let fallbackProfileImage = UIImage(named: "MissingProfile")!.withRenderingMode(.alwaysOriginal)
                 guard let image = currentUser.thumbnail else {
                     self?.loginButton.setImage(fallbackProfileImage, for: .normal)
@@ -216,7 +228,7 @@ class DrawerViewController: AppContextAwareController {
                 })
             }
             else {
-                self?.loginButton.setTitle("Log in", for: .normal)
+                self?.loginButton.setAttributedTitle(header: "Log in", forControlStateColors: colors, headerFont: appFonts.drawerButtonHeader)
                 self?.loginButton.setImage(UIImage(named: "UserLoginIcon"), for: .normal)
             }
         }
@@ -235,6 +247,11 @@ class DrawerViewController: AppContextAwareController {
     
     override func appReachabilityDidChange() {
         super.appReachabilityDidChange()
+        adjustContextDrawerUI()
+    }
+    
+    override func appLastSyncDidChange() {
+        super.appLastSyncDidChange()
         adjustContextDrawerUI()
     }
     

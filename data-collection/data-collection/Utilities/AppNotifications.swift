@@ -33,6 +33,10 @@ class AppNotifications {
     static var workModeChanged: Notification {
         return WorkModeChanged.notification
     }
+    
+    static var lastSyncChanged: Notification {
+        return LastSyncChanged.notification
+    }
 }
 
 fileprivate struct ReachabilityChanged: AppNotification {
@@ -41,4 +45,8 @@ fileprivate struct ReachabilityChanged: AppNotification {
 
 fileprivate struct WorkModeChanged: AppNotification {
     static var name = "workModeChanged"
+}
+
+fileprivate struct LastSyncChanged: AppNotification {
+    static var name = "lastSyncChanged"
 }

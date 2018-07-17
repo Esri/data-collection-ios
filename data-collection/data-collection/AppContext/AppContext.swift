@@ -73,6 +73,9 @@ import ArcGIS
      */
     dynamic var hasOfflineMap: Bool = false
     
+    // MARK: Last Sync
+    var lastSync = LastSync()
+    
     // MARK: Auth
     /**
      An kv-observable property that holds on to the portal's user.
