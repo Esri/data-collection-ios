@@ -38,7 +38,7 @@ extension UIButton {
         }
     }
     
-    func setAttributedTitle(header: String, subheader: String? = nil, forControlStateColors controlStateColors: [UIControlState: UIColor], headerFont: UIFont, subheaderFont: UIFont? = nil) {
+    func setAttributed(header: String, subheader: String? = nil, forControlStateColors controlStateColors: [UIControlState: UIColor], headerFont: UIFont, subheaderFont: UIFont? = nil) {
         
         let attributedTitle: NSMutableAttributedString!
         
@@ -74,7 +74,11 @@ extension UIButton {
                 attributedTitle.addAttributes([.foregroundColor : controlStateColor.value, .font: subheaderFont], range: subheaderRange)
             }
             
-            setAttributedTitle(attributedTitle, for: controlStateColor.key)
+//            print("\n\(self)\n[SETTING: control state \(controlStateColor.key.rawValue)]\n\(attributedTitle)")
+            
+            self.setAttributedTitle(attributedTitle, for: controlStateColor.key)
+
+            print("•\n\(self)\n[GETTING: control state \(controlStateColor.key.rawValue)]\n\(self.attributedTitle(for: controlStateColor.key) ?? NSAttributedString(string: "[no current attributed title]"))")
         }
     }
 }

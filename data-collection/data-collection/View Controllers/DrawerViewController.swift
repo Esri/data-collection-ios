@@ -40,14 +40,14 @@ class DrawerViewController: AppContextAwareController {
     var observeCurrentUser: NSKeyValueObservation?
     var observeOfflineMap: NSKeyValueObservation?
     
-    let workModeControlStateColors: [UIControlState: UIColor] = {
+    var workModeControlStateColors: [UIControlState: UIColor] = {
         return [.normal: appColors.workModeNormal,
                 .highlighted: appColors.workModeHighlighted,
                 .selected: appColors.workModeSelected,
                 .disabled: appColors.workModeDisabled]
     }()
     
-    let offlineActivityControlStateColors: [UIControlState: UIColor] = {
+    var offlineActivityControlStateColors: [UIControlState: UIColor] = {
         return [.normal: appColors.offlineActivityNormal,
                 .highlighted: appColors.offlineActivityHighlighted,
                 .selected: appColors.offlineActivitySelected,
@@ -61,7 +61,7 @@ class DrawerViewController: AppContextAwareController {
         beginObservingOfflineMap()
         
         setButtonImageTints()
-//        setButtonAttributedTitles()
+        setButtonAttributedTitles()
     }
     
     func setButtonImageTints() {
@@ -74,14 +74,21 @@ class DrawerViewController: AppContextAwareController {
     
     func setButtonAttributedTitles() {
 
-        workOnlineButton.setAttributedTitle(header: "Work Online", forControlStateColors: workModeControlStateColors, headerFont: appFonts.drawerButtonHeader)
-        workOfflineButton.setAttributedTitle(header: "Work Offline", forControlStateColors: workModeControlStateColors, headerFont: appFonts.drawerButtonHeader)
-        synchronizeOfflineMapButton.setAttributedTitle(header: "Synchronize Offline Map", subheader: "Last synchronized ..", forControlStateColors: offlineActivityControlStateColors, headerFont: appFonts.drawerButtonHeader, subheaderFont: appFonts.drawerButtonSubheader)
-        deleteOfflineMapButton.setAttributedTitle(header: "Delete Offline Map", forControlStateColors: offlineActivityControlStateColors, headerFont: appFonts.drawerButtonHeader)
+        workOnlineButton.setAttributed(header: "Work Online", forControlStateColors: workModeControlStateColors, headerFont: appFonts.drawerButtonHeader)
+        workOfflineButton.setAttributed(header: "Work Offline", forControlStateColors: workModeControlStateColors, headerFont: appFonts.drawerButtonHeader)
+        synchronizeOfflineMapButton.setAttributed(header: "Synchronize Offline Map", subheader: "Last synchronized ..", forControlStateColors: offlineActivityControlStateColors, headerFont: appFonts.drawerButtonHeader, subheaderFont: appFonts.drawerButtonSubheader)
+        deleteOfflineMapButton.setAttributed(header: "Delete Offline Map", forControlStateColors: offlineActivityControlStateColors, headerFont: appFonts.drawerButtonHeader)
+        
+        let buttons = [workOnlineButton!, workOfflineButton!, synchronizeOfflineMapButton!, deleteOfflineMapButton!]
+        for button in buttons {
+            for controlStateColor in workModeControlStateColors {
+                print("~\n\(button)\n[GETTING: control state \(controlStateColor.key.rawValue)]\n\(button.attributedTitle(for: controlStateColor.key) ?? NSAttributedString(string: "[no current attributed title]"))")
+            }
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)        
+        super.viewWillAppear(animated)
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -187,12 +194,12 @@ class DrawerViewController: AppContextAwareController {
         synchronizeOfflineMapButton.isEnabled = appContext.hasOfflineMap && appContext.isLoggedIn && appReachability.isReachable
         synchronizeOfflineMapButton.isSelected = false
         
-        if let lastSynchronized = appContext.lastSync.date {
-            synchronizeOfflineMapButton.setAttributedTitle(header: "Synchronize Offline Map", subheader: "last synchronized \(lastSynchronized.formattedString)", forControlStateColors: offlineActivityControlStateColors, headerFont: appFonts.drawerButtonHeader, subheaderFont: appFonts.drawerButtonSubheader)
-        }
-        else {
-            synchronizeOfflineMapButton.setAttributedTitle(header: "Synchronize Offline Map", forControlStateColors: offlineActivityControlStateColors, headerFont: appFonts.drawerButtonHeader)
-        }
+//        if let lastSynchronized = appContext.lastSync.date {
+//            synchronizeOfflineMapButton.setAttributedTitle(header: "Synchronize Offline Map", subheader: "last synchronized \(lastSynchronized.formattedString)", forControlStateColors: offlineActivityControlStateColors, headerFont: appFonts.drawerButtonHeader, subheaderFont: appFonts.drawerButtonSubheader)
+//        }
+//        else {
+//            synchronizeOfflineMapButton.setAttributedTitle(header: "Synchronize Offline Map", forControlStateColors: offlineActivityControlStateColors, headerFont: appFonts.drawerButtonHeader)
+//        }
         
         deleteOfflineMapButton.isEnabled = appContext.hasOfflineMap && appContext.isLoggedIn
         deleteOfflineMapButton.isSelected = false
@@ -208,7 +215,7 @@ class DrawerViewController: AppContextAwareController {
             }
             
             if let currentUser = appContext.user {
-                self?.loginButton.setAttributedTitle(header: "Log out", subheader: currentUser.username, forControlStateColors: colors, headerFont: appFonts.drawerButtonHeader, subheaderFont: appFonts.drawerButtonSubheader)
+//                self?.loginButton.setAttributedTitle(header: "Log out", subheader: currentUser.username, forControlStateColors: colors, headerFont: appFonts.drawerButtonHeader, subheaderFont: appFonts.drawerButtonSubheader)
                 let fallbackProfileImage = UIImage(named: "MissingProfile")!.withRenderingMode(.alwaysOriginal)
                 guard let image = currentUser.thumbnail else {
                     self?.loginButton.setImage(fallbackProfileImage, for: .normal)
@@ -228,7 +235,7 @@ class DrawerViewController: AppContextAwareController {
                 })
             }
             else {
-                self?.loginButton.setAttributedTitle(header: "Log in", forControlStateColors: colors, headerFont: appFonts.drawerButtonHeader)
+//                self?.loginButton.setAttributedTitle(header: "Log in", forControlStateColors: colors, headerFont: appFonts.drawerButtonHeader)
                 self?.loginButton.setImage(UIImage(named: "UserLoginIcon"), for: .normal)
             }
         }
