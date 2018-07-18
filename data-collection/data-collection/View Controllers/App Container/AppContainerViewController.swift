@@ -119,13 +119,13 @@ class AppContainerViewController: AppContextAwareController {
 
         UIView.animate(withDuration: animationDuration, delay: 0.0, options: .curveEaseOut, animations: { [weak self] in
             self?.view.layoutIfNeeded()
-            self?.adjustVisualEffectViewForDrawerShowing()
+            self?.adjustVisualEffectViewBlurEffect()
         }) { [weak self] (_) in
             self?.adjustVisualEffectViewIsUserInteractionEnabled()
         }
     }
     
-    private func adjustVisualEffectViewForDrawerShowing() {
+    private func adjustVisualEffectViewBlurEffect() {
         self.visualEffectView.effect = self.drawerShowing ? UIBlurEffect(style: .light) : nil
     }
     
