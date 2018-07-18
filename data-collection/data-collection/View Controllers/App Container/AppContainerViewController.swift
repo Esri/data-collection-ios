@@ -71,7 +71,7 @@ class AppContainerViewController: AppContextAwareController {
         adjustForDrawerShowing(animationDuration: 0.0)
         adjustNavigationBarButtons()
         
-        NotificationCenter.default.addObserver(self, selector: #selector(AppContainerViewController.rotated), name: NSNotification.Name.UIDeviceOrientationDidChange, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(AppContainerViewController.deviceOrientationDidChange), name: NSNotification.Name.UIDeviceOrientationDidChange, object: nil)
     }
     
     @IBAction func userTapsOutsideOfDrawer(_ sender: Any) {
@@ -109,7 +109,7 @@ class AppContainerViewController: AppContextAwareController {
         }
     }
     
-    @objc func rotated() {
+    @objc func deviceOrientationDidChange() {
         adjustForDrawerShowing(animationDuration: 0.0)
     }
     
