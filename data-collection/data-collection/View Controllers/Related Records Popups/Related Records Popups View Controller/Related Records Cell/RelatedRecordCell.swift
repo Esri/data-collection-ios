@@ -89,13 +89,13 @@ class RelatedRecordCell: UITableViewCell {
                 
                 let titleLabel = UILabel()
                 titleLabel.textColor = appColors.tableCellTitle
-                titleLabel.font = UIFont.preferredFont(forTextStyle: .footnote)
+                titleLabel.font = appFonts.tableCellTitle
                 stackView.addArrangedSubview(titleLabel)
                 
                 let valueLabel = UILabel()
                 valueLabel.numberOfLines = 0
                 valueLabel.textColor = appColors.tableCellValue
-                valueLabel.font = UIFont.preferredFont(forTextStyle: .body)
+                valueLabel.font = appFonts.tableCellValue
                 stackView.addArrangedSubview(valueLabel)
                 
                 attributes.append((titleLabel, valueLabel))
@@ -156,7 +156,7 @@ class RelatedRecordCell: UITableViewCell {
             stackView.addArrangedSubview(emptyCellLabel!)
         }
         
-        emptyCellLabel?.font = UIFont.preferredFont(forTextStyle: .footnote)
+        emptyCellLabel?.font = appFonts.tableCellTitle
         emptyCellLabel?.sizeToFit()
         
         guard let info = relationshipInfo else {

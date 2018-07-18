@@ -26,10 +26,8 @@ extension MapViewController {
     
     func adjustForMapViewMode(from: MapViewMode?, to: MapViewMode) {
         
-        if let from = from {
-            guard from != to else {
-                return
-            }
+        if let from = from, from == to {
+            return
         }
         
         let smallPopViewVisible: (Bool) -> UIViewAnimations = { [weak self] (visible) in
@@ -57,49 +55,49 @@ extension MapViewController {
         
         var animations = [UIViewAnimations]()
         
-        if let from = from {
-            switch from {
-            case .offlineMask:
-                hideMapMaskViewForOfflineDownloadArea()
-            case .disabled:
-                animations.append( mapViewVisible(true) )
-                view.isUserInteractionEnabled = true
-            default:
-                break
-            }
-        }
-        
         switch to {
             
         case .defaultView:
             pinDropView.pinDropped = false
             animations.append( selectViewVisible(false) )
             animations.append( smallPopViewVisible(false) )
+            animations.append( mapViewVisible(true) )
+            hideMapMaskViewForOfflineDownloadArea()
+            view.isUserInteractionEnabled = true
 
         case .disabled:
             pinDropView.pinDropped = false
             animations.append( selectViewVisible(false) )
             animations.append( smallPopViewVisible(false) )
             animations.append( mapViewVisible(false) )
+            hideMapMaskViewForOfflineDownloadArea()
             view.isUserInteractionEnabled = false
             
         case .selectingFeature:
             pinDropView.pinDropped = true
             animations.append( selectViewVisible(true) )
             animations.append( smallPopViewVisible(false) )
+            animations.append( mapViewVisible(true) )
+            hideMapMaskViewForOfflineDownloadArea()
+            view.isUserInteractionEnabled = true
             locationSelectionType = .newFeature
             
         case .selectedFeature:
             pinDropView.pinDropped = false
             animations.append( selectViewVisible(false) )
             animations.append( smallPopViewVisible(true) )
+            animations.append( mapViewVisible(true) )
+            hideMapMaskViewForOfflineDownloadArea()
+            view.isUserInteractionEnabled = true
             
         case .offlineMask:
             pinDropView.pinDropped = false
             animations.append( selectViewVisible(true) )
             animations.append( smallPopViewVisible(false) )
-            locationSelectionType = .offlineExtent
+            animations.append( mapViewVisible(true) )
             presentMapMaskViewForOfflineDownloadArea()
+            view.isUserInteractionEnabled = true
+            locationSelectionType = .offlineExtent
         }
         
         UIView.animate(withDuration: 0.2) { [weak self] in
