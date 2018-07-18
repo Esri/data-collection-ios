@@ -70,6 +70,8 @@ class AppContainerViewController: AppContextAwareController {
         
         adjustForDrawerShowing(animationDuration: 0.0)
         adjustNavigationBarButtons()
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(AppContainerViewController.rotated), name: NSNotification.Name.UIDeviceOrientationDidChange, object: nil)
     }
     
     @IBAction func userTapsOutsideOfDrawer(_ sender: Any) {
@@ -107,9 +109,7 @@ class AppContainerViewController: AppContextAwareController {
         }
     }
     
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        
+    @objc func rotated() {
         adjustForDrawerShowing(animationDuration: 0.0)
     }
     
@@ -138,5 +138,9 @@ class AppContainerViewController: AppContextAwareController {
         rightBarButton?.isEnabled = !drawerShowing && showAddFeatureBarButton
         secondRightBarButton?.isEnabled = !drawerShowing && showZoomToLocationBarButton
         leftBarButton?.isEnabled = showProfileBarButton
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIDeviceOrientationDidChange, object: nil)
     }
 }
