@@ -175,30 +175,18 @@ class DrawerViewController: AppContextAwareController {
     
     func adjustContextDrawerUI() {
         
-        let workModeIndicatorAnimation:()->Void = { [weak self] in
-            guard let online = self?.workOnlineButton.frame, let offline = self?.workOfflineButton.frame else {
-                return
-            }
-            self?.workModeHighlightView.frame = appContext.workMode == .online ? online : offline
-        }
-        
-        UIView.animate(withDuration: 0.1, delay: 0.1, options: .curveEaseOut, animations: workModeIndicatorAnimation, completion: nil)
+        workModeHighlightView.frame = appContext.workMode == .online ? workOnlineButton.frame : workOfflineButton.frame
         
         workOnlineButton.isEnabled = appReachability.isReachable
         workOnlineButton.isSelected = appContext.workMode == .online
+        workOnlineButton.setAttributed(header: appContext.workMode == .online ? "Working Online" : "Work Online", forControlStateColors: workModeControlStateColors, headerFont: appFonts.drawerButtonHeader)
         
         workOfflineButton.isEnabled = appContext.hasOfflineMap || appReachability.isReachable
         workOfflineButton.isSelected = appContext.workMode == .offline
-        
+        workOfflineButton.setAttributed(header: appContext.workMode == .offline ? "Working Offline" : "Work Offline", forControlStateColors: workModeControlStateColors, headerFont: appFonts.drawerButtonHeader)
+
         synchronizeOfflineMapButton.isEnabled = appContext.hasOfflineMap && appContext.isLoggedIn && appReachability.isReachable
         synchronizeOfflineMapButton.isSelected = false
-        
-        if let lastSynchronized = appContext.lastSync.date {
-            synchronizeOfflineMapButton.setAttributed(header: "Synchronize Offline Map", subheader: "last synchronized \(lastSynchronized.formattedString)", forControlStateColors: offlineActivityControlStateColors, headerFont: appFonts.drawerButtonHeader, subheaderFont: appFonts.drawerButtonSubheader)
-        }
-        else {
-            synchronizeOfflineMapButton.setAttributed(header: "Synchronize Offline Map", forControlStateColors: offlineActivityControlStateColors, headerFont: appFonts.drawerButtonHeader)
-        }
         
         deleteOfflineMapButton.isEnabled = appContext.hasOfflineMap && appContext.isLoggedIn
         deleteOfflineMapButton.isSelected = false
@@ -206,7 +194,7 @@ class DrawerViewController: AppContextAwareController {
     
     private func beginObservingCurrentUser() {
         observeCurrentUser = appContext.observe(\.user, options: [.new, .old]) { [weak self] (context, _) in
-            print("[Authentication] user is", appContext.isLoggedIn ? "logged in." : "logged out.")
+            print("[Authentication] user is", appContext.isLoggedIn ? "logged in (\(appContext.user!.username ?? "no username")." : "logged out.")
             
             // TODO update.
             guard let colors = self?.loginLogoutButtonControlStateColors else {
@@ -258,7 +246,13 @@ class DrawerViewController: AppContextAwareController {
     
     override func appLastSyncDidChange() {
         super.appLastSyncDidChange()
-        adjustContextDrawerUI()
+
+        if let lastSynchronized = appContext.lastSync.date {
+            synchronizeOfflineMapButton.setAttributed(header: "Synchronize Offline Map", subheader: "last synchronized \(lastSynchronized.formattedString)", forControlStateColors: offlineActivityControlStateColors, headerFont: appFonts.drawerButtonHeader, subheaderFont: appFonts.drawerButtonSubheader)
+        }
+        else {
+            synchronizeOfflineMapButton.setAttributed(header: "Synchronize Offline Map", forControlStateColors: offlineActivityControlStateColors, headerFont: appFonts.drawerButtonHeader)
+        }
     }
     
     deinit {
