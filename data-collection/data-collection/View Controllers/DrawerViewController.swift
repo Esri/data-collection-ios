@@ -79,10 +79,10 @@ class DrawerViewController: AppContextAwareController {
     
     func setButtonAttributedTitles() {
         
-        loginButton.setAttributed(header: "Log in", forControlStateColors: loginLogoutButtonControlStateColors, headerFont: appFonts.drawerButtonSubheader)
+        updateLoginButtonForAuthenticatedUsername()
         workOnlineButton.setAttributed(header: "Work Online", forControlStateColors: workModeControlStateColors, headerFont: appFonts.drawerButtonHeader)
         workOfflineButton.setAttributed(header: "Work Offline", forControlStateColors: workModeControlStateColors, headerFont: appFonts.drawerButtonHeader)
-        synchronizeOfflineMapButton.setAttributed(header: "Synchronize Offline Map", forControlStateColors: offlineActivityControlStateColors, headerFont: appFonts.drawerButtonHeader)
+        updateSynchronizeButtonForLastSync()
         deleteOfflineMapButton.setAttributed(header: "Delete Offline Map", forControlStateColors: offlineActivityControlStateColors, headerFont: appFonts.drawerButtonHeader)
     }
     
@@ -193,38 +193,53 @@ class DrawerViewController: AppContextAwareController {
     }
     
     private func beginObservingCurrentUser() {
-        observeCurrentUser = appContext.observe(\.user, options: [.new, .old]) { [weak self] (context, _) in
-            print("[Authentication] user is", appContext.isLoggedIn ? "logged in (\(appContext.user!.username ?? "no username")." : "logged out.")
+        observeCurrentUser = appContext.observe(\.user, options: [.new, .old]) { [weak self] (_, _) in
             
-            // TODO update.
-            guard let colors = self?.loginLogoutButtonControlStateColors else {
+            self?.updateLoginButtonForAuthenticatedUserProfileImage()
+            self?.updateLoginButtonForAuthenticatedUsername()
+        }
+    }
+    
+    private func updateLoginButtonForAuthenticatedUserProfileImage() {
+        
+        if let currentUser = appContext.user {
+            
+            let fallbackProfileImage = UIImage(named: "MissingProfile")!.withRenderingMode(.alwaysOriginal).circularThumbnail(ofSize: 36, strokeColor: appColors.loginLogoutNormal)
+            
+            guard let image = currentUser.thumbnail else {
+                loginButton.setImage(fallbackProfileImage, for: .normal)
                 return
             }
             
-            if let currentUser = appContext.user {
-                self?.loginButton.setAttributed(header: "Log out", subheader: currentUser.username, forControlStateColors: colors, headerFont: appFonts.drawerButtonHeader, subheaderFont: appFonts.drawerButtonSubheader)
-                let fallbackProfileImage = UIImage(named: "MissingProfile")!.withRenderingMode(.alwaysOriginal)
-                guard let image = currentUser.thumbnail else {
-                    self?.loginButton.setImage(fallbackProfileImage, for: .normal)
+            image.load(completion: { [weak self] (error: Error?) in
+                
+                self?.loginButton.setImage(fallbackProfileImage, for: .normal)
+                
+                guard error == nil else {
+                    print("[Error: User Thumbnail Image Load]", error!.localizedDescription)
                     return
                 }
-                image.load(completion: { (error: Error?) in
-                    self?.loginButton.setImage(fallbackProfileImage, for: .normal)
-                    guard error == nil else {
-                        print("[Error: User Thumbnail Image Load]", error!.localizedDescription)
-                        return
-                    }
-                    guard let img = image.image, let profImage = img.circularThumbnail(ofSize: 36) else {
-                        print("[Error: User Thumbnail Image Load] image processing error.")
-                        return
-                    }
-                    self?.loginButton.setImage(profImage.withRenderingMode(.alwaysOriginal), for: .normal)
-                })
-            }
-            else {
-                self?.loginButton.setAttributed(header: "Log in", forControlStateColors: colors, headerFont: appFonts.drawerButtonHeader)
-                self?.loginButton.setImage(UIImage(named: "UserLoginIcon"), for: .normal)
-            }
+                
+                guard let img = image.image, let profImage = img.circularThumbnail(ofSize: 36, strokeColor: appColors.loginLogoutNormal) else {
+                    print("[Error: User Thumbnail Image Load] image processing error.")
+                    return
+                }
+                
+                self?.loginButton.setImage(profImage.withRenderingMode(.alwaysOriginal), for: .normal)
+            })
+        }
+        else {
+            loginButton.setImage(UIImage(named: "UserLoginIcon"), for: .normal)
+        }
+    }
+    
+    private func updateLoginButtonForAuthenticatedUsername() {
+        
+        if let currentUser = appContext.user {
+            loginButton.setAttributed(header: "Log out", subheader: currentUser.username, forControlStateColors: loginLogoutButtonControlStateColors, headerFont: appFonts.drawerButtonHeader, subheaderFont: appFonts.drawerButtonSubheader)
+        }
+        else {
+            loginButton.setAttributed(header: "Log in", forControlStateColors: loginLogoutButtonControlStateColors, headerFont: appFonts.drawerButtonHeader)
         }
     }
     
@@ -247,6 +262,11 @@ class DrawerViewController: AppContextAwareController {
     override func appLastSyncDidChange() {
         super.appLastSyncDidChange()
 
+        updateSynchronizeButtonForLastSync()
+    }
+    
+    func updateSynchronizeButtonForLastSync() {
+        
         if let lastSynchronized = appContext.lastSync.date {
             synchronizeOfflineMapButton.setAttributed(header: "Synchronize Offline Map", subheader: "last synchronized \(lastSynchronized.formattedString)", forControlStateColors: offlineActivityControlStateColors, headerFont: appFonts.drawerButtonHeader, subheaderFont: appFonts.drawerButtonSubheader)
         }

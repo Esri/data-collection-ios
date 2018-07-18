@@ -19,7 +19,7 @@ extension UIImage {
     /**
      This UIImage extension function returns a new copy of an image that is resized, circled and given a white stroke weight.
      */
-    func circularThumbnail(ofSize desiredWH: CGFloat) -> UIImage? {
+    func circularThumbnail(ofSize desiredWH: CGFloat, strokeColor: UIColor) -> UIImage? {
         
         let scale = min(size.width/desiredWH, size.height/desiredWH)
         
@@ -45,7 +45,7 @@ extension UIImage {
         
         draw(in: thumbRect)
         
-        UIColor.white.setStroke()
+        strokeColor.setStroke()
         path.lineWidth = 1 * UIScreen.main.scale
         path.stroke()
         

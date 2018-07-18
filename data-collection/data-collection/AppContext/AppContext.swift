@@ -35,14 +35,14 @@ import ArcGIS
      */
     var portal:AGSPortal = AGSPortal(loginRequired: false) {
         didSet {
-            portal.load { (error: Error?) in
+            portal.load { [weak self] (error: Error?) in
                 if let error = error {
                     print("[Error: Portal Load Status]", error.localizedDescription)
                 }
                 else {
                     print("[Portal] loaded")
                 }
-                appContext.user = self.portal.user
+                self?.user = self?.portal.user
             }
         }
     }
@@ -80,7 +80,11 @@ import ArcGIS
     /**
      An kv-observable property that holds on to the portal's user.
      */
-    dynamic var user:AGSPortalUser? = nil
+    dynamic var user:AGSPortalUser? = nil {
+        didSet {
+            print("[Authentication] user is", user != nil ? "logged in (\(user!.username ?? "no username"))." : "logged out.")
+        }
+    }
     
     var isLoggedIn:Bool {
         return user != nil
