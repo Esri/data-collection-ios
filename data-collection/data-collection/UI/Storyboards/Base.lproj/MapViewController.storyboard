@@ -188,7 +188,7 @@
                                         </constraints>
                                     </view>
                                     <view opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="L7K-qp-Vqi" customClass="PinDropView" customModule="data_collection" customModuleProvider="target">
-                                        <rect key="frame" x="166.66666666666666" y="363.66666666666669" width="42" height="42"/>
+                                        <rect key="frame" x="167.33333333333334" y="363.33333333333331" width="42" height="42"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="42" id="ECp-1S-WeB"/>
                                             <constraint firstAttribute="height" constant="42" id="Y7U-Ai-flW"/>
@@ -380,7 +380,7 @@
                                 <blurEffect style="dark"/>
                             </visualEffectView>
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jM0-uj-oBw">
-                                <rect key="frame" x="0.0" y="88" width="281.66666666666669" height="724"/>
+                                <rect key="frame" x="0.0" y="88" width="281.33333333333331" height="724"/>
                                 <connections>
                                     <segue destination="J5a-vF-Peq" kind="embed" id="1PX-q5-oDh"/>
                                 </connections>
@@ -504,11 +504,11 @@
             <objects>
                 <viewController id="J5a-vF-Peq" customClass="DrawerViewController" customModule="data_collection" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Qpk-EM-iWf">
-                        <rect key="frame" x="0.0" y="0.0" width="281.66666666666669" height="724"/>
+                        <rect key="frame" x="0.0" y="0.0" width="281.33333333333331" height="724"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bqL-1K-A5Z">
-                                <rect key="frame" x="0.0" y="0.0" width="281.66666666666669" height="76"/>
+                                <rect key="frame" x="0.0" y="0.0" width="281.33333333333331" height="76"/>
                                 <color key="backgroundColor" red="0.7607440352" green="0.76081240179999998" blue="0.76068693399999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YgX-ws-Mkq">

@@ -68,7 +68,7 @@ class AppContainerViewController: AppContextAwareController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        adjustForDrawerShowing()
+        adjustForDrawerShowing(animationDuration: 0.0)
         adjustNavigationBarButtons()
     }
     
@@ -107,16 +107,30 @@ class AppContainerViewController: AppContextAwareController {
         }
     }
     
-    func adjustForDrawerShowing() {
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
+        adjustForDrawerShowing(animationDuration: 0.0)
+    }
+    
+    func adjustForDrawerShowing(animationDuration: TimeInterval = 0.2) {
         
         drawerLeadingLayoutConstraint.constant = drawerShowing ? 0.0 : -contextView.frame.size.width
 
-        UIView.animate(withDuration: 0.2, delay: 0.0, options: .curveEaseOut, animations: {
-            self.view.layoutIfNeeded()
-            self.visualEffectView.effect = self.drawerShowing ? UIBlurEffect(style: .light) : nil
-        }) { (_) in
-            self.visualEffectView.isUserInteractionEnabled = self.drawerShowing
+        UIView.animate(withDuration: animationDuration, delay: 0.0, options: .curveEaseOut, animations: { [weak self] in
+            self?.view.layoutIfNeeded()
+            self?.adjustVisualEffectViewForDrawerShowing()
+        }) { [weak self] (_) in
+            self?.adjustVisualEffectViewIsUserInteractionEnabled()
         }
+    }
+    
+    private func adjustVisualEffectViewForDrawerShowing() {
+        self.visualEffectView.effect = self.drawerShowing ? UIBlurEffect(style: .light) : nil
+    }
+    
+    private func adjustVisualEffectViewIsUserInteractionEnabled() {
+        self.visualEffectView.isUserInteractionEnabled = self.drawerShowing
     }
     
     func adjustNavigationBarButtons() {
