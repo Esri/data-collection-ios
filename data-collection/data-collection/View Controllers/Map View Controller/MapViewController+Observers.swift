@@ -23,7 +23,7 @@ extension MapViewController {
     }
     
     private func beginObservingLocationAuthStatus() {
-        observeLocationAuthorization = AppLocation.shared.observe(\.locationAuthorized, options:[.new, .old]) { [weak self] (appLocation, _) in
+        observeLocationAuthorization = appLocation.observe(\.locationAuthorized, options:[.new, .old]) { [weak self] (appLocation, _) in
             print("[Location Authorization] is authorized: \(appLocation.locationAuthorized)")
             self?.adjustForLocationAuthorizationStatus()
         }

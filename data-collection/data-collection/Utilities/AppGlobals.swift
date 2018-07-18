@@ -22,6 +22,10 @@ var appReachability: NetworkReachabilityManager {
     return appDelegate.reachabilityManager
 }
 
+var appLocation: AppLocation {
+    return AppLocation.shared
+}
+
 var appContext: AppContext {
     return AppContext.shared
 }

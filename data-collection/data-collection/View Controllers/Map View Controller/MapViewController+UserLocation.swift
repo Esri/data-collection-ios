@@ -23,7 +23,7 @@ extension MapViewController {
             return
         }
         
-        if AppLocation.shared.locationAuthorized {
+        if appLocation.locationAuthorized {
             guard mapView.locationDisplay.showLocation == true, let location = mapView.locationDisplay.location, let position = location.position else {
                 return
             }
@@ -38,10 +38,10 @@ extension MapViewController {
     
     func adjustForLocationAuthorizationStatus() {
         
-        mapView.locationDisplay.showLocation = AppLocation.shared.locationAuthorized
-        mapView.locationDisplay.showAccuracy = AppLocation.shared.locationAuthorized
+        mapView.locationDisplay.showLocation = appLocation.locationAuthorized
+        mapView.locationDisplay.showAccuracy = appLocation.locationAuthorized
         
-        if AppLocation.shared.locationAuthorized {
+        if appLocation.locationAuthorized {
             mapView.locationDisplay.start { (err) in
                 if let error = err {
                     print("[Error] Cannot display user location: \(error.localizedDescription)")
