@@ -33,6 +33,9 @@ struct AppColors {
     
     let tint: UIColor = .white
     
+    let loginLogoutNormal: UIColor = .white
+    let loginLogoutHighlighted: UIColor = .lightGray
+    
     let workModeNormal: UIColor = .darkGray
     let workModeHighlighted: UIColor = .lightGray
     let workModeSelected: UIColor = .white

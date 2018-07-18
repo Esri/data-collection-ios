@@ -40,19 +40,24 @@ class DrawerViewController: AppContextAwareController {
     var observeCurrentUser: NSKeyValueObservation?
     var observeOfflineMap: NSKeyValueObservation?
     
-    var workModeControlStateColors: [UIControlState: UIColor] {
+    let loginLogoutButtonControlStateColors: [UIControlState: UIColor] = {
+        return [.normal: appColors.loginLogoutNormal,
+                .highlighted: appColors.loginLogoutHighlighted]
+    }()
+    
+    let workModeControlStateColors: [UIControlState: UIColor] = {
         return [.normal: appColors.workModeNormal,
                 .highlighted: appColors.workModeHighlighted,
                 .selected: appColors.workModeSelected,
                 .disabled: appColors.workModeDisabled]
-    }
+    }()
     
-    var offlineActivityControlStateColors: [UIControlState: UIColor] {
+    let offlineActivityControlStateColors: [UIControlState: UIColor] = {
         return [.normal: appColors.offlineActivityNormal,
                 .highlighted: appColors.offlineActivityHighlighted,
                 .selected: appColors.offlineActivitySelected,
                 .disabled: appColors.offlineActivityDisabled]
-    }
+    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -73,15 +78,11 @@ class DrawerViewController: AppContextAwareController {
     }
     
     func setButtonAttributedTitles() {
-
+        
+        loginButton.setAttributed(header: "Log in", forControlStateColors: loginLogoutButtonControlStateColors, headerFont: appFonts.drawerButtonSubheader)
         workOnlineButton.setAttributed(header: "Work Online", forControlStateColors: workModeControlStateColors, headerFont: appFonts.drawerButtonHeader)
-        
-        for controlStateColor in workModeControlStateColors {
-            print("~\n\(workOnlineButton!)\n[GETTING: control state \(controlStateColor.key.rawValue)]\n\(workOnlineButton!.attributedTitle(for: controlStateColor.key) ?? NSAttributedString(string: "[no current attributed title]"))")
-        }
-        
         workOfflineButton.setAttributed(header: "Work Offline", forControlStateColors: workModeControlStateColors, headerFont: appFonts.drawerButtonHeader)
-        synchronizeOfflineMapButton.setAttributed(header: "Synchronize Offline Map", subheader: "Last synchronized ..", forControlStateColors: offlineActivityControlStateColors, headerFont: appFonts.drawerButtonHeader, subheaderFont: appFonts.drawerButtonSubheader)
+        synchronizeOfflineMapButton.setAttributed(header: "Synchronize Offline Map", forControlStateColors: offlineActivityControlStateColors, headerFont: appFonts.drawerButtonHeader)
         deleteOfflineMapButton.setAttributed(header: "Delete Offline Map", forControlStateColors: offlineActivityControlStateColors, headerFont: appFonts.drawerButtonHeader)
     }
     
@@ -208,7 +209,7 @@ class DrawerViewController: AppContextAwareController {
             print("[Authentication] user is", appContext.isLoggedIn ? "logged in." : "logged out.")
             
             // TODO update.
-            guard let colors = self?.workModeControlStateColors else {
+            guard let colors = self?.loginLogoutButtonControlStateColors else {
                 return
             }
             

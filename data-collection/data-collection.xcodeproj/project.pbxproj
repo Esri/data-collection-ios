@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9400C40820FFB8420073B754 /* RelatedRecordsPopupsViewController+RelatedRecordsPreferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9400C40720FFB8420073B754 /* RelatedRecordsPopupsViewController+RelatedRecordsPreferences.swift */; };
 		940DA9722097825700AB4BF6 /* UILabel+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 940DA9712097825700AB4BF6 /* UILabel+Extensions.swift */; };
 		940DA9752097942000AB4BF6 /* PopupFieldCellProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 940DA9742097942000AB4BF6 /* PopupFieldCellProtocol.swift */; };
 		940DA977209794E200AB4BF6 /* PopupTextFieldCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 940DA976209794E200AB4BF6 /* PopupTextFieldCell.swift */; };
@@ -142,6 +143,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		9400C40720FFB8420073B754 /* RelatedRecordsPopupsViewController+RelatedRecordsPreferences.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RelatedRecordsPopupsViewController+RelatedRecordsPreferences.swift"; sourceTree = "<group>"; };
 		940DA9712097825700AB4BF6 /* UILabel+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+Extensions.swift"; sourceTree = "<group>"; };
 		940DA9742097942000AB4BF6 /* PopupFieldCellProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupFieldCellProtocol.swift; sourceTree = "<group>"; };
 		940DA976209794E200AB4BF6 /* PopupTextFieldCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupTextFieldCell.swift; sourceTree = "<group>"; };
@@ -317,6 +319,7 @@
 			isa = PBXGroup;
 			children = (
 				948066352091483600A398EA /* RelatedRecordsPopupsViewController.swift */,
+				9400C40720FFB8420073B754 /* RelatedRecordsPopupsViewController+RelatedRecordsPreferences.swift */,
 				94D2713A20CEF04F00304E27 /* RelatedRecordsPopupsViewController+EditingSessions.swift */,
 				9412D214209937E50031F9EB /* RelatedRecordsPopupsViewController+Delegate.swift */,
 				9412D2162099382C0031F9EB /* RelatedRecordsPopupsViewController+DataSource.swift */,
@@ -909,6 +912,7 @@
 				940DA9722097825700AB4BF6 /* UILabel+Extensions.swift in Sources */,
 				94BA7D3C20FD151A00C78255 /* AppFonts.swift in Sources */,
 				94D2714320D0578000304E27 /* OneToManyManager.swift in Sources */,
+				9400C40820FFB8420073B754 /* RelatedRecordsPopupsViewController+RelatedRecordsPreferences.swift in Sources */,
 				94B375C1207E8D5600691F2A /* AppConfiguration.swift in Sources */,
 				946569062087FBF700599E55 /* MapViewController+UserLocation.swift in Sources */,
 				940DA9792097951000AB4BF6 /* PopupTextViewCell.swift in Sources */,

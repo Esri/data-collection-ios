@@ -40,25 +40,25 @@ extension UIButton {
     
     func setAttributed(header: String, subheader: String? = nil, forControlStateColors controlStateColors: [UIControlState: UIColor], headerFont: UIFont, subheaderFont: UIFont? = nil) {
         
-        let attributedTitle: NSMutableAttributedString!
-        
-        let headerLocation = 0
-        var headerLength = header.count
-        
-        let headerRange = NSRange(location: headerLocation, length: headerLength)
-        
-        if let subheader = subheader, let _ = subheaderFont {
-            let newline = "\n"
-            attributedTitle = NSMutableAttributedString(string: "\(header)\(newline)\(subheader)")
-            headerLength += newline.count
-        }
-        else {
-            attributedTitle = NSMutableAttributedString(string: header)
-        }
+        var attributedTitleString: NSMutableAttributedString
         
         for controlStateColor in controlStateColors {
+            
+            let headerLocation = 0
+            var headerLength = header.count
+            
+            let headerRange = NSRange(location: headerLocation, length: headerLength)
 
-            attributedTitle.addAttributes([.foregroundColor : controlStateColor.value, .font: headerFont], range: headerRange)
+            if let subheader = subheader, let _ = subheaderFont {
+                let newline = "\n"
+                attributedTitleString = NSMutableAttributedString(string: "\(header)\(newline)\(subheader)")
+                headerLength += newline.count
+            }
+            else {
+                attributedTitleString = NSMutableAttributedString(string: header)
+            }
+
+            attributedTitleString.addAttributes([.foregroundColor : controlStateColor.value, .font: headerFont], range: headerRange)
             
             titleLabel?.numberOfLines = 1
             
@@ -71,14 +71,10 @@ extension UIButton {
                 
                 titleLabel?.numberOfLines = 2
                 
-                attributedTitle.addAttributes([.foregroundColor : controlStateColor.value, .font: subheaderFont], range: subheaderRange)
+                attributedTitleString.addAttributes([.foregroundColor : controlStateColor.value, .font: subheaderFont], range: subheaderRange)
             }
             
-//            print("\n\(self)\n[SETTING: control state \(controlStateColor.key.rawValue)]\n\(attributedTitle)")
-            
-            self.setAttributedTitle(attributedTitle, for: controlStateColor.key)
-
-            print("•\n\(self)\n[GETTING: control state \(controlStateColor.key.rawValue)]\n\(self.attributedTitle(for: controlStateColor.key) ?? NSAttributedString(string: "[no current attributed title]"))")
+            self.setAttributedTitle(attributedTitleString, for: controlStateColor.key)
         }
     }
 }

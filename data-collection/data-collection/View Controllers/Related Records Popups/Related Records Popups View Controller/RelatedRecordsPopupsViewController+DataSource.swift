@@ -88,7 +88,7 @@ extension RelatedRecordsPopupsViewController: UITableViewDataSource {
             cell.table = manager.relatedTable
             cell.popup = manager.relatedPopup
             cell.relationshipInfo = manager.relationshipInfo
-            cell.maxAttributes = AppConfiguration.relatedRecordPrefs.manyToOneCellAttributeCount
+            cell.maxAttributes = RelatedRecordsPreferences.manyToOneCellAttributeCount
             cell.editingPopup = recordsManager.isEditing
             cell.updateCellContent()
             
@@ -101,7 +101,7 @@ extension RelatedRecordsPopupsViewController: UITableViewDataSource {
             cell.table = manager.relatedTable
             cell.popup = manager.popup(forIndexPath: indexPath)
             cell.relationshipInfo = manager.relationshipInfo
-            cell.maxAttributes = AppConfiguration.relatedRecordPrefs.oneToManyCellAttributeCount
+            cell.maxAttributes = RelatedRecordsPreferences.oneToManyCellAttributeCount
             cell.editingPopup = recordsManager.isEditing
             cell.updateCellContent()
             

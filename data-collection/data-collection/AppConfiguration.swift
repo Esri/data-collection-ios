@@ -29,23 +29,7 @@ class AppConfiguration {
     static let keychainIdentifier: String = "\(appBundleID).keychain"
     static let licenseKey: String = "fake_license_key"
     static let clientID: String = "AaXxKoHH3piT1fe3"
-        
-    static let config = AppConfiguration()
-    
-    static var relatedRecordPrefs: RelatedRecordsPreferences {
-        return config.prefs
-    }
-    
-    private var prefs = RelatedRecordsPreferences()
 }
-
-struct RelatedRecordsPreferences {
-    
-    let manyToOneCellAttributeCount = 2
-    let oneToManyCellAttributeCount = 3
-}
-
-
 
 // MARK: Debug Request Logging
 
