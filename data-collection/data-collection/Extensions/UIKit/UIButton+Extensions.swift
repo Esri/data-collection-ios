@@ -44,14 +44,14 @@ extension UIButton {
         
         let headerLocation = 0
 
-        for controlStateColor in controlStateColors {
+        for (state, color) in controlStateColors {
             
             var headerLength = header.count
             
             let headerRange = NSRange(location: headerLocation, length: headerLength)
             
             attributedTitleString = NSMutableAttributedString(string: header)
-            attributedTitleString.addAttributes([.foregroundColor : controlStateColor.value, .font: headerFont], range: headerRange)
+            attributedTitleString.addAttributes([.foregroundColor : color, .font: headerFont], range: headerRange)
 
             if let subheader = subheader, let subheaderFont = subheaderFont {
 
@@ -67,7 +67,7 @@ extension UIButton {
                 
                 let subheaderRange = NSRange(location: subheaderLocation, length: subheaderLength)
                 
-                attributedTitleString.addAttributes([.foregroundColor : controlStateColor.value, .font: subheaderFont], range: subheaderRange)
+                attributedTitleString.addAttributes([.foregroundColor : color, .font: subheaderFont], range: subheaderRange)
                 
                 titleLabel?.numberOfLines = 2
             }
@@ -75,7 +75,7 @@ extension UIButton {
                 titleLabel?.numberOfLines = 1
             }
             
-            self.setAttributedTitle(attributedTitleString, for: controlStateColor.key)
+            self.setAttributedTitle(attributedTitleString, for: state)
         }
     }
 }
