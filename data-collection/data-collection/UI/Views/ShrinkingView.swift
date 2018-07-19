@@ -52,6 +52,8 @@ class ShrinkingView: UIControl {
         super.touchesCancelled(touches, with: event)
         // animate
         scale = .full
+        
+        sendActions(for: .touchCancel)
     }
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
