@@ -16,6 +16,7 @@ import Foundation
 import ArcGIS
 
 extension AGSLoadStatus: CustomStringConvertible {
+    
     public var description:String {
         switch self {
         case .loaded:

@@ -51,14 +51,10 @@ extension AGSArcGISFeature {
     
     var objectID: Int64? {
         get {
-            guard
-                let featureTable = featureTable as? AGSArcGISFeatureTable,
-                let oid = attributes[featureTable.objectIDField] as? Int64
-                else {
-                    return nil
+            guard let featureTable = featureTable as? AGSArcGISFeatureTable else {
+                return nil
             }
-            
-            return oid
+            return attributes[featureTable.objectIDField] as? Int64
         }
         set {
             guard let featureTable = featureTable as? AGSArcGISFeatureTable else {
