@@ -20,6 +20,6 @@ struct AppFonts {
     let tableCellTitle = UIFont.preferredFont(forTextStyle: .footnote)
     let tableCellValue = UIFont.preferredFont(forTextStyle: .body)
     
-    let drawerButtonHeader = UIFont.preferredFont(forTextStyle: .body)
-    let drawerButtonSubheader = UIFont.preferredFont(forTextStyle: .footnote)
+    let drawerButtonHeader = UIFont.systemFont(ofSize: 14.0)
+    let drawerButtonSubheader = UIFont.systemFont(ofSize: 12.0)
 }
