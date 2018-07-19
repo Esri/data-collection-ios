@@ -22,13 +22,9 @@ var appReachability: NetworkReachabilityManager {
     return appDelegate.reachabilityManager
 }
 
-var appLocation: AppLocation {
-    return AppLocation.shared
-}
+let appLocation = AppLocation()
 
-var appContext: AppContext {
-    return AppContext.shared
-}
+let appContext = AppContext()
 
 var appBundleID: String {
     return Bundle.main.bundleIdentifier!
@@ -42,6 +38,6 @@ var appReverseGeocoder: ReverseGeocoderManager {
     return appContext.reverseGeocoderManager
 }
 
-var appColors = AppColors()
+let appColors = AppColors()
 
-var appFonts = AppFonts()
+let appFonts = AppFonts()

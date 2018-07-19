@@ -15,9 +15,7 @@
 import CoreLocation
 
 @objcMembers class AppLocation: NSObject, CLLocationManagerDelegate {
-    
-    static let shared = AppLocation()
-    
+        
     private let locationManager = CLLocationManager()
     
     dynamic var locationAuthorized: Bool = false

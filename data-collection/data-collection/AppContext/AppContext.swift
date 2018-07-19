@@ -16,10 +16,8 @@ import Foundation
 import ArcGIS
 
 @objcMembers class AppContext: NSObject {
-    
-    static let shared = AppContext()
-    
-    private override init() {
+        
+    override init() {
         super.init()
         attemptLoginToPortalFromCredentials()
     }

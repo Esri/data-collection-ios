@@ -17,7 +17,6 @@ import ArcGIS
 
 // MARK: Protocol Declarations
 
-
 protocol UserDefaultsKeysProtocol {
     static var objectDomain:String { get }
 }
