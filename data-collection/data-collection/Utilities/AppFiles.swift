@@ -23,19 +23,6 @@ extension FileManager {
         
         static let dataCollection = "data_collection"
         static let offlineMap = "offlineMap"
-        static let generatedAssets = "generatedAssets"
-    }
-    
-    struct OfflineExtentImage {
-        
-        static let fileName = "offlineMapExtent"
-        static let fileExtension = "png"
-        
-        var image: UIImage
-        
-        var data: Data? {
-            return UIImagePNGRepresentation(image)
-        }
     }
     
     // MARK: Temporary Map Directory
@@ -75,21 +62,7 @@ extension FileManager {
         return dataCollectionDocsDirectoryURL.appendingPathComponent(OfflineDirectoryComponents.offlineMap)
     }
     
-    private static var appGeneratedAssetsDirectoryURL: URL {
-        return dataCollectionDocsDirectoryURL.appendingPathComponent(OfflineDirectoryComponents.generatedAssets)
-    }
-    
-    private static var offlineExtentImageFileURL: URL {
-        return appGeneratedAssetsDirectoryURL.appendingPathComponent(OfflineExtentImage.fileName).appendingPathExtension(OfflineExtentImage.fileExtension)
-    }
-    
-    // MARK: Offline Directories
-    
-    static func buildOfflineDirectories() {
-        
-        buildOfflineMapDirectory()
-        buildGeneratedAssetsDirectory()
-    }
+    // MARK: Offline Directory
     
     static func buildOfflineMapDirectory() {
         
@@ -102,73 +75,4 @@ extension FileManager {
             print("[Error: AppFiles] could not create directory: \(path) with error:", error.localizedDescription)
         }
     }
-    
-    static func buildGeneratedAssetsDirectory() {
-        
-        let path = appGeneratedAssetsDirectoryURL
-
-        do {
-            try FileManager.default.createDirectory(at: path, withIntermediateDirectories: true, attributes: nil)
-        }
-        catch {
-            print("[Error: AppFiles] could not create directory: \(path) with error:", error.localizedDescription)
-        }
-    }
-    
-    // MARK: Offline Extent Image
-    
-//    static var offlineExtentImageFile: UIImage? {
-//        get {
-//            guard let path = offlineExtentImageFileURL else {
-//                print("[Error: AppFiles] could not build path to offline map extent image file.")
-//                return nil
-//            }
-//
-//            guard FileManager.default.fileExists(atPath: path.absoluteString) else {
-//                print("[AppFiles] no offline map extent image file at path \(path).")
-//                return nil
-//            }
-//
-//            guard FileManager.default.isReadableFile(atPath: path.absoluteString) else {
-//                print("[Error: AppFiles] cannot read offline map extent image file at path \(path).")
-//                return nil
-//            }
-//
-//            guard let image = UIImage(contentsOfFile: path.absoluteString) else {
-//                print("[Error: AppFiles] file exists at offline extent image file path but could not load image at path \(path).")
-//                return nil
-//            }
-//
-//            return image
-//        }
-//        set {
-//            guard let path = offlineExtentImageFileURL else {
-//                print("[Error: AppFiles] could not build path to offline map extent image file.")
-//                return
-//            }
-//
-//            if FileManager.default.fileExists(atPath: path.absoluteString) {
-//                guard FileManager.default.isDeletableFile(atPath: path.absoluteString) else {
-//                    print("[Error: AppFiles] cannot delete offline map extent image file at path \(path).")
-//                    return
-//                }
-//                do {
-//                    try FileManager.default.removeItem(at: path)
-//                }
-//                catch {
-//                    print("[Error: AppFiles] cannot remove item at path: \(path) with error:", error.localizedDescription)
-//                    return
-//                }
-//            }
-//
-//            if let newImage = newValue {
-//                guard FileManager.default.isWritableFile(atPath: path.absoluteString) else {
-//                    print("[Error: AppFiles] cannot write offline map extent image file to path \(path).")
-//                    return
-//                }
-//                let extentImage = OfflineExtentImage(image: newImage)
-//                FileManager.default.createFile(atPath: path.absoluteString, contents: extentImage.data, attributes: nil)
-//            }
-//        }
-//    }
 }

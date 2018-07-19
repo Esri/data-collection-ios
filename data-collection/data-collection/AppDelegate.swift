@@ -44,7 +44,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         appContext.attemptLoginToPortalFromCredentials()
         
         // Configure file documents directories for offline usage
-        FileManager.buildOfflineDirectories()
+        FileManager.buildOfflineMapDirectory()
         
         return true
     }
