@@ -14,10 +14,6 @@
 
 import Foundation
 
-//protocol EphemeralCacheCacheable {
-//    static var ephemeralCacheKey: String { get }
-//}
-
 class EphemeralCache {
     
     private static let shared = EphemeralCache()
