@@ -34,6 +34,8 @@ class DrawerViewController: AppContextAwareController {
     @IBOutlet weak var workOfflineButton: UIButton!
     @IBOutlet weak var synchronizeOfflineMapButton: UIButton!
     @IBOutlet weak var deleteOfflineMapButton: UIButton!
+    @IBOutlet weak var mmpkThumbnailImageView: UIImageView!
+    @IBOutlet weak var mmpkThumbnailImageViewHeightConstraint: NSLayoutConstraint!
     
     var contextViewControllerJobDelegate: DrawerViewControllerDelegate?
     
@@ -190,6 +192,19 @@ class DrawerViewController: AppContextAwareController {
         
         deleteOfflineMapButton.isEnabled = appContext.hasOfflineMap && appContext.isLoggedIn
         deleteOfflineMapButton.isSelected = false
+        
+        mmpkThumbnailImageViewHeightConstraint.constant = appContext.hasOfflineMap ? 200.0 : 0
+        
+        if let thumbnail = appContext.mobileMapPackage?.item?.thumbnail {
+            thumbnail.load { [weak self] (_) in
+                self?.mmpkThumbnailImageViewHeightConstraint.constant = thumbnail.image?.size.height ?? 0.0
+                self?.mmpkThumbnailImageView.image = thumbnail.image
+            }
+        }
+        else {
+            mmpkThumbnailImageView.image = nil
+            mmpkThumbnailImageViewHeightConstraint.constant = 0.0
+        }
     }
     
     private func beginObservingCurrentUser() {
