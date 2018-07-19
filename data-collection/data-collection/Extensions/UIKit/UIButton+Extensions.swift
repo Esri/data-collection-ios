@@ -42,36 +42,37 @@ extension UIButton {
         
         var attributedTitleString: NSMutableAttributedString
         
+        let headerLocation = 0
+
         for controlStateColor in controlStateColors {
             
-            let headerLocation = 0
             var headerLength = header.count
             
             let headerRange = NSRange(location: headerLocation, length: headerLength)
-
-            if let subheader = subheader, let _ = subheaderFont {
-                let newline = "\n"
-                attributedTitleString = NSMutableAttributedString(string: "\(header)\(newline)\(subheader)")
-                headerLength += newline.count
-            }
-            else {
-                attributedTitleString = NSMutableAttributedString(string: header)
-            }
-
+            
+            attributedTitleString = NSMutableAttributedString(string: header)
             attributedTitleString.addAttributes([.foregroundColor : controlStateColor.value, .font: headerFont], range: headerRange)
-            
-            titleLabel?.numberOfLines = 1
-            
+
             if let subheader = subheader, let subheaderFont = subheaderFont {
+
+                let newline = "\n"
+                
+                headerLength += newline.count
                 
                 let subheaderLocation = headerLength
                 let subheaderLength = subheader.count
                 
+                let subheaderAttributedString = NSAttributedString(string: "\(newline)\(subheader)")
+                attributedTitleString.append(subheaderAttributedString)
+                
                 let subheaderRange = NSRange(location: subheaderLocation, length: subheaderLength)
                 
-                titleLabel?.numberOfLines = 2
-                
                 attributedTitleString.addAttributes([.foregroundColor : controlStateColor.value, .font: subheaderFont], range: subheaderRange)
+                
+                titleLabel?.numberOfLines = 2
+            }
+            else {
+                titleLabel?.numberOfLines = 1
             }
             
             self.setAttributedTitle(attributedTitleString, for: controlStateColor.key)
