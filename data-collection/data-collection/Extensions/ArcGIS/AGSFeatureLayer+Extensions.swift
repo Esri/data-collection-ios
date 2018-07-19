@@ -21,7 +21,6 @@ extension AGSFeatureLayer {
         guard
             isVisible,
             let featureTable = featureTable,
-            featureTable.isEditable,
             featureTable.geometryType == .point,
             featureTable.isPopupActuallyEnabled else {
                 return false
