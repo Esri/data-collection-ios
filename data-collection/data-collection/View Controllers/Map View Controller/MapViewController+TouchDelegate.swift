@@ -40,12 +40,14 @@ extension MapViewController: AGSGeoViewTouchDelegate {
             
             if let error = error {
                 print("[Error] identifying layers", error.localizedDescription)
+                self?.notificationBar.showLabel(withNotificationMessage: "Could not identify features.", forDuration: 2.0)
                 self?.currentPopup = nil
                 return
             }
             
             guard let identifyResults = result else {
                 print("[Error] identifying layers, missing results")
+                self?.notificationBar.showLabel(withNotificationMessage: "Could not identify features.", forDuration: 2.0)
                 self?.currentPopup = nil
                 return
             }
