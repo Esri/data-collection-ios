@@ -17,49 +17,130 @@ import UIKit
 /**
  `AppContextAwareController` is a `UIViewController` subclass that registers for App Notifications upon with overrideable
  functions so each view controller can adjust accordingly.
- 
- Two notifications are observed:
- - changes to network reachability
- - changes to app work mode
  */
-class AppContextAwareController: UIViewController {
+
+enum AppContextNotifications {
+    case currentUser, currentMap, offlineMap, locationAuthorization, reachability, workMode, lastSync
+}
+
+protocol AppContextNotificationsSubscribable {
+    var notifications: [AppContextNotifications] { get }
+}
+
+class AppContextAwareController: UIViewController, AppContextNotificationsSubscribable {
     
+    var notifications: [AppContextNotifications] { return [] }
+    
+    private var appContextNotifications: [AppContextNotifications]!
+    
+    private var observeCurrentUser: NSKeyValueObservation?
+    private var observeCurrentMap: NSKeyValueObservation?
+    private var observeOfflineMap: NSKeyValueObservation?
+    private var observeLocationAuthorization: NSKeyValueObservation?
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        appNotificationCenter.addObserver(self, selector: #selector(AppContextAwareController.recieveReachabilityNotification(notification:)), name: AppNotifications.reachabilityChanged.name, object: nil)
-        appNotificationCenter.addObserver(self, selector: #selector(AppContextAwareController.recieveWorkModeNotification(notification:)), name: AppNotifications.workModeChanged.name, object: nil)
-        appNotificationCenter.addObserver(self, selector: #selector(AppContextAwareController.recieveLastSyncNotification(notification:)), name: AppNotifications.lastSyncChanged.name, object: nil)
+        
+        appContextNotifications = notifications
+        
+        if appContextNotifications.contains(.reachability) {
+            appNotificationCenter.addObserver(self, selector: #selector(AppContextAwareController.recieveReachabilityNotification(notification:)), name: AppNotifications.reachabilityChanged.name, object: nil)
+        }
+        
+        if appContextNotifications.contains(.workMode) {
+            appNotificationCenter.addObserver(self, selector: #selector(AppContextAwareController.recieveWorkModeNotification(notification:)), name: AppNotifications.workModeChanged.name, object: nil)
+        }
+        
+        if appContextNotifications.contains(.lastSync) {
+            appNotificationCenter.addObserver(self, selector: #selector(AppContextAwareController.recieveLastSyncNotification(notification:)), name: AppNotifications.lastSyncChanged.name, object: nil)
+        }
+        
+        if appContextNotifications.contains(.currentUser) {
+            observeCurrentUser = appContext.observe(\.user, options: [.new, .old]) { [weak self] (_, _) in
+                self?.appCurrentUserDidChange()
+            }
+        }
+
+        if appContextNotifications.contains(.currentMap) {
+            observeCurrentMap = appContext.observe(\.currentMap, options:[.new, .old]) { [weak self] (_, _) in
+                self?.appCurrentMapDidChange()
+            }
+        }
+        
+        if appContextNotifications.contains(.offlineMap) {
+            observeOfflineMap = appContext.observe(\.hasOfflineMap, options: [.new, .old]) { [weak self] (_, _) in
+                self?.appHasOfflineMapDidChange()
+            }
+        }
+        
+        if appContextNotifications.contains(.locationAuthorization) {
+            observeLocationAuthorization = appLocation.observe(\.locationAuthorized, options:[.new, .old]) { [weak self] (_, _) in
+                // print("[Location Authorization] is authorized: \(appLocation.locationAuthorized)")
+                self?.appLocationAuthorizationStatusDidChange()
+            }
+        }
+    }
+    
+    @objc private func recieveReachabilityNotification(notification: Notification) {
         appReachabilityDidChange()
+    }
+    
+    @objc private func recieveWorkModeNotification(notification: Notification) {
         appWorkModeDidChange()
     }
     
-    @objc func recieveReachabilityNotification(notification: Notification) {
-        appReachabilityDidChange()
-    }
-    
-    @objc func recieveWorkModeNotification(notification: Notification) {
-        appWorkModeDidChange()
-    }
-    
-    @objc func recieveLastSyncNotification(notification: Notification) {
+    @objc private func recieveLastSyncNotification(notification: Notification) {
         appLastSyncDidChange()
     }
     
-    func appReachabilityDidChange() {
-        
-    }
+    func appReachabilityDidChange() { }
     
     func appWorkModeDidChange() {
         navigationController?.navigationBar.barTintColor = (appContext.workMode == .online) ? appColors.primary : appColors.offline
     }
     
-    func appLastSyncDidChange() {
-
-    }
+    func appLastSyncDidChange() { }
+    
+    func appCurrentUserDidChange() { }
+    
+    func appCurrentMapDidChange() { }
+    
+    func appHasOfflineMapDidChange() { }
+    
+    func appLocationAuthorizationStatusDidChange() { }
     
     deinit {
-        appNotificationCenter.removeObserver(self, name: AppNotifications.reachabilityChanged.name, object: nil)
-        appNotificationCenter.removeObserver(self, name: AppNotifications.workModeChanged.name, object: nil)
-        appNotificationCenter.removeObserver(self, name: AppNotifications.lastSyncChanged.name, object: nil)
+        
+        if appContextNotifications.contains(.reachability) {
+            appNotificationCenter.removeObserver(self, name: AppNotifications.reachabilityChanged.name, object: nil)
+        }
+        
+        if appContextNotifications.contains(.workMode) {
+            appNotificationCenter.removeObserver(self, name: AppNotifications.workModeChanged.name, object: nil)
+        }
+        
+        if appContextNotifications.contains(.lastSync) {
+            appNotificationCenter.removeObserver(self, name: AppNotifications.lastSyncChanged.name, object: nil)
+        }
+        
+        if appContextNotifications.contains(.currentUser) {
+            observeCurrentUser?.invalidate()
+            observeCurrentUser = nil
+        }
+        
+        if appContextNotifications.contains(.currentMap) {
+            observeCurrentMap?.invalidate()
+            observeCurrentMap = nil
+        }
+        
+        if appContextNotifications.contains(.offlineMap) {
+            observeOfflineMap?.invalidate()
+            observeOfflineMap = nil
+        }
+        
+        if appContextNotifications.contains(.locationAuthorization) {
+            observeLocationAuthorization?.invalidate()
+            observeLocationAuthorization = nil
+        }
     }
 }

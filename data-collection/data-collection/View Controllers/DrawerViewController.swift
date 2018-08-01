@@ -39,9 +39,6 @@ class DrawerViewController: AppContextAwareController {
     
     var contextViewControllerJobDelegate: DrawerViewControllerDelegate?
     
-    var observeCurrentUser: NSKeyValueObservation?
-    var observeOfflineMap: NSKeyValueObservation?
-    
     let loginLogoutButtonControlStateColors: [UIControlState: UIColor] = {
         return [.normal: appColors.loginLogoutNormal,
                 .highlighted: appColors.loginLogoutHighlighted]
@@ -63,10 +60,7 @@ class DrawerViewController: AppContextAwareController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        beginObservingCurrentUser()
-        beginObservingOfflineMap()
-        
+
         setButtonImageTints()
         setButtonAttributedTitles()
     }
@@ -205,14 +199,6 @@ class DrawerViewController: AppContextAwareController {
         }
     }
     
-    private func beginObservingCurrentUser() {
-        observeCurrentUser = appContext.observe(\.user, options: [.new, .old]) { [weak self] (_, _) in
-            
-            self?.updateLoginButtonForAuthenticatedUserProfileImage()
-            self?.updateLoginButtonForAuthenticatedUsername()
-        }
-    }
-    
     private func updateLoginButtonForAuthenticatedUserProfileImage() {
         
         if let currentUser = appContext.user {
@@ -256,12 +242,17 @@ class DrawerViewController: AppContextAwareController {
         }
     }
     
-    private func beginObservingOfflineMap() {
-        observeOfflineMap = appContext.observe(\.hasOfflineMap, options: [.new, .old]) { [weak self] (context, _) in
-            self?.adjustContextDrawerUI()
-        }
+    override var notifications: [AppContextNotifications] {
+        return [.currentUser, .workMode, .reachability, .lastSync, .offlineMap]
     }
     
+    override func appCurrentUserDidChange() {
+        super.appCurrentUserDidChange()
+        
+        updateLoginButtonForAuthenticatedUserProfileImage()
+        updateLoginButtonForAuthenticatedUsername()
+    }
+
     override func appWorkModeDidChange() {
         super.appWorkModeDidChange()
         adjustContextDrawerUI()
@@ -274,8 +265,12 @@ class DrawerViewController: AppContextAwareController {
     
     override func appLastSyncDidChange() {
         super.appLastSyncDidChange()
-
         updateSynchronizeButtonForLastSync()
+    }
+    
+    override func appHasOfflineMapDidChange() {
+        super.appHasOfflineMapDidChange()
+        adjustContextDrawerUI()
     }
     
     func updateSynchronizeButtonForLastSync() {
@@ -286,14 +281,6 @@ class DrawerViewController: AppContextAwareController {
         else {
             synchronizeOfflineMapButton.setAttributed(header: "Synchronize Offline Map", forControlStateColors: offlineActivityControlStateColors, headerFont: appFonts.drawerButtonHeader)
         }
-    }
-    
-    deinit {
-        observeCurrentUser?.invalidate()
-        observeCurrentUser = nil
-        
-        observeOfflineMap?.invalidate()
-        observeOfflineMap = nil
     }
 }
 

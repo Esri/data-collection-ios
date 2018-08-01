@@ -31,7 +31,6 @@
 		946569022087FAE700599E55 /* MapViewController+MapViewMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 946569012087FAE700599E55 /* MapViewController+MapViewMode.swift */; };
 		946569042087FB5000599E55 /* MapViewController+LocationSelection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 946569032087FB5000599E55 /* MapViewController+LocationSelection.swift */; };
 		946569062087FBF700599E55 /* MapViewController+UserLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 946569052087FBF700599E55 /* MapViewController+UserLocation.swift */; };
-		9465690A2087FC5800599E55 /* MapViewController+Observers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 946569092087FC5800599E55 /* MapViewController+Observers.swift */; };
 		9465690C2087FCCE00599E55 /* MapViewController+Setup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9465690B2087FCCE00599E55 /* MapViewController+Setup.swift */; };
 		9465690E208800A200599E55 /* MapViewController+Delegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9465690D208800A200599E55 /* MapViewController+Delegate.swift */; };
 		94656910208800E100599E55 /* MapViewController+TouchDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9465690F208800E100599E55 /* MapViewController+TouchDelegate.swift */; };
@@ -172,7 +171,6 @@
 		946569012087FAE700599E55 /* MapViewController+MapViewMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MapViewController+MapViewMode.swift"; sourceTree = "<group>"; };
 		946569032087FB5000599E55 /* MapViewController+LocationSelection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MapViewController+LocationSelection.swift"; sourceTree = "<group>"; };
 		946569052087FBF700599E55 /* MapViewController+UserLocation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MapViewController+UserLocation.swift"; sourceTree = "<group>"; };
-		946569092087FC5800599E55 /* MapViewController+Observers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MapViewController+Observers.swift"; sourceTree = "<group>"; };
 		9465690B2087FCCE00599E55 /* MapViewController+Setup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MapViewController+Setup.swift"; sourceTree = "<group>"; };
 		9465690D208800A200599E55 /* MapViewController+Delegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MapViewController+Delegate.swift"; sourceTree = "<group>"; };
 		9465690F208800E100599E55 /* MapViewController+TouchDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MapViewController+TouchDelegate.swift"; sourceTree = "<group>"; };
@@ -598,7 +596,6 @@
 				946569012087FAE700599E55 /* MapViewController+MapViewMode.swift */,
 				946569032087FB5000599E55 /* MapViewController+LocationSelection.swift */,
 				946569052087FBF700599E55 /* MapViewController+UserLocation.swift */,
-				946569092087FC5800599E55 /* MapViewController+Observers.swift */,
 				9465690B2087FCCE00599E55 /* MapViewController+Setup.swift */,
 				946569282089066800599E55 /* MapViewController+Map.swift */,
 				945CEE7C20E2FAFE00CD3E0D /* MapViewController+SmallPopupView.swift */,
@@ -901,7 +898,6 @@
 				94B375FE207E8E4800691F2A /* UIImage+Extensions.swift in Sources */,
 				94B37600207E8E4800691F2A /* UIAlertController+Extensions.swift in Sources */,
 				946569042087FB5000599E55 /* MapViewController+LocationSelection.swift in Sources */,
-				9465690A2087FC5800599E55 /* MapViewController+Observers.swift in Sources */,
 				9412D213209937950031F9EB /* RelatedRecordCell.swift in Sources */,
 				94FA8B25207BF2CD00972C75 /* MapViewController.swift in Sources */,
 				9440D35C20DC2809005ED582 /* CustomBehavior+TreeSymbology.swift in Sources */,

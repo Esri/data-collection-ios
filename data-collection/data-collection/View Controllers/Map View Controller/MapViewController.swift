@@ -44,10 +44,7 @@ class MapViewController: AppContextAwareController {
     @IBOutlet weak var selectViewSubheaderLabel: UILabel!
         
     var featureDetailViewBottomConstraint: NSLayoutConstraint!
-    
-    var observeLocationAuthorization: NSKeyValueObservation?
-    var observeCurrentMap: NSKeyValueObservation?
-    
+
     var identifyOperation: AGSCancelable?
     
     var currentPopup: AGSPopup? {
@@ -95,9 +92,6 @@ class MapViewController: AppContextAwareController {
         
         // SMALL POPUP
         setupSmallPopupView()
-        
-        // OBSERVERS
-        setupObservers()
 
         // MAPVIEWMODE
         adjustForMapViewMode(from: nil, to: mapViewMode)
@@ -179,8 +173,11 @@ class MapViewController: AppContextAwareController {
         // Dispose of any resources that can be recreated.
     }
     
+    override var notifications: [AppContextNotifications] {
+        return [.workMode, .currentMap, .locationAuthorization]
+    }
+    
     override func appWorkModeDidChange() {
-        
         super.appWorkModeDidChange()
         
         DispatchQueue.main.async { [weak self] in
@@ -190,8 +187,28 @@ class MapViewController: AppContextAwareController {
         }
     }
     
-    deinit {        
-        // Invalidate and release KVO observations
-        invalidateAndReleaseObservations()
+    override func appCurrentMapDidChange() {
+        super.appCurrentMapDidChange()
+        
+        mapView.map = appContext.currentMap
+        updateForMap()
+    }
+    
+    override func appLocationAuthorizationStatusDidChange() {
+        super.appLocationAuthorizationStatusDidChange()
+        
+        mapView.locationDisplay.showLocation = appLocation.locationAuthorized
+        mapView.locationDisplay.showAccuracy = appLocation.locationAuthorized
+        
+        if appLocation.locationAuthorized {
+            mapView.locationDisplay.start { (err) in
+                if let error = err {
+                    print("[Error] Cannot display user location: \(error.localizedDescription)")
+                }
+            }
+        }
+        else {
+            mapView.locationDisplay.stop()
+        }
     }
 }
