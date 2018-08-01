@@ -19,19 +19,19 @@ import UIKit
  functions so each view controller can adjust accordingly.
  */
 
-enum AppContextNotifications {
-    case currentUser, currentMap, offlineMap, locationAuthorization, reachability, workMode, lastSync
+enum AppContextChangeNotifications {
+    case currentUser, currentMap, hasOfflineMap, locationAuthorization, reachability, workMode, lastSync
 }
 
 protocol AppContextNotificationsSubscribable {
-    var notifications: [AppContextNotifications] { get }
+    var notifications: [AppContextChangeNotifications] { get }
 }
 
 class AppContextAwareController: UIViewController, AppContextNotificationsSubscribable {
     
-    var notifications: [AppContextNotifications] { return [] }
+    var notifications: [AppContextChangeNotifications] { return [] }
     
-    private var appContextNotifications: [AppContextNotifications]!
+    private var appContextNotifications: [AppContextChangeNotifications]!
     
     private var observeCurrentUser: NSKeyValueObservation?
     private var observeCurrentMap: NSKeyValueObservation?
@@ -67,7 +67,7 @@ class AppContextAwareController: UIViewController, AppContextNotificationsSubscr
             }
         }
         
-        if appContextNotifications.contains(.offlineMap) {
+        if appContextNotifications.contains(.hasOfflineMap) {
             observeOfflineMap = appContext.observe(\.hasOfflineMap, options: [.new, .old]) { [weak self] (_, _) in
                 self?.appHasOfflineMapDidChange()
             }
@@ -133,7 +133,7 @@ class AppContextAwareController: UIViewController, AppContextNotificationsSubscr
             observeCurrentMap = nil
         }
         
-        if appContextNotifications.contains(.offlineMap) {
+        if appContextNotifications.contains(.hasOfflineMap) {
             observeOfflineMap?.invalidate()
             observeOfflineMap = nil
         }

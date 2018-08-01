@@ -242,8 +242,8 @@ class DrawerViewController: AppContextAwareController {
         }
     }
     
-    override var notifications: [AppContextNotifications] {
-        return [.currentUser, .workMode, .reachability, .lastSync, .offlineMap]
+    override var notifications: [AppContextChangeNotifications] {
+        return [.currentUser, .workMode, .reachability, .lastSync, .hasOfflineMap]
     }
     
     override func appCurrentUserDidChange() {

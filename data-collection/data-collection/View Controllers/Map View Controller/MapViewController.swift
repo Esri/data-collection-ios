@@ -173,7 +173,7 @@ class MapViewController: AppContextAwareController {
         // Dispose of any resources that can be recreated.
     }
     
-    override var notifications: [AppContextNotifications] {
+    override var notifications: [AppContextChangeNotifications] {
         return [.workMode, .currentMap, .locationAuthorization]
     }
     
