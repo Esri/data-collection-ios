@@ -34,9 +34,21 @@ var appNotificationCenter: NotificationCenter {
     return NotificationCenter.default
 }
 
-var appReverseGeocoder: ReverseGeocoderManager {
-    return appContext.reverseGeocoderManager
-}
+let appReverseGeocoder: ReverseGeocoderManager = {
+    
+    let geocoder = ReverseGeocoderManager()
+    
+    geocoder.load(completion: { (error) in
+        if let error = error {
+            print("[Reverse Geocoder Manager] loading error", error.localizedDescription)
+        }
+        else {
+            print("[Reverse Geocoder Manager] loaded")
+        }
+    })
+    
+    return geocoder
+}()
 
 let appColors = AppColors()
 
