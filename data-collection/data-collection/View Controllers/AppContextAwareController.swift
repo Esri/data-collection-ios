@@ -37,9 +37,9 @@ class AppContextAwareController: UIViewController, AppContextNotificationsSubscr
     private var observeCurrentMap: NSKeyValueObservation?
     private var observeOfflineMap: NSKeyValueObservation?
     private var observeLocationAuthorization: NSKeyValueObservation?
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
         
         appContextNotifications = notifications
         
@@ -60,7 +60,7 @@ class AppContextAwareController: UIViewController, AppContextNotificationsSubscr
                 self?.appCurrentUserDidChange()
             }
         }
-
+        
         if appContextNotifications.contains(.currentMap) {
             observeCurrentMap = appContext.observe(\.currentMap, options:[.new, .old]) { [weak self] (_, _) in
                 self?.appCurrentMapDidChange()
@@ -80,34 +80,6 @@ class AppContextAwareController: UIViewController, AppContextNotificationsSubscr
             }
         }
     }
-    
-    @objc private func recieveReachabilityNotification(notification: Notification) {
-        appReachabilityDidChange()
-    }
-    
-    @objc private func recieveWorkModeNotification(notification: Notification) {
-        appWorkModeDidChange()
-    }
-    
-    @objc private func recieveLastSyncNotification(notification: Notification) {
-        appLastSyncDidChange()
-    }
-    
-    func appReachabilityDidChange() { }
-    
-    func appWorkModeDidChange() {
-        navigationController?.navigationBar.barTintColor = (appContext.workMode == .online) ? appColors.primary : appColors.offline
-    }
-    
-    func appLastSyncDidChange() { }
-    
-    func appCurrentUserDidChange() { }
-    
-    func appCurrentMapDidChange() { }
-    
-    func appHasOfflineMapDidChange() { }
-    
-    func appLocationAuthorizationStatusDidChange() { }
     
     deinit {
         
@@ -143,4 +115,34 @@ class AppContextAwareController: UIViewController, AppContextNotificationsSubscr
             observeLocationAuthorization = nil
         }
     }
+    
+    @objc private func recieveReachabilityNotification(notification: Notification) {
+        appReachabilityDidChange()
+    }
+    
+    @objc private func recieveWorkModeNotification(notification: Notification) {
+        appWorkModeDidChange()
+    }
+    
+    @objc private func recieveLastSyncNotification(notification: Notification) {
+        appLastSyncDidChange()
+    }
+    
+    // MARK: Overridable functions
+    
+    func appReachabilityDidChange() { }
+    
+    func appWorkModeDidChange() {
+        navigationController?.navigationBar.barTintColor = (appContext.workMode == .online) ? appColors.primary : appColors.offline
+    }
+    
+    func appLastSyncDidChange() { }
+    
+    func appCurrentUserDidChange() { }
+    
+    func appCurrentMapDidChange() { }
+    
+    func appHasOfflineMapDidChange() { }
+    
+    func appLocationAuthorizationStatusDidChange() { }
 }
