@@ -63,28 +63,30 @@ class JobStatusViewController: AppContextAwareController {
         
         progressObserver = job.progress.observe(\.fractionCompleted) { [weak self] (progress,_) in
             DispatchQueue.main.async {
-                 self?.jobStatusProgress = Float(job.progress.fractionCompleted)
+                 self?.jobStatusProgress = Float(progress.fractionCompleted)
             }
         }
         
-        job.start(statusHandler: nil) { (result, error) in
+        job.start(statusHandler: nil) { [weak self] (result, error) in
+            
+            guard let strongSelf = self else { return }
             
             guard error == nil else {
                 
                 if let nserror = error as NSError?, nserror.code == 3072 {
-                    self.jobStatusLabel.text = self.jobConstruct?.cancelMessage
+                    strongSelf.jobStatusLabel.text = strongSelf.jobConstruct?.cancelMessage
                 }
                 else {
-                    self.jobStatusLabel.text = self.jobConstruct?.errorMessage
+                    strongSelf.jobStatusLabel.text = strongSelf.jobConstruct?.errorMessage
                 }
-                self.delegate?.jobStatusViewController(self, didEndWithError: error!)
+                strongSelf.delegate?.jobStatusViewController(strongSelf, didEndWithError: error!)
                 return
             }
             
             if let result = result {
                 
-                self.jobStatusLabel.text = self.jobConstruct?.successMessage
-                self.delegate?.jobStatusViewController(self, didEndWithResult: result)
+                strongSelf.jobStatusLabel.text = strongSelf.jobConstruct?.successMessage
+                strongSelf.delegate?.jobStatusViewController(strongSelf, didEndWithResult: result)
             }
         }
     }
