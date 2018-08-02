@@ -242,26 +242,26 @@ class DrawerViewController: AppContextAwareController {
         }
     }
     
-    override func buildAppContextNotifications() -> [AppContextChangeNotifications] {
+    override var appContextNotificationRegistrations: [AppContextChangeNotification] {
         
-        let currentUserNotification = AppContextChangeNotifications.currentUser { [weak self] user in
+        let currentUserNotification = AppContextChangeNotification.currentUser { [weak self] user in
             self?.updateLoginButtonForAuthenticatedUserProfileImage(user: user)
             self?.updateLoginButtonForAuthenticatedUsername(user: user)
         }
         
-        let workModeNotification = AppContextChangeNotifications.workMode { [weak self] workMode in
+        let workModeNotification = AppContextChangeNotification.workMode { [weak self] workMode in
             self?.adjustContextDrawerUI()
         }
         
-        let reachabilityNotification = AppContextChangeNotifications.reachability { [weak self] reachable in
+        let reachabilityNotification = AppContextChangeNotification.reachability { [weak self] reachable in
             self?.adjustContextDrawerUI()
         }
         
-        let lastSyncNotification = AppContextChangeNotifications.lastSync { [weak self] date in
+        let lastSyncNotification = AppContextChangeNotification.lastSync { [weak self] date in
             self?.updateSynchronizeButtonForLastSync(date: date)
         }
         
-        let hasOfflineMap = AppContextChangeNotifications.hasOfflineMap { [weak self] hasOfflineMap in
+        let hasOfflineMap = AppContextChangeNotification.hasOfflineMap { [weak self] hasOfflineMap in
             self?.adjustContextDrawerUI()
         }
         

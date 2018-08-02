@@ -31,7 +31,7 @@ struct AppContextChangeKeys {
     static let lastSync = "appContextChange.lastSync"
 }
 
-enum AppContextChangeNotifications {
+enum AppContextChangeNotification {
     
     case currentUser((AGSPortalUser?) -> Void)
     case currentMap((AGSMap?) -> Void)
@@ -83,9 +83,9 @@ enum AppContextChangeNotifications {
 
 class AppContextAwareController: UIViewController {
     
-    func buildAppContextNotifications() -> [AppContextChangeNotifications] { return [] }
-    
-    private var appNotifications = [String: AppContextChangeNotifications]()
+    var appContextNotificationRegistrations: [AppContextChangeNotification] { return [] }
+        
+    private var appNotifications = [String: AppContextChangeNotification]()
     
     private var observeCurrentUser: NSKeyValueObservation?
     private var observeCurrentMap: NSKeyValueObservation?
@@ -95,7 +95,7 @@ class AppContextAwareController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        for notification in buildAppContextNotifications() {
+        for notification in appContextNotificationRegistrations {
             appNotifications[notification.key] = notification
         }
         

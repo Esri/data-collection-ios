@@ -173,9 +173,9 @@ class MapViewController: AppContextAwareController {
         // Dispose of any resources that can be recreated.
     }
     
-    override func buildAppContextNotifications() -> [AppContextChangeNotifications] {
+    override var appContextNotificationRegistrations: [AppContextChangeNotification] {
         
-        let workModeNotification = AppContextChangeNotifications.workMode { [weak self] workMode in
+        let workModeNotification = AppContextChangeNotification.workMode { [weak self] workMode in
             
             DispatchQueue.main.async { [weak self] in
                 self?.activityBarView.colorA = (workMode == .online) ? appColors.primary.lighter : appColors.offlineLight
@@ -184,13 +184,13 @@ class MapViewController: AppContextAwareController {
             }
         }
         
-        let currentMapNotification = AppContextChangeNotifications.currentMap { [weak self] currentMap in
+        let currentMapNotification = AppContextChangeNotification.currentMap { [weak self] currentMap in
             
             self?.mapView.map = currentMap
             self?.updateForMap()
         }
         
-        let locationAuthorizationNotification = AppContextChangeNotifications.locationAuthorization { [weak self] authorized in
+        let locationAuthorizationNotification = AppContextChangeNotification.locationAuthorization { [weak self] authorized in
             
             self?.mapView.locationDisplay.showLocation = authorized
             self?.mapView.locationDisplay.showAccuracy = authorized
