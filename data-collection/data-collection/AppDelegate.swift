@@ -52,7 +52,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 extension AppDelegate {
     
-    // NOTE: Mostly Nick's Code, URLComponents API has changed in Swift4
     // MARK: OAuth
     func application(_ app: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any] = [:]) -> Bool {
         // Handle OAuth callback from application(app,url,options) when the app's URL schema is called.
