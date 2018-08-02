@@ -21,10 +21,6 @@ extension MapViewController: AGSGeoViewTouchDelegate {
         query(geoView, atScreenPoint: screenPoint, mapPoint: mapPoint)
     }
     
-    func geoView(_ geoView: AGSGeoView, didEndLongPressAtScreenPoint screenPoint: CGPoint, mapPoint: AGSPoint) {
-        query(geoView, atScreenPoint: screenPoint, mapPoint: mapPoint)
-    }
-    
     private func query(_ geoView: AGSGeoView, atScreenPoint screenPoint: CGPoint, mapPoint: AGSPoint) {
         
         guard mapViewMode != .disabled else {

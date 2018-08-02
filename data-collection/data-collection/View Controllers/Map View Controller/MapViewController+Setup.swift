@@ -19,7 +19,7 @@ extension MapViewController {
     func setupMapView() {
         mapView.touchDelegate = self
         mapView.releaseHardwareResourcesWhenBackgrounded = true
-        mapView.interactionOptions.isMagnifierEnabled = true
+        mapView.interactionOptions.isMagnifierEnabled = false
     }
     
     func setupMapViewAttributionBarAutoLayoutConstraints() {
