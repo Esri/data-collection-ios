@@ -75,10 +75,10 @@ class DrawerViewController: AppContextAwareController {
     
     func setButtonAttributedTitles() {
         
-        updateLoginButtonForAuthenticatedUsername()
+        updateLoginButtonForAuthenticatedUsername(user: appContext.user)
         workOnlineButton.setAttributed(header: "Work Online", forControlStateColors: workModeControlStateColors, headerFont: appFonts.drawerButtonHeader)
         workOfflineButton.setAttributed(header: "Work Offline", forControlStateColors: workModeControlStateColors, headerFont: appFonts.drawerButtonHeader)
-        updateSynchronizeButtonForLastSync()
+        updateSynchronizeButtonForLastSync(date: appContext.lastSync.date)
         deleteOfflineMapButton.setAttributed(header: "Delete Offline Map", forControlStateColors: offlineActivityControlStateColors, headerFont: appFonts.drawerButtonHeader)
     }
     
@@ -199,9 +199,9 @@ class DrawerViewController: AppContextAwareController {
         }
     }
     
-    private func updateLoginButtonForAuthenticatedUserProfileImage() {
+    private func updateLoginButtonForAuthenticatedUserProfileImage(user: AGSPortalUser?) {
         
-        if let currentUser = appContext.user {
+        if let currentUser = user {
             
             let fallbackProfileImage = UIImage(named: "MissingProfile")!.withRenderingMode(.alwaysOriginal).circularThumbnail(ofSize: 36, strokeColor: appColors.loginLogoutNormal)
             
@@ -232,9 +232,9 @@ class DrawerViewController: AppContextAwareController {
         }
     }
     
-    private func updateLoginButtonForAuthenticatedUsername() {
+    private func updateLoginButtonForAuthenticatedUsername(user: AGSPortalUser?) {
         
-        if let currentUser = appContext.user {
+        if let currentUser = user {
             loginButton.setAttributed(header: "Log out", subheader: currentUser.username, forControlStateColors: loginLogoutButtonControlStateColors, headerFont: appFonts.drawerButtonHeader, subheaderFont: appFonts.drawerButtonSubheader)
         }
         else {
@@ -242,40 +242,35 @@ class DrawerViewController: AppContextAwareController {
         }
     }
     
-    override var notifications: [AppContextChangeNotifications] {
-        return [.currentUser, .workMode, .reachability, .lastSync, .hasOfflineMap]
-    }
-    
-    override func appCurrentUserDidChange() {
-        super.appCurrentUserDidChange()
+    override func buildAppContextNotifications() -> [AppContextChangeNotifications] {
         
-        updateLoginButtonForAuthenticatedUserProfileImage()
-        updateLoginButtonForAuthenticatedUsername()
-    }
-
-    override func appWorkModeDidChange() {
-        super.appWorkModeDidChange()
-        adjustContextDrawerUI()
-    }
-    
-    override func appReachabilityDidChange() {
-        super.appReachabilityDidChange()
-        adjustContextDrawerUI()
-    }
-    
-    override func appLastSyncDidChange() {
-        super.appLastSyncDidChange()
-        updateSynchronizeButtonForLastSync()
-    }
-    
-    override func appHasOfflineMapDidChange() {
-        super.appHasOfflineMapDidChange()
-        adjustContextDrawerUI()
-    }
-    
-    func updateSynchronizeButtonForLastSync() {
+        let currentUserNotification = AppContextChangeNotifications.currentUser { [weak self] user in
+            self?.updateLoginButtonForAuthenticatedUserProfileImage(user: user)
+            self?.updateLoginButtonForAuthenticatedUsername(user: user)
+        }
         
-        if let lastSynchronized = appContext.lastSync.date {
+        let workModeNotification = AppContextChangeNotifications.workMode { [weak self] workMode in
+            self?.adjustContextDrawerUI()
+        }
+        
+        let reachabilityNotification = AppContextChangeNotifications.reachability { [weak self] reachable in
+            self?.adjustContextDrawerUI()
+        }
+        
+        let lastSyncNotification = AppContextChangeNotifications.lastSync { [weak self] date in
+            self?.updateSynchronizeButtonForLastSync(date: date)
+        }
+        
+        let hasOfflineMap = AppContextChangeNotifications.hasOfflineMap { [weak self] hasOfflineMap in
+            self?.adjustContextDrawerUI()
+        }
+        
+        return [currentUserNotification, workModeNotification, reachabilityNotification, lastSyncNotification, hasOfflineMap]
+    }
+    
+    func updateSynchronizeButtonForLastSync(date: Date?) {
+        
+        if let lastSynchronized = date {
             synchronizeOfflineMapButton.setAttributed(header: "Synchronize Offline Map", subheader: "last synchronized \(lastSynchronized.formattedString)", forControlStateColors: offlineActivityControlStateColors, headerFont: appFonts.drawerButtonHeader, subheaderFont: appFonts.drawerButtonSubheader)
         }
         else {

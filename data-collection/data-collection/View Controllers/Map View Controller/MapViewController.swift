@@ -173,42 +173,40 @@ class MapViewController: AppContextAwareController {
         // Dispose of any resources that can be recreated.
     }
     
-    override var notifications: [AppContextChangeNotifications] {
-        return [.workMode, .currentMap, .locationAuthorization]
-    }
-    
-    override func appWorkModeDidChange() {
-        super.appWorkModeDidChange()
+    override func buildAppContextNotifications() -> [AppContextChangeNotifications] {
         
-        DispatchQueue.main.async { [weak self] in
-            self?.activityBarView.colorA = (appContext.workMode == .online) ? appColors.primary.lighter : appColors.offlineLight
-            self?.activityBarView.colorB = (appContext.workMode == .online) ? appColors.primary.darker : appColors.offlineDark
-            self?.notificationBar.backgroundColor = (appContext.workMode == .online) ? appColors.primary.lighter : appColors.offlineDark
-        }
-    }
-    
-    override func appCurrentMapDidChange() {
-        super.appCurrentMapDidChange()
-        
-        mapView.map = appContext.currentMap
-        updateForMap()
-    }
-    
-    override func appLocationAuthorizationStatusDidChange() {
-        super.appLocationAuthorizationStatusDidChange()
-        
-        mapView.locationDisplay.showLocation = appLocation.locationAuthorized
-        mapView.locationDisplay.showAccuracy = appLocation.locationAuthorized
-        
-        if appLocation.locationAuthorized {
-            mapView.locationDisplay.start { (err) in
-                if let error = err {
-                    print("[Error] Cannot display user location: \(error.localizedDescription)")
-                }
+        let workModeNotification = AppContextChangeNotifications.workMode { [weak self] workMode in
+            
+            DispatchQueue.main.async { [weak self] in
+                self?.activityBarView.colorA = (workMode == .online) ? appColors.primary.lighter : appColors.offlineLight
+                self?.activityBarView.colorB = (workMode == .online) ? appColors.primary.darker : appColors.offlineDark
+                self?.notificationBar.backgroundColor = (workMode == .online) ? appColors.primary.lighter : appColors.offlineDark
             }
         }
-        else {
-            mapView.locationDisplay.stop()
+        
+        let currentMapNotification = AppContextChangeNotifications.currentMap { [weak self] currentMap in
+            
+            self?.mapView.map = currentMap
+            self?.updateForMap()
         }
+        
+        let locationAuthorizationNotification = AppContextChangeNotifications.locationAuthorization { [weak self] authorized in
+            
+            self?.mapView.locationDisplay.showLocation = authorized
+            self?.mapView.locationDisplay.showAccuracy = authorized
+            
+            if authorized {
+                self?.mapView.locationDisplay.start { (err) in
+                    if let error = err {
+                        print("[Error] Cannot display user location: \(error.localizedDescription)")
+                    }
+                }
+            }
+            else {
+                self?.mapView.locationDisplay.stop()
+            }
+        }
+        
+        return [workModeNotification, currentMapNotification, locationAuthorizationNotification]
     }
 }
