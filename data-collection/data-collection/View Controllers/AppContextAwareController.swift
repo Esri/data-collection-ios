@@ -80,11 +80,6 @@ enum AppContextChangeNotifications {
     }
 }
 
-extension AppContextChangeNotifications: Equatable { }
-
-func ==(lhs: AppContextChangeNotifications, rhs: AppContextChangeNotifications) -> Bool {
-    return lhs.key ==  rhs.key
-}
 
 class AppContextAwareController: UIViewController {
     
