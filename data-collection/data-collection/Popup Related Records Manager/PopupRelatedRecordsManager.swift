@@ -81,12 +81,6 @@ class PopupRelatedRecordsManager: AGSPopupManager {
         // 2. enforce validity on all popup fields
         invalids += editableDisplayFields.compactMap { return validationError(for: $0) }
         
-        for field in displayFields {
-            if let error = validationError(for: field) {
-                print(error, "for field", field.fieldName, field.label)
-            }
-        }
-        
         return invalids
     }
     
