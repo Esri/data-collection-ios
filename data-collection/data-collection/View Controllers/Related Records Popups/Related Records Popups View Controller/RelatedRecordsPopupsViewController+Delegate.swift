@@ -77,13 +77,10 @@ extension RelatedRecordsPopupsViewController: UITableViewDelegate {
                 return
             }
             
-            guard let table = cell.table, table.canAddFeature, let popupDefinition = table.popupDefinition else {
+            guard let table = cell.table, table.canAddFeature, let newPopup = table.createPopup() else {
                 present(simpleAlertMessage: "An unknown error occurred!")
                 return
             }
-            
-            let newFeature = table.createFeature()
-            let newPopup = AGSPopup(geoElement: newFeature, popupDefinition: popupDefinition)
             
             closeEditingSessionAndBeginEditing(childPopup: newPopup)
             

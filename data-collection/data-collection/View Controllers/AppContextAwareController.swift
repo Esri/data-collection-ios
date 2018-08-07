@@ -84,7 +84,7 @@ enum AppContextChangeNotification {
 class AppContextAwareController: UIViewController {
     
     var appContextNotificationRegistrations: [AppContextChangeNotification] { return [] }
-        
+    
     private var appNotifications = [String: AppContextChangeNotification]()
     
     private var observeCurrentUser: NSKeyValueObservation?
@@ -140,7 +140,6 @@ class AppContextAwareController: UIViewController {
         
         if appNotifications.keys.contains(AppContextChangeKeys.locationAuthorization) {
             observeLocationAuthorization = appLocation.observe(\.locationAuthorized, options:[.new, .old]) { [weak self] (_, _) in
-                // print("[Location Authorization] is authorized: \(appLocation.locationAuthorized)")
                 if let change = self?.appNotifications[AppContextChangeKeys.locationAuthorization],
                     let completionClosure = change.notificationClosure as? (Bool) -> Void  {
                     completionClosure(appLocation.locationAuthorized)

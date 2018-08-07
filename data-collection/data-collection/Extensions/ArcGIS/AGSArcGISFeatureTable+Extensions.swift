@@ -74,62 +74,6 @@ extension AGSArcGISFeatureTable {
         }
     }
     
-    func queryRelatedFeatures(forFeature feature: AGSArcGISFeature, relationships:[AGSRelationshipInfo], completion: @escaping ([AGSRelatedFeatureQueryResult]?, Error?) -> Void) {
-                
-        let group = DispatchGroup()
-        var finalError: NSError?
-        var finalResults = [AGSRelatedFeatureQueryResult]()
-        
-        for info in relationships {
-            
-            group.enter()
-            queryRelatedFeatures(forFeature: feature, relationship: info) { (results, error) in
-
-                if error != nil {
-                    finalError = FeatureTableError.multipleQueriesFailure as NSError
-                }
-
-                if let additionalResults = results {
-                    finalResults += additionalResults
-                }
-
-                group.leave()
-            }
-        }
-        
-        group.notify(queue: OperationQueue.current?.underlyingQueue ?? .main) {
-            completion(finalResults, finalError)
-        }
-    }
-
-    func queryRelatedFeaturesAsPopups(forFeature feature: AGSArcGISFeature, relationships:[AGSRelationshipInfo], completion: @escaping ([AGSPopup]?, Error?) -> Void) {
-        
-        let group = DispatchGroup()
-        var finalError: NSError?
-        var finalResults = [AGSPopup]()
-        
-        for info in relationships {
-            
-            group.enter()
-            queryRelatedFeaturesAsPopups(forFeature: feature, relationship: info) { (results, error) in
-                
-                if error != nil {
-                    finalError = FeatureTableError.multipleQueriesFailure as NSError
-                }
-                
-                if let additionalResults = results {
-                    finalResults += additionalResults
-                }
-                
-                group.leave()
-            }
-        }
-        
-        group.notify(queue: OperationQueue.current?.underlyingQueue ?? .main) {
-            completion(finalResults, finalError)
-        }
-    }
-    
     func queryAllFeatures(sorted: AGSOrderBy? = nil, completion: @escaping (AGSFeatureQueryResult?, Error?) -> Void) {
         
         let queryParams = AGSQueryParameters.all()
