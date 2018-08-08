@@ -14,10 +14,6 @@
 
 import UIKit
 
-var appDelegate: AppDelegate {
-    return UIApplication.shared.delegate as! AppDelegate
-}
-
 let appReachability: NetworkReachabilityManager = {
     
     let manager = NetworkReachabilityManager(host: AppConfiguration.basePortalDomain)

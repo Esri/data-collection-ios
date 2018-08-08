@@ -207,6 +207,10 @@ class MapViewController: AppContextAwareController {
             }
         }
         
-        return [workModeNotification, currentMapNotification, locationAuthorizationNotification]
+        let reachabilityNotification = AppContextChangeNotification.reachability { [weak self] reachable in
+            self?.notificationBar.showLabel(withNotificationMessage: "Device \(reachable ? "gained" : "lost") connection to the network.", forDuration: 6.0)
+        }
+        
+        return [workModeNotification, currentMapNotification, locationAuthorizationNotification, reachabilityNotification]
     }
 }
