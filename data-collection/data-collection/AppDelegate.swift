@@ -20,16 +20,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     var window: UIWindow?
     
-    internal let reachabilityManager: NetworkReachabilityManager = {
-        let manager = NetworkReachabilityManager(host: AppConfiguration.basePortalDomain)
-        assert(manager != nil, "Network Reachability Manager must be constructed a valid service url.")
-        return manager!
-    }()
-    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        
-        // Begin listening to Network Status Changes
-        AppDelegate.beginListeningToNetworkStatusChanges()
         
         // Enable credential cache auto sync
         AppDelegate.configCredentialCacheAutoSyncToKeychain()
@@ -64,16 +55,6 @@ extension AppDelegate {
             AGSApplicationDelegate.shared().application(app, open: url, options: options)
         }
         return true
-    }
-    
-    static func beginListeningToNetworkStatusChanges() {
-        
-        appDelegate.reachabilityManager.listener = { status in
-            print("[Reachability] Network status changed: \(status)")
-            appNotificationCenter.post(AppNotifications.reachabilityChanged)
-        }
-        
-        appDelegate.reachabilityManager.startListening()
     }
     
     static func configCredentialCacheAutoSyncToKeychain() {

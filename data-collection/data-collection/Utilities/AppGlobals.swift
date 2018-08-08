@@ -18,9 +18,20 @@ var appDelegate: AppDelegate {
     return UIApplication.shared.delegate as! AppDelegate
 }
 
-var appReachability: NetworkReachabilityManager {
-    return appDelegate.reachabilityManager
-}
+let appReachability: NetworkReachabilityManager = {
+    
+    let manager = NetworkReachabilityManager(host: AppConfiguration.basePortalDomain)
+    assert(manager != nil, "Network Reachability Manager must be constructed a valid service url.")
+    
+    manager!.listener = { status in
+        print("[Reachability] Network status changed: \(status)")
+        appNotificationCenter.post(AppNotifications.reachabilityChanged)
+    }
+    
+    manager!.startListening()
+    
+    return manager!
+}()
 
 let appLocation = AppLocation()
 
