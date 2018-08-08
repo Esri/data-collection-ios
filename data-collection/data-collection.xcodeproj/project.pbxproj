@@ -74,7 +74,7 @@
 		94B375CA207E8D5600691F2A /* AppGlobals.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94B375A9207E8D5600691F2A /* AppGlobals.swift */; };
 		94B375CB207E8D5600691F2A /* NetworkReachabilityManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94B375AC207E8D5600691F2A /* NetworkReachabilityManager.swift */; };
 		94B375D2207E8D5600691F2A /* EphemeralCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94B375BB207E8D5600691F2A /* EphemeralCache.swift */; };
-		94B375D6207E8DD600691F2A /* GeocodeSearchManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94B375D4207E8DD600691F2A /* GeocodeSearchManager.swift */; };
+		94B375D6207E8DD600691F2A /* ReverseGeocoderManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94B375D4207E8DD600691F2A /* ReverseGeocoderManager.swift */; };
 		94B375D7207E8DD600691F2A /* EditType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94B375D5207E8DD600691F2A /* EditType.swift */; };
 		94B375F2207E8E4800691F2A /* AGSLoadStatus+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94B375DB207E8E4800691F2A /* AGSLoadStatus+Extensions.swift */; };
 		94B375F4207E8E4800691F2A /* AGSJobStatus+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94B375DD207E8E4800691F2A /* AGSJobStatus+Extensions.swift */; };
@@ -215,7 +215,7 @@
 		94B375AC207E8D5600691F2A /* NetworkReachabilityManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkReachabilityManager.swift; sourceTree = "<group>"; };
 		94B375B4207E8D5600691F2A /* data-collection-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "data-collection-Bridging-Header.h"; sourceTree = "<group>"; };
 		94B375BB207E8D5600691F2A /* EphemeralCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EphemeralCache.swift; sourceTree = "<group>"; };
-		94B375D4207E8DD600691F2A /* GeocodeSearchManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GeocodeSearchManager.swift; sourceTree = "<group>"; };
+		94B375D4207E8DD600691F2A /* ReverseGeocoderManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReverseGeocoderManager.swift; sourceTree = "<group>"; };
 		94B375D5207E8DD600691F2A /* EditType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditType.swift; sourceTree = "<group>"; };
 		94B375DB207E8E4800691F2A /* AGSLoadStatus+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AGSLoadStatus+Extensions.swift"; sourceTree = "<group>"; };
 		94B375DD207E8E4800691F2A /* AGSJobStatus+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AGSJobStatus+Extensions.swift"; sourceTree = "<group>"; };
@@ -484,7 +484,7 @@
 			isa = PBXGroup;
 			children = (
 				94B37597207E8D5600691F2A /* Locator */,
-				94B375D4207E8DD600691F2A /* GeocodeSearchManager.swift */,
+				94B375D4207E8DD600691F2A /* ReverseGeocoderManager.swift */,
 			);
 			path = "Geocode Search";
 			sourceTree = "<group>";
@@ -944,7 +944,7 @@
 				94B0D32B20C84B010075EA7A /* RelatedRecordsPopupsViewController+RelatedRecordsListDelegate.swift in Sources */,
 				94D544BD207FC15D00ED0D04 /* DrawerViewController.swift in Sources */,
 				94D544DA20852A5100ED0D04 /* ActivityBarView.swift in Sources */,
-				94B375D6207E8DD600691F2A /* GeocodeSearchManager.swift in Sources */,
+				94B375D6207E8DD600691F2A /* ReverseGeocoderManager.swift in Sources */,
 				94B375C3207E8D5600691F2A /* AppDefaults.swift in Sources */,
 				94B375F9207E8E4800691F2A /* AGSArcGISFeature+Extensions.swift in Sources */,
 				94A8103B20B635A000D4BC68 /* AGSQueryParameters+Extensions.swift in Sources */,
