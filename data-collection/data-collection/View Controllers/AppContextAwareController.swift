@@ -115,7 +115,9 @@ class AppContextAwareController: UIViewController {
             observeCurrentUser = appContext.observe(\.user, options: [.new, .old]) { [weak self] (_, _) in
                 if let change = self?.appNotifications[AppContextChangeKeys.currentUser],
                     let completionClosure = change.notificationClosure as? (AGSPortalUser?) -> Void  {
+                    DispatchQueue.main.async {
                         completionClosure(appContext.user)
+                    }
                 }
             }
         }
@@ -124,7 +126,9 @@ class AppContextAwareController: UIViewController {
             observeCurrentMap = appContext.observe(\.currentMap, options:[.new, .old]) { [weak self] (_, _) in
                 if let change = self?.appNotifications[AppContextChangeKeys.currentMap],
                     let completionClosure = change.notificationClosure as? (AGSMap?) -> Void  {
-                    completionClosure(appContext.currentMap)
+                    DispatchQueue.main.async {
+                        completionClosure(appContext.currentMap)
+                    }
                 }
             }
         }
@@ -133,7 +137,9 @@ class AppContextAwareController: UIViewController {
             observeOfflineMap = appContext.observe(\.hasOfflineMap, options: [.new, .old]) { [weak self] (_, _) in
                 if let change = self?.appNotifications[AppContextChangeKeys.hasOfflineMap],
                     let completionClosure = change.notificationClosure as? (Bool) -> Void  {
-                    completionClosure(appContext.hasOfflineMap)
+                    DispatchQueue.main.async {
+                        completionClosure(appContext.hasOfflineMap)
+                    }
                 }
             }
         }
@@ -142,7 +148,9 @@ class AppContextAwareController: UIViewController {
             observeLocationAuthorization = appLocation.observe(\.locationAuthorized, options:[.new, .old]) { [weak self] (_, _) in
                 if let change = self?.appNotifications[AppContextChangeKeys.locationAuthorization],
                     let completionClosure = change.notificationClosure as? (Bool) -> Void  {
-                    completionClosure(appLocation.locationAuthorized)
+                    DispatchQueue.main.async {
+                        completionClosure(appLocation.locationAuthorized)
+                    }
                 }
             }
         }
@@ -187,7 +195,9 @@ class AppContextAwareController: UIViewController {
         
         if let change = appNotifications[AppContextChangeKeys.reachability],
             let completionClosure = change.notificationClosure as? (Bool) -> Void  {
-            completionClosure(appReachability.isReachable)
+            DispatchQueue.main.async {
+                completionClosure(appReachability.isReachable)
+            }
         }
     }
     
@@ -197,7 +207,9 @@ class AppContextAwareController: UIViewController {
         
         if let change = appNotifications[AppContextChangeKeys.workMode],
             let completionClosure = change.notificationClosure as? (WorkMode) -> Void  {
-            completionClosure(appContext.workMode)
+            DispatchQueue.main.async {
+                completionClosure(appContext.workMode)
+            }
         }
     }
     
@@ -205,7 +217,9 @@ class AppContextAwareController: UIViewController {
         
         if let change = appNotifications[AppContextChangeKeys.lastSync],
             let completionClosure = change.notificationClosure as? (Date?) -> Void  {
-            completionClosure(appContext.lastSync.date)
+            DispatchQueue.main.async {
+                completionClosure(appContext.lastSync.date)
+            }
         }
     }
 }

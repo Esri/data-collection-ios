@@ -184,13 +184,13 @@ class MapViewController: AppContextAwareController {
             }
         }
         
-        let currentMapNotification = AppContextChangeNotification.currentMap { [weak self] currentMap in
+        let currentMapNotification: AppContextChangeNotification = .currentMap { [weak self] currentMap in
             
             self?.mapView.map = currentMap
             self?.updateForMap()
         }
         
-        let locationAuthorizationNotification = AppContextChangeNotification.locationAuthorization { [weak self] authorized in
+        let locationAuthorizationNotification: AppContextChangeNotification = .locationAuthorization { [weak self] authorized in
             
             self?.mapView.locationDisplay.showLocation = authorized
             self?.mapView.locationDisplay.showAccuracy = authorized
