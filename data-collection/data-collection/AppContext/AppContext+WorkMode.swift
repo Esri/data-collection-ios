@@ -174,7 +174,7 @@ extension AppContext {
      This function builds a web map stored in the portal and sets it to the current map and the work mode to online.
      */
     func setWorkModeOnlineWithMapFromPortal() {
-        let portalItem = AGSPortalItem(portal: portal, itemID: AppConfiguration.itemID)
+        let portalItem = AGSPortalItem(portal: portal, itemID: AppConfiguration.webMapItemID)
         let map = AGSMap(item: portalItem)
         currentMap = map
         workMode = .online

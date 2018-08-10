@@ -24,8 +24,6 @@ let appReachability: NetworkReachabilityManager = {
         appNotificationCenter.post(AppNotifications.reachabilityChanged)
     }
     
-    manager!.startListening()
-    
     return manager!
 }()
 
