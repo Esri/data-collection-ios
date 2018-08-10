@@ -50,7 +50,7 @@ func enrich(popup: AGSPopup, withNeighborhoodIdentifyForPoint point: AGSPoint, c
             return
         }
         
-        guard let features = result, let feature = features.featureEnumerator().allObjects.first as? AGSArcGISFeature else {
+        guard let features = result, let feature = features.featureEnumerator().nextObject() as? AGSArcGISFeature else {
             print("[Neighborhood Feature Table] point outside neighborhood boundaries.")
             completion()
             return

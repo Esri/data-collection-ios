@@ -80,7 +80,8 @@ import ArcGIS
      */
     dynamic var user:AGSPortalUser? = nil {
         didSet {
-            print("[Authentication] user is", user != nil ? "logged in (\(user!.username ?? "no username"))." : "logged out.")
+            let userDescription = user != nil ? "logged in (\(user!.username ?? "no username"))" : "logged out"
+            print("[Authentication] user is \(userDescription).")
         }
     }
     

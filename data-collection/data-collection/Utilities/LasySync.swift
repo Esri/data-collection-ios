@@ -26,14 +26,14 @@ class LastSync: UserDefaultsKeysProtocol {
         return "LastSync"
     }
     
-    func setLastSyncNow() {
+    func setNow() {
         let now = Date()
         date = now
         UserDefaults.standard.set(now, forKey: LastSync.userDefaultsKey)
         appNotificationCenter.post(AppNotifications.lastSyncChanged)
     }
     
-    func clearLastSync() {
+    func clear() {
         date = nil
         UserDefaults.standard.set(nil, forKey: LastSync.userDefaultsKey)
         appNotificationCenter.post(AppNotifications.lastSyncChanged)

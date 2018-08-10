@@ -38,14 +38,20 @@ func updateSymbology(withTreeManager treeManager: PopupRelatedRecordsManager, co
         let treeFeature = treeManager.popup.geoElement as? AGSArcGISFeature,
         let treeFeatureTable = treeFeature.featureTable as? AGSArcGISFeatureTable,
         treeFeatureTable.canUpdate(treeFeature),
-        treeFeatureTable.tableName == "Trees",
+        treeFeatureTable.tableName == "Trees"
+        else {
+        completion()
+        return
+    }
+    
+    guard
         let newestInspection = inspectionsManager.relatedPopups.first,
         let newestInspectionFeature = newestInspection.geoElement as? AGSArcGISFeature,
         let newestInspectionFeatureTable = newestInspectionFeature.featureTable as? AGSArcGISFeatureTable,
         newestInspectionFeatureTable.tableName == "Inspections"
         else {
-        completion()
-        return
+            completion()
+            return
     }
     
     let conditionKey = "Condition"
@@ -54,12 +60,18 @@ func updateSymbology(withTreeManager treeManager: PopupRelatedRecordsManager, co
     guard
         let treeKeys = treeFeature.attributes.allKeys as? [String],
         treeKeys.contains(conditionKey),
-        treeKeys.contains(dbhKey),
+        treeKeys.contains(dbhKey)
+        else {
+        completion()
+            return
+    }
+    
+    guard
         let inspectionKeys = newestInspectionFeature.attributes.allKeys as? [String],
         inspectionKeys.contains(conditionKey),
         inspectionKeys.contains(dbhKey)
         else {
-        completion()
+            completion()
             return
     }
     

@@ -17,36 +17,36 @@ import ArcGIS
 
 extension AGSPopupManager {
     
-    public func labelTitle(idx: Int) -> String? {
+    public func labelTitle(fieldIndex: Int) -> String? {
         
-        guard idx < displayFields.count else {
+        guard fieldIndex < displayFields.count else {
             return nil
         }
         
-        return displayFields[idx].label
+        return displayFields[fieldIndex].label
     }
     
-    public func labelValue(idx: Int) -> String? {
+    public func labelValue(fieldIndex: Int) -> String? {
         
-        guard idx < displayFields.count else {
+        guard fieldIndex < displayFields.count else {
             return nil
         }
         
-        let field = displayFields[idx]
+        let field = displayFields[fieldIndex]
         let value = formattedValue(for: field)
         
         return value
     }
     
-    public func nextFieldStringValue(idx: inout Int) -> String? {
+    public func nextFieldStringValue(fieldIndex: inout Int) -> String? {
         
-        guard idx < displayFields.count else {
+        guard fieldIndex < displayFields.count else {
             return nil
         }
         
-        let value = labelValue(idx: idx)
+        let value = labelValue(fieldIndex: fieldIndex)
         
-        idx += 1
+        fieldIndex += 1
         return value
     }
     

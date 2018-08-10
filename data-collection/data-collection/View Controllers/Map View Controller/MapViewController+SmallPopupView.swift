@@ -45,12 +45,12 @@ extension MapViewController {
             
             if let manyToOneManager = self?.recordsManager?.manyToOne.first?.relatedPopup?.asManager {
                 var destinationIndex = 0
-                self?.relatedRecordHeaderLabel.text = manyToOneManager.nextFieldStringValue(idx: &destinationIndex) ?? fallbackPopupManager?.nextFieldStringValue(idx: &fallbackIndex)
-                self?.relatedRecordSubheaderLabel.text = manyToOneManager.nextFieldStringValue(idx: &destinationIndex) ?? fallbackPopupManager?.nextFieldStringValue(idx: &fallbackIndex)
+                self?.relatedRecordHeaderLabel.text = manyToOneManager.nextFieldStringValue(fieldIndex: &destinationIndex) ?? fallbackPopupManager?.nextFieldStringValue(fieldIndex: &fallbackIndex)
+                self?.relatedRecordSubheaderLabel.text = manyToOneManager.nextFieldStringValue(fieldIndex: &destinationIndex) ?? fallbackPopupManager?.nextFieldStringValue(fieldIndex: &fallbackIndex)
             }
             else {
-                self?.relatedRecordHeaderLabel.text = fallbackPopupManager?.nextFieldStringValue(idx: &fallbackIndex)
-                self?.relatedRecordSubheaderLabel.text = fallbackPopupManager?.nextFieldStringValue(idx: &fallbackIndex)
+                self?.relatedRecordHeaderLabel.text = fallbackPopupManager?.nextFieldStringValue(fieldIndex: &fallbackIndex)
+                self?.relatedRecordSubheaderLabel.text = fallbackPopupManager?.nextFieldStringValue(fieldIndex: &fallbackIndex)
             }
             
             if let oneToMany = self?.recordsManager?.oneToMany.first {
@@ -59,7 +59,7 @@ extension MapViewController {
                 self?.relatedRecordsNLabel.text = "\(n) \(name)"
             }
             else {
-                self?.relatedRecordsNLabel.text = fallbackPopupManager?.nextFieldStringValue(idx: &fallbackIndex)
+                self?.relatedRecordsNLabel.text = fallbackPopupManager?.nextFieldStringValue(fieldIndex: &fallbackIndex)
             }
             
             self?.addPopupRelatedRecordButton.isHidden = false

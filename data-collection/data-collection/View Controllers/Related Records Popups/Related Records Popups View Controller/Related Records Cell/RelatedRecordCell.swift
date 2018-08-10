@@ -126,9 +126,9 @@ class RelatedRecordCell: UITableViewCell {
         for attribute in attributes {
             
             let titleLabel = attribute.title
-            titleLabel.text = manager.labelTitle(idx: popupIndex)
+            titleLabel.text = manager.labelTitle(fieldIndex: popupIndex)
             let valueLabel = attribute.value
-            valueLabel.text = manager.nextFieldStringValue(idx: &popupIndex)
+            valueLabel.text = manager.nextFieldStringValue(fieldIndex: &popupIndex)
             
             // TODO workout constraints issue
             titleLabel.considerEmptyStringForStackView()

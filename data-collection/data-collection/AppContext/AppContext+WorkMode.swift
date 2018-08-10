@@ -48,13 +48,13 @@ extension AppContext {
         
         loadOfflineMobileMapPackage { [weak self] (map) in
             
-            if appContext.workMode == .offline, let offlineMap = map {
-                self?.currentMap = offlineMap
-                self?.workMode = .offline
-            }
-            else {
+            guard let offlineMap = map, appContext.workMode == .offline else {
                 appContext.setWorkModeOnlineWithMapFromPortal()
+                return
             }
+            
+            self?.currentMap = offlineMap
+            self?.workMode = .offline
         }
     }
     
@@ -65,13 +65,14 @@ extension AppContext {
         
         loadOfflineMobileMapPackage { [weak self] (map) in
             
-            if let offlineMap = map {
-                self?.currentMap = offlineMap
-                self?.workMode = .offline
-            }
-            else {
+            guard let offlineMap = map else {
+                
                 appContext.setWorkModeOnlineWithMapFromPortal()
+                return
             }
+            
+            self?.currentMap = offlineMap
+            self?.workMode = .offline
         }
     }
     
@@ -140,7 +141,7 @@ extension AppContext {
             throw error
         }
         
-        lastSync.clearLastSync()
+        lastSync.clear()
         
         FileManager.buildOfflineMapDirectory()
     }
