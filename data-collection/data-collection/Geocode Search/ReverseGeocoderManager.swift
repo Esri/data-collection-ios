@@ -22,14 +22,9 @@ class ReverseGeocoderManager: AGSLoadableBase {
         static let matchAddress = "Match_addr"
     }
     
-    private var onlineLocatorTask: AGSLocatorTask = {
-        assert(AppConfiguration.geocodeServiceURL != nil, "App Configuration must contain a valid geocode service url.")
-        return AGSLocatorTask(url: AppConfiguration.geocodeServiceURL!)
-    }()
+    private var onlineLocatorTask = AGSLocatorTask(url: AppConfiguration.geocodeServiceURL)
     
-    private var offlineLocatorTask: AGSLocatorTask = {
-        return AGSLocatorTask(name: "AddressLocator")
-    }()
+    private var offlineLocatorTask = AGSLocatorTask(name: "AddressLocator")
     
     override func doCancelLoading() {
         
