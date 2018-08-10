@@ -33,7 +33,7 @@ class AppConfiguration {
         return url!
     }()
     
-    static let urlScheme: String = "data-collection"
+    static let urlScheme: String = "data_collection"
     static let urlAuthPath: String = "auth"
     static let oAuthRedirectURLString: String = "\(urlScheme)://\(urlAuthPath)"
     
