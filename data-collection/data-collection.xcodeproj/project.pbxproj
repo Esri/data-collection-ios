@@ -55,6 +55,7 @@
 		94AB310320B76A62003540D2 /* PopupEditableFieldCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94AB310220B76A62003540D2 /* PopupEditableFieldCell.swift */; };
 		94AB310520B7731A003540D2 /* PopupCodedValueCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94AB310420B7731A003540D2 /* PopupCodedValueCell.swift */; };
 		94AB811A210A476400B9C920 /* DeleteRecordCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94AB8119210A476400B9C920 /* DeleteRecordCell.swift */; };
+		94AB811C211E0AD300B9C920 /* AGSLicense+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94AB811B211E0AD300B9C920 /* AGSLicense+Extensions.swift */; };
 		94B0D32B20C84B010075EA7A /* RelatedRecordsPopupsViewController+RelatedRecordsListDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94B0D32A20C84B010075EA7A /* RelatedRecordsPopupsViewController+RelatedRecordsListDelegate.swift */; };
 		94B0D32D20C84C390075EA7A /* UINavigationController+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94B0D32C20C84C390075EA7A /* UINavigationController+Extensions.swift */; };
 		94B375BC207E8D5600691F2A /* AddressLocator.locb in Resources */ = {isa = PBXBuildFile; fileRef = 94B37598207E8D5600691F2A /* AddressLocator.locb */; };
@@ -195,6 +196,7 @@
 		94AB310220B76A62003540D2 /* PopupEditableFieldCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupEditableFieldCell.swift; sourceTree = "<group>"; };
 		94AB310420B7731A003540D2 /* PopupCodedValueCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupCodedValueCell.swift; sourceTree = "<group>"; };
 		94AB8119210A476400B9C920 /* DeleteRecordCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeleteRecordCell.swift; sourceTree = "<group>"; };
+		94AB811B211E0AD300B9C920 /* AGSLicense+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AGSLicense+Extensions.swift"; sourceTree = "<group>"; };
 		94B0D32A20C84B010075EA7A /* RelatedRecordsPopupsViewController+RelatedRecordsListDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RelatedRecordsPopupsViewController+RelatedRecordsListDelegate.swift"; sourceTree = "<group>"; };
 		94B0D32C20C84C390075EA7A /* UINavigationController+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UINavigationController+Extensions.swift"; sourceTree = "<group>"; };
 		94B37598207E8D5600691F2A /* AddressLocator.locb */ = {isa = PBXFileReference; lastKnownFileType = file; path = AddressLocator.locb; sourceTree = "<group>"; };
@@ -517,6 +519,7 @@
 				9465691D208802CE00599E55 /* AGSFeatureTable+Extensions.swift */,
 				940DA97A2098E1C600AB4BF6 /* AGSArcGISFeatureTable+Extensions.swift */,
 				94A8103A20B635A000D4BC68 /* AGSQueryParameters+Extensions.swift */,
+				94AB811B211E0AD300B9C920 /* AGSLicense+Extensions.swift */,
 			);
 			path = ArcGIS;
 			sourceTree = "<group>";
@@ -857,6 +860,7 @@
 				94B375CB207E8D5600691F2A /* NetworkReachabilityManager.swift in Sources */,
 				94B3760C207EAE4700691F2A /* AppDelegate.swift in Sources */,
 				940DA97B2098E1C600AB4BF6 /* AGSArcGISFeatureTable+Extensions.swift in Sources */,
+				94AB811C211E0AD300B9C920 /* AGSLicense+Extensions.swift in Sources */,
 				94D544D820852A5100ED0D04 /* ShrinkingView.swift in Sources */,
 				94B375C2207E8D5600691F2A /* AppOfflineMapJobConstructionInfo.swift in Sources */,
 				94B375FA207E8E4800691F2A /* UIViewController+Extensions.swift in Sources */,

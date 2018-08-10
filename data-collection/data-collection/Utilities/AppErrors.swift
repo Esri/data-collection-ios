@@ -14,7 +14,9 @@
 
 import Foundation
 
-enum AppFilesError: Error, CustomNSError, LocalizedError  {
+protocol AppError: CustomNSError, LocalizedError { }
+
+enum AppFilesError: AppError  {
     
     case cannotBuildPath(String)
     
@@ -37,7 +39,7 @@ enum AppFilesError: Error, CustomNSError, LocalizedError  {
     }
 }
 
-enum AssetsError: Error {
+enum AssetsError: AppError {
     
     case missingAsset(String)
     
@@ -60,7 +62,7 @@ enum AssetsError: Error {
     }
 }
 
-enum RelatedRecordsManagerError: Error, CustomNSError, LocalizedError {
+enum RelatedRecordsManagerError: AppError {
     
     case featureMissingTable
     case missingManyToOneRelationship(String)
@@ -98,7 +100,7 @@ enum RelatedRecordsManagerError: Error, CustomNSError, LocalizedError {
     }
 }
 
-enum FeatureTableError: Error, CustomNSError, LocalizedError {
+enum FeatureTableError: AppError {
     
     case missingFeature
     case missingFeatureTable
@@ -161,7 +163,7 @@ enum FeatureTableError: Error, CustomNSError, LocalizedError {
     }
 }
 
-enum PopupSortingError : Error, CustomNSError, LocalizedError {
+enum PopupSortingError : AppError {
     
     case missingFields
     case badFields

@@ -22,6 +22,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         
+        // License the app
+        AppDelegate.licenseApplication()
+        
         // Enable credential cache auto sync
         AppDelegate.configCredentialCacheAutoSyncToKeychain()
         
@@ -68,6 +71,20 @@ extension AppDelegate {
                                                 redirectURL: AppConfiguration.oAuthRedirectURLString)
         
         AGSAuthenticationManager.shared().oAuthConfigurations.add(oauthConfig)
+    }
+}
+
+extension AppDelegate {
+    
+    static func licenseApplication() {
+        
+        do {
+            try AGSArcGISRuntimeEnvironment.setLicenseKey(AppConfiguration.licenseKey)
+        } catch {
+            print("Error licensing app: \(error.localizedDescription)")
+        }
+        
+        print("[ArcGIS Runtime License] \(AGSArcGISRuntimeEnvironment.license())")
     }
 }
 
