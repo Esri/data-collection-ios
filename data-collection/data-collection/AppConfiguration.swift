@@ -40,7 +40,7 @@ class AppConfiguration {
     static let keychainIdentifier: String = "\(appBundleID).keychain"
     
     static let licenseKey: String = "fake_license_key"
-    static let clientID: String = "AaXxKoHH3piT1fe3"
+    static let clientID: String = "h3em0ifYNGfz3uHX"
 }
 
 // MARK: Debug Request Logging
