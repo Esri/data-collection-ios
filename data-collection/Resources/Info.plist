@@ -24,7 +24,7 @@
 			<key>CFBundleTypeRole</key>
 			<string>Editor</string>
 			<key>CFBundleURLName</key>
-			<string>com.esri.arcgisruntime.data-collection</string>
+			<string>com.esri.arcgisruntime.exampleapps.data-collection</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
 				<string>data-collection</string>
@@ -60,7 +60,7 @@
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>Allow Data Collection to collect data near your location.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>ArcGIS requires access to your device&apos;s photo library.</string>
+	<string>ArcGIS requires access to your device's photo library.</string>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>

@@ -25,6 +25,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // License the app
         AppDelegate.licenseApplication()
         
+        // Reachability
+        appReachability.startListening()
+        
         // Enable credential cache auto sync
         AppDelegate.configCredentialCacheAutoSyncToKeychain()
         
@@ -41,6 +44,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         FileManager.buildOfflineMapDirectory()
         
         return true
+    }
+    
+    func applicationWillEnterForeground(_ application: UIApplication) {
+        appReachability.startListening()
+    }
+    
+    func applicationWillResignActive(_ application: UIApplication) {
+        appReachability.stopListening()
+    }
+    
+    func applicationWillTerminate(_ application: UIApplication) {
+        appReachability.stopListening()
     }
 }
 
@@ -66,7 +81,7 @@ extension AppDelegate {
     
     static func configOAuthRedirectURL() {
         
-        let oauthConfig = AGSOAuthConfiguration(portalURL: AppConfiguration.basePortalURL!,
+        let oauthConfig = AGSOAuthConfiguration(portalURL: AppConfiguration.basePortalURL,
                                                 clientID: AppConfiguration.clientID,
                                                 redirectURL: AppConfiguration.oAuthRedirectURLString)
         

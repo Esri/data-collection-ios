@@ -17,18 +17,30 @@ import ArcGIS
 
 class AppConfiguration {
     
-    static let itemID = "fcc7fc65bb96464c9c0986576c119a92"
+    static let webMapItemID = "fcc7fc65bb96464c9c0986576c119a92"
+    
     static let basePortalDomain = "www.arcgis.com"
-    static let basePortalURLString = "https://\(basePortalDomain)"
-    static let basePortalURL: URL? = URL(string: basePortalURLString)
-    static let portalURL: URL? = URL(string: "\(basePortalURLString)/home/item.html?id=\(itemID)")
-    static let geocodeServiceURL: URL? = URL(string: "https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer")
+    
+    static let basePortalURL: URL = {
+        let url = URL(string: "https://\(basePortalDomain)")
+        assert(url != nil, "App Configuration must contain a valid portal service url.")
+        return url!
+    }()
+    
+    static let geocodeServiceURL: URL = {
+        let url = URL(string: "https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer")
+        assert(url != nil, "App Configuration must contain a valid geocode service url.")
+        return url!
+    }()
+    
     static let urlScheme: String = "data-collection"
     static let urlAuthPath: String = "auth"
     static let oAuthRedirectURLString: String = "\(urlScheme)://\(urlAuthPath)"
+    
     static let keychainIdentifier: String = "\(appBundleID).keychain"
+    
     static let licenseKey: String = "fake_license_key"
-    static let clientID: String = "AaXxKoHH3piT1fe3"
+    static let clientID: String = "h3em0ifYNGfz3uHX"
 }
 
 // MARK: Debug Request Logging

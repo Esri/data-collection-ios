@@ -18,7 +18,6 @@ import ArcGIS
 extension AGSPortal {
     
     convenience init(loginRequired: Bool = false) {
-        assert(AppConfiguration.basePortalURL != nil, "App Configuration must contain a valid service url.")
-        self.init(url: AppConfiguration.basePortalURL!, loginRequired: loginRequired)
+        self.init(url: AppConfiguration.basePortalURL, loginRequired: loginRequired)
     }
 }
