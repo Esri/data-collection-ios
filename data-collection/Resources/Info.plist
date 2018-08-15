@@ -27,7 +27,7 @@
 			<string>com.esri.arcgisruntime.exampleapps.data-collection</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>data_collection</string>
+				<string>data-collection</string>
 			</array>
 		</dict>
 	</array>
