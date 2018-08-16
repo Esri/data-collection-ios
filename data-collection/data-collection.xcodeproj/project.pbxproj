@@ -17,11 +17,11 @@
 		9412D215209937E50031F9EB /* RelatedRecordsPopupsViewController+Delegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9412D214209937E50031F9EB /* RelatedRecordsPopupsViewController+Delegate.swift */; };
 		9412D2172099382C0031F9EB /* RelatedRecordsPopupsViewController+DataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9412D2162099382C0031F9EB /* RelatedRecordsPopupsViewController+DataSource.swift */; };
 		9416A19320BF3334001377ED /* RelatedRecordsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9416A19220BF3334001377ED /* RelatedRecordsManager.swift */; };
-		9440D35120D4662E005ED582 /* CustomBehavior+NewTreeCondition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9440D35020D4662E005ED582 /* CustomBehavior+NewTreeCondition.swift */; };
+		9440D35120D4662E005ED582 /* CustomBehavior_NewTreeCondition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9440D35020D4662E005ED582 /* CustomBehavior_NewTreeCondition.swift */; };
 		9440D35520D479B5005ED582 /* PopupLongStringCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9440D35420D479B5005ED582 /* PopupLongStringCell.swift */; };
 		9440D35A20DB2283005ED582 /* RelatedRecordsPopupsViewController+TableViewCellReuseIdentifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9440D35920DB2283005ED582 /* RelatedRecordsPopupsViewController+TableViewCellReuseIdentifiers.swift */; };
-		9440D35C20DC2809005ED582 /* CustomBehavior+TreeSymbology.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9440D35B20DC2809005ED582 /* CustomBehavior+TreeSymbology.swift */; };
-		9451EC5220D0705700792FFC /* CustomBehavior+IdentifyNeighborhood.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9451EC5120D0705700792FFC /* CustomBehavior+IdentifyNeighborhood.swift */; };
+		9440D35C20DC2809005ED582 /* CustomBehavior_TreeSymbology.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9440D35B20DC2809005ED582 /* CustomBehavior_TreeSymbology.swift */; };
+		9451EC5220D0705700792FFC /* CustomBehavior_IdentifyNeighborhood.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9451EC5120D0705700792FFC /* CustomBehavior_IdentifyNeighborhood.swift */; };
 		945CEE7520DDC2AC00CD3E0D /* SVRadialGradientLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 945CEE6B20DDC2AC00CD3E0D /* SVRadialGradientLayer.m */; };
 		945CEE7620DDC2AC00CD3E0D /* SVProgressAnimatedView.m in Sources */ = {isa = PBXBuildFile; fileRef = 945CEE6E20DDC2AC00CD3E0D /* SVProgressAnimatedView.m */; };
 		945CEE7720DDC2AC00CD3E0D /* SVProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 945CEE7120DDC2AC00CD3E0D /* SVProgressHUD.m */; };
@@ -100,8 +100,8 @@
 		94BA7D3C20FD151A00C78255 /* AppFonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94BA7D3B20FD151A00C78255 /* AppFonts.swift */; };
 		94BA7D3E20FD6E0900C78255 /* LasySync.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94BA7D3D20FD6E0900C78255 /* LasySync.swift */; };
 		94D2713B20CEF04F00304E27 /* RelatedRecordsPopupsViewController+EditingSessions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94D2713A20CEF04F00304E27 /* RelatedRecordsPopupsViewController+EditingSessions.swift */; };
-		94D2713E20D030D900304E27 /* CustomBehavior+ReverseGeocode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94D2713D20D030D900304E27 /* CustomBehavior+ReverseGeocode.swift */; };
-		94D2714020D0315900304E27 /* CustomBehavior+Map.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94D2713F20D0315900304E27 /* CustomBehavior+Map.swift */; };
+		94D2713E20D030D900304E27 /* CustomBehavior_ReverseGeocode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94D2713D20D030D900304E27 /* CustomBehavior_ReverseGeocode.swift */; };
+		94D2714020D0315900304E27 /* CustomBehavior_Map.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94D2713F20D0315900304E27 /* CustomBehavior_Map.swift */; };
 		94D2714320D0578000304E27 /* OneToManyManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94D2714220D0578000304E27 /* OneToManyManager.swift */; };
 		94D2714520D0578C00304E27 /* ManyToOneManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94D2714420D0578C00304E27 /* ManyToOneManager.swift */; };
 		94D544BD207FC15D00ED0D04 /* DrawerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94D544B4207FC15C00ED0D04 /* DrawerViewController.swift */; };
@@ -154,11 +154,11 @@
 		9412D214209937E50031F9EB /* RelatedRecordsPopupsViewController+Delegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RelatedRecordsPopupsViewController+Delegate.swift"; sourceTree = "<group>"; };
 		9412D2162099382C0031F9EB /* RelatedRecordsPopupsViewController+DataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RelatedRecordsPopupsViewController+DataSource.swift"; sourceTree = "<group>"; };
 		9416A19220BF3334001377ED /* RelatedRecordsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RelatedRecordsManager.swift; sourceTree = "<group>"; };
-		9440D35020D4662E005ED582 /* CustomBehavior+NewTreeCondition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CustomBehavior+NewTreeCondition.swift"; sourceTree = "<group>"; };
+		9440D35020D4662E005ED582 /* CustomBehavior_NewTreeCondition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomBehavior_NewTreeCondition.swift; sourceTree = "<group>"; };
 		9440D35420D479B5005ED582 /* PopupLongStringCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupLongStringCell.swift; sourceTree = "<group>"; };
 		9440D35920DB2283005ED582 /* RelatedRecordsPopupsViewController+TableViewCellReuseIdentifiers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RelatedRecordsPopupsViewController+TableViewCellReuseIdentifiers.swift"; sourceTree = "<group>"; };
-		9440D35B20DC2809005ED582 /* CustomBehavior+TreeSymbology.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CustomBehavior+TreeSymbology.swift"; sourceTree = "<group>"; };
-		9451EC5120D0705700792FFC /* CustomBehavior+IdentifyNeighborhood.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CustomBehavior+IdentifyNeighborhood.swift"; sourceTree = "<group>"; };
+		9440D35B20DC2809005ED582 /* CustomBehavior_TreeSymbology.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomBehavior_TreeSymbology.swift; sourceTree = "<group>"; };
+		9451EC5120D0705700792FFC /* CustomBehavior_IdentifyNeighborhood.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomBehavior_IdentifyNeighborhood.swift; sourceTree = "<group>"; };
 		945CEE6B20DDC2AC00CD3E0D /* SVRadialGradientLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVRadialGradientLayer.m; sourceTree = "<group>"; };
 		945CEE6C20DDC2AC00CD3E0D /* SVIndefiniteAnimatedView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVIndefiniteAnimatedView.h; sourceTree = "<group>"; };
 		945CEE6D20DDC2AC00CD3E0D /* SVProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVProgressHUD.h; sourceTree = "<group>"; };
@@ -243,8 +243,8 @@
 		94BA7D3B20FD151A00C78255 /* AppFonts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppFonts.swift; sourceTree = "<group>"; };
 		94BA7D3D20FD6E0900C78255 /* LasySync.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LasySync.swift; sourceTree = "<group>"; };
 		94D2713A20CEF04F00304E27 /* RelatedRecordsPopupsViewController+EditingSessions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RelatedRecordsPopupsViewController+EditingSessions.swift"; sourceTree = "<group>"; };
-		94D2713D20D030D900304E27 /* CustomBehavior+ReverseGeocode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CustomBehavior+ReverseGeocode.swift"; sourceTree = "<group>"; };
-		94D2713F20D0315900304E27 /* CustomBehavior+Map.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CustomBehavior+Map.swift"; sourceTree = "<group>"; };
+		94D2713D20D030D900304E27 /* CustomBehavior_ReverseGeocode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomBehavior_ReverseGeocode.swift; sourceTree = "<group>"; };
+		94D2713F20D0315900304E27 /* CustomBehavior_Map.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomBehavior_Map.swift; sourceTree = "<group>"; };
 		94D2714220D0578000304E27 /* OneToManyManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OneToManyManager.swift; sourceTree = "<group>"; };
 		94D2714420D0578C00304E27 /* ManyToOneManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManyToOneManager.swift; sourceTree = "<group>"; };
 		94D544B4207FC15C00ED0D04 /* DrawerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DrawerViewController.swift; sourceTree = "<group>"; };
@@ -563,11 +563,11 @@
 		94D2713C20D02C0800304E27 /* Custom Behavior */ = {
 			isa = PBXGroup;
 			children = (
-				94D2713F20D0315900304E27 /* CustomBehavior+Map.swift */,
-				94D2713D20D030D900304E27 /* CustomBehavior+ReverseGeocode.swift */,
-				9451EC5120D0705700792FFC /* CustomBehavior+IdentifyNeighborhood.swift */,
-				9440D35020D4662E005ED582 /* CustomBehavior+NewTreeCondition.swift */,
-				9440D35B20DC2809005ED582 /* CustomBehavior+TreeSymbology.swift */,
+				94D2713F20D0315900304E27 /* CustomBehavior_Map.swift */,
+				94D2713D20D030D900304E27 /* CustomBehavior_ReverseGeocode.swift */,
+				9451EC5120D0705700792FFC /* CustomBehavior_IdentifyNeighborhood.swift */,
+				9440D35020D4662E005ED582 /* CustomBehavior_NewTreeCondition.swift */,
+				9440D35B20DC2809005ED582 /* CustomBehavior_TreeSymbology.swift */,
 			);
 			path = "Custom Behavior";
 			sourceTree = "<group>";
@@ -875,7 +875,7 @@
 				94D544C1207FC15D00ED0D04 /* AppContainerViewController+JobStatusDelegate.swift in Sources */,
 				94D544C0207FC15D00ED0D04 /* AppContainerViewController+MapDelegate.swift in Sources */,
 				945CEE7520DDC2AC00CD3E0D /* SVRadialGradientLayer.m in Sources */,
-				94D2713E20D030D900304E27 /* CustomBehavior+ReverseGeocode.swift in Sources */,
+				94D2713E20D030D900304E27 /* CustomBehavior_ReverseGeocode.swift in Sources */,
 				94D544C4207FC15D00ED0D04 /* JobStatusViewController.swift in Sources */,
 				94D544D920852A5100ED0D04 /* PinDropView.swift in Sources */,
 				94B375C9207E8D5600691F2A /* AppContext.swift in Sources */,
@@ -892,7 +892,7 @@
 				94D544D620852A5100ED0D04 /* NotificationBarLabel.swift in Sources */,
 				948066362091483600A398EA /* RelatedRecordsPopupsViewController.swift in Sources */,
 				946569122088020F00599E55 /* AGSPopup+Extensions.swift in Sources */,
-				9440D35120D4662E005ED582 /* CustomBehavior+NewTreeCondition.swift in Sources */,
+				9440D35120D4662E005ED582 /* CustomBehavior_NewTreeCondition.swift in Sources */,
 				94B375F4207E8E4800691F2A /* AGSJobStatus+Extensions.swift in Sources */,
 				9465690E208800A200599E55 /* MapViewController+Delegate.swift in Sources */,
 				94B375F8207E8E4800691F2A /* AGSDrawStatus+Extensions.swift in Sources */,
@@ -907,7 +907,7 @@
 				946569042087FB5000599E55 /* MapViewController+LocationSelection.swift in Sources */,
 				9412D213209937950031F9EB /* RelatedRecordCell.swift in Sources */,
 				94FA8B25207BF2CD00972C75 /* MapViewController.swift in Sources */,
-				9440D35C20DC2809005ED582 /* CustomBehavior+TreeSymbology.swift in Sources */,
+				9440D35C20DC2809005ED582 /* CustomBehavior_TreeSymbology.swift in Sources */,
 				94AB811A210A476400B9C920 /* DeleteRecordCell.swift in Sources */,
 				945CEE7D20E2FAFE00CD3E0D /* MapViewController+SmallPopupView.swift in Sources */,
 				9465691A2088028E00599E55 /* AGSRelationshipInfo+Extensions.swift in Sources */,
@@ -926,7 +926,7 @@
 				9440D35520D479B5005ED582 /* PopupLongStringCell.swift in Sources */,
 				9412D2172099382C0031F9EB /* RelatedRecordsPopupsViewController+DataSource.swift in Sources */,
 				94B0D32D20C84C390075EA7A /* UINavigationController+Extensions.swift in Sources */,
-				9451EC5220D0705700792FFC /* CustomBehavior+IdentifyNeighborhood.swift in Sources */,
+				9451EC5220D0705700792FFC /* CustomBehavior_IdentifyNeighborhood.swift in Sources */,
 				94D2713B20CEF04F00304E27 /* RelatedRecordsPopupsViewController+EditingSessions.swift in Sources */,
 				9465690C2087FCCE00599E55 /* MapViewController+Setup.swift in Sources */,
 				94B375FC207E8E4800691F2A /* UIView+Extensions.swift in Sources */,
@@ -946,7 +946,7 @@
 				9465691C208802AE00599E55 /* AGSFeatureLayer+Extensions.swift in Sources */,
 				94A8103720B6306600D4BC68 /* RelatedRecordsListViewController.swift in Sources */,
 				94B375C8207E8D5600691F2A /* AppContext+WorkMode.swift in Sources */,
-				94D2714020D0315900304E27 /* CustomBehavior+Map.swift in Sources */,
+				94D2714020D0315900304E27 /* CustomBehavior_Map.swift in Sources */,
 				94BA7D3E20FD6E0900C78255 /* LasySync.swift in Sources */,
 				945CEE7720DDC2AC00CD3E0D /* SVProgressHUD.m in Sources */,
 				94B0D32B20C84B010075EA7A /* RelatedRecordsPopupsViewController+RelatedRecordsListDelegate.swift in Sources */,
