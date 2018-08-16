@@ -135,10 +135,10 @@ extension RelatedRecordsPopupsViewController: UITableViewDataSource {
             return nFields + recordsManager.manyToOne.count
         }
         else if recordsManager.oneToMany.count > section - 1 {
-            let idx = section - 1
-            var nRows = recordsManager.oneToMany[idx].relatedPopups.count
+            let index = section - 1
+            var nRows = recordsManager.oneToMany[index].relatedPopups.count
             
-            if let table = recordsManager.oneToMany[idx].relatedTable, table.canAddFeature {
+            if let table = recordsManager.oneToMany[index].relatedTable, table.canAddFeature {
                 nRows += 1
             }
             
