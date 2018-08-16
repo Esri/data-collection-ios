@@ -14,18 +14,7 @@
 
 import UIKit
 
-let appReachability: NetworkReachabilityManager = {
-    
-    let manager = NetworkReachabilityManager(host: AppConfiguration.basePortalDomain)
-    assert(manager != nil, "Network Reachability Manager must be constructed a valid service url.")
-    
-    manager!.listener = { status in
-        print("[Reachability] Network status changed: \(status)")
-        AppReachability.status = status
-    }
-    
-    return manager!
-}()
+let appReachability = AppReachability.buildManager()
 
 let appLocation = AppLocation()
 

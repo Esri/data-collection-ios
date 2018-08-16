@@ -16,7 +16,20 @@ import Foundation
 
 class AppReachability {
     
-    static var status: NetworkReachabilityManager.NetworkReachabilityStatus? = nil {
+    static func buildManager() -> NetworkReachabilityManager {
+        
+        let manager = NetworkReachabilityManager(host: AppConfiguration.basePortalDomain)
+        assert(manager != nil, "Network Reachability Manager must be constructed a valid service url.")
+        
+        manager!.listener = { status in
+            print("[Reachability] Network status changed: \(status)")
+            reachabilityStatus = status
+        }
+        
+        return manager!
+    }
+    
+    static var reachabilityStatus: NetworkReachabilityManager.NetworkReachabilityStatus? = nil {
         didSet {
             if oldValue != nil {
                 appNotificationCenter.post(AppNotifications.reachabilityChanged)
