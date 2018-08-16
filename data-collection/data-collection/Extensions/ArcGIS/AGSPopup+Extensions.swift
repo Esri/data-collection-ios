@@ -17,14 +17,14 @@ import ArcGIS
 
 extension AGSPopup {
     
+    var feature: AGSArcGISFeature? {
+        return geoElement as? AGSArcGISFeature
+    }
+    
     func clearSelection() {
         
-        guard
-            let feature = geoElement as? AGSArcGISFeature,
-            let table = feature.featureTable,
-            let layer = table.featureLayer
-            else {
-                return
+        guard let layer = feature?.featureTable?.featureLayer else {
+            return
         }
         
         layer.clearSelection()
@@ -33,7 +33,7 @@ extension AGSPopup {
     func select() {
         
         guard
-            let feature = geoElement as? AGSArcGISFeature,
+            let feature = feature,
             let table = feature.featureTable,
             let layer = table.featureLayer
             else {
