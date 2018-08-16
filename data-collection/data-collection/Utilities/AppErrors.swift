@@ -201,3 +201,26 @@ enum PopupSortingError : AppError {
     }
 }
 
+enum AppGeocoderError: AppError  {
+    
+    case missingAddressAttribute
+    
+    var errorCode: Int {
+        switch self {
+        case .missingAddressAttribute:
+            return 5001
+        }
+    }
+    
+    var errorUserInfo: [String : Any] {
+        switch self {
+        case .missingAddressAttribute:
+            return [NSLocalizedDescriptionKey: "Missing Address (for online locator) or Match_addr (for offline locator) in attributes."]
+        }
+    }
+    
+    var localizedDescription: String {
+        return errorUserInfo[NSLocalizedDescriptionKey] as! String
+    }
+}
+

@@ -19,7 +19,13 @@ func enrich(popup: AGSPopup, withReverseGeocodedDataForPoint point: AGSPoint, co
     
     let addressKey = "Address"
     
-    appReverseGeocoder.reverseGeocode(forPoint: point) { (address) in
+    appReverseGeocoder.reverseGeocode(forPoint: point) { (address, error)  in
+        
+        guard error == nil else {
+            print("[Error: Reverse Geocode]", error!.localizedDescription)
+            completion()
+            return
+        }
         
         if let keys = popup.geoElement.attributes.allKeys as? [String], keys.contains(addressKey) {
             popup.geoElement.attributes[addressKey] = address
