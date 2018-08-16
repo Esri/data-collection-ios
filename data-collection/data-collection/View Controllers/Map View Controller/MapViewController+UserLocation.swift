@@ -27,8 +27,7 @@ extension MapViewController {
             guard mapView.locationDisplay.showLocation == true, let location = mapView.locationDisplay.location, let position = location.position else {
                 return
             }
-            let scale = min(1500, mapView.mapScale)
-            let viewpoint = AGSViewpoint(center: position, scale: scale)
+            let viewpoint = AGSViewpoint(center: position, scale: 2500)
             mapView.setViewpoint(viewpoint, duration: 1.2, completion: nil)
         }
         else {
