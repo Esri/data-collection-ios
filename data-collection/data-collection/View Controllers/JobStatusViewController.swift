@@ -68,27 +68,43 @@ class JobStatusViewController: AppContextAwareController {
         }
         
         job.start(statusHandler: nil) { [weak self] (result, error) in
-            
-            guard let strongSelf = self else { return }
-            
+
             guard error == nil else {
-                
-                if let nserror = error as NSError?, nserror.code == 3072 {
-                    strongSelf.jobStatusLabel.text = strongSelf.jobConstruct?.cancelMessage
-                }
-                else {
-                    strongSelf.jobStatusLabel.text = strongSelf.jobConstruct?.errorMessage
-                }
-                strongSelf.delegate?.jobStatusViewController(strongSelf, didEndWithError: error!)
+                self?.handleJob(error: error!)
                 return
             }
             
             if let result = result {
-                
-                strongSelf.jobStatusLabel.text = strongSelf.jobConstruct?.successMessage
-                strongSelf.delegate?.jobStatusViewController(strongSelf, didEndWithResult: result)
+                self?.handleJob(result: result)
+            }
+            else {
+                print("[Job Status View Controller: Job Failure] something went very wrong.")
+                self?.handleJobFailure()
             }
         }
+    }
+    
+    private func handleJob(error: Error) {
+        
+        if let nserror = error as NSError?, nserror.code == 3072 {
+            jobStatusLabel.text = jobConstruct?.cancelMessage
+        }
+        else {
+            jobStatusLabel.text = jobConstruct?.errorMessage
+        }
+        
+        delegate?.jobStatusViewController(self, didEndWithError: error)
+    }
+    
+    private func handleJob(result: Any) {
+        
+        jobStatusLabel.text = jobConstruct?.successMessage
+        delegate?.jobStatusViewController(self, didEndWithResult: result)
+    }
+    
+    private func handleJobFailure() {
+        
+        delegate?.jobStatusViewController(didEndAbruptly: self)
     }
     
     override func viewDidDisappear(_ animated: Bool) {

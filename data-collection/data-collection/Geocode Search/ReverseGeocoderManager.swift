@@ -60,16 +60,16 @@ class ReverseGeocoderManager: AGSLoadableBase {
         }
     }
     
-    internal func reverseGeocode(forPoint point: AGSPoint, completion: @escaping (String?)->Void) {
+    internal func reverseGeocode(forPoint point: AGSPoint, completion: @escaping (String?, Error?)->Void) {
         
         load { [weak self] error in
 
             guard error == nil else {
-                print("[Geocode Search manager] load error", error!.localizedDescription)
+                completion(nil, error)
                 return
             }
             
-            var locatorTask: AGSLocatorTask?
+            var locatorTask: AGSLocatorTask!
             
             if appContext.workMode == .online && appReachability.isReachable {
                 locatorTask = self?.onlineLocatorTask
@@ -78,30 +78,25 @@ class ReverseGeocoderManager: AGSLoadableBase {
                 locatorTask = self?.offlineLocatorTask
             }
             
-            guard let selectedLocatorTask = locatorTask else {
-                completion(nil)
-                return
-            }
-            
             let params = AGSReverseGeocodeParameters()
             params.forStorage = true
             
-            selectedLocatorTask.reverseGeocode(withLocation: point, parameters: params) { (geoCodeResults: [AGSGeocodeResult]?, error: Error?) in
+            locatorTask.reverseGeocode(withLocation: point, parameters: params) { (geoCodeResults: [AGSGeocodeResult]?, error: Error?) in
                 
                 guard error == nil else {
-                    print("[Error] reverse geocoder error", error!.localizedDescription)
-                    completion(nil)
+                    completion(nil, error)
                     return
                 }
+                
                 guard let results = geoCodeResults,
                     let first = results.first,
                     let attributesDict = first.attributes,
                     let address = attributesDict[Keys.address] as? String ?? attributesDict[Keys.matchAddress] as? String
                     else {
-                        completion(nil)
+                        completion(nil, AppGeocoderError.missingAddressAttribute)
                         return
                 }
-                completion(address)
+                completion(address, nil)
             }
         }
     }

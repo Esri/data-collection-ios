@@ -68,6 +68,8 @@ class ManyToOneManager: RelatedRecordsManager {
             return
         }
         
+        stagedRelatedPopup = nil
+        
         guard
             let feature = popup?.geoElement as? AGSArcGISFeature,
             let relatedFeature = newRelatedPopup.geoElement as? AGSArcGISFeature
@@ -77,7 +79,6 @@ class ManyToOneManager: RelatedRecordsManager {
         
         feature.relate(to: relatedFeature, relationshipInfo: info)
         
-        stagedRelatedPopup = nil
         currentRelatedPopup = newRelatedPopup
     }
 }

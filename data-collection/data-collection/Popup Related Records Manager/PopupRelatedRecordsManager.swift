@@ -41,13 +41,13 @@ class PopupRelatedRecordsManager: AGSPopupManager {
         
         var relatedRecordsError: Error?
         
-        do {
-            for manager in manyToOne {
+        for manager in manyToOne {
+            do {
                 try manager.commitChange()
             }
-        }
-        catch {
-            relatedRecordsError = error
+            catch {
+                relatedRecordsError = error
+            }
         }
         
         // 2. Validate Fields
@@ -273,14 +273,14 @@ extension PopupRelatedRecordsManager {
         if indexPathWithinManyToOne(indexPath) {
             
             let rowOffset = isEditing ? editableDisplayFields.count : displayFields.count
-            let rowIDX = indexPath.row - rowOffset
-            return manyToOne[rowIDX]
+            let rowIndex = indexPath.row - rowOffset
+            return manyToOne[rowIndex]
         }
         else if indexPathWithinOneToMany(indexPath) {
             
             let sectionOffset = 1
-            let sectionIDX = indexPath.section - sectionOffset
-            return oneToMany[sectionIDX]
+            let sectionIndex = indexPath.section - sectionOffset
+            return oneToMany[sectionIndex]
         }
         
         return nil
@@ -307,9 +307,9 @@ extension PopupRelatedRecordsManager {
         }
 
         let rowOffset = isEditing ? editableDisplayFields.count : displayFields.count
-        let offsetIDX = indexPath.row - rowOffset
+        let offsetIndex = indexPath.row - rowOffset
 
-        return manyToOne.count > offsetIDX
+        return manyToOne.count > offsetIndex
     }
 
     func indexPathWithinOneToMany(_ indexPath: IndexPath) -> Bool {
@@ -319,13 +319,13 @@ extension PopupRelatedRecordsManager {
         }
 
         let sectionOffset = 1
-        let sectionIDX = indexPath.section - sectionOffset
+        let sectionIndex = indexPath.section - sectionOffset
 
-        guard oneToMany.count > sectionIDX else {
+        guard oneToMany.count > sectionIndex else {
             return false
         }
 
-        let manager = oneToMany[sectionIDX]
+        let manager = oneToMany[sectionIndex]
 
         var rowOffset = 0
         if let table = manager.relatedTable, table.canAddFeature {

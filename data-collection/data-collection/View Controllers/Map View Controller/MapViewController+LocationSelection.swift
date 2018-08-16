@@ -222,11 +222,11 @@ extension MapViewController {
             return
         }
         
-        let nw = mask.frame.origin
-        let se = CGPoint(x: mask.frame.maxX, y: mask.frame.maxY)
+        let nwCorner = mask.frame.origin
+        let seCorner = CGPoint(x: mask.frame.maxX, y: mask.frame.maxY)
         
-        let agsNW = mapView.screen(toLocation: nw)
-        let agsSE = mapView.screen(toLocation: se)
+        let agsNW = mapView.screen(toLocation: nwCorner)
+        let agsSE = mapView.screen(toLocation: seCorner)
         
         let envelope = AGSEnvelope(min: agsNW, max: agsSE)
         

@@ -76,7 +76,7 @@ class OneToManyManager: RelatedRecordsManager {
         
         var foundPopupIndex: Int?
         
-        for (idx, popup) in relatedPopups.enumerated() {
+        for (popupIndex, popup) in relatedPopups.enumerated() {
             
             guard
                 let feature = popup.geoElement as? AGSArcGISFeature,
@@ -86,16 +86,16 @@ class OneToManyManager: RelatedRecordsManager {
             }
             
             if oid == relatedFeatureID {
-                foundPopupIndex = idx
+                foundPopupIndex = popupIndex
                 break
             }
         }
         
-        guard let idx = foundPopupIndex else {
+        guard let popupIndex = foundPopupIndex else {
             throw RelatedRecordsManagerError.cannotRelateFeatures
         }
         
-        relatedPopups.remove(at: idx)
+        relatedPopups.remove(at: popupIndex)
     }
     
     private func sortRelatedRecords() {
@@ -119,7 +119,7 @@ extension OneToManyManager {
         }
         
         // Determine which One To Many record we'd like to display
-        let rowIDX = indexPath.row - rowOffset
+        let rowIndex = indexPath.row - rowOffset
         
         // Add feature row button
         if indexPath.row < rowOffset {
@@ -127,7 +127,7 @@ extension OneToManyManager {
         }
         // Display popup at index
         else {
-            return relatedPopups[rowIDX]
+            return relatedPopups[rowIndex]
         }
     }
 }

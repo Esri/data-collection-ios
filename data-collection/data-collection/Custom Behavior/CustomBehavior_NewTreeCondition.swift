@@ -15,16 +15,17 @@
 import Foundation
 import ArcGIS
 
-func enrich(popup: AGSPopup, withReverseGeocodedDataForPoint point: AGSPoint, completion: @escaping () -> Void) {
+func configureDefaultCondition(forPopup popup: AGSPopup, completion: @escaping () -> Void) {
     
-    let addressKey = "Address"
+    let conditionKey = "Condition"
+    let defaultCondition = "Good"
     
-    appReverseGeocoder.reverseGeocode(forPoint: point) { (address) in
-        
-        if let keys = popup.geoElement.attributes.allKeys as? [String], keys.contains(addressKey) {
-            popup.geoElement.attributes[addressKey] = address
-        }
-        
-        completion()
+    if let keys = popup.geoElement.attributes.allKeys as? [String], keys.contains(conditionKey) {
+        popup.geoElement.attributes[conditionKey] = defaultCondition
     }
+    else {
+        print("[Error: Tree Condition] could not find condition key in attributes.")
+    }
+    
+    completion()
 }

@@ -92,9 +92,9 @@ class ActivityBarView: UIView {
             self?.isAnimating = true
             self?.alpha = 1.0
             self?.isHidden = false
-            UIView.animate(withDuration: 0.1, animations: { [weak self] in
+            UIView.animate(withDuration: 0.1, animations: {
                 self?.setNewFrame(forVisible: true)
-                }, completion: { [weak self] (completion) in
+                }, completion: { (completion) in
                     UIView.animate(withDuration: 0.2, delay: 0.0, options: [.autoreverse, .`repeat`], animations: {
                         self?.swapBackgroundColor()
                     })
@@ -106,9 +106,9 @@ class ActivityBarView: UIView {
         DispatchQueue.main.async { [weak self] in
             self?.layer.removeAllAnimations()
             self?.resetBackgroundColor()
-            UIView.animate(withDuration: 0.1, animations: { [weak self] in
+            UIView.animate(withDuration: 0.1, animations: {
                 self?.setNewFrame(forVisible: false)
-                }, completion: { [weak self] (completion) in
+                }, completion: { (completion) in
                     self?.removeAnimations()
             })
         }
