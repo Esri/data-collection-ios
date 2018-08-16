@@ -18,15 +18,16 @@ class AppReachability {
     
     static func buildManager() -> NetworkReachabilityManager {
         
-        let manager = NetworkReachabilityManager(host: AppConfiguration.basePortalDomain)
-        assert(manager != nil, "Network Reachability Manager must be constructed a valid service url.")
+        guard let manager = NetworkReachabilityManager(host: AppConfiguration.basePortalDomain) else {
+            assertionFailure("Network Reachability Manager must be constructed a valid service url.")
+        }
         
-        manager!.listener = { status in
+        manager.listener = { status in
             print("[Reachability] Network status changed: \(status)")
             reachabilityStatus = status
         }
         
-        return manager!
+        return manager
     }
     
     static var reachabilityStatus: NetworkReachabilityManager.NetworkReachabilityStatus? = nil {
