@@ -32,7 +32,7 @@ extension MapViewController: AGSGeoViewTouchDelegate {
         identifyOperation?.cancel()
         identifyOperation = nil
         
-        identifyOperation = geoView.identifyLayers(atScreenPoint: screenPoint, tolerance: 8, returnPopupsOnly: true, maximumResultsPerLayer: 5) { [weak self] (result, error) in
+        identifyOperation = geoView.identifyLayers(atScreenPoint: screenPoint, tolerance: 10, returnPopupsOnly: true, maximumResultsPerLayer: 5) { [weak self] (result, error) in
             
             if let error = error {
                 print("[Error] identifying layers", error.localizedDescription)
