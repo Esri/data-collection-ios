@@ -41,13 +41,13 @@ class PopupRelatedRecordsManager: AGSPopupManager {
         
         var relatedRecordsError: Error?
         
-        do {
-            for manager in manyToOne {
+        for manager in manyToOne {
+            do {
                 try manager.commitChange()
             }
-        }
-        catch {
-            relatedRecordsError = error
+            catch {
+                relatedRecordsError = error
+            }
         }
         
         // 2. Validate Fields
