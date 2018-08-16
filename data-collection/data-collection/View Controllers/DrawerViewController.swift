@@ -35,7 +35,7 @@ class DrawerViewController: AppContextAwareController {
     @IBOutlet weak var synchronizeOfflineMapButton: UIButton!
     @IBOutlet weak var deleteOfflineMapButton: UIButton!
     
-    var contextViewControllerJobDelegate: DrawerViewControllerDelegate?
+    var drawerDelegate: DrawerViewControllerDelegate?
     
     let loginLogoutButtonControlStateColors: [UIControlState: UIColor] = {
         return [.normal: appColors.loginLogoutNormal,
@@ -90,7 +90,7 @@ class DrawerViewController: AppContextAwareController {
     
     
     @IBAction func userRequestsLoginLogout(_ sender: Any) {
-        contextViewControllerJobDelegate?.drawerViewController(didRequestLoginLogout: self)
+        drawerDelegate?.drawerViewController(didRequestLoginLogout: self)
     }
     
     @IBAction func userRequestsWorkOnline(_ sender: Any) {
@@ -104,7 +104,7 @@ class DrawerViewController: AppContextAwareController {
             return
         }
         
-        contextViewControllerJobDelegate?.drawerViewController(didRequestWorkOnline: self)
+        drawerDelegate?.drawerViewController(didRequestWorkOnline: self)
     }
     
     @IBAction func userRequestsWorkOffline(_ sender: Any) {
@@ -123,7 +123,7 @@ class DrawerViewController: AppContextAwareController {
             return
         }
 
-        contextViewControllerJobDelegate?.drawerViewController(didRequestWorkOffline: self)
+        drawerDelegate?.drawerViewController(didRequestWorkOffline: self)
     }
     
     @IBAction func userRequestsSynchronizeOfflineMap(_ sender: Any) {
@@ -143,7 +143,7 @@ class DrawerViewController: AppContextAwareController {
             return
         }
         
-        contextViewControllerJobDelegate?.drawerViewController(didRequestSyncJob: self)
+        drawerDelegate?.drawerViewController(didRequestSyncJob: self)
     }
     
     @IBAction func userRequestsDeleteOfflineMap(_ sender: Any) {
@@ -158,7 +158,7 @@ class DrawerViewController: AppContextAwareController {
             return
         }
         
-        contextViewControllerJobDelegate?.drawerViewController(didRequestDeleteMap: self)
+        drawerDelegate?.drawerViewController(didRequestDeleteMap: self)
     }
     
     override func viewDidLayoutSubviews() {
