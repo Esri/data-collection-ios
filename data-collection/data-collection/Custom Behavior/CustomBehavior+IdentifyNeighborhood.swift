@@ -18,6 +18,7 @@ import ArcGIS
 func enrich(popup: AGSPopup, withNeighborhoodIdentifyForPoint point: AGSPoint, completion: @escaping () -> Void) {
     
     guard let map = appContext.currentMap else {
+        print("[Error: Identify Neighborhood] no current map.")
         completion()
         return
     }
@@ -34,6 +35,7 @@ func enrich(popup: AGSPopup, withNeighborhoodIdentifyForPoint point: AGSPoint, c
     }
     
     guard let neighborhoodFeatureTable = foundNeighborhoodTable else {
+        print("[Error: Identify Neighborhood] could not find neighborhood table.")
         completion()
         return
     }
@@ -66,6 +68,9 @@ func enrich(popup: AGSPopup, withNeighborhoodIdentifyForPoint point: AGSPoint, c
             treeLayerKeys.contains(treeKey) {
             
             popup.geoElement.attributes[treeKey] = feature.attributes[neighbohoodKey]
+        }
+        else {
+            print("[Error: Identify Neighborhood] could not find neighborhood key in attributes.")
         }
         
         completion()

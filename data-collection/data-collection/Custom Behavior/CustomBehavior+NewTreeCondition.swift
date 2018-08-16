@@ -23,6 +23,9 @@ func configureDefaultCondition(forPopup popup: AGSPopup, completion: @escaping (
     if let keys = popup.geoElement.attributes.allKeys as? [String], keys.contains(conditionKey) {
         popup.geoElement.attributes[conditionKey] = defaultCondition
     }
+    else {
+        print("[Error: Tree Condition] could not find condition key in attributes.")
+    }
     
     completion()
 }

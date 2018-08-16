@@ -17,7 +17,7 @@ import ArcGIS
 
 func updateSymbology(withTreeManager treeManager: PopupRelatedRecordsManager, completion: @escaping () -> Void) {
     
-    // This function will have been called only after the inspections array has been sorted by inspection date
+    // This function will be called only after the inspections array has been sorted by inspection date
 
     var foundInspectionsManager: OneToManyManager?
     
@@ -30,6 +30,7 @@ func updateSymbology(withTreeManager treeManager: PopupRelatedRecordsManager, co
     }
     
     guard let inspectionsManager = foundInspectionsManager else {
+        print("[Error: Update Symbology] could not find inspections manager.")
         completion()
         return
     }
@@ -40,6 +41,7 @@ func updateSymbology(withTreeManager treeManager: PopupRelatedRecordsManager, co
         treeFeatureTable.canUpdate(treeFeature),
         treeFeatureTable.tableName == "Trees"
         else {
+        print("[Error: Update Symbology] could not find tree table or update tree.")
         completion()
         return
     }
@@ -50,6 +52,7 @@ func updateSymbology(withTreeManager treeManager: PopupRelatedRecordsManager, co
         let newestInspectionFeatureTable = newestInspectionFeature.featureTable as? AGSArcGISFeatureTable,
         newestInspectionFeatureTable.tableName == "Inspections"
         else {
+            print("[Error: Update Symbology] could not find inspections table.")
             completion()
             return
     }
@@ -62,6 +65,7 @@ func updateSymbology(withTreeManager treeManager: PopupRelatedRecordsManager, co
         treeKeys.contains(conditionKey),
         treeKeys.contains(dbhKey)
         else {
+            print("[Error: Update Symbology] tree attributes doensn't contain condition or dbh keys.")
         completion()
             return
     }
@@ -71,6 +75,7 @@ func updateSymbology(withTreeManager treeManager: PopupRelatedRecordsManager, co
         inspectionKeys.contains(conditionKey),
         inspectionKeys.contains(dbhKey)
         else {
+            print("[Error: Update Symbology] inspection attributes doensn't contain condition or dbh keys.")
             completion()
             return
     }
@@ -81,7 +86,7 @@ func updateSymbology(withTreeManager treeManager: PopupRelatedRecordsManager, co
     treeFeatureTable.performEdit(feature: treeFeature) { (error) in
         
         if let error = error {
-            print("[Error: Updating Tree]", error.localizedDescription)
+            print("[Error: Update Symbology]", error.localizedDescription)
         }
         
         completion()
