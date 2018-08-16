@@ -23,7 +23,7 @@ class MapViewController: AppContextAwareController {
         static let newRelatedRecord = "MapViewController.newRelatedRecord"
     }
 
-    var delegate: MapViewControllerDelegate?
+    var mapDelegate: MapViewControllerDelegate?
 
     @IBOutlet weak var mapView: AGSMapView!
     @IBOutlet weak var smallPopupView: ShrinkingView!

@@ -22,8 +22,8 @@ extension MapViewController {
         mapViewMode = appContext.currentMap != nil ? .defaultView : .disabled
 
         guard let map = mapView.map else {
-            delegate?.mapViewController(self, didUpdateTitle: "No Map")
-            delegate?.mapViewController(self, shouldAllowNewFeature: false)
+            mapDelegate?.mapViewController(self, didUpdateTitle: "No Map")
+            mapDelegate?.mapViewController(self, shouldAllowNewFeature: false)
             return
         }
         
@@ -35,21 +35,21 @@ extension MapViewController {
             }
             
             // 1 set map title from map definition
-            self?.delegate?.mapViewController(self!, didUpdateTitle: map.item?.title ?? "Map")
+            self?.mapDelegate?.mapViewController(self!, didUpdateTitle: map.item?.title ?? "Map")
             
             guard let operationalLayers = map.operationalLayers as? [AGSFeatureLayer] else {
-                self?.delegate?.mapViewController(self!, shouldAllowNewFeature: false)
+                self?.mapDelegate?.mapViewController(self!, shouldAllowNewFeature: false)
                 return
             }
             
             AGSLoadObjects(operationalLayers, { [weak self] (_) in
                 
                 guard let addableLayers = operationalLayers.featureAddableLayers, addableLayers.count > 0 else {
-                    self?.delegate?.mapViewController(self!, shouldAllowNewFeature: false)
+                    self?.mapDelegate?.mapViewController(self!, shouldAllowNewFeature: false)
                     return
                 }
                 
-                self?.delegate?.mapViewController(self!, shouldAllowNewFeature: true)
+                self?.mapDelegate?.mapViewController(self!, shouldAllowNewFeature: true)
             })
         }
     }
