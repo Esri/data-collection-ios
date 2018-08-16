@@ -133,16 +133,15 @@ extension AppContext {
         
         mobileMapPackage = nil
         hasOfflineMap = false
-        
+        lastSync.clear()
+
         do {
             try FileManager.default.removeItem(at: FileManager.offlineMapDirectoryURL)
         }
         catch {
             throw error
         }
-        
-        lastSync.clear()
-        
+                
         FileManager.buildOfflineMapDirectory()
     }
     
