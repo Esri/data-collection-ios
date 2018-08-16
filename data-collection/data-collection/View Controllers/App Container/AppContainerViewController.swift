@@ -15,10 +15,6 @@
 import UIKit
 import ArcGIS
 
-protocol DrawerViewReferencable {
-    var drawerView: AppContainerViewController? { get set }
-}
-
 class AppContainerViewController: AppContextAwareController {
     
     @IBOutlet weak var leftBarButton: UIBarButtonItem!
@@ -91,9 +87,7 @@ class AppContainerViewController: AppContextAwareController {
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if var destination = segue.destination as? DrawerViewReferencable {
-            destination.drawerView = self
-        }
+
         if let destination = segue.destination as? MapViewController {
             destination.delegate = self
             mapViewController = destination
