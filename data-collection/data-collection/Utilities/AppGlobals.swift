@@ -21,7 +21,7 @@ let appReachability: NetworkReachabilityManager = {
     
     manager!.listener = { status in
         print("[Reachability] Network status changed: \(status)")
-        appNotificationCenter.post(AppNotifications.reachabilityChanged)
+        AppReachability.status = status
     }
     
     return manager!
