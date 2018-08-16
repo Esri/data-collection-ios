@@ -19,7 +19,7 @@ class AppReachability {
     static func buildManager() -> NetworkReachabilityManager {
         
         guard let manager = NetworkReachabilityManager(host: AppConfiguration.basePortalDomain) else {
-            assertionFailure("Network Reachability Manager must be constructed a valid service url.")
+            fatalError("Network Reachability Manager must be constructed a valid service url.")
         }
         
         manager.listener = { status in
