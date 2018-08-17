@@ -14,23 +14,31 @@
 
 import Foundation
 
-class AppDateFormatter {
+extension DateFormatter {
     
-    private static let formatter = DateFormatter()
+    private static let appShared = DateFormatter()
+    
+    private static let appFormatterQueue = DispatchQueue(label: "\(appBundleID).dateFormatter")
     
     static func format(mediumDate date: Date) -> String {
         
-        formatter.dateStyle = .medium
-        formatter.timeStyle = .none
-        
-        return formatter.string(from: date)
+        return appFormatterQueue.sync {
+            
+            appShared.dateStyle = .medium
+            appShared.timeStyle = .none
+            
+            return appShared.string(from: date)
+        }
     }
     
     static func format(shortDateTime date: Date) -> String {
         
-        formatter.dateStyle = .short
-        formatter.timeStyle = .short
-        
-        return formatter.string(from: date)
+        return appFormatterQueue.sync {
+            
+            appShared.dateStyle = .short
+            appShared.timeStyle = .short
+            
+            return appShared.string(from: date)
+        }
     }
 }

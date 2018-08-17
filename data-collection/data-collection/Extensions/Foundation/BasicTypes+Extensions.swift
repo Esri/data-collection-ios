@@ -49,11 +49,11 @@ extension Double {
 extension Date {
     
     var mediumDateFormatted: String {
-        return AppDateFormatter.format(mediumDate: self)
+        return DateFormatter.format(mediumDate: self)
     }
     
     var shortDateTimeFormatted: String {
-        return AppDateFormatter.format(shortDateTime: self)
+        return DateFormatter.format(shortDateTime: self)
     }
 }
 
