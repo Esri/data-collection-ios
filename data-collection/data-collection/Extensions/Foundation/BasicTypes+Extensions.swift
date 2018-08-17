@@ -48,13 +48,12 @@ extension Double {
 
 extension Date {
     
-    var formattedString: String {
-        
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateStyle = .medium
-        dateFormatter.timeStyle = .none
-        
-        return dateFormatter.string(from: self)
+    var mediumDateFormatted: String {
+        return DateFormatter.format(mediumDate: self)
+    }
+    
+    var shortDateTimeFormatted: String {
+        return DateFormatter.format(shortDateTime: self)
     }
 }
 
