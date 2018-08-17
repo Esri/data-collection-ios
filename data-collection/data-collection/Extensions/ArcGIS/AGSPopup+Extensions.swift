@@ -22,25 +22,12 @@ extension AGSPopup {
     }
     
     func clearSelection() {
-        
-        guard let layer = feature?.featureTable?.featureLayer else {
-            return
-        }
-        
-        layer.clearSelection()
+        feature?.featureTable?.featureLayer?.clearSelection()
     }
     
     func select() {
-        
-        guard
-            let feature = feature,
-            let table = feature.featureTable,
-            let layer = table.featureLayer
-            else {
-                return
-        }
-        
-        layer.select(feature)
+        guard let feature = feature else { return }
+        feature.featureTable?.featureLayer?.select(feature)
     }
     
     var asManager: AGSPopupManager {
@@ -88,30 +75,26 @@ extension AGSPopup {
     }
     
     var isFeatureAddedToTable: Bool {
-        
-        guard let feature = geoElement as? AGSArcGISFeature else {
-            return false
-        }
-        
-        return feature.objectID != nil
+        return (geoElement as? AGSArcGISFeature)?.objectID != nil
     }
     
     var tableName: String? {
         return (geoElement as? AGSArcGISFeature)?.featureTable?.tableName
     }
     
-    var recordType: ArcGISRecordType? {
+    enum RecordType: String {
+        case record, feature // a more descriptive popup record type
+        case popup // the fallback general record type
+    }
+    
+    var recordType: RecordType {
         
         guard let feature = geoElement as? AGSArcGISFeature, let featureTable = feature.featureTable as? AGSArcGISFeatureTable else {
-            return nil
+            return .popup
         }
         
         return featureTable.featureLayer != nil ? .feature : .record
     }
-}
-
-enum ArcGISRecordType: String {
-    case record, feature
 }
 
 extension Collection where Iterator.Element == AGSPopup {
@@ -123,14 +106,17 @@ extension Collection where Iterator.Element == AGSPopup {
      the feature was discovered in traverse by the backing service as opposed to distance from the query's point.
      */
     func popupNearestTo(mapPoint: AGSPoint) -> AGSPopup? {
-        guard count > 0 else {
+        
+        guard !isEmpty else {
             return nil
         }
+        
         let sorted = self.sorted(by: { (popupA, popupB) -> Bool in
             let deltaA = AGSGeometryEngine.distanceBetweenGeometry1(mapPoint, geometry2: popupA.geoElement.geometry!)
             let deltaB = AGSGeometryEngine.distanceBetweenGeometry1(mapPoint, geometry2: popupB.geoElement.geometry!)
             return deltaA < deltaB
         })
+        
         return sorted.first
     }
 }

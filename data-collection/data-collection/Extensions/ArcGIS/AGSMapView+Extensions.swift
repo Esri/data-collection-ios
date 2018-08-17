@@ -18,7 +18,7 @@ import ArcGIS
 // Centerpoint
 extension AGSMapView {
     
-    internal func centerAGSPoint() -> AGSPoint {
+    var centerAGSPoint: AGSPoint {
         return screen(toLocation: boundsCenter)
     }
 }

@@ -147,7 +147,7 @@ extension MapViewController {
         
         SVProgressHUD.show(withStatus: "Preparing new \(newPopup.tableName ?? "record").")
         
-        let centerPoint = mapView.centerAGSPoint()
+        let centerPoint = mapView.centerAGSPoint
         
         // Custom Behavior
         

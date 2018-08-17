@@ -27,13 +27,13 @@ extension RelatedRecordsPopupsViewController {
             }
             
             guard appContext.isLoggedIn else {
-                present(loginAlertMessage: "You must login to edit this \(popup.recordType?.rawValue ?? "popup").")
+                present(loginAlertMessage: "You must login to edit this \(popup.recordType.rawValue).")
                 completion?(false)
                 return
             }
             
             guard recordsManager.shouldAllowEdit, recordsManager.startEditing() else {
-                present(simpleAlertMessage: "Unexpected error, you couldn't edit this \(popup.recordType?.rawValue ?? "popup").")
+                present(simpleAlertMessage: "Unexpected error, you couldn't edit this \(popup.recordType.rawValue).")
                 completion?(false)
                 return
             }
@@ -50,7 +50,7 @@ extension RelatedRecordsPopupsViewController {
             
             // 1. Check Validity
             guard invalids.count == 0 else {
-                self.present(simpleAlertMessage: "You cannot save this \(popup.recordType?.rawValue ?? "popup"). There \(invalids.count == 1 ? "is" : "are") \(invalids.count) invalid field\(invalids.count == 1 ? "" : "s").")
+                self.present(simpleAlertMessage: "You cannot save this \(popup.recordType.rawValue). There \(invalids.count == 1 ? "is" : "are") \(invalids.count) invalid field\(invalids.count == 1 ? "" : "s").")
                 completion?(false)
                 return
             }
@@ -64,13 +64,13 @@ extension RelatedRecordsPopupsViewController {
                     let featureTable = feature.featureTable as? AGSArcGISFeatureTable
                     else {
                         print("[Error: Validating Feature]", error?.localizedDescription ?? "")
-                        self?.present(simpleAlertMessage: "Could not edit \(self?.popup.recordType?.rawValue ?? "popup")!")
+                        self?.present(simpleAlertMessage: "Could not edit \(self?.popup.recordType.rawValue ?? "popup")!")
                         self?.recordsManager.cancelEditing()
                         completion?(true)
                         return
                 }
                 
-                SVProgressHUD.show(withStatus: "Saving \(self?.popup.recordType?.rawValue.capitalized ?? "Popup")...")
+                SVProgressHUD.show(withStatus: "Saving \(self?.popup.recordType.rawValue.capitalized ?? "Popup")...")
                 
                 if let childPopup = self?.popup, let manager = self?.parentRecordsManager, let relationship = manager.popup.relationship(withPopup: childPopup), relationship.isOneToMany {
                     
@@ -79,7 +79,7 @@ extension RelatedRecordsPopupsViewController {
                     }
                     catch {
                         SVProgressHUD.dismiss()
-                        self?.present(simpleAlertMessage: "Unexpected error, you couldn't edit this \(self?.popup.recordType?.rawValue ?? "popup").")
+                        self?.present(simpleAlertMessage: "Unexpected error, you couldn't edit this \(self?.popup.recordType.rawValue ?? "popup").")
                         print("[Error: Records Manager]", error.localizedDescription)
                         return
                     }
@@ -90,7 +90,7 @@ extension RelatedRecordsPopupsViewController {
                     SVProgressHUD.dismiss()
                     
                     if error != nil {
-                        self?.present(simpleAlertMessage: "Unexpected error, you couldn't edit this \(self?.popup.recordType?.rawValue ?? "popup").")
+                        self?.present(simpleAlertMessage: "Unexpected error, you couldn't edit this \(self?.popup.recordType.rawValue ?? "popup").")
                         print("[Error] feature table edit error", error!.localizedDescription)
                     }
                     
@@ -151,21 +151,21 @@ extension RelatedRecordsPopupsViewController {
     
     func deletePopupAndDismissViewController() {
         
-        present(confirmationAlertMessage: "Are you sure you want to delete \(popup.recordType?.rawValue ?? "popup")?", confirmationTitle: "Delete", confirmationAction: { [weak self] (_) in
+        present(confirmationAlertMessage: "Are you sure you want to delete \(popup.recordType.rawValue)?", confirmationTitle: "Delete", confirmationAction: { [weak self] (_) in
             
             guard let popup = self?.popup else {
-                self?.present(simpleAlertMessage: "Something went wrong. Couldn't delete \(self?.popup.recordType?.rawValue ?? "popup").")
+                self?.present(simpleAlertMessage: "Something went wrong. Couldn't delete \(self?.popup.recordType.rawValue ?? "popup").")
                 return
             }
             
-            SVProgressHUD.show(withStatus: "Deleting \(self?.popup.recordType?.rawValue ?? "popup").")
+            SVProgressHUD.show(withStatus: "Deleting \(self?.popup.recordType.rawValue ?? "popup").")
             
             self?.delete(popup: popup, parentPopupManager: self?.parentRecordsManager) { (success) in
                 
                 SVProgressHUD.dismiss()
                 
                 if !success {
-                    self?.present(simpleAlertMessage: "Couldn't delete \(self?.popup.recordType?.rawValue ?? "popup").")
+                    self?.present(simpleAlertMessage: "Couldn't delete \(self?.popup.recordType.rawValue ?? "popup").")
                 }
                 
                 self?.popDismiss()
@@ -178,7 +178,7 @@ extension RelatedRecordsPopupsViewController {
         
         let deletePopup: (AGSPopup) -> Void = { childPopup in
             
-            SVProgressHUD.show(withStatus: "Deleting child \(childPopup.recordType?.rawValue ?? "popup")")
+            SVProgressHUD.show(withStatus: "Deleting child \(childPopup.recordType.rawValue)")
             
             self.delete(popup: childPopup, parentPopupManager: self.recordsManager) { (success) in
                 
@@ -188,7 +188,7 @@ extension RelatedRecordsPopupsViewController {
                 }
                 
                 if !success {
-                    self.present(simpleAlertMessage: "Could not delete child \(childPopup.recordType?.rawValue ?? "popup")")
+                    self.present(simpleAlertMessage: "Could not delete child \(childPopup.recordType.rawValue)")
                 }
             }
         }
@@ -199,7 +199,7 @@ extension RelatedRecordsPopupsViewController {
             attemptToSavePopup { [weak self] (shouldProceed: Bool) in
                 
                 guard shouldProceed else {
-                    self?.present(simpleAlertMessage: "Could not edit this \(self?.popup.recordType?.rawValue ?? "popup").")
+                    self?.present(simpleAlertMessage: "Could not edit this \(self?.popup.recordType.rawValue ?? "popup").")
                     return
                 }
                 
@@ -233,7 +233,7 @@ extension RelatedRecordsPopupsViewController {
             attemptToSavePopup { [weak self] (shouldProceed: Bool) in
                 
                 guard shouldProceed else {
-                    self?.present(simpleAlertMessage: "Could not edit this \(self?.popup.recordType?.rawValue ?? "popup").")
+                    self?.present(simpleAlertMessage: "Could not edit this \(self?.popup.recordType.rawValue ?? "popup").")
                     return
                 }
                 

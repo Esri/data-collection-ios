@@ -53,12 +53,6 @@ class DeleteRecordCell: UITableViewCell {
     }
     
     func configure(forPopup popup: AGSPopup) {
-        
-        guard let recordType = popup.recordType else {
-            deleteLabel?.text = "Delete"
-            return
-        }
-        
-        deleteLabel?.text = "Delete \(recordType.rawValue.capitalized)"
+        deleteLabel?.text = "Delete \(popup.recordType.rawValue.capitalized)"
     }
 }
