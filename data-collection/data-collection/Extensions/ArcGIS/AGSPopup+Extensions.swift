@@ -132,35 +132,32 @@ extension AGSPopup {
         }
         
         do {
-            return try autoreleasepool { () throws -> Bool in
-                
-                let lhsManager = AGSPopupManager(popup: lhs)
-                let rhsManager = AGSPopupManager(popup: rhs)
-                
-                guard lhsManager.fieldType(for: lhsField) == rhsManager.fieldType(for: rhsField) else {
-                    throw PopupSortingError.badFields
-                }
-                
-                guard let lhsValue = lhsManager.value(for: lhsField), let rhsValue = rhsManager.value(for: rhsField) else {
-                    throw PopupSortingError.noValues
-                }
-                
-                switch lhsManager.fieldType(for: lhsField) {
-                case .int16:
-                    return (lhsValue as! Int16) < (rhsValue as! Int16)
-                case .int32:
-                    return (lhsValue as! Int32) < (rhsValue as! Int32)
-                case .float:
-                    return (lhsValue as! Float) < (rhsValue as! Float)
-                case .double:
-                    return (lhsValue as! Double) < (rhsValue as! Double)
-                case .text:
-                    return (lhsValue as! String) < (rhsValue as! String)
-                case .date:
-                    return (lhsValue as! Date) < (rhsValue as! Date)
-                default:
-                    throw PopupSortingError.invalidValueType
-                }
+            let lhsManager = AGSPopupManager(popup: lhs)
+            let rhsManager = AGSPopupManager(popup: rhs)
+            
+            guard lhsManager.fieldType(for: lhsField) == rhsManager.fieldType(for: rhsField) else {
+                throw PopupSortingError.badFields
+            }
+            
+            guard let lhsValue = lhsManager.value(for: lhsField), let rhsValue = rhsManager.value(for: rhsField) else {
+                throw PopupSortingError.noValues
+            }
+            
+            switch lhsManager.fieldType(for: lhsField) {
+            case .int16:
+                return (lhsValue as! Int16) < (rhsValue as! Int16)
+            case .int32:
+                return (lhsValue as! Int32) < (rhsValue as! Int32)
+            case .float:
+                return (lhsValue as! Float) < (rhsValue as! Float)
+            case .double:
+                return (lhsValue as! Double) < (rhsValue as! Double)
+            case .text:
+                return (lhsValue as! String) < (rhsValue as! String)
+            case .date:
+                return (lhsValue as! Date) < (rhsValue as! Date)
+            default:
+                throw PopupSortingError.invalidValueType
             }
         }
         catch {
@@ -175,35 +172,32 @@ extension AGSPopup {
         }
         
         do {
-            return try autoreleasepool { () throws -> Bool in
-                
-                let lhsManager = AGSPopupManager(popup: lhs)
-                let rhsManager = AGSPopupManager(popup: rhs)
-                
-                guard lhsManager.fieldType(for: lhsField) == rhsManager.fieldType(for: rhsField) else {
-                    throw PopupSortingError.badFields
-                }
-                
-                guard let lhsValue = lhsManager.value(for: lhsField), let rhsValue = rhsManager.value(for: rhsField) else {
-                    throw PopupSortingError.noValues
-                }
-                
-                switch lhsManager.fieldType(for: lhsField) {
-                case .int16:
-                    return (lhsValue as! Int16) > (rhsValue as! Int16)
-                case .int32:
-                    return (lhsValue as! Int32) > (rhsValue as! Int32)
-                case .float:
-                    return (lhsValue as! Float) > (rhsValue as! Float)
-                case .double:
-                    return (lhsValue as! Double) > (rhsValue as! Double)
-                case .text:
-                    return (lhsValue as! String) > (rhsValue as! String)
-                case .date:
-                    return (lhsValue as! Date) > (rhsValue as! Date)
-                default:
-                    throw PopupSortingError.invalidValueType
-                }
+            let lhsManager = AGSPopupManager(popup: lhs)
+            let rhsManager = AGSPopupManager(popup: rhs)
+            
+            guard lhsManager.fieldType(for: lhsField) == rhsManager.fieldType(for: rhsField) else {
+                throw PopupSortingError.badFields
+            }
+            
+            guard let lhsValue = lhsManager.value(for: lhsField), let rhsValue = rhsManager.value(for: rhsField) else {
+                throw PopupSortingError.noValues
+            }
+            
+            switch lhsManager.fieldType(for: lhsField) {
+            case .int16:
+                return (lhsValue as! Int16) > (rhsValue as! Int16)
+            case .int32:
+                return (lhsValue as! Int32) > (rhsValue as! Int32)
+            case .float:
+                return (lhsValue as! Float) > (rhsValue as! Float)
+            case .double:
+                return (lhsValue as! Double) > (rhsValue as! Double)
+            case .text:
+                return (lhsValue as! String) > (rhsValue as! String)
+            case .date:
+                return (lhsValue as! Date) > (rhsValue as! Date)
+            default:
+                throw PopupSortingError.invalidValueType
             }
         }
         catch {
@@ -219,9 +213,17 @@ extension Array where Iterator.Element == AGSPopup {
         do {
             switch order {
             case .ascending:
-                try sort { (left, right) -> Bool in return try left < right }
+                try sort { (left, right) -> Bool in
+                    return try autoreleasepool { () throws -> Bool in
+                        return try left < right
+                    }
+                }
             case .descending:
-                try sort { (left, right) -> Bool in return try left > right }
+                try sort { (left, right) -> Bool in
+                    return try autoreleasepool { () throws -> Bool in
+                        return try left > right
+                    }
+                }
             }
         }
         catch {

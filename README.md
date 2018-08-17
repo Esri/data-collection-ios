@@ -36,7 +36,7 @@ Once you have forked the repo, you can make a clone and open `data-collection.xc
 
 #### Command line Git
 1. [Clone Data Collection](https://help.github.com/articles/fork-a-repo/#step-2-create-a-local-clone-of-your-fork)
-2. `cd` into the `data-collection-ios` folder
+2. `cd` into into the cloned repository's directory
 3. Make your changes and create a [pull request](https://help.github.com/articles/creating-a-pull-request)
 
 ### Configuring a Remote for a Fork
