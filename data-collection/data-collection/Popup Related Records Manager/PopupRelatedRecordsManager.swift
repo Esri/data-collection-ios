@@ -106,17 +106,8 @@ class PopupRelatedRecordsManager: AGSPopupManager {
                 continue
             }
             
-            var foundRelatedTable: AGSArcGISFeatureTable?
+            let foundRelatedTable = featureTable.relatedTables()?.first { $0.serviceLayerID == info.relatedTableID }
             
-            if let relatedTables = featureTable.relatedTables() {
-                for relatedTable in relatedTables {
-                    if relatedTable.serviceLayerID == info.relatedTableID {
-                        foundRelatedTable = relatedTable
-                        break
-                    }
-                }
-            }
-
             if info.isManyToOne, let manager = ManyToOneManager(relationshipInfo: info, table: foundRelatedTable, popup: popup) {
                 
                 dispatchGroup.enter()
@@ -167,19 +158,14 @@ class PopupRelatedRecordsManager: AGSPopupManager {
         guard isEditing else {
             throw RelatedRecordsManagerError.cannotRelateFeatures
         }
-
-        var foundManager: ManyToOneManager?
         
-        for manager in manyToOne {
+        let foundManager = manyToOne.first { (manager) -> Bool in
             
             guard let relationshipInfo = manager.relationshipInfo else {
-                continue
+                return false
             }
             
-            if relationshipInfo == info {
-                foundManager = manager
-                break
-            }
+            return relationshipInfo == info
         }
         
         guard let manager = foundManager else {
@@ -196,19 +182,14 @@ class PopupRelatedRecordsManager: AGSPopupManager {
         guard !isEditing else {
             throw RelatedRecordsManagerError.cannotRelateFeatures
         }
-
-        var foundManager: OneToManyManager?
-
-        for manager in oneToMany {
-
+        
+        let foundManager = oneToMany.first { (manager) -> Bool in
+            
             guard let relationshipInfo = manager.relationshipInfo else {
-                continue
+                return false
             }
-
-            if relationshipInfo == info {
-                foundManager = manager
-                break
-            }
+            
+            return relationshipInfo == info
         }
 
         guard let manager = foundManager else {
@@ -229,18 +210,13 @@ class PopupRelatedRecordsManager: AGSPopupManager {
             throw RelatedRecordsManagerError.cannotRelateFeatures
         }
         
-        var foundManager: OneToManyManager?
-
-        for manager in oneToMany {
-
+        let foundManager = oneToMany.first { (manager) -> Bool in
+            
             guard let relationshipInfo = manager.relationshipInfo else {
-                continue
+                return false
             }
-
-            if relationshipInfo == info {
-                foundManager = manager
-                break
-            }
+            
+            return relationshipInfo == info
         }
 
         guard let manager = foundManager else {

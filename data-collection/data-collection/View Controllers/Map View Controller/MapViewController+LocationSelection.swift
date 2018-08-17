@@ -90,11 +90,11 @@ extension MapViewController {
             return
         }
         
-        guard let map = mapView.map, let operationalLayers = map.operationalLayers as? [AGSFeatureLayer], let layers = operationalLayers.featureAddableLayers else {
+        guard let map = mapView.map, let layers = (map.operationalLayers as? [AGSFeatureLayer])?.featureAddableLayers, layers.count > 0 else {
             present(simpleAlertMessage: "No eligible feature layer that you can add to.")
             return
         }
-        
+                
         guard layers.count > 1 else {
             addNewFeatureFor(featureLayer: layers.first!)
             return
@@ -163,9 +163,11 @@ extension MapViewController {
         
         if shouldEnactCustomBehavior {
             
+            configureDefaultCondition(forPopup: newPopup)
+            
             let dispatchGroup = DispatchGroup()
             
-            dispatchGroup.enter(n: 3)
+            dispatchGroup.enter(n: 2)
             
             dispatchGroup.notify(queue: OperationQueue.current?.underlyingQueue ?? .main) {
                 proceedAfterCustomBehavior()
@@ -176,10 +178,6 @@ extension MapViewController {
             }
             
             enrich(popup: newPopup, withNeighborhoodIdentifyForPoint: centerPoint) {
-                dispatchGroup.leave()
-            }
-            
-            configureDefaultCondition(forPopup: newPopup) {
                 dispatchGroup.leave()
             }
         }

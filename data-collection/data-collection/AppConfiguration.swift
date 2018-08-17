@@ -22,15 +22,17 @@ class AppConfiguration {
     static let basePortalDomain = "www.arcgis.com"
     
     static let basePortalURL: URL = {
-        let url = URL(string: "https://\(basePortalDomain)")
-        assert(url != nil, "App Configuration must contain a valid portal service url.")
-        return url!
+        guard let url = URL(string: "https://\(basePortalDomain)") else {
+            fatalError("App Configuration must contain a valid portal service url.")
+        }
+        return url
     }()
     
     static let geocodeServiceURL: URL = {
-        let url = URL(string: "https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer")
-        assert(url != nil, "App Configuration must contain a valid geocode service url.")
-        return url!
+        guard let url = URL(string: "https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer") else {
+            fatalError("App Configuration must contain a valid geocode service url.")
+        }
+        return url
     }()
     
     static let urlScheme: String = "data-collection"

@@ -16,16 +16,16 @@ import Foundation
 import ArcGIS
 
 extension AGSArcGISFeature {
-    
-    var asPopup: AGSPopup? {
+
+    func asPopup() -> AGSPopup? {
         guard let featureTable = featureTable, featureTable.isPopupActuallyEnabled, let popupDefinition = featureTable.popupDefinition else {
             return nil
         }
         return AGSPopup(geoElement: self, popupDefinition: popupDefinition)
     }
     
-    var asPopupManager: AGSPopupManager? {
-        guard let popup = asPopup else {
+    func asPopupManager() -> AGSPopupManager? {
+        guard let popup = asPopup() else {
             return nil
         }
         return AGSPopupManager(popup: popup)
@@ -67,7 +67,7 @@ extension AGSArcGISFeature {
 
 extension Collection where Iterator.Element == AGSArcGISFeature {
     
-    var asPopups: [AGSPopup]? {
+    func asPopups() -> [AGSPopup]? {
         
         var popups = [AGSPopup]()
 
@@ -86,7 +86,7 @@ extension Collection where Iterator.Element == AGSArcGISFeature {
                 return nil
             }
             
-            if let popup = feature.asPopup {
+            if let popup = feature.asPopup() {
                 popups.append(popup)
             }
         }

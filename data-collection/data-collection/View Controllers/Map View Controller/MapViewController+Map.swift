@@ -44,7 +44,7 @@ extension MapViewController {
             
             AGSLoadObjects(operationalLayers, { [weak self] (_) in
                 
-                guard let addableLayers = operationalLayers.featureAddableLayers, addableLayers.count > 0 else {
+                guard operationalLayers.featureAddableLayers.count > 0 else {
                     self?.mapDelegate?.mapViewController(self!, shouldAllowNewFeature: false)
                     return
                 }

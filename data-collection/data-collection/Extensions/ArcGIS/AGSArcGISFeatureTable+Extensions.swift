@@ -47,7 +47,6 @@ extension AGSArcGISFeatureTable {
         }
         else {
             completion(nil, FeatureTableError.isNotArcGISFeatureTable)
-            return
         }
     }
     
@@ -65,7 +64,7 @@ extension AGSArcGISFeatureTable {
                 return
             }
             
-            guard let popups = features.asPopups else {
+            guard let popups = features.asPopups() else {
                 completion(nil, FeatureTableError.isNotPopupEnabled)
                 return
             }
@@ -118,7 +117,7 @@ extension AGSArcGISFeatureTable {
                 return
             }
             
-            guard let popups = features.asPopups else {
+            guard let popups = features.asPopups() else {
                 completion(nil, FeatureTableError.isNotPopupEnabled)
                 return
             }
@@ -155,7 +154,11 @@ extension AGSArcGISFeatureTable {
     
     private func performEdit(type: EditType, forFeature feature: AGSArcGISFeature, completion: @escaping (Error?)->Void) {
         
-        assert(appContext.isLoggedIn, "User must be authenticated to perform edits.")
+        guard appContext.isLoggedIn else {
+            assert(appContext.isLoggedIn, "User must be authenticated to perform edits.")
+            completion(FeatureTableError.cannotEditFeature)
+            return
+        }
         
         let editClosure:(Error?) -> Void = { error in
             
@@ -190,17 +193,10 @@ extension AGSArcGISFeatureTable {
             })
         }
         
-        if type == .update {
-            update(feature, completion: editClosure)
-        }
-        else if type == .delete {
-            delete(feature, completion: editClosure)
-        }
-        else if type == .add {
-            add(feature, completion: editClosure)
-        }
-        else {
-            completion(FeatureTableError.cannotEditFeature)
+        switch type {
+        case .update: update(feature, completion: editClosure)
+        case .delete: delete(feature, completion: editClosure)
+        case .add: add(feature, completion: editClosure)
         }
     }
     

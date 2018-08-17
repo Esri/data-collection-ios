@@ -84,9 +84,7 @@ extension AGSPopup {
                 return nil
         }
         
-        return relationships.first { (info) -> Bool in
-            return info.relatedTableID == relatedFeatureTable.serviceLayerID
-        }
+        return relationships.first { (info) -> Bool in return info.relatedTableID == relatedFeatureTable.serviceLayerID }
     }
     
     var isFeatureAddedToTable: Bool {

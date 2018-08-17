@@ -43,7 +43,7 @@ extension AGSFeatureLayer {
 
 extension Collection where Iterator.Element == AGSFeatureLayer {
     
-    var featureAddableLayers: [AGSFeatureLayer]? {
+    var featureAddableLayers: [AGSFeatureLayer] {
         return filter { return $0.isAddable }
     }
 }

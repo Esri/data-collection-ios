@@ -53,8 +53,7 @@ extension AppContext {
                 return
             }
             
-            self?.currentMap = offlineMap
-            self?.workMode = .offline
+            self?.set(offlineMap: offlineMap)
         }
     }
     
@@ -66,13 +65,11 @@ extension AppContext {
         loadOfflineMobileMapPackage { [weak self] (map) in
             
             guard let offlineMap = map else {
-                
                 appContext.setWorkModeOnlineWithMapFromPortal()
                 return
             }
             
-            self?.currentMap = offlineMap
-            self?.workMode = .offline
+            self?.set(offlineMap: offlineMap)
         }
     }
     
@@ -91,12 +88,21 @@ extension AppContext {
         }
         
         mmpk.load(completion: { [weak self] (error) in
+            
             if let error = error {
                 print("[Error: Mobile Map Package]", error.localizedDescription)
             }
-            self?.hasOfflineMap = self?.offlineMap != nil
-            completion(self?.offlineMap)
+            
+            let offlineMap = self?.checkIfHasOfflineMap()
+            
+            completion(offlineMap)
         })
+    }
+    
+    fileprivate func checkIfHasOfflineMap() -> AGSMap? {
+        
+        hasOfflineMap = offlineMap != nil
+        return offlineMap
     }
 
     /**
@@ -109,9 +115,15 @@ extension AppContext {
             return false
         }
         
-        currentMap = currentOfflineMap
-        workMode = .offline
+        set(offlineMap: currentOfflineMap)
+        
         return true
+    }
+    
+    fileprivate func set(offlineMap map: AGSMap) {
+        
+        currentMap = map
+        workMode = .offline
     }
     
     @discardableResult
@@ -173,8 +185,14 @@ extension AppContext {
      This function builds a web map stored in the portal and sets it to the current map and the work mode to online.
      */
     func setWorkModeOnlineWithMapFromPortal() {
+        
         let portalItem = AGSPortalItem(portal: portal, itemID: AppConfiguration.webMapItemID)
         let map = AGSMap(item: portalItem)
+        set(onlineMap: map)
+    }
+    
+    fileprivate func set(onlineMap map: AGSMap) {
+        
         currentMap = map
         workMode = .online
     }

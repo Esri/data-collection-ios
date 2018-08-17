@@ -23,18 +23,17 @@ func enrich(popup: AGSPopup, withNeighborhoodIdentifyForPoint point: AGSPoint, c
         return
     }
     
-    var foundNeighborhoodTable: AGSArcGISFeatureTable?
-    
-    for layer in map.operationalLayers {
-        if let featureLayer = layer as? AGSFeatureLayer, let featureTable = featureLayer.featureTable as? AGSArcGISFeatureTable {
-            if featureTable.tableName == "Neighborhoods" {
-                foundNeighborhoodTable = featureTable
-                break
-            }
+    let foundNeighborhoodLayer = map.operationalLayers.first { (layer) -> Bool in
+        
+        guard let featureLayer = layer as? AGSFeatureLayer, let featureTable = featureLayer.featureTable as? AGSArcGISFeatureTable else {
+            return false
         }
+        
+        return featureTable.tableName == "Neighborhoods"
+        
     }
     
-    guard let neighborhoodFeatureTable = foundNeighborhoodTable else {
+    guard let neighborhoodFeatureTable = (foundNeighborhoodLayer as? AGSFeatureLayer)?.featureTable as? AGSArcGISFeatureTable else {
         print("[Error: Identify Neighborhood] could not find neighborhood table.")
         completion()
         return
@@ -61,12 +60,7 @@ func enrich(popup: AGSPopup, withNeighborhoodIdentifyForPoint point: AGSPoint, c
         let neighbohoodKey = "NAME"
         let treeKey = "Neighborhood"
         
-        if
-            let neighbhorhoodKeys = feature.attributes.allKeys as? [String],
-            neighbhorhoodKeys.contains(neighbohoodKey),
-            let treeLayerKeys = popup.geoElement.attributes.allKeys as? [String],
-            treeLayerKeys.contains(treeKey) {
-            
+        if feature.attributes[neighbohoodKey] != nil && popup.geoElement.attributes[treeKey] != nil {
             popup.geoElement.attributes[treeKey] = feature.attributes[neighbohoodKey]
         }
         else {

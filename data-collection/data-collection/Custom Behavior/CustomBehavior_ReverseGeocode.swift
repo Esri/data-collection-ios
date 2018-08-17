@@ -27,7 +27,7 @@ func enrich(popup: AGSPopup, withReverseGeocodedDataForPoint point: AGSPoint, co
             return
         }
         
-        if let keys = popup.geoElement.attributes.allKeys as? [String], keys.contains(addressKey) {
+        if popup.geoElement.attributes[addressKey] != nil {
             popup.geoElement.attributes[addressKey] = address
         }
         else {

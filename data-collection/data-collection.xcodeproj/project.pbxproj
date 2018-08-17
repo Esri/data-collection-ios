@@ -36,7 +36,6 @@
 		94656910208800E100599E55 /* MapViewController+TouchDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9465690F208800E100599E55 /* MapViewController+TouchDelegate.swift */; };
 		946569122088020F00599E55 /* AGSPopup+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 946569112088020F00599E55 /* AGSPopup+Extensions.swift */; };
 		946569142088023600599E55 /* AGSPopupManager+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 946569132088023600599E55 /* AGSPopupManager+Extensions.swift */; };
-		946569162088026100599E55 /* AGSRelatedFeatureQueryResult+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 946569152088026100599E55 /* AGSRelatedFeatureQueryResult+Extensions.swift */; };
 		9465691A2088028E00599E55 /* AGSRelationshipInfo+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 946569192088028E00599E55 /* AGSRelationshipInfo+Extensions.swift */; };
 		9465691C208802AE00599E55 /* AGSFeatureLayer+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9465691B208802AE00599E55 /* AGSFeatureLayer+Extensions.swift */; };
 		9465691E208802CE00599E55 /* AGSFeatureTable+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9465691D208802CE00599E55 /* AGSFeatureTable+Extensions.swift */; };
@@ -178,7 +177,6 @@
 		9465690F208800E100599E55 /* MapViewController+TouchDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MapViewController+TouchDelegate.swift"; sourceTree = "<group>"; };
 		946569112088020F00599E55 /* AGSPopup+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AGSPopup+Extensions.swift"; sourceTree = "<group>"; };
 		946569132088023600599E55 /* AGSPopupManager+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AGSPopupManager+Extensions.swift"; sourceTree = "<group>"; };
-		946569152088026100599E55 /* AGSRelatedFeatureQueryResult+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AGSRelatedFeatureQueryResult+Extensions.swift"; sourceTree = "<group>"; };
 		946569192088028E00599E55 /* AGSRelationshipInfo+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AGSRelationshipInfo+Extensions.swift"; sourceTree = "<group>"; };
 		9465691B208802AE00599E55 /* AGSFeatureLayer+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AGSFeatureLayer+Extensions.swift"; sourceTree = "<group>"; };
 		9465691D208802CE00599E55 /* AGSFeatureTable+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AGSFeatureTable+Extensions.swift"; sourceTree = "<group>"; };
@@ -516,7 +514,6 @@
 				94B375E2207E8E4800691F2A /* AGSArcGISFeature+Extensions.swift */,
 				946569112088020F00599E55 /* AGSPopup+Extensions.swift */,
 				946569132088023600599E55 /* AGSPopupManager+Extensions.swift */,
-				946569152088026100599E55 /* AGSRelatedFeatureQueryResult+Extensions.swift */,
 				946569192088028E00599E55 /* AGSRelationshipInfo+Extensions.swift */,
 				9465691B208802AE00599E55 /* AGSFeatureLayer+Extensions.swift */,
 				9465691D208802CE00599E55 /* AGSFeatureTable+Extensions.swift */,
@@ -958,7 +955,6 @@
 				94A8103B20B635A000D4BC68 /* AGSQueryParameters+Extensions.swift in Sources */,
 				94B375C7207E8D5600691F2A /* AppContext+Login.swift in Sources */,
 				94656910208800E100599E55 /* MapViewController+TouchDelegate.swift in Sources */,
-				946569162088026100599E55 /* AGSRelatedFeatureQueryResult+Extensions.swift in Sources */,
 				9440D35A20DB2283005ED582 /* RelatedRecordsPopupsViewController+TableViewCellReuseIdentifiers.swift in Sources */,
 				94B37603207E8E4800691F2A /* CGGeometry+Extensions.swift in Sources */,
 			);

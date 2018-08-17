@@ -15,17 +15,15 @@
 import Foundation
 import ArcGIS
 
-func configureDefaultCondition(forPopup popup: AGSPopup, completion: @escaping () -> Void) {
+func configureDefaultCondition(forPopup popup: AGSPopup) {
     
     let conditionKey = "Condition"
     let defaultCondition = "Good"
     
-    if let keys = popup.geoElement.attributes.allKeys as? [String], keys.contains(conditionKey) {
+    if popup.geoElement.attributes[conditionKey] != nil {
         popup.geoElement.attributes[conditionKey] = defaultCondition
     }
     else {
         print("[Error: Tree Condition] could not find condition key in attributes.")
-    }
-    
-    completion()
+    }  
 }

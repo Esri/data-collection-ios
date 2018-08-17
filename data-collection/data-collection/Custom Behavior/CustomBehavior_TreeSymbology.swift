@@ -19,17 +19,7 @@ func updateSymbology(withTreeManager treeManager: PopupRelatedRecordsManager, co
     
     // This function will be called only after the inspections array has been sorted by inspection date
 
-    var foundInspectionsManager: OneToManyManager?
-    
-    for manager in treeManager.oneToMany {
-        
-        if let name = manager.name, name == "Inspections" {
-            foundInspectionsManager = manager
-            break
-        }
-    }
-    
-    guard let inspectionsManager = foundInspectionsManager else {
+    guard let inspectionsManager = treeManager.oneToMany.first(where: { (manager) -> Bool in manager.name == "Inspections" }) else {
         print("[Error: Update Symbology] could not find inspections manager.")
         completion()
         return
@@ -60,24 +50,16 @@ func updateSymbology(withTreeManager treeManager: PopupRelatedRecordsManager, co
     let conditionKey = "Condition"
     let dbhKey = "DBH"
     
-    guard
-        let treeKeys = treeFeature.attributes.allKeys as? [String],
-        treeKeys.contains(conditionKey),
-        treeKeys.contains(dbhKey)
-        else {
-            print("[Error: Update Symbology] tree attributes doensn't contain condition or dbh keys.")
+    guard treeFeature.attributes[conditionKey] != nil, treeFeature.attributes[dbhKey] != nil else {
+        print("[Error: Update Symbology] tree attributes doesn't contain condition or dbh keys.")
         completion()
-            return
+        return
     }
     
-    guard
-        let inspectionKeys = newestInspectionFeature.attributes.allKeys as? [String],
-        inspectionKeys.contains(conditionKey),
-        inspectionKeys.contains(dbhKey)
-        else {
-            print("[Error: Update Symbology] inspection attributes doensn't contain condition or dbh keys.")
-            completion()
-            return
+    guard newestInspectionFeature.attributes[conditionKey] != nil, newestInspectionFeature.attributes[dbhKey] != nil else {
+        print("[Error: Update Symbology] inspection attributes doesn't contain condition or dbh keys.")
+        completion()
+        return
     }
     
     treeFeature.attributes[conditionKey] = newestInspectionFeature.attributes[conditionKey]
@@ -100,10 +82,7 @@ extension RelatedRecordsPopupsViewController {
         if shouldEnactCustomBehavior {
             
             let isTreeManager: (PopupRelatedRecordsManager) -> Bool = { manager in
-                guard let tableName = manager.tableName else {
-                    return false
-                }
-                return tableName == "Trees"
+                return manager.tableName == "Trees"
             }
             
             if isTreeManager(recordsManager) {
