@@ -270,7 +270,7 @@ class DrawerViewController: AppContextAwareController {
     func updateSynchronizeButtonForLastSync(date: Date?) {
         
         if let lastSynchronized = date {
-            synchronizeOfflineMapButton.setAttributed(header: "Synchronize Offline Map", subheader: "last synchronized \(lastSynchronized.formattedString)", forControlStateColors: offlineActivityControlStateColors, headerFont: appFonts.drawerButtonHeader, subheaderFont: appFonts.drawerButtonSubheader)
+            synchronizeOfflineMapButton.setAttributed(header: "Synchronize Offline Map", subheader: "last sync \(lastSynchronized.shortDateTimeFormatted)", forControlStateColors: offlineActivityControlStateColors, headerFont: appFonts.drawerButtonHeader, subheaderFont: appFonts.drawerButtonSubheader)
         }
         else {
             synchronizeOfflineMapButton.setAttributed(header: "Synchronize Offline Map", forControlStateColors: offlineActivityControlStateColors, headerFont: appFonts.drawerButtonHeader)

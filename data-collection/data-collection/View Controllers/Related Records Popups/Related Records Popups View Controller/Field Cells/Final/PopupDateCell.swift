@@ -41,10 +41,10 @@ final class PopupDateCell: PopupTextFieldCell {
         updateCellValue(sender.date)
 
         guard let field = field else {
-            valueEditView?.text = sender.date.formattedString
+            valueEditView?.text = sender.date.mediumDateFormatted
             return
         }
         
-        valueEditView?.text = popupManager?.formattedValue(for: field) ?? sender.date.formattedString
+        valueEditView?.text = popupManager?.formattedValue(for: field) ?? sender.date.mediumDateFormatted
     }
 }
