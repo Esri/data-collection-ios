@@ -29,23 +29,17 @@ extension FileManager {
     
     public static var temporaryOfflineMapDirectoryURL: URL {
         let tmpDir = NSTemporaryDirectory()
-        return
-            URL(fileURLWithPath: tmpDir)
+        return URL(fileURLWithPath: tmpDir)
             .appendingPathComponent(OfflineDirectoryComponents.dataCollection)
             .appendingPathComponent(OfflineDirectoryComponents.offlineMap)
     }
     
     static func prepareTemporaryOfflineMapDirectory() throws {
         
-        let path = temporaryOfflineMapDirectoryURL
+        let url = temporaryOfflineMapDirectoryURL
         
-        do {
-            try FileManager.default.createDirectory(at: path, withIntermediateDirectories: true, attributes: nil)
-            try FileManager.default.removeItem(at: path)
-        }
-        catch {
-            throw error
-        }
+        try FileManager.default.createDirectory(at: url, withIntermediateDirectories: true)
+        try FileManager.default.removeItem(at: url)
     }
     
     // MARK: URLs
