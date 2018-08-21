@@ -43,12 +43,14 @@ class ActivityBarView: UIView {
             }
             
             mapViewLoadStatusObserver = mapView.observe(\.drawStatus, options:[.new, .old]) { [weak self] (mapView, _) in
-                print("[Draw Status] \(mapView.drawStatus)")
-                if mapView.drawStatus == .inProgress {
-                    self?.startProgressAnimation()
-                }
-                else {
-                    self?.stopProgressAnimation()
+                DispatchQueue.main.async { [weak self] in
+                    print("[Draw Status] \(mapView.drawStatus)")
+                    if mapView.drawStatus == .inProgress {
+                        self?.startProgressAnimation()
+                    }
+                    else {
+                        self?.stopProgressAnimation()
+                    }
                 }
             }
         }
@@ -81,37 +83,32 @@ class ActivityBarView: UIView {
     }
     
     public func resetBackgroundColor() {
-        DispatchQueue.main.async { [weak self] in
-            self?.isAnimating = false
-            self?.backgroundColor = self?.colorA
-        }
+        isAnimating = false
+        backgroundColor = colorA
     }
     
-    public func startProgressAnimation() {
-        DispatchQueue.main.async { [weak self] in
-            self?.isAnimating = true
-            self?.alpha = 1.0
-            self?.isHidden = false
-            UIView.animate(withDuration: 0.1, animations: {
-                self?.setNewFrame(forVisible: true)
-                }, completion: { (completion) in
-                    UIView.animate(withDuration: 0.2, delay: 0.0, options: [.autoreverse, .`repeat`], animations: {
-                        self?.swapBackgroundColor()
-                    })
+    private func startProgressAnimation() {
+        isAnimating = true
+        alpha = 1.0
+        isHidden = false
+        UIView.animate(withDuration: 0.1, animations: { [weak self] in
+            self?.setNewFrame(forVisible: true)
+        }, completion: { [weak self] (completion) in
+            UIView.animate(withDuration: 0.2, delay: 0.0, options: [.autoreverse, .`repeat`], animations: {
+                self?.swapBackgroundColor()
             })
-        }
+        })
     }
     
-    public func stopProgressAnimation() {
-        DispatchQueue.main.async { [weak self] in
-            self?.layer.removeAllAnimations()
-            self?.resetBackgroundColor()
-            UIView.animate(withDuration: 0.1, animations: {
-                self?.setNewFrame(forVisible: false)
-                }, completion: { (completion) in
-                    self?.removeAnimations()
-            })
-        }
+    private func stopProgressAnimation() {
+        isAnimating = false
+        layer.removeAllAnimations()
+        resetBackgroundColor()
+        UIView.animate(withDuration: 0.1, animations: { [weak self] in
+            self?.setNewFrame(forVisible: false)
+        }, completion: {  [weak self] (completion) in
+            self?.removeAnimations()
+        })
     }
     
     private func removeAnimations() {
@@ -120,19 +117,13 @@ class ActivityBarView: UIView {
         layer.removeAllAnimations()
     }
     
-    private func setNewFrame(forVisible: Bool) {
-        DispatchQueue.main.async { [weak self] in
-            self?.adjustRect(forVisible: forVisible)
-        }
+    private func setNewFrame(forVisible visible: Bool) {
+        let y = visible ? 0.0 : -frame.size.height
+        let rect = CGRect(x: 0.0, y: y, width: frame.size.width, height: frame.size.height)
+        self.frame = rect
     }
     
     private func swapBackgroundColor() {
         backgroundColor = backgroundColor == colorA ? colorB : colorA
-    }
-    
-    private func adjustRect(forVisible visible: Bool) {
-        let y = visible ? 0.0 : -frame.size.height
-        let rect = CGRect(x: 0.0, y: y, width: frame.size.width, height: frame.size.height)
-        self.frame = rect
     }
 }

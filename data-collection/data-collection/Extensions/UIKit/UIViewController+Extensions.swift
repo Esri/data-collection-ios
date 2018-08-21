@@ -31,10 +31,7 @@ extension UIViewController {
     }
     
     var isRootViewController: Bool {
-        guard let n = navigationController?.viewControllers.count else {
-            return true
-        }
-        return n == 1
+        return self == navigationController?.viewControllers.first
     }
 }
 
