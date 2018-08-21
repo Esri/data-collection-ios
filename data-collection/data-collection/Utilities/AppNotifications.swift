@@ -14,39 +14,10 @@
 
 import Foundation
 
-protocol AppNotification {
-    static var name: String { get }
-}
-
-extension AppNotification {
-    static var notification: Notification {
-        return Notification(name: Notification.Name(rawValue: "\(appBundleID).notifications.name.\(name)"))
-    }
-}
-
-class AppNotifications {
+extension Notification.Name {
     
-    static var reachabilityChanged: Notification {
-        return ReachabilityChanged.notification
-    }
-    
-    static var workModeChanged: Notification {
-        return WorkModeChanged.notification
-    }
-    
-    static var lastSyncChanged: Notification {
-        return LastSyncChanged.notification
-    }
+    static let reachabilityDidChange = Notification.Name("reachabilityDidChange")
+    static let workModeDidChange = Notification.Name("workModeDidChange")
+    static let lastSyncDidChange = Notification.Name("lastSyncDidChange")
 }
 
-fileprivate struct ReachabilityChanged: AppNotification {
-    static var name = "reachabilityChanged"
-}
-
-fileprivate struct WorkModeChanged: AppNotification {
-    static var name = "workModeChanged"
-}
-
-fileprivate struct LastSyncChanged: AppNotification {
-    static var name = "lastSyncChanged"
-}

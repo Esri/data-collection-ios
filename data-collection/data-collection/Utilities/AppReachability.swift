@@ -33,7 +33,7 @@ class AppReachability {
     static var reachabilityStatus: NetworkReachabilityManager.NetworkReachabilityStatus? = nil {
         didSet {
             if oldValue != nil {
-                appNotificationCenter.post(AppNotifications.reachabilityChanged)
+                appNotificationCenter.post(name: .reachabilityDidChange, object: nil)
             }
         }
     }

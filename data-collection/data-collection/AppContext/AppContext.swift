@@ -98,7 +98,7 @@ import ArcGIS
     var workMode: WorkMode = WorkMode.defaultWorkMode {
         didSet {
             workMode.storeDefaultWorkMode()
-            appNotificationCenter.post(AppNotifications.workModeChanged)
+            appNotificationCenter.post(name: .workModeDidChange, object: nil)
         }
     }
 }

@@ -100,15 +100,15 @@ class AppContextAwareController: UIViewController {
         }
         
         if appNotifications.keys.contains(AppContextChangeKeys.reachability) {
-            appNotificationCenter.addObserver(self, selector: #selector(AppContextAwareController.recieveReachabilityNotification(notification:)), name: AppNotifications.reachabilityChanged.name, object: nil)
+            appNotificationCenter.addObserver(self, selector: #selector(AppContextAwareController.recieveReachabilityNotification(notification:)), name: .reachabilityDidChange, object: nil)
         }
         
         if appNotifications.keys.contains(AppContextChangeKeys.workMode) {
-            appNotificationCenter.addObserver(self, selector: #selector(AppContextAwareController.recieveWorkModeNotification(notification:)), name: AppNotifications.workModeChanged.name, object: nil)
+            appNotificationCenter.addObserver(self, selector: #selector(AppContextAwareController.recieveWorkModeNotification(notification:)), name: .workModeDidChange, object: nil)
         }
         
         if appNotifications.keys.contains(AppContextChangeKeys.lastSync) {
-            appNotificationCenter.addObserver(self, selector: #selector(AppContextAwareController.recieveLastSyncNotification(notification:)), name: AppNotifications.lastSyncChanged.name, object: nil)
+            appNotificationCenter.addObserver(self, selector: #selector(AppContextAwareController.recieveLastSyncNotification(notification:)), name: .lastSyncDidChange, object: nil)
         }
         
         if appNotifications.keys.contains(AppContextChangeKeys.currentUser) {
@@ -159,15 +159,15 @@ class AppContextAwareController: UIViewController {
     deinit {
         
         if appNotifications.keys.contains(AppContextChangeKeys.reachability) {
-            appNotificationCenter.removeObserver(self, name: AppNotifications.reachabilityChanged.name, object: nil)
+            appNotificationCenter.removeObserver(self, name: .reachabilityDidChange, object: nil)
         }
         
         if appNotifications.keys.contains(AppContextChangeKeys.workMode) {
-            appNotificationCenter.removeObserver(self, name: AppNotifications.workModeChanged.name, object: nil)
+            appNotificationCenter.removeObserver(self, name: .workModeDidChange, object: nil)
         }
         
         if appNotifications.keys.contains(AppContextChangeKeys.lastSync) {
-            appNotificationCenter.removeObserver(self, name: AppNotifications.lastSyncChanged.name, object: nil)
+            appNotificationCenter.removeObserver(self, name: .lastSyncDidChange, object: nil)
         }
         
         if appNotifications.keys.contains(AppContextChangeKeys.currentUser) {
