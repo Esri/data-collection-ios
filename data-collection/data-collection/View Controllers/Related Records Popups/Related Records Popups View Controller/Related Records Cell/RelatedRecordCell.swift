@@ -40,8 +40,7 @@ class RelatedRecordCell: UITableViewCell {
         stackView.alignment = .fill
         stackView.spacing = 6.0
         
-        contentView.addSubview(stackView)
-        contentView.constrainToBounds(stackView)
+        contentView.addSubviewAndConstrainToView(stackView)
     }
     
     required init?(coder aDecoder: NSCoder) {

@@ -41,8 +41,7 @@ class DeleteRecordCell: UITableViewCell {
         
         containingStackView.addArrangedSubview(containedDeleteLabel)
         
-        contentView.addSubview(containingStackView)
-        contentView.constrainToBounds(containingStackView)
+        contentView.addSubviewAndConstrainToView(containingStackView)
         
         stackView = containingStackView
         deleteLabel = containedDeleteLabel

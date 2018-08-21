@@ -45,12 +45,16 @@ extension UIView {
 
 extension UIView {
     
-    func constrainToBounds(_ view: UIView) {
-        view.translatesAutoresizingMaskIntoConstraints = false
-        leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0).isActive = true
-        trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0).isActive = true
-        topAnchor.constraint(equalTo: view.topAnchor, constant: 0).isActive = true
-        bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0).isActive = true
+    func addSubviewAndConstrainToView(_ subview: UIView) {
+
+        addSubview(subview)
+        
+        subview.translatesAutoresizingMaskIntoConstraints = false
+        
+        subview.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 0).isActive = true
+        subview.trailingAnchor.constraint(equalTo: trailingAnchor, constant: 0).isActive = true
+        subview.topAnchor.constraint(equalTo: topAnchor, constant: 0).isActive = true
+        subview.bottomAnchor.constraint(equalTo: bottomAnchor, constant: 0).isActive = true
     }
 }
 

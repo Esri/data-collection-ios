@@ -32,8 +32,8 @@ class PopupReadonlyFieldCell: UITableViewCell, PopupFieldCellProtocol {
         stackView.axis = .vertical
         stackView.alignment = .fill
         stackView.spacing = 6.0
-        contentView.addSubview(stackView)
-        contentView.constrainToBounds(stackView)
+
+        contentView.addSubviewAndConstrainToView(stackView)
         
         titleLabel.textColor = appColors.tableCellTitle
         titleLabel.font = appFonts.tableCellTitle
