@@ -16,7 +16,7 @@ import Foundation
 import UIKit
 import ArcGIS
 
-protocol DrawerViewControllerDelegate {
+protocol DrawerViewControllerDelegate: class {
     
     func drawerViewController(didRequestWorkOnline drawerViewController: DrawerViewController)
     func drawerViewController(didRequestLoginLogout drawerViewController: DrawerViewController)
