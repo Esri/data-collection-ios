@@ -20,7 +20,7 @@ extension AppContainerViewController: MapViewControllerDelegate {
     func mapViewController(_ mapViewController: MapViewController, didSelect extent: AGSEnvelope) {
         
         do {
-            try FileManager.prepareTemporaryOfflineMapDirectory()
+            try FileManager.default.prepareTemporaryOfflineMapDirectory()
         }
         catch {
             print("[Error]", error.localizedDescription)
@@ -34,7 +34,7 @@ extension AppContainerViewController: MapViewControllerDelegate {
         }
         
         let scale = mapViewController.mapView.mapScale
-        let directory = FileManager.temporaryOfflineMapDirectoryURL
+        let directory: URL = .temporaryOfflineMapDirectoryURL
         let offlineJob = AppOfflineMapJobConstructionInfo.downloadMapOffline(map, directory, extent, scale)
         
         EphemeralCache.set(object: offlineJob, forKey: AppOfflineMapJobConstructionInfo.EphemeralCacheKeys.offlineMapJob)

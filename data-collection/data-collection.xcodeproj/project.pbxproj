@@ -42,6 +42,7 @@
 		946569292089066800599E55 /* MapViewController+Map.swift in Sources */ = {isa = PBXBuildFile; fileRef = 946569282089066800599E55 /* MapViewController+Map.swift */; };
 		946D20A721250F46001BF5CC /* AppReachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 946D20A621250F46001BF5CC /* AppReachability.swift */; };
 		946D20AB2126541C001BF5CC /* DateFormatter+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 946D20AA2126541C001BF5CC /* DateFormatter+Extensions.swift */; };
+		946D20AD212E07FC001BF5CC /* URL+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 946D20AC212E07FC001BF5CC /* URL+Extensions.swift */; };
 		948066332091474F00A398EA /* RelatedRecordsPopup.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 948066322091474F00A398EA /* RelatedRecordsPopup.storyboard */; };
 		948066362091483600A398EA /* RelatedRecordsPopupsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 948066352091483600A398EA /* RelatedRecordsPopupsViewController.swift */; };
 		948066382091595200A398EA /* PopupRelatedRecordsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 948066372091595200A398EA /* PopupRelatedRecordsManager.swift */; };
@@ -184,6 +185,7 @@
 		946569282089066800599E55 /* MapViewController+Map.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MapViewController+Map.swift"; sourceTree = "<group>"; };
 		946D20A621250F46001BF5CC /* AppReachability.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppReachability.swift; sourceTree = "<group>"; };
 		946D20AA2126541C001BF5CC /* DateFormatter+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DateFormatter+Extensions.swift"; sourceTree = "<group>"; };
+		946D20AC212E07FC001BF5CC /* URL+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URL+Extensions.swift"; sourceTree = "<group>"; };
 		948066322091474F00A398EA /* RelatedRecordsPopup.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = RelatedRecordsPopup.storyboard; sourceTree = "<group>"; };
 		948066352091483600A398EA /* RelatedRecordsPopupsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RelatedRecordsPopupsViewController.swift; sourceTree = "<group>"; };
 		948066372091595200A398EA /* PopupRelatedRecordsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupRelatedRecordsManager.swift; sourceTree = "<group>"; };
@@ -548,6 +550,7 @@
 				94B375EC207E8E4800691F2A /* DispatchGroup+Extensions.swift */,
 				94B375ED207E8E4800691F2A /* BasicTypes+Extensions.swift */,
 				946D20AA2126541C001BF5CC /* DateFormatter+Extensions.swift */,
+				946D20AC212E07FC001BF5CC /* URL+Extensions.swift */,
 			);
 			path = Foundation;
 			sourceTree = "<group>";
@@ -879,6 +882,7 @@
 				94D544C4207FC15D00ED0D04 /* JobStatusViewController.swift in Sources */,
 				94D544D920852A5100ED0D04 /* PinDropView.swift in Sources */,
 				94B375C9207E8D5600691F2A /* AppContext.swift in Sources */,
+				946D20AD212E07FC001BF5CC /* URL+Extensions.swift in Sources */,
 				94B375D2207E8D5600691F2A /* EphemeralCache.swift in Sources */,
 				94AB310520B7731A003540D2 /* PopupCodedValueCell.swift in Sources */,
 				94B375C0207E8D5600691F2A /* AppFiles.swift in Sources */,

@@ -25,42 +25,19 @@ extension FileManager {
         static let offlineMap = "offlineMap"
     }
     
-    // MARK: Temporary Map Directory
-    
-    public static var temporaryOfflineMapDirectoryURL: URL {
-        let tmpDir = NSTemporaryDirectory()
-        return URL(fileURLWithPath: tmpDir)
-            .appendingPathComponent(OfflineDirectoryComponents.dataCollection)
-            .appendingPathComponent(OfflineDirectoryComponents.offlineMap)
-    }
-    
-    static func prepareTemporaryOfflineMapDirectory() throws {
+    func prepareTemporaryOfflineMapDirectory() throws {
         
-        let url = temporaryOfflineMapDirectoryURL
+        let url: URL = .temporaryOfflineMapDirectoryURL
         
         try FileManager.default.createDirectory(at: url, withIntermediateDirectories: true)
         try FileManager.default.removeItem(at: url)
-    }
-    
-    // MARK: URLs
-    
-    private static var baseDocumentsDirectoryURL: URL {
-        return FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
-    }
-    
-    private static var dataCollectionDocsDirectoryURL: URL {
-        return baseDocumentsDirectoryURL.appendingPathComponent(OfflineDirectoryComponents.dataCollection)
-    }
-    
-    public static var offlineMapDirectoryURL: URL {
-        return dataCollectionDocsDirectoryURL.appendingPathComponent(OfflineDirectoryComponents.offlineMap)
     }
     
     // MARK: Offline Directory
     
     static func buildOfflineMapDirectory() {
         
-        let path = offlineMapDirectoryURL
+        let path: URL = .offlineMapDirectoryURL
         
         do {
             try FileManager.default.createDirectory(at: path, withIntermediateDirectories: true, attributes: nil)
