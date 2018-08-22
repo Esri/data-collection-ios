@@ -17,7 +17,7 @@ import ArcGIS
 
 class RelatedRecordsTableManager: AGSLoadableBase {
     
-    weak var featureTable: AGSArcGISFeatureTable?
+    weak var featureTable: AGSArcGISFeatureTable!
     
     var popups = [AGSPopup]()
 

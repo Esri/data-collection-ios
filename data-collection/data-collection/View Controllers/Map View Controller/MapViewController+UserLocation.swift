@@ -24,7 +24,7 @@ extension MapViewController {
         }
         
         if appLocation.locationAuthorized {
-            guard mapView.locationDisplay.showLocation == true, let location = mapView.locationDisplay.location, let position = location.position else {
+            guard mapView.locationDisplay.showLocation, let location = mapView.locationDisplay.location, let position = location.position else {
                 return
             }
             let viewpoint = AGSViewpoint(center: position, scale: 2500)

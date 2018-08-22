@@ -26,24 +26,23 @@ class RelatedRecordsListViewController: AppContextAwareController {
     
     @IBOutlet weak var tableView: UITableView!
     
-    weak var featureTable: AGSArcGISFeatureTable? {
-        didSet {
-            guard let table = featureTable else {
-                featureTableRecordsManager = nil
-                return
-            }
-            featureTableRecordsManager = RelatedRecordsTableManager(featureTable: table)
+    var featureTable: AGSArcGISFeatureTable {
+        get {
+            return featureTableRecordsManager.featureTable
+        }
+        set {
+            featureTableRecordsManager = RelatedRecordsTableManager(featureTable: newValue)
         }
     }
     
-    var featureTableRecordsManager: RelatedRecordsTableManager?
+    private var featureTableRecordsManager: RelatedRecordsTableManager!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         tableView.register(RelatedRecordCell.self, forCellReuseIdentifier: ReuseIdentifiers.relatedRecordCell)
         
-        title = featureTable?.tableName
+        title = featureTable.tableName
         
         loadRecords()
     }
@@ -88,13 +87,13 @@ extension RelatedRecordsListViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return featureTableRecordsManager?.popups.count ?? 0
+        return featureTableRecordsManager.popups.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: ReuseIdentifiers.relatedRecordCell, for: indexPath) as! RelatedRecordCell
-        cell.popup = featureTableRecordsManager?.popups[indexPath.row]
+        cell.popup = featureTableRecordsManager.popups[indexPath.row]
         cell.maxAttributes = 2
         cell.updateCellContent()
         return cell
