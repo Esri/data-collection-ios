@@ -17,22 +17,26 @@ import ArcGIS
 
 extension MapViewController {
     
-    func updateForMap() {
+    func loadMapViewMap() {
         
-        mapViewMode = appContext.currentMap != nil ? .defaultView : .disabled
+//        mapViewMode = mapView.map != nil ? .defaultView : .disabled
 
         guard let map = mapView.map else {
+            mapViewMode = .disabled
             mapDelegate?.mapViewController(self, didUpdateTitle: "No Map")
             mapDelegate?.mapViewController(self, shouldAllowNewFeature: false)
             return
         }
         
-        map.load { [weak self] (error) in
+        let loadCompletion: ((Error?) -> Void)? = { [weak self] (error) in
             
             guard error == nil else {
                 print("[Error: Map Load]", error!.localizedDescription)
+                self?.mapViewMode = .disabled
                 return
             }
+            
+            self?.mapViewMode = .defaultView
             
             // 1 set map title from map definition
             self?.mapDelegate?.mapViewController(self!, didUpdateTitle: map.item?.title ?? "Map")
@@ -52,6 +56,10 @@ extension MapViewController {
                 self?.mapDelegate?.mapViewController(self!, shouldAllowNewFeature: true)
             })
         }
+        
+        if map.loadStatus == .failedToLoad { map.retryLoad(completion: loadCompletion) }
+            
+        else { map.load(completion: loadCompletion) }
     }
     
 }

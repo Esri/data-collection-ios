@@ -34,6 +34,7 @@ class MapViewController: AppContextAwareController {
     @IBOutlet weak var activityBarView: ActivityBarView!
     @IBOutlet weak var notificationBar: NotificationBarLabel!
     @IBOutlet weak var compassView: CompassView!
+    @IBOutlet weak var reloadMapButton: UIButton!
     
     @IBOutlet weak var relatedRecordHeaderLabel: UILabel!
     @IBOutlet weak var relatedRecordSubheaderLabel: UILabel!
@@ -114,11 +115,17 @@ class MapViewController: AppContextAwareController {
         
         adjustForLocationAuthorizationStatus()
         
+        displayInitialReachabilityMessage()
+        
         if let popup = currentPopup, !popup.isFeatureAddedToTable {
             currentPopup = nil
         }
         
         updateSmallPopupViewForCurrentPopup()
+    }
+    
+    @IBAction func userRequestsReloadMap(_ sender: Any) {
+        loadMapViewMap()
     }
     
     @IBAction func userRequestsAddNewRelatedRecord(_ sender: Any) {
@@ -167,6 +174,14 @@ class MapViewController: AppContextAwareController {
             }
         }
     }
+    
+    private func displayInitialReachabilityMessage() {
+        if !appReachability.isReachable { displayReachabilityMessage(isReachable: false) }
+    }
+    
+    private func displayReachabilityMessage(isReachable reachable: Bool) {
+        notificationBar.showLabel(withNotificationMessage: "Device \(reachable ? "gained" : "lost") connection to the network.", forDuration: 6.0)
+    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -187,7 +202,7 @@ class MapViewController: AppContextAwareController {
         let currentMapNotification: AppContextChangeNotification = .currentMap { [weak self] currentMap in
             
             self?.mapView.map = currentMap
-            self?.updateForMap()
+            self?.loadMapViewMap()
         }
         
         let locationAuthorizationNotification: AppContextChangeNotification = .locationAuthorization { [weak self] authorized in
@@ -208,7 +223,7 @@ class MapViewController: AppContextAwareController {
         }
         
         let reachabilityNotification = AppContextChangeNotification.reachability { [weak self] reachable in
-            self?.notificationBar.showLabel(withNotificationMessage: "Device \(reachable ? "gained" : "lost") connection to the network.", forDuration: 6.0)
+            self?.displayReachabilityMessage(isReachable: reachable)
         }
         
         return [workModeNotification, currentMapNotification, locationAuthorizationNotification, reachabilityNotification]

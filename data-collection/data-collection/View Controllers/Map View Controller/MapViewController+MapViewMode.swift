@@ -49,7 +49,7 @@ extension MapViewController {
         
         let mapViewVisible: (Bool) -> UIViewAnimations = { [weak self] (visible) in
             return {
-                self?.mapView.alpha = visible ? 1.0 : 0.5
+                self?.mapView.alpha = visible ? 1.0 : 0.0
             }
         }
         
@@ -63,7 +63,6 @@ extension MapViewController {
             animations.append( smallPopViewVisible(false) )
             animations.append( mapViewVisible(true) )
             hideMapMaskViewForOfflineDownloadArea()
-            view.isUserInteractionEnabled = true
 
         case .disabled:
             pinDropView.pinDropped = false
@@ -71,7 +70,6 @@ extension MapViewController {
             animations.append( smallPopViewVisible(false) )
             animations.append( mapViewVisible(false) )
             hideMapMaskViewForOfflineDownloadArea()
-            view.isUserInteractionEnabled = false
             
         case .selectingFeature:
             pinDropView.pinDropped = true
@@ -79,7 +77,6 @@ extension MapViewController {
             animations.append( smallPopViewVisible(false) )
             animations.append( mapViewVisible(true) )
             hideMapMaskViewForOfflineDownloadArea()
-            view.isUserInteractionEnabled = true
             locationSelectionType = .newFeature
             
         case .selectedFeature:
@@ -88,7 +85,6 @@ extension MapViewController {
             animations.append( smallPopViewVisible(true) )
             animations.append( mapViewVisible(true) )
             hideMapMaskViewForOfflineDownloadArea()
-            view.isUserInteractionEnabled = true
             
         case .offlineMask:
             pinDropView.pinDropped = false
@@ -96,7 +92,6 @@ extension MapViewController {
             animations.append( smallPopViewVisible(false) )
             animations.append( mapViewVisible(true) )
             presentMapMaskViewForOfflineDownloadArea()
-            view.isUserInteractionEnabled = true
             locationSelectionType = .offlineExtent
         }
         
