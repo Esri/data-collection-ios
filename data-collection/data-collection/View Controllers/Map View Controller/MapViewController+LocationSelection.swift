@@ -44,11 +44,9 @@ extension MapViewController {
             
         case .newFeature:
             prepareNewFeatureForEdit()
-            break
             
         case .offlineExtent:
             prepareForOfflineMapDownloadJob()
-            break
         }
         
         mapViewMode = .defaultView

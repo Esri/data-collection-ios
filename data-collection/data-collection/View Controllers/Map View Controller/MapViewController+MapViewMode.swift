@@ -14,14 +14,6 @@
 
 import UIKit
 
-enum MapViewMode {
-    case defaultView
-    case disabled
-    case selectedFeature
-    case selectingFeature
-    case offlineMask
-}
-
 extension MapViewController {
     
     func adjustForMapViewMode(from: MapViewMode?, to: MapViewMode) {

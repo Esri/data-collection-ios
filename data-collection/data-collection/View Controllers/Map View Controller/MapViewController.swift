@@ -31,9 +31,16 @@ class MapViewController: AppContextAwareController {
     }
     
     enum LocationSelectionViewType {
-        
         case newFeature
         case offlineExtent
+    }
+    
+    enum MapViewMode {
+        case defaultView
+        case disabled
+        case selectedFeature
+        case selectingFeature
+        case offlineMask
     }
 
     var delegate: MapViewControllerDelegate?
