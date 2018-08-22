@@ -133,8 +133,4 @@ class AppContainerViewController: AppContextAwareController {
         secondRightBarButton?.isEnabled = !drawerShowing && showZoomToLocationBarButton
         leftBarButton?.isEnabled = showProfileBarButton
     }
-    
-    deinit {
-        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIDeviceOrientationDidChange, object: nil)
-    }
 }

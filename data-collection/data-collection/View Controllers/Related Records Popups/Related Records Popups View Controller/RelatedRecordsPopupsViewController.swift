@@ -214,10 +214,5 @@ class RelatedRecordsPopupsViewController: AppContextAwareController, BackButtonD
         print("[Keyboard] \(notification.name.rawValue)")
         adjustableBottomConstraint.constant = 0
     }
-    
-    deinit {
-        // Remove All Observers
-        NotificationCenter.default.removeObserver(self)
-    }
 }
 
