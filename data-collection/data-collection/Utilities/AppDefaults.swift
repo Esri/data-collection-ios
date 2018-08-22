@@ -17,15 +17,25 @@ import ArcGIS
 
 // MARK: Protocol Declarations
 
-protocol UserDefaultsKeysProtocol {
-    static var objectDomain:String { get }
+protocol AppUserDefaultsProtocol {
+    associatedtype ValueType
+    static var defaultsObjectDomain:String { get }
 }
 
 // MARK: Protocol Extensions
 
-extension UserDefaultsKeysProtocol {
+extension AppUserDefaultsProtocol {
+    
     static var userDefaultsKey: String {
-        return "\(appBundleID).userDefaults.\(objectDomain)"
+        return "\(appBundleID).userDefaults.\(defaultsObjectDomain)"
+    }
+    
+    static func setUserDefault(_ value: ValueType?) {
+        UserDefaults.standard.set(value, forKey: userDefaultsKey)
+    }
+    
+    static func getUserDefaultValue() -> ValueType? {
+        return UserDefaults.standard.value(forKey: userDefaultsKey) as? ValueType
     }
 }
 

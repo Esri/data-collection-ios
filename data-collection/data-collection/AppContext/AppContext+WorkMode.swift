@@ -15,23 +15,30 @@
 import Foundation
 import ArcGIS
 
-enum WorkMode: Int, UserDefaultsKeysProtocol {
+enum WorkMode: Int, AppUserDefaultsProtocol {
     
     case online = 0
     case offline = 1
     
     func storeDefaultWorkMode() {
-        UserDefaults.standard.set(self.rawValue, forKey: WorkMode.userDefaultsKey)
-    }
-    
-    static var objectDomain: String {
-        return "WorkMode"
+        WorkMode.setUserDefault(self.rawValue)
     }
     
     static var defaultWorkMode: WorkMode {
-        let defaults = UserDefaults.standard
-        let storedMode = defaults.integer(forKey: WorkMode.userDefaultsKey)
+        
+        guard let storedMode = WorkMode.getUserDefaultValue() else {
+            return WorkMode.online
+        }
+        
         return WorkMode(rawValue: storedMode) ?? WorkMode.online
+    }
+    
+    // MARK: User Defaults Protocol
+    
+    typealias ValueType = Int
+    
+    static var defaultsObjectDomain: String {
+        return "WorkMode"
     }
 }
 

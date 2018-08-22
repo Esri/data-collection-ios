@@ -14,28 +14,32 @@
 
 import Foundation
 
-class LastSync: UserDefaultsKeysProtocol {
+class LastSync: AppUserDefaultsProtocol {
     
-    internal private(set) var date: Date?
-    
-    init() {
-        self.date = UserDefaults.standard.value(forKey: LastSync.userDefaultsKey) as? Date
+    internal private(set) var date: Date? {
+        didSet {
+            LastSync.setUserDefault(date)
+            appNotificationCenter.post(name: .lastSyncDidChange, object: nil)
+        }
     }
     
-    static var objectDomain: String {
-        return "LastSync"
+    init() {
+        self.date = LastSync.getUserDefaultValue()
     }
     
     func setNow() {
-        let now = Date()
-        date = now
-        UserDefaults.standard.set(now, forKey: LastSync.userDefaultsKey)
-        appNotificationCenter.post(name: .lastSyncDidChange, object: nil)
+        date = Date()
     }
     
     func clear() {
         date = nil
-        UserDefaults.standard.set(nil, forKey: LastSync.userDefaultsKey)
-        appNotificationCenter.post(name: .lastSyncDidChange, object: nil)
+    }
+    
+    // MARK: User Defaults Protocol
+    
+    typealias ValueType = Date
+
+    static var defaultsObjectDomain: String {
+        return "LastSync"
     }
 }
