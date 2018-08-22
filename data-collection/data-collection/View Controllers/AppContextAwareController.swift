@@ -20,72 +20,84 @@ import ArcGIS
  functions so each view controller can adjust accordingly.
  */
 
-struct AppContextChangeKeys {
-    
-    static let currentUser = "appContextChange.currentUser"
-    static let currentMap = "appContextChange.currentMap"
-    static let hasOfflineMap = "appContextChange.hasOfflineMap"
-    static let locationAuthorization = "appContextChange.locationAuthorization"
-    static let reachability = "appContextChange.reachability"
-    static let workMode = "appContextChange.workMode"
-    static let lastSync = "appContextChange.lastSync"
-}
-
-enum AppContextChangeNotification {
-    
-    case currentUser((AGSPortalUser?) -> Void)
-    case currentMap((AGSMap?) -> Void)
-    case hasOfflineMap((Bool) -> Void)
-    case locationAuthorization((Bool) -> Void)
-    case reachability((Bool) -> Void)
-    case workMode((WorkMode) -> Void)
-    case lastSync((Date?) -> Void)
-    
-    var key: String {
-        switch self {
-        case .currentUser(_):
-            return AppContextChangeKeys.currentUser
-        case .currentMap(_):
-            return AppContextChangeKeys.currentMap
-        case .hasOfflineMap(_):
-            return AppContextChangeKeys.hasOfflineMap
-        case .locationAuthorization(_):
-            return AppContextChangeKeys.locationAuthorization
-        case .reachability(_):
-            return AppContextChangeKeys.reachability
-        case .workMode(_):
-            return AppContextChangeKeys.workMode
-        case .lastSync(_):
-            return AppContextChangeKeys.lastSync
-        }
-    }
-    
-    var notificationClosure: Any {
-        switch self {
-        case .currentUser(let closure):
-            return closure
-        case .currentMap(let closure):
-            return closure
-        case .hasOfflineMap(let closure):
-            return closure
-        case .locationAuthorization(let closure):
-            return closure
-        case .reachability(let closure):
-            return closure
-        case .workMode(let closure):
-            return closure
-        case .lastSync(let closure):
-            return closure
-        }
-    }
-}
-
-
 class AppContextAwareController: UIViewController {
+    
+    struct AppContextChangeKey: RawRepresentable, Hashable {
+        
+        typealias RawValue = String
+        
+        var rawValue: RawValue
+        
+        init(_ rawValue: RawValue) {
+            self.rawValue = rawValue
+        }
+        
+        // Needed to satisfy the protocol requirement.
+        init?(rawValue: RawValue) {
+            self.init(rawValue)
+        }
+        
+        static let currentUser = AppContextChangeKey("AppContextChangeKey.currentUser")
+        static let currentMap = AppContextChangeKey("AppContextChange.currentMap")
+        static let hasOfflineMap = AppContextChangeKey("AppContextChange.hasOfflineMap")
+        static let locationAuthorization = AppContextChangeKey("AppContextChange.locationAuthorization")
+        static let reachability = AppContextChangeKey("AppContextChange.reachability")
+        static let workMode = AppContextChangeKey("AppContextChange.workMode")
+        static let lastSync = AppContextChangeKey("AppContextChange.lastSync")
+    }
+    
+    enum AppContextChangeNotification {
+        
+        case currentUser((AGSPortalUser?) -> Void)
+        case currentMap((AGSMap?) -> Void)
+        case hasOfflineMap((Bool) -> Void)
+        case locationAuthorization((Bool) -> Void)
+        case reachability((Bool) -> Void)
+        case workMode((WorkMode) -> Void)
+        case lastSync((Date?) -> Void)
+        
+        var notificationClosure: Any {
+            switch self {
+            case .currentUser(let closure):
+                return closure
+            case .currentMap(let closure):
+                return closure
+            case .hasOfflineMap(let closure):
+                return closure
+            case .locationAuthorization(let closure):
+                return closure
+            case .reachability(let closure):
+                return closure
+            case .workMode(let closure):
+                return closure
+            case .lastSync(let closure):
+                return closure
+            }
+        }
+        
+        var key: AppContextChangeKey {
+            switch self {
+            case .currentUser(_):
+                return AppContextChangeKey.currentUser
+            case .currentMap(_):
+                return AppContextChangeKey.currentMap
+            case .hasOfflineMap(_):
+                return AppContextChangeKey.hasOfflineMap
+            case .locationAuthorization(_):
+                return AppContextChangeKey.locationAuthorization
+            case .reachability(_):
+                return AppContextChangeKey.reachability
+            case .workMode(_):
+                return AppContextChangeKey.workMode
+            case .lastSync(_):
+                return AppContextChangeKey.lastSync
+            }
+        }
+    }
     
     var appContextNotificationRegistrations: [AppContextChangeNotification] { return [] }
     
-    private var appNotifications = [String: AppContextChangeNotification]()
+    private var appNotifications = [AppContextChangeKey: AppContextChangeNotification]()
     
     private var observeCurrentUser: NSKeyValueObservation?
     private var observeCurrentMap: NSKeyValueObservation?
@@ -99,21 +111,21 @@ class AppContextAwareController: UIViewController {
             appNotifications[notification.key] = notification
         }
         
-        if appNotifications.keys.contains(AppContextChangeKeys.reachability) {
+        if appNotifications.keys.contains(AppContextChangeKey.reachability) {
             appNotificationCenter.addObserver(self, selector: #selector(AppContextAwareController.recieveReachabilityNotification(notification:)), name: .reachabilityDidChange, object: nil)
         }
         
-        if appNotifications.keys.contains(AppContextChangeKeys.workMode) {
+        if appNotifications.keys.contains(AppContextChangeKey.workMode) {
             appNotificationCenter.addObserver(self, selector: #selector(AppContextAwareController.recieveWorkModeNotification(notification:)), name: .workModeDidChange, object: nil)
         }
         
-        if appNotifications.keys.contains(AppContextChangeKeys.lastSync) {
+        if appNotifications.keys.contains(AppContextChangeKey.lastSync) {
             appNotificationCenter.addObserver(self, selector: #selector(AppContextAwareController.recieveLastSyncNotification(notification:)), name: .lastSyncDidChange, object: nil)
         }
         
-        if appNotifications.keys.contains(AppContextChangeKeys.currentUser) {
+        if appNotifications.keys.contains(AppContextChangeKey.currentUser) {
             observeCurrentUser = appContext.observe(\.user, options: [.new, .old]) { [weak self] (_, _) in
-                if let change = self?.appNotifications[AppContextChangeKeys.currentUser],
+                if let change = self?.appNotifications[AppContextChangeKey.currentUser],
                     let completionClosure = change.notificationClosure as? (AGSPortalUser?) -> Void  {
                     DispatchQueue.main.async {
                         completionClosure(appContext.user)
@@ -122,9 +134,9 @@ class AppContextAwareController: UIViewController {
             }
         }
         
-        if appNotifications.keys.contains(AppContextChangeKeys.currentMap) {
+        if appNotifications.keys.contains(AppContextChangeKey.currentMap) {
             observeCurrentMap = appContext.observe(\.currentMap, options:[.new, .old]) { [weak self] (_, _) in
-                if let change = self?.appNotifications[AppContextChangeKeys.currentMap],
+                if let change = self?.appNotifications[AppContextChangeKey.currentMap],
                     let completionClosure = change.notificationClosure as? (AGSMap?) -> Void  {
                     DispatchQueue.main.async {
                         completionClosure(appContext.currentMap)
@@ -133,9 +145,9 @@ class AppContextAwareController: UIViewController {
             }
         }
         
-        if appNotifications.keys.contains(AppContextChangeKeys.hasOfflineMap) {
+        if appNotifications.keys.contains(AppContextChangeKey.hasOfflineMap) {
             observeOfflineMap = appContext.observe(\.hasOfflineMap, options: [.new, .old]) { [weak self] (_, _) in
-                if let change = self?.appNotifications[AppContextChangeKeys.hasOfflineMap],
+                if let change = self?.appNotifications[AppContextChangeKey.hasOfflineMap],
                     let completionClosure = change.notificationClosure as? (Bool) -> Void  {
                     DispatchQueue.main.async {
                         completionClosure(appContext.hasOfflineMap)
@@ -144,9 +156,9 @@ class AppContextAwareController: UIViewController {
             }
         }
         
-        if appNotifications.keys.contains(AppContextChangeKeys.locationAuthorization) {
+        if appNotifications.keys.contains(AppContextChangeKey.locationAuthorization) {
             observeLocationAuthorization = appLocation.observe(\.locationAuthorized, options:[.new, .old]) { [weak self] (_, _) in
-                if let change = self?.appNotifications[AppContextChangeKeys.locationAuthorization],
+                if let change = self?.appNotifications[AppContextChangeKey.locationAuthorization],
                     let completionClosure = change.notificationClosure as? (Bool) -> Void  {
                     DispatchQueue.main.async {
                         completionClosure(appLocation.locationAuthorized)
@@ -158,34 +170,34 @@ class AppContextAwareController: UIViewController {
     
     deinit {
         
-        if appNotifications.keys.contains(AppContextChangeKeys.reachability) {
+        if appNotifications.keys.contains(AppContextChangeKey.reachability) {
             appNotificationCenter.removeObserver(self, name: .reachabilityDidChange, object: nil)
         }
         
-        if appNotifications.keys.contains(AppContextChangeKeys.workMode) {
+        if appNotifications.keys.contains(AppContextChangeKey.workMode) {
             appNotificationCenter.removeObserver(self, name: .workModeDidChange, object: nil)
         }
         
-        if appNotifications.keys.contains(AppContextChangeKeys.lastSync) {
+        if appNotifications.keys.contains(AppContextChangeKey.lastSync) {
             appNotificationCenter.removeObserver(self, name: .lastSyncDidChange, object: nil)
         }
         
-        if appNotifications.keys.contains(AppContextChangeKeys.currentUser) {
+        if appNotifications.keys.contains(AppContextChangeKey.currentUser) {
             observeCurrentUser?.invalidate()
             observeCurrentUser = nil
         }
         
-        if appNotifications.keys.contains(AppContextChangeKeys.currentMap) {
+        if appNotifications.keys.contains(AppContextChangeKey.currentMap) {
             observeCurrentMap?.invalidate()
             observeCurrentMap = nil
         }
         
-        if appNotifications.keys.contains(AppContextChangeKeys.hasOfflineMap) {
+        if appNotifications.keys.contains(AppContextChangeKey.hasOfflineMap) {
             observeOfflineMap?.invalidate()
             observeOfflineMap = nil
         }
         
-        if appNotifications.keys.contains(AppContextChangeKeys.locationAuthorization) {
+        if appNotifications.keys.contains(AppContextChangeKey.locationAuthorization) {
             observeLocationAuthorization?.invalidate()
             observeLocationAuthorization = nil
         }
@@ -193,7 +205,7 @@ class AppContextAwareController: UIViewController {
     
     @objc private func recieveReachabilityNotification(notification: Notification) {
         
-        if let change = appNotifications[AppContextChangeKeys.reachability],
+        if let change = appNotifications[AppContextChangeKey.reachability],
             let completionClosure = change.notificationClosure as? (Bool) -> Void  {
             DispatchQueue.main.async {
                 completionClosure(appReachability.isReachable)
@@ -205,7 +217,7 @@ class AppContextAwareController: UIViewController {
         
         navigationController?.navigationBar.barTintColor = (appContext.workMode == .online) ? appColors.primary : appColors.offline
         
-        if let change = appNotifications[AppContextChangeKeys.workMode],
+        if let change = appNotifications[AppContextChangeKey.workMode],
             let completionClosure = change.notificationClosure as? (WorkMode) -> Void  {
             DispatchQueue.main.async {
                 completionClosure(appContext.workMode)
@@ -215,7 +227,7 @@ class AppContextAwareController: UIViewController {
     
     @objc private func recieveLastSyncNotification(notification: Notification) {
         
-        if let change = appNotifications[AppContextChangeKeys.lastSync],
+        if let change = appNotifications[AppContextChangeKey.lastSync],
             let completionClosure = change.notificationClosure as? (Date?) -> Void  {
             DispatchQueue.main.async {
                 completionClosure(appContext.lastSync.date)
