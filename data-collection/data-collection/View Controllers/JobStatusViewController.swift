@@ -16,7 +16,7 @@ import Foundation
 import UIKit
 import ArcGIS
 
-protocol JobStatusViewControllerDelegate {
+protocol JobStatusViewControllerDelegate: class {
     func jobStatusViewController(didEndAbruptly jobStatusViewController: JobStatusViewController)
     func jobStatusViewController(_ jobStatusViewController: JobStatusViewController, didEndWithError error: Error)
     func jobStatusViewController(_ jobStatusViewController: JobStatusViewController, didEndWithResult result: Any)
