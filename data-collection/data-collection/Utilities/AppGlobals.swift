@@ -14,7 +14,9 @@
 
 import UIKit
 
-let appReachability = AppReachability.buildManager()
+var appReachability: NetworkReachabilityManager {
+    return NetworkReachabilityManager.shared
+}
 
 let appLocation = AppLocation()
 

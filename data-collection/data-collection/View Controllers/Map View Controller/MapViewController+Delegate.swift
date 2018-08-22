@@ -15,7 +15,7 @@
 import Foundation
 import ArcGIS
 
-protocol MapViewControllerDelegate {
+protocol MapViewControllerDelegate: class {
     func mapViewController(_ mapViewController: MapViewController, didSelect extent: AGSEnvelope)
     func mapViewController(_ mapViewController: MapViewController, shouldAllowNewFeature: Bool)
     func mapViewController(_ mapViewController: MapViewController, didUpdateTitle title: String)

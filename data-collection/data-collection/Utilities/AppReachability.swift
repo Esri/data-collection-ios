@@ -14,9 +14,9 @@
 
 import Foundation
 
-class AppReachability {
+extension NetworkReachabilityManager {
     
-    static func buildManager() -> NetworkReachabilityManager {
+    static let shared: NetworkReachabilityManager = {
         
         guard let manager = NetworkReachabilityManager(host: AppConfiguration.basePortalDomain) else {
             fatalError("Network Reachability Manager must be constructed a valid service url.")
@@ -28,7 +28,7 @@ class AppReachability {
         }
         
         return manager
-    }
+    }()
     
     static var reachabilityStatus: NetworkReachabilityManager.NetworkReachabilityStatus? = nil {
         didSet {
