@@ -63,7 +63,7 @@ class JobStatusViewController: AppContextAwareController {
         
         progressObserver = job.progress.observe(\.fractionCompleted) { [weak self] (progress,_) in
             DispatchQueue.main.async {
-                 self?.jobStatusProgress = Float(progress.fractionCompleted)
+                self?.jobStatusProgressView.observedProgress = progress
             }
         }
         
@@ -111,12 +111,6 @@ class JobStatusViewController: AppContextAwareController {
         super.viewDidDisappear(animated)
         
         UIApplication.shared.isIdleTimerDisabled = false
-    }
-    
-    var jobStatusProgress: Float = 0.0 {
-        didSet {
-            jobStatusProgressView?.progress = status(jobStatusProgress, upperBounds: 1.0, lowerBounds: 0.0)
-        }
     }
     
     func status(_ status: Float, upperBounds: Float, lowerBounds: Float) -> Float {
