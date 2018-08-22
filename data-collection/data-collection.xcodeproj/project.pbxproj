@@ -98,7 +98,7 @@
 		94B3760E207EAEA100691F2A /* ArcGIS.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 94B3760D207EAEA100691F2A /* ArcGIS.bundle */; };
 		94BA7D3A20FD140500C78255 /* AppColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94BA7D3920FD140500C78255 /* AppColors.swift */; };
 		94BA7D3C20FD151A00C78255 /* AppFonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94BA7D3B20FD151A00C78255 /* AppFonts.swift */; };
-		94BA7D3E20FD6E0900C78255 /* LasySync.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94BA7D3D20FD6E0900C78255 /* LasySync.swift */; };
+		94BA7D3E20FD6E0900C78255 /* LastSync.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94BA7D3D20FD6E0900C78255 /* LastSync.swift */; };
 		94D2713B20CEF04F00304E27 /* RelatedRecordsPopupsViewController+EditingSessions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94D2713A20CEF04F00304E27 /* RelatedRecordsPopupsViewController+EditingSessions.swift */; };
 		94D2713E20D030D900304E27 /* CustomBehavior_ReverseGeocode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94D2713D20D030D900304E27 /* CustomBehavior_ReverseGeocode.swift */; };
 		94D2714020D0315900304E27 /* CustomBehavior_Map.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94D2713F20D0315900304E27 /* CustomBehavior_Map.swift */; };
@@ -241,7 +241,7 @@
 		94B3760D207EAEA100691F2A /* ArcGIS.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = ArcGIS.bundle; path = "~/Library/SDKs/ArcGIS/iOS/Frameworks/Static/ArcGIS.framework/Versions/Current/Resources/ArcGIS.bundle"; sourceTree = "<group>"; };
 		94BA7D3920FD140500C78255 /* AppColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppColors.swift; sourceTree = "<group>"; };
 		94BA7D3B20FD151A00C78255 /* AppFonts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppFonts.swift; sourceTree = "<group>"; };
-		94BA7D3D20FD6E0900C78255 /* LasySync.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LasySync.swift; sourceTree = "<group>"; };
+		94BA7D3D20FD6E0900C78255 /* LastSync.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LastSync.swift; sourceTree = "<group>"; };
 		94D2713A20CEF04F00304E27 /* RelatedRecordsPopupsViewController+EditingSessions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RelatedRecordsPopupsViewController+EditingSessions.swift"; sourceTree = "<group>"; };
 		94D2713D20D030D900304E27 /* CustomBehavior_ReverseGeocode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomBehavior_ReverseGeocode.swift; sourceTree = "<group>"; };
 		94D2713F20D0315900304E27 /* CustomBehavior_Map.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomBehavior_Map.swift; sourceTree = "<group>"; };
@@ -435,7 +435,7 @@
 			isa = PBXGroup;
 			children = (
 				94B375D5207E8DD600691F2A /* EditType.swift */,
-				94BA7D3D20FD6E0900C78255 /* LasySync.swift */,
+				94BA7D3D20FD6E0900C78255 /* LastSync.swift */,
 				94B3759E207E8D5600691F2A /* AppFiles.swift */,
 				94B375A0207E8D5600691F2A /* AppOfflineMapJobConstructionInfo.swift */,
 				94B375A1207E8D5600691F2A /* AppDefaults.swift */,
@@ -948,7 +948,7 @@
 				94A8103720B6306600D4BC68 /* RelatedRecordsListViewController.swift in Sources */,
 				94B375C8207E8D5600691F2A /* AppContext+WorkMode.swift in Sources */,
 				94D2714020D0315900304E27 /* CustomBehavior_Map.swift in Sources */,
-				94BA7D3E20FD6E0900C78255 /* LasySync.swift in Sources */,
+				94BA7D3E20FD6E0900C78255 /* LastSync.swift in Sources */,
 				945CEE7720DDC2AC00CD3E0D /* SVProgressHUD.m in Sources */,
 				94B0D32B20C84B010075EA7A /* RelatedRecordsPopupsViewController+RelatedRecordsListDelegate.swift in Sources */,
 				94D544BD207FC15D00ED0D04 /* DrawerViewController.swift in Sources */,
