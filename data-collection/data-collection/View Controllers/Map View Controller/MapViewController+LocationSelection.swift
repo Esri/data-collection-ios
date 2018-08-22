@@ -228,6 +228,6 @@ extension MapViewController {
         
         let envelope = AGSEnvelope(min: agsNW, max: agsSE)
         
-        mapDelegate?.mapViewController(self, didSelect: envelope)
+        delegate?.mapViewController(self, didSelect: envelope)
     }
 }

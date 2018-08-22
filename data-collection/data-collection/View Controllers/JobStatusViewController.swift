@@ -28,7 +28,7 @@ class JobStatusViewController: AppContextAwareController {
     @IBOutlet weak var jobStatusProgressView: UIProgressView!
     @IBOutlet weak var cancelButton: UIButton!
     
-    var jobStatusDelegate: JobStatusViewControllerDelegate?
+    var delegate: JobStatusViewControllerDelegate?
     
     var jobConstruct: AppOfflineMapJobConstructionInfo? {
         didSet {
@@ -57,7 +57,7 @@ class JobStatusViewController: AppContextAwareController {
         super.viewDidAppear(animated)
         
         guard let job = mapJob else {
-            jobStatusDelegate?.jobStatusViewController(didEndAbruptly: self)
+            delegate?.jobStatusViewController(didEndAbruptly: self)
             return
         }
         
@@ -93,18 +93,18 @@ class JobStatusViewController: AppContextAwareController {
             jobStatusLabel.text = jobConstruct?.errorMessage
         }
         
-        jobStatusDelegate?.jobStatusViewController(self, didEndWithError: error)
+        delegate?.jobStatusViewController(self, didEndWithError: error)
     }
     
     private func handleJob(result: Any) {
         
         jobStatusLabel.text = jobConstruct?.successMessage
-        jobStatusDelegate?.jobStatusViewController(self, didEndWithResult: result)
+        delegate?.jobStatusViewController(self, didEndWithResult: result)
     }
     
     private func handleJobFailure() {
         
-        jobStatusDelegate?.jobStatusViewController(didEndAbruptly: self)
+        delegate?.jobStatusViewController(didEndAbruptly: self)
     }
     
     override func viewDidDisappear(_ animated: Bool) {
@@ -128,7 +128,7 @@ class JobStatusViewController: AppContextAwareController {
             appJob.progress.cancel()
         }
         else {
-            jobStatusDelegate?.jobStatusViewController(didEndAbruptly: self)
+            delegate?.jobStatusViewController(didEndAbruptly: self)
         }
     }
 }

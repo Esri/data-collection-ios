@@ -35,7 +35,7 @@ class DrawerViewController: AppContextAwareController {
     @IBOutlet weak var synchronizeOfflineMapButton: UIButton!
     @IBOutlet weak var deleteOfflineMapButton: UIButton!
     
-    var drawerDelegate: DrawerViewControllerDelegate?
+    var delegate: DrawerViewControllerDelegate?
     
     let loginLogoutButtonControlStateColors: [UIControlState: UIColor] = {
         return [.normal: appColors.loginLogoutNormal,
@@ -90,7 +90,7 @@ class DrawerViewController: AppContextAwareController {
     
     
     @IBAction func userRequestsLoginLogout(_ sender: Any) {
-        drawerDelegate?.drawerViewController(didRequestLoginLogout: self)
+        delegate?.drawerViewController(didRequestLoginLogout: self)
     }
     
     @IBAction func userRequestsWorkOnline(_ sender: Any) {
@@ -104,7 +104,7 @@ class DrawerViewController: AppContextAwareController {
             return
         }
         
-        drawerDelegate?.drawerViewController(didRequestWorkOnline: self)
+        delegate?.drawerViewController(didRequestWorkOnline: self)
     }
     
     @IBAction func userRequestsWorkOffline(_ sender: Any) {
@@ -123,7 +123,7 @@ class DrawerViewController: AppContextAwareController {
             return
         }
 
-        drawerDelegate?.drawerViewController(didRequestWorkOffline: self)
+        delegate?.drawerViewController(didRequestWorkOffline: self)
     }
     
     @IBAction func userRequestsSynchronizeOfflineMap(_ sender: Any) {
@@ -143,7 +143,7 @@ class DrawerViewController: AppContextAwareController {
             return
         }
         
-        drawerDelegate?.drawerViewController(didRequestSyncJob: self)
+        delegate?.drawerViewController(didRequestSyncJob: self)
     }
     
     @IBAction func userRequestsDeleteOfflineMap(_ sender: Any) {
@@ -158,7 +158,7 @@ class DrawerViewController: AppContextAwareController {
             return
         }
         
-        drawerDelegate?.drawerViewController(didRequestDeleteMap: self)
+        delegate?.drawerViewController(didRequestDeleteMap: self)
     }
     
     override func viewDidLayoutSubviews() {

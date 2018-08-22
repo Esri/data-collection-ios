@@ -89,16 +89,16 @@ class AppContainerViewController: AppContextAwareController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
 
         if let destination = segue.destination as? MapViewController {
-            destination.mapDelegate = self
+            destination.delegate = self
             mapViewController = destination
         }
         else if let destination = segue.destination as? DrawerViewController {
-            destination.drawerDelegate = self
+            destination.delegate = self
             drawerViewController = destination
         }
         else if let destination = segue.destination as? JobStatusViewController {
             destination.jobConstruct = EphemeralCache.get(objectForKey: AppOfflineMapJobConstructionInfo.EphemeralCacheKeys.offlineMapJob) as? AppOfflineMapJobConstructionInfo
-            destination.jobStatusDelegate = self
+            destination.delegate = self
             jobStatusViewController = destination
         }
     }
