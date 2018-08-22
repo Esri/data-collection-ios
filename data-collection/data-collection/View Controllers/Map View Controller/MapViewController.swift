@@ -29,6 +29,12 @@ class MapViewController: AppContextAwareController {
         static let newNonSpatialFeature = "MapViewController.newFeature.nonspatial"
         static let newRelatedRecord = "MapViewController.newRelatedRecord"
     }
+    
+    enum LocationSelectionViewType {
+        
+        case newFeature
+        case offlineExtent
+    }
 
     var delegate: MapViewControllerDelegate?
 

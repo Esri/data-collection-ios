@@ -15,10 +15,7 @@
 import Foundation
 import ArcGIS
 
-enum LocationSelectionViewType {
-    
-    case newFeature
-    case offlineExtent
+extension MapViewController.LocationSelectionViewType {
     
     var headerText: String {
         switch self {
