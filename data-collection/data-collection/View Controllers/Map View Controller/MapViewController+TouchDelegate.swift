@@ -18,14 +18,15 @@ import ArcGIS
 extension MapViewController: AGSGeoViewTouchDelegate {
     
     func geoView(_ geoView: AGSGeoView, didTapAtScreenPoint screenPoint: CGPoint, mapPoint: AGSPoint) {
+        
+        guard mapViewMode == .defaultView || mapViewMode == .selectedFeature else {
+            return
+        }
+        
         query(geoView, atScreenPoint: screenPoint, mapPoint: mapPoint)
     }
     
     private func query(_ geoView: AGSGeoView, atScreenPoint screenPoint: CGPoint, mapPoint: AGSPoint) {
-        
-        guard mapViewMode != .disabled else {
-            return
-        }
 
         currentPopup = nil
         
