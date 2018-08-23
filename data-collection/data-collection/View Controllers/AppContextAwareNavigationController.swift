@@ -14,9 +14,9 @@
 
 import Foundation
 
-class AppContextAwareNavigationController: UINavigationController, AppContextAware {
+class AppContextAwareNavigationController: UINavigationController {
     
-    var changeHandler = AppContextAwareChangeHandler()
+    var changeHandler = AppContextChangeHandler()
     
     override init(navigationBarClass: AnyClass?, toolbarClass: AnyClass?) {
         super.init(navigationBarClass: navigationBarClass, toolbarClass: toolbarClass)

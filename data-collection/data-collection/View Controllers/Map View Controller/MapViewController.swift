@@ -22,7 +22,7 @@ protocol MapViewControllerDelegate: class {
 }
 
 
-class MapViewController: UIViewController, AppContextAware {
+class MapViewController: UIViewController {
     
     struct EphemeralCacheKeys {
         static let newSpatialFeature = "MapViewController.newFeature.spatial"
@@ -45,7 +45,7 @@ class MapViewController: UIViewController, AppContextAware {
 
     var delegate: MapViewControllerDelegate?
     
-    var changeHandler = AppContextAwareChangeHandler()
+    let changeHandler = AppContextChangeHandler()
 
     @IBOutlet weak var mapView: AGSMapView!
     @IBOutlet weak var smallPopupView: ShrinkingView!

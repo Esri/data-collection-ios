@@ -25,7 +25,7 @@ protocol DrawerViewControllerDelegate: class {
     func drawerViewController(didRequestDeleteMap drawerViewController: DrawerViewController)
 }
 
-class DrawerViewController: UIViewController, AppContextAware {
+class DrawerViewController: UIViewController {
     
     @IBOutlet weak var workModeHighlightView: UIView!
 
@@ -37,7 +37,7 @@ class DrawerViewController: UIViewController, AppContextAware {
     
     var delegate: DrawerViewControllerDelegate?
     
-    var changeHandler = AppContextAwareChangeHandler()
+    let changeHandler = AppContextChangeHandler()
     
     let loginLogoutButtonControlStateColors: [UIControlState: UIColor] = {
         return [.normal: appColors.loginLogoutNormal,

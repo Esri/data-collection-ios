@@ -21,7 +21,7 @@ import ArcGIS
  */
 
 
-class AppContextAwareChangeHandler {
+class AppContextChangeHandler {
     
     private var appChanges = [AppContextChange.Key: AppContextChange]()
     private var appObservations = [NSKeyValueObservation]()
@@ -60,15 +60,15 @@ class AppContextAwareChangeHandler {
             
         case .reachability(_):
             appChanges[change.key] = change
-            appNotificationCenter.addObserver(self, selector: #selector(AppContextAwareChangeHandler.recieveReachabilityNotification(notification:)), name: .reachabilityDidChange, object: nil)
+            appNotificationCenter.addObserver(self, selector: #selector(AppContextChangeHandler.recieveReachabilityNotification(notification:)), name: .reachabilityDidChange, object: nil)
         
         case .workMode(_):
             appChanges[change.key] = change
-            appNotificationCenter.addObserver(self, selector: #selector(AppContextAwareChangeHandler.recieveWorkModeNotification(notification:)), name: .workModeDidChange, object: nil)
+            appNotificationCenter.addObserver(self, selector: #selector(AppContextChangeHandler.recieveWorkModeNotification(notification:)), name: .workModeDidChange, object: nil)
         
         case .lastSync(_):
             appChanges[change.key] = change
-            appNotificationCenter.addObserver(self, selector: #selector(AppContextAwareChangeHandler.recieveLastSyncNotification(notification:)), name: .lastSyncDidChange, object: nil)
+            appNotificationCenter.addObserver(self, selector: #selector(AppContextChangeHandler.recieveLastSyncNotification(notification:)), name: .lastSyncDidChange, object: nil)
         }
     }
     
