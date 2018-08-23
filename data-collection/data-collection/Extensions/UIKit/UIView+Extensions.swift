@@ -20,15 +20,6 @@ import UIKit
 
 typealias UIViewAnimations = () -> Void
 
-// MARK: Core Graphics
-
-extension UIView {
-    
-    var boundsCenter: CGPoint {
-        return CGPoint(x: bounds.midX, y: bounds.midY)
-    }
-}
-
 // MARK: Style
 
 extension UIView {

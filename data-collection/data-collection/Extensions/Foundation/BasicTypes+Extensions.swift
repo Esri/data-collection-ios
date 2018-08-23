@@ -39,6 +39,13 @@ extension CGFloat {
     }
 }
 
+extension CGRect {
+
+    var center: CGPoint {
+        return CGPoint(x: midX, y: midY)
+    }
+}
+
 extension Double {
     
     var asRadians: Double {

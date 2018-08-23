@@ -19,7 +19,7 @@ import ArcGIS
 extension AGSMapView {
     
     var centerAGSPoint: AGSPoint {
-        return screen(toLocation: boundsCenter)
+        return screen(toLocation: bounds.center)
     }
 }
 
