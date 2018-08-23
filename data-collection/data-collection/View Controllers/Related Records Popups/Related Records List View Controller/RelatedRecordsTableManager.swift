@@ -21,7 +21,7 @@ class RelatedRecordsTableManager: AGSLoadableBase {
     
     private var query: AGSCancelable?
     
-    var popups = [AGSPopup]()
+    internal private(set) var popups = [AGSPopup]()
 
     init(featureTable table: AGSArcGISFeatureTable) {
         self.featureTable = table
