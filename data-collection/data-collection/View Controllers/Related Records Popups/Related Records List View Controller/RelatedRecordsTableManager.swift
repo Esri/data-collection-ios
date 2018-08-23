@@ -17,7 +17,7 @@ import ArcGIS
 
 class RelatedRecordsTableManager: AGSLoadableBase {
     
-    private weak var featureTable: AGSArcGISFeatureTable!
+    weak var featureTable: AGSArcGISFeatureTable!
     
     private var query: AGSCancelable?
     
