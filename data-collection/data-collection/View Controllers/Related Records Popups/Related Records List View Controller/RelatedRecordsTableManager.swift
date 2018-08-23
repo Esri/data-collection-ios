@@ -19,6 +19,8 @@ class RelatedRecordsTableManager: AGSLoadableBase {
     
     weak var featureTable: AGSArcGISFeatureTable!
     
+    var query: AGSCancelable?
+    
     var popups = [AGSPopup]()
 
     init(featureTable table: AGSArcGISFeatureTable) {
@@ -26,7 +28,9 @@ class RelatedRecordsTableManager: AGSLoadableBase {
     }
     
     override func doCancelLoading() {
-        loadDidFinishWithError(NSUserCancelledError as? Error)
+        query?.cancel()
+        popups.removeAll()
+        loadDidFinishWithError(AppLoadableError.canceledLoad)
     }
     
     override func doStartLoading(_ retrying: Bool) {
@@ -44,7 +48,7 @@ class RelatedRecordsTableManager: AGSLoadableBase {
             sorted = AGSOrderBy(fieldName: field.fieldName, sortOrder: .ascending)
         }
         
-        featureTable.queryAllFeaturesAsPopups(sorted: sorted) { [weak self] (popups, error) in
+        query = featureTable.queryAllFeaturesAsPopups(sorted: sorted) { [weak self] (popups, error) in
             
             guard error == nil else {
                 self?.loadDidFinishWithError(error!)

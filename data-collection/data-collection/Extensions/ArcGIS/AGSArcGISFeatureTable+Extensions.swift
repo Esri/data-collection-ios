@@ -34,25 +34,28 @@ extension AGSArcGISFeatureTable {
         return false
     }
     
-    func queryRelatedFeatures(forFeature feature: AGSArcGISFeature, relationship: AGSRelationshipInfo, completion: @escaping ([AGSRelatedFeatureQueryResult]?, Error?)->()) {
+    @discardableResult
+    func queryRelatedFeatures(forFeature feature: AGSArcGISFeature, relationship: AGSRelationshipInfo, completion: @escaping ([AGSRelatedFeatureQueryResult]?, Error?)->()) -> AGSCancelable? {
         
         let parameters = AGSRelatedQueryParameters(relationshipInfo: relationship)
         
         if let serviceFeatureTable = self as? AGSServiceFeatureTable {
             let fields = AGSQueryFeatureFields.loadAll
-            serviceFeatureTable.queryRelatedFeatures(for: feature, parameters: parameters, queryFeatureFields: fields, completion: completion)
+            return serviceFeatureTable.queryRelatedFeatures(for: feature, parameters: parameters, queryFeatureFields: fields, completion: completion)
         }
         else if let geodatabaseFeatureTable = self as? AGSGeodatabaseFeatureTable {
-            geodatabaseFeatureTable.queryRelatedFeatures(for: feature, parameters: parameters, completion: completion)
+            return geodatabaseFeatureTable.queryRelatedFeatures(for: feature, parameters: parameters, completion: completion)
         }
         else {
             completion(nil, FeatureTableError.isNotArcGISFeatureTable)
+            return nil
         }
     }
     
-    func queryRelatedFeaturesAsPopups(forFeature feature: AGSArcGISFeature, relationship: AGSRelationshipInfo, completion: @escaping ([AGSPopup]?, Error?)->()) {
+    @discardableResult
+    func queryRelatedFeaturesAsPopups(forFeature feature: AGSArcGISFeature, relationship: AGSRelationshipInfo, completion: @escaping ([AGSPopup]?, Error?)->()) -> AGSCancelable? {
         
-        queryRelatedFeatures(forFeature: feature, relationship: relationship) { (results, error) in
+        return queryRelatedFeatures(forFeature: feature, relationship: relationship) { (results, error) in
             
             guard error == nil else {
                 completion(nil, error!)
@@ -73,7 +76,8 @@ extension AGSArcGISFeatureTable {
         }
     }
     
-    func queryAllFeatures(sorted: AGSOrderBy? = nil, completion: @escaping (AGSFeatureQueryResult?, Error?) -> Void) {
+    @discardableResult
+    func queryAllFeatures(sorted: AGSOrderBy? = nil, completion: @escaping (AGSFeatureQueryResult?, Error?) -> Void) -> AGSCancelable? {
         
         let queryParams = AGSQueryParameters.all()
         
@@ -83,22 +87,23 @@ extension AGSArcGISFeatureTable {
 
         // Online
         if let serviceFeatureTable = self as? AGSServiceFeatureTable {
-            serviceFeatureTable.queryFeatures(with: queryParams, queryFeatureFields: .loadAll, completion: completion)
+            return serviceFeatureTable.queryFeatures(with: queryParams, queryFeatureFields: .loadAll, completion: completion)
         }
         // Offline
         else if let geodatabaseFeatureTable = self as? AGSGeodatabaseFeatureTable {
-            geodatabaseFeatureTable.queryFeatures(with: queryParams, completion: completion)
+            return geodatabaseFeatureTable.queryFeatures(with: queryParams, completion: completion)
         }
         // Unknown
         else {
             completion(nil, FeatureTableError.isNotArcGISFeatureTable)
-            return
+            return nil
         }
     }
     
-    func queryAllFeaturesAsPopups(sorted: AGSOrderBy? = nil, completion: @escaping ([AGSPopup]?, Error?) -> Void) {
+    @discardableResult
+    func queryAllFeaturesAsPopups(sorted: AGSOrderBy? = nil, completion: @escaping ([AGSPopup]?, Error?) -> Void) -> AGSCancelable? {
         
-        self.queryAllFeatures(sorted: sorted) { (result, error) in
+        return self.queryAllFeatures(sorted: sorted) { (result, error) in
             
             guard error == nil else {
                 print("[Error: Service Feature Table Query]", error!.localizedDescription)

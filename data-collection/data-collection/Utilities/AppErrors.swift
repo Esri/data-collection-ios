@@ -201,7 +201,7 @@ enum PopupSortingError : AppError {
     }
 }
 
-enum AppGeocoderError: AppError  {
+enum AppGeocoderError: AppError {
     
     case missingAddressAttribute
     
@@ -224,3 +224,25 @@ enum AppGeocoderError: AppError  {
     }
 }
 
+enum AppLoadableError: AppError {
+    
+    case canceledLoad
+    
+    var errorCode: Int {
+        switch self {
+        case .canceledLoad:
+            return 6001
+        }
+    }
+    
+    var errorUserInfo: [String : Any] {
+        switch self {
+        case .canceledLoad:
+            return [NSLocalizedDescriptionKey: "Did cancel load."]
+        }
+    }
+    
+    var canceledLoad: String {
+        return errorUserInfo[NSLocalizedDescriptionKey] as! String
+    }
+}
