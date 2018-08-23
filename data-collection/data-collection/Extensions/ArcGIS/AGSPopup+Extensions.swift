@@ -206,28 +206,23 @@ extension AGSPopup {
     }
 }
 
-extension Array where Iterator.Element == AGSPopup {
+extension Array where Element == AGSPopup {
     
     mutating func sortPopupsByFirstField(_ order: AGSSortOrder = .ascending) throws {
         
-        do {
-            switch order {
-            case .ascending:
-                try sort { (left, right) -> Bool in
-                    return try autoreleasepool { () throws -> Bool in
-                        return try left < right
-                    }
-                }
-            case .descending:
-                try sort { (left, right) -> Bool in
-                    return try autoreleasepool { () throws -> Bool in
-                        return try left > right
-                    }
+        switch order {
+        case .ascending:
+            try sort { (left, right) -> Bool in
+                return try autoreleasepool { () throws -> Bool in
+                    return try left < right
                 }
             }
-        }
-        catch {
-            throw error
+        case .descending:
+            try sort { (left, right) -> Bool in
+                return try autoreleasepool { () throws -> Bool in
+                    return try left > right
+                }
+            }
         }
     }
 }
