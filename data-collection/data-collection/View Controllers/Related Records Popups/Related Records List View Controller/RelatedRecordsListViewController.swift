@@ -26,23 +26,27 @@ class RelatedRecordsListViewController: AppContextAwareController {
     
     @IBOutlet weak var tableView: UITableView!
     
-    var featureTable: AGSArcGISFeatureTable {
+    var featureTable: AGSArcGISFeatureTable? {
         get {
-            return featureTableRecordsManager.featureTable
+            return featureTableRecordsManager?.featureTable
         }
         set {
-            featureTableRecordsManager = RelatedRecordsTableManager(featureTable: newValue)
+            guard let featureTable = newValue else {
+                featureTableRecordsManager = nil
+                return
+            }
+            featureTableRecordsManager = RelatedRecordsTableManager(featureTable: featureTable)
         }
     }
     
-    private var featureTableRecordsManager: RelatedRecordsTableManager!
+    private var featureTableRecordsManager: RelatedRecordsTableManager?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         tableView.register(RelatedRecordCell.self, forCellReuseIdentifier: ReuseIdentifiers.relatedRecordCell)
         
-        title = featureTable.tableName
+        title = featureTable?.tableName ?? "Records"
         
         loadRecords()
     }
@@ -51,7 +55,13 @@ class RelatedRecordsListViewController: AppContextAwareController {
         
         SVProgressHUD.show(withStatus: "Loading Records...")
         
-        featureTableRecordsManager?.load { [weak self] (error) in
+        guard let manager = featureTableRecordsManager else {
+            SVProgressHUD.showError(withStatus: "Could not load records.")
+            delegate?.relatedRecordsListViewControllerDidCancel(self)
+            return
+        }
+        
+        manager.load { [weak self] (error) in
             
             guard error == nil else {
                 print("[Error: Feature Table Records manager]", error!.localizedDescription)
@@ -87,13 +97,13 @@ extension RelatedRecordsListViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return featureTableRecordsManager.popups.count
+        return featureTableRecordsManager?.popups.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: ReuseIdentifiers.relatedRecordCell, for: indexPath) as! RelatedRecordCell
-        cell.popup = featureTableRecordsManager.popups[indexPath.row]
+        cell.popup = featureTableRecordsManager?.popups[indexPath.row]
         cell.maxAttributes = 2
         cell.updateCellContent()
         return cell
