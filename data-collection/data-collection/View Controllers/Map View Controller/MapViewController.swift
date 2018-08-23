@@ -70,7 +70,11 @@ class MapViewController: AppContextAwareController {
     
     var currentPopup: AGSPopup? {
         set {
-            recordsManager = newValue != nil ? PopupRelatedRecordsManager(popup: newValue!) : nil
+            if let popup = newValue {
+                recordsManager = PopupRelatedRecordsManager(popup: popup)
+            } else {
+                recordsManager = nil
+            }
         }
         get {
             return recordsManager?.popup
