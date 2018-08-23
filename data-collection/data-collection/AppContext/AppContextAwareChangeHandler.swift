@@ -33,8 +33,6 @@ class AppContextAwareChangeHandler {
     
     func subscribe(toChange change: AppContextChange) {
         
-        appChanges[change.key] = change
-        
         switch change {
         case .currentUser(let closure):
             let observeCurrentUser = appContext.observe(\.user, options: [.new, .old]) { (_, _) in
@@ -43,30 +41,33 @@ class AppContextAwareChangeHandler {
             appObservations.append(observeCurrentUser)
             
         case .currentMap(let closure):
-            let observeCurrentMap = appContext.observe(\.currentMap, options:[.new, .old]) { [weak self] (_, _) in
+            let observeCurrentMap = appContext.observe(\.currentMap, options:[.new, .old]) { (_, _) in
                 DispatchQueue.main.async { closure(appContext.currentMap) }
             }
             appObservations.append(observeCurrentMap)
             
         case .hasOfflineMap(let closure):
-            let observeOfflineMap = appContext.observe(\.hasOfflineMap, options: [.new, .old]) { [weak self] (_, _) in
+            let observeOfflineMap = appContext.observe(\.hasOfflineMap, options: [.new, .old]) { (_, _) in
                 DispatchQueue.main.async { closure(appContext.hasOfflineMap) }
             }
             appObservations.append(observeOfflineMap)
             
         case .locationAuthorization(let closure):
-            let observeLocationAuthorization = appLocation.observe(\.locationAuthorized, options:[.new, .old]) { [weak self] (_, _) in
+            let observeLocationAuthorization = appLocation.observe(\.locationAuthorized, options:[.new, .old]) { (_, _) in
                 DispatchQueue.main.async { closure(appLocation.locationAuthorized) }
             }
             appObservations.append(observeLocationAuthorization)
             
         case .reachability(_):
+            appChanges[change.key] = change
             appNotificationCenter.addObserver(self, selector: #selector(AppContextAwareChangeHandler.recieveReachabilityNotification(notification:)), name: .reachabilityDidChange, object: nil)
         
         case .workMode(_):
+            appChanges[change.key] = change
             appNotificationCenter.addObserver(self, selector: #selector(AppContextAwareChangeHandler.recieveWorkModeNotification(notification:)), name: .workModeDidChange, object: nil)
         
         case .lastSync(_):
+            appChanges[change.key] = change
             appNotificationCenter.addObserver(self, selector: #selector(AppContextAwareChangeHandler.recieveLastSyncNotification(notification:)), name: .lastSyncDidChange, object: nil)
         }
     }
