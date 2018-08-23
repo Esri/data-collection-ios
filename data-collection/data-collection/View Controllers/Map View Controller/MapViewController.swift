@@ -86,10 +86,6 @@ class MapViewController: AppContextAwareController {
         }
     }
     
-    var oneToManyRelatedRecordTable: AGSArcGISFeatureTable? {
-        return recordsManager?.oneToMany.first?.relatedTable
-    }
-    
     var mapViewMode: MapViewMode = .defaultView {
         didSet {
             adjustForMapViewMode(from: oldValue, to: mapViewMode)
@@ -157,7 +153,7 @@ class MapViewController: AppContextAwareController {
         
         guard
             let parentPopup = currentPopup,
-            let featureTable = oneToManyRelatedRecordTable,
+            let featureTable = recordsManager?.oneToMany.first?.relatedTable,
             let childPopup = featureTable.createPopup()
             else {
             present(simpleAlertMessage: "Uh Oh! You are unable to add a new related record.")

@@ -64,7 +64,7 @@ extension MapViewController {
             
             self?.addPopupRelatedRecordButton.isHidden = false
             
-            if let canAdd = self?.oneToManyRelatedRecordTable?.canAddFeature {
+            if let canAdd = self?.recordsManager?.oneToMany.first?.relatedTable?.canAddFeature {
                 self?.addPopupRelatedRecordButton.isHidden = !canAdd
             }
             
