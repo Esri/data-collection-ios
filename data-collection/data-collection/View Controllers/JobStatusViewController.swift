@@ -22,7 +22,7 @@ protocol JobStatusViewControllerDelegate: class {
     func jobStatusViewController(_ jobStatusViewController: JobStatusViewController, didEndWithResult result: Any)
 }
 
-class JobStatusViewController: AppContextAwareController {
+class JobStatusViewController: UIViewController {
         
     @IBOutlet weak var jobStatusLabel: UILabel!
     @IBOutlet weak var jobStatusProgressView: UIProgressView!

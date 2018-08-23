@@ -20,7 +20,7 @@ protocol RelatedRecordsListViewControllerDelegate {
     func relatedRecordsListViewControllerDidCancel(_ viewController: RelatedRecordsListViewController)
 }
 
-class RelatedRecordsListViewController: AppContextAwareController {
+class RelatedRecordsListViewController: UIViewController {
     
     var delegate: RelatedRecordsListViewControllerDelegate?
     

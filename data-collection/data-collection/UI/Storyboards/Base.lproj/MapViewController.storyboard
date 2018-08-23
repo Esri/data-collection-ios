@@ -101,7 +101,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Could not load map." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mK3-YB-BbF">
-                                <rect key="frame" x="110.66666666666666" y="359" width="153.66666666666666" height="21"/>
+                                <rect key="frame" x="110.66666666666667" y="359" width="153.66666666666663" height="21"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="21" id="XqC-VS-qdL"/>
                                 </constraints>
@@ -355,6 +355,7 @@
                         <outlet property="addPopupRelatedRecordButton" destination="YLl-vb-3IY" id="TPz-a1-cOH"/>
                         <outlet property="compassView" destination="grA-PX-pq9" id="suW-Kc-voR"/>
                         <outlet property="mapView" destination="3gQ-pY-vhI" id="Ycy-Ti-Oko"/>
+                        <outlet property="maskViewContainer" destination="xXO-Lb-niC" id="xMw-SN-uKc"/>
                         <outlet property="notificationBar" destination="HuO-Rv-Bbl" id="mtD-OH-hLb"/>
                         <outlet property="pinDropView" destination="L7K-qp-Vqi" id="64O-4P-VqP"/>
                         <outlet property="popupsContainerView" destination="7z9-bF-yLj" id="X5f-ZJ-SP3"/>
@@ -464,10 +465,10 @@
             </objects>
             <point key="canvasLocation" x="953" y="416"/>
         </scene>
-        <!--Download Mask View Controller-->
+        <!--Mask View Controller-->
         <scene sceneID="cSa-if-J8D">
             <objects>
-                <viewController id="Kcg-Md-S5T" customClass="DownloadMaskViewController" customModule="data_collection" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="Kcg-Md-S5T" customClass="MaskViewController" customModule="data_collection" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" userInteractionEnabled="NO" tag="1001" contentMode="scaleToFill" id="JaC-GX-r1N">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="768"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
