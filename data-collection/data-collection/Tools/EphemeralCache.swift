@@ -50,4 +50,8 @@ class EphemeralCache {
         shared[key] = nil
         return object
     }
+    
+    static func remove(objectForKey key: String) {
+        shared[key] = nil
+    }
 }

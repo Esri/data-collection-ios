@@ -56,7 +56,7 @@ extension MapViewController {
         
         switch locationSelectionType {
         case .newFeature:
-            _ = EphemeralCache.get(objectForKey: EphemeralCacheKeys.newNonSpatialFeature)
+            EphemeralCache.remove(objectForKey: EphemeralCacheKeys.newNonSpatialFeature)
             break
         case .offlineExtent:
             hideMapMaskViewForOfflineDownloadArea()
