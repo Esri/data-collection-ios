@@ -495,10 +495,10 @@
             </objects>
             <point key="canvasLocation" x="2554" y="415"/>
         </scene>
-        <!--Navigation Controller-->
+        <!--App Context Aware Navigation Controller-->
         <scene sceneID="4f0-wp-SMt">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="czy-FD-PCO" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="czy-FD-PCO" customClass="AppContextAwareNavigationController" customModule="data_collection" customModuleProvider="target" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="VrT-XK-pBA">
                         <rect key="frame" x="0.0" y="44" width="375" height="44"/>
