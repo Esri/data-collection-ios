@@ -17,9 +17,9 @@ import ArcGIS
 
 class RelatedRecordsTableManager: AGSLoadableBase {
     
-    weak var featureTable: AGSArcGISFeatureTable!
+    private weak var featureTable: AGSArcGISFeatureTable!
     
-    var query: AGSCancelable?
+    private var query: AGSCancelable?
     
     var popups = [AGSPopup]()
 
