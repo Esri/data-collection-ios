@@ -45,44 +45,44 @@ extension MapViewController {
             }
         }
         
-        var animations = [UIViewAnimations]()
+        let animations: [UIViewAnimations]
         
         switch to {
             
         case .defaultView:
             pinDropView.pinDropped = false
-            animations.append( selectViewVisible(false) )
-            animations.append( smallPopViewVisible(false) )
-            animations.append( mapViewVisible(true) )
+            animations = [ selectViewVisible(false),
+                           smallPopViewVisible(false),
+                           mapViewVisible(true) ]
             hideMapMaskViewForOfflineDownloadArea()
 
         case .disabled:
             pinDropView.pinDropped = false
-            animations.append( selectViewVisible(false) )
-            animations.append( smallPopViewVisible(false) )
-            animations.append( mapViewVisible(false) )
+            animations = [ selectViewVisible(false),
+                           smallPopViewVisible(false),
+                           mapViewVisible(false) ]
             hideMapMaskViewForOfflineDownloadArea()
             
         case .selectingFeature:
             pinDropView.pinDropped = true
-            animations.append( selectViewVisible(true) )
-            animations.append( smallPopViewVisible(false) )
-            animations.append( mapViewVisible(true) )
+            animations = [ selectViewVisible(true),
+                           smallPopViewVisible(false),
+                           mapViewVisible(true) ]
             hideMapMaskViewForOfflineDownloadArea()
             locationSelectionType = .newFeature
             
         case .selectedFeature:
             pinDropView.pinDropped = false
-            animations.append( selectViewVisible(false) )
-            animations.append( smallPopViewVisible(true) )
-            animations.append( mapViewVisible(true) )
+            animations = [ selectViewVisible(false),
+                           smallPopViewVisible(true),
+                           mapViewVisible(true) ]
             hideMapMaskViewForOfflineDownloadArea()
             
         case .offlineMask:
             pinDropView.pinDropped = false
-            animations.append( selectViewVisible(true) )
-            animations.append( smallPopViewVisible(false) )
-            animations.append( mapViewVisible(true) )
+            animations = [ selectViewVisible(true),
+                           smallPopViewVisible(false),
+                           mapViewVisible(true) ]
             presentMapMaskViewForOfflineDownloadArea()
             locationSelectionType = .offlineExtent
         }

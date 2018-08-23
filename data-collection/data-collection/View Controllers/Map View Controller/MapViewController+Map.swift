@@ -19,9 +19,8 @@ extension MapViewController {
     
     func loadMapViewMap() {
         
-//        mapViewMode = mapView.map != nil ? .defaultView : .disabled
-
         guard let map = mapView.map else {
+            
             mapViewMode = .disabled
             delegate?.mapViewController(self, didUpdateTitle: "No Map")
             delegate?.mapViewController(self, shouldAllowNewFeature: false)
@@ -48,12 +47,8 @@ extension MapViewController {
             
             AGSLoadObjects(operationalLayers, { [weak self] (_) in
                 
-                guard operationalLayers.featureAddableLayers.count > 0 else {
-                    self?.delegate?.mapViewController(self!, shouldAllowNewFeature: false)
-                    return
-                }
-                
-                self?.delegate?.mapViewController(self!, shouldAllowNewFeature: true)
+                let flag = !operationalLayers.featureAddableLayers.isEmpty
+                self?.delegate?.mapViewController(self!, shouldAllowNewFeature: flag)
             })
         }
         
