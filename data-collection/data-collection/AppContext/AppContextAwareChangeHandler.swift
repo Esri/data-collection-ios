@@ -42,34 +42,30 @@ class AppContextAwareChangeHandler {
             }
             appObservations.append(observeCurrentUser)
             
-        case .currentMap(_):
+        case .currentMap(let closure):
             let observeCurrentMap = appContext.observe(\.currentMap, options:[.new, .old]) { [weak self] (_, _) in
-                if let change = self?.appChanges[AppContextChange.Key.currentMap], let completionClosure = change.notificationClosure as? (AGSMap?) -> Void  {
-                    DispatchQueue.main.async { completionClosure(appContext.currentMap) }
-                }
+                DispatchQueue.main.async { closure(appContext.currentMap) }
             }
             appObservations.append(observeCurrentMap)
             
-        case .hasOfflineMap(_):
+        case .hasOfflineMap(let closure):
             let observeOfflineMap = appContext.observe(\.hasOfflineMap, options: [.new, .old]) { [weak self] (_, _) in
-                if let change = self?.appChanges[AppContextChange.Key.hasOfflineMap], let completionClosure = change.notificationClosure as? (Bool) -> Void  {
-                    DispatchQueue.main.async { completionClosure(appContext.hasOfflineMap) }
-                }
+                DispatchQueue.main.async { closure(appContext.hasOfflineMap) }
             }
             appObservations.append(observeOfflineMap)
             
-        case .locationAuthorization(_):
+        case .locationAuthorization(let closure):
             let observeLocationAuthorization = appLocation.observe(\.locationAuthorized, options:[.new, .old]) { [weak self] (_, _) in
-                if let change = self?.appChanges[AppContextChange.Key.locationAuthorization], let completionClosure = change.notificationClosure as? (Bool) -> Void  {
-                    DispatchQueue.main.async { completionClosure(appLocation.locationAuthorized) }
-                }
+                DispatchQueue.main.async { closure(appLocation.locationAuthorized) }
             }
             appObservations.append(observeLocationAuthorization)
             
         case .reachability(_):
             appNotificationCenter.addObserver(self, selector: #selector(AppContextAwareChangeHandler.recieveReachabilityNotification(notification:)), name: .reachabilityDidChange, object: nil)
+        
         case .workMode(_):
             appNotificationCenter.addObserver(self, selector: #selector(AppContextAwareChangeHandler.recieveWorkModeNotification(notification:)), name: .workModeDidChange, object: nil)
+        
         case .lastSync(_):
             appNotificationCenter.addObserver(self, selector: #selector(AppContextAwareChangeHandler.recieveLastSyncNotification(notification:)), name: .lastSyncDidChange, object: nil)
         }
@@ -103,5 +99,10 @@ class AppContextAwareChangeHandler {
                 completionClosure(appContext.lastSync.date)
             }
         }
+    }
+    
+    deinit {
+        appChanges.removeAll()
+        appObservations.removeAll()
     }
 }
