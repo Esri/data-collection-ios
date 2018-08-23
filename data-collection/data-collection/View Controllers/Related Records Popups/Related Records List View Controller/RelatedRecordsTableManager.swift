@@ -17,7 +17,7 @@ import ArcGIS
 
 class RelatedRecordsTableManager: AGSLoadableBase {
     
-    weak var featureTable: AGSArcGISFeatureTable!
+    internal private(set) var featureTable: AGSArcGISFeatureTable
     
     private var query: AGSCancelable?
     
@@ -36,11 +36,6 @@ class RelatedRecordsTableManager: AGSLoadableBase {
     override func doStartLoading(_ retrying: Bool) {
         
         popups.removeAll()
-        
-        guard let featureTable = self.featureTable else {
-            loadDidFinishWithError(FeatureTableError.missingFeatureTable)
-            return
-        }
         
         var sorted: AGSOrderBy?
         
