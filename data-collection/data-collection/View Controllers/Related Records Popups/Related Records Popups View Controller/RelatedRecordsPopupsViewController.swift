@@ -15,7 +15,7 @@
 import Foundation
 import ArcGIS
 
-class RelatedRecordsPopupsViewController: UIViewController, BackButtonDelegate {
+class RelatedRecordsPopupsViewController: UITableViewController, BackButtonDelegate {
     
     private typealias VC = RelatedRecordsPopupsViewController
     
@@ -23,11 +23,9 @@ class RelatedRecordsPopupsViewController: UIViewController, BackButtonDelegate {
         static let tableList = "EphemeralCache.RelatedRecordsPopupsViewController.TableList.Key"
     }
     
-    @IBOutlet weak var tableView: UITableView!
-    
     var popupModeButton: UIBarButtonItem?
     
-    @IBOutlet weak var adjustableBottomConstraint: NSLayoutConstraint!
+//    @IBOutlet weak var adjustableBottomConstraint: NSLayoutConstraint!
     
     var popup: AGSPopup! {
         didSet {
@@ -54,8 +52,8 @@ class RelatedRecordsPopupsViewController: UIViewController, BackButtonDelegate {
 
         title = recordsManager.title
         
-        NotificationCenter.default.addObserver(self, selector: #selector(VC.adjustKeyboardVisible(notification:)), name: .UIKeyboardWillShow, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(VC.adjustKeyboardHidden(notification:)), name: .UIKeyboardWillHide, object: nil)
+//        NotificationCenter.default.addObserver(self, selector: #selector(VC.adjustKeyboardVisible(notification:)), name: .UIKeyboardWillShow, object: nil)
+//        NotificationCenter.default.addObserver(self, selector: #selector(VC.adjustKeyboardHidden(notification:)), name: .UIKeyboardWillHide, object: nil)
         
         tableView.register(PopupReadonlyFieldCell.self, forCellReuseIdentifier: ReuseIdentifiers.popupReadonlyCell)
         tableView.register(PopupNumberCell.self, forCellReuseIdentifier: ReuseIdentifiers.popupNumberCell)
@@ -202,17 +200,17 @@ class RelatedRecordsPopupsViewController: UIViewController, BackButtonDelegate {
         }
     }
     
-    @objc func adjustKeyboardVisible(notification: NSNotification) {
-        print("[Keyboard] \(notification.name.rawValue)")
-        if let keyboardFrame: NSValue = notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? NSValue {
-            let heightDelta = keyboardFrame.cgRectValue.height
-            adjustableBottomConstraint.constant = -heightDelta
-        }
-    }
-    
-    @objc func adjustKeyboardHidden(notification: NSNotification) {
-        print("[Keyboard] \(notification.name.rawValue)")
-        adjustableBottomConstraint.constant = 0
-    }
+//    @objc func adjustKeyboardVisible(notification: NSNotification) {
+//        print("[Keyboard] \(notification.name.rawValue)")
+//        if let keyboardFrame: NSValue = notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? NSValue {
+//            let heightDelta = keyboardFrame.cgRectValue.height
+//            adjustableBottomConstraint.constant = -heightDelta
+//        }
+//    }
+//
+//    @objc func adjustKeyboardHidden(notification: NSNotification) {
+//        print("[Keyboard] \(notification.name.rawValue)")
+//        adjustableBottomConstraint.constant = 0
+//    }
 }
 

@@ -20,11 +20,9 @@ protocol RelatedRecordsListViewControllerDelegate {
     func relatedRecordsListViewControllerDidCancel(_ viewController: RelatedRecordsListViewController)
 }
 
-class RelatedRecordsListViewController: UIViewController {
+class RelatedRecordsListViewController: UITableViewController {
     
     var delegate: RelatedRecordsListViewControllerDelegate?
-    
-    @IBOutlet weak var tableView: UITableView!
     
     var featureTable: AGSArcGISFeatureTable? {
         get {
@@ -74,9 +72,9 @@ class RelatedRecordsListViewController: UIViewController {
     }
 }
 
-extension RelatedRecordsListViewController: UITableViewDelegate {
+extension RelatedRecordsListViewController {
 
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         guard let relatedRecordCell = tableView.cellForRow(at: indexPath) as? RelatedRecordCell, let popup = relatedRecordCell.popup else {
             let alert = UIAlertController.simpleAlert(title: nil, message: "Uh Oh! An unknown error occurred.", actionTitle: "OK") { [weak self] (_) in
@@ -90,17 +88,17 @@ extension RelatedRecordsListViewController: UITableViewDelegate {
     }
 }
 
-extension RelatedRecordsListViewController: UITableViewDataSource {
+extension RelatedRecordsListViewController {
     
-    func numberOfSections(in tableView: UITableView) -> Int {
+    override func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
     
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return featureTableRecordsManager?.popups.count ?? 0
     }
     
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: ReuseIdentifiers.relatedRecordCell, for: indexPath) as! RelatedRecordCell
         cell.popup = featureTableRecordsManager?.popups[indexPath.row]

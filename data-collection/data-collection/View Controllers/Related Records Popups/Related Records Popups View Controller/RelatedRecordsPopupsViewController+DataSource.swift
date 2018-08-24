@@ -16,9 +16,9 @@ import Foundation
 import UIKit
 import ArcGIS
 
-extension RelatedRecordsPopupsViewController: UITableViewDataSource {
+extension RelatedRecordsPopupsViewController {
     
-    func numberOfSections(in tableView: UITableView) -> Int {
+    override func numberOfSections(in tableView: UITableView) -> Int {
         
         var nSections = 1
         nSections += recordsManager.manyToOne.count
@@ -30,7 +30,7 @@ extension RelatedRecordsPopupsViewController: UITableViewDataSource {
         return nSections
     }
     
-    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         
         guard section > 0 else {
             return nil
@@ -46,7 +46,7 @@ extension RelatedRecordsPopupsViewController: UITableViewDataSource {
         return nil
     }
         
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         if recordsManager.indexPathWithinAttributes(indexPath) {
 
@@ -115,7 +115,7 @@ extension RelatedRecordsPopupsViewController: UITableViewDataSource {
         }
     }
     
-    func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+    override func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         
         if var fieldCell = cell as? PopupFieldCellProtocol {
             fieldCell.popupManager = nil
@@ -128,7 +128,7 @@ extension RelatedRecordsPopupsViewController: UITableViewDataSource {
         }
     }
     
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
         if section == 0 {
             let nFields = recordsManager.isEditing ? recordsManager.editableDisplayFields.count : recordsManager.displayFields.count

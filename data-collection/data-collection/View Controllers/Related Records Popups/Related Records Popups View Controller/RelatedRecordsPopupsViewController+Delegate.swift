@@ -15,15 +15,15 @@
 import UIKit
 import ArcGIS
 
-extension RelatedRecordsPopupsViewController: UITableViewDelegate {
+extension RelatedRecordsPopupsViewController {
     
-    func tableView(_ tableView: UITableView, shouldHighlightRowAt indexPath: IndexPath) -> Bool {
+    override func tableView(_ tableView: UITableView, shouldHighlightRowAt indexPath: IndexPath) -> Bool {
 
         // We only want to highlight related records
         return !recordsManager.indexPathWithinAttributes(indexPath)
     }
     
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         tableView.deselectRow(at: indexPath, animated: true)
         
@@ -98,7 +98,7 @@ extension RelatedRecordsPopupsViewController: UITableViewDelegate {
         }
     }
     
-    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+    override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         
         guard section == 0, loadingRelatedRecords else {
             return 0.0
@@ -107,7 +107,7 @@ extension RelatedRecordsPopupsViewController: UITableViewDelegate {
         return 35.0
     }
     
-    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+    override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         
         guard section == 0, loadingRelatedRecords else {
             return nil
@@ -125,11 +125,11 @@ extension RelatedRecordsPopupsViewController: UITableViewDelegate {
         return container
     }
     
-    func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCellEditingStyle {
+    override func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCellEditingStyle {
         return .none
     }
     
-    func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
+    override func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
         
         guard
             recordsManager.indexPathWithinOneToMany(indexPath),
