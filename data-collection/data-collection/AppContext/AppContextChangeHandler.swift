@@ -101,9 +101,4 @@ class AppContextChangeHandler {
             }
         }
     }
-    
-    deinit {
-        appChanges.removeAll()
-        appObservations.removeAll()
-    }
 }
