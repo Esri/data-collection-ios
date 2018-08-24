@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="tff-pw-9ak">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Drawer View Controller-->
+        <scene sceneID="r1t-TD-CNh">
+            <objects>
+                <viewController id="tff-pw-9ak" customClass="DrawerViewController" customModule="data_collection" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="bhX-Uc-zH4">
+                        <rect key="frame" x="0.0" y="0.0" width="300" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tTn-MW-Nim" userLabel="Banner">
+                                <rect key="frame" x="0.0" y="0.0" width="300" height="76"/>
+                                <color key="backgroundColor" red="0.7607440352" green="0.76081240179999998" blue="0.76068693399999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="g0m-dF-Inv" userLabel="Login Button">
+                                <rect key="frame" x="0.0" y="0.0" width="300" height="76"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="19y-Pi-gQF">
+                                        <rect key="frame" x="16" y="16" width="268" height="44"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                        <inset key="titleEdgeInsets" minX="8" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                        <state key="normal" title="Log in" image="UserLoginIcon"/>
+                                        <connections>
+                                            <action selector="userRequestsLoginLogout:" destination="tff-pw-9ak" eventType="touchUpInside" id="9KY-4Z-SsG"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" red="0.7607440352" green="0.76081240179999998" blue="0.76068693399999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstItem="19y-Pi-gQF" firstAttribute="top" secondItem="g0m-dF-Inv" secondAttribute="top" constant="16" id="7di-3S-lQL"/>
+                                    <constraint firstAttribute="bottom" secondItem="19y-Pi-gQF" secondAttribute="bottom" constant="16" id="LaC-e3-H4b"/>
+                                    <constraint firstAttribute="height" constant="76" id="Xhs-AS-ual"/>
+                                    <constraint firstAttribute="trailing" secondItem="19y-Pi-gQF" secondAttribute="trailing" constant="16" id="dJO-x2-gje"/>
+                                    <constraint firstItem="19y-Pi-gQF" firstAttribute="leading" secondItem="g0m-dF-Inv" secondAttribute="leading" constant="16" id="yaA-R0-gln"/>
+                                </constraints>
+                            </view>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" bouncesZoom="NO" translatesAutoresizingMaskIntoConstraints="NO" id="D9i-NW-FC3">
+                                <rect key="frame" x="0.0" y="76" width="300" height="591"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nLI-GB-Tum" userLabel="Content View">
+                                        <rect key="frame" x="0.0" y="0.0" width="300" height="265"/>
+                                        <subviews>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Xeh-QM-sKm">
+                                                <rect key="frame" x="16" y="16" width="268" height="40"/>
+                                                <color key="backgroundColor" red="0.96078431369999995" green="0.69019607839999997" blue="0.14117647059999999" alpha="1" colorSpace="calibratedRGB"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="40" id="nEJ-xi-Xlc"/>
+                                                </constraints>
+                                                <userDefinedRuntimeAttributes>
+                                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                        <integer key="value" value="4"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                </userDefinedRuntimeAttributes>
+                                            </view>
+                                            <button opaque="NO" contentMode="scaleToFill" selected="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8f1-WT-qtw">
+                                                <rect key="frame" x="16" y="16" width="268" height="40"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="40" id="K69-4s-I61"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <inset key="contentEdgeInsets" minX="8" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                                <inset key="titleEdgeInsets" minX="9" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                                <state key="normal" title="Work Online" image="CloudConnected">
+                                                    <color key="titleColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                </state>
+                                                <state key="disabled">
+                                                    <color key="titleColor" white="0.66666666669999997" alpha="0.5" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                </state>
+                                                <state key="selected" image="CloudConnected">
+                                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                </state>
+                                                <state key="highlighted" image="CloudConnected">
+                                                    <color key="titleColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="userRequestsWorkOnline:" destination="tff-pw-9ak" eventType="touchUpInside" id="fsS-E9-UVp"/>
+                                                </connections>
+                                            </button>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9j3-u1-yZ3" userLabel="Spacer">
+                                                <rect key="frame" x="16" y="72" width="268" height="1"/>
+                                                <color key="backgroundColor" red="0.7607440352" green="0.76081240179999998" blue="0.76068693399999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="1" id="7q2-VB-0pz"/>
+                                                </constraints>
+                                            </view>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bBY-Xa-AVq">
+                                                <rect key="frame" x="16" y="89" width="268" height="40"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="40" id="DFh-Iy-uin"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <inset key="contentEdgeInsets" minX="8" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                                <inset key="titleEdgeInsets" minX="8" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                                <state key="normal" title="Work Offline" image="CloudNoConnection">
+                                                    <color key="titleColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                </state>
+                                                <state key="disabled" image="CloudNoConnection">
+                                                    <color key="titleColor" white="0.66666666669999997" alpha="0.5" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                </state>
+                                                <state key="selected" image="CloudNoConnection">
+                                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                </state>
+                                                <state key="highlighted" image="CloudNoConnection">
+                                                    <color key="titleColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="userRequestsWorkOffline:" destination="tff-pw-9ak" eventType="touchUpInside" id="94w-9e-agk"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nly-Js-OCy">
+                                                <rect key="frame" x="16" y="145" width="268" height="40"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="40" id="NAo-aQ-Cdq"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <inset key="contentEdgeInsets" minX="8" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                                <inset key="titleEdgeInsets" minX="12" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                                <state key="normal" title="Synchronize Offline Map" image="Synchronize">
+                                                    <color key="titleColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                </state>
+                                                <state key="disabled" image="Synchronize">
+                                                    <color key="titleColor" white="0.66666666669999997" alpha="0.5" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                </state>
+                                                <state key="selected" image="Synchronize">
+                                                    <color key="titleColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                </state>
+                                                <state key="highlighted" image="Synchronize">
+                                                    <color key="titleColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="userRequestsSynchronizeOfflineMap:" destination="tff-pw-9ak" eventType="touchUpInside" id="gp6-RM-tgc"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PEO-mf-oZz">
+                                                <rect key="frame" x="16" y="201" width="268" height="40"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="40" id="gbR-Km-W2G"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <inset key="contentEdgeInsets" minX="8" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                                <inset key="titleEdgeInsets" minX="13" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                                <state key="normal" title="Delete Offline Map" image="GarbageBin">
+                                                    <color key="titleColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                </state>
+                                                <state key="disabled" image="GarbageBin">
+                                                    <color key="titleColor" white="0.66666666669999997" alpha="0.5" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                </state>
+                                                <state key="selected" image="GarbageBin">
+                                                    <color key="titleColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                </state>
+                                                <state key="highlighted" image="GarbageBin">
+                                                    <color key="titleColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="userRequestsDeleteOfflineMap:" destination="tff-pw-9ak" eventType="touchUpInside" id="ktf-ns-FPY"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstItem="PEO-mf-oZz" firstAttribute="leading" secondItem="nLI-GB-Tum" secondAttribute="leading" constant="16" id="2c2-38-A6T"/>
+                                            <constraint firstAttribute="trailing" secondItem="PEO-mf-oZz" secondAttribute="trailing" constant="16" id="6Zb-qX-nhG"/>
+                                            <constraint firstAttribute="trailing" secondItem="bBY-Xa-AVq" secondAttribute="trailing" constant="16" id="CPY-ID-Hlu"/>
+                                            <constraint firstItem="nly-Js-OCy" firstAttribute="top" secondItem="bBY-Xa-AVq" secondAttribute="bottom" constant="16" id="EnV-zZ-4FF"/>
+                                            <constraint firstItem="bBY-Xa-AVq" firstAttribute="top" secondItem="9j3-u1-yZ3" secondAttribute="bottom" constant="16" id="RIw-V3-d6t"/>
+                                            <constraint firstAttribute="trailing" secondItem="9j3-u1-yZ3" secondAttribute="trailing" constant="16" id="Swv-Gz-Z71"/>
+                                            <constraint firstItem="9j3-u1-yZ3" firstAttribute="top" secondItem="Xeh-QM-sKm" secondAttribute="bottom" constant="16" id="Ufs-Tz-YaX"/>
+                                            <constraint firstItem="bBY-Xa-AVq" firstAttribute="leading" secondItem="nLI-GB-Tum" secondAttribute="leading" constant="16" id="Urm-Qu-9x6"/>
+                                            <constraint firstAttribute="height" constant="265" id="WTL-AR-n6Z"/>
+                                            <constraint firstAttribute="trailing" secondItem="8f1-WT-qtw" secondAttribute="trailing" constant="16" id="YXI-pF-fbg"/>
+                                            <constraint firstItem="Xeh-QM-sKm" firstAttribute="leading" secondItem="nLI-GB-Tum" secondAttribute="leading" constant="16" id="dun-om-bta"/>
+                                            <constraint firstAttribute="trailing" secondItem="Xeh-QM-sKm" secondAttribute="trailing" constant="16" id="eZx-Rw-K5W"/>
+                                            <constraint firstItem="9j3-u1-yZ3" firstAttribute="leading" secondItem="nLI-GB-Tum" secondAttribute="leading" constant="16" id="hK8-p1-OXy"/>
+                                            <constraint firstItem="PEO-mf-oZz" firstAttribute="top" secondItem="nly-Js-OCy" secondAttribute="bottom" constant="16" id="jlb-42-820"/>
+                                            <constraint firstItem="8f1-WT-qtw" firstAttribute="leading" secondItem="nLI-GB-Tum" secondAttribute="leading" constant="16" id="k2S-QS-mig"/>
+                                            <constraint firstItem="nly-Js-OCy" firstAttribute="leading" secondItem="nLI-GB-Tum" secondAttribute="leading" constant="16" id="oSG-zY-yX4"/>
+                                            <constraint firstItem="Xeh-QM-sKm" firstAttribute="top" secondItem="nLI-GB-Tum" secondAttribute="top" constant="16" id="p59-gG-m9O"/>
+                                            <constraint firstItem="8f1-WT-qtw" firstAttribute="top" secondItem="nLI-GB-Tum" secondAttribute="top" constant="16" id="ue5-rI-60E"/>
+                                            <constraint firstAttribute="trailing" secondItem="nly-Js-OCy" secondAttribute="trailing" constant="16" id="vU0-2W-l2i"/>
+                                        </constraints>
+                                    </view>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="nLI-GB-Tum" secondAttribute="trailing" id="CmJ-n7-rVZ"/>
+                                    <constraint firstItem="nLI-GB-Tum" firstAttribute="leading" secondItem="D9i-NW-FC3" secondAttribute="leading" id="Fhj-d6-Qeq"/>
+                                    <constraint firstItem="nLI-GB-Tum" firstAttribute="top" secondItem="D9i-NW-FC3" secondAttribute="top" id="VVn-wv-ouF"/>
+                                    <constraint firstAttribute="bottom" secondItem="nLI-GB-Tum" secondAttribute="bottom" id="f0l-P0-s90"/>
+                                    <constraint firstAttribute="width" secondItem="nLI-GB-Tum" secondAttribute="width" id="tvm-xT-BuU"/>
+                                </constraints>
+                            </scrollView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="D9i-NW-FC3" firstAttribute="trailing" secondItem="7zU-JO-OaT" secondAttribute="trailing" id="G3v-oL-IZt"/>
+                            <constraint firstItem="g0m-dF-Inv" firstAttribute="top" secondItem="bhX-Uc-zH4" secondAttribute="top" id="OH3-ht-cYv"/>
+                            <constraint firstItem="g0m-dF-Inv" firstAttribute="leading" secondItem="7zU-JO-OaT" secondAttribute="leading" id="Sad-Yx-bcX"/>
+                            <constraint firstItem="D9i-NW-FC3" firstAttribute="top" secondItem="tTn-MW-Nim" secondAttribute="bottom" id="TOG-Sz-cI6"/>
+                            <constraint firstItem="tTn-MW-Nim" firstAttribute="height" secondItem="g0m-dF-Inv" secondAttribute="height" id="WCf-q0-vPN"/>
+                            <constraint firstItem="D9i-NW-FC3" firstAttribute="leading" secondItem="7zU-JO-OaT" secondAttribute="leading" id="bPh-Bk-oz4"/>
+                            <constraint firstItem="tTn-MW-Nim" firstAttribute="leading" secondItem="bhX-Uc-zH4" secondAttribute="leading" id="c9d-HW-aON"/>
+                            <constraint firstItem="tTn-MW-Nim" firstAttribute="top" secondItem="bhX-Uc-zH4" secondAttribute="top" id="dyA-aI-XWo"/>
+                            <constraint firstItem="D9i-NW-FC3" firstAttribute="bottom" secondItem="7zU-JO-OaT" secondAttribute="bottom" id="m2V-fE-kwS"/>
+                            <constraint firstItem="g0m-dF-Inv" firstAttribute="trailing" secondItem="7zU-JO-OaT" secondAttribute="trailing" id="mr0-we-Sns"/>
+                            <constraint firstAttribute="trailing" secondItem="tTn-MW-Nim" secondAttribute="trailing" id="xBR-3c-SeX"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="7zU-JO-OaT"/>
+                    </view>
+                    <size key="freeformSize" width="300" height="667"/>
+                    <connections>
+                        <outlet property="deleteOfflineMapButton" destination="PEO-mf-oZz" id="HPj-bb-p9K"/>
+                        <outlet property="loginButton" destination="19y-Pi-gQF" id="1KV-Gp-aAR"/>
+                        <outlet property="synchronizeOfflineMapButton" destination="nly-Js-OCy" id="Wfb-rv-LWo"/>
+                        <outlet property="workModeHighlightView" destination="Xeh-QM-sKm" id="Liu-cn-xez"/>
+                        <outlet property="workOfflineButton" destination="bBY-Xa-AVq" id="Spy-Jm-cLV"/>
+                        <outlet property="workOnlineButton" destination="8f1-WT-qtw" id="2wq-Ly-4oD"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="DNv-fe-1iS" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1734.4000000000001" y="1369.2118226600985"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="CloudConnected" width="20" height="13"/>
+        <image name="CloudNoConnection" width="22" height="17"/>
+        <image name="GarbageBin" width="16" height="16"/>
+        <image name="Synchronize" width="17" height="19"/>
+        <image name="UserLoginIcon" width="36" height="36"/>
+    </resources>
+</document>
