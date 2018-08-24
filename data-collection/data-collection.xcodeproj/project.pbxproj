@@ -366,18 +366,6 @@
 			path = "Popup Related Records Manager";
 			sourceTree = "<group>";
 		};
-		9419C798208A97630060D104 /* Storyboards */ = {
-			isa = PBXGroup;
-			children = (
-				94FA8B26207BF2CD00972C75 /* AppContainerViewController.storyboard */,
-				948066322091474F00A398EA /* RelatedRecordsPopupViewControllers.storyboard */,
-				946D20B9213093DE001BF5CC /* JobStatusViewController.storyboard */,
-				946D20BB2130951B001BF5CC /* DrawerViewController.storyboard */,
-				946D20BD2130965A001BF5CC /* MapViewController.storyboard */,
-			);
-			path = Storyboards;
-			sourceTree = "<group>";
-		};
 		945CEE6A20DDC2AC00CD3E0D /* SVProgressHUD */ = {
 			isa = PBXGroup;
 			children = (
@@ -398,10 +386,30 @@
 		946D20B621309088001BF5CC /* Drawer View Controller */ = {
 			isa = PBXGroup;
 			children = (
+				946D20BB2130951B001BF5CC /* DrawerViewController.storyboard */,
 				94D544B4207FC15C00ED0D04 /* DrawerViewController.swift */,
 				946D20B7213090AE001BF5CC /* DrawerViewController+AppContainerFocusDelegate.swift */,
 			);
 			path = "Drawer View Controller";
+			sourceTree = "<group>";
+		};
+		946D20BF2130AC02001BF5CC /* Related Records View Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				948066322091474F00A398EA /* RelatedRecordsPopupViewControllers.storyboard */,
+				9416A18D20BDFF93001377ED /* Related Records Popups View Controller */,
+				9416A18E20BDFFC9001377ED /* Related Records List View Controller */,
+			);
+			path = "Related Records View Controllers";
+			sourceTree = "<group>";
+		};
+		946D20C02130AC24001BF5CC /* Job Status View Controller */ = {
+			isa = PBXGroup;
+			children = (
+				946D20B9213093DE001BF5CC /* JobStatusViewController.storyboard */,
+				94D544BC207FC15D00ED0D04 /* JobStatusViewController.swift */,
+			);
+			path = "Job Status View Controller";
 			sourceTree = "<group>";
 		};
 		94A8102620B33AFF00D4BC68 /* Base */ = {
@@ -451,6 +459,7 @@
 		94B3759D207E8D5600691F2A /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				94B375BB207E8D5600691F2A /* EphemeralCache.swift */,
 				94B375D5207E8DD600691F2A /* EditType.swift */,
 				94BA7D3D20FD6E0900C78255 /* LastSync.swift */,
 				94B3759E207E8D5600691F2A /* AppFiles.swift */,
@@ -494,14 +503,6 @@
 				94B375AC207E8D5600691F2A /* NetworkReachabilityManager.swift */,
 			);
 			path = Alamofire;
-			sourceTree = "<group>";
-		};
-		94B375BA207E8D5600691F2A /* Tools */ = {
-			isa = PBXGroup;
-			children = (
-				94B375BB207E8D5600691F2A /* EphemeralCache.swift */,
-			);
-			path = Tools;
 			sourceTree = "<group>";
 		};
 		94B375D3207E8DD600691F2A /* Geocode Search */ = {
@@ -605,6 +606,7 @@
 		94D544B5207FC15D00ED0D04 /* App Container */ = {
 			isa = PBXGroup;
 			children = (
+				94FA8B26207BF2CD00972C75 /* AppContainerViewController.storyboard */,
 				94D544B7207FC15D00ED0D04 /* AppContainerViewController.swift */,
 				94D544B6207FC15D00ED0D04 /* AppContainerViewController+DrawerDelegate.swift */,
 				94D544B8207FC15D00ED0D04 /* AppContainerViewController+MapDelegate.swift */,
@@ -616,6 +618,7 @@
 		94D544CF208511FB00ED0D04 /* Map View Controller */ = {
 			isa = PBXGroup;
 			children = (
+				946D20BD2130965A001BF5CC /* MapViewController.storyboard */,
 				94FA8B24207BF2CD00972C75 /* MapViewController.swift */,
 				9465690F208800E100599E55 /* MapViewController+TouchDelegate.swift */,
 				946569012087FAE700599E55 /* MapViewController+MapViewMode.swift */,
@@ -626,12 +629,11 @@
 				945CEE7C20E2FAFE00CD3E0D /* MapViewController+SmallPopupView.swift */,
 				946D20B421307FE1001BF5CC /* MapViewController+AppContainerFocusDelegate.swift */,
 				94D544BB207FC15D00ED0D04 /* MaskViewController.swift */,
-				94D544BC207FC15D00ED0D04 /* JobStatusViewController.swift */,
 			);
 			path = "Map View Controller";
 			sourceTree = "<group>";
 		};
-		94D544D020852A5100ED0D04 /* Views */ = {
+		94D544D020852A5100ED0D04 /* Custom Views */ = {
 			isa = PBXGroup;
 			children = (
 				94D544D120852A5100ED0D04 /* NotificationBarLabel.swift */,
@@ -640,7 +642,7 @@
 				94D544D420852A5100ED0D04 /* PinDropView.swift */,
 				94D544D520852A5100ED0D04 /* ActivityBarView.swift */,
 			);
-			path = Views;
+			path = "Custom Views";
 			sourceTree = "<group>";
 		};
 		94FA8B16207BF2CD00972C75 = {
@@ -674,10 +676,9 @@
 				94D2713C20D02C0800304E27 /* Custom Behavior */,
 				94B375A5207E8D5600691F2A /* AppContext */,
 				94B3759D207E8D5600691F2A /* Utilities */,
-				94B375BA207E8D5600691F2A /* Tools */,
 				9416A19120BF3283001377ED /* Popup Related Records Manager */,
 				94FA8B54207BF5DF00972C75 /* View Controllers */,
-				94FA8B55207BF5EC00972C75 /* UI */,
+				94D544D020852A5100ED0D04 /* Custom Views */,
 				94B375AA207E8D5600691F2A /* 3rd Party */,
 			);
 			path = "data-collection";
@@ -718,22 +719,13 @@
 			isa = PBXGroup;
 			children = (
 				946D20AE212F50EB001BF5CC /* AppContextAwareNavigationController.swift */,
+				946D20C02130AC24001BF5CC /* Job Status View Controller */,
+				946D20BF2130AC02001BF5CC /* Related Records View Controllers */,
 				946D20B621309088001BF5CC /* Drawer View Controller */,
-				9416A18D20BDFF93001377ED /* Related Records Popups View Controller */,
-				9416A18E20BDFFC9001377ED /* Related Records List View Controller */,
 				94D544CF208511FB00ED0D04 /* Map View Controller */,
 				94D544B5207FC15D00ED0D04 /* App Container */,
 			);
 			path = "View Controllers";
-			sourceTree = "<group>";
-		};
-		94FA8B55207BF5EC00972C75 /* UI */ = {
-			isa = PBXGroup;
-			children = (
-				9419C798208A97630060D104 /* Storyboards */,
-				94D544D020852A5100ED0D04 /* Views */,
-			);
-			path = UI;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
