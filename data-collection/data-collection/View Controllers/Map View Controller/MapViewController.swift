@@ -22,7 +22,7 @@ protocol MapViewControllerDelegate: class {
 }
 
 
-class MapViewController: AppContextAwareController {
+class MapViewController: UIViewController {
     
     struct EphemeralCacheKeys {
         static let newSpatialFeature = "MapViewController.newFeature.spatial"
@@ -44,6 +44,8 @@ class MapViewController: AppContextAwareController {
     }
 
     var delegate: MapViewControllerDelegate?
+    
+    let changeHandler = AppContextChangeHandler()
 
     @IBOutlet weak var mapView: AGSMapView!
     @IBOutlet weak var smallPopupView: ShrinkingView!
@@ -63,7 +65,10 @@ class MapViewController: AppContextAwareController {
     @IBOutlet weak var selectViewTopConstraint: NSLayoutConstraint!
     @IBOutlet weak var selectViewHeaderLabel: UILabel!
     @IBOutlet weak var selectViewSubheaderLabel: UILabel!
-        
+    
+    var maskViewController: MaskViewController!
+    @IBOutlet weak var maskViewContainer: UIView!
+    
     var featureDetailViewBottomConstraint: NSLayoutConstraint!
 
     var identifyOperation: AGSCancelable?
@@ -125,6 +130,8 @@ class MapViewController: AppContextAwareController {
         
         // ACTIVITY BAR
         activityBarView.mapView = mapView
+        
+        subscribeToAppContextChanges()
         
         // Load Map and Services
         appContext.loadOfflineMobileMapPackageAndSetMapForCurrentWorkMode()
@@ -193,6 +200,9 @@ class MapViewController: AppContextAwareController {
                 destination.popup = currentPopup!
             }
         }
+        else if let destination = segue.destination as? MaskViewController {
+            maskViewController = destination
+        }
     }
     
     private func displayInitialReachabilityMessage() {
@@ -208,24 +218,15 @@ class MapViewController: AppContextAwareController {
         // Dispose of any resources that can be recreated.
     }
     
-    override var appContextNotificationRegistrations: [AppContextChangeNotification] {
+    func subscribeToAppContextChanges() {
         
-        let workModeNotification = AppContextChangeNotification.workMode { [weak self] workMode in
-            
-            DispatchQueue.main.async { [weak self] in
-                self?.activityBarView.colorA = (workMode == .online) ? appColors.primary.lighter : appColors.offlineLight
-                self?.activityBarView.colorB = (workMode == .online) ? appColors.primary.darker : appColors.offlineDark
-                self?.notificationBar.backgroundColor = (workMode == .online) ? appColors.primary.lighter : appColors.offlineDark
-            }
-        }
-        
-        let currentMapNotification: AppContextChangeNotification = .currentMap { [weak self] currentMap in
+        let currentMapChange: AppContextChange = .currentMap { [weak self] currentMap in
             
             self?.mapView.map = currentMap
             self?.loadMapViewMap()
         }
         
-        let locationAuthorizationNotification: AppContextChangeNotification = .locationAuthorization { [weak self] authorized in
+        let locationAuthorizationChange: AppContextChange = .locationAuthorization { [weak self] authorized in
             
             self?.mapView.locationDisplay.showLocation = authorized
             self?.mapView.locationDisplay.showAccuracy = authorized
@@ -241,11 +242,21 @@ class MapViewController: AppContextAwareController {
                 self?.mapView.locationDisplay.stop()
             }
         }
-        
-        let reachabilityNotification = AppContextChangeNotification.reachability { [weak self] reachable in
-            self?.displayReachabilityMessage(isReachable: reachable)
+
+        let workModeChange: AppContextChange = .workMode { [weak self] workMode in
+            
+            DispatchQueue.main.async { [weak self] in
+                self?.activityBarView.colorA = (workMode == .online) ? appColors.primary.lighter : appColors.offlineLight
+                self?.activityBarView.colorB = (workMode == .online) ? appColors.primary.darker : appColors.offlineDark
+                self?.notificationBar.backgroundColor = (workMode == .online) ? appColors.primary.lighter : appColors.offlineDark
+            }
         }
         
-        return [workModeNotification, currentMapNotification, locationAuthorizationNotification, reachabilityNotification]
+        let reachabilityChange: AppContextChange = .reachability { [weak self] reachable in
+            
+            self?.displayReachabilityMessage(isReachable: reachable)
+        }
+
+        changeHandler.subscribe(toChanges: [currentMapChange, locationAuthorizationChange, workModeChange, reachabilityChange])
     }
 }

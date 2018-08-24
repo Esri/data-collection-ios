@@ -26,7 +26,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         AppDelegate.licenseApplication()
         
         // Reachability
-        appReachability.startListening()
+        appReachability.resetAndStartListening()
         
         // Enable credential cache auto sync
         AppDelegate.configCredentialCacheAutoSyncToKeychain()
@@ -47,7 +47,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func applicationWillEnterForeground(_ application: UIApplication) {
-        appReachability.startListening()
+        appReachability.resetAndStartListening()
     }
     
     func applicationWillResignActive(_ application: UIApplication) {

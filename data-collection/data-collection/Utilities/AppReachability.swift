@@ -22,11 +22,9 @@ extension NetworkReachabilityManager {
             fatalError("Network Reachability Manager must be constructed a valid service url.")
         }
         
-        var firstReachabilityChangeStatusFlag = true
-        
         manager.listener = { status in
             print("[Reachability] Network status changed: \(status)")
-            if !firstReachabilityChangeStatusFlag {
+            if firstReachabilityChangeStatusFlag {
                 NotificationCenter.default.post(name: .reachabilityDidChange, object: nil)
             } else {
                 firstReachabilityChangeStatusFlag = false
@@ -35,4 +33,11 @@ extension NetworkReachabilityManager {
         
         return manager
     }()
+    
+    private static var firstReachabilityChangeStatusFlag = false
+    
+    func resetAndStartListening() {
+        NetworkReachabilityManager.firstReachabilityChangeStatusFlag = false
+        startListening()
+    }
 }

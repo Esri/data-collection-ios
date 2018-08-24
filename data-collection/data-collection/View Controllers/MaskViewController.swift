@@ -15,26 +15,23 @@
 import Foundation
 import UIKit
 
-class DownloadMaskViewController: AppContextAwareController {
+class MaskViewController: UIViewController {
     
-    let borderWidth: CGFloat = 2.0
+    private let borderWidth: CGFloat = 2.0
     
     @IBOutlet weak var maskView: UIView!
-    var borderView: UIView?
+    private let borderView = UIView()
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        borderView = UIView()
-        borderView?.backgroundColor = .clear
-        borderView?.layer.borderColor = appColors.primary.cgColor
-        borderView?.layer.borderWidth = borderWidth
+        borderView.backgroundColor = .clear
+        borderView.layer.borderColor = appColors.primary.cgColor
+        borderView.layer.borderWidth = borderWidth
         
         adjustFrameInset()
 
-        if let borderView = borderView {
-            view.addSubview(borderView)
-        }
+        view.addSubview(borderView)
     }
     
     override func viewDidLayoutSubviews() {
@@ -50,7 +47,13 @@ class DownloadMaskViewController: AppContextAwareController {
         adjustFrameInset()
     }
     
-    func adjustFrameInset() {
-        borderView?.frame = maskView.frame.insetBy(dx: -borderWidth, dy: -borderWidth)
+    private func adjustFrameInset() {
+        borderView.frame = maskView.frame.insetBy(dx: -borderWidth, dy: -borderWidth)
+    }
+    
+    var maskCorners: (CGPoint, CGPoint) {
+        let nwCorner = maskView.frame.origin
+        let seCorner = CGPoint(x: maskView.frame.maxX, y: maskView.frame.maxY)
+        return (nwCorner, seCorner)
     }
 }

@@ -15,7 +15,7 @@
 import Foundation
 import ArcGIS
 
-class RelatedRecordsPopupsViewController: AppContextAwareController, BackButtonDelegate {
+class RelatedRecordsPopupsViewController: UIViewController, BackButtonDelegate {
     
     private typealias VC = RelatedRecordsPopupsViewController
     

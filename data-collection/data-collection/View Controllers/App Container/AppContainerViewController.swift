@@ -15,7 +15,7 @@
 import UIKit
 import ArcGIS
 
-class AppContainerViewController: AppContextAwareController {
+class AppContainerViewController: UIViewController {
     
     @IBOutlet weak var leftBarButton: UIBarButtonItem!
     @IBOutlet weak var rightBarButton: UIBarButtonItem!
