@@ -16,12 +16,7 @@ import Foundation
 import ArcGIS
 
 @objcMembers class AppContext: NSObject {
-        
-    override init() {
-        super.init()
-        attemptLoginToPortalFromCredentials()
-    }
-    
+            
     // MARK: Portal
     /**
      The app's current portal.
