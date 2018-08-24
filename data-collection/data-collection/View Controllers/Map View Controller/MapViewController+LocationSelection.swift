@@ -190,33 +190,19 @@ extension MapViewController {
     
     func presentMapMaskViewForOfflineDownloadArea() {
         
-        guard let locationSelectionView = view.viewWithTag(1001), let maskView = view.viewWithTag(1002) else {
-            return
-        }
-        
-        maskView.isHidden = false
-        view.bringSubview(toFront: maskView)
-        view.bringSubview(toFront: locationSelectionView)
+        maskViewContainer.isHidden = false
+        view.bringSubview(toFront: maskViewController.view)
     }
     
     func hideMapMaskViewForOfflineDownloadArea() {
-        
-        guard let maskView = view.viewWithTag(1002) else {
-            return
-        }
-        
-        maskView.isHidden = true
-        view.sendSubview(toBack: maskView)
+
+        maskViewContainer.isHidden = true
+        view.sendSubview(toBack: maskViewController.view)
     }
     
     func prepareForOfflineMapDownloadJob() {
         
-        guard let mask = view.viewWithTag(1003) else {
-            return
-        }
-        
-        let nwCorner = mask.frame.origin
-        let seCorner = CGPoint(x: mask.frame.maxX, y: mask.frame.maxY)
+        let (nwCorner, seCorner) = maskViewController.maskCorners 
         
         let agsNW = mapView.screen(toLocation: nwCorner)
         let agsSE = mapView.screen(toLocation: seCorner)

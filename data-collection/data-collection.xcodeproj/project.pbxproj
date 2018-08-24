@@ -42,6 +42,8 @@
 		946D20A721250F46001BF5CC /* AppReachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 946D20A621250F46001BF5CC /* AppReachability.swift */; };
 		946D20AB2126541C001BF5CC /* DateFormatter+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 946D20AA2126541C001BF5CC /* DateFormatter+Extensions.swift */; };
 		946D20AD212E07FC001BF5CC /* URL+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 946D20AC212E07FC001BF5CC /* URL+Extensions.swift */; };
+		946D20AF212F50EB001BF5CC /* AppContextAwareNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 946D20AE212F50EB001BF5CC /* AppContextAwareNavigationController.swift */; };
+		946D20B3212F5348001BF5CC /* AppContextChange.swift in Sources */ = {isa = PBXBuildFile; fileRef = 946D20B2212F5348001BF5CC /* AppContextChange.swift */; };
 		948066332091474F00A398EA /* RelatedRecordsPopup.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 948066322091474F00A398EA /* RelatedRecordsPopup.storyboard */; };
 		948066362091483600A398EA /* RelatedRecordsPopupsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 948066352091483600A398EA /* RelatedRecordsPopupsViewController.swift */; };
 		948066382091595200A398EA /* PopupRelatedRecordsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 948066372091595200A398EA /* PopupRelatedRecordsManager.swift */; };
@@ -109,8 +111,8 @@
 		94D544BF207FC15D00ED0D04 /* AppContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94D544B7207FC15D00ED0D04 /* AppContainerViewController.swift */; };
 		94D544C0207FC15D00ED0D04 /* AppContainerViewController+MapDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94D544B8207FC15D00ED0D04 /* AppContainerViewController+MapDelegate.swift */; };
 		94D544C1207FC15D00ED0D04 /* AppContainerViewController+JobStatusDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94D544B9207FC15D00ED0D04 /* AppContainerViewController+JobStatusDelegate.swift */; };
-		94D544C2207FC15D00ED0D04 /* AppContextAwareController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94D544BA207FC15D00ED0D04 /* AppContextAwareController.swift */; };
-		94D544C3207FC15D00ED0D04 /* DownloadMaskViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94D544BB207FC15D00ED0D04 /* DownloadMaskViewController.swift */; };
+		94D544C2207FC15D00ED0D04 /* AppContextChangeHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94D544BA207FC15D00ED0D04 /* AppContextChangeHandler.swift */; };
+		94D544C3207FC15D00ED0D04 /* MaskViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94D544BB207FC15D00ED0D04 /* MaskViewController.swift */; };
 		94D544C4207FC15D00ED0D04 /* JobStatusViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94D544BC207FC15D00ED0D04 /* JobStatusViewController.swift */; };
 		94D544C9207FC67B00ED0D04 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 94D544C7207FC67A00ED0D04 /* Assets.xcassets */; };
 		94D544CA207FC67B00ED0D04 /* AppIcon.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 94D544C8207FC67B00ED0D04 /* AppIcon.xcassets */; };
@@ -184,6 +186,8 @@
 		946D20A621250F46001BF5CC /* AppReachability.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppReachability.swift; sourceTree = "<group>"; };
 		946D20AA2126541C001BF5CC /* DateFormatter+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DateFormatter+Extensions.swift"; sourceTree = "<group>"; };
 		946D20AC212E07FC001BF5CC /* URL+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URL+Extensions.swift"; sourceTree = "<group>"; };
+		946D20AE212F50EB001BF5CC /* AppContextAwareNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppContextAwareNavigationController.swift; sourceTree = "<group>"; };
+		946D20B2212F5348001BF5CC /* AppContextChange.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppContextChange.swift; sourceTree = "<group>"; };
 		948066322091474F00A398EA /* RelatedRecordsPopup.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = RelatedRecordsPopup.storyboard; sourceTree = "<group>"; };
 		948066352091483600A398EA /* RelatedRecordsPopupsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RelatedRecordsPopupsViewController.swift; sourceTree = "<group>"; };
 		948066372091595200A398EA /* PopupRelatedRecordsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupRelatedRecordsManager.swift; sourceTree = "<group>"; };
@@ -252,8 +256,8 @@
 		94D544B7207FC15D00ED0D04 /* AppContainerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppContainerViewController.swift; sourceTree = "<group>"; };
 		94D544B8207FC15D00ED0D04 /* AppContainerViewController+MapDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AppContainerViewController+MapDelegate.swift"; sourceTree = "<group>"; };
 		94D544B9207FC15D00ED0D04 /* AppContainerViewController+JobStatusDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AppContainerViewController+JobStatusDelegate.swift"; sourceTree = "<group>"; };
-		94D544BA207FC15D00ED0D04 /* AppContextAwareController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppContextAwareController.swift; sourceTree = "<group>"; };
-		94D544BB207FC15D00ED0D04 /* DownloadMaskViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DownloadMaskViewController.swift; sourceTree = "<group>"; };
+		94D544BA207FC15D00ED0D04 /* AppContextChangeHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppContextChangeHandler.swift; sourceTree = "<group>"; };
+		94D544BB207FC15D00ED0D04 /* MaskViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MaskViewController.swift; sourceTree = "<group>"; };
 		94D544BC207FC15D00ED0D04 /* JobStatusViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JobStatusViewController.swift; sourceTree = "<group>"; };
 		94D544C7207FC67A00ED0D04 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Assets.xcassets; path = "data-collection/Assets.xcassets"; sourceTree = SOURCE_ROOT; };
 		94D544C8207FC67B00ED0D04 /* AppIcon.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = AppIcon.xcassets; path = "data-collection/AppIcon.xcassets"; sourceTree = SOURCE_ROOT; };
@@ -456,6 +460,8 @@
 				94B375A8207E8D5600691F2A /* AppContext.swift */,
 				94B375A6207E8D5600691F2A /* AppContext+Login.swift */,
 				94B375A7207E8D5600691F2A /* AppContext+WorkMode.swift */,
+				946D20B2212F5348001BF5CC /* AppContextChange.swift */,
+				94D544BA207FC15D00ED0D04 /* AppContextChangeHandler.swift */,
 			);
 			path = AppContext;
 			sourceTree = "<group>";
@@ -698,10 +704,10 @@
 				94806634209147CE00A398EA /* Related Records Popups */,
 				94D544CF208511FB00ED0D04 /* Map View Controller */,
 				94D544B5207FC15D00ED0D04 /* App Container */,
-				94D544BA207FC15D00ED0D04 /* AppContextAwareController.swift */,
-				94D544BB207FC15D00ED0D04 /* DownloadMaskViewController.swift */,
+				94D544BB207FC15D00ED0D04 /* MaskViewController.swift */,
 				94D544B4207FC15C00ED0D04 /* DrawerViewController.swift */,
 				94D544BC207FC15D00ED0D04 /* JobStatusViewController.swift */,
+				946D20AE212F50EB001BF5CC /* AppContextAwareNavigationController.swift */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -875,9 +881,11 @@
 				94D544C1207FC15D00ED0D04 /* AppContainerViewController+JobStatusDelegate.swift in Sources */,
 				94D544C0207FC15D00ED0D04 /* AppContainerViewController+MapDelegate.swift in Sources */,
 				945CEE7520DDC2AC00CD3E0D /* SVRadialGradientLayer.m in Sources */,
+				946D20AF212F50EB001BF5CC /* AppContextAwareNavigationController.swift in Sources */,
 				94D2713E20D030D900304E27 /* CustomBehavior_ReverseGeocode.swift in Sources */,
 				94D544C4207FC15D00ED0D04 /* JobStatusViewController.swift in Sources */,
 				94D544D920852A5100ED0D04 /* PinDropView.swift in Sources */,
+				946D20B3212F5348001BF5CC /* AppContextChange.swift in Sources */,
 				94B375C9207E8D5600691F2A /* AppContext.swift in Sources */,
 				946D20AD212E07FC001BF5CC /* URL+Extensions.swift in Sources */,
 				94B375D2207E8D5600691F2A /* EphemeralCache.swift in Sources */,
@@ -900,7 +908,7 @@
 				94D2714520D0578C00304E27 /* ManyToOneManager.swift in Sources */,
 				94B37602207E8E4800691F2A /* BasicTypes+Extensions.swift in Sources */,
 				94B375FD207E8E4800691F2A /* UIColor+Extensions.swift in Sources */,
-				94D544C3207FC15D00ED0D04 /* DownloadMaskViewController.swift in Sources */,
+				94D544C3207FC15D00ED0D04 /* MaskViewController.swift in Sources */,
 				94AB310120B76A16003540D2 /* PopupReadonlyFieldCell.swift in Sources */,
 				94B375F2207E8E4800691F2A /* AGSLoadStatus+Extensions.swift in Sources */,
 				94B375FE207E8E4800691F2A /* UIImage+Extensions.swift in Sources */,
@@ -931,7 +939,7 @@
 				94D2713B20CEF04F00304E27 /* RelatedRecordsPopupsViewController+EditingSessions.swift in Sources */,
 				9465690C2087FCCE00599E55 /* MapViewController+Setup.swift in Sources */,
 				94B375FC207E8E4800691F2A /* UIView+Extensions.swift in Sources */,
-				94D544C2207FC15D00ED0D04 /* AppContextAwareController.swift in Sources */,
+				94D544C2207FC15D00ED0D04 /* AppContextChangeHandler.swift in Sources */,
 				94A8102B20B33B9200D4BC68 /* PopupShortStringCell.swift in Sources */,
 				946569292089066800599E55 /* MapViewController+Map.swift in Sources */,
 				94B375C6207E8D5600691F2A /* AppLocation.swift in Sources */,

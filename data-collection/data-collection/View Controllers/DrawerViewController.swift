@@ -25,7 +25,7 @@ protocol DrawerViewControllerDelegate: class {
     func drawerViewController(didRequestDeleteMap drawerViewController: DrawerViewController)
 }
 
-class DrawerViewController: AppContextAwareController {
+class DrawerViewController: UIViewController {
     
     @IBOutlet weak var workModeHighlightView: UIView!
 
@@ -36,6 +36,8 @@ class DrawerViewController: AppContextAwareController {
     @IBOutlet weak var deleteOfflineMapButton: UIButton!
     
     var delegate: DrawerViewControllerDelegate?
+    
+    let changeHandler = AppContextChangeHandler()
     
     let loginLogoutButtonControlStateColors: [UIControlState: UIColor] = {
         return [.normal: appColors.loginLogoutNormal,
@@ -61,6 +63,7 @@ class DrawerViewController: AppContextAwareController {
 
         setButtonImageTints()
         setButtonAttributedTitles()
+        subscribeToAppContextChanges()
     }
     
     func setButtonImageTints() {
@@ -241,30 +244,30 @@ class DrawerViewController: AppContextAwareController {
         }
     }
     
-    override var appContextNotificationRegistrations: [AppContextChangeNotification] {
+    func subscribeToAppContextChanges() {
         
-        let currentUserNotification: AppContextChangeNotification = .currentUser { [weak self] user in
+        let currentUserChange: AppContextChange = .currentUser { [weak self] user in
             self?.updateLoginButtonForAuthenticatedUserProfileImage(user: user)
             self?.updateLoginButtonForAuthenticatedUsername(user: user)
         }
         
-        let workModeNotification: AppContextChangeNotification = .workMode { [weak self] workMode in
+        let workModeChange: AppContextChange = .workMode { [weak self] workMode in
             self?.adjustContextDrawerUI()
         }
         
-        let reachabilityNotification: AppContextChangeNotification = .reachability { [weak self] reachable in
+        let reachabilityChange: AppContextChange = .reachability { [weak self] reachable in
             self?.adjustContextDrawerUI()
         }
         
-        let lastSyncNotification: AppContextChangeNotification = .lastSync { [weak self] date in
+        let lastSyncChange: AppContextChange = .lastSync { [weak self] date in
             self?.updateSynchronizeButtonForLastSync(date: date)
         }
         
-        let hasOfflineMap: AppContextChangeNotification = .hasOfflineMap { [weak self] hasOfflineMap in
+        let hasOfflineMapChange: AppContextChange = .hasOfflineMap { [weak self] hasOfflineMap in
             self?.adjustContextDrawerUI()
         }
         
-        return [currentUserNotification, workModeNotification, reachabilityNotification, lastSyncNotification, hasOfflineMap]
+        changeHandler.subscribe(toChanges: [currentUserChange, workModeChange, reachabilityChange, lastSyncChange, hasOfflineMapChange])
     }
     
     func updateSynchronizeButtonForLastSync(date: Date?) {
