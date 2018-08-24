@@ -15,6 +15,11 @@
 import UIKit
 import ArcGIS
 
+protocol AppContainerFocusDelegate {
+    
+    func controllerBecomingFocus()
+}
+
 class AppContainerViewController: UIViewController {
     
     @IBOutlet weak var leftBarButton: UIBarButtonItem!
@@ -40,6 +45,7 @@ class AppContainerViewController: UIViewController {
         didSet {
             adjustForDrawerShowing()
             adjustNavigationBarButtons()
+            informChildViewControllersOfFocus()
         }
     }
     
@@ -76,6 +82,15 @@ class AppContainerViewController: UIViewController {
     
     @IBAction func userRequestsToggleDrawer(_ sender: Any) {
         drawerShowing = !drawerShowing
+    }
+    
+    private func informChildViewControllersOfFocus() {
+        if drawerShowing {
+            drawerViewController?.controllerBecomingFocus()
+        }
+        else {
+            mapViewController?.controllerBecomingFocus()
+        }
     }
     
     @IBAction func userTapsSecondRightButton(_ sender: Any) {

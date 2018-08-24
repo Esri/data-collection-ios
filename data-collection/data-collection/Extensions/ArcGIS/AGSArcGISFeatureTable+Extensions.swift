@@ -173,27 +173,32 @@ extension AGSArcGISFeatureTable {
                 return
             }
             
-            // If online, apply edits.
-            guard let serviceFeatureTable = self as? AGSServiceFeatureTable else {
-                completion(nil)
-                return
-            }
-            
-            serviceFeatureTable.applyEdits(completion: { (results, error) in
-                
-                guard error == nil else {
-                    print("[Error: Feature Service Table] could not apply edits", error!.localizedDescription)
-                    completion(error!)
-                    return
-                }
-                
+            let updateObjectID: () -> Void = {
                 if type != .delete {
                     feature.refreshObjectID()
                 }
                 else {
                     feature.objectID = nil
                 }
+            }
+            
+            // If online, apply edits.
+            guard let serviceFeatureTable = self as? AGSServiceFeatureTable else {
+                updateObjectID()
+                completion(nil)
+                return
+            }
+
+            serviceFeatureTable.applyEdits(completion: { (results, error) in
                 
+                guard error == nil else {
+                    print("[Error: Feature Service Table] could not apply edits", error!.localizedDescription)
+                    updateObjectID()
+                    completion(error!)
+                    return
+                }
+                
+                updateObjectID()
                 completion(nil)
             })
         }

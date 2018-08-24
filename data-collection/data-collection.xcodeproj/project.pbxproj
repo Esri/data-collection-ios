@@ -44,6 +44,8 @@
 		946D20AD212E07FC001BF5CC /* URL+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 946D20AC212E07FC001BF5CC /* URL+Extensions.swift */; };
 		946D20AF212F50EB001BF5CC /* AppContextAwareNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 946D20AE212F50EB001BF5CC /* AppContextAwareNavigationController.swift */; };
 		946D20B3212F5348001BF5CC /* AppContextChange.swift in Sources */ = {isa = PBXBuildFile; fileRef = 946D20B2212F5348001BF5CC /* AppContextChange.swift */; };
+		946D20B521307FE1001BF5CC /* MapViewController+AppContainerFocusDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 946D20B421307FE1001BF5CC /* MapViewController+AppContainerFocusDelegate.swift */; };
+		946D20B8213090AE001BF5CC /* DrawerViewController+AppContainerFocusDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 946D20B7213090AE001BF5CC /* DrawerViewController+AppContainerFocusDelegate.swift */; };
 		948066332091474F00A398EA /* RelatedRecordsPopup.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 948066322091474F00A398EA /* RelatedRecordsPopup.storyboard */; };
 		948066362091483600A398EA /* RelatedRecordsPopupsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 948066352091483600A398EA /* RelatedRecordsPopupsViewController.swift */; };
 		948066382091595200A398EA /* PopupRelatedRecordsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 948066372091595200A398EA /* PopupRelatedRecordsManager.swift */; };
@@ -188,6 +190,8 @@
 		946D20AC212E07FC001BF5CC /* URL+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URL+Extensions.swift"; sourceTree = "<group>"; };
 		946D20AE212F50EB001BF5CC /* AppContextAwareNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppContextAwareNavigationController.swift; sourceTree = "<group>"; };
 		946D20B2212F5348001BF5CC /* AppContextChange.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppContextChange.swift; sourceTree = "<group>"; };
+		946D20B421307FE1001BF5CC /* MapViewController+AppContainerFocusDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MapViewController+AppContainerFocusDelegate.swift"; sourceTree = "<group>"; };
+		946D20B7213090AE001BF5CC /* DrawerViewController+AppContainerFocusDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DrawerViewController+AppContainerFocusDelegate.swift"; sourceTree = "<group>"; };
 		948066322091474F00A398EA /* RelatedRecordsPopup.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = RelatedRecordsPopup.storyboard; sourceTree = "<group>"; };
 		948066352091483600A398EA /* RelatedRecordsPopupsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RelatedRecordsPopupsViewController.swift; sourceTree = "<group>"; };
 		948066372091595200A398EA /* PopupRelatedRecordsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupRelatedRecordsManager.swift; sourceTree = "<group>"; };
@@ -382,13 +386,13 @@
 			path = SVProgressHUD;
 			sourceTree = "<group>";
 		};
-		94806634209147CE00A398EA /* Related Records Popups */ = {
+		946D20B621309088001BF5CC /* Drawer View Controller */ = {
 			isa = PBXGroup;
 			children = (
-				9416A18D20BDFF93001377ED /* Related Records Popups View Controller */,
-				9416A18E20BDFFC9001377ED /* Related Records List View Controller */,
+				94D544B4207FC15C00ED0D04 /* DrawerViewController.swift */,
+				946D20B7213090AE001BF5CC /* DrawerViewController+AppContainerFocusDelegate.swift */,
 			);
-			path = "Related Records Popups";
+			path = "Drawer View Controller";
 			sourceTree = "<group>";
 		};
 		94A8102620B33AFF00D4BC68 /* Base */ = {
@@ -611,6 +615,9 @@
 				9465690B2087FCCE00599E55 /* MapViewController+Setup.swift */,
 				946569282089066800599E55 /* MapViewController+Map.swift */,
 				945CEE7C20E2FAFE00CD3E0D /* MapViewController+SmallPopupView.swift */,
+				946D20B421307FE1001BF5CC /* MapViewController+AppContainerFocusDelegate.swift */,
+				94D544BB207FC15D00ED0D04 /* MaskViewController.swift */,
+				94D544BC207FC15D00ED0D04 /* JobStatusViewController.swift */,
 			);
 			path = "Map View Controller";
 			sourceTree = "<group>";
@@ -701,13 +708,12 @@
 		94FA8B54207BF5DF00972C75 /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				94806634209147CE00A398EA /* Related Records Popups */,
+				946D20AE212F50EB001BF5CC /* AppContextAwareNavigationController.swift */,
+				946D20B621309088001BF5CC /* Drawer View Controller */,
+				9416A18D20BDFF93001377ED /* Related Records Popups View Controller */,
+				9416A18E20BDFFC9001377ED /* Related Records List View Controller */,
 				94D544CF208511FB00ED0D04 /* Map View Controller */,
 				94D544B5207FC15D00ED0D04 /* App Container */,
-				94D544BB207FC15D00ED0D04 /* MaskViewController.swift */,
-				94D544B4207FC15C00ED0D04 /* DrawerViewController.swift */,
-				94D544BC207FC15D00ED0D04 /* JobStatusViewController.swift */,
-				946D20AE212F50EB001BF5CC /* AppContextAwareNavigationController.swift */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -867,6 +873,7 @@
 				94B375D7207E8DD600691F2A /* EditType.swift in Sources */,
 				948066382091595200A398EA /* PopupRelatedRecordsManager.swift in Sources */,
 				94B375CB207E8D5600691F2A /* NetworkReachabilityManager.swift in Sources */,
+				946D20B521307FE1001BF5CC /* MapViewController+AppContainerFocusDelegate.swift in Sources */,
 				94B3760C207EAE4700691F2A /* AppDelegate.swift in Sources */,
 				940DA97B2098E1C600AB4BF6 /* AGSArcGISFeatureTable+Extensions.swift in Sources */,
 				94AB811C211E0AD300B9C920 /* AGSLicense+Extensions.swift in Sources */,
@@ -927,6 +934,7 @@
 				9400C40820FFB8420073B754 /* RelatedRecordsPopupsViewController+RelatedRecordsPreferences.swift in Sources */,
 				94B375C1207E8D5600691F2A /* AppConfiguration.swift in Sources */,
 				946569062087FBF700599E55 /* MapViewController+UserLocation.swift in Sources */,
+				946D20B8213090AE001BF5CC /* DrawerViewController+AppContainerFocusDelegate.swift in Sources */,
 				940DA9792097951000AB4BF6 /* PopupTextViewCell.swift in Sources */,
 				945CEE7620DDC2AC00CD3E0D /* SVProgressAnimatedView.m in Sources */,
 				94B375CA207E8D5600691F2A /* AppGlobals.swift in Sources */,

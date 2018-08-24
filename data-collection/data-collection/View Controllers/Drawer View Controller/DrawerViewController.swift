@@ -199,7 +199,7 @@ class DrawerViewController: UIViewController {
         
         deleteOfflineMapButton.isEnabled = appContext.hasOfflineMap && appContext.isLoggedIn
         deleteOfflineMapButton.isSelected = false
-    }
+    }    
     
     private func updateLoginButtonForAuthenticatedUserProfileImage(user: AGSPortalUser?) {
         
