@@ -97,7 +97,7 @@ class AppContextChangeHandler {
         if let change = appChanges[AppContextChange.Key.lastSync],
             let completionClosure = change.notificationClosure as? (Date?) -> Void  {
             DispatchQueue.main.async {
-                completionClosure(appContext.lastSync.date)
+                completionClosure(appContext.mobileMapPackage?.lastSyncDate)
             }
         }
     }

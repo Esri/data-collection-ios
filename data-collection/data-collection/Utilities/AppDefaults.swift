@@ -19,7 +19,6 @@ import ArcGIS
 
 protocol AppUserDefaultsProtocol {
     associatedtype ValueType
-    static var defaultsObjectDomain:String { get }
 }
 
 // MARK: Protocol Extensions
@@ -27,7 +26,7 @@ protocol AppUserDefaultsProtocol {
 extension AppUserDefaultsProtocol {
     
     static var userDefaultsKey: String {
-        return "\(appBundleID).userDefaults.\(defaultsObjectDomain)"
+        return "\(appBundleID).userDefaults.\(String(describing:type(of:self)))"
     }
     
     static func setUserDefault(_ value: ValueType?) {

@@ -13,33 +13,34 @@
 // limitations under the License.
 
 import Foundation
+import ArcGIS
 
-class LastSync: AppUserDefaultsProtocol {
+class AppMobileMapPackage: AGSMobileMapPackage, AppUserDefaultsProtocol {
     
-    internal private(set) var date: Date? {
+    // MARK: Last Sync
+    
+    internal private(set) var lastSyncDate: Date? {
         didSet {
-            LastSync.setUserDefault(date)
+            AppMobileMapPackage.setUserDefault(lastSyncDate)
             appNotificationCenter.post(name: .lastSyncDidChange, object: nil)
         }
     }
     
-    init() {
-        self.date = LastSync.getUserDefaultValue()
+    override init(fileURL: URL) {
+        self.lastSyncDate = AppMobileMapPackage.getUserDefaultValue()
+        super.init(fileURL: fileURL)
     }
     
-    func setNow() {
-        date = Date()
+    func setLastSyncNow() {
+        lastSyncDate = Date()
     }
     
-    func clear() {
-        date = nil
+    func clearLastSyncDate() {
+        lastSyncDate = nil
     }
     
     // MARK: User Defaults Protocol
     
     typealias ValueType = Date
-
-    static var defaultsObjectDomain: String {
-        return "LastSync"
-    }
 }
+

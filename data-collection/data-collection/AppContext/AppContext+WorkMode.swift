@@ -36,10 +36,6 @@ enum WorkMode: Int, AppUserDefaultsProtocol {
     // MARK: User Defaults Protocol
     
     typealias ValueType = Int
-    
-    static var defaultsObjectDomain: String {
-        return "WorkMode"
-    }
 }
 
 // MARK: Offline Map
@@ -86,7 +82,7 @@ extension AppContext {
      */
     private func loadOfflineMobileMapPackage(_ completion: @escaping (AGSMap?) -> Void) {
         
-        self.mobileMapPackage = AGSMobileMapPackage(fileURL: .offlineMapDirectoryURL)
+        self.mobileMapPackage = AppMobileMapPackage(fileURL: .offlineMapDirectoryURL)
         
         guard let mmpk = self.mobileMapPackage else {
             hasOfflineMap = false
@@ -150,9 +146,9 @@ extension AppContext {
      */
     func deleteOfflineMap() throws {
         
+        mobileMapPackage?.clearLastSyncDate()
         mobileMapPackage = nil
         hasOfflineMap = false
-        lastSync.clear()
 
         do {
             try FileManager.default.removeItem(at: .offlineMapDirectoryURL)
