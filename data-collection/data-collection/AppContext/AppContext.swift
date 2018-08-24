@@ -16,7 +16,7 @@ import Foundation
 import ArcGIS
 
 @objcMembers class AppContext: NSObject {
-            
+    
     // MARK: Portal
     /**
      The app's current portal.
@@ -67,6 +67,9 @@ import ArcGIS
     dynamic var hasOfflineMap: Bool = false
     
     // MARK: Last Sync
+    /**
+     The date the map was downloaded or latest sync of downloaded map.
+     */
     var lastSync = LastSync()
     
     // MARK: Auth
