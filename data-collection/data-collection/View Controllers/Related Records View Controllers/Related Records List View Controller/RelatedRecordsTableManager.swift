@@ -17,7 +17,7 @@ import ArcGIS
 
 class RelatedRecordsTableManager: AGSLoadableBase {
     
-    internal private(set) var featureTable: AGSArcGISFeatureTable
+    let featureTable: AGSArcGISFeatureTable
     
     private var query: AGSCancelable?
     
