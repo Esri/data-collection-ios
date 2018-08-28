@@ -28,7 +28,7 @@ class JobStatusViewController: UIViewController {
     @IBOutlet weak var jobStatusProgressView: UIProgressView!
     @IBOutlet weak var cancelButton: UIButton!
     
-    var delegate: JobStatusViewControllerDelegate?
+    weak var delegate: JobStatusViewControllerDelegate?
     
     var jobConstruct: AppOfflineMapJobConstructionInfo? {
         didSet {
