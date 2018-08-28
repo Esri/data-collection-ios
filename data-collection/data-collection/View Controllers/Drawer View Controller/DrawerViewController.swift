@@ -83,15 +83,6 @@ class DrawerViewController: UIViewController {
         deleteOfflineMapButton.setAttributed(header: "Delete Offline Map", forControlStateColors: offlineActivityControlStateColors, headerFont: appFonts.drawerButtonHeader)
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-    }
-    
-    
     @IBAction func userRequestsLoginLogout(_ sender: Any) {
         delegate?.drawerViewController(didRequestLoginLogout: self)
     }
