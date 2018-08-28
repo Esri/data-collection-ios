@@ -59,6 +59,8 @@ class PopupReadonlyFieldCell: UITableViewCell, PopupFieldCellProtocol {
             stackView.addArrangedSubview(valueLabel)
             valueLabel.heightAnchor.constraint(greaterThanOrEqualToConstant: valueLabel.font.lineHeight).isActive = true
         }
+        
+        valueLabel.isHidden = false
     }
     
     func updateCellContent() {

@@ -69,11 +69,7 @@ class PopupEditableFieldCell<ViewType: UIView>: PopupReadonlyFieldCell {
     
     public func removeValueLabel() {
         
-        if stackView.subviews.contains(valueLabel) {
-            valueLabel.heightAnchor.constraint(greaterThanOrEqualToConstant: valueLabel.font.lineHeight).isActive = false
-            stackView.removeArrangedSubview(valueLabel)
-            valueLabel.removeFromSuperview()
-        }
+        valueLabel.isHidden = true
     }
     
     public func insertValueEditView() {
@@ -85,6 +81,8 @@ class PopupEditableFieldCell<ViewType: UIView>: PopupReadonlyFieldCell {
         if !stackView.subviews.contains(view)  {
             stackView.addArrangedSubview(view)
         }
+        
+        view.isHidden = false
     }
     
     public func removeValueEditView() {
@@ -93,10 +91,7 @@ class PopupEditableFieldCell<ViewType: UIView>: PopupReadonlyFieldCell {
             return
         }
         
-        if stackView.subviews.contains(view) {
-            stackView.removeArrangedSubview(view)
-            view.removeFromSuperview()
-        }
+        view.isHidden = true
     }
     
     override func layoutSubviews() {
