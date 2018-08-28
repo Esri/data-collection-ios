@@ -20,9 +20,9 @@ class PopupReadonlyFieldCell: UITableViewCell, PopupFieldCellProtocol {
     var field: AGSPopupField?
     weak var popupManager: PopupRelatedRecordsManager?
     
-    internal var stackView = UIStackView()
-    internal var titleLabel = UILabel()
-    internal var valueLabel = UILabel()
+    let stackView = UIStackView()
+    let titleLabel = UILabel()
+    let valueLabel = UILabel()
     
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
