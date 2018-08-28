@@ -35,7 +35,7 @@ class DrawerViewController: UIViewController {
     @IBOutlet weak var synchronizeOfflineMapButton: UIButton!
     @IBOutlet weak var deleteOfflineMapButton: UIButton!
     
-    var delegate: DrawerViewControllerDelegate?
+    weak var delegate: DrawerViewControllerDelegate?
     
     let changeHandler = AppContextChangeHandler()
     
