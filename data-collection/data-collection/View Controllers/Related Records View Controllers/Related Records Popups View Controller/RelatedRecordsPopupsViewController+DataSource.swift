@@ -117,7 +117,7 @@ extension RelatedRecordsPopupsViewController {
     
     override func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         
-        if var fieldCell = cell as? PopupFieldCellProtocol {
+        if let fieldCell = cell as? PopupFieldCellProtocol {
             fieldCell.popupManager = nil
             fieldCell.field = nil
         }

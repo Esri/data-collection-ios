@@ -57,8 +57,4 @@ extension AGSPopupManager {
     var tableName: String? {
         return table?.tableName
     }
-    
-    var actionButtonTitle: String {
-        return isEditing ? "Done" : "Edit"
-    }
 }

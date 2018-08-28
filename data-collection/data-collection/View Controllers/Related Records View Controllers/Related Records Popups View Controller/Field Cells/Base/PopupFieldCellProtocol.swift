@@ -15,7 +15,7 @@
 import ArcGIS
 import UIKit
 
-protocol PopupFieldCellProtocol {
+protocol PopupFieldCellProtocol: AnyObject {
     
     var field: AGSPopupField? { get set }
     var popupManager: PopupRelatedRecordsManager? { get set }

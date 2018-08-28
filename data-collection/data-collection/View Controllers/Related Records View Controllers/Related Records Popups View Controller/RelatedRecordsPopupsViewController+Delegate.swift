@@ -27,8 +27,10 @@ extension RelatedRecordsPopupsViewController {
         
         tableView.deselectRow(at: indexPath, animated: true)
         
+        let selectedCell = tableView.cellForRow(at: indexPath)
+        
         // Wants to delete record
-        if tableView.cellForRow(at: indexPath) is DeleteRecordCell {
+        if selectedCell is DeleteRecordCell {
             
             guard appContext.isLoggedIn else {
                 present(loginAlertMessage: "You must log in to delete this \(popup.title ?? "record").")
@@ -41,9 +43,7 @@ extension RelatedRecordsPopupsViewController {
         }
         
         // Any other action should only want to allow selection of related records
-        guard let cell = tableView.cellForRow(at: indexPath) as? RelatedRecordCell else {
-            return
-        }
+        guard let cell = selectedCell as? RelatedRecordCell else { return }
         
         // Should edit M:1 Related Record
         if indexPath.section == 0, recordsManager.isEditing {
@@ -92,7 +92,8 @@ extension RelatedRecordsPopupsViewController {
             
             rrvc.popup = childPopup
             rrvc.parentRecordsManager = parentRecordsManager
-            self.navigationController?.pushViewController(rrvc, animated: true)
+//            self.navigationController?.pushViewController(rrvc, animated: true)
+            show(rrvc, sender: self)
             
             return
         }

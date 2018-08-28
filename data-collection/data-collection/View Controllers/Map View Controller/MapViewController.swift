@@ -15,12 +15,11 @@
 import UIKit
 import ArcGIS
 
-protocol MapViewControllerDelegate: class {
+protocol MapViewControllerDelegate: AnyObject {
     func mapViewController(_ mapViewController: MapViewController, didSelect extent: AGSEnvelope)
     func mapViewController(_ mapViewController: MapViewController, shouldAllowNewFeature: Bool)
     func mapViewController(_ mapViewController: MapViewController, didUpdateTitle title: String)
 }
-
 
 class MapViewController: UIViewController {
     

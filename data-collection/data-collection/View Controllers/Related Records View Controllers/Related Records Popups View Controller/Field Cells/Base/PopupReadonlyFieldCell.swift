@@ -37,14 +37,12 @@ class PopupReadonlyFieldCell: UITableViewCell, PopupFieldCellProtocol {
         
         titleLabel.textColor = appColors.tableCellTitle
         titleLabel.font = appFonts.tableCellTitle
-        titleLabel.sizeToFit()
         titleLabel.heightAnchor.constraint(equalToConstant: titleLabel.font.lineHeight).isActive = true
         stackView.addArrangedSubview(titleLabel)
         
         valueLabel.textColor = appColors.tableCellValue
         valueLabel.font = appFonts.tableCellValue
         valueLabel.numberOfLines = 0
-        valueLabel.sizeToFit()
         
         insertValueLabel()
     }
@@ -57,7 +55,6 @@ class PopupReadonlyFieldCell: UITableViewCell, PopupFieldCellProtocol {
         
         if !stackView.subviews.contains(valueLabel)  {
             stackView.addArrangedSubview(valueLabel)
-            valueLabel.heightAnchor.constraint(greaterThanOrEqualToConstant: valueLabel.font.lineHeight).isActive = true
         }
         
         valueLabel.isHidden = false
@@ -79,7 +76,7 @@ class PopupReadonlyFieldCell: UITableViewCell, PopupFieldCellProtocol {
         titleLabel.text = field.label
         valueLabel.text = popupManager.formattedValue(for: field)
         
-        titleLabel.considerEmptyStringForStackView()
-        valueLabel.considerEmptyStringForStackView()
+        titleLabel.considerEmptyString()
+        valueLabel.considerEmptyString()
     }
 }

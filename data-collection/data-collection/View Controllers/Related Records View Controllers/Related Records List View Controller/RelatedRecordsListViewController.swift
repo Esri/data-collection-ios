@@ -15,14 +15,14 @@
 import UIKit
 import ArcGIS
 
-protocol RelatedRecordsListViewControllerDelegate {
+protocol RelatedRecordsListViewControllerDelegate: AnyObject {
     func relatedRecordsListViewController(_ viewController: RelatedRecordsListViewController, didSelectPopup popup: AGSPopup)
     func relatedRecordsListViewControllerDidCancel(_ viewController: RelatedRecordsListViewController)
 }
 
 class RelatedRecordsListViewController: UITableViewController {
     
-    var delegate: RelatedRecordsListViewControllerDelegate?
+    weak var delegate: RelatedRecordsListViewControllerDelegate?
     
     var featureTable: AGSArcGISFeatureTable? {
         get {
