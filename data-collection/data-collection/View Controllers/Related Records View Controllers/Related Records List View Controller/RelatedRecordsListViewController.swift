@@ -49,9 +49,15 @@ class RelatedRecordsListViewController: UITableViewController {
         loadRecords()
     }
     
-    func loadRecords() {
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         
-        SVProgressHUD.show(withStatus: "Loading Records...")
+        if featureTableRecordsManager?.loadStatus == .loading {
+            SVProgressHUD.show(withStatus: "Loading Records...")
+        }
+    }
+    
+    func loadRecords() {
         
         guard let manager = featureTableRecordsManager else {
             SVProgressHUD.showError(withStatus: "Could not load records.")
