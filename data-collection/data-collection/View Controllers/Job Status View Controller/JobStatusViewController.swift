@@ -107,10 +107,6 @@ class JobStatusViewController: UIViewController {
         UIApplication.shared.isIdleTimerDisabled = false
     }
     
-    func status(_ status: Float, upperBounds: Float, lowerBounds: Float) -> Float {
-        return max(min(status, upperBounds), lowerBounds)
-    }
-    
     @IBAction func userDidTapCancelJob(_ sender: Any) {
         if let appJob = mapJob  {
             appJob.progress.cancel()
