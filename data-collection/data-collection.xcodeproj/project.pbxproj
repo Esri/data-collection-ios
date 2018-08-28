@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		9400C40820FFB8420073B754 /* RelatedRecordsPopupsViewController+RelatedRecordsPreferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9400C40720FFB8420073B754 /* RelatedRecordsPopupsViewController+RelatedRecordsPreferences.swift */; };
 		940DA9722097825700AB4BF6 /* UILabel+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 940DA9712097825700AB4BF6 /* UILabel+Extensions.swift */; };
 		940DA9752097942000AB4BF6 /* PopupFieldCellProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 940DA9742097942000AB4BF6 /* PopupFieldCellProtocol.swift */; };
 		940DA977209794E200AB4BF6 /* PopupTextFieldCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 940DA976209794E200AB4BF6 /* PopupTextFieldCell.swift */; };
@@ -19,7 +18,6 @@
 		9416A19320BF3334001377ED /* RelatedRecordsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9416A19220BF3334001377ED /* RelatedRecordsManager.swift */; };
 		9440D35120D4662E005ED582 /* CustomBehavior_NewTreeCondition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9440D35020D4662E005ED582 /* CustomBehavior_NewTreeCondition.swift */; };
 		9440D35520D479B5005ED582 /* PopupLongStringCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9440D35420D479B5005ED582 /* PopupLongStringCell.swift */; };
-		9440D35A20DB2283005ED582 /* RelatedRecordsPopupsViewController+TableViewCellReuseIdentifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9440D35920DB2283005ED582 /* RelatedRecordsPopupsViewController+TableViewCellReuseIdentifiers.swift */; };
 		9440D35C20DC2809005ED582 /* CustomBehavior_TreeSymbology.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9440D35B20DC2809005ED582 /* CustomBehavior_TreeSymbology.swift */; };
 		9451EC5220D0705700792FFC /* CustomBehavior_IdentifyNeighborhood.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9451EC5120D0705700792FFC /* CustomBehavior_IdentifyNeighborhood.swift */; };
 		945CEE7520DDC2AC00CD3E0D /* SVRadialGradientLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 945CEE6B20DDC2AC00CD3E0D /* SVRadialGradientLayer.m */; };
@@ -52,6 +50,7 @@
 		948066332091474F00A398EA /* RelatedRecordsPopupViewControllers.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 948066322091474F00A398EA /* RelatedRecordsPopupViewControllers.storyboard */; };
 		948066362091483600A398EA /* RelatedRecordsPopupsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 948066352091483600A398EA /* RelatedRecordsPopupsViewController.swift */; };
 		948066382091595200A398EA /* PopupRelatedRecordsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 948066372091595200A398EA /* PopupRelatedRecordsManager.swift */; };
+		948D84C72136094900E2048F /* CellReuseIdentifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 948D84C62136094900E2048F /* CellReuseIdentifiers.swift */; };
 		94A8101D20AA1D7C00D4BC68 /* PopupNumberCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94A8101C20AA1D7C00D4BC68 /* PopupNumberCell.swift */; };
 		94A8102B20B33B9200D4BC68 /* PopupShortStringCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94A8102A20B33B9200D4BC68 /* PopupShortStringCell.swift */; };
 		94A8102D20B33C0E00D4BC68 /* PopupDateCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94A8102C20B33C0E00D4BC68 /* PopupDateCell.swift */; };
@@ -151,7 +150,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		9400C40720FFB8420073B754 /* RelatedRecordsPopupsViewController+RelatedRecordsPreferences.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RelatedRecordsPopupsViewController+RelatedRecordsPreferences.swift"; sourceTree = "<group>"; };
 		940DA9712097825700AB4BF6 /* UILabel+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+Extensions.swift"; sourceTree = "<group>"; };
 		940DA9742097942000AB4BF6 /* PopupFieldCellProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupFieldCellProtocol.swift; sourceTree = "<group>"; };
 		940DA976209794E200AB4BF6 /* PopupTextFieldCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupTextFieldCell.swift; sourceTree = "<group>"; };
@@ -163,7 +161,6 @@
 		9416A19220BF3334001377ED /* RelatedRecordsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RelatedRecordsManager.swift; sourceTree = "<group>"; };
 		9440D35020D4662E005ED582 /* CustomBehavior_NewTreeCondition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomBehavior_NewTreeCondition.swift; sourceTree = "<group>"; };
 		9440D35420D479B5005ED582 /* PopupLongStringCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupLongStringCell.swift; sourceTree = "<group>"; };
-		9440D35920DB2283005ED582 /* RelatedRecordsPopupsViewController+TableViewCellReuseIdentifiers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RelatedRecordsPopupsViewController+TableViewCellReuseIdentifiers.swift"; sourceTree = "<group>"; };
 		9440D35B20DC2809005ED582 /* CustomBehavior_TreeSymbology.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomBehavior_TreeSymbology.swift; sourceTree = "<group>"; };
 		9451EC5120D0705700792FFC /* CustomBehavior_IdentifyNeighborhood.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomBehavior_IdentifyNeighborhood.swift; sourceTree = "<group>"; };
 		945CEE6B20DDC2AC00CD3E0D /* SVRadialGradientLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVRadialGradientLayer.m; sourceTree = "<group>"; };
@@ -201,6 +198,7 @@
 		948066322091474F00A398EA /* RelatedRecordsPopupViewControllers.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = RelatedRecordsPopupViewControllers.storyboard; sourceTree = "<group>"; };
 		948066352091483600A398EA /* RelatedRecordsPopupsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RelatedRecordsPopupsViewController.swift; sourceTree = "<group>"; };
 		948066372091595200A398EA /* PopupRelatedRecordsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupRelatedRecordsManager.swift; sourceTree = "<group>"; };
+		948D84C62136094900E2048F /* CellReuseIdentifiers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellReuseIdentifiers.swift; sourceTree = "<group>"; };
 		94A8101C20AA1D7C00D4BC68 /* PopupNumberCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupNumberCell.swift; sourceTree = "<group>"; };
 		94A8102A20B33B9200D4BC68 /* PopupShortStringCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupShortStringCell.swift; sourceTree = "<group>"; };
 		94A8102C20B33C0E00D4BC68 /* PopupDateCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupDateCell.swift; sourceTree = "<group>"; };
@@ -317,6 +315,7 @@
 		940DA9732097939A00AB4BF6 /* Field Cells */ = {
 			isa = PBXGroup;
 			children = (
+				948D84C62136094900E2048F /* CellReuseIdentifiers.swift */,
 				94A8102620B33AFF00D4BC68 /* Base */,
 				94A8102720B33B0C00D4BC68 /* Final */,
 			);
@@ -335,12 +334,10 @@
 			isa = PBXGroup;
 			children = (
 				948066352091483600A398EA /* RelatedRecordsPopupsViewController.swift */,
-				9400C40720FFB8420073B754 /* RelatedRecordsPopupsViewController+RelatedRecordsPreferences.swift */,
 				94D2713A20CEF04F00304E27 /* RelatedRecordsPopupsViewController+EditingSessions.swift */,
 				9412D214209937E50031F9EB /* RelatedRecordsPopupsViewController+Delegate.swift */,
 				9412D2162099382C0031F9EB /* RelatedRecordsPopupsViewController+DataSource.swift */,
 				94B0D32A20C84B010075EA7A /* RelatedRecordsPopupsViewController+RelatedRecordsListDelegate.swift */,
-				9440D35920DB2283005ED582 /* RelatedRecordsPopupsViewController+TableViewCellReuseIdentifiers.swift */,
 				9412D211209937760031F9EB /* Related Records Cell */,
 				940DA9732097939A00AB4BF6 /* Field Cells */,
 				94AB8118210A476400B9C920 /* Delete Cell */,
@@ -924,6 +921,7 @@
 				94B375F2207E8E4800691F2A /* AGSLoadStatus+Extensions.swift in Sources */,
 				94B375FE207E8E4800691F2A /* UIImage+Extensions.swift in Sources */,
 				94B37600207E8E4800691F2A /* UIAlertController+Extensions.swift in Sources */,
+				948D84C72136094900E2048F /* CellReuseIdentifiers.swift in Sources */,
 				946569042087FB5000599E55 /* MapViewController+LocationSelection.swift in Sources */,
 				9412D213209937950031F9EB /* RelatedRecordCell.swift in Sources */,
 				94FA8B25207BF2CD00972C75 /* MapViewController.swift in Sources */,
@@ -935,7 +933,6 @@
 				940DA9722097825700AB4BF6 /* UILabel+Extensions.swift in Sources */,
 				94BA7D3C20FD151A00C78255 /* AppFonts.swift in Sources */,
 				94D2714320D0578000304E27 /* OneToManyManager.swift in Sources */,
-				9400C40820FFB8420073B754 /* RelatedRecordsPopupsViewController+RelatedRecordsPreferences.swift in Sources */,
 				94B375C1207E8D5600691F2A /* AppConfiguration.swift in Sources */,
 				946569062087FBF700599E55 /* MapViewController+UserLocation.swift in Sources */,
 				946D20B8213090AE001BF5CC /* DrawerViewController+AppContainerFocusDelegate.swift in Sources */,
@@ -979,7 +976,6 @@
 				94A8103B20B635A000D4BC68 /* AGSQueryParameters+Extensions.swift in Sources */,
 				94B375C7207E8D5600691F2A /* AppContext+Login.swift in Sources */,
 				94656910208800E100599E55 /* MapViewController+TouchDelegate.swift in Sources */,
-				9440D35A20DB2283005ED582 /* RelatedRecordsPopupsViewController+TableViewCellReuseIdentifiers.swift in Sources */,
 				94B37603207E8E4800691F2A /* CGGeometry+Extensions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -137,7 +137,7 @@ class RelatedRecordsPopupsViewController: UITableViewController, BackButtonDeleg
         }
     }
     
-    func endPopupEditMode(_ completion: ((_ shouldDismiss: Bool) -> Void)? = nil) {
+    private func endPopupEditMode(_ completion: ((_ shouldDismiss: Bool) -> Void)? = nil) {
 
         var action: ((UIAlertAction) -> Void)!
         
@@ -164,9 +164,7 @@ class RelatedRecordsPopupsViewController: UITableViewController, BackButtonDeleg
             popupModeButton?.title = recordsManager.isEditing ? "Done" : "Edit"
         }
         
-        if tableView != nil {
-            tableView.reloadData()
-        }
+        tableView.reloadData()
         
         guard isRootViewController else {
             return

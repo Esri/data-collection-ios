@@ -20,6 +20,7 @@ class PopupEditableFieldCell<ViewType: UIView>: PopupReadonlyFieldCell {
     internal var valueEditView: ViewType?
 
     override func prepareForReuse() {
+        super.prepareForReuse()
         
         field = nil
         popupManager = nil
