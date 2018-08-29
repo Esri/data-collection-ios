@@ -16,7 +16,7 @@ import Foundation
 import UIKit
 import ArcGIS
 
-protocol DrawerViewControllerDelegate: class {
+protocol DrawerViewControllerDelegate: AnyObject {
     
     func drawerViewController(didRequestWorkOnline drawerViewController: DrawerViewController)
     func drawerViewController(didRequestLoginLogout drawerViewController: DrawerViewController)
@@ -37,7 +37,7 @@ class DrawerViewController: UIViewController {
     
     @IBOutlet weak var workModeHighlighViewTopConstraint: NSLayoutConstraint!
     
-    var delegate: DrawerViewControllerDelegate?
+    weak var delegate: DrawerViewControllerDelegate?
     
     let changeHandler = AppContextChangeHandler()
     
