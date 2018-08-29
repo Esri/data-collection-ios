@@ -31,11 +31,13 @@ extension AppContainerViewController: JobStatusViewControllerDelegate {
     
     func jobStatusViewController(_ jobStatusViewController: JobStatusViewController, didEndWithResult result: Any) {
         
-        if result is AGSOfflineMapSyncResult {
-            appContext.mobileMapPackage?.setLastSyncNow()
+        switch result {
+            
+        case is AGSOfflineMapSyncResult:
             print("[Offline Map Sync Result] success")
-        }
-        else if result is AGSGenerateOfflineMapResult {
+            appContext.mobileMapPackage?.setLastSyncNow()
+            
+        case is AGSGenerateOfflineMapResult:
             print("[Generate Offline Map Result] success")
             do {
                 try appContext.moveDownloadedMapToOfflineMapDirectory()
@@ -45,9 +47,13 @@ extension AppContainerViewController: JobStatusViewControllerDelegate {
             catch {
                 print("[Error] Moving Downloaded Map", error.localizedDescription)
                 try? appContext.deleteOfflineMapAndAttemptToGoOnline()
-                return
             }
+            
+        default:
+            preconditionFailure("Unsupported job finished.")
+            break
         }
+
         jobStatusViewController.dismissAfter(1.2, animated: true, completion: nil)
     }
 }
