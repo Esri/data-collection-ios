@@ -55,7 +55,7 @@ import ArcGIS
      A reference to the offline mobile map package persists even if the user operates the app in online work mode to signify state.
      A nil `mobileMapPackage` signifies there is no offline mobile map package.
      */
-    var mobileMapPackage: AGSMobileMapPackage?
+    var mobileMapPackage: AppMobileMapPackage?
     
     var offlineMap: AGSMap? {
         return mobileMapPackage?.maps.first
@@ -65,12 +65,6 @@ import ArcGIS
      An kv-observable boolean value that signifies if the app has a loaded offline `mobileMapPackage`
      */
     dynamic var hasOfflineMap: Bool = false
-    
-    // MARK: Last Sync
-    /**
-     The date the map was downloaded or latest sync of downloaded map.
-     */
-    var lastSync = LastSync()
     
     // MARK: Auth
     /**

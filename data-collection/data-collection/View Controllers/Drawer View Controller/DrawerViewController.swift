@@ -81,7 +81,7 @@ class DrawerViewController: UIViewController {
         updateLoginButtonForAuthenticatedUsername(user: appContext.user)
         workOnlineButton.setAttributed(header: "Work Online", forControlStateColors: workModeControlStateColors, headerFont: appFonts.drawerButtonHeader)
         workOfflineButton.setAttributed(header: "Work Offline", forControlStateColors: workModeControlStateColors, headerFont: appFonts.drawerButtonHeader)
-        updateSynchronizeButtonForLastSync(date: appContext.lastSync.date)
+        updateSynchronizeButtonForLastSync(date: appContext.mobileMapPackage?.lastSyncDate)
         deleteOfflineMapButton.setAttributed(header: "Delete Offline Map", forControlStateColors: offlineActivityControlStateColors, headerFont: appFonts.drawerButtonHeader)
     }
     
