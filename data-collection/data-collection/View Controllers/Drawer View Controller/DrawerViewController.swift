@@ -17,6 +17,7 @@ import UIKit
 import ArcGIS
 
 protocol DrawerViewControllerDelegate: AnyObject {
+
     func drawerViewController(didRequestWorkOnline drawerViewController: DrawerViewController)
     func drawerViewController(didRequestLoginLogout drawerViewController: DrawerViewController)
     func drawerViewController(didRequestSyncJob drawerViewController: DrawerViewController)
@@ -34,6 +35,8 @@ class DrawerViewController: UIViewController {
     @IBOutlet weak var synchronizeOfflineMapButton: UIButton!
     @IBOutlet weak var deleteOfflineMapButton: UIButton!
     
+    @IBOutlet weak var workModeHighlighViewTopConstraint: NSLayoutConstraint!
+
     weak var delegate: DrawerViewControllerDelegate?
     
     let changeHandler = AppContextChangeHandler()
@@ -154,15 +157,9 @@ class DrawerViewController: UIViewController {
         delegate?.drawerViewController(didRequestDeleteMap: self)
     }
     
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        
-        adjustContextDrawerUI()
-    }
-    
     func adjustContextDrawerUI() {
         
-        workModeHighlightView.frame = appContext.workMode == .online ? workOnlineButton.frame : workOfflineButton.frame
+        workModeHighlighViewTopConstraint.constant = appContext.workMode == .online ? workOnlineButton.frame.origin.y : workOfflineButton.frame.origin.y
         
         workOnlineButton.isEnabled = appContext.workMode == .offline ? appReachability.isReachable : true
         workOnlineButton.isSelected = appContext.workMode == .online

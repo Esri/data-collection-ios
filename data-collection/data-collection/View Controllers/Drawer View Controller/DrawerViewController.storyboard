@@ -177,7 +177,7 @@
                                             <constraint firstItem="nly-Js-OCy" firstAttribute="top" secondItem="bBY-Xa-AVq" secondAttribute="bottom" constant="16" id="EnV-zZ-4FF"/>
                                             <constraint firstItem="bBY-Xa-AVq" firstAttribute="top" secondItem="9j3-u1-yZ3" secondAttribute="bottom" constant="16" id="RIw-V3-d6t"/>
                                             <constraint firstAttribute="trailing" secondItem="9j3-u1-yZ3" secondAttribute="trailing" constant="16" id="Swv-Gz-Z71"/>
-                                            <constraint firstItem="9j3-u1-yZ3" firstAttribute="top" secondItem="Xeh-QM-sKm" secondAttribute="bottom" constant="16" id="Ufs-Tz-YaX"/>
+                                            <constraint firstItem="9j3-u1-yZ3" firstAttribute="top" secondItem="8f1-WT-qtw" secondAttribute="bottom" constant="16" id="Ufs-Tz-YaX"/>
                                             <constraint firstItem="bBY-Xa-AVq" firstAttribute="leading" secondItem="nLI-GB-Tum" secondAttribute="leading" constant="16" id="Urm-Qu-9x6"/>
                                             <constraint firstAttribute="height" constant="265" id="WTL-AR-n6Z"/>
                                             <constraint firstAttribute="trailing" secondItem="8f1-WT-qtw" secondAttribute="trailing" constant="16" id="YXI-pF-fbg"/>
@@ -223,6 +223,7 @@
                         <outlet property="deleteOfflineMapButton" destination="PEO-mf-oZz" id="HPj-bb-p9K"/>
                         <outlet property="loginButton" destination="19y-Pi-gQF" id="1KV-Gp-aAR"/>
                         <outlet property="synchronizeOfflineMapButton" destination="nly-Js-OCy" id="Wfb-rv-LWo"/>
+                        <outlet property="workModeHighlighViewTopConstraint" destination="p59-gG-m9O" id="0wc-Ks-2me"/>
                         <outlet property="workModeHighlightView" destination="Xeh-QM-sKm" id="Liu-cn-xez"/>
                         <outlet property="workOfflineButton" destination="bBY-Xa-AVq" id="Spy-Jm-cLV"/>
                         <outlet property="workOnlineButton" destination="8f1-WT-qtw" id="2wq-Ly-4oD"/>
