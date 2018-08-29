@@ -15,7 +15,7 @@
 import UIKit
 import ArcGIS
 
-protocol AppContainerFocusDelegate {
+protocol AppContainerFocusDelegate: AnyObject {
     
     func controllerBecomingFocus()
 }

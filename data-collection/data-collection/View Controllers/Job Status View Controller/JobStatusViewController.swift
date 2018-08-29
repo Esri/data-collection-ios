@@ -16,7 +16,7 @@ import Foundation
 import UIKit
 import ArcGIS
 
-protocol JobStatusViewControllerDelegate: class {
+protocol JobStatusViewControllerDelegate: AnyObject {
     func jobStatusViewController(didEndAbruptly jobStatusViewController: JobStatusViewController)
     func jobStatusViewController(_ jobStatusViewController: JobStatusViewController, didEndWithError error: Error)
     func jobStatusViewController(_ jobStatusViewController: JobStatusViewController, didEndWithResult result: Any)
@@ -28,7 +28,7 @@ class JobStatusViewController: UIViewController {
     @IBOutlet weak var jobStatusProgressView: UIProgressView!
     @IBOutlet weak var cancelButton: UIButton!
     
-    var delegate: JobStatusViewControllerDelegate?
+    weak var delegate: JobStatusViewControllerDelegate?
     
     var jobConstruct: AppOfflineMapJobConstructionInfo? {
         didSet {
@@ -105,10 +105,6 @@ class JobStatusViewController: UIViewController {
         super.viewDidDisappear(animated)
         
         UIApplication.shared.isIdleTimerDisabled = false
-    }
-    
-    func status(_ status: Float, upperBounds: Float, lowerBounds: Float) -> Float {
-        return max(min(status, upperBounds), lowerBounds)
     }
     
     @IBAction func userDidTapCancelJob(_ sender: Any) {

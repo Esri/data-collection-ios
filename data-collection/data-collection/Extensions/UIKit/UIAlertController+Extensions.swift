@@ -23,9 +23,9 @@ extension UIAlertController {
         return alert
     }
     
-    static func multiAlert(title:String? = nil, message:String, actionTitle:String, action:((UIAlertAction)->Void)? = nil, cancelTitle:String = "Cancel", cancel:((UIAlertAction)->Void)? = nil) -> UIAlertController {
+    static func multiAlert(title:String? = nil, message:String, actionTitle:String, action:((UIAlertAction)->Void)? = nil, isDestructive: Bool = false, cancelTitle:String = "Cancel", cancel:((UIAlertAction)->Void)? = nil) -> UIAlertController {
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        let action = UIAlertAction(title: actionTitle, style: .default, handler: action)
+        let action = UIAlertAction(title: actionTitle, style: isDestructive ? .destructive : .default, handler: action)
         let cancel = UIAlertAction(title: cancelTitle, style: .cancel, handler: cancel)
         alert.addAction(action)
         alert.addAction(cancel)

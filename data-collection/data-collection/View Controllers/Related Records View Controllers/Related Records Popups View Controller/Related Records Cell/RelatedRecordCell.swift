@@ -130,8 +130,8 @@ class RelatedRecordCell: UITableViewCell {
             valueLabel.text = manager.nextFieldStringValue(fieldIndex: &popupIndex)
             
             // TODO workout constraints issue
-            titleLabel.considerEmptyStringForStackView()
-            valueLabel.considerEmptyStringForStackView()
+            titleLabel.considerEmptyString()
+            valueLabel.considerEmptyString()
         }
         
         setAccessoryViewDisclosureIndicator()

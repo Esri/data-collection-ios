@@ -17,34 +17,29 @@ import ArcGIS
 
 class DeleteRecordCell: UITableViewCell {
     
-    private weak var stackView: UIStackView?
-    private weak var deleteLabel: UILabel?
+    private let stackView = UIStackView()
+    private let deleteLabel = UILabel()
     
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
         accessoryType = .none
         
-        let containingStackView = UIStackView()
-        containingStackView.layoutMargins = UIEdgeInsets(top: 16, left: 16, bottom: 16, right: 16)
-        containingStackView.isLayoutMarginsRelativeArrangement = true
-        containingStackView.axis = .vertical
-        containingStackView.alignment = .fill
-        containingStackView.spacing = 6.0
+        stackView.layoutMargins = UIEdgeInsets(top: 16, left: 16, bottom: 16, right: 16)
+        stackView.isLayoutMarginsRelativeArrangement = true
+        stackView.axis = .vertical
+        stackView.alignment = .fill
+        stackView.spacing = 6.0
         
-        let containedDeleteLabel = UILabel()
-        containedDeleteLabel.textColor = appColors.invalid
-        containedDeleteLabel.font = appFonts.tableCellValue
-        containedDeleteLabel.textAlignment = .center
-        containedDeleteLabel.numberOfLines = 1
-        containedDeleteLabel.text = "Delete"
+        deleteLabel.textColor = appColors.invalid
+        deleteLabel.font = appFonts.tableCellValue
+        deleteLabel.textAlignment = .center
+        deleteLabel.numberOfLines = 1
+        deleteLabel.text = "Delete"
         
-        containingStackView.addArrangedSubview(containedDeleteLabel)
+        stackView.addArrangedSubview(deleteLabel)
         
-        contentView.addSubviewAndConstrainToView(containingStackView)
-        
-        stackView = containingStackView
-        deleteLabel = containedDeleteLabel
+        contentView.addSubviewAndConstrainToView(stackView)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -52,6 +47,6 @@ class DeleteRecordCell: UITableViewCell {
     }
     
     func configure(forPopup popup: AGSPopup) {
-        deleteLabel?.text = "Delete \(popup.recordType.rawValue.capitalized)"
+        deleteLabel.text = "Delete \(popup.recordType.rawValue.capitalized)"
     }
 }

@@ -25,8 +25,6 @@ class RelatedRecordsPopupsViewController: UITableViewController, BackButtonDeleg
     
     var popupModeButton: UIBarButtonItem?
     
-//    @IBOutlet weak var adjustableBottomConstraint: NSLayoutConstraint!
-    
     var popup: AGSPopup! {
         didSet {
             recordsManager = PopupRelatedRecordsManager(popup: popup)
@@ -51,9 +49,6 @@ class RelatedRecordsPopupsViewController: UITableViewController, BackButtonDeleg
         super.viewDidLoad()
 
         title = recordsManager.title
-        
-//        NotificationCenter.default.addObserver(self, selector: #selector(VC.adjustKeyboardVisible(notification:)), name: .UIKeyboardWillShow, object: nil)
-//        NotificationCenter.default.addObserver(self, selector: #selector(VC.adjustKeyboardHidden(notification:)), name: .UIKeyboardWillHide, object: nil)
         
         tableView.register(PopupReadonlyFieldCell.self, forCellReuseIdentifier: ReuseIdentifiers.popupReadonlyCell)
         tableView.register(PopupNumberCell.self, forCellReuseIdentifier: ReuseIdentifiers.popupNumberCell)
@@ -142,7 +137,7 @@ class RelatedRecordsPopupsViewController: UITableViewController, BackButtonDeleg
         }
     }
     
-    func endPopupEditMode(_ completion: ((_ shouldDismiss: Bool) -> Void)? = nil) {
+    private func endPopupEditMode(_ completion: ((_ shouldDismiss: Bool) -> Void)? = nil) {
 
         var action: ((UIAlertAction) -> Void)!
         
@@ -166,12 +161,10 @@ class RelatedRecordsPopupsViewController: UITableViewController, BackButtonDeleg
     func adjustViewControllerForEditState() {
         
         if popupModeButton != nil {
-            popupModeButton?.title = recordsManager.actionButtonTitle
+            popupModeButton?.title = recordsManager.isEditing ? "Done" : "Edit"
         }
         
-        if tableView != nil {
-            tableView.reloadData()
-        }
+        tableView.reloadData()
         
         guard isRootViewController else {
             return
@@ -199,18 +192,5 @@ class RelatedRecordsPopupsViewController: UITableViewController, BackButtonDeleg
             navigationController?.popViewController(animated: animated)
         }
     }
-    
-//    @objc func adjustKeyboardVisible(notification: NSNotification) {
-//        print("[Keyboard] \(notification.name.rawValue)")
-//        if let keyboardFrame: NSValue = notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? NSValue {
-//            let heightDelta = keyboardFrame.cgRectValue.height
-//            adjustableBottomConstraint.constant = -heightDelta
-//        }
-//    }
-//
-//    @objc func adjustKeyboardHidden(notification: NSNotification) {
-//        print("[Keyboard] \(notification.name.rawValue)")
-//        adjustableBottomConstraint.constant = 0
-//    }
 }
 

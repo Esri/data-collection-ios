@@ -17,7 +17,7 @@ import UIKit
 
 extension UILabel {
     
-    func considerEmptyStringForStackView() {
+    func considerEmptyString() {
         guard let labelText = text, !labelText.isEmpty else {
             text = " "
             return

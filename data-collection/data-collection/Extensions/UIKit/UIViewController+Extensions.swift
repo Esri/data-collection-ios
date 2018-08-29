@@ -45,7 +45,7 @@ extension UIViewController {
     func present(loginAlertMessage message: String, animated: Bool = true, completion: (() -> Void)? = nil) {
         let alert = UIAlertController.multiAlert(message: message, actionTitle: "Log in", action: { (action) in
             appContext.login()
-        })
+        }, isDestructive: false)
         present(alert, animated: animated, completion: completion)
     }
 
@@ -56,12 +56,12 @@ extension UIViewController {
                 return
             }
             UIApplication.shared.open(url, options: [:], completionHandler: nil)
-        })
+        }, isDestructive: false)
         present(alert, animated: animated, completion: completion)
     }
 
-    func present(confirmationAlertMessage message: String, confirmationTitle: String, confirmationAction:((UIAlertAction)->Void)?, animated: Bool = true, completion: (() -> Void)? = nil) {
-        let alert = UIAlertController.multiAlert(message: message, actionTitle: confirmationTitle, action: confirmationAction)
+    func present(confirmationAlertMessage message: String, confirmationTitle: String, confirmationAction:((UIAlertAction)->Void)?, animated: Bool = true, isDestructive: Bool = true, completion: (() -> Void)? = nil) {
+        let alert = UIAlertController.multiAlert(message: message, actionTitle: confirmationTitle, action: confirmationAction, isDestructive: true)
         present(alert, animated: animated, completion: completion)
     }
 }

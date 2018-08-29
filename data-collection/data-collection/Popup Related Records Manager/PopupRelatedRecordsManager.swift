@@ -75,8 +75,13 @@ class PopupRelatedRecordsManager: AGSPopupManager {
         
         // 1. enforce M:1 relationships if composite
         invalids += manyToOne
-            .filter { return ($0.relationshipInfo != nil) ? false : $0.relationshipInfo!.isComposite ? $0.relatedPopup == nil : false }
-            .map    { return RelatedRecordsManagerError.missingManyToOneRelationship($0.name ?? "Unknown") as Error }
+            .filter { record in
+                guard let info = record.relationshipInfo else { return false }
+                
+                if info.isComposite { return record.relatedPopup == nil }
+                else { return false }
+            }
+            .map { return RelatedRecordsManagerError.missingManyToOneRelationship($0.name ?? "Unknown") as Error }
         
         // 2. enforce validity on all popup fields
         invalids += editableDisplayFields.compactMap { return validationError(for: $0) }

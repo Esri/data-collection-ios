@@ -15,14 +15,14 @@
 import UIKit
 import ArcGIS
 
-protocol RelatedRecordsListViewControllerDelegate {
+protocol RelatedRecordsListViewControllerDelegate: AnyObject {
     func relatedRecordsListViewController(_ viewController: RelatedRecordsListViewController, didSelectPopup popup: AGSPopup)
     func relatedRecordsListViewControllerDidCancel(_ viewController: RelatedRecordsListViewController)
 }
 
 class RelatedRecordsListViewController: UITableViewController {
     
-    var delegate: RelatedRecordsListViewControllerDelegate?
+    weak var delegate: RelatedRecordsListViewControllerDelegate?
     
     var featureTable: AGSArcGISFeatureTable? {
         get {
@@ -49,9 +49,15 @@ class RelatedRecordsListViewController: UITableViewController {
         loadRecords()
     }
     
-    func loadRecords() {
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         
-        SVProgressHUD.show(withStatus: "Loading Records...")
+        if featureTableRecordsManager?.loadStatus == .loading {
+            SVProgressHUD.show(withStatus: "Loading Records...")
+        }
+    }
+    
+    func loadRecords() {
         
         guard let manager = featureTableRecordsManager else {
             SVProgressHUD.showError(withStatus: "Could not load records.")

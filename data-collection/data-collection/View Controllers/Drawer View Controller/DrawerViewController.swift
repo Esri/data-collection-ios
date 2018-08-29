@@ -17,7 +17,7 @@ import UIKit
 import ArcGIS
 
 protocol DrawerViewControllerDelegate: AnyObject {
-    
+
     func drawerViewController(didRequestWorkOnline drawerViewController: DrawerViewController)
     func drawerViewController(didRequestLoginLogout drawerViewController: DrawerViewController)
     func drawerViewController(didRequestSyncJob drawerViewController: DrawerViewController)
@@ -36,7 +36,7 @@ class DrawerViewController: UIViewController {
     @IBOutlet weak var deleteOfflineMapButton: UIButton!
     
     @IBOutlet weak var workModeHighlighViewTopConstraint: NSLayoutConstraint!
-    
+
     weak var delegate: DrawerViewControllerDelegate?
     
     let changeHandler = AppContextChangeHandler()
@@ -84,15 +84,6 @@ class DrawerViewController: UIViewController {
         updateSynchronizeButtonForLastSync(date: appContext.lastSync.date)
         deleteOfflineMapButton.setAttributed(header: "Delete Offline Map", forControlStateColors: offlineActivityControlStateColors, headerFont: appFonts.drawerButtonHeader)
     }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-    }
-    
     
     @IBAction func userRequestsLoginLogout(_ sender: Any) {
         delegate?.drawerViewController(didRequestLoginLogout: self)

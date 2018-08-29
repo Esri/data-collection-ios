@@ -16,6 +16,13 @@ import Foundation
 import UIKit
 import ArcGIS
 
+struct RelatedRecordsPreferences {
+    
+    static let manyToOneCellAttributeCount = 2
+    static let oneToManyCellAttributeCount = 3
+}
+
+
 extension RelatedRecordsPopupsViewController {
     
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -117,7 +124,7 @@ extension RelatedRecordsPopupsViewController {
     
     override func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         
-        if var fieldCell = cell as? PopupFieldCellProtocol {
+        if let fieldCell = cell as? PopupFieldCellProtocol {
             fieldCell.popupManager = nil
             fieldCell.field = nil
         }
