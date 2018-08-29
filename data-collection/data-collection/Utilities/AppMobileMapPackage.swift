@@ -42,5 +42,7 @@ class AppMobileMapPackage: AGSMobileMapPackage, AppUserDefaultsProtocol {
     // MARK: User Defaults Protocol
     
     typealias ValueType = Date
+    
+    static var objectDomain: String { return "AppMobileMapPackage" }
 }
 

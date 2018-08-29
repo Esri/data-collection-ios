@@ -26,9 +26,7 @@ enum WorkMode: Int, AppUserDefaultsProtocol {
     
     static var defaultWorkMode: WorkMode {
         
-        guard let storedMode = WorkMode.getUserDefaultValue() else {
-            return WorkMode.online
-        }
+        guard let storedMode = WorkMode.getUserDefaultValue() else { return .online }
         
         return WorkMode(rawValue: storedMode) ?? WorkMode.online
     }
@@ -36,6 +34,8 @@ enum WorkMode: Int, AppUserDefaultsProtocol {
     // MARK: User Defaults Protocol
     
     typealias ValueType = Int
+    
+    static var objectDomain: String { return "WorkMode" }
 }
 
 // MARK: Offline Map
