@@ -99,3 +99,13 @@ extension AppDelegate {
         print("[ArcGIS Runtime License] \(AGSArcGISRuntimeEnvironment.license())")
     }
 }
+
+extension AppDelegate {
+    
+    static var ArcGISSDKVersionString: String {
+        let bundle = AGSBundle()
+        let bundleV = (bundle?.object(forInfoDictionaryKey: "CFBundleVersion") as? String) ?? "?"
+        let sdkV = (bundle?.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String) ?? "?"
+        return "ArcGIS SDK \(sdkV) (\(bundleV))"
+    }
+}
