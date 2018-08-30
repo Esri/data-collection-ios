@@ -105,6 +105,9 @@ extension AppContext {
     fileprivate func checkIfHasOfflineMap() -> AGSMap? {
         
         hasOfflineMap = offlineMap != nil
+        
+        if !hasOfflineMap { mobileMapPackage = nil }
+        
         return offlineMap
     }
 
