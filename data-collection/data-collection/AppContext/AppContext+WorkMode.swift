@@ -96,13 +96,13 @@ extension AppContext {
                 print("[Error: Mobile Map Package]", error.localizedDescription)
             }
             
-            let offlineMap = self?.checkIfHasOfflineMap()
+            let offlineMap = self?.getOfflineMapAndUpdateAppContext()
             
             completion(offlineMap)
         })
     }
     
-    fileprivate func checkIfHasOfflineMap() -> AGSMap? {
+    fileprivate func getOfflineMapAndUpdateAppContext() -> AGSMap? {
         
         hasOfflineMap = offlineMap != nil
         
