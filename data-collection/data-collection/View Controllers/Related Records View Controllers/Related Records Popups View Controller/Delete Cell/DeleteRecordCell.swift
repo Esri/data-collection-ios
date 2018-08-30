@@ -39,7 +39,7 @@ class DeleteRecordCell: UITableViewCell {
         
         stackView.addArrangedSubview(deleteLabel)
         
-        contentView.addSubviewAndConstrainToView(stackView)
+        contentView.addStackviewAndConstrainToEdges(stackView)
     }
     
     required init?(coder aDecoder: NSCoder) {

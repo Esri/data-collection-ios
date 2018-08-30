@@ -36,20 +36,29 @@ extension UIView {
 
 extension UIView {
     
-    func addSubviewAndConstrainToView(_ subview: UIView) {
+    func addStackviewAndConstrainToEdges(_ stackView: UIStackView) {
 
-        addSubview(subview)
+        addSubview(stackView)
         
-        subview.translatesAutoresizingMaskIntoConstraints = false
+        stackView.translatesAutoresizingMaskIntoConstraints = false
         
-        var constraints = [NSLayoutConstraint]()
+        let leading = stackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 0)
+        let trailing = stackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: 0)
+        let top = stackView.topAnchor.constraint(equalTo: topAnchor, constant: 0)
+        let bottom = stackView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: 0)
         
-        constraints.append(subview.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 0))
-        constraints.append(subview.trailingAnchor.constraint(equalTo: trailingAnchor, constant: 0))
-        constraints.append(subview.topAnchor.constraint(equalTo: topAnchor, constant: 0))
-        constraints.append(subview.bottomAnchor.constraint(equalTo: bottomAnchor, constant: 0))
+        switch stackView.axis {
+            
+        case .horizontal:
+            leading.priority = UILayoutPriority(999)
+            trailing.priority = UILayoutPriority(999)
+
+        case .vertical:
+            top.priority = UILayoutPriority(999)
+            bottom.priority = UILayoutPriority(999)
+        }
         
-        NSLayoutConstraint.activate(constraints)
+        NSLayoutConstraint.activate([leading, trailing, top, bottom])
     }
 }
 
