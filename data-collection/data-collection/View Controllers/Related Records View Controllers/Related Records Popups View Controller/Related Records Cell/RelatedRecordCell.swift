@@ -24,7 +24,7 @@ class RelatedRecordCell: UITableViewCell {
     public var maxAttributes: Int = 3
     public var editingPopup: Bool = false
     
-    private var stackView = UIStackView()
+    private let stackView = UIStackView()
 
     private var attributes = [(title: UILabel, value: UILabel)]()
     private var emptyCellLabel: UILabel?
@@ -38,8 +38,9 @@ class RelatedRecordCell: UITableViewCell {
         stackView.isLayoutMarginsRelativeArrangement = true
         stackView.axis = .vertical
         stackView.alignment = .fill
+
         stackView.spacing = 6.0
-        
+
         contentView.addSubviewAndConstrainToView(stackView)
     }
     
@@ -47,17 +48,17 @@ class RelatedRecordCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func setAccessoryViewNone() {
+    private func setAccessoryViewNone() {
         accessoryType = .none
         accessoryView = nil
     }
     
-    func setAccessoryViewDisclosureIndicator() {
+    private func setAccessoryViewDisclosureIndicator() {
         accessoryType = .disclosureIndicator
         accessoryView = nil
     }
     
-    func setAccessoryViewAddIndicator() {
+    private func setAccessoryViewAddIndicator() {
         let button = UIButton(type: .contactAdd)
         button.tintColor = appColors.primary
         button.isUserInteractionEnabled = false
@@ -65,7 +66,7 @@ class RelatedRecordCell: UITableViewCell {
     }
     
     func updateCellContent() {
-        
+
         guard let manager = popup?.asManager else {
             updateEmptyCellContent()
             return
@@ -87,6 +88,7 @@ class RelatedRecordCell: UITableViewCell {
             while attributes.count != nAttributes {
                 
                 let titleLabel = UILabel()
+                titleLabel.numberOfLines = 1
                 titleLabel.textColor = appColors.tableCellTitle
                 titleLabel.font = appFonts.tableCellTitle
                 stackView.addArrangedSubview(titleLabel)
@@ -134,7 +136,7 @@ class RelatedRecordCell: UITableViewCell {
             valueLabel.considerEmptyString()
         }
         
-        setAccessoryViewDisclosureIndicator()
+        setAccessoryViewDisclosureIndicator()        
     }
     
     private func updateEmptyCellContent() {
@@ -150,13 +152,10 @@ class RelatedRecordCell: UITableViewCell {
         
         if emptyCellLabel == nil {
             emptyCellLabel = UILabel()
-            emptyCellLabel?.heightAnchor.constraint(equalToConstant: emptyCellLabel!.font.lineHeight).isActive = true
-            emptyCellLabel?.translatesAutoresizingMaskIntoConstraints = false
+            emptyCellLabel?.numberOfLines = 1
+            emptyCellLabel?.font = appFonts.tableCellTitle
             stackView.addArrangedSubview(emptyCellLabel!)
         }
-        
-        emptyCellLabel?.font = appFonts.tableCellTitle
-        emptyCellLabel?.sizeToFit()
         
         guard let info = relationshipInfo else {
             setAccessoryViewNone()
