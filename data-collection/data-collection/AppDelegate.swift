@@ -34,9 +34,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Configure oAuth redirect URL
         AppDelegate.configOAuthRedirectURL()
         
-        // Set UIAppearance Defaults
-        AppDelegate.setAppAppearance()
-        
         // Attempt to login from previously stored credentials
         appContext.attemptLoginToPortalFromCredentials()
         
@@ -102,14 +99,3 @@ extension AppDelegate {
         print("[ArcGIS Runtime License] \(AGSArcGISRuntimeEnvironment.license())")
     }
 }
-
-extension AppDelegate {
-    
-    static func setAppAppearance() {
-        UINavigationBar.appearance().tintColor = appColors.tint
-        UINavigationBar.appearance().titleTextAttributes = [.foregroundColor : appColors.tint]
-        
-        UIApplication.shared.statusBarStyle = .lightContent
-    }
-}
-
