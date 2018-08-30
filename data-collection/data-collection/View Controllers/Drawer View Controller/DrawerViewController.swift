@@ -27,16 +27,12 @@ protocol DrawerViewControllerDelegate: AnyObject {
 
 class DrawerViewController: UIViewController {
     
-    @IBOutlet weak var workModeHighlightView: UIView!
-
     @IBOutlet weak var loginButton: UIButton!
     @IBOutlet weak var workOnlineButton: UIButton!
     @IBOutlet weak var workOfflineButton: UIButton!
     @IBOutlet weak var synchronizeOfflineMapButton: UIButton!
     @IBOutlet weak var deleteOfflineMapButton: UIButton!
     
-    @IBOutlet weak var workModeHighlighViewTopConstraint: NSLayoutConstraint!
-
     weak var delegate: DrawerViewControllerDelegate?
     
     let changeHandler = AppContextChangeHandler()
@@ -159,11 +155,10 @@ class DrawerViewController: UIViewController {
     
     func adjustContextDrawerUI() {
         
-        workModeHighlighViewTopConstraint.constant = appContext.workMode == .online ? workOnlineButton.frame.origin.y : workOfflineButton.frame.origin.y
-        
         workOnlineButton.isEnabled = appContext.workMode == .offline ? appReachability.isReachable : true
         workOnlineButton.isSelected = appContext.workMode == .online
-        
+        workOnlineButton.backgroundColor = appContext.workMode == .online ? appColors.accent : .clear
+
         if appReachability.isReachable {
             workOnlineButton.setAttributed(header: appContext.workMode == .online ? "Working Online" : "Work Online", forControlStateColors: workModeControlStateColors, headerFont: appFonts.drawerButtonHeader)
         }
@@ -173,6 +168,7 @@ class DrawerViewController: UIViewController {
         
         workOfflineButton.isEnabled = appContext.hasOfflineMap || appReachability.isReachable
         workOfflineButton.isSelected = appContext.workMode == .offline
+        workOfflineButton.backgroundColor = appContext.workMode == .offline ? appColors.accent : .clear
         
         if appContext.isLoggedIn {
             workOfflineButton.setAttributed(header: appContext.workMode == .offline ? "Working Offline" : "Work Offline", forControlStateColors: workModeControlStateColors, headerFont: appFonts.drawerButtonHeader)

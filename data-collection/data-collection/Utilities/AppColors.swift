@@ -23,7 +23,7 @@ struct AppColors {
     let offlineLight: UIColor = .gray
     let offlineDark: UIColor = .black
     
-    let accent: UIColor = UIColor(red:0.93, green:0.54, blue:0.01, alpha:1.00)
+    let accent: UIColor = UIColor(red:0.97, green:0.74, blue:0.18, alpha:1.00)
     
     let tableCellTitle: UIColor = .gray
     let tableCellValue: UIColor = .black
