@@ -39,7 +39,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         // Configure file documents directories for offline usage
         FileManager.buildOfflineMapDirectory()
-        
+
         return true
     }
     

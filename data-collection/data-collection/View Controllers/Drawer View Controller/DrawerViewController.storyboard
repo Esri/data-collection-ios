@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="tff-pw-9ak">
-    <device id="retina4_7" orientation="portrait">
+    <device id="retina5_9" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
@@ -17,6 +17,15 @@
                         <rect key="frame" x="0.0" y="0.0" width="300" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="App Version SDK Version" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PyC-UU-GZQ">
+                                <rect key="frame" x="16" y="605" width="268" height="28"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="28" id="d4f-tq-f0q"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="12"/>
+                                <color key="textColor" red="0.91953521573604058" green="0.91953521573604058" blue="0.91953521573604058" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tTn-MW-Nim" userLabel="Banner">
                                 <rect key="frame" x="0.0" y="0.0" width="300" height="76"/>
                                 <color key="backgroundColor" red="0.7607440352" green="0.76081240179999998" blue="0.76068693399999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -44,7 +53,7 @@
                                 </constraints>
                             </view>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" bouncesZoom="NO" translatesAutoresizingMaskIntoConstraints="NO" id="D9i-NW-FC3">
-                                <rect key="frame" x="0.0" y="76" width="300" height="591"/>
+                                <rect key="frame" x="0.0" y="76" width="300" height="529"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nLI-GB-Tum" userLabel="Content View">
                                         <rect key="frame" x="0.0" y="0.0" width="300" height="265"/>
@@ -200,15 +209,18 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="7zU-JO-OaT" firstAttribute="trailing" secondItem="PyC-UU-GZQ" secondAttribute="trailing" constant="16" id="2ru-lE-KDZ"/>
+                            <constraint firstItem="7zU-JO-OaT" firstAttribute="bottom" secondItem="PyC-UU-GZQ" secondAttribute="bottom" id="2yd-cY-6e6"/>
                             <constraint firstItem="D9i-NW-FC3" firstAttribute="trailing" secondItem="7zU-JO-OaT" secondAttribute="trailing" id="G3v-oL-IZt"/>
                             <constraint firstItem="g0m-dF-Inv" firstAttribute="top" secondItem="bhX-Uc-zH4" secondAttribute="top" id="OH3-ht-cYv"/>
                             <constraint firstItem="g0m-dF-Inv" firstAttribute="leading" secondItem="7zU-JO-OaT" secondAttribute="leading" id="Sad-Yx-bcX"/>
                             <constraint firstItem="D9i-NW-FC3" firstAttribute="top" secondItem="tTn-MW-Nim" secondAttribute="bottom" id="TOG-Sz-cI6"/>
                             <constraint firstItem="tTn-MW-Nim" firstAttribute="height" secondItem="g0m-dF-Inv" secondAttribute="height" id="WCf-q0-vPN"/>
+                            <constraint firstItem="PyC-UU-GZQ" firstAttribute="leading" secondItem="7zU-JO-OaT" secondAttribute="leading" constant="16" id="YS7-QM-zpY"/>
                             <constraint firstItem="D9i-NW-FC3" firstAttribute="leading" secondItem="7zU-JO-OaT" secondAttribute="leading" id="bPh-Bk-oz4"/>
                             <constraint firstItem="tTn-MW-Nim" firstAttribute="leading" secondItem="bhX-Uc-zH4" secondAttribute="leading" id="c9d-HW-aON"/>
                             <constraint firstItem="tTn-MW-Nim" firstAttribute="top" secondItem="bhX-Uc-zH4" secondAttribute="top" id="dyA-aI-XWo"/>
-                            <constraint firstItem="D9i-NW-FC3" firstAttribute="bottom" secondItem="7zU-JO-OaT" secondAttribute="bottom" id="m2V-fE-kwS"/>
+                            <constraint firstItem="D9i-NW-FC3" firstAttribute="bottom" secondItem="PyC-UU-GZQ" secondAttribute="top" id="m2V-fE-kwS"/>
                             <constraint firstItem="g0m-dF-Inv" firstAttribute="trailing" secondItem="7zU-JO-OaT" secondAttribute="trailing" id="mr0-we-Sns"/>
                             <constraint firstAttribute="trailing" secondItem="tTn-MW-Nim" secondAttribute="trailing" id="xBR-3c-SeX"/>
                         </constraints>
@@ -216,6 +228,7 @@
                     </view>
                     <size key="freeformSize" width="300" height="667"/>
                     <connections>
+                        <outlet property="appVersionLabel" destination="PyC-UU-GZQ" id="y5u-ay-W5T"/>
                         <outlet property="deleteOfflineMapButton" destination="PEO-mf-oZz" id="HPj-bb-p9K"/>
                         <outlet property="loginButton" destination="19y-Pi-gQF" id="1KV-Gp-aAR"/>
                         <outlet property="synchronizeOfflineMapButton" destination="nly-Js-OCy" id="Wfb-rv-LWo"/>
