@@ -15,11 +15,6 @@
 import UIKit
 import ArcGIS
 
-/**
- `UIViewController` is a `UIViewController` subclass that registers for App Notifications upon with overrideable
- functions so each view controller can adjust accordingly.
- */
-
 
 class AppContextChangeHandler {
     

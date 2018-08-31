@@ -43,6 +43,6 @@ class AppMobileMapPackage: AGSMobileMapPackage, AppUserDefaultsProtocol {
     
     typealias ValueType = Date
     
-    static var objectDomain: String { return "AppMobileMapPackage" }
+    static let objectDomain = "AppMobileMapPackage"
 }
 

@@ -46,26 +46,14 @@ class PinDropView: UIView {
         super.init(frame: frame)
         
         generalInit()
-        
-        do {
-            try buildSublayers()
-        }
-        catch {
-            print("[Error]", error.localizedDescription)
-        }
+        buildSublayers()
     }
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         
         generalInit()
-        
-        do {
-            try buildSublayers()
-        }
-        catch {
-            print("[Error:Assets]", (error as! AssetsError).localizedDescription)
-        }
+        buildSublayers()
     }
     
     private func generalInit() {
@@ -73,29 +61,26 @@ class PinDropView: UIView {
         backgroundColor = .clear
     }
     
-    private func buildSublayers() throws {
+    private func buildSublayers() {
         let scale = UIScreen.main.scale
         
         guard let pinImage = UIImage(named: AssetName.pin)?.cgImage else {
-            throw AssetsError.missingAsset(AssetName.pin)
+            return assertionFailure("App bundle must contain asset named \(AssetName.pin).")
         }
         
         guard let pinShadowImage = UIImage(named: AssetName.shadow)?.cgImage else {
-            throw AssetsError.missingAsset(AssetName.shadow)
+            return assertionFailure("App bundle must contain asset named \(AssetName.shadow).")
         }
-        
-        // establish origin
-        let origin = CGPoint(x: 0.0, y: 0.0)
         
         // build pin shadow
         let pinShadowSize = CGSize(width: CGFloat(pinShadowImage.width)/scale, height: CGFloat(pinShadowImage.height)/scale)
-        shadowLayer.frame = CGRect(origin: origin, size: pinShadowSize)
+        shadowLayer.frame = CGRect(origin: .zero, size: pinShadowSize)
         shadowLayer.contents = pinShadowImage
         layer.addSublayer(shadowLayer)
         
         // build pin
         let pinSize = CGSize(width: CGFloat(pinImage.width)/scale, height: CGFloat(pinImage.height)/scale)
-        pinLayer.frame = CGRect(origin: origin, size: pinSize)
+        pinLayer.frame = CGRect(origin: .zero, size: pinSize)
         pinLayer.contents = pinImage
         layer.addSublayer(pinLayer)
     }

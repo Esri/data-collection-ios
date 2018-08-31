@@ -23,7 +23,7 @@ enum AppFilesError: AppError  {
     var errorCode: Int {
         switch self {
         case .cannotBuildPath(_):
-            return 0001
+            return 1001
         }
     }
     
@@ -31,29 +31,6 @@ enum AppFilesError: AppError  {
         switch self {
         case .cannotBuildPath(let path):
             return [NSLocalizedDescriptionKey: "Cannot build path \(path)"]
-        }
-    }
-    
-    var localizedDescription: String {
-        return errorUserInfo[NSLocalizedDescriptionKey] as! String
-    }
-}
-
-enum AssetsError: AppError {
-    
-    case missingAsset(String)
-    
-    var errorCode: Int {
-        switch self {
-        case .missingAsset(_):
-            return 1001
-        }
-    }
-    
-    var errorUserInfo: [String : Any] {
-        switch self {
-        case .missingAsset(let name):
-            return [NSLocalizedDescriptionKey: "Asset missing for name \(name)"]
         }
     }
     
