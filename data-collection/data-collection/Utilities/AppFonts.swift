@@ -25,11 +25,7 @@ extension UIFont {
         return UIFont.preferredFont(forTextStyle: .body)
     }
     
-    static var drawerButtonHeader: UIFont {
-        return UIFont.systemFont(ofSize: 15.0)
-    }
+    static let drawerButtonHeader = UIFont.systemFont(ofSize: 15.0)
     
-    static var drawerButtonSubheader: UIFont {
-        return UIFont.systemFont(ofSize: 12.0)
-    }
+    static let drawerButtonSubheader = UIFont.systemFont(ofSize: 12.0)
 }
