@@ -26,7 +26,7 @@ class MaskViewController: UIViewController {
         super.viewDidLoad()
 
         borderView.backgroundColor = .clear
-        borderView.layer.borderColor = appColors.primary.cgColor
+        borderView.layer.borderColor = UIColor.primary.cgColor
         borderView.layer.borderWidth = borderWidth
         
         adjustFrameInset()

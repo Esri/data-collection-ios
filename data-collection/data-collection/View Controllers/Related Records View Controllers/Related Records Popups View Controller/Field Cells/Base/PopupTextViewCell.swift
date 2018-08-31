@@ -28,7 +28,7 @@ class PopupTextViewCell: PopupEditableFieldCell<UITextView>, UITextViewDelegate 
         if valueEditView == nil {
             
             valueEditView = UITextView(frame: .zero)
-            valueEditView?.textColor = appColors.tableCellValue
+            valueEditView?.textColor = .tableCellValue
             valueEditView?.font = .tableCellValue
             valueEditView?.sizeToFit()
             valueEditView?.stylizeBorder()

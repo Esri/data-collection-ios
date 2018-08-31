@@ -15,34 +15,34 @@
 import Foundation
 import UIKit.UIColor
 
-struct AppColors {
+extension UIColor {
     
-    let primary: UIColor = UIColor(red:0.66, green:0.81, blue:0.40, alpha:1.00)
+    static let primary: UIColor = UIColor(red:0.66, green:0.81, blue:0.40, alpha:1.00)
     
-    let offline: UIColor = .darkGray
-    let offlineLight: UIColor = .gray
-    let offlineDark: UIColor = .black
+    static let offline: UIColor = .darkGray
+    static let offlineLight: UIColor = .gray
+    static let offlineDark: UIColor = .black
     
-    let accent: UIColor = UIColor(red:0.97, green:0.74, blue:0.18, alpha:1.00)
+    static let accent: UIColor = UIColor(red:0.97, green:0.74, blue:0.18, alpha:1.00)
     
-    let tableCellTitle: UIColor = .gray
-    let tableCellValue: UIColor = .black
+    static let tableCellTitle: UIColor = .gray
+    static let tableCellValue: UIColor = .black
     
-    let invalid: UIColor = .red
-    let missing: UIColor = .lightGray
+    static let invalid: UIColor = .red
+    static let missing: UIColor = .lightGray
     
-    let tint: UIColor = .white
+    static let tint: UIColor = .white
     
-    let loginLogoutNormal: UIColor = .white
-    let loginLogoutHighlighted: UIColor = .lightGray
+    static let loginLogoutNormal: UIColor = .white
+    static let loginLogoutHighlighted: UIColor = .lightGray
     
-    let workModeNormal: UIColor = .darkGray
-    let workModeHighlighted: UIColor = .lightGray
-    let workModeSelected: UIColor = .white
-    let workModeDisabled: UIColor = UIColor(white: 0.5, alpha: 0.5)
+    static let workModeNormal: UIColor = .darkGray
+    static let workModeHighlighted: UIColor = .lightGray
+    static let workModeSelected: UIColor = .white
+    static let workModeDisabled: UIColor = UIColor(white: 0.5, alpha: 0.5)
     
-    let offlineActivityNormal: UIColor = .darkGray
-    let offlineActivityHighlighted: UIColor = .lightGray
-    let offlineActivitySelected: UIColor = .lightGray
-    let offlineActivityDisabled: UIColor = UIColor(white: 0.5, alpha: 0.5)
+    static let offlineActivityNormal: UIColor = .darkGray
+    static let offlineActivityHighlighted: UIColor = .lightGray
+    static let offlineActivitySelected: UIColor = .lightGray
+    static let offlineActivityDisabled: UIColor = UIColor(white: 0.5, alpha: 0.5)
 }

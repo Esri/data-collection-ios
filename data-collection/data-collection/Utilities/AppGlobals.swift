@@ -31,5 +31,3 @@ var appNotificationCenter: NotificationCenter {
 }
 
 let appReverseGeocoder = ReverseGeocoderManager()
-
-let appColors = AppColors()

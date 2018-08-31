@@ -39,22 +39,22 @@ class DrawerViewController: UIViewController {
     let changeHandler = AppContextChangeHandler()
     
     let loginLogoutButtonControlStateColors: [UIControlState: UIColor] = {
-        return [.normal: appColors.loginLogoutNormal,
-                .highlighted: appColors.loginLogoutHighlighted]
+        return [.normal: .loginLogoutNormal,
+                .highlighted: .loginLogoutHighlighted]
     }()
     
     let workModeControlStateColors: [UIControlState: UIColor] = {
-        return [.normal: appColors.workModeNormal,
-                .highlighted: appColors.workModeHighlighted,
-                .selected: appColors.workModeSelected,
-                .disabled: appColors.workModeDisabled]
+        return [.normal: .workModeNormal,
+                .highlighted: .workModeHighlighted,
+                .selected: .workModeSelected,
+                .disabled: .workModeDisabled]
     }()
     
     let offlineActivityControlStateColors: [UIControlState: UIColor] = {
-        return [.normal: appColors.offlineActivityNormal,
-                .highlighted: appColors.offlineActivityHighlighted,
-                .selected: appColors.offlineActivitySelected,
-                .disabled: appColors.offlineActivityDisabled]
+        return [.normal: .offlineActivityNormal,
+                .highlighted: .offlineActivityHighlighted,
+                .selected: .offlineActivitySelected,
+                .disabled: .offlineActivityDisabled]
     }()
     
     override func viewDidLoad() {
@@ -164,7 +164,7 @@ class DrawerViewController: UIViewController {
         
         workOnlineButton.isEnabled = appContext.workMode == .offline ? appReachability.isReachable : true
         workOnlineButton.isSelected = appContext.workMode == .online
-        workOnlineButton.backgroundColor = appContext.workMode == .online ? appColors.accent : .clear
+        workOnlineButton.backgroundColor = appContext.workMode == .online ? .accent : .clear
 
         if appReachability.isReachable {
             workOnlineButton.setAttributed(header: appContext.workMode == .online ? "Working Online" : "Work Online", forControlStateColors: workModeControlStateColors, headerFont: .drawerButtonHeader)
@@ -175,7 +175,7 @@ class DrawerViewController: UIViewController {
         
         workOfflineButton.isEnabled = appContext.hasOfflineMap || appReachability.isReachable
         workOfflineButton.isSelected = appContext.workMode == .offline
-        workOfflineButton.backgroundColor = appContext.workMode == .offline ? appColors.accent : .clear
+        workOfflineButton.backgroundColor = appContext.workMode == .offline ? .accent : .clear
         
         if appContext.isLoggedIn {
             workOfflineButton.setAttributed(header: appContext.workMode == .offline ? "Working Offline" : "Work Offline", forControlStateColors: workModeControlStateColors, headerFont: .drawerButtonHeader)
@@ -195,7 +195,7 @@ class DrawerViewController: UIViewController {
         
         if let currentUser = user {
             
-            let fallbackProfileImage = UIImage(named: "MissingProfile")!.withRenderingMode(.alwaysOriginal).circularThumbnail(ofSize: 36, strokeColor: appColors.loginLogoutNormal)
+            let fallbackProfileImage = UIImage(named: "MissingProfile")!.withRenderingMode(.alwaysOriginal).circularThumbnail(ofSize: 36, strokeColor: .loginLogoutNormal)
             
             guard let image = currentUser.thumbnail else {
                 loginButton.setImage(fallbackProfileImage, for: .normal)
@@ -211,7 +211,7 @@ class DrawerViewController: UIViewController {
                     return
                 }
                 
-                guard let img = image.image, let profImage = img.circularThumbnail(ofSize: 36, strokeColor: appColors.loginLogoutNormal) else {
+                guard let img = image.image, let profImage = img.circularThumbnail(ofSize: 36, strokeColor: .loginLogoutNormal) else {
                     print("[Error: User Thumbnail Image Load] image processing error.")
                     return
                 }

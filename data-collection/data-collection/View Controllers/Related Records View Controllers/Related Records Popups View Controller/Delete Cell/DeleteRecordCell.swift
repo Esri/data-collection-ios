@@ -31,7 +31,7 @@ class DeleteRecordCell: UITableViewCell {
         stackView.alignment = .fill
         stackView.spacing = 6.0
         
-        deleteLabel.textColor = appColors.invalid
+        deleteLabel.textColor = .invalid
         deleteLabel.font = .tableCellValue
         deleteLabel.textAlignment = .center
         deleteLabel.numberOfLines = 1
