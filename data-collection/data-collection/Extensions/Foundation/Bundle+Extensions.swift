@@ -28,7 +28,7 @@ extension Bundle {
     }
     
     static var ArcGISSDKVersionString: String {
-        return "ArcGIS SDK \(sdkVersion) (\(sdkBundleVersion))"
+        return "ArcGIS Runtime SDK \(sdkVersion) (\(sdkBundleVersion))"
     }
 }
 
