@@ -15,11 +15,17 @@
 import Foundation
 import UIKit.UIFont
 
-struct AppFonts {
+extension UIFont {
     
-    let tableCellTitle = UIFont.preferredFont(forTextStyle: .footnote)
-    let tableCellValue = UIFont.preferredFont(forTextStyle: .body)
+    static var tableCellTitle: UIFont {
+        return UIFont.preferredFont(forTextStyle: .footnote)
+    }
     
-    let drawerButtonHeader = UIFont.systemFont(ofSize: 15.0)
-    let drawerButtonSubheader = UIFont.systemFont(ofSize: 12.0)
+    static var tableCellValue: UIFont {
+        return UIFont.preferredFont(forTextStyle: .body)
+    }
+    
+    static let drawerButtonHeader = UIFont.systemFont(ofSize: 15.0)
+    
+    static let drawerButtonSubheader = UIFont.systemFont(ofSize: 12.0)
 }
