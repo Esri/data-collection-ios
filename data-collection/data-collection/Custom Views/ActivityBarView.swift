@@ -17,13 +17,13 @@ import ArcGIS
 
 class ActivityBarView: UIView {
     
-    @IBInspectable var colorA: UIColor = appColors.primary.lighter {
+    @IBInspectable var colorA: UIColor = UIColor.primary.lighter {
         didSet {
             updateAnimationsForNewColor()
         }
     }
     
-    @IBInspectable var colorB: UIColor = appColors.primary.darker {
+    @IBInspectable var colorB: UIColor = UIColor.primary.darker {
         didSet {
             updateAnimationsForNewColor()
         }

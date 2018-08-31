@@ -246,9 +246,9 @@ class MapViewController: UIViewController {
         let workModeChange: AppContextChange = .workMode { [weak self] workMode in
             
             DispatchQueue.main.async { [weak self] in
-                self?.activityBarView.colorA = (workMode == .online) ? appColors.primary.lighter : appColors.offlineLight
-                self?.activityBarView.colorB = (workMode == .online) ? appColors.primary.darker : appColors.offlineDark
-                self?.notificationBar.backgroundColor = (workMode == .online) ? appColors.primary.lighter : appColors.offlineDark
+                self?.activityBarView.colorA = (workMode == .online) ? UIColor.primary.lighter : .offlineLight
+                self?.activityBarView.colorB = (workMode == .online) ? UIColor.primary.darker : .offlineDark
+                self?.notificationBar.backgroundColor = (workMode == .online) ? UIColor.primary.lighter : .offlineDark
             }
         }
         

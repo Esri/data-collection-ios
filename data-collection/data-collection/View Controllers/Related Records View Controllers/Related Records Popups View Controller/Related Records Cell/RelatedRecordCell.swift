@@ -60,7 +60,7 @@ class RelatedRecordCell: UITableViewCell {
     
     private func setAccessoryViewAddIndicator() {
         let button = UIButton(type: .contactAdd)
-        button.tintColor = appColors.primary
+        button.tintColor = .primary
         button.isUserInteractionEnabled = false
         accessoryView = button
     }
@@ -89,13 +89,13 @@ class RelatedRecordCell: UITableViewCell {
                 
                 let titleLabel = UILabel()
                 titleLabel.numberOfLines = 1
-                titleLabel.textColor = appColors.tableCellTitle
+                titleLabel.textColor = .tableCellTitle
                 titleLabel.font = .tableCellTitle
                 stackView.addArrangedSubview(titleLabel)
                 
                 let valueLabel = UILabel()
                 valueLabel.numberOfLines = 0
-                valueLabel.textColor = appColors.tableCellValue
+                valueLabel.textColor = .tableCellValue
                 valueLabel.font = .tableCellValue
                 stackView.addArrangedSubview(valueLabel)
                 
@@ -166,12 +166,12 @@ class RelatedRecordCell: UITableViewCell {
         if info.isManyToOne {
             if editingPopup {
                 setAccessoryViewDisclosureIndicator()
-                emptyCellLabel?.textColor = info.isComposite ? appColors.invalid : appColors.tableCellTitle
+                emptyCellLabel?.textColor = info.isComposite ? .invalid : .tableCellTitle
                 emptyCellLabel?.text = "Select \(table?.tableName ?? "related record")"
             }
             else {
                 setAccessoryViewNone()
-                emptyCellLabel?.textColor = appColors.missing
+                emptyCellLabel?.textColor = .missing
                 emptyCellLabel?.text = "(Empty \(table?.tableName ?? "related") record)"
             }
         }
@@ -182,7 +182,7 @@ class RelatedRecordCell: UITableViewCell {
             else {
                 setAccessoryViewDisclosureIndicator()
             }
-            emptyCellLabel?.textColor = appColors.primary
+            emptyCellLabel?.textColor = .primary
             emptyCellLabel?.text = "Add \(table?.tableName ?? "related record")"
         }
     }
