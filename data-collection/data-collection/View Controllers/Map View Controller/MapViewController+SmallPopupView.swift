@@ -24,7 +24,7 @@ extension MapViewController {
     
     func updateSmallPopupViewForCurrentPopup() {
         
-        guard recordsManager != nil else {
+        guard let manager = recordsManager else {
             
             mapViewMode = .defaultView
             
@@ -37,7 +37,7 @@ extension MapViewController {
         
         currentPopup!.select()
         
-        recordsManager!.loadRelatedRecords { [weak self] in
+        manager.loadRelatedRecords { [weak self] in
             
             var fallbackIndex = 0
             

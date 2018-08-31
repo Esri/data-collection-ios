@@ -18,17 +18,13 @@ import ArcGIS
 // MARK: Protocol Declarations
 
 protocol AppUserDefaultsProtocol {
-    static var objectDomain: String { get }
+    static var userDefaultsKey: String { get }
     associatedtype ValueType
 }
 
 // MARK: Protocol Extensions
 
 extension AppUserDefaultsProtocol {
-    
-    private static var userDefaultsKey: String {
-        return "\(appBundleID).userDefaults.\(objectDomain)"
-    }
     
     static func setUserDefault(_ value: ValueType?) {
         UserDefaults.standard.set(value, forKey: userDefaultsKey)

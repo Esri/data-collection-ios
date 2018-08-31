@@ -74,7 +74,7 @@ class OneToManyManager: RelatedRecordsManager {
         
         feature.unrelate(to: relatedFeature)
         
-        let foundPopupIndex = relatedPopups.enumerated().first { (popupIndex, popup) -> Bool in
+        let foundPopupIndex = relatedPopups.index { (popup) -> Bool in
             
             guard
                 let feature = popup.geoElement as? AGSArcGISFeature,
@@ -86,7 +86,7 @@ class OneToManyManager: RelatedRecordsManager {
             return oid == relatedFeatureID
         }
         
-        guard let popupIndex = foundPopupIndex?.offset else {
+        guard let popupIndex = foundPopupIndex else {
             throw RelatedRecordsManagerError.cannotRelateFeatures
         }
         

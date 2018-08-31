@@ -36,7 +36,7 @@ class AppContextAwareNavigationController: UINavigationController {
     
     private func subscribeToWorkModeChange() {
         
-        let workModeChange: AppContextChange = .workMode { [weak self] (workMode) in
+        let workModeChange: AppContextChange = .workMode { [weak self] (_) in
             self?.adjustNavigationBarTintForWorkMode()
         }
         

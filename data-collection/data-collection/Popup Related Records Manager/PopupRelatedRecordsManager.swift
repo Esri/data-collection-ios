@@ -17,8 +17,8 @@ import ArcGIS
 
 class PopupRelatedRecordsManager: AGSPopupManager {
     
-    internal var manyToOne = [ManyToOneManager]()
-    internal var oneToMany = [OneToManyManager]()
+    private(set) var manyToOne = [ManyToOneManager]()
+    private(set) var oneToMany = [OneToManyManager]()
     
     // MARK: Popup Manager Editing Session
     
@@ -65,10 +65,10 @@ class PopupRelatedRecordsManager: AGSPopupManager {
     
     // MARK: Custom Validation
     
-    func validatePopup() -> [Error]? {
+    func validatePopup() -> [Error] {
         
         guard isEditing else {
-            return nil
+            return [Error]()
         }
         
         var invalids = [Error]()

@@ -35,7 +35,7 @@ enum WorkMode: Int, AppUserDefaultsProtocol {
     
     typealias ValueType = Int
     
-    static let objectDomain = "WorkMode"
+    static let userDefaultsKey = "WorkMode"
 }
 
 // MARK: Offline Map

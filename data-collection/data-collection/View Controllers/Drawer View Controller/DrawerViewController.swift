@@ -241,11 +241,11 @@ class DrawerViewController: UIViewController {
             self?.updateLoginButtonForAuthenticatedUsername(user: user)
         }
         
-        let workModeChange: AppContextChange = .workMode { [weak self] workMode in
+        let workModeChange: AppContextChange = .workMode { [weak self] _ in
             self?.adjustContextDrawerUI()
         }
         
-        let reachabilityChange: AppContextChange = .reachability { [weak self] reachable in
+        let reachabilityChange: AppContextChange = .reachability { [weak self] _ in
             self?.adjustContextDrawerUI()
         }
         
@@ -253,7 +253,7 @@ class DrawerViewController: UIViewController {
             self?.updateSynchronizeButtonForLastSync(date: date)
         }
         
-        let hasOfflineMapChange: AppContextChange = .hasOfflineMap { [weak self] hasOfflineMap in
+        let hasOfflineMapChange: AppContextChange = .hasOfflineMap { [weak self] _ in
             self?.adjustContextDrawerUI()
         }
         

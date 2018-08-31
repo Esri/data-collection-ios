@@ -70,7 +70,7 @@ class AppContainerViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        adjustForDrawerShowing(animationDuration: 0.0)
+        adjustForDrawerShowing(isAnimated: false)
         adjustNavigationBarButtons()
         
         NotificationCenter.default.addObserver(self, selector: #selector(AppContainerViewController.deviceOrientationDidChange), name: NSNotification.Name.UIDeviceOrientationDidChange, object: nil)
@@ -119,11 +119,12 @@ class AppContainerViewController: UIViewController {
     }
     
     @objc func deviceOrientationDidChange() {
-        adjustForDrawerShowing(animationDuration: 0.0)
+        adjustForDrawerShowing(isAnimated: false)
     }
     
-    func adjustForDrawerShowing(animationDuration: TimeInterval = 0.2) {
+    func adjustForDrawerShowing(isAnimated: Bool = true) {
         
+        let animationDuration = 0.2
         drawerLeadingLayoutConstraint.constant = drawerShowing ? 0.0 : -contextView.frame.size.width
 
         UIView.animate(withDuration: animationDuration, delay: 0.0, options: .curveEaseOut, animations: { [weak self] in

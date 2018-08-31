@@ -60,7 +60,7 @@ class RelatedRecordsListViewController: UITableViewController {
     func loadRecords() {
         
         guard let manager = featureTableRecordsManager else {
-            SVProgressHUD.showError(withStatus: "Could not load records.")
+            present(simpleAlertMessage: "Could not load records.")
             delegate?.relatedRecordsListViewControllerDidCancel(self)
             return
         }

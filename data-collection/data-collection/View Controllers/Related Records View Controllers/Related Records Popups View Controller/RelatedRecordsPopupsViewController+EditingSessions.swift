@@ -43,13 +43,15 @@ extension RelatedRecordsPopupsViewController {
         }
         else {
             
-            guard recordsManager.isEditing, let invalids = recordsManager.validatePopup() else {
+            guard recordsManager.isEditing else {
                 completion?(true)
                 return
             }
             
+            let invalids = recordsManager.validatePopup()
+            
             // 1. Check Validity
-            guard invalids.count == 0 else {
+            guard invalids.isEmpty else {
                 self.present(simpleAlertMessage: "You cannot save this \(popup.recordType.rawValue). There \(invalids.count == 1 ? "is" : "are") \(invalids.count) invalid field\(invalids.count == 1 ? "" : "s").")
                 completion?(false)
                 return
@@ -110,10 +112,7 @@ extension RelatedRecordsPopupsViewController {
         }
         
         present(confirmationAlertMessage: "You must save first.", confirmationTitle: "Save", confirmationAction: { [weak self] (_) in
-            self?.editPopup(false) { (success: Bool) in
-                completion(success)
-                return
-            }
+            self?.editPopup(false, completion: completion)
         })
     }
     
@@ -182,10 +181,8 @@ extension RelatedRecordsPopupsViewController {
             
             self.delete(popup: childPopup, parentPopupManager: self.recordsManager) { (success) in
                 
-                defer {
-                    SVProgressHUD.dismiss()
-                    self.tableView.reloadData()
-                }
+                SVProgressHUD.dismiss()
+                self.tableView.reloadData()
                 
                 if !success {
                     self.present(simpleAlertMessage: "Could not delete child \(childPopup.recordType.rawValue)")

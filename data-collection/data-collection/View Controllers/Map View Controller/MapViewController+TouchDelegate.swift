@@ -49,20 +49,9 @@ extension MapViewController: AGSGeoViewTouchDelegate {
                 return
             }
             
-            var firstIdentifiableResult: AGSIdentifyLayerResult?
-            
-            for identifyResult in identifyResults {
-                
-                guard
-                    let featureLayer = identifyResult.layerContent as? AGSFeatureLayer,
-                    featureLayer.isIdentifiable
-                    else {
-                        continue
-                }
-                
-                firstIdentifiableResult = identifyResult
-                break
-            }
+            let firstIdentifiableResult = identifyResults.first(where: { (identifyLayerResult) -> Bool in
+                return (identifyLayerResult.layerContent as? AGSFeatureLayer)?.isIdentifiable ?? false
+            })
             
             guard let identifyResult = firstIdentifiableResult else {
                 print("[Error] no found feature layer meets criteria")
