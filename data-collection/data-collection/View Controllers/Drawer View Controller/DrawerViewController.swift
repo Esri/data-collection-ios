@@ -32,6 +32,7 @@ class DrawerViewController: UIViewController {
     @IBOutlet weak var workOfflineButton: UIButton!
     @IBOutlet weak var synchronizeOfflineMapButton: UIButton!
     @IBOutlet weak var deleteOfflineMapButton: UIButton!
+    @IBOutlet weak var appVersionLabel: UILabel!
     
     weak var delegate: DrawerViewControllerDelegate?
     
@@ -59,9 +60,15 @@ class DrawerViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        setAppVersionLabel()
         setButtonImageTints()
         setButtonAttributedTitles()
         subscribeToAppContextChanges()
+    }
+    
+    func setAppVersionLabel() {
+        
+        appVersionLabel.text = "\(Bundle.AppNameVersionString)\n\(Bundle.ArcGISSDKVersionString)"
     }
     
     func setButtonImageTints() {
