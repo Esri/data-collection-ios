@@ -39,13 +39,13 @@ extension UINavigationController: UINavigationBarDelegate  {
             }
         }
         else {
-            for subView in navigationBar.subviews {
-                if(0 < subView.alpha && subView.alpha < 1) {
-                    UIView.animate(withDuration: 0.25, animations: {
+            UIView.animate(withDuration: 0.25, animations: {
+                for subView in navigationBar.subviews {
+                    if(0 < subView.alpha && subView.alpha < 1) {
                         subView.alpha = 1
-                    })
+                    }
                 }
-            }
+            })
         }
         
         return false
