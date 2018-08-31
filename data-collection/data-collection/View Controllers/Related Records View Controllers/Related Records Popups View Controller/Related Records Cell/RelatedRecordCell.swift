@@ -90,13 +90,13 @@ class RelatedRecordCell: UITableViewCell {
                 let titleLabel = UILabel()
                 titleLabel.numberOfLines = 1
                 titleLabel.textColor = appColors.tableCellTitle
-                titleLabel.font = appFonts.tableCellTitle
+                titleLabel.font = .tableCellTitle
                 stackView.addArrangedSubview(titleLabel)
                 
                 let valueLabel = UILabel()
                 valueLabel.numberOfLines = 0
                 valueLabel.textColor = appColors.tableCellValue
-                valueLabel.font = appFonts.tableCellValue
+                valueLabel.font = .tableCellValue
                 stackView.addArrangedSubview(valueLabel)
                 
                 attributes.append((titleLabel, valueLabel))
@@ -153,7 +153,7 @@ class RelatedRecordCell: UITableViewCell {
         if emptyCellLabel == nil {
             emptyCellLabel = UILabel()
             emptyCellLabel?.numberOfLines = 1
-            emptyCellLabel?.font = appFonts.tableCellTitle
+            emptyCellLabel?.font = .tableCellTitle
             stackView.addArrangedSubview(emptyCellLabel!)
         }
         

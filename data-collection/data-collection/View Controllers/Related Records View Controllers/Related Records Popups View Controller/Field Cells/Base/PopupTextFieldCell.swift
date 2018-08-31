@@ -23,7 +23,7 @@ class PopupTextFieldCell: PopupEditableFieldCell<UITextField> {
             
             valueEditView = UITextField(frame: .zero)
             valueEditView?.textColor = appColors.tableCellValue
-            valueEditView?.font = appFonts.tableCellValue
+            valueEditView?.font = .tableCellValue
             valueEditView?.sizeToFit()
             valueEditView?.borderStyle = .roundedRect
             valueEditView?.keyboardType = keyboardType
