@@ -14,22 +14,212 @@
 
 import Foundation
 
-enum AGSPortalError: Error {
-    case invalidPortalURL
-    case invalidPortalJSON
-}
+protocol AppError: CustomNSError, LocalizedError { }
 
-enum AuthenticationError: Error {
-    case badCredentials
-}
-
-enum AssetsError: Error {
-    case missingAsset(String)
+enum AppFilesError: AppError  {
+    
+    case cannotBuildPath(String)
+    
+    var errorCode: Int {
+        switch self {
+        case .cannotBuildPath(_):
+            return 1001
+        }
+    }
+    
+    var errorUserInfo: [String : Any] {
+        switch self {
+        case .cannotBuildPath(let path):
+            return [NSLocalizedDescriptionKey: "Cannot build path \(path)"]
+        }
+    }
     
     var localizedDescription: String {
+        return errorUserInfo[NSLocalizedDescriptionKey] as! String
+    }
+}
+
+enum RelatedRecordsManagerError: AppError {
+    
+    case featureMissingTable
+    case missingManyToOneRelationship(String)
+    case invalidPopup
+    case cannotRelateFeatures
+
+    var errorCode: Int {
         switch self {
-        case .missingAsset(let name):
-            return "Missing local asset named \(name)"
+        case .featureMissingTable:
+            return 2001
+        case .missingManyToOneRelationship(_):
+            return 2002
+        case .invalidPopup:
+            return 2003
+        case .cannotRelateFeatures:
+            return 2004
         }
+    }
+
+    var errorUserInfo: [String : Any] {
+        switch self {
+        case .featureMissingTable:
+            return [NSLocalizedDescriptionKey: "Feature does not belong to a feature table"]
+        case .missingManyToOneRelationship(let str):
+            return [NSLocalizedDescriptionKey: "Missing value for many to one relationship \(str)"]
+        case .invalidPopup:
+            return [NSLocalizedDescriptionKey: "Popup with related records in invalid."]
+        case .cannotRelateFeatures:
+            return [NSLocalizedDescriptionKey: "Features or Relationship Info missing."]
+        }
+    }
+
+    var localizedDescription: String {
+        return errorUserInfo[NSLocalizedDescriptionKey] as! String
+    }
+}
+
+enum FeatureTableError: AppError {
+    
+    case missingFeature
+    case missingFeatureTable
+    case missingRelationshipInfos
+    case multipleQueriesFailure
+    case queryResultsMissingFeatures
+    case queryResultsMissingPopups
+    case isNotArcGISFeatureTable
+    case isNotPopupEnabled
+    case cannotEditFeature
+
+    var errorCode: Int {
+        switch self {
+        case .missingFeature:
+            return 3001
+        case .missingFeatureTable:
+            return 3002
+        case .missingRelationshipInfos:
+            return 3003
+        case .multipleQueriesFailure:
+            return 3004
+        case .queryResultsMissingFeatures:
+            return 3005
+        case .queryResultsMissingPopups:
+            return 3006
+        case .isNotArcGISFeatureTable:
+            return 3007
+        case .isNotPopupEnabled:
+            return 3008
+        case .cannotEditFeature:
+            return 3009
+        }
+    }
+    
+    var errorUserInfo: [String : Any] {
+        switch self {
+        case .missingFeature:
+            return [NSLocalizedDescriptionKey: "Missing feature"]
+        case .missingFeatureTable:
+            return [NSLocalizedDescriptionKey: "Missing feature table"]
+        case .missingRelationshipInfos:
+            return [NSLocalizedDescriptionKey: "Feature does not belong to a feature table."]
+        case .multipleQueriesFailure:
+            return [NSLocalizedDescriptionKey: "Attempt to query table multiple times failed."]
+        case .queryResultsMissingFeatures:
+            return [NSLocalizedDescriptionKey: "Query result is missing features."]
+        case .queryResultsMissingPopups:
+            return [NSLocalizedDescriptionKey: "Query result is missing popups."]
+        case .isNotArcGISFeatureTable:
+            return [NSLocalizedDescriptionKey: "Feature table is not of type AGSServiceFeatureTable or AGSGeodatabaseFeatureTable."]
+        case .isNotPopupEnabled:
+            return [NSLocalizedDescriptionKey: "Feature table is not popup enabled."]
+        case .cannotEditFeature:
+            return [NSLocalizedDescriptionKey: "Feature table cannot edit (add/update) feature."]
+        }
+    }
+    
+    var localizedDescription: String {
+        return errorUserInfo[NSLocalizedDescriptionKey] as! String
+    }
+}
+
+enum PopupSortingError : AppError {
+    
+    case missingFields
+    case badFields
+    case noValues
+    case invalidValueType
+    
+    var errorCode: Int {
+        switch self {
+        case .missingFields:
+            return 4001
+        case .badFields:
+            return 4002
+        case .noValues:
+            return 4003
+        case .invalidValueType:
+            return 4004
+        }
+    }
+    
+    var errorUserInfo: [String : Any] {
+        switch self {
+        case .missingFields:
+            return [NSLocalizedDescriptionKey: "A popup you are comparing does not have any fields."]
+        case .badFields:
+            return [NSLocalizedDescriptionKey: "Both popups fields must be of the same type."]
+        case .noValues:
+            return [NSLocalizedDescriptionKey: "A popup you are comparing contains a nil value."]
+        case .invalidValueType:
+            return [NSLocalizedDescriptionKey: "A popup you are comparing contains an invalid type."]
+        }
+    }
+    
+    var localizedDescription: String {
+        return errorUserInfo[NSLocalizedDescriptionKey] as! String
+    }
+}
+
+enum AppGeocoderError: AppError {
+    
+    case missingAddressAttribute
+    
+    var errorCode: Int {
+        switch self {
+        case .missingAddressAttribute:
+            return 5001
+        }
+    }
+    
+    var errorUserInfo: [String : Any] {
+        switch self {
+        case .missingAddressAttribute:
+            return [NSLocalizedDescriptionKey: "Missing Address (for online locator) or Match_addr (for offline locator) in attributes."]
+        }
+    }
+    
+    var localizedDescription: String {
+        return errorUserInfo[NSLocalizedDescriptionKey] as! String
+    }
+}
+
+enum AppLoadableError: AppError {
+    
+    case canceledLoad
+    
+    var errorCode: Int {
+        switch self {
+        case .canceledLoad:
+            return 6001
+        }
+    }
+    
+    var errorUserInfo: [String : Any] {
+        switch self {
+        case .canceledLoad:
+            return [NSLocalizedDescriptionKey: "Did cancel load."]
+        }
+    }
+    
+    var canceledLoad: String {
+        return errorUserInfo[NSLocalizedDescriptionKey] as! String
     }
 }

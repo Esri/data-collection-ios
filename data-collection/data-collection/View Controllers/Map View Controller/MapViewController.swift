@@ -15,88 +15,115 @@
 import UIKit
 import ArcGIS
 
-enum MapViewMode {
-    case `default`
-    case disabled
-    case selectedFeature
-    case selectingFeature
-    case offlineMask
-    case offlineDownload
-    case noMap
-}
-
-enum LocationSelectionViewType {
-    
-    case newFeature
-    case offlineExtent
-    
-    var headerText: String {
-        switch self {
-        case .newFeature:
-            return "Choose the location"
-        case .offlineExtent:
-            return "Select the region of the map to take offline"
-        }
-    }
-    
-    var subheaderText: String {
-        switch self {
-        case .newFeature:
-            return "Pan and zoom map under pin"
-        case .offlineExtent:
-            return "Pan and zoom map within the rectangle"
-        }
-    }
-}
-
-protocol MapViewControllerDelegate {
+protocol MapViewControllerDelegate: AnyObject {
     func mapViewController(_ mapViewController: MapViewController, didSelect extent: AGSEnvelope)
+    func mapViewController(_ mapViewController: MapViewController, shouldAllowNewFeature: Bool)
+    func mapViewController(_ mapViewController: MapViewController, didUpdateTitle title: String)
 }
 
-class MapViewController: AppContextAwareController {
-
-    var delegate: MapViewControllerDelegate?
+class MapViewController: UIViewController {
     
+    struct EphemeralCacheKeys {
+        static let newSpatialFeature = "MapViewController.newFeature.spatial"
+        static let newNonSpatialFeature = "MapViewController.newFeature.nonspatial"
+        static let newRelatedRecord = "MapViewController.newRelatedRecord"
+    }
+    
+    enum LocationSelectionViewType {
+        case newFeature
+        case offlineExtent
+    }
+    
+    enum MapViewMode {
+        case defaultView
+        case disabled
+        case selectedFeature
+        case selectingFeature
+        case offlineMask
+    }
+
+    weak var delegate: MapViewControllerDelegate?
+    
+    let changeHandler = AppContextChangeHandler()
+
     @IBOutlet weak var mapView: AGSMapView!
-    @IBOutlet weak var smallPopupView: UIView!
+    @IBOutlet weak var smallPopupView: ShrinkingView!
+    @IBOutlet weak var popupsContainerView: UIView!
+    @IBOutlet weak var addPopupRelatedRecordButton: UIButton!
     @IBOutlet weak var selectView: UIView!
     @IBOutlet weak var pinDropView: PinDropView!
     @IBOutlet weak var activityBarView: ActivityBarView!
     @IBOutlet weak var notificationBar: NotificationBarLabel!
     @IBOutlet weak var compassView: CompassView!
+    @IBOutlet weak var reloadMapButton: UIButton!
+    
+    @IBOutlet weak var relatedRecordHeaderLabel: UILabel!
+    @IBOutlet weak var relatedRecordSubheaderLabel: UILabel!
+    @IBOutlet weak var relatedRecordsNLabel: UILabel!
     
     @IBOutlet weak var selectViewTopConstraint: NSLayoutConstraint!
     @IBOutlet weak var selectViewHeaderLabel: UILabel!
     @IBOutlet weak var selectViewSubheaderLabel: UILabel!
     
-    var featureDetailViewBottomConstraint: NSLayoutConstraint!
+    var maskViewController: MaskViewController!
+    @IBOutlet weak var maskViewContainer: UIView!
     
-    var observeDrawStatus: NSKeyValueObservation?
-    var observeLocationAuthorization: NSKeyValueObservation?
-    var observeCurrentMap: NSKeyValueObservation?
+    var featureDetailViewBottomConstraint: NSLayoutConstraint!
+
+    var identifyOperation: AGSCancelable?
+    
+    var currentPopup: AGSPopup? {
+        set {
+            if let popup = newValue {
+                recordsManager = PopupRelatedRecordsManager(popup: popup)
+            } else {
+                recordsManager = nil
+            }
+        }
+        get {
+            return recordsManager?.popup
+        }
+    }
+    
+    internal private(set) var recordsManager: PopupRelatedRecordsManager? {
+        willSet {
+            recordsManager?.popup.clearSelection()
+        }
+        didSet {
+            refreshCurrentPopup()
+            updateSmallPopupViewForCurrentPopup()
+        }
+    }
+    
+    var mapViewMode: MapViewMode = .defaultView {
+        didSet {
+            adjustForMapViewMode(from: oldValue, to: mapViewMode)
+        }
+    }
     
     var locationSelectionType: LocationSelectionViewType = .newFeature {
         didSet {
-            updateSelectView(forType: locationSelectionType)
+            adjustForLocationSelectionType()
         }
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // SETUPS
-        setupMapViewAttributionBarAutoLayoutConstraints()
+        // MAPVIEW
         setupMapView()
         
-        // OBSERVERS
-        setupObservers()
+        // SETUPS
+        setupMapViewAttributionBarAutoLayoutConstraints()
         
-        //
-        adjustForMapViewMode()
+        // SMALL POPUP
+        setupSmallPopupView()
+
+        // MAPVIEWMODE
+        adjustForMapViewMode(from: nil, to: mapViewMode)
         
-        let map = AGSMap(basemap: AGSBasemap.streetsVector())
-        mapView.map = map
-        mapView.map?.load(completion: { (error) in })
+        // LOCATION SELECTION TYPE
+        adjustForLocationSelectionType()
         
         // COMPASS
         compassView.mapView = mapView
@@ -104,297 +131,132 @@ class MapViewController: AppContextAwareController {
         // ACTIVITY BAR
         activityBarView.mapView = mapView
         
+        subscribeToAppContextChanges()
+        
         // Load Map and Services
-        appContext.loadOfflineMobileMapPackageAndSetBestMap()
+        appContext.loadOfflineMobileMapPackageAndSetMapForCurrentWorkMode()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
         adjustForLocationAuthorizationStatus()
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-
-    // MARK: Setup
-    
-    func setupMapView() {
-        mapView.touchDelegate = self
-        mapView.releaseHardwareResourcesWhenBackgrounded = true
-        mapView.interactionOptions.isMagnifierEnabled = true
+        
+        displayInitialReachabilityMessage()
+        
+        refreshCurrentPopup()
+        updateSmallPopupViewForCurrentPopup()
     }
     
-    func setupMapViewAttributionBarAutoLayoutConstraints() {
-        featureDetailViewBottomConstraint = mapView.attributionTopAnchor.constraint(equalTo: smallPopupView.bottomAnchor, constant: 8)
-        featureDetailViewBottomConstraint.isActive = true
-    }
-    
-    // MARK: Observers
-    
-    func setupObservers() {
-        beginObservingLocationAuthStatus()
-        beginMonitoringMapviewLayerViewStateChanges()
-        beginObservingCurrentMap()
-    }
-    
-    private func beginObservingLocationAuthStatus() {
-        observeLocationAuthorization = AppLocation.shared.observe(\.locationAuthorized, options:[.new, .old]) { [weak self] (appLocation, _) in
-            print("[Location Authorization] is authorized: \(appLocation.locationAuthorized)")
-            self?.adjustForLocationAuthorizationStatus()
+    func refreshCurrentPopup() {
+        
+        if let popup = currentPopup, !popup.isFeatureAddedToTable {
+            currentPopup = nil
         }
     }
     
-    private func beginMonitoringMapviewLayerViewStateChanges() {
-        mapView.layerViewStateChangedHandler = { (layer:AGSLayer, state:AGSLayerViewState) in
-            print("[Layer View State] \(state) - \(layer.name)")
-        }
+    @IBAction func userRequestsReloadMap(_ sender: Any) {
+        loadMapViewMap()
     }
     
-    private func beginObservingCurrentMap() {
-        observeCurrentMap = appContext.observe(\.currentMap, options:[.new, .old]) { [weak self] (appContext, _) in
-            self?.mapView.map = appContext.currentMap
-            if let map = appContext.currentMap {
-                print("[Current Map] \(map)")
-            }
-            else {
-                print("[Current Map] nil")
-            }
-        }
-    }
-    
-    // MARK: Adjustments
-    
-    func adjustForLocationAuthorizationStatus() {
-        mapView.locationDisplay.showLocation = AppLocation.shared.locationAuthorized
-        mapView.locationDisplay.showAccuracy = AppLocation.shared.locationAuthorized
-        if AppLocation.shared.locationAuthorized {
-            mapView.locationDisplay.start { (err) in
-                if let error = err {
-                    print("[Error] Cannot display user location: \(error.localizedDescription)")
-                }
-            }
-        }
-        else {
-            mapView.locationDisplay.stop()
-        }
-    }
-    
-    func invalidateAndReleaseObservations() {
+    @IBAction func userRequestsAddNewRelatedRecord(_ sender: Any) {
         
-        // Invalidate and release KVO observations
-        observeDrawStatus?.invalidate()
-        observeDrawStatus = nil
-        
-        observeLocationAuthorization?.invalidate()
-        observeLocationAuthorization = nil
-        
-        observeCurrentMap?.invalidate()
-        observeCurrentMap = nil
-    }
-    
-    // MARK: Select View
-    
-    func prepareMapMaskViewForOfflineDownloadArea() {
-        presentMapMaskViewForOfflineDownloadArea()
-        mapViewMode = .offlineMask
-    }
-    
-    @IBAction func userDidSelectLocation(_ sender: Any) {
-
-        switch locationSelectionType {
-        case .newFeature:
-            break
-        case .offlineExtent:
-            prepareForOfflineMapDownloadJob()
-            break
-        }
-        
-        mapViewMode = .`default`
-    }
-    
-    @IBAction func userDidCancelSelectLocation(_ sender: Any) {
-        
-        switch locationSelectionType {
-        case .newFeature:
-            break
-        case .offlineExtent:
-            hideMapMaskViewForOfflineDownloadArea()
-            break
-        }
-        
-        mapViewMode = .`default`
-    }
-    
-    func updateSelectView(forType type: LocationSelectionViewType) {
-        
-        selectViewHeaderLabel.text = type.headerText
-        selectViewSubheaderLabel.text = type.subheaderText
-    }
-    
-    func userRequestsAddNewFeature() {
-        
-        // 1 User must be logged in, prompt if not.
         guard appContext.isLoggedIn else {
-            present(loginAlertMessage: "You must log in to add a Tree.")
+            self.present(loginAlertMessage: "You must log in to add a related record.")
             return
         }
         
-        mapViewMode = .selectingFeature
-    }
-    
-    // MARK: User Location
-    
-    func userRequestsZoomOnUserLocation() {
-        if AppLocation.shared.locationAuthorized {
-            guard mapView.locationDisplay.showLocation == true, let location = mapView.locationDisplay.location, let position = location.position else {
-                return
-            }
-            let scale = min(1500, mapView.mapScale)
-            let viewpoint = AGSViewpoint(center: position, scale: scale)
-            mapView.setViewpoint(viewpoint, duration: 1.2, completion: nil)
-        }
-        else {
-            present(settingsAlertMessage: "You must enable Data Collection to access your location in your device's settings to zoom to your location.")
-        }
-    }
-    
-    // MARK: Map View Mode
-    var mapViewMode: MapViewMode = .`default` {
-        didSet {
-            adjustForMapViewMode()
-        }
-    }
-    
-    func adjustForMapViewMode() {
-        
-        let smallPopViewVisible: (Bool) -> UIViewAnimations = { [unowned mvc = self] (visible) in
-            return {
-                mvc.smallPopupView.alpha = visible.asAlpha
-                mvc.featureDetailViewBottomConstraint.constant = visible ? 8 : 28
-            }
+        guard
+            let parentPopup = currentPopup,
+            let featureTable = recordsManager?.oneToMany.first?.relatedTable,
+            let childPopup = featureTable.createPopup()
+            else {
+            present(simpleAlertMessage: "Uh Oh! You are unable to add a new related record.")
+            return
         }
         
-        let selectViewVisible: (Bool) -> UIViewAnimations = { [unowned mvc = self] (visible) in
-            return {
-                mvc.selectViewTopConstraint.constant = visible ? 0 : -mvc.selectView.frame.height
-                mvc.selectView.alpha = visible.asAlpha
+        SVProgressHUD.show(withStatus: "Creating new \(childPopup.title ?? "related record").")
+        
+        let parentPopupManager = PopupRelatedRecordsManager(popup: parentPopup)
+        
+        parentPopupManager.loadRelatedRecords { [weak self] in
+            
+            EphemeralCache.set(object: (parentPopupManager, childPopup), forKey: EphemeralCacheKeys.newRelatedRecord)
+            SVProgressHUD.dismiss()
+            self?.performSegue(withIdentifier: "modallyPresentRelatedRecordsPopupViewController", sender: nil)
+        }
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+        if let destination = segue.navigationDestination as? RelatedRecordsPopupsViewController {
+            if let newPopup = EphemeralCache.get(objectForKey: EphemeralCacheKeys.newSpatialFeature) as? AGSPopup {
+                currentPopup = newPopup
+                destination.popup = newPopup
+                destination.editPopup(true)
+            }
+            else if let (parentPopupManager, childPopup) = EphemeralCache.get(objectForKey: EphemeralCacheKeys.newRelatedRecord) as? (PopupRelatedRecordsManager, AGSPopup) {
+                destination.parentRecordsManager = parentPopupManager
+                destination.popup = childPopup
+                destination.editPopup(true)
+            }
+            else {
+                destination.popup = currentPopup!
             }
         }
-        
-        var animations = [UIViewAnimations]()
-        
-        switch mapViewMode {
-            
-        case .selectingFeature:
-            pinDropView.pinDropped = true
-            animations.append( selectViewVisible(true) )
-            animations.append( smallPopViewVisible(false) )
-            locationSelectionType = .newFeature
-            
-        case .selectedFeature:
-            pinDropView.pinDropped = false
-            animations.append( selectViewVisible(false) )
-            animations.append( smallPopViewVisible(true) )
-            
-        case .offlineMask:
-            pinDropView.pinDropped = false
-            animations.append( selectViewVisible(true) )
-            animations.append( smallPopViewVisible(false) )
-            locationSelectionType = .offlineExtent
-            
-        default:
-            pinDropView.pinDropped = false
-            animations.append( selectViewVisible(false) )
-            animations.append( smallPopViewVisible(false) )
-        }
-        
-        UIView.animate(withDuration: 0.2) { [unowned mvc = self] in
-            for animation in animations { animation() }
-            mvc.view.layoutIfNeeded()
+        else if let destination = segue.destination as? MaskViewController {
+            maskViewController = destination
         }
     }
     
-    // MARK: App Context
+    private func displayInitialReachabilityMessage() {
+        if !appReachability.isReachable { displayReachabilityMessage(isReachable: false) }
+    }
     
-    override func appWorkModeDidChange() {
+    private func displayReachabilityMessage(isReachable reachable: Bool) {
+        notificationBar.showLabel(withNotificationMessage: "Device \(reachable ? "gained" : "lost") connection to the network.", forDuration: 6.0)
+    }
+    
+    func subscribeToAppContextChanges() {
         
-        super.appWorkModeDidChange()
-        
-        DispatchQueue.main.async { [weak self] in
-            self?.activityBarView.colorA = (appContext.workMode == .online) ? AppColors.primaryLight : AppColors.offlineLight
-            self?.activityBarView.colorB = (appContext.workMode == .online) ? AppColors.primaryDark : AppColors.offlineDark
-            self?.notificationBar.backgroundColor = (appContext.workMode == .online) ? AppColors.offlineLight : AppColors.offlineDark
+        let currentMapChange: AppContextChange = .currentMap { [weak self] currentMap in
+            
+            self?.currentPopup = nil
+            self?.mapView.map = currentMap
+            self?.loadMapViewMap()
         }
-    }
-    
-    deinit {
-        // Remove gestures
-        // TODO: needed?
-        mapView.removeGestures()
         
-        // Invalidate and release KVO observations
-        invalidateAndReleaseObservations()
-    }
-}
+        let locationAuthorizationChange: AppContextChange = .locationAuthorization { [weak self] authorized in
+            
+            self?.mapView.locationDisplay.showLocation = authorized
+            self?.mapView.locationDisplay.showAccuracy = authorized
+            
+            if authorized {
+                self?.mapView.locationDisplay.start { (err) in
+                    if let error = err {
+                        print("[Error] Cannot display user location: \(error.localizedDescription)")
+                    }
+                }
+            }
+            else {
+                self?.mapView.locationDisplay.stop()
+            }
+        }
 
-extension MapViewController: AGSGeoViewTouchDelegate {
-    
-    func geoView(_ geoView: AGSGeoView, didTapAtScreenPoint screenPoint: CGPoint, mapPoint: AGSPoint) {
-        query(geoView, atScreenPoint: screenPoint, mapPoint: mapPoint)
-    }
-    
-    func geoView(_ geoView: AGSGeoView, didEndLongPressAtScreenPoint screenPoint: CGPoint, mapPoint: AGSPoint) {
-        query(geoView, atScreenPoint: screenPoint, mapPoint: mapPoint)
-    }
-    
-    private func query(_ geoView: AGSGeoView, atScreenPoint screenPoint: CGPoint, mapPoint: AGSPoint) {
-//
-//        guard let map = mapView.map, map.loadStatus == .loaded, newTreeUIVisible == false, let treeManager = appTreesManager else {
-//            return
-//        }
-//
-//        selectedTreeDetailViewLoading = true
-//
-//        queryForTreeAtMapPoint?.cancel()
-//        queryForTreeAtMapPoint = nil
-//
-//        // Extension bridge between AGSGeoView identifyTree(::::::) with ArcGIS runtime feature service layers.
-//        // See: AGSGeoView+Extensions.swift
-//        queryForTreeAtMapPoint = geoView.identifyTree(atScreenPoint: screenPoint, tolerance: 8, returnPopupsOnly: false, maximumResults: 8)  { [weak self] (result) in
-//
-//            treeManager.clearSelections()
-//
-//            guard let queryResult = result else {
-//                self?.selectedTree = nil
-//                self?.queryForTreeAtMapPoint = nil
-//                return
-//            }
-//
-//            guard
-//                let features = queryResult.geoElements as? [AGSArcGISFeature],
-//                let feature = features.featureNearestTo(mapPoint: mapPoint)
-//                else {
-//
-//                    self?.mapViewNotificationBarLabel.showLabel(withNotificationMessage: "Did not find a tree at that location.", forDuration: 2.0)
-//                    self?.selectedTree = nil
-//                    self?.queryForTreeAtMapPoint = nil
-//                    return
-//            }
-//
-//            treeManager.tree(forSelectedFeature: feature) { (tree) in
-//
-//                self?.selectedTree = tree
-//                self?.queryForTreeAtMapPoint = nil
-//
-//                if let point = feature.geometry as? AGSPoint, let scale = self?.mapView.mapScale {
-//
-//                    let viewpoint = AGSViewpoint(center: point, scale: scale)
-//                    self?.mapView.setViewpoint(viewpoint, duration: 1.2, completion: nil)
-//                }
-//            }
-//        }
+        let workModeChange: AppContextChange = .workMode { [weak self] workMode in
+            
+            DispatchQueue.main.async { [weak self] in
+                self?.activityBarView.colorA = (workMode == .online) ? UIColor.primary.lighter : .offlineLight
+                self?.activityBarView.colorB = (workMode == .online) ? UIColor.primary.darker : .offlineDark
+                self?.notificationBar.backgroundColor = (workMode == .online) ? UIColor.primary.lighter : .offlineDark
+            }
+        }
+        
+        let reachabilityChange: AppContextChange = .reachability { [weak self] reachable in
+            
+            self?.displayReachabilityMessage(isReachable: reachable)
+        }
+
+        changeHandler.subscribe(toChanges: [currentMapChange, locationAuthorizationChange, workModeChange, reachabilityChange])
     }
 }

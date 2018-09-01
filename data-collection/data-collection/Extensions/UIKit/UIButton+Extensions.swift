@@ -25,20 +25,57 @@ extension UIControlState: Hashable {
 extension UIButton {
     
     func setTintColors(forControlStateColors controlStateColors: [UIControlState: UIColor]) {
-
+        
         guard let normalImage = image(for: .normal) else {
             print("[Tint Color Error] no default image for control state normal.")
             return
         }
-        setImage(normalImage, forControlStateColors: controlStateColors)
-    }
-
-    func setImage(_ image: UIImage, forControlStateColors controlStateColors: [UIControlState: UIColor]) {
-
+        
         for controlStateColor in controlStateColors {
-            if let controlStateImage = image.renderImage(toMaskWithColor: controlStateColor.value) {
+            if let controlStateImage = normalImage.renderImage(toMaskWithColor: controlStateColor.value) {
                 setImage(controlStateImage, for: controlStateColor.key)
             }
+        }
+    }
+    
+    func setAttributed(header: String, subheader: String? = nil, forControlStateColors controlStateColors: [UIControlState: UIColor], headerFont: UIFont, subheaderFont: UIFont? = nil) {
+        
+        var attributedTitleString: NSMutableAttributedString
+        
+        let headerLocation = 0
+
+        for (state, color) in controlStateColors {
+            
+            var headerLength = header.count
+            
+            let headerRange = NSRange(location: headerLocation, length: headerLength)
+            
+            attributedTitleString = NSMutableAttributedString(string: header)
+            attributedTitleString.addAttributes([.foregroundColor : color, .font: headerFont], range: headerRange)
+
+            if let subheader = subheader, let subheaderFont = subheaderFont {
+
+                let newline = "\n"
+                
+                headerLength += newline.count
+                
+                let subheaderLocation = headerLength
+                let subheaderLength = subheader.count
+                
+                let subheaderAttributedString = NSAttributedString(string: "\(newline)\(subheader)")
+                attributedTitleString.append(subheaderAttributedString)
+                
+                let subheaderRange = NSRange(location: subheaderLocation, length: subheaderLength)
+                
+                attributedTitleString.addAttributes([.foregroundColor : color, .font: subheaderFont], range: subheaderRange)
+                
+                titleLabel?.numberOfLines = 2
+            }
+            else {
+                titleLabel?.numberOfLines = 1
+            }
+            
+            self.setAttributedTitle(attributedTitleString, for: state)
         }
     }
 }

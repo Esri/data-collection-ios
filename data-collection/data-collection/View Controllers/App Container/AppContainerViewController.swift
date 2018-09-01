@@ -15,11 +15,12 @@
 import UIKit
 import ArcGIS
 
-protocol DrawerViewReferencable {
-    weak var drawerView: AppContainerViewController? { get set }
+protocol AppContainerFocusDelegate: AnyObject {
+    
+    func controllerBecomingFocus()
 }
 
-class AppContainerViewController: AppContextAwareController {
+class AppContainerViewController: UIViewController {
     
     @IBOutlet weak var leftBarButton: UIBarButtonItem!
     @IBOutlet weak var rightBarButton: UIBarButtonItem!
@@ -44,6 +45,7 @@ class AppContainerViewController: AppContextAwareController {
         didSet {
             adjustForDrawerShowing()
             adjustNavigationBarButtons()
+            informChildViewControllersOfFocus()
         }
     }
     
@@ -53,7 +55,7 @@ class AppContainerViewController: AppContextAwareController {
         }
     }
     
-    var showAddTreeBarButton: Bool = true {
+    var showAddFeatureBarButton: Bool = true {
         didSet {
             adjustNavigationBarButtons()
         }
@@ -68,8 +70,10 @@ class AppContainerViewController: AppContextAwareController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        adjustForDrawerShowing()
+        adjustForDrawerShowing(isAnimated: false)
         adjustNavigationBarButtons()
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(AppContainerViewController.deviceOrientationDidChange), name: NSNotification.Name.UIDeviceOrientationDidChange, object: nil)
     }
     
     @IBAction func userTapsOutsideOfDrawer(_ sender: Any) {
@@ -78,6 +82,15 @@ class AppContainerViewController: AppContextAwareController {
     
     @IBAction func userRequestsToggleDrawer(_ sender: Any) {
         drawerShowing = !drawerShowing
+    }
+    
+    private func informChildViewControllersOfFocus() {
+        if drawerShowing {
+            drawerViewController?.controllerBecomingFocus()
+        }
+        else {
+            mapViewController?.controllerBecomingFocus()
+        }
     }
     
     @IBAction func userTapsSecondRightButton(_ sender: Any) {
@@ -89,44 +102,50 @@ class AppContainerViewController: AppContextAwareController {
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if var destination = segue.destination as? DrawerViewReferencable {
-            destination.drawerView = self
-        }
+
         if let destination = segue.destination as? MapViewController {
             destination.delegate = self
             mapViewController = destination
         }
         else if let destination = segue.destination as? DrawerViewController {
-            destination.contextViewControllerJobDelegate = self
+            destination.delegate = self
             drawerViewController = destination
         }
         else if let destination = segue.destination as? JobStatusViewController {
-            destination.offlineMapJob = EphemeralCache.get(objectForKey: AppOfflineMapJob.ephemeralCacheKey) as? AppOfflineMapJob
+            destination.jobConstruct = EphemeralCache.get(objectForKey: AppOfflineMapJobConstructionInfo.EphemeralCacheKeys.offlineMapJob) as? AppOfflineMapJobConstructionInfo
             destination.delegate = self
             jobStatusViewController = destination
         }
     }
     
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        adjustForDrawerShowing()
+    @objc func deviceOrientationDidChange() {
+        adjustForDrawerShowing(isAnimated: false)
     }
     
-    func adjustForDrawerShowing() {
+    func adjustForDrawerShowing(isAnimated: Bool = true) {
         
+        let animationDuration = 0.2
         drawerLeadingLayoutConstraint.constant = drawerShowing ? 0.0 : -contextView.frame.size.width
-        
-        UIView.animate(withDuration: 0.2, delay: 0.0, options: .curveEaseOut, animations: {
-            self.view.layoutIfNeeded()
-            self.visualEffectView.effect = self.drawerShowing ? UIBlurEffect(style: .light) : nil
-        }) { (_) in
-            self.visualEffectView.isUserInteractionEnabled = self.drawerShowing
+
+        UIView.animate(withDuration: animationDuration, delay: 0.0, options: .curveEaseOut, animations: { [weak self] in
+            self?.view.layoutIfNeeded()
+            self?.adjustVisualEffectViewBlurEffect()
+        }) { [weak self] (_) in
+            self?.adjustVisualEffectViewIsUserInteractionEnabled()
         }
+    }
+    
+    private func adjustVisualEffectViewBlurEffect() {
+        self.visualEffectView.effect = self.drawerShowing ? UIBlurEffect(style: .light) : nil
+    }
+    
+    private func adjustVisualEffectViewIsUserInteractionEnabled() {
+        self.visualEffectView.isUserInteractionEnabled = self.drawerShowing
     }
     
     func adjustNavigationBarButtons() {
         
-        rightBarButton?.isEnabled = !drawerShowing && showAddTreeBarButton
+        rightBarButton?.isEnabled = !drawerShowing && showAddFeatureBarButton
         secondRightBarButton?.isEnabled = !drawerShowing && showZoomToLocationBarButton
         leftBarButton?.isEnabled = showProfileBarButton
     }

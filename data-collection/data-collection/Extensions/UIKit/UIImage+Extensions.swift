@@ -19,7 +19,7 @@ extension UIImage {
     /**
      This UIImage extension function returns a new copy of an image that is resized, circled and given a white stroke weight.
      */
-    func circularThumbnail(ofSize desiredWH: CGFloat) -> UIImage? {
+    func circularThumbnail(ofSize desiredWH: CGFloat, strokeColor: UIColor) -> UIImage? {
         
         let scale = min(size.width/desiredWH, size.height/desiredWH)
         
@@ -30,7 +30,11 @@ extension UIImage {
         
         UIGraphicsBeginImageContextWithOptions(CGSize(width: desiredWH, height: desiredWH), false, 0)
         
-        let context = UIGraphicsGetCurrentContext()!
+        guard let context = UIGraphicsGetCurrentContext() else {
+            UIGraphicsEndImageContext()
+            return nil
+        }
+        
         context.saveGState()
         
         let path = UIBezierPath(roundedRect: thumbRect, cornerRadius: min(thumbRect.width/2, thumbRect.height/2))
@@ -41,7 +45,7 @@ extension UIImage {
         
         draw(in: thumbRect)
         
-        UIColor.white.setStroke()
+        strokeColor.setStroke()
         path.lineWidth = 1 * UIScreen.main.scale
         path.stroke()
         
@@ -56,15 +60,24 @@ extension UIImage {
      This UIImage extension function returns a new copy of an image applying a color mask.
      */
     func renderImage(toMaskWithColor color: UIColor) -> UIImage? {
+        
         UIGraphicsBeginImageContextWithOptions(size, false, scale)
-        let context: CGContext? = UIGraphicsGetCurrentContext()
+        
+        guard let context = UIGraphicsGetCurrentContext() else {
+            UIGraphicsEndImageContext()
+            return nil
+        }
+        
         color.setFill()
-        context?.translateBy(x: 0, y: size.height)
-        context?.scaleBy(x: 1.0, y: -1.0)
-        context?.clip(to: CGRect(x: 0, y: 0, width: size.width, height: size.height), mask: cgImage!)
-        context?.fill(CGRect(x: 0, y: 0, width: size.width, height: size.height))
+        context.translateBy(x: 0, y: size.height)
+        context.scaleBy(x: 1.0, y: -1.0)
+        context.clip(to: CGRect(x: 0, y: 0, width: size.width, height: size.height), mask: cgImage!)
+        context.fill(CGRect(x: 0, y: 0, width: size.width, height: size.height))
+        
         let coloredImg: UIImage? = UIGraphicsGetImageFromCurrentImageContext()
+        
         UIGraphicsEndImageContext()
+        
         return coloredImg
     }
 }

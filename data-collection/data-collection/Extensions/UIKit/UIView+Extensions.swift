@@ -17,35 +17,48 @@ import UIKit
 // MARK: UIView Animation
 
 // UIView Animation Callback
+
 typealias UIViewAnimations = () -> Void
-
-// MARK: Gestures
-
-extension UIView {
-    func removeGestures() {
-        if let gestures = gestureRecognizers {
-            for gesture in gestures {
-                removeGestureRecognizer(gesture)
-            }
-        }
-    }
-}
-
-// Core Graphcs
-extension UIView {
-    var boundsCenter: CGPoint {
-        return CGPoint(x: bounds.size.width/2.0, y: bounds.size.height/2.0)
-    }
-}
 
 // MARK: Style
 
 extension UIView {
-//    func stylizeBorder() {
-//        layer.borderColor = UIColor.lightGray.withAlphaComponent(0.2).cgColor
-//        layer.borderWidth = 1
-//        layer.cornerRadius = 5
-//        clipsToBounds = true
-//    }
+    
+    func stylizeBorder() {
+        layer.borderColor = UIColor.lightGray.withAlphaComponent(0.2).cgColor
+        layer.borderWidth = 1
+        layer.cornerRadius = 5
+        clipsToBounds = true
+    }
+}
+
+// MARK: Autolayout
+
+extension UIView {
+    
+    func addStackviewAndConstrainToEdges(_ stackView: UIStackView) {
+
+        addSubview(stackView)
+        
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        
+        let leading = stackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 0)
+        let trailing = stackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: 0)
+        let top = stackView.topAnchor.constraint(equalTo: topAnchor, constant: 0)
+        let bottom = stackView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: 0)
+        
+        switch stackView.axis {
+            
+        case .horizontal:
+            leading.priority = UILayoutPriority(999)
+            trailing.priority = UILayoutPriority(999)
+
+        case .vertical:
+            top.priority = UILayoutPriority(999)
+            bottom.priority = UILayoutPriority(999)
+        }
+        
+        NSLayoutConstraint.activate([leading, trailing, top, bottom])
+    }
 }
 

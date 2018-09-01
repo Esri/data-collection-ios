@@ -20,16 +20,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     var window: UIWindow?
     
-    internal let reachabilityManager: NetworkReachabilityManager = {
-        let manager = NetworkReachabilityManager(host: AppConfiguration.basePortalDomain)
-        assert(manager != nil, "Network Reachability Manager must be constructed a valid service url.")
-        return manager!
-    }()
-    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         
-        // Begin listening to Network Status Changes
-        AppDelegate.beginListeningToNetworkStatusChanges()
+        // License the app
+        AppDelegate.licenseApplication()
+        
+        // Reachability
+        appReachability.resetAndStartListening()
         
         // Enable credential cache auto sync
         AppDelegate.configCredentialCacheAutoSyncToKeychain()
@@ -37,22 +34,30 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Configure oAuth redirect URL
         AppDelegate.configOAuthRedirectURL()
         
-        // Set UIAppearance Defaults
-        AppDelegate.setAppAppearance()
-        
         // Attempt to login from previously stored credentials
         appContext.attemptLoginToPortalFromCredentials()
         
         // Configure file documents directories for offline usage
-        FileManager.buildOfflineDirectories()
-        
+        FileManager.buildOfflineMapDirectory()
+
         return true
+    }
+    
+    func applicationWillEnterForeground(_ application: UIApplication) {
+        appReachability.resetAndStartListening()
+    }
+    
+    func applicationWillResignActive(_ application: UIApplication) {
+        appReachability.stopListening()
+    }
+    
+    func applicationWillTerminate(_ application: UIApplication) {
+        appReachability.stopListening()
     }
 }
 
 extension AppDelegate {
     
-    // NOTE: Mostly Nick's Code, URLComponents API has changed in Swift4
     // MARK: OAuth
     func application(_ app: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any] = [:]) -> Bool {
         // Handle OAuth callback from application(app,url,options) when the app's URL schema is called.
@@ -67,23 +72,13 @@ extension AppDelegate {
         return true
     }
     
-    static func beginListeningToNetworkStatusChanges() {
-        
-        appDelegate.reachabilityManager.listener = { status in
-            print("[Reachability] Network status changed: \(status)")
-            appNotificationCenter.post(AppNotifications.reachabilityChanged)
-        }
-        
-        appDelegate.reachabilityManager.startListening()
-    }
-    
     static func configCredentialCacheAutoSyncToKeychain() {
         AGSAuthenticationManager.shared().credentialCache.enableAutoSyncToKeychain(withIdentifier: AppConfiguration.keychainIdentifier, accessGroup: nil, acrossDevices: false)
     }
     
     static func configOAuthRedirectURL() {
         
-        let oauthConfig = AGSOAuthConfiguration(portalURL: AppConfiguration.basePortalURL!,
+        let oauthConfig = AGSOAuthConfiguration(portalURL: AppConfiguration.basePortalURL,
                                                 clientID: AppConfiguration.clientID,
                                                 redirectURL: AppConfiguration.oAuthRedirectURLString)
         
@@ -93,11 +88,14 @@ extension AppDelegate {
 
 extension AppDelegate {
     
-    static func setAppAppearance() {
-        UINavigationBar.appearance().tintColor = .white
-        UINavigationBar.appearance().titleTextAttributes = [.foregroundColor : UIColor.white]
+    static func licenseApplication() {
         
-        UIApplication.shared.statusBarStyle = .lightContent
+        do {
+            try AGSArcGISRuntimeEnvironment.setLicenseKey(AppConfiguration.licenseKey)
+        } catch {
+            print("Error licensing app: \(error.localizedDescription)")
+        }
+        
+        print("[ArcGIS Runtime License] \(AGSArcGISRuntimeEnvironment.license())")
     }
 }
-

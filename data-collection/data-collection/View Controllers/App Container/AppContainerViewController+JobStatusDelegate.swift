@@ -18,23 +18,42 @@ import ArcGIS
 extension AppContainerViewController: JobStatusViewControllerDelegate {
     
     func jobStatusViewController(didEndAbruptly jobStatusViewController: JobStatusViewController) {
+        
         print("[Error: Offline Map Job] unknown error!")
         jobStatusViewController.dismissAfter(1.2, animated: true, completion: nil)
     }
     
     func jobStatusViewController(_ jobStatusViewController: JobStatusViewController, didEndWithError error: Error) {
+        
         print("[Error: Offline Map Job]", error.localizedDescription)
         jobStatusViewController.dismissAfter(1.2, animated: true, completion: nil)
     }
     
     func jobStatusViewController(_ jobStatusViewController: JobStatusViewController, didEndWithResult result: Any) {
-        if let _ = result as? AGSOfflineMapSyncResult {
+        
+        switch result {
+            
+        case is AGSOfflineMapSyncResult:
             print("[Offline Map Sync Result] success")
-        }
-        else if let generateOfflineMapResult = result as? AGSGenerateOfflineMapResult {
+            appContext.mobileMapPackage?.setLastSyncNow()
+            
+        case is AGSGenerateOfflineMapResult:
             print("[Generate Offline Map Result] success")
-            appContext.loadDownloaded(mobileMapPackage: generateOfflineMapResult.mobileMapPackage) { (_) in }
+            do {
+                try appContext.moveDownloadedMapToOfflineMapDirectory()
+                appContext.mobileMapPackage?.setLastSyncNow()
+                appContext.loadOfflineMobileMapPackageAndSetMap()
+            }
+            catch {
+                print("[Error] Moving Downloaded Map", error.localizedDescription)
+                try? appContext.deleteOfflineMapAndAttemptToGoOnline()
+            }
+            
+        default:
+            preconditionFailure("Unsupported job finished.")
+            break
         }
+
         jobStatusViewController.dismissAfter(1.2, animated: true, completion: nil)
     }
 }

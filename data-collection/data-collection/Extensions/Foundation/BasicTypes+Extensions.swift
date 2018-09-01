@@ -39,6 +39,13 @@ extension CGFloat {
     }
 }
 
+extension CGRect {
+
+    var center: CGPoint {
+        return CGPoint(x: midX, y: midY)
+    }
+}
+
 extension Double {
     
     var asRadians: Double {
@@ -48,13 +55,12 @@ extension Double {
 
 extension Date {
     
-    var formattedString: String {
-        
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateStyle = .medium
-        dateFormatter.timeStyle = .none
-        
-        return dateFormatter.string(from: self)
+    var mediumDateFormatted: String {
+        return DateFormatter.format(mediumDate: self)
+    }
+    
+    var shortDateTimeFormatted: String {
+        return DateFormatter.format(shortDateTime: self)
     }
 }
 

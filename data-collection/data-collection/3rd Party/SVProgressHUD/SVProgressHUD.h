@@ -2,17 +2,11 @@
 //  SVProgressHUD.h
 //  SVProgressHUD, https://github.com/SVProgressHUD/SVProgressHUD
 //
-//  Copyright (c) 2011-2017 Sam Vermette and contributors. All rights reserved.
+//  Copyright (c) 2011-2018 Sam Vermette and contributors. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
 #import <AvailabilityMacros.h>
-
-#if __IPHONE_OS_VERSION_MAX_ALLOWED < 70000
-
-#define UI_APPEARANCE_SELECTOR
-
-#endif
 
 extern NSString * _Nonnull const SVProgressHUDDidReceiveTouchEventNotification;
 extern NSString * _Nonnull const SVProgressHUDDidTouchDownInsideNotification;
@@ -24,16 +18,16 @@ extern NSString * _Nonnull const SVProgressHUDDidAppearNotification;
 extern NSString * _Nonnull const SVProgressHUDStatusUserInfoKey;
 
 typedef NS_ENUM(NSInteger, SVProgressHUDStyle) {
-    SVProgressHUDStyleLight,        // default style, white HUD with black text, HUD background will be blurred on iOS 8 and above
-    SVProgressHUDStyleDark,         // black HUD and white text, HUD background will be blurred on iOS 8 and above
+    SVProgressHUDStyleLight,        // default style, white HUD with black text, HUD background will be blurred
+    SVProgressHUDStyleDark,         // black HUD and white text, HUD background will be blurred
     SVProgressHUDStyleCustom        // uses the fore- and background color properties
 };
 
 typedef NS_ENUM(NSUInteger, SVProgressHUDMaskType) {
     SVProgressHUDMaskTypeNone = 1,  // default mask type, allow user interactions while HUD is displayed
     SVProgressHUDMaskTypeClear,     // don't allow user interactions with background objects
-    SVProgressHUDMaskTypeBlack,     // don't allow user interactions with background objects and dim the UI in the back of the HUD, as on iOS 7 and above
-    SVProgressHUDMaskTypeGradient,  // don't allow user interactions with background objects and dim the UI with a a-la UIAlertView background gradient, as on iOS 6
+    SVProgressHUDMaskTypeBlack,     // don't allow user interactions with background objects and dim the UI in the back of the HUD (as seen in iOS 7 and above)
+    SVProgressHUDMaskTypeGradient,  // don't allow user interactions with background objects and dim the UI with a a-la UIAlertView background gradient (as seen in iOS 6)
     SVProgressHUDMaskTypeCustom     // don't allow user interactions with background objects and dim the UI in the back of the HUD with a custom color
 };
 
@@ -63,10 +57,12 @@ typedef void (^SVProgressHUDDismissCompletion)(void);
 @property (strong, nonatomic, nonnull) UIColor *foregroundColor UI_APPEARANCE_SELECTOR;     // default is [UIColor blackColor]
 @property (strong, nonatomic, nonnull) UIColor *backgroundLayerColor UI_APPEARANCE_SELECTOR;// default is [UIColor colorWithWhite:0 alpha:0.4]
 @property (assign, nonatomic) CGSize imageViewSize UI_APPEARANCE_SELECTOR;                  // default is 28x28 pt
+@property (assign, nonatomic) BOOL shouldTintImages UI_APPEARANCE_SELECTOR;                 // default is YES
 @property (strong, nonatomic, nonnull) UIImage *infoImage UI_APPEARANCE_SELECTOR;           // default is the bundled info image provided by Freepik
 @property (strong, nonatomic, nonnull) UIImage *successImage UI_APPEARANCE_SELECTOR;        // default is the bundled success image provided by Freepik
 @property (strong, nonatomic, nonnull) UIImage *errorImage UI_APPEARANCE_SELECTOR;          // default is the bundled error image provided by Freepik
 @property (strong, nonatomic, nonnull) UIView *viewForExtension UI_APPEARANCE_SELECTOR;     // default is nil, only used if #define SV_APP_EXTENSIONS is set
+@property (assign, nonatomic) NSTimeInterval graceTimeInterval;                             // default is 0 seconds
 @property (assign, nonatomic) NSTimeInterval minimumDismissTimeInterval;                    // default is 5.0 seconds
 @property (assign, nonatomic) NSTimeInterval maximumDismissTimeInterval;                    // default is CGFLOAT_MAX
 
@@ -82,7 +78,7 @@ typedef void (^SVProgressHUDDismissCompletion)(void);
 + (void)setDefaultStyle:(SVProgressHUDStyle)style;                  // default is SVProgressHUDStyleLight
 + (void)setDefaultMaskType:(SVProgressHUDMaskType)maskType;         // default is SVProgressHUDMaskTypeNone
 + (void)setDefaultAnimationType:(SVProgressHUDAnimationType)type;   // default is SVProgressHUDAnimationTypeFlat
-+ (void)setContainerView:(nonnull UIView*)containerView;            // default is window level
++ (void)setContainerView:(nullable UIView*)containerView;           // default is window level
 + (void)setMinimumSize:(CGSize)minimumSize;                         // default is CGSizeZero, can be used to avoid resizing for a larger message
 + (void)setRingThickness:(CGFloat)ringThickness;                    // default is 2 pt
 + (void)setRingRadius:(CGFloat)radius;                              // default is 18 pt
@@ -93,12 +89,14 @@ typedef void (^SVProgressHUDDismissCompletion)(void);
 + (void)setFont:(nonnull UIFont*)font;                              // default is [UIFont preferredFontForTextStyle:UIFontTextStyleSubheadline]
 + (void)setForegroundColor:(nonnull UIColor*)color;                 // default is [UIColor blackColor], only used for SVProgressHUDStyleCustom
 + (void)setBackgroundColor:(nonnull UIColor*)color;                 // default is [UIColor whiteColor], only used for SVProgressHUDStyleCustom
-+ (void)setBackgroundLayerColor:(nonnull UIColor*)color;            // default is [UIColor colorWithWhite:0 alpha:0.5], only used for SVProgressHUDMaskTypeBlack
++ (void)setBackgroundLayerColor:(nonnull UIColor*)color;            // default is [UIColor colorWithWhite:0 alpha:0.5], only used for SVProgressHUDMaskTypeCustom
 + (void)setImageViewSize:(CGSize)size;                              // default is 28x28 pt
++ (void)setShouldTintImages:(BOOL)shouldTintImages;                 // default is YES
 + (void)setInfoImage:(nonnull UIImage*)image;                       // default is the bundled info image provided by Freepik
 + (void)setSuccessImage:(nonnull UIImage*)image;                    // default is the bundled success image provided by Freepik
 + (void)setErrorImage:(nonnull UIImage*)image;                      // default is the bundled error image provided by Freepik
 + (void)setViewForExtension:(nonnull UIView*)view;                  // default is nil, only used if #define SV_APP_EXTENSIONS is set
++ (void)setGraceTimeInterval:(NSTimeInterval)interval;              // default is 0 seconds
 + (void)setMinimumDismissTimeInterval:(NSTimeInterval)interval;     // default is 5.0 seconds
 + (void)setMaximumDismissTimeInterval:(NSTimeInterval)interval;     // default is infinite
 + (void)setFadeInAnimationDuration:(NSTimeInterval)duration;        // default is 0.15 seconds

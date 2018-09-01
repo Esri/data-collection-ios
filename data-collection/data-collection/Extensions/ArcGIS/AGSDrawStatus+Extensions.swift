@@ -16,6 +16,7 @@ import Foundation
 import ArcGIS
 
 extension AGSDrawStatus: CustomStringConvertible {
+    
     public var description:String {
         switch self {
         case .completed:

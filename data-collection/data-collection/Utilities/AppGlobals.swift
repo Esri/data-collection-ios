@@ -14,17 +14,13 @@
 
 import UIKit
 
-var appDelegate: AppDelegate {
-    return UIApplication.shared.delegate as! AppDelegate
-}
-
 var appReachability: NetworkReachabilityManager {
-    return appDelegate.reachabilityManager
+    return NetworkReachabilityManager.shared
 }
 
-var appContext: AppContext {
-    return AppContext.shared
-}
+let appLocation = AppLocation()
+
+let appContext = AppContext()
 
 var appBundleID: String {
     return Bundle.main.bundleIdentifier!
@@ -34,6 +30,4 @@ var appNotificationCenter: NotificationCenter {
     return NotificationCenter.default
 }
 
-var appReverseGeocoder: ReverseGeocoderManager {
-    return appContext.reverseGeocoderManager
-}
+let appReverseGeocoder = ReverseGeocoderManager()

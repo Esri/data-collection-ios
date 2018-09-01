@@ -18,8 +18,8 @@ import ArcGIS
 // Centerpoint
 extension AGSMapView {
     
-    internal func centerAGSPoint() -> AGSPoint {
-        return visibleArea?.extent.center ?? screen(toLocation: boundsCenter)
+    var centerAGSPoint: AGSPoint {
+        return screen(toLocation: bounds.center)
     }
 }
 
