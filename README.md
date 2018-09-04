@@ -88,4 +88,4 @@ For information about licensing your deployed app, see [License your app](https:
 Some great open source components are available out there for iOS developers. The following have been used in this project, with much gratitude to their authors.
 
 * [SVProgressHUD](https://github.com/SVProgressHUD/SVProgressHUD) is licensed under the MIT License.
-* [AlamofireNetworkActivityIndicator](https://github.com/Alamofire/AlamofireNetworkActivityIndicator) is licensed under the MIT License.
+* [Alamofire/NetworkReachabilityManager](https://github.com/Alamofire/Alamofire/blob/master/Source/NetworkReachabilityManager.swift) is licensed under the MIT License.
