@@ -50,13 +50,6 @@
                                             <segue destination="ZtZ-f6-rZp" kind="embed" id="VcP-nO-K0c"/>
                                         </connections>
                                     </containerView>
-                                    <view opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JPL-Oj-pCs" customClass="PinDropView" customModule="data_collection" customModuleProvider="target">
-                                        <rect key="frame" x="166.66666666666666" y="363.66666666666669" width="42" height="42"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="42" id="Vz9-Uy-yXm"/>
-                                            <constraint firstAttribute="height" constant="42" id="aQQ-2p-xV5"/>
-                                        </constraints>
-                                    </view>
                                     <label opaque="NO" userInteractionEnabled="NO" alpha="0.0" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="haj-40-3i6" customClass="NotificationBarLabel" customModule="data_collection" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="32"/>
                                         <color key="backgroundColor" red="0.56600448749999999" green="0.69739838649999997" blue="0.34364558169999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -165,7 +158,6 @@
                                     <constraint firstAttribute="trailing" secondItem="673-08-WQO" secondAttribute="trailing" id="JoG-op-6cS"/>
                                     <constraint firstAttribute="trailing" secondItem="haj-40-3i6" secondAttribute="trailing" id="LsR-RP-Bjv"/>
                                     <constraint firstAttribute="bottom" secondItem="673-08-WQO" secondAttribute="bottom" id="Zkm-FL-CK9"/>
-                                    <constraint firstItem="JPL-Oj-pCs" firstAttribute="centerX" secondItem="Iie-Za-UAs" secondAttribute="centerX" id="a7w-8k-xJw"/>
                                     <constraint firstAttribute="trailing" secondItem="R4S-JP-3ta" secondAttribute="trailing" id="aCX-Ek-pcR"/>
                                     <constraint firstItem="haj-40-3i6" firstAttribute="leading" secondItem="Iie-Za-UAs" secondAttribute="leading" id="bxb-TJ-OwZ"/>
                                     <constraint firstItem="R4S-JP-3ta" firstAttribute="leading" secondItem="Iie-Za-UAs" secondAttribute="leading" id="dFF-h3-EHN"/>
@@ -253,14 +245,21 @@
                                     <constraint firstItem="XFk-gB-uaM" firstAttribute="leading" secondItem="wWn-Jn-iZF" secondAttribute="leading" id="zPS-Yk-arx"/>
                                 </constraints>
                             </view>
+                            <view opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JPL-Oj-pCs" customClass="PinDropView" customModule="data_collection" customModuleProvider="target">
+                                <rect key="frame" x="166" y="407" width="42" height="42"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="42" id="Vz9-Uy-yXm"/>
+                                    <constraint firstAttribute="height" constant="42" id="aQQ-2p-xV5"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="5HZ-r9-azH" firstAttribute="trailing" secondItem="bCz-JE-wcZ" secondAttribute="trailing" constant="16" id="60W-yn-Zbk"/>
                             <constraint firstItem="Iie-Za-UAs" firstAttribute="bottom" secondItem="kpE-SF-vK8" secondAttribute="bottom" id="6lt-Y7-AkG"/>
-                            <constraint firstItem="JPL-Oj-pCs" firstAttribute="centerY" secondItem="Iie-Za-UAs" secondAttribute="centerY" id="86D-OT-T4H"/>
                             <constraint firstItem="5HZ-r9-azH" firstAttribute="trailing" secondItem="d08-gQ-Xdi" secondAttribute="trailing" constant="8" id="AP7-km-vgW"/>
                             <constraint firstItem="w1m-XM-YEC" firstAttribute="centerX" secondItem="5HZ-r9-azH" secondAttribute="centerX" id="Fd6-nF-Sp6"/>
+                            <constraint firstItem="JPL-Oj-pCs" firstAttribute="centerX" secondItem="Iie-Za-UAs" secondAttribute="centerX" id="Mcl-Sm-zBv"/>
                             <constraint firstItem="rjg-aP-1qN" firstAttribute="centerX" secondItem="5HZ-r9-azH" secondAttribute="centerX" id="Nbe-HX-i6t"/>
                             <constraint firstItem="5HZ-r9-azH" firstAttribute="trailing" secondItem="wWn-Jn-iZF" secondAttribute="trailing" constant="16" id="Pbc-7m-8Mf"/>
                             <constraint firstItem="Iie-Za-UAs" firstAttribute="leading" secondItem="kpE-SF-vK8" secondAttribute="leading" id="S1O-WV-qr3"/>
@@ -271,6 +270,7 @@
                             <constraint firstAttribute="trailing" secondItem="Iie-Za-UAs" secondAttribute="trailing" id="evB-78-ejO"/>
                             <constraint firstItem="zgp-WW-HM7" firstAttribute="leading" secondItem="5HZ-r9-azH" secondAttribute="leading" constant="8" id="iBm-FA-cqS"/>
                             <constraint firstItem="Iie-Za-UAs" firstAttribute="top" secondItem="5HZ-r9-azH" secondAttribute="top" id="jsM-rh-24s"/>
+                            <constraint firstItem="JPL-Oj-pCs" firstAttribute="centerY" secondItem="Iie-Za-UAs" secondAttribute="centerY" id="vUm-ac-clo"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="5HZ-r9-azH"/>
                     </view>
