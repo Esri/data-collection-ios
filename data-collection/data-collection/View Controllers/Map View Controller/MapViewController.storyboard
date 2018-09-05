@@ -60,22 +60,6 @@
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="R4S-JP-3ta" customClass="ActivityBarView" customModule="data_collection" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="0.0" width="375" height="2"/>
-                                        <color key="backgroundColor" red="0.71372549019999998" green="0.81176470590000005" blue="0.5450980392" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="2" id="Qre-1v-HLU"/>
-                                        </constraints>
-                                        <userDefinedRuntimeAttributes>
-                                            <userDefinedRuntimeAttribute type="color" keyPath="colorA">
-                                                <color key="value" red="0.71372549019999998" green="0.81176470590000005" blue="0.5450980392" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                            </userDefinedRuntimeAttribute>
-                                            <userDefinedRuntimeAttribute type="color" keyPath="colorB">
-                                                <color key="value" red="0.94901960780000005" green="1" blue="0.83921568629999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                            </userDefinedRuntimeAttribute>
-                                        </userDefinedRuntimeAttributes>
-                                    </view>
                                 </subviews>
                                 <color key="backgroundColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
@@ -83,10 +67,7 @@
                                     <constraint firstAttribute="trailing" secondItem="673-08-WQO" secondAttribute="trailing" id="JoG-op-6cS"/>
                                     <constraint firstAttribute="trailing" secondItem="haj-40-3i6" secondAttribute="trailing" id="LsR-RP-Bjv"/>
                                     <constraint firstAttribute="bottom" secondItem="673-08-WQO" secondAttribute="bottom" id="Zkm-FL-CK9"/>
-                                    <constraint firstAttribute="trailing" secondItem="R4S-JP-3ta" secondAttribute="trailing" id="aCX-Ek-pcR"/>
                                     <constraint firstItem="haj-40-3i6" firstAttribute="leading" secondItem="Iie-Za-UAs" secondAttribute="leading" id="bxb-TJ-OwZ"/>
-                                    <constraint firstItem="R4S-JP-3ta" firstAttribute="leading" secondItem="Iie-Za-UAs" secondAttribute="leading" id="dFF-h3-EHN"/>
-                                    <constraint firstItem="R4S-JP-3ta" firstAttribute="top" secondItem="Iie-Za-UAs" secondAttribute="top" id="dpT-EY-Ykz"/>
                                     <constraint firstItem="673-08-WQO" firstAttribute="top" secondItem="Iie-Za-UAs" secondAttribute="top" id="gVv-GB-dqD"/>
                                     <constraint firstItem="673-08-WQO" firstAttribute="leading" secondItem="Iie-Za-UAs" secondAttribute="leading" id="jAC-9u-Wkf"/>
                                 </constraints>
@@ -276,7 +257,6 @@
                     </view>
                     <navigationItem key="navigationItem" title="Map" id="kuP-yj-hzx"/>
                     <connections>
-                        <outlet property="activityBarView" destination="R4S-JP-3ta" id="Ntc-fM-1VO"/>
                         <outlet property="addPopupRelatedRecordButton" destination="hFk-4Y-xfb" id="MKS-iz-r3Q"/>
                         <outlet property="compassView" destination="bCz-JE-wcZ" id="ru4-XR-LHp"/>
                         <outlet property="mapView" destination="Iie-Za-UAs" id="qSz-xf-Ger"/>

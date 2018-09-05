@@ -52,7 +52,7 @@ class MapViewController: UIViewController {
     @IBOutlet weak var addPopupRelatedRecordButton: UIButton!
     @IBOutlet weak var selectView: UIView!
     @IBOutlet weak var pinDropView: PinDropView!
-    @IBOutlet weak var activityBarView: ActivityBarView!
+    weak var activityBarView: ActivityBarView!
     @IBOutlet weak var notificationBar: NotificationBarLabel!
     @IBOutlet weak var compassView: CompassView!
     @IBOutlet weak var reloadMapButton: UIButton!
@@ -112,6 +112,9 @@ class MapViewController: UIViewController {
         
         // MAPVIEW
         setupMapView()
+        
+        // ACTIVITY BAR
+        setupActivityBarView()
         
         // SETUPS
         setupMapViewAttributionBarAutoLayoutConstraints()
