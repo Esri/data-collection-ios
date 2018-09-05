@@ -43,13 +43,7 @@ class AppMobileMapPackage: AGSMobileMapPackage, AppUserDefaultsProtocol {
         
         guard let lastSync = lastSyncDate, let map = maps.first else { return false }
         
-        for table in map.allOfflineTables {
-            if table.hasLocalEdits(since: lastSync) {
-                return true
-            }
-        }
-
-        return false
+        return map.allOfflineTables.contains { $0.hasLocalEdits(since: lastSync) }
     }
     
     // MARK: User Defaults Protocol

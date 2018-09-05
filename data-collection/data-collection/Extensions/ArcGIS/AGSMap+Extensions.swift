@@ -19,7 +19,7 @@ extension AGSMap {
     
     var allOfflineTables: [AGSGeodatabaseFeatureTable] {
 
-        return tables.compactMap { (table) -> AGSGeodatabaseFeatureTable? in return (table as? AGSGeodatabaseFeatureTable) } +
-            operationalLayers.compactMap { (layer) -> AGSGeodatabaseFeatureTable? in return ((layer as? AGSFeatureLayer)?.featureTable as? AGSGeodatabaseFeatureTable) }
+        return tables.compactMap { return ($0 as? AGSGeodatabaseFeatureTable) } +
+            operationalLayers.compactMap { return (($0 as? AGSFeatureLayer)?.featureTable as? AGSGeodatabaseFeatureTable) }
     }
 }
