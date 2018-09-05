@@ -152,11 +152,6 @@ class DrawerViewController: UIViewController {
             return
         }
         
-        guard appContext.isLoggedIn else {
-            present(loginAlertMessage: "You must log in to download map offline.")
-            return
-        }
-        
         delegate?.drawerViewController(didRequestDeleteMap: self)
     }
     
