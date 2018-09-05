@@ -131,9 +131,6 @@ class MapViewController: UIViewController {
         // COMPASS
         compassView.mapView = mapView
         
-        // ACTIVITY BAR
-        activityBarView.mapView = mapView
-        
         subscribeToAppContextChanges()
         
         // Load Map and Services
