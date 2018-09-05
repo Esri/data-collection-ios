@@ -39,6 +39,19 @@ class AppMobileMapPackage: AGSMobileMapPackage, AppUserDefaultsProtocol {
         lastSyncDate = nil
     }
     
+    var hasLocalEdits: Bool {
+        
+        guard let lastSync = lastSyncDate, let map = maps.first else { return false }
+        
+        for table in map.allOfflineTables {
+            if table.hasLocalEdits(since: lastSync) {
+                return true
+            }
+        }
+
+        return false
+    }
+    
     // MARK: User Defaults Protocol
     
     typealias ValueType = Date

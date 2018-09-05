@@ -67,8 +67,14 @@ extension AppContainerViewController: DrawerViewControllerDelegate {
     
     func drawerViewController(didRequestDeleteMap drawerViewController: DrawerViewController) {
         
+        var message = "Are you sure you want to delete your offline map?"
+
+        if let mobileMapPackage = appContext.mobileMapPackage, mobileMapPackage.hasLocalEdits {
+            message += "\n\nThe offline map contains un-synchronized changes."
+        }
+        
         let alert = UIAlertController.multiAlert(title: nil,
-                                                 message: "Are you sure you want to delete your offline map?",
+                                                 message: message,
                                                  actionTitle: "Delete",
                                                  action: { (action) in
                                                     do {
