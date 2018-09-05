@@ -39,10 +39,17 @@ class AppMobileMapPackage: AGSMobileMapPackage, AppUserDefaultsProtocol {
         lastSyncDate = nil
     }
     
+    var hasLocalEdits: Bool {
+        
+        guard let lastSync = lastSyncDate, let map = maps.first else { return false }
+        
+        return map.allOfflineTables.contains { $0.hasLocalEdits(since: lastSync) }
+    }
+    
     // MARK: User Defaults Protocol
     
     typealias ValueType = Date
     
-    static let userDefaultsKey = "AppMobileMapPackage"
+    static let userDefaultsKey = "AppMobileMapPackage.\(AppConfiguration.webMapItemID)"
 }
 

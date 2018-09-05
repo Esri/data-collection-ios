@@ -41,8 +41,8 @@ extension AppContainerViewController: JobStatusViewControllerDelegate {
             print("[Generate Offline Map Result] success")
             do {
                 try appContext.moveDownloadedMapToOfflineMapDirectory()
-                appContext.mobileMapPackage?.setLastSyncNow()
                 appContext.loadOfflineMobileMapPackageAndSetMap()
+                appContext.mobileMapPackage?.setLastSyncNow()
             }
             catch {
                 print("[Error] Moving Downloaded Map", error.localizedDescription)

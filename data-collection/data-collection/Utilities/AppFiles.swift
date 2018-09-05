@@ -27,7 +27,7 @@ extension FileManager {
     
     func prepareTemporaryOfflineMapDirectory() throws {
         
-        let url: URL = .temporaryOfflineMapDirectoryURL
+        let url: URL = .temporaryOfflineMapDirectoryURL(forWebMapItemID: AppConfiguration.webMapItemID)
         
         try FileManager.default.createDirectory(at: url, withIntermediateDirectories: true)
         try FileManager.default.removeItem(at: url)
@@ -37,7 +37,7 @@ extension FileManager {
     
     static func buildOfflineMapDirectory() {
         
-        let path: URL = .offlineMapDirectoryURL
+        let path: URL = .offlineMapDirectoryURL(forWebMapItemID: AppConfiguration.webMapItemID)
         
         do {
             try FileManager.default.createDirectory(at: path, withIntermediateDirectories: true, attributes: nil)
