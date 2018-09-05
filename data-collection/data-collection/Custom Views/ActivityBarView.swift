@@ -17,7 +17,7 @@ import ArcGIS
 
 class ActivityBarView: UIView {
     
-    init(mapView: AGSMapView, colors:(a: UIColor, b: UIColor), height: CGFloat = 2.0) {
+    init(mapView: AGSMapView, colors:(a: UIColor, b: UIColor)) {
         self.mapView = mapView
         self.colorA = colors.a
         self.colorB = colors.b
@@ -34,9 +34,7 @@ class ActivityBarView: UIView {
                     self?.stopProgressAnimation()
                 }
             }
-        }
-        
-        heightAnchor.constraint(equalToConstant: height).isActive = true
+        }        
     }
     
     required init?(coder aDecoder: NSCoder) {

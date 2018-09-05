@@ -34,8 +34,9 @@ extension MapViewController {
         let top = activity.topAnchor.constraint(equalTo: mapView.topAnchor, constant: 0.0)
         let leading = activity.leadingAnchor.constraint(equalTo: mapView.leadingAnchor, constant: 0.0)
         let trailing = activity.trailingAnchor.constraint(equalTo: mapView.trailingAnchor, constant: 0.0)
-        
-        NSLayoutConstraint.activate([top, leading, trailing])
+        let height = activity.heightAnchor.constraint(equalToConstant: 2.0)
+
+        NSLayoutConstraint.activate([top, leading, trailing, height])
 
         activityBarView = activity
     }
