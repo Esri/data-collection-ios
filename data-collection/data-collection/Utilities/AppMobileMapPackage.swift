@@ -50,6 +50,6 @@ class AppMobileMapPackage: AGSMobileMapPackage, AppUserDefaultsProtocol {
     
     typealias ValueType = Date
     
-    static let userDefaultsKey = "AppMobileMapPackage"
+    static let userDefaultsKey = "AppMobileMapPackage.\(AppConfiguration.webMapItemID)"
 }
 
