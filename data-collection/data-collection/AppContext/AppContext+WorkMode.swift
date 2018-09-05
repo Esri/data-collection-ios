@@ -82,7 +82,7 @@ extension AppContext {
      */
     private func loadOfflineMobileMapPackage(_ completion: @escaping (AGSMap?) -> Void) {
         
-        self.mobileMapPackage = AppMobileMapPackage(fileURL: .offlineMapDirectoryURL)
+        self.mobileMapPackage = AppMobileMapPackage(fileURL: .offlineMapDirectoryURL(forWebMapItemID: AppConfiguration.webMapItemID))
         
         guard let mmpk = self.mobileMapPackage else {
             hasOfflineMap = false
@@ -136,7 +136,7 @@ extension AppContext {
     func moveDownloadedMapToOfflineMapDirectory() throws -> URL?  {
 
         do {
-            return try FileManager.default.replaceItemAt(.offlineMapDirectoryURL, withItemAt: .temporaryOfflineMapDirectoryURL)
+            return try FileManager.default.replaceItemAt(.offlineMapDirectoryURL(forWebMapItemID: AppConfiguration.webMapItemID), withItemAt: .temporaryOfflineMapDirectoryURL(forWebMapItemID: AppConfiguration.webMapItemID))
         }
         catch {
             throw error
@@ -154,7 +154,7 @@ extension AppContext {
         hasOfflineMap = false
 
         do {
-            try FileManager.default.removeItem(at: .offlineMapDirectoryURL)
+            try FileManager.default.removeItem(at: .offlineMapDirectoryURL(forWebMapItemID: AppConfiguration.webMapItemID))
         }
         catch {
             throw error
