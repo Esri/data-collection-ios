@@ -16,22 +16,17 @@ import Foundation
 
 extension URL {
     
-    static let temporaryOfflineMapDirectoryURL: URL = {
-        let tmpDir = NSTemporaryDirectory()
-        return URL(fileURLWithPath: tmpDir)
+    static func temporaryOfflineMapDirectoryURL(forWebMapItemID itemID: String) -> URL {
+        return URL(fileURLWithPath: NSTemporaryDirectory())
             .appendingPathComponent(FileManager.OfflineDirectoryComponents.dataCollection)
             .appendingPathComponent(FileManager.OfflineDirectoryComponents.offlineMap)
-    }()
+            .appendingPathComponent(itemID)
+    }
     
-    static let baseDocumentsDirectoryURL: URL = {
+    static func offlineMapDirectoryURL(forWebMapItemID itemID: String) -> URL {
         return FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
-    }()
-    
-    static let dataCollectionDocsDirectoryURL: URL = {
-        return baseDocumentsDirectoryURL.appendingPathComponent(FileManager.OfflineDirectoryComponents.dataCollection)
-    }()
-    
-    static let offlineMapDirectoryURL: URL = {
-        return dataCollectionDocsDirectoryURL.appendingPathComponent(FileManager.OfflineDirectoryComponents.offlineMap)
-    }()
+            .appendingPathComponent(FileManager.OfflineDirectoryComponents.dataCollection)
+            .appendingPathComponent(FileManager.OfflineDirectoryComponents.offlineMap)
+            .appendingPathComponent(itemID)
+    }
 }
