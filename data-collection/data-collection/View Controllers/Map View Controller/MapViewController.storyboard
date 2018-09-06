@@ -43,22 +43,14 @@
                             </button>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Iie-Za-UAs" customClass="AGSMapView">
                                 <rect key="frame" x="0.0" y="44" width="375" height="768"/>
-                                <subviews>
-                                    <containerView hidden="YES" opaque="NO" userInteractionEnabled="NO" tag="1002" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="673-08-WQO">
-                                        <rect key="frame" x="0.0" y="0.0" width="375" height="768"/>
-                                        <connections>
-                                            <segue destination="ZtZ-f6-rZp" kind="embed" id="VcP-nO-K0c"/>
-                                        </connections>
-                                    </containerView>
-                                </subviews>
                                 <color key="backgroundColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="trailing" secondItem="673-08-WQO" secondAttribute="trailing" id="JoG-op-6cS"/>
-                                    <constraint firstAttribute="bottom" secondItem="673-08-WQO" secondAttribute="bottom" id="Zkm-FL-CK9"/>
-                                    <constraint firstItem="673-08-WQO" firstAttribute="top" secondItem="Iie-Za-UAs" secondAttribute="top" id="gVv-GB-dqD"/>
-                                    <constraint firstItem="673-08-WQO" firstAttribute="leading" secondItem="Iie-Za-UAs" secondAttribute="leading" id="jAC-9u-Wkf"/>
-                                </constraints>
                             </view>
+                            <containerView hidden="YES" opaque="NO" userInteractionEnabled="NO" tag="1002" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="673-08-WQO">
+                                <rect key="frame" x="0.0" y="44" width="375" height="768"/>
+                                <connections>
+                                    <segue destination="ZtZ-f6-rZp" kind="embed" id="VcP-nO-K0c"/>
+                                </connections>
+                            </containerView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nd8-Es-e3p" customClass="SlideNotificationView" customModule="data_collection" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="44" width="375" height="32"/>
                                 <constraints>
@@ -236,9 +228,11 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="673-08-WQO" firstAttribute="trailing" secondItem="Iie-Za-UAs" secondAttribute="trailing" id="0Xd-84-vG5"/>
                             <constraint firstItem="zgp-WW-HM7" firstAttribute="leading" secondItem="5HZ-r9-azH" secondAttribute="leading" constant="8" id="4X1-Vf-e8m"/>
                             <constraint firstItem="Iie-Za-UAs" firstAttribute="bottom" secondItem="kpE-SF-vK8" secondAttribute="bottom" id="6lt-Y7-AkG"/>
                             <constraint firstItem="pcE-3a-4ld" firstAttribute="trailing" secondItem="Iie-Za-UAs" secondAttribute="trailing" id="9Hy-gf-Vkm"/>
+                            <constraint firstItem="673-08-WQO" firstAttribute="bottom" secondItem="Iie-Za-UAs" secondAttribute="bottom" id="Afj-mH-cGM"/>
                             <constraint firstItem="w1m-XM-YEC" firstAttribute="centerX" secondItem="5HZ-r9-azH" secondAttribute="centerX" id="Fd6-nF-Sp6"/>
                             <constraint firstItem="JPL-Oj-pCs" firstAttribute="centerX" secondItem="Iie-Za-UAs" secondAttribute="centerX" id="Mcl-Sm-zBv"/>
                             <constraint firstItem="nd8-Es-e3p" firstAttribute="trailing" secondItem="Iie-Za-UAs" secondAttribute="trailing" id="Mr4-HZ-mff"/>
@@ -256,6 +250,8 @@
                             <constraint firstItem="wWn-Jn-iZF" firstAttribute="leading" secondItem="5HZ-r9-azH" secondAttribute="leading" constant="16" id="dKi-4X-nCw"/>
                             <constraint firstAttribute="trailing" secondItem="Iie-Za-UAs" secondAttribute="trailing" id="evB-78-ejO"/>
                             <constraint firstItem="Iie-Za-UAs" firstAttribute="top" secondItem="5HZ-r9-azH" secondAttribute="top" id="jsM-rh-24s"/>
+                            <constraint firstItem="673-08-WQO" firstAttribute="leading" secondItem="Iie-Za-UAs" secondAttribute="leading" id="kB3-8G-TJI"/>
+                            <constraint firstItem="673-08-WQO" firstAttribute="top" secondItem="Iie-Za-UAs" secondAttribute="top" id="lfI-0Q-uWW"/>
                             <constraint firstItem="nd8-Es-e3p" firstAttribute="top" secondItem="Iie-Za-UAs" secondAttribute="top" id="mdB-pv-VLk"/>
                             <constraint firstItem="5HZ-r9-azH" firstAttribute="trailing" secondItem="d08-gQ-Xdi" secondAttribute="trailing" constant="8" id="tQU-pj-ABH"/>
                             <constraint firstItem="JPL-Oj-pCs" firstAttribute="centerY" secondItem="Iie-Za-UAs" secondAttribute="centerY" id="vUm-ac-clo"/>
