@@ -75,3 +75,5 @@ extension String {
         return removeCharacters(from: CharacterSet(charactersIn: from))
     }
 }
+
+typealias TimerBlock = (Timer) -> Void

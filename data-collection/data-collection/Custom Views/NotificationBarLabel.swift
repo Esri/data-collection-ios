@@ -14,55 +14,114 @@
 
 import UIKit
 
-class NotificationBarLabel: UILabel {
+@IBDesignable
+class NotificationBarLabel: UIView {
+    
+    @IBInspectable var labelBackgroundColor: UIColor! = .darkGray {
+        didSet {
+            label.backgroundColor = labelBackgroundColor
+        }
+    }
+    
+    @IBInspectable var labelFontColor: UIColor! = .white {
+        didSet {
+            label.textColor = labelFontColor
+        }
+    }
+    
+    @IBInspectable var slideAnimationDuration: Double = 0.4
     
     private var hideLabelTimer: Timer?
     
-    private static let slideAnimationDuration: TimeInterval = 0.4
+    private let label = UILabel()
+    
+    private var topSlideConstraint: NSLayoutConstraint!
     
     private override init(frame: CGRect) {
         super.init(frame: frame)
+        setupView()
     }
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
+        setupView()
+    }
+    
+    private func setupView() {
+        
+        isUserInteractionEnabled = false
+        backgroundColor = .clear
+        clipsToBounds = true
+        
+        label.font = UIFont.preferredFont(forTextStyle: .footnote)
+        label.textAlignment = .center
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.backgroundColor = labelBackgroundColor ?? .darkGray
+        label.textColor = labelFontColor ?? .white
+        label.numberOfLines = 1
+        
+        addSubview(label)
+        
+        let top = label.topAnchor.constraint(equalTo: topAnchor, constant: 0.0)
+        let leading = label.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 0.0)
+        let trailing = label.trailingAnchor.constraint(equalTo: trailingAnchor, constant: 0.0)
+        
+        let height = NSLayoutConstraint(item: label, attribute: NSLayoutAttribute.height, relatedBy: NSLayoutRelation.equal, toItem: self, attribute: NSLayoutAttribute.height, multiplier: 1.0, constant: 0.0)
+        
+        topSlideConstraint = top
+        
+        NSLayoutConstraint.activate([top, leading, trailing, height])
+        
+        hideNotificationLabel()
     }
 
     public func showLabel(withNotificationMessage message: String, forDuration duration: TimeInterval) {
         
-        text = message
+        clearTimer()
+        
+        label.text = message
+        
+        hideNotificationLabel()
+        
+        let animations: UIViewAnimations = { [weak self] in
+            self?.showNotificationLabel()
+        }
+        
+        let completion: UIViewAnimationCompletion = { [weak self] (_) in
+            
+            let block: TimerBlock = { (_) in self?.hideLabel() }
+            
+            self?.hideLabelTimer = Timer.scheduledTimer(withTimeInterval: duration, repeats: false, block: block)
+        }
+        
+        UIView.animate(withDuration: slideAnimationDuration, delay: 0.0, options: .curveEaseOut, animations: animations, completion: completion)
+    }
+    
+    private func hideLabel() {
+
+        let animations: UIViewAnimations = { [weak self] in
+            self?.hideNotificationLabel()
+        }
+        
+        let completion: UIViewAnimationCompletion = { [weak self] (_) in
+            self?.clearTimer()
+        }
+        
+        UIView.animate(withDuration: slideAnimationDuration, delay: 0.0, options: .curveEaseOut, animations: animations, completion: completion)
+    }
+    
+    private func showNotificationLabel() {
+        topSlideConstraint.constant = 0
+        layoutIfNeeded()
+    }
+    
+    private func hideNotificationLabel() {
+        topSlideConstraint.constant = -bounds.size.height
+        layoutIfNeeded()
+    }
+    
+    private func clearTimer() {
         hideLabelTimer?.invalidate()
         hideLabelTimer = nil
-        alpha = 1.0
-        isHidden = false
-        frame = rect(forVisible: false)
-        
-        UIView.animate(withDuration: NotificationBarLabel.slideAnimationDuration, delay: 0.0, options: .curveEaseOut, animations: { [weak self] in
-            self?.setRect(forVisible: true)
-        }, completion: { [weak self] (completion) in
-            self?.hideLabelTimer = Timer.scheduledTimer(withTimeInterval: duration, repeats: false, block: { [weak self] (_) in
-                self?.hideLabel()
-            })
-        })
     }
-    
-    public func hideLabel() {
-
-        UIView.animate(withDuration: NotificationBarLabel.slideAnimationDuration, delay: 0.0, options: .curveEaseOut, animations: { [weak self] in
-            self?.setRect(forVisible: false)
-        }, completion: {(completion) in
-            self.alpha = 0.0
-            self.isHidden = true
-        })
-    }
-    
-    private func setRect(forVisible visible: Bool) {
-        frame = rect(forVisible: visible)
-    }
-    
-    private func rect(forVisible visible: Bool) -> CGRect {
-        let y = visible ? 0.0 : -frame.size.height
-        return CGRect(x: 0.0, y: y, width: frame.size.width, height: frame.size.height)
-    }
-    
 }

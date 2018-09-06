@@ -50,27 +50,31 @@
                                             <segue destination="ZtZ-f6-rZp" kind="embed" id="VcP-nO-K0c"/>
                                         </connections>
                                     </containerView>
-                                    <label opaque="NO" userInteractionEnabled="NO" alpha="0.0" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="haj-40-3i6" customClass="NotificationBarLabel" customModule="data_collection" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="0.0" width="375" height="32"/>
-                                        <color key="backgroundColor" red="0.56600448749999999" green="0.69739838649999997" blue="0.34364558169999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="32" id="toP-R8-idr"/>
-                                        </constraints>
-                                        <fontDescription key="fontDescription" style="UICTFontTextStyleFootnote"/>
-                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
                                 </subviews>
                                 <color key="backgroundColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
-                                    <constraint firstItem="haj-40-3i6" firstAttribute="top" secondItem="Iie-Za-UAs" secondAttribute="top" id="ETx-b0-51R"/>
                                     <constraint firstAttribute="trailing" secondItem="673-08-WQO" secondAttribute="trailing" id="JoG-op-6cS"/>
-                                    <constraint firstAttribute="trailing" secondItem="haj-40-3i6" secondAttribute="trailing" id="LsR-RP-Bjv"/>
                                     <constraint firstAttribute="bottom" secondItem="673-08-WQO" secondAttribute="bottom" id="Zkm-FL-CK9"/>
-                                    <constraint firstItem="haj-40-3i6" firstAttribute="leading" secondItem="Iie-Za-UAs" secondAttribute="leading" id="bxb-TJ-OwZ"/>
                                     <constraint firstItem="673-08-WQO" firstAttribute="top" secondItem="Iie-Za-UAs" secondAttribute="top" id="gVv-GB-dqD"/>
                                     <constraint firstItem="673-08-WQO" firstAttribute="leading" secondItem="Iie-Za-UAs" secondAttribute="leading" id="jAC-9u-Wkf"/>
                                 </constraints>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nd8-Es-e3p" customClass="NotificationBarLabel" customModule="data_collection" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="44" width="375" height="32"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="32" id="TUB-b0-OlH"/>
+                                </constraints>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="labelBackgroundColor">
+                                        <color key="value" red="0.6588235294" green="0.81176470590000005" blue="0.40000000000000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="slideAnimationDuration">
+                                        <real key="value" value="0.40000000000000002"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="labelFontColor">
+                                        <color key="value" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wWn-Jn-iZF" customClass="ShrinkingView" customModule="data_collection" customModuleProvider="target">
                                 <rect key="frame" x="16" y="668" width="343" height="94"/>
@@ -237,6 +241,7 @@
                             <constraint firstItem="pcE-3a-4ld" firstAttribute="trailing" secondItem="Iie-Za-UAs" secondAttribute="trailing" id="9Hy-gf-Vkm"/>
                             <constraint firstItem="w1m-XM-YEC" firstAttribute="centerX" secondItem="5HZ-r9-azH" secondAttribute="centerX" id="Fd6-nF-Sp6"/>
                             <constraint firstItem="JPL-Oj-pCs" firstAttribute="centerX" secondItem="Iie-Za-UAs" secondAttribute="centerX" id="Mcl-Sm-zBv"/>
+                            <constraint firstItem="nd8-Es-e3p" firstAttribute="trailing" secondItem="Iie-Za-UAs" secondAttribute="trailing" id="Mr4-HZ-mff"/>
                             <constraint firstItem="rjg-aP-1qN" firstAttribute="centerX" secondItem="5HZ-r9-azH" secondAttribute="centerX" id="Nbe-HX-i6t"/>
                             <constraint firstItem="5HZ-r9-azH" firstAttribute="trailing" secondItem="wWn-Jn-iZF" secondAttribute="trailing" constant="16" id="Pbc-7m-8Mf"/>
                             <constraint firstItem="Iie-Za-UAs" firstAttribute="leading" secondItem="kpE-SF-vK8" secondAttribute="leading" id="S1O-WV-qr3"/>
@@ -244,12 +249,14 @@
                             <constraint firstItem="w1m-XM-YEC" firstAttribute="top" secondItem="rjg-aP-1qN" secondAttribute="bottom" constant="16" id="TVB-ZK-qWS"/>
                             <constraint firstItem="pcE-3a-4ld" firstAttribute="top" secondItem="Iie-Za-UAs" secondAttribute="top" id="VKC-6t-gAW"/>
                             <constraint firstItem="5HZ-r9-azH" firstAttribute="trailing" secondItem="bCz-JE-wcZ" secondAttribute="trailing" constant="16" id="XEj-x9-f2d"/>
+                            <constraint firstItem="nd8-Es-e3p" firstAttribute="leading" secondItem="Iie-Za-UAs" secondAttribute="leading" id="XMa-xj-WIv"/>
                             <constraint firstItem="pcE-3a-4ld" firstAttribute="leading" secondItem="Iie-Za-UAs" secondAttribute="leading" id="ZLu-Qi-UfN"/>
                             <constraint firstItem="w1m-XM-YEC" firstAttribute="centerY" secondItem="5HZ-r9-azH" secondAttribute="centerY" id="ZQC-hI-cw7"/>
                             <constraint firstItem="bCz-JE-wcZ" firstAttribute="top" secondItem="pcE-3a-4ld" secondAttribute="bottom" constant="16" id="Zvi-Yi-VqY"/>
                             <constraint firstItem="wWn-Jn-iZF" firstAttribute="leading" secondItem="5HZ-r9-azH" secondAttribute="leading" constant="16" id="dKi-4X-nCw"/>
                             <constraint firstAttribute="trailing" secondItem="Iie-Za-UAs" secondAttribute="trailing" id="evB-78-ejO"/>
                             <constraint firstItem="Iie-Za-UAs" firstAttribute="top" secondItem="5HZ-r9-azH" secondAttribute="top" id="jsM-rh-24s"/>
+                            <constraint firstItem="nd8-Es-e3p" firstAttribute="top" secondItem="Iie-Za-UAs" secondAttribute="top" id="mdB-pv-VLk"/>
                             <constraint firstItem="5HZ-r9-azH" firstAttribute="trailing" secondItem="d08-gQ-Xdi" secondAttribute="trailing" constant="8" id="tQU-pj-ABH"/>
                             <constraint firstItem="JPL-Oj-pCs" firstAttribute="centerY" secondItem="Iie-Za-UAs" secondAttribute="centerY" id="vUm-ac-clo"/>
                         </constraints>
@@ -261,7 +268,7 @@
                         <outlet property="compassView" destination="bCz-JE-wcZ" id="ru4-XR-LHp"/>
                         <outlet property="mapView" destination="Iie-Za-UAs" id="qSz-xf-Ger"/>
                         <outlet property="maskViewContainer" destination="673-08-WQO" id="sOa-1Y-1cv"/>
-                        <outlet property="notificationBar" destination="haj-40-3i6" id="wsJ-Hw-TZD"/>
+                        <outlet property="notificationBar" destination="nd8-Es-e3p" id="djf-cX-Vrh"/>
                         <outlet property="pinDropView" destination="JPL-Oj-pCs" id="3vt-tC-fGM"/>
                         <outlet property="popupsContainerView" destination="XFk-gB-uaM" id="qpP-OR-B14"/>
                         <outlet property="relatedRecordHeaderLabel" destination="qdc-PH-C8o" id="c8Z-yL-Fh3"/>
