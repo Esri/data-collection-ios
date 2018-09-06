@@ -126,7 +126,8 @@ class AppContainerViewController: UIViewController {
         
         let animationDuration = 0.2
         drawerLeadingLayoutConstraint.constant = drawerShowing ? 0.0 : -contextView.frame.size.width
-
+        drawerViewController?.view.isHidden = !drawerShowing
+        
         UIView.animate(withDuration: animationDuration, delay: 0.0, options: .curveEaseOut, animations: { [weak self] in
             self?.view.layoutIfNeeded()
             self?.adjustVisualEffectViewBlurEffect()
