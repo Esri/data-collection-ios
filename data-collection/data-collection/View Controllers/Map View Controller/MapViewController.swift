@@ -228,19 +228,7 @@ class MapViewController: UIViewController {
         
         let locationAuthorizationChange: AppContextChange = .locationAuthorization { [weak self] authorized in
             
-            self?.mapView.locationDisplay.showLocation = authorized
-            self?.mapView.locationDisplay.showAccuracy = authorized
-            
-            if authorized {
-                self?.mapView.locationDisplay.start { (err) in
-                    if let error = err {
-                        print("[Error] Cannot display user location: \(error.localizedDescription)")
-                    }
-                }
-            }
-            else {
-                self?.mapView.locationDisplay.stop()
-            }
+            self?.adjustForLocationAuthorizationStatus()
         }
 
         let workModeChange: AppContextChange = .workMode { [weak self] workMode in
