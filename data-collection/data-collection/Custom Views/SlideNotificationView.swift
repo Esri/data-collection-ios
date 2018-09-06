@@ -15,7 +15,7 @@
 import UIKit
 
 @IBDesignable
-class NotificationBarLabel: UIView {
+class SlideNotificationView: UIView {
     
     @IBInspectable var labelBackgroundColor: UIColor! = .darkGray {
         didSet {

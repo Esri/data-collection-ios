@@ -122,7 +122,7 @@
 		94D544C4207FC15D00ED0D04 /* JobStatusViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94D544BC207FC15D00ED0D04 /* JobStatusViewController.swift */; };
 		94D544C9207FC67B00ED0D04 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 94D544C7207FC67A00ED0D04 /* Assets.xcassets */; };
 		94D544CA207FC67B00ED0D04 /* AppIcon.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 94D544C8207FC67B00ED0D04 /* AppIcon.xcassets */; };
-		94D544D620852A5100ED0D04 /* NotificationBarLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94D544D120852A5100ED0D04 /* NotificationBarLabel.swift */; };
+		94D544D620852A5100ED0D04 /* SlideNotificationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94D544D120852A5100ED0D04 /* SlideNotificationView.swift */; };
 		94D544D720852A5100ED0D04 /* CompassView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94D544D220852A5100ED0D04 /* CompassView.swift */; };
 		94D544D820852A5100ED0D04 /* ShrinkingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94D544D320852A5100ED0D04 /* ShrinkingView.swift */; };
 		94D544D920852A5100ED0D04 /* PinDropView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94D544D420852A5100ED0D04 /* PinDropView.swift */; };
@@ -273,7 +273,7 @@
 		94D544BC207FC15D00ED0D04 /* JobStatusViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JobStatusViewController.swift; sourceTree = "<group>"; };
 		94D544C7207FC67A00ED0D04 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Assets.xcassets; path = "data-collection/Assets.xcassets"; sourceTree = SOURCE_ROOT; };
 		94D544C8207FC67B00ED0D04 /* AppIcon.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = AppIcon.xcassets; path = "data-collection/AppIcon.xcassets"; sourceTree = SOURCE_ROOT; };
-		94D544D120852A5100ED0D04 /* NotificationBarLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationBarLabel.swift; sourceTree = "<group>"; };
+		94D544D120852A5100ED0D04 /* SlideNotificationView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SlideNotificationView.swift; sourceTree = "<group>"; };
 		94D544D220852A5100ED0D04 /* CompassView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CompassView.swift; sourceTree = "<group>"; };
 		94D544D320852A5100ED0D04 /* ShrinkingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShrinkingView.swift; sourceTree = "<group>"; };
 		94D544D420852A5100ED0D04 /* PinDropView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PinDropView.swift; sourceTree = "<group>"; };
@@ -639,7 +639,7 @@
 		94D544D020852A5100ED0D04 /* Custom Views */ = {
 			isa = PBXGroup;
 			children = (
-				94D544D120852A5100ED0D04 /* NotificationBarLabel.swift */,
+				94D544D120852A5100ED0D04 /* SlideNotificationView.swift */,
 				94D544D220852A5100ED0D04 /* CompassView.swift */,
 				94D544D320852A5100ED0D04 /* ShrinkingView.swift */,
 				94D544D420852A5100ED0D04 /* PinDropView.swift */,
@@ -913,7 +913,7 @@
 				946D20AB2126541C001BF5CC /* DateFormatter+Extensions.swift in Sources */,
 				940DA977209794E200AB4BF6 /* PopupTextFieldCell.swift in Sources */,
 				94A8102F20B33C3B00D4BC68 /* PopupIDCell.swift in Sources */,
-				94D544D620852A5100ED0D04 /* NotificationBarLabel.swift in Sources */,
+				94D544D620852A5100ED0D04 /* SlideNotificationView.swift in Sources */,
 				948066362091483600A398EA /* RelatedRecordsPopupsViewController.swift in Sources */,
 				948D84C92139B27D00E2048F /* Bundle+Extensions.swift in Sources */,
 				946569122088020F00599E55 /* AGSPopup+Extensions.swift in Sources */,

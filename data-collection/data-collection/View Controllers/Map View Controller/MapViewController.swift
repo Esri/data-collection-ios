@@ -53,7 +53,7 @@ class MapViewController: UIViewController {
     @IBOutlet weak var selectView: UIView!
     @IBOutlet weak var pinDropView: PinDropView!
     weak var activityBarView: ActivityBarView!
-    @IBOutlet weak var notificationBar: NotificationBarLabel!
+    @IBOutlet weak var slideNotificationView: SlideNotificationView!
     @IBOutlet weak var compassView: CompassView!
     @IBOutlet weak var reloadMapButton: UIButton!
     
@@ -214,7 +214,7 @@ class MapViewController: UIViewController {
     }
     
     private func displayReachabilityMessage(isReachable reachable: Bool) {
-        notificationBar.showLabel(withNotificationMessage: "Device \(reachable ? "gained" : "lost") connection to the network.", forDuration: 6.0)
+        slideNotificationView.showLabel(withNotificationMessage: "Device \(reachable ? "gained" : "lost") connection to the network.", forDuration: 6.0)
     }
     
     func subscribeToAppContextChanges() {
@@ -248,7 +248,7 @@ class MapViewController: UIViewController {
             DispatchQueue.main.async { [weak self] in
                 self?.activityBarView.colorA = (workMode == .online) ? UIColor.primary.lighter : .offlineLight
                 self?.activityBarView.colorB = (workMode == .online) ? UIColor.primary.darker : .offlineDark
-                self?.notificationBar.labelBackgroundColor = (workMode == .online) ? UIColor.primary.lighter : .offlineDark
+                self?.slideNotificationView.labelBackgroundColor = (workMode == .online) ? UIColor.primary.lighter : .offlineDark
             }
         }
         
