@@ -161,11 +161,6 @@ class MapViewController: UIViewController {
     
     @IBAction func userRequestsAddNewRelatedRecord(_ sender: Any) {
         
-        guard appContext.isLoggedIn else {
-            self.present(loginAlertMessage: "You must log in to add a related record.")
-            return
-        }
-        
         guard
             let parentPopup = currentPopup,
             let featureTable = recordsManager?.oneToMany.first?.relatedTable,

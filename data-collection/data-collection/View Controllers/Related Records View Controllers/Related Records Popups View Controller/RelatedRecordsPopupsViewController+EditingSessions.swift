@@ -26,12 +26,6 @@ extension RelatedRecordsPopupsViewController {
                 return
             }
             
-            guard appContext.isLoggedIn else {
-                present(loginAlertMessage: "You must login to edit this \(popup.recordType.rawValue).")
-                completion?(false)
-                return
-            }
-            
             guard recordsManager.shouldAllowEdit, recordsManager.startEditing() else {
                 present(simpleAlertMessage: "Unexpected error, you couldn't edit this \(popup.recordType.rawValue).")
                 completion?(false)

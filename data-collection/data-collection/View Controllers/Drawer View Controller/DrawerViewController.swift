@@ -112,11 +112,6 @@ class DrawerViewController: UIViewController {
             return
         }
         
-        guard appContext.isLoggedIn else {
-            present(loginAlertMessage: "You must log in to work offline.")
-            return
-        }
-        
         if !appContext.hasOfflineMap && !appReachability.isReachable {
             present(simpleAlertMessage: "Your device must be connected to a network to work online.", animated: true, completion: nil)
             return
@@ -134,11 +129,6 @@ class DrawerViewController: UIViewController {
         
         guard appContext.hasOfflineMap else {
             present(simpleAlertMessage: "Unknown Error: your device doesn't have an offline map.", animated: true, completion: nil)
-            return
-        }
-        
-        guard appContext.isLoggedIn else {
-            present(loginAlertMessage: "You must log in to download map offline.")
             return
         }
         
@@ -172,17 +162,17 @@ class DrawerViewController: UIViewController {
         workOfflineButton.isSelected = appContext.workMode == .offline
         workOfflineButton.backgroundColor = appContext.workMode == .offline ? .accent : .clear
         
-        if appContext.isLoggedIn {
-            workOfflineButton.setAttributed(header: appContext.workMode == .offline ? "Working Offline" : "Work Offline", forControlStateColors: workModeControlStateColors, headerFont: .drawerButtonHeader)
+        if !appContext.hasOfflineMap {
+            workOfflineButton.setAttributed(header: appContext.workMode == .offline ? "Working Offline" : "Work Offline", subheader: "download map", forControlStateColors: workModeControlStateColors, headerFont: .drawerButtonHeader, subheaderFont: .drawerButtonSubheader)
         }
         else {
-            workOfflineButton.setAttributed(header: appContext.workMode == .offline ? "Working Offline" : "Work Offline", subheader: "user isn't logged in", forControlStateColors: workModeControlStateColors, headerFont: .drawerButtonHeader, subheaderFont: .drawerButtonSubheader)
+            workOfflineButton.setAttributed(header: appContext.workMode == .offline ? "Working Offline" : "Work Offline", forControlStateColors: workModeControlStateColors, headerFont: .drawerButtonHeader)
         }
 
-        synchronizeOfflineMapButton.isEnabled = appContext.hasOfflineMap && appContext.isLoggedIn && appReachability.isReachable
+        synchronizeOfflineMapButton.isEnabled = appContext.hasOfflineMap && appReachability.isReachable
         synchronizeOfflineMapButton.isSelected = false
         
-        deleteOfflineMapButton.isEnabled = appContext.hasOfflineMap && appContext.isLoggedIn
+        deleteOfflineMapButton.isEnabled = appContext.hasOfflineMap
         deleteOfflineMapButton.isSelected = false
     }    
     

@@ -159,12 +159,6 @@ extension AGSArcGISFeatureTable {
     
     private func performEdit(type: EditType, forFeature feature: AGSArcGISFeature, completion: @escaping (Error?)->Void) {
         
-        guard appContext.isLoggedIn else {
-            assert(appContext.isLoggedIn, "User must be authenticated to perform edits.")
-            completion(FeatureTableError.cannotEditFeature)
-            return
-        }
-        
         let editClosure:(Error?) -> Void = { error in
             
             guard error == nil else {
