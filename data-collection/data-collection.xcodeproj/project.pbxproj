@@ -54,6 +54,11 @@
 		948D84C72136094900E2048F /* CellReuseIdentifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 948D84C62136094900E2048F /* CellReuseIdentifiers.swift */; };
 		948D84C92139B27D00E2048F /* Bundle+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 948D84C82139B27D00E2048F /* Bundle+Extensions.swift */; };
 		948D84CB213F578800E2048F /* AGSMap+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 948D84CA213F578800E2048F /* AGSMap+Extensions.swift */; };
+		948D84CF2142227900E2048F /* Bool+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 948D84CE2142227900E2048F /* Bool+Extensions.swift */; };
+		948D84D52142235B00E2048F /* Date+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 948D84D42142235B00E2048F /* Date+Extensions.swift */; };
+		948D84D72142237E00E2048F /* Double+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 948D84D62142237E00E2048F /* Double+Extensions.swift */; };
+		948D84DA2142E29C00E2048F /* CGRect+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 948D84D92142E29C00E2048F /* CGRect+Extensions.swift */; };
+		948D84DF214324D800E2048F /* Timer+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 948D84DE214324D800E2048F /* Timer+Extensions.swift */; };
 		94A8101D20AA1D7C00D4BC68 /* PopupNumberCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94A8101C20AA1D7C00D4BC68 /* PopupNumberCell.swift */; };
 		94A8102B20B33B9200D4BC68 /* PopupShortStringCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94A8102A20B33B9200D4BC68 /* PopupShortStringCell.swift */; };
 		94A8102D20B33C0E00D4BC68 /* PopupDateCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94A8102C20B33C0E00D4BC68 /* PopupDateCell.swift */; };
@@ -101,8 +106,7 @@
 		94B375FF207E8E4800691F2A /* UIStoryboardSegue+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94B375E9207E8E4800691F2A /* UIStoryboardSegue+Extensions.swift */; };
 		94B37600207E8E4800691F2A /* UIAlertController+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94B375EA207E8E4800691F2A /* UIAlertController+Extensions.swift */; };
 		94B37601207E8E4800691F2A /* DispatchGroup+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94B375EC207E8E4800691F2A /* DispatchGroup+Extensions.swift */; };
-		94B37602207E8E4800691F2A /* BasicTypes+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94B375ED207E8E4800691F2A /* BasicTypes+Extensions.swift */; };
-		94B37603207E8E4800691F2A /* CGGeometry+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94B375EF207E8E4800691F2A /* CGGeometry+Extensions.swift */; };
+		94B37603207E8E4800691F2A /* CGPoint+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94B375EF207E8E4800691F2A /* CGPoint+Extensions.swift */; };
 		94B3760C207EAE4700691F2A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94B3760B207EAE4600691F2A /* AppDelegate.swift */; };
 		94B3760E207EAEA100691F2A /* ArcGIS.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 94B3760D207EAEA100691F2A /* ArcGIS.bundle */; };
 		94BA7D3A20FD140500C78255 /* AppColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94BA7D3920FD140500C78255 /* AppColors.swift */; };
@@ -122,7 +126,7 @@
 		94D544C4207FC15D00ED0D04 /* JobStatusViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94D544BC207FC15D00ED0D04 /* JobStatusViewController.swift */; };
 		94D544C9207FC67B00ED0D04 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 94D544C7207FC67A00ED0D04 /* Assets.xcassets */; };
 		94D544CA207FC67B00ED0D04 /* AppIcon.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 94D544C8207FC67B00ED0D04 /* AppIcon.xcassets */; };
-		94D544D620852A5100ED0D04 /* NotificationBarLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94D544D120852A5100ED0D04 /* NotificationBarLabel.swift */; };
+		94D544D620852A5100ED0D04 /* SlideNotificationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94D544D120852A5100ED0D04 /* SlideNotificationView.swift */; };
 		94D544D720852A5100ED0D04 /* CompassView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94D544D220852A5100ED0D04 /* CompassView.swift */; };
 		94D544D820852A5100ED0D04 /* ShrinkingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94D544D320852A5100ED0D04 /* ShrinkingView.swift */; };
 		94D544D920852A5100ED0D04 /* PinDropView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94D544D420852A5100ED0D04 /* PinDropView.swift */; };
@@ -204,6 +208,11 @@
 		948D84C62136094900E2048F /* CellReuseIdentifiers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellReuseIdentifiers.swift; sourceTree = "<group>"; };
 		948D84C82139B27D00E2048F /* Bundle+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bundle+Extensions.swift"; sourceTree = "<group>"; };
 		948D84CA213F578800E2048F /* AGSMap+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AGSMap+Extensions.swift"; sourceTree = "<group>"; };
+		948D84CE2142227900E2048F /* Bool+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bool+Extensions.swift"; sourceTree = "<group>"; };
+		948D84D42142235B00E2048F /* Date+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Extensions.swift"; sourceTree = "<group>"; };
+		948D84D62142237E00E2048F /* Double+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Double+Extensions.swift"; sourceTree = "<group>"; };
+		948D84D92142E29C00E2048F /* CGRect+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGRect+Extensions.swift"; sourceTree = "<group>"; };
+		948D84DE214324D800E2048F /* Timer+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Timer+Extensions.swift"; sourceTree = "<group>"; };
 		94A8101C20AA1D7C00D4BC68 /* PopupNumberCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupNumberCell.swift; sourceTree = "<group>"; };
 		94A8102A20B33B9200D4BC68 /* PopupShortStringCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupShortStringCell.swift; sourceTree = "<group>"; };
 		94A8102C20B33C0E00D4BC68 /* PopupDateCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupDateCell.swift; sourceTree = "<group>"; };
@@ -252,8 +261,7 @@
 		94B375E9207E8E4800691F2A /* UIStoryboardSegue+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIStoryboardSegue+Extensions.swift"; sourceTree = "<group>"; };
 		94B375EA207E8E4800691F2A /* UIAlertController+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIAlertController+Extensions.swift"; sourceTree = "<group>"; };
 		94B375EC207E8E4800691F2A /* DispatchGroup+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "DispatchGroup+Extensions.swift"; sourceTree = "<group>"; };
-		94B375ED207E8E4800691F2A /* BasicTypes+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "BasicTypes+Extensions.swift"; sourceTree = "<group>"; };
-		94B375EF207E8E4800691F2A /* CGGeometry+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CGGeometry+Extensions.swift"; sourceTree = "<group>"; };
+		94B375EF207E8E4800691F2A /* CGPoint+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CGPoint+Extensions.swift"; sourceTree = "<group>"; };
 		94B3760B207EAE4600691F2A /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		94B3760D207EAEA100691F2A /* ArcGIS.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = ArcGIS.bundle; path = "~/Library/SDKs/ArcGIS/iOS/Frameworks/Static/ArcGIS.framework/Versions/Current/Resources/ArcGIS.bundle"; sourceTree = "<group>"; };
 		94BA7D3920FD140500C78255 /* AppColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppColors.swift; sourceTree = "<group>"; };
@@ -273,7 +281,7 @@
 		94D544BC207FC15D00ED0D04 /* JobStatusViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JobStatusViewController.swift; sourceTree = "<group>"; };
 		94D544C7207FC67A00ED0D04 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Assets.xcassets; path = "data-collection/Assets.xcassets"; sourceTree = SOURCE_ROOT; };
 		94D544C8207FC67B00ED0D04 /* AppIcon.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = AppIcon.xcassets; path = "data-collection/AppIcon.xcassets"; sourceTree = SOURCE_ROOT; };
-		94D544D120852A5100ED0D04 /* NotificationBarLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationBarLabel.swift; sourceTree = "<group>"; };
+		94D544D120852A5100ED0D04 /* SlideNotificationView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SlideNotificationView.swift; sourceTree = "<group>"; };
 		94D544D220852A5100ED0D04 /* CompassView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CompassView.swift; sourceTree = "<group>"; };
 		94D544D320852A5100ED0D04 /* ShrinkingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShrinkingView.swift; sourceTree = "<group>"; };
 		94D544D420852A5100ED0D04 /* PinDropView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PinDropView.swift; sourceTree = "<group>"; };
@@ -413,6 +421,23 @@
 			path = "Job Status View Controller";
 			sourceTree = "<group>";
 		};
+		948D84D82142E22B00E2048F /* Swift */ = {
+			isa = PBXGroup;
+			children = (
+				948D84CE2142227900E2048F /* Bool+Extensions.swift */,
+				948D84D62142237E00E2048F /* Double+Extensions.swift */,
+			);
+			path = Swift;
+			sourceTree = "<group>";
+		};
+		948D84DD2142E6ED00E2048F /* Dispatch */ = {
+			isa = PBXGroup;
+			children = (
+				94B375EC207E8E4800691F2A /* DispatchGroup+Extensions.swift */,
+			);
+			path = Dispatch;
+			sourceTree = "<group>";
+		};
 		94A8102620B33AFF00D4BC68 /* Base */ = {
 			isa = PBXGroup;
 			children = (
@@ -519,9 +544,11 @@
 			isa = PBXGroup;
 			children = (
 				94B375DA207E8E4800691F2A /* ArcGIS */,
-				94B375E3207E8E4800691F2A /* UIKit */,
+				948D84D82142E22B00E2048F /* Swift */,
 				94B375EB207E8E4800691F2A /* Foundation */,
+				948D84DD2142E6ED00E2048F /* Dispatch */,
 				94B375EE207E8E4800691F2A /* Core Graphics */,
+				94B375E3207E8E4800691F2A /* UIKit */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -567,11 +594,11 @@
 		94B375EB207E8E4800691F2A /* Foundation */ = {
 			isa = PBXGroup;
 			children = (
-				94B375EC207E8E4800691F2A /* DispatchGroup+Extensions.swift */,
-				94B375ED207E8E4800691F2A /* BasicTypes+Extensions.swift */,
 				946D20AA2126541C001BF5CC /* DateFormatter+Extensions.swift */,
 				946D20AC212E07FC001BF5CC /* URL+Extensions.swift */,
 				948D84C82139B27D00E2048F /* Bundle+Extensions.swift */,
+				948D84D42142235B00E2048F /* Date+Extensions.swift */,
+				948D84DE214324D800E2048F /* Timer+Extensions.swift */,
 			);
 			path = Foundation;
 			sourceTree = "<group>";
@@ -579,7 +606,8 @@
 		94B375EE207E8E4800691F2A /* Core Graphics */ = {
 			isa = PBXGroup;
 			children = (
-				94B375EF207E8E4800691F2A /* CGGeometry+Extensions.swift */,
+				94B375EF207E8E4800691F2A /* CGPoint+Extensions.swift */,
+				948D84D92142E29C00E2048F /* CGRect+Extensions.swift */,
 			);
 			path = "Core Graphics";
 			sourceTree = "<group>";
@@ -639,7 +667,7 @@
 		94D544D020852A5100ED0D04 /* Custom Views */ = {
 			isa = PBXGroup;
 			children = (
-				94D544D120852A5100ED0D04 /* NotificationBarLabel.swift */,
+				94D544D120852A5100ED0D04 /* SlideNotificationView.swift */,
 				94D544D220852A5100ED0D04 /* CompassView.swift */,
 				94D544D320852A5100ED0D04 /* ShrinkingView.swift */,
 				94D544D420852A5100ED0D04 /* PinDropView.swift */,
@@ -885,6 +913,7 @@
 				940DA97B2098E1C600AB4BF6 /* AGSArcGISFeatureTable+Extensions.swift in Sources */,
 				94AB811C211E0AD300B9C920 /* AGSLicense+Extensions.swift in Sources */,
 				94D544D820852A5100ED0D04 /* ShrinkingView.swift in Sources */,
+				948D84D52142235B00E2048F /* Date+Extensions.swift in Sources */,
 				94B375C2207E8D5600691F2A /* AppOfflineMapJobConstructionInfo.swift in Sources */,
 				94B375FA207E8E4800691F2A /* UIViewController+Extensions.swift in Sources */,
 				946569022087FAE700599E55 /* MapViewController+MapViewMode.swift in Sources */,
@@ -904,6 +933,7 @@
 				946D20AD212E07FC001BF5CC /* URL+Extensions.swift in Sources */,
 				94B375D2207E8D5600691F2A /* EphemeralCache.swift in Sources */,
 				94AB310520B7731A003540D2 /* PopupCodedValueCell.swift in Sources */,
+				948D84DA2142E29C00E2048F /* CGRect+Extensions.swift in Sources */,
 				94B375C0207E8D5600691F2A /* AppFiles.swift in Sources */,
 				94D544BF207FC15D00ED0D04 /* AppContainerViewController.swift in Sources */,
 				94A8101D20AA1D7C00D4BC68 /* PopupNumberCell.swift in Sources */,
@@ -913,15 +943,15 @@
 				946D20AB2126541C001BF5CC /* DateFormatter+Extensions.swift in Sources */,
 				940DA977209794E200AB4BF6 /* PopupTextFieldCell.swift in Sources */,
 				94A8102F20B33C3B00D4BC68 /* PopupIDCell.swift in Sources */,
-				94D544D620852A5100ED0D04 /* NotificationBarLabel.swift in Sources */,
+				94D544D620852A5100ED0D04 /* SlideNotificationView.swift in Sources */,
 				948066362091483600A398EA /* RelatedRecordsPopupsViewController.swift in Sources */,
 				948D84C92139B27D00E2048F /* Bundle+Extensions.swift in Sources */,
 				946569122088020F00599E55 /* AGSPopup+Extensions.swift in Sources */,
 				9440D35120D4662E005ED582 /* CustomBehavior_NewTreeCondition.swift in Sources */,
 				94B375F4207E8E4800691F2A /* AGSJobStatus+Extensions.swift in Sources */,
 				94B375F8207E8E4800691F2A /* AGSDrawStatus+Extensions.swift in Sources */,
+				948D84DF214324D800E2048F /* Timer+Extensions.swift in Sources */,
 				94D2714520D0578C00304E27 /* ManyToOneManager.swift in Sources */,
-				94B37602207E8E4800691F2A /* BasicTypes+Extensions.swift in Sources */,
 				94B375FD207E8E4800691F2A /* UIColor+Extensions.swift in Sources */,
 				94D544C3207FC15D00ED0D04 /* MaskViewController.swift in Sources */,
 				94AB310120B76A16003540D2 /* PopupReadonlyFieldCell.swift in Sources */,
@@ -929,7 +959,9 @@
 				94B375FE207E8E4800691F2A /* UIImage+Extensions.swift in Sources */,
 				94B37600207E8E4800691F2A /* UIAlertController+Extensions.swift in Sources */,
 				948D84C72136094900E2048F /* CellReuseIdentifiers.swift in Sources */,
+				948D84CF2142227900E2048F /* Bool+Extensions.swift in Sources */,
 				946569042087FB5000599E55 /* MapViewController+LocationSelection.swift in Sources */,
+				948D84D72142237E00E2048F /* Double+Extensions.swift in Sources */,
 				9412D213209937950031F9EB /* RelatedRecordCell.swift in Sources */,
 				94FA8B25207BF2CD00972C75 /* MapViewController.swift in Sources */,
 				9440D35C20DC2809005ED582 /* CustomBehavior_TreeSymbology.swift in Sources */,
@@ -984,7 +1016,7 @@
 				94A8103B20B635A000D4BC68 /* AGSQueryParameters+Extensions.swift in Sources */,
 				94B375C7207E8D5600691F2A /* AppContext+Login.swift in Sources */,
 				94656910208800E100599E55 /* MapViewController+TouchDelegate.swift in Sources */,
-				94B37603207E8E4800691F2A /* CGGeometry+Extensions.swift in Sources */,
+				94B37603207E8E4800691F2A /* CGPoint+Extensions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

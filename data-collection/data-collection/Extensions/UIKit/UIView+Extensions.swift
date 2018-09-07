@@ -19,7 +19,7 @@ import UIKit
 // UIView Animation Callback
 
 typealias UIViewAnimations = () -> Void
-
+typealias UIViewAnimationCompletion = (Bool) -> Void
 // MARK: Style
 
 extension UIView {
