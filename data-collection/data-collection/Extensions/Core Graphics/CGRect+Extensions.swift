@@ -21,3 +21,30 @@ extension CGRect {
         return CGPoint(x: midX, y: midY)
     }
 }
+
+extension CGRect {
+    
+    func modified(x xDelta: CGFloat) -> CGRect {
+        return modified(origin: origin.modified(x: xDelta))
+    }
+    
+    func modified(y yDelta: CGFloat) -> CGRect {
+        return modified(origin: origin.modified(y: yDelta))
+    }
+    
+    func modified(origin originDelta: CGPoint) -> CGRect {
+        return CGRect(origin: originDelta, size: size)
+    }
+    
+    mutating func modify(x: CGFloat) {
+        self = modified(x: x)
+    }
+    
+    mutating func modify(y: CGFloat) {
+        self = modified(y: y)
+    }
+    
+    mutating func modify(origin: CGPoint) {
+        self = modified(origin: origin)
+    }
+}

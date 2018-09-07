@@ -1,4 +1,4 @@
-//// Copyright 2018 Esri
+//// Copyright 2017 Esri
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -12,14 +12,23 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import Foundation
 import CoreGraphics
 
-extension CGFloat {
+extension CGPoint {
     
-    var asBool: Bool {
-        get {
-            return self == 1.0
-        }
+    func modified(x xDelta: CGFloat) -> CGPoint {
+        return CGPoint(x: x + xDelta, y: y)
+    }
+    
+    func modified(y yDelta: CGFloat) -> CGPoint {
+        return CGPoint(x: x, y: y + yDelta)
+    }
+    
+    mutating func modify(x: CGFloat) {
+        self = modified(x: x)
+    }
+    
+    mutating func modify(y: CGFloat) {
+        self = modified(y: y)
     }
 }
