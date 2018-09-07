@@ -153,7 +153,7 @@ enum PopupSortingError : AppError {
         case .badFields:
             return 4002
         case .invalidValueType:
-            return 4004
+            return 4003
         }
     }
     
