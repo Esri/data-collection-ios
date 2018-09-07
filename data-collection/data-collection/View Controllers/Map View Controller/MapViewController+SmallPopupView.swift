@@ -24,6 +24,8 @@ extension MapViewController {
     
     func updateSmallPopupViewForCurrentPopup() {
         
+        guard mapViewMode != .disabled else { return }
+        
         guard let manager = recordsManager else {
             
             mapViewMode = .defaultView

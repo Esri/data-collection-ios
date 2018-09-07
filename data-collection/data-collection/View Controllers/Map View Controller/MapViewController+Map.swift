@@ -31,6 +31,16 @@ extension MapViewController {
             
             guard error == nil else {
                 print("[Error: Map Load]", error!.localizedDescription)
+                
+                switch (error! as NSError).code {
+                    
+                case 499:
+                    self?.present(loginAlertMessage: "You must login to access this resource.")
+                    
+                default:
+                    self?.present(simpleAlertMessage: "Couldn't load map. \(error!.localizedDescription).")
+                }
+                
                 self?.mapViewMode = .disabled
                 return
             }
