@@ -58,6 +58,7 @@
 		948D84D52142235B00E2048F /* Date+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 948D84D42142235B00E2048F /* Date+Extensions.swift */; };
 		948D84D72142237E00E2048F /* Double+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 948D84D62142237E00E2048F /* Double+Extensions.swift */; };
 		948D84DA2142E29C00E2048F /* CGRect+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 948D84D92142E29C00E2048F /* CGRect+Extensions.swift */; };
+		948D84DF214324D800E2048F /* Timer+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 948D84DE214324D800E2048F /* Timer+Extensions.swift */; };
 		94A8101D20AA1D7C00D4BC68 /* PopupNumberCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94A8101C20AA1D7C00D4BC68 /* PopupNumberCell.swift */; };
 		94A8102B20B33B9200D4BC68 /* PopupShortStringCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94A8102A20B33B9200D4BC68 /* PopupShortStringCell.swift */; };
 		94A8102D20B33C0E00D4BC68 /* PopupDateCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94A8102C20B33C0E00D4BC68 /* PopupDateCell.swift */; };
@@ -211,6 +212,7 @@
 		948D84D42142235B00E2048F /* Date+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Extensions.swift"; sourceTree = "<group>"; };
 		948D84D62142237E00E2048F /* Double+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Double+Extensions.swift"; sourceTree = "<group>"; };
 		948D84D92142E29C00E2048F /* CGRect+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGRect+Extensions.swift"; sourceTree = "<group>"; };
+		948D84DE214324D800E2048F /* Timer+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Timer+Extensions.swift"; sourceTree = "<group>"; };
 		94A8101C20AA1D7C00D4BC68 /* PopupNumberCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupNumberCell.swift; sourceTree = "<group>"; };
 		94A8102A20B33B9200D4BC68 /* PopupShortStringCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupShortStringCell.swift; sourceTree = "<group>"; };
 		94A8102C20B33C0E00D4BC68 /* PopupDateCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupDateCell.swift; sourceTree = "<group>"; };
@@ -596,6 +598,7 @@
 				946D20AC212E07FC001BF5CC /* URL+Extensions.swift */,
 				948D84C82139B27D00E2048F /* Bundle+Extensions.swift */,
 				948D84D42142235B00E2048F /* Date+Extensions.swift */,
+				948D84DE214324D800E2048F /* Timer+Extensions.swift */,
 			);
 			path = Foundation;
 			sourceTree = "<group>";
@@ -947,6 +950,7 @@
 				9440D35120D4662E005ED582 /* CustomBehavior_NewTreeCondition.swift in Sources */,
 				94B375F4207E8E4800691F2A /* AGSJobStatus+Extensions.swift in Sources */,
 				94B375F8207E8E4800691F2A /* AGSDrawStatus+Extensions.swift in Sources */,
+				948D84DF214324D800E2048F /* Timer+Extensions.swift in Sources */,
 				94D2714520D0578C00304E27 /* ManyToOneManager.swift in Sources */,
 				94B375FD207E8E4800691F2A /* UIColor+Extensions.swift in Sources */,
 				94D544C3207FC15D00ED0D04 /* MaskViewController.swift in Sources */,
