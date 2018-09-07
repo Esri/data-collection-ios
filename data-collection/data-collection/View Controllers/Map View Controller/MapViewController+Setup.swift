@@ -17,17 +17,38 @@ import Foundation
 extension MapViewController {
     
     func setupMapView() {
+        
         mapView.touchDelegate = self
         mapView.releaseHardwareResourcesWhenBackgrounded = true
         mapView.interactionOptions.isMagnifierEnabled = false
     }
     
+    func setupActivityBarView() {
+        
+        let activity = ActivityBarView(mapView: mapView, colors: (a: UIColor.primary.lighter, b: UIColor.primary.darker))
+        
+        activity.translatesAutoresizingMaskIntoConstraints = false
+        
+        self.view.addSubview(activity)
+        
+        let top = activity.topAnchor.constraint(equalTo: mapView.topAnchor, constant: 0.0)
+        let leading = activity.leadingAnchor.constraint(equalTo: mapView.leadingAnchor, constant: 0.0)
+        let trailing = activity.trailingAnchor.constraint(equalTo: mapView.trailingAnchor, constant: 0.0)
+        let height = activity.heightAnchor.constraint(equalToConstant: 2.0)
+
+        NSLayoutConstraint.activate([top, leading, trailing, height])
+
+        activityBarView = activity
+    }
+    
     func setupMapViewAttributionBarAutoLayoutConstraints() {
+        
         featureDetailViewBottomConstraint = mapView.attributionTopAnchor.constraint(equalTo: smallPopupView.bottomAnchor, constant: 8)
         featureDetailViewBottomConstraint.isActive = true
     }
     
     func setupSmallPopupView() {
+        
         smallPopupView.addTarget(self, action: #selector(MapViewController.didTapSmallPopupView(_:)), for: .touchUpInside)
     }
 }

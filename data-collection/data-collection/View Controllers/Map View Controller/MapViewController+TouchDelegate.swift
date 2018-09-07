@@ -37,14 +37,14 @@ extension MapViewController: AGSGeoViewTouchDelegate {
             
             if let error = error {
                 print("[Error] identifying layers", error.localizedDescription)
-                self?.notificationBar.showLabel(withNotificationMessage: "Could not identify features.", forDuration: 2.0)
+                self?.slideNotificationView.showLabel(withNotificationMessage: "Could not identify features.", forDuration: 2.0)
                 self?.currentPopup = nil
                 return
             }
             
             guard let identifyResults = result else {
                 print("[Error] identifying layers, missing results")
-                self?.notificationBar.showLabel(withNotificationMessage: "Could not identify features.", forDuration: 2.0)
+                self?.slideNotificationView.showLabel(withNotificationMessage: "Could not identify features.", forDuration: 2.0)
                 self?.currentPopup = nil
                 return
             }
@@ -55,14 +55,14 @@ extension MapViewController: AGSGeoViewTouchDelegate {
             
             guard let identifyResult = firstIdentifiableResult else {
                 print("[Error] no found feature layer meets criteria")
-                self?.notificationBar.showLabel(withNotificationMessage: "Found no results.", forDuration: 2.0)
+                self?.slideNotificationView.showLabel(withNotificationMessage: "Found no results.", forDuration: 2.0)
                 self?.currentPopup = nil
                 return
             }
             
             guard identifyResult.popups.count > 0 else {
                 print("[Identify Layer] Found no results")
-                self?.notificationBar.showLabel(withNotificationMessage: "Found no results.", forDuration: 2.0)
+                self?.slideNotificationView.showLabel(withNotificationMessage: "Found no results.", forDuration: 2.0)
                 self?.currentPopup = nil
                 return
             }
