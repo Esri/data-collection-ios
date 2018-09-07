@@ -24,7 +24,7 @@ class ActivityBarView: UIView {
         
         super.init(frame: .zero)
         
-        mapViewLoadStatusObserver = mapView.observe(\.drawStatus, options:[.new, .old]) { [weak self] (mapView, _) in
+        mapViewLoadStatusObserver = mapView.observe(\.drawStatus, options:[]) { [weak self] (mapView, _) in
             DispatchQueue.main.async { [weak self] in
                 print("[Draw Status] \(mapView.drawStatus)")
                 if mapView.drawStatus == .inProgress {

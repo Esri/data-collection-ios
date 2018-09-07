@@ -17,15 +17,15 @@ import UIKit
 @IBDesignable
 class SlideNotificationView: UIView {
     
-    @IBInspectable var labelBackgroundColor: UIColor! = .darkGray {
+    @IBInspectable var messageBackgroundColor: UIColor! = .darkGray {
         didSet {
-            label.backgroundColor = labelBackgroundColor
+            label.backgroundColor = messageBackgroundColor
         }
     }
     
-    @IBInspectable var labelFontColor: UIColor! = .white {
+    @IBInspectable var messageTextColor: UIColor! = .white {
         didSet {
-            label.textColor = labelFontColor
+            label.textColor = messageTextColor
         }
     }
     
@@ -56,8 +56,8 @@ class SlideNotificationView: UIView {
         label.font = UIFont.preferredFont(forTextStyle: .footnote)
         label.textAlignment = .center
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.backgroundColor = labelBackgroundColor ?? .darkGray
-        label.textColor = labelFontColor ?? .white
+        label.backgroundColor = messageBackgroundColor ?? .darkGray
+        label.textColor = messageTextColor ?? .white
         label.numberOfLines = 1
         
         addSubview(label)
@@ -66,7 +66,7 @@ class SlideNotificationView: UIView {
         let leading = label.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 0.0)
         let trailing = label.trailingAnchor.constraint(equalTo: trailingAnchor, constant: 0.0)
         
-        let height = NSLayoutConstraint(item: label, attribute: NSLayoutAttribute.height, relatedBy: NSLayoutRelation.equal, toItem: self, attribute: NSLayoutAttribute.height, multiplier: 1.0, constant: 0.0)
+        let height = NSLayoutConstraint(item: label, attribute: .height, relatedBy: .equal, toItem: self, attribute: .height, multiplier: 1.0, constant: 0.0)
         
         topSlideConstraint = top
         

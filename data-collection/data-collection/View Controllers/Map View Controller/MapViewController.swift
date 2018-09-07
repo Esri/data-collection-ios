@@ -248,7 +248,7 @@ class MapViewController: UIViewController {
             DispatchQueue.main.async { [weak self] in
                 self?.activityBarView.colorA = (workMode == .online) ? UIColor.primary.lighter : .offlineLight
                 self?.activityBarView.colorB = (workMode == .online) ? UIColor.primary.darker : .offlineDark
-                self?.slideNotificationView.labelBackgroundColor = (workMode == .online) ? UIColor.primary.lighter : .offlineDark
+                self?.slideNotificationView.messageBackgroundColor = (workMode == .online) ? UIColor.primary.lighter : .offlineDark
             }
         }
         
