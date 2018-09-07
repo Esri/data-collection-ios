@@ -144,7 +144,6 @@ enum PopupSortingError : AppError {
     
     case missingFields
     case badFields
-    case noValues
     case invalidValueType
     
     var errorCode: Int {
@@ -153,8 +152,6 @@ enum PopupSortingError : AppError {
             return 4001
         case .badFields:
             return 4002
-        case .noValues:
-            return 4003
         case .invalidValueType:
             return 4004
         }
@@ -166,8 +163,6 @@ enum PopupSortingError : AppError {
             return [NSLocalizedDescriptionKey: "A popup you are comparing does not have any fields."]
         case .badFields:
             return [NSLocalizedDescriptionKey: "Both popups fields must be of the same type."]
-        case .noValues:
-            return [NSLocalizedDescriptionKey: "A popup you are comparing contains a nil value."]
         case .invalidValueType:
             return [NSLocalizedDescriptionKey: "A popup you are comparing contains an invalid type."]
         }
