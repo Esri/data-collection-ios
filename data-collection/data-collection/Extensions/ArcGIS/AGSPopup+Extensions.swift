@@ -139,12 +139,13 @@ extension AGSPopup {
                 throw PopupSortingError.badFields
             }
             
-            let lhsValue = lhsManager.value(for: lhsField)
-            let rhsValue = rhsManager.value(for: rhsField)
+            guard let rhsValue = rhsManager.value(for: rhsField) else {
+                return true
+            }
             
-            if lhsValue == nil && rhsValue == nil { return true }
-            else if lhsValue == nil { return false }
-            else if rhsValue == nil { return true }
+            guard let lhsValue = lhsManager.value(for: lhsField) else {
+                return false
+            }
             
             switch lhsManager.fieldType(for: lhsField) {
             case .int16:
@@ -182,12 +183,13 @@ extension AGSPopup {
                 throw PopupSortingError.badFields
             }
             
-            let lhsValue = lhsManager.value(for: lhsField)
-            let rhsValue = rhsManager.value(for: rhsField)
+            guard let rhsValue = rhsManager.value(for: rhsField) else {
+                return true
+            }
             
-            if lhsValue == nil && rhsValue == nil { return true }
-            else if lhsValue == nil { return false }
-            else if rhsValue == nil { return true }
+            guard let lhsValue = lhsManager.value(for: lhsField) else {
+                return false
+            }
             
             switch lhsManager.fieldType(for: lhsField) {
             case .int16:
