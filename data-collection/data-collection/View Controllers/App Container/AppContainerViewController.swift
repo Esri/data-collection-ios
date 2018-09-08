@@ -126,12 +126,16 @@ class AppContainerViewController: UIViewController {
         
         let animationDuration = 0.2
         drawerLeadingLayoutConstraint.constant = drawerShowing ? 0.0 : -contextView.frame.size.width
-
+        
+        if drawerShowing { drawerViewController?.view.isHidden = false }
+        
         UIView.animate(withDuration: animationDuration, delay: 0.0, options: .curveEaseOut, animations: { [weak self] in
             self?.view.layoutIfNeeded()
             self?.adjustVisualEffectViewBlurEffect()
         }) { [weak self] (_) in
-            self?.adjustVisualEffectViewIsUserInteractionEnabled()
+            guard let strongSelf = self else { return }
+            strongSelf.visualEffectView.isUserInteractionEnabled = strongSelf.drawerShowing
+            if !strongSelf.drawerShowing { strongSelf.drawerViewController?.view.isHidden = true }
         }
     }
     

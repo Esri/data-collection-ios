@@ -52,8 +52,8 @@ class MapViewController: UIViewController {
     @IBOutlet weak var addPopupRelatedRecordButton: UIButton!
     @IBOutlet weak var selectView: UIView!
     @IBOutlet weak var pinDropView: PinDropView!
-    @IBOutlet weak var activityBarView: ActivityBarView!
-    @IBOutlet weak var notificationBar: NotificationBarLabel!
+    weak var activityBarView: ActivityBarView!
+    @IBOutlet weak var slideNotificationView: SlideNotificationView!
     @IBOutlet weak var compassView: CompassView!
     @IBOutlet weak var reloadMapButton: UIButton!
     
@@ -113,6 +113,9 @@ class MapViewController: UIViewController {
         // MAPVIEW
         setupMapView()
         
+        // ACTIVITY BAR
+        setupActivityBarView()
+        
         // SETUPS
         setupMapViewAttributionBarAutoLayoutConstraints()
         
@@ -127,9 +130,6 @@ class MapViewController: UIViewController {
         
         // COMPASS
         compassView.mapView = mapView
-        
-        // ACTIVITY BAR
-        activityBarView.mapView = mapView
         
         subscribeToAppContextChanges()
         
@@ -214,7 +214,7 @@ class MapViewController: UIViewController {
     }
     
     private func displayReachabilityMessage(isReachable reachable: Bool) {
-        notificationBar.showLabel(withNotificationMessage: "Device \(reachable ? "gained" : "lost") connection to the network.", forDuration: 6.0)
+        slideNotificationView.showLabel(withNotificationMessage: "Device \(reachable ? "gained" : "lost") connection to the network.", forDuration: 6.0)
     }
     
     func subscribeToAppContextChanges() {
@@ -228,19 +228,7 @@ class MapViewController: UIViewController {
         
         let locationAuthorizationChange: AppContextChange = .locationAuthorization { [weak self] authorized in
             
-            self?.mapView.locationDisplay.showLocation = authorized
-            self?.mapView.locationDisplay.showAccuracy = authorized
-            
-            if authorized {
-                self?.mapView.locationDisplay.start { (err) in
-                    if let error = err {
-                        print("[Error] Cannot display user location: \(error.localizedDescription)")
-                    }
-                }
-            }
-            else {
-                self?.mapView.locationDisplay.stop()
-            }
+            self?.adjustForLocationAuthorizationStatus()
         }
 
         let workModeChange: AppContextChange = .workMode { [weak self] workMode in
@@ -248,7 +236,7 @@ class MapViewController: UIViewController {
             DispatchQueue.main.async { [weak self] in
                 self?.activityBarView.colorA = (workMode == .online) ? UIColor.primary.lighter : .offlineLight
                 self?.activityBarView.colorB = (workMode == .online) ? UIColor.primary.darker : .offlineDark
-                self?.notificationBar.backgroundColor = (workMode == .online) ? UIColor.primary.lighter : .offlineDark
+                self?.slideNotificationView.messageBackgroundColor = (workMode == .online) ? UIColor.primary.lighter : .offlineDark
             }
         }
         
