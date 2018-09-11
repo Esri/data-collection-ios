@@ -67,3 +67,10 @@ extension AppConfiguration {
         }
     }
 }
+
+extension AppConfiguration {
+    
+    static func buildConfiguredPortal(loginRequired: Bool) -> AGSPortal {
+        return AGSPortal(url: basePortalURL, loginRequired: loginRequired)
+    }
+}

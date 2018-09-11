@@ -81,7 +81,7 @@ class DrawerViewController: UIViewController {
     
     func setButtonAttributedTitles() {
         
-        updateLoginButtonForAuthenticatedUsername(user: appContext.user)
+        updateLoginButtonForAuthenticatedUsername(user: appContext.portal.user)
         workOnlineButton.setAttributed(header: "Work Online", forControlStateColors: workModeControlStateColors, headerFont: .drawerButtonHeader)
         workOfflineButton.setAttributed(header: "Work Offline", forControlStateColors: workModeControlStateColors, headerFont: .drawerButtonHeader)
         updateSynchronizeButtonForLastSync(date: appContext.mobileMapPackage?.lastSyncDate)
@@ -221,9 +221,9 @@ class DrawerViewController: UIViewController {
     
     func subscribeToAppContextChanges() {
         
-        let currentUserChange: AppContextChange = .currentUser { [weak self] user in
-            self?.updateLoginButtonForAuthenticatedUserProfileImage(user: user)
-            self?.updateLoginButtonForAuthenticatedUsername(user: user)
+        let currentPortalChange: AppContextChange = .currentPortal { [weak self] portal in
+            self?.updateLoginButtonForAuthenticatedUserProfileImage(user: portal.user)
+            self?.updateLoginButtonForAuthenticatedUsername(user: portal.user)
         }
         
         let workModeChange: AppContextChange = .workMode { [weak self] _ in
@@ -242,7 +242,7 @@ class DrawerViewController: UIViewController {
             self?.adjustContextDrawerUI()
         }
         
-        changeHandler.subscribe(toChanges: [currentUserChange, workModeChange, reachabilityChange, lastSyncChange, hasOfflineMapChange])
+        changeHandler.subscribe(toChanges: [currentPortalChange, workModeChange, reachabilityChange, lastSyncChange, hasOfflineMapChange])
     }
     
     func updateSynchronizeButtonForLastSync(date: Date?) {

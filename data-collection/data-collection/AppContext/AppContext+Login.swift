@@ -16,52 +16,41 @@ import Foundation
 import ArcGIS
 
 extension AppContext {
-        
-    // MARK: Portal Auth
+    
     /**
-     We want to try to log in to the portal with cached credentials from our last session.
+     Try to log in to the AppContext's current portal if possible.
      */
-    func attemptLoginToPortalFromCredentials() {
-        
-        // We'll temporarily disable prompting the user to log in in case the cached credentials are not suitable to log us in.
-        // I.e. if the cached credentials aren't good enough to find ourselves logged in to the portal/ArcGIS Online, then just
-        // accept it and don't prompt us to log in, resulting in a Portal being accessed anonymously.
-        // We revert from that behaviour as soon as the portal loads below.
-        let authenticationRequiredPortal = AGSPortal(loginRequired: true)
-        let authenticationRequiredPortalRequestConfiguration = authenticationRequiredPortal.requestConfiguration
-        let silentAuthenticationRequestConfiguration = (authenticationRequiredPortalRequestConfiguration ?? AGSRequestConfiguration.global()).copy() as? AGSRequestConfiguration
-        silentAuthenticationRequestConfiguration?.shouldIssueAuthenticationChallenge = { _ in return false }
-        authenticationRequiredPortal.requestConfiguration = silentAuthenticationRequestConfiguration
-        authenticationRequiredPortal.load() { [weak self] error in
-            // Before we do anything else, go back to handling auth challenges as before.
-            authenticationRequiredPortal.requestConfiguration = authenticationRequiredPortalRequestConfiguration
-            // If we were able to log in with cached credentials, there will be no error.
-            if let error = error {
-                // If we were not able to log in with cached credentials, we will set `loginRequired` to `false` thus allowing unauthenticated users to consume the map (but not edit!)
-                print("[Error] loading the new fake portal, user is not authenticated: \(error.localizedDescription)")
-                self?.portal = AGSPortal(loginRequired: false)
+    func logInCurrentPortalIfPossible() {
+        // Try to take the current portal and update it to be in a logged in state.
+        portal.load() { error in
+            guard error == nil else {
+                print("[Error: AGSPortal] loading the portal during login attempt: \(error!.localizedDescription)")
+                return
             }
-            else {
-                self?.portal = AGSPortal(loginRequired: true)
+            
+            // Only try logging in if the current portal isn't logged in (user == nil)
+            // That is, we got here because the AuthenticationManager is being called back from some in-line OAuth
+            // success based off a call to a service (an explicit login would set portal.user != nil).
+            if let portalURL = appContext.portal.url, appContext.portal.user == nil {
+                AGSPortal.bestPortalFromCachedCredentials(portalURL: portalURL) { newPortalInstance, didLogIn in
+                    if didLogIn {
+                        // Finally update the current portal if we managed to log in.
+                        appContext.portal = newPortalInstance
+                    }
+                }
             }
         }
     }
     
-    func login() {
-        guard !isLoggedIn else {
-            return
-        }
+    func login() { 
         // Setting `loginRequired` to `true` will force a login prompt to present.
-        portal = AGSPortal(loginRequired: true)
+        portal = AppConfiguration.buildConfiguredPortal(loginRequired: true)
     }
     
     func logout() {
-        guard isLoggedIn else {
-            return
-        }
         // We want to remove cached credentials upon logout.
         AGSAuthenticationManager.shared().credentialCache.removeAllCredentials()
         // Setting `loginRequired` to `false` will allow unauthenticated users to consume the map (but not edit!)
-        portal = AGSPortal(loginRequired: false)
+        portal = AppConfiguration.buildConfiguredPortal(loginRequired: false)
     }
 }

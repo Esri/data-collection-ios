@@ -215,19 +215,16 @@ class MapViewController: UIViewController {
     func subscribeToAppContextChanges() {
         
         let currentMapChange: AppContextChange = .currentMap { [weak self] currentMap in
-            
             self?.currentPopup = nil
             self?.mapView.map = currentMap
             self?.loadMapViewMap()
         }
         
         let locationAuthorizationChange: AppContextChange = .locationAuthorization { [weak self] authorized in
-            
             self?.adjustForLocationAuthorizationStatus()
         }
 
         let workModeChange: AppContextChange = .workMode { [weak self] workMode in
-            
             DispatchQueue.main.async { [weak self] in
                 self?.activityBarView.colorA = (workMode == .online) ? UIColor.primary.lighter : .offlineLight
                 self?.activityBarView.colorB = (workMode == .online) ? UIColor.primary.darker : .offlineDark
@@ -236,10 +233,13 @@ class MapViewController: UIViewController {
         }
         
         let reachabilityChange: AppContextChange = .reachability { [weak self] reachable in
-            
             self?.displayReachabilityMessage(isReachable: reachable)
         }
+        
+        let currentPortalChange: AppContextChange = .currentPortal { [weak self] portal in
+            self?.loadMapViewMap()
+        }
 
-        changeHandler.subscribe(toChanges: [currentMapChange, locationAuthorizationChange, workModeChange, reachabilityChange])
+        changeHandler.subscribe(toChanges: [currentMapChange, locationAuthorizationChange, workModeChange, reachabilityChange, currentPortalChange])
     }
 }

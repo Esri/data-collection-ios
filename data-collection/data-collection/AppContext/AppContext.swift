@@ -26,18 +26,29 @@ import ArcGIS
      When set, the portal is configured for OAuth authentication so that if login is required, the Runtime SDK and iOS can work together
      to authenticate the current user.
      */
-    var portal:AGSPortal = AGSPortal(loginRequired: false) {
+    var portal:AGSPortal = AppConfiguration.buildConfiguredPortal(loginRequired: false) {
         didSet {
             portal.load { [weak self] (error: Error?) in
+                
                 if let error = error {
                     print("[Error: Portal Load Status]", error.localizedDescription)
                 }
                 else {
                     print("[Portal] loaded")
                 }
-                self?.user = self?.portal.user
+                
+                guard let strongSelf = self else { return }
+                
+                let userDescription = strongSelf.portal.user != nil ? "logged in (\(strongSelf.portal.user!.username ?? "no username"))" : "logged out"
+                print("[Authentication] user is \(userDescription).")
+                
+                appNotificationCenter.post(name: .currentPortalDidChange, object: nil)
             }
         }
+    }
+    
+    var isLoggedIn:Bool {
+        return portal.user != nil
     }
     
     // MARK: Map
@@ -65,21 +76,6 @@ import ArcGIS
      An kv-observable boolean value that signifies if the app has a loaded offline `mobileMapPackage`
      */
     dynamic var hasOfflineMap: Bool = false
-    
-    // MARK: Auth
-    /**
-     An kv-observable property that holds on to the portal's user.
-     */
-    dynamic var user:AGSPortalUser? = nil {
-        didSet {
-            let userDescription = user != nil ? "logged in (\(user!.username ?? "no username"))" : "logged out"
-            print("[Authentication] user is \(userDescription).")
-        }
-    }
-    
-    var isLoggedIn:Bool {
-        return user != nil
-    }
     
     /**
      The app's current work mode
