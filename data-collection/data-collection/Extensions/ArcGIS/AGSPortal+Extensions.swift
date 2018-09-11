@@ -23,7 +23,7 @@ extension AGSPortal {
      - portalURL: A URL to a custom portal. If nil, ArcGIS Online is used.
      - completion: A block that receives the AGSPortal and a Bool. The Bool is true if the portal could be logged in to using cached credentials, or false otherwise.
      */
-    static func bestPortalFromCachedCredentials(portalURL: URL?, completion: @escaping ((AGSPortal, Bool) -> Void)) {
+    static func bestPortalFromCachedCredentials(portalURL: URL, completion: @escaping ((AGSPortal, Bool) -> Void)) {
         // The credential cache will have at most one valid cached credential. We want to see if it will log us into the portal.
         //
         // If a custom portal URL is provided, we'll use that, but otherwise we'll use ArcGIS Online.
@@ -33,7 +33,7 @@ extension AGSPortal {
         
         // First try a portal that requires a login. If there are cached credentials that suit,
         // then in the portal.load() callback below we will find ourselves logged in to the portal.
-        let newPortal = (portalURL != nil) ? AGSPortal(url: portalURL!, loginRequired: true) : AGSPortal.arcGISOnline(withLoginRequired: true)
+        let newPortal = AGSPortal(url: portalURL, loginRequired: true)
         
         // We'll temporarily disable prompting the user to log in in case the cached credentials are not suitable to log us in.
         // I.e. if the cached credentials aren't good enough to find ourselves logged in to the portal/ArcGIS Online, then just
@@ -57,13 +57,14 @@ extension AGSPortal {
             } else {
                 // Could not log in silently with cached credentials, so let's return a portal that doesn't require login
                 print("Error loading the new portal: \(error!.localizedDescription)")
-                if let newURL = newPortal.url {
-                    // Portal URL was specified. Let's use that.
-                    completion(AGSPortal(url: newURL, loginRequired: false), false)
-                } else {
+                guard let newURL = newPortal.url else {
                     // Fall back to ArcGIS Online
                     completion(AGSPortal.arcGISOnline(withLoginRequired: false), false)
+                    return
                 }
+                
+                // Portal URL was specified. Let's use that.
+                completion(AGSPortal(url: newURL, loginRequired: false), false)
             }
         }
     }
