@@ -60,6 +60,10 @@ import ArcGIS
      */
     dynamic var currentMap: AGSMap?
     
+    var isCurrentMapLoaded: Bool {
+        return currentMap?.loadStatus == .loaded
+    }
+    
     /**
      The app's currently loaded offline mobile map package
      

@@ -116,6 +116,11 @@ class DrawerViewController: UIViewController {
             present(simpleAlertMessage: "Your device must be connected to a network to work online.", animated: true, completion: nil)
             return
         }
+        
+        if !appContext.hasOfflineMap && !appContext.isCurrentMapLoaded {
+            present(simpleAlertMessage: "Map must be loaded to work offline.", animated: true, completion: nil)
+            return
+        }
 
         delegate?.drawerViewController(didRequestWorkOffline: self)
     }
