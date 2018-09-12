@@ -17,7 +17,7 @@ import ArcGIS
 
 extension AppContainerViewController: MapViewControllerDelegate {
     
-    func mapViewController(_ mapViewController: MapViewController, didSelect extent: AGSEnvelope) {
+    func mapViewController(_ mapViewController: MapViewController, didSelect extent: AGSGeometry) {
         
         do {
             try FileManager.default.prepareTemporaryOfflineMapDirectory()
