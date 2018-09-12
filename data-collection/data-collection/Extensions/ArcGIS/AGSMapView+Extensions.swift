@@ -34,20 +34,20 @@ extension AGSMapView {
 // Extent for CGRect
 extension AGSMapView {
     
-    func extent(fromRect rect: CGRect) -> AGSGeometry? {
+    func convertExtent(fromRect rect: CGRect) -> AGSGeometry? {
         
         guard bounds.contains(rect) else { return nil }
         
         let nw = rect.origin
-        let ne = CGPoint(x: rect.maxX, y: rect.origin.y)
-        let sw = CGPoint(x: rect.origin.x, y: rect.maxY)
+        let ne = CGPoint(x: rect.maxX, y: rect.minY)
         let se = CGPoint(x: rect.maxX, y: rect.maxY)
-        
+        let sw = CGPoint(x: rect.minX, y: rect.maxY)
+
         let agsNW = screen(toLocation: nw)
         let agsNE = screen(toLocation: ne)
-        let agsSW = screen(toLocation: sw)
         let agsSE = screen(toLocation: se)
-        
-        return AGSPolygon(points: [agsNW, agsNE, agsSW, agsSE])
+        let agsSW = screen(toLocation: sw)
+
+        return AGSPolygon(points: [agsNW, agsNE, agsSE, agsSW])
     }
 }

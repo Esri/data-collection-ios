@@ -202,7 +202,7 @@ extension MapViewController {
     
     private func prepareForOfflineMapDownloadJob() {
         
-        guard let geometry = mapView.extent(fromRect: maskViewController.maskRect) else {
+        guard let geometry = mapView.convertExtent(fromRect: maskViewController.maskRect) else {
             present(simpleAlertMessage: "Could not determine extent for offline map.")
             return
         }
