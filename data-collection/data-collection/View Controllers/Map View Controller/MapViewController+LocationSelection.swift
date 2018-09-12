@@ -200,15 +200,13 @@ extension MapViewController {
         view.sendSubview(toBack: maskViewController.view)
     }
     
-    func prepareForOfflineMapDownloadJob() {
+    private func prepareForOfflineMapDownloadJob() {
         
-        let (nwCorner, seCorner) = maskViewController.maskCorners 
+        guard let geometry = mapView.convertExtent(fromRect: maskViewController.maskRect) else {
+            present(simpleAlertMessage: "Could not determine extent for offline map.")
+            return
+        }
         
-        let agsNW = mapView.screen(toLocation: nwCorner)
-        let agsSE = mapView.screen(toLocation: seCorner)
-        
-        let envelope = AGSEnvelope(min: agsNW, max: agsSE)
-        
-        delegate?.mapViewController(self, didSelect: envelope)
+        delegate?.mapViewController(self, didSelect: geometry)
     }
 }
