@@ -80,11 +80,6 @@ extension MapViewController {
             return
         }
         
-        guard appContext.isLoggedIn else {
-            present(loginAlertMessage: "You must log in to add a Feature.")
-            return
-        }
-        
         guard let map = mapView.map, let layers = (map.operationalLayers as? [AGSFeatureLayer])?.featureAddableLayers, layers.count > 0 else {
             present(simpleAlertMessage: "No eligible feature layer that you can add to.")
             return
@@ -200,15 +195,13 @@ extension MapViewController {
         view.sendSubview(toBack: maskViewController.view)
     }
     
-    func prepareForOfflineMapDownloadJob() {
+    private func prepareForOfflineMapDownloadJob() {
         
-        let (nwCorner, seCorner) = maskViewController.maskCorners 
+        guard let geometry = mapView.convertExtent(fromRect: maskViewController.maskRect) else {
+            present(simpleAlertMessage: "Could not determine extent for offline map.")
+            return
+        }
         
-        let agsNW = mapView.screen(toLocation: nwCorner)
-        let agsSE = mapView.screen(toLocation: seCorner)
-        
-        let envelope = AGSEnvelope(min: agsNW, max: agsSE)
-        
-        delegate?.mapViewController(self, didSelect: envelope)
+        delegate?.mapViewController(self, didSelect: geometry)
     }
 }

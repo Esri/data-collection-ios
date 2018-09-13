@@ -16,7 +16,7 @@ import UIKit
 import ArcGIS
 
 protocol MapViewControllerDelegate: AnyObject {
-    func mapViewController(_ mapViewController: MapViewController, didSelect extent: AGSEnvelope)
+    func mapViewController(_ mapViewController: MapViewController, didSelect extent: AGSGeometry)
     func mapViewController(_ mapViewController: MapViewController, shouldAllowNewFeature: Bool)
     func mapViewController(_ mapViewController: MapViewController, didUpdateTitle title: String)
 }
@@ -161,11 +161,6 @@ class MapViewController: UIViewController {
     
     @IBAction func userRequestsAddNewRelatedRecord(_ sender: Any) {
         
-        guard appContext.isLoggedIn else {
-            self.present(loginAlertMessage: "You must log in to add a related record.")
-            return
-        }
-        
         guard
             let parentPopup = currentPopup,
             let featureTable = recordsManager?.oneToMany.first?.relatedTable,
@@ -220,19 +215,16 @@ class MapViewController: UIViewController {
     func subscribeToAppContextChanges() {
         
         let currentMapChange: AppContextChange = .currentMap { [weak self] currentMap in
-            
             self?.currentPopup = nil
             self?.mapView.map = currentMap
             self?.loadMapViewMap()
         }
         
         let locationAuthorizationChange: AppContextChange = .locationAuthorization { [weak self] authorized in
-            
             self?.adjustForLocationAuthorizationStatus()
         }
 
         let workModeChange: AppContextChange = .workMode { [weak self] workMode in
-            
             DispatchQueue.main.async { [weak self] in
                 self?.activityBarView.colorA = (workMode == .online) ? UIColor.primary.lighter : .offlineLight
                 self?.activityBarView.colorB = (workMode == .online) ? UIColor.primary.darker : .offlineDark
@@ -241,10 +233,13 @@ class MapViewController: UIViewController {
         }
         
         let reachabilityChange: AppContextChange = .reachability { [weak self] reachable in
-            
             self?.displayReachabilityMessage(isReachable: reachable)
         }
+        
+        let currentPortalChange: AppContextChange = .currentPortal { [weak self] portal in
+            self?.loadMapViewMap()
+        }
 
-        changeHandler.subscribe(toChanges: [currentMapChange, locationAuthorizationChange, workModeChange, reachabilityChange])
+        changeHandler.subscribe(toChanges: [currentMapChange, locationAuthorizationChange, workModeChange, reachabilityChange, currentPortalChange])
     }
 }

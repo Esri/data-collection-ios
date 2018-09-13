@@ -51,9 +51,7 @@ class MaskViewController: UIViewController {
         borderView.frame = maskView.frame.insetBy(dx: -borderWidth, dy: -borderWidth)
     }
     
-    var maskCorners: (nw: CGPoint, se: CGPoint) {
-        let nwCorner = maskView.frame.origin
-        let seCorner = CGPoint(x: maskView.frame.maxX, y: maskView.frame.maxY)
-        return (nw: nwCorner, se: seCorner)
+    var maskRect: CGRect {
+        return maskView.frame
     }
 }

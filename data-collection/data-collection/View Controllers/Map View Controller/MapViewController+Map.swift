@@ -30,7 +30,17 @@ extension MapViewController {
         let loadCompletion: ((Error?) -> Void)? = { [weak self] (error) in
             
             guard error == nil else {
-                print("[Error: Map Load]", error!.localizedDescription)
+                let error = (error! as NSError)
+
+                print("[Error: Map Load]", "code: \(error.code)", error.localizedDescription)
+                
+                if AGSServicesErrorCode(rawValue: error.code) == .tokenRequired {
+                    self?.present(loginAlertMessage: "You must login to access this resource.")
+                }
+                else {
+                    self?.present(simpleAlertMessage: "Couldn't load map. \(error.localizedDescription).")
+                }
+                
                 self?.mapViewMode = .disabled
                 return
             }

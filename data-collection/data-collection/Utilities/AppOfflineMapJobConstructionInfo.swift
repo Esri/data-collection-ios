@@ -21,7 +21,7 @@ enum AppOfflineMapJobConstructionInfo {
         static let offlineMapJob = "EphemeralCache.AppOfflineMapJob.Key"
     }
     
-    case downloadMapOffline(AGSMap, URL, AGSEnvelope, Double)
+    case downloadMapOffline(AGSMap, URL, AGSGeometry, Double)
     case syncOfflineMap(AGSMap)
     
     var message: String {
