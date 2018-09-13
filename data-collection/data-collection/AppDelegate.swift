@@ -35,7 +35,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         AppDelegate.configOAuthRedirectURL()
         
         // Attempt to login from previously stored credentials
-        appContext.attemptLoginToPortalFromCredentials()
+        appContext.logInCurrentPortalIfPossible()
         
         // Configure file documents directories for offline usage
         FileManager.buildOfflineMapDirectory()
@@ -68,6 +68,12 @@ extension AppDelegate {
             
             // Pass the OAuth callback through to the ArcGIS Runtime helper function
             AGSApplicationDelegate.shared().application(app, open: url, options: options)
+            
+            // See if we were called back with confirmation that we're authorized.
+            if urlComponents.hasParameter(named: "code") {
+                // If we were authenticated, there should now be a shared credential to use. Let's try it.
+                appContext.logInCurrentPortalIfPossible()
+            }
         }
         return true
     }

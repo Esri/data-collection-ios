@@ -14,11 +14,13 @@
 
 import Foundation
 
-extension Notification.Name {
+extension URLComponents {
     
-    static let currentPortalDidChange = Notification.Name("currentPortalDidChange")
-    static let reachabilityDidChange = Notification.Name("reachabilityDidChange")
-    static let workModeDidChange = Notification.Name("workModeDidChange")
-    static let lastSyncDidChange = Notification.Name("lastSyncDidChange")
+    func queryParameter(named name:String) -> String? {
+        return self.queryItems?.filter({ $0.name == name }).first?.value
+    }
+    
+    func hasParameter(named name: String) -> Bool {
+        return queryParameter(named: name) != nil
+    }
 }
-

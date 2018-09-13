@@ -80,11 +80,6 @@ extension MapViewController {
             return
         }
         
-        guard appContext.isLoggedIn else {
-            present(loginAlertMessage: "You must log in to add a Feature.")
-            return
-        }
-        
         guard let map = mapView.map, let layers = (map.operationalLayers as? [AGSFeatureLayer])?.featureAddableLayers, layers.count > 0 else {
             present(simpleAlertMessage: "No eligible feature layer that you can add to.")
             return

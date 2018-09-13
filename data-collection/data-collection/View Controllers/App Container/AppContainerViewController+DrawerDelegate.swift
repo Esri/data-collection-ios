@@ -30,23 +30,9 @@ extension AppContainerViewController: DrawerViewControllerDelegate {
     }
     
     func drawerViewController(didRequestLoginLogout drawerViewController: DrawerViewController) {
+        
         if appContext.isLoggedIn {
-            var message: String = ""
-            if appContext.hasOfflineMap {
-                message = "Logging out will delete your offline map. Are you sure you want to proceed?"
-            }
-            let alert = UIAlertController.multiAlert(title: "Log out?", message: message, actionTitle: "Log out", action: { (_) in
-                appContext.logout()
-                if appContext.hasOfflineMap {
-                    do {
-                        try appContext.deleteOfflineMapAndAttemptToGoOnline()
-                    }
-                    catch {
-                        print("[Error] couldn't delete offline map", error.localizedDescription)
-                    }
-                }
-            })
-            self.present(alert, animated: true, completion: nil)
+            appContext.logout()
         }
         else {
             appContext.login()

@@ -81,7 +81,7 @@ class DrawerViewController: UIViewController {
     
     func setButtonAttributedTitles() {
         
-        updateLoginButtonForAuthenticatedUsername(user: appContext.user)
+        updateLoginButtonForAuthenticatedUsername(user: appContext.portal.user)
         workOnlineButton.setAttributed(header: "Work Online", forControlStateColors: workModeControlStateColors, headerFont: .drawerButtonHeader)
         workOfflineButton.setAttributed(header: "Work Offline", forControlStateColors: workModeControlStateColors, headerFont: .drawerButtonHeader)
         updateSynchronizeButtonForLastSync(date: appContext.mobileMapPackage?.lastSyncDate)
@@ -112,13 +112,13 @@ class DrawerViewController: UIViewController {
             return
         }
         
-        guard appContext.isLoggedIn else {
-            present(loginAlertMessage: "You must log in to work offline.")
+        if !appContext.hasOfflineMap && !appReachability.isReachable {
+            present(simpleAlertMessage: "Your device must be connected to a network to work online.", animated: true, completion: nil)
             return
         }
         
-        if !appContext.hasOfflineMap && !appReachability.isReachable {
-            present(simpleAlertMessage: "Your device must be connected to a network to work online.", animated: true, completion: nil)
+        if !appContext.hasOfflineMap && !appContext.isCurrentMapLoaded {
+            present(simpleAlertMessage: "Map must be loaded to work offline.", animated: true, completion: nil)
             return
         }
 
@@ -134,11 +134,6 @@ class DrawerViewController: UIViewController {
         
         guard appContext.hasOfflineMap else {
             present(simpleAlertMessage: "Unknown Error: your device doesn't have an offline map.", animated: true, completion: nil)
-            return
-        }
-        
-        guard appContext.isLoggedIn else {
-            present(loginAlertMessage: "You must log in to download map offline.")
             return
         }
         
@@ -172,17 +167,17 @@ class DrawerViewController: UIViewController {
         workOfflineButton.isSelected = appContext.workMode == .offline
         workOfflineButton.backgroundColor = appContext.workMode == .offline ? .accent : .clear
         
-        if appContext.isLoggedIn {
-            workOfflineButton.setAttributed(header: appContext.workMode == .offline ? "Working Offline" : "Work Offline", forControlStateColors: workModeControlStateColors, headerFont: .drawerButtonHeader)
+        if !appContext.hasOfflineMap {
+            workOfflineButton.setAttributed(header: appContext.workMode == .offline ? "Working Offline" : "Work Offline", subheader: "download map", forControlStateColors: workModeControlStateColors, headerFont: .drawerButtonHeader, subheaderFont: .drawerButtonSubheader)
         }
         else {
-            workOfflineButton.setAttributed(header: appContext.workMode == .offline ? "Working Offline" : "Work Offline", subheader: "user isn't logged in", forControlStateColors: workModeControlStateColors, headerFont: .drawerButtonHeader, subheaderFont: .drawerButtonSubheader)
+            workOfflineButton.setAttributed(header: appContext.workMode == .offline ? "Working Offline" : "Work Offline", forControlStateColors: workModeControlStateColors, headerFont: .drawerButtonHeader)
         }
 
-        synchronizeOfflineMapButton.isEnabled = appContext.hasOfflineMap && appContext.isLoggedIn && appReachability.isReachable
+        synchronizeOfflineMapButton.isEnabled = appContext.hasOfflineMap && appReachability.isReachable
         synchronizeOfflineMapButton.isSelected = false
         
-        deleteOfflineMapButton.isEnabled = appContext.hasOfflineMap && appContext.isLoggedIn
+        deleteOfflineMapButton.isEnabled = appContext.hasOfflineMap
         deleteOfflineMapButton.isSelected = false
     }    
     
@@ -231,9 +226,9 @@ class DrawerViewController: UIViewController {
     
     func subscribeToAppContextChanges() {
         
-        let currentUserChange: AppContextChange = .currentUser { [weak self] user in
-            self?.updateLoginButtonForAuthenticatedUserProfileImage(user: user)
-            self?.updateLoginButtonForAuthenticatedUsername(user: user)
+        let currentPortalChange: AppContextChange = .currentPortal { [weak self] portal in
+            self?.updateLoginButtonForAuthenticatedUserProfileImage(user: portal.user)
+            self?.updateLoginButtonForAuthenticatedUsername(user: portal.user)
         }
         
         let workModeChange: AppContextChange = .workMode { [weak self] _ in
@@ -252,7 +247,7 @@ class DrawerViewController: UIViewController {
             self?.adjustContextDrawerUI()
         }
         
-        changeHandler.subscribe(toChanges: [currentUserChange, workModeChange, reachabilityChange, lastSyncChange, hasOfflineMapChange])
+        changeHandler.subscribe(toChanges: [currentPortalChange, workModeChange, reachabilityChange, lastSyncChange, hasOfflineMapChange])
     }
     
     func updateSynchronizeButtonForLastSync(date: Date?) {

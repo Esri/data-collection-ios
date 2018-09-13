@@ -32,7 +32,7 @@ enum AppContextChange {
             self.init(rawValue)
         }
         
-        static let currentUser = Key("AppContextChangeKey.currentUser")
+        static let currentPortal = Key("AppContextChangeKey.currentPortal")
         static let currentMap = Key("AppContextChange.currentMap")
         static let hasOfflineMap = Key("AppContextChange.hasOfflineMap")
         static let locationAuthorization = Key("AppContextChange.locationAuthorization")
@@ -41,7 +41,7 @@ enum AppContextChange {
         static let lastSync = Key("AppContextChange.lastSync")
     }
     
-    case currentUser((AGSPortalUser?) -> Void)
+    case currentPortal((AGSPortal) -> Void)
     case currentMap((AGSMap?) -> Void)
     case hasOfflineMap((Bool) -> Void)
     case locationAuthorization((Bool) -> Void)
@@ -51,7 +51,7 @@ enum AppContextChange {
     
     var notificationClosure: Any {
         switch self {
-        case .currentUser(let closure):
+        case .currentPortal(let closure):
             return closure
         case .currentMap(let closure):
             return closure
@@ -70,8 +70,8 @@ enum AppContextChange {
     
     var key: Key {
         switch self {
-        case .currentUser(_):
-            return Key.currentUser
+        case .currentPortal(_):
+            return Key.currentPortal
         case .currentMap(_):
             return Key.currentMap
         case .hasOfflineMap(_):

@@ -29,11 +29,6 @@ class AppContextChangeHandler {
     func subscribe(toChange change: AppContextChange) {
         
         switch change {
-        case .currentUser(let closure):
-            let observeCurrentUser = appContext.observe(\.user, options: [.new, .old]) { (_, _) in
-                DispatchQueue.main.async { closure(appContext.user) }
-            }
-            appObservations.append(observeCurrentUser)
             
         case .currentMap(let closure):
             let observeCurrentMap = appContext.observe(\.currentMap, options:[.new, .old]) { (_, _) in
@@ -52,6 +47,10 @@ class AppContextChangeHandler {
                 DispatchQueue.main.async { closure(appLocation.locationAuthorized) }
             }
             appObservations.append(observeLocationAuthorization)
+        
+        case .currentPortal(_):
+            appChanges[change.key] = change
+            appNotificationCenter.addObserver(self, selector: #selector(AppContextChangeHandler.recieveCurrentPortalNotification(notification:)), name: .currentPortalDidChange, object: nil)
             
         case .reachability(_):
             appChanges[change.key] = change
@@ -67,13 +66,17 @@ class AppContextChangeHandler {
         }
     }
     
+    @objc private func recieveCurrentPortalNotification(notification: Notification) {
+        
+        if let change = appChanges[AppContextChange.Key.currentPortal], let completionClosure = change.notificationClosure as? (AGSPortal) -> Void  {
+            DispatchQueue.main.async { completionClosure(appContext.portal) }
+        }
+    }
+    
     @objc private func recieveReachabilityNotification(notification: Notification) {
         
-        if let change = appChanges[AppContextChange.Key.reachability],
-            let completionClosure = change.notificationClosure as? (Bool) -> Void  {
-            DispatchQueue.main.async {
-                completionClosure(appReachability.isReachable)
-            }
+        if let change = appChanges[AppContextChange.Key.reachability], let completionClosure = change.notificationClosure as? (Bool) -> Void  {
+            DispatchQueue.main.async { completionClosure(appReachability.isReachable) }
         }
     }
     
@@ -81,9 +84,7 @@ class AppContextChangeHandler {
         
         if let change = appChanges[AppContextChange.Key.workMode],
             let completionClosure = change.notificationClosure as? (WorkMode) -> Void  {
-            DispatchQueue.main.async {
-                completionClosure(appContext.workMode)
-            }
+            DispatchQueue.main.async { completionClosure(appContext.workMode) }
         }
     }
     
@@ -91,9 +92,7 @@ class AppContextChangeHandler {
         
         if let change = appChanges[AppContextChange.Key.lastSync],
             let completionClosure = change.notificationClosure as? (Date?) -> Void  {
-            DispatchQueue.main.async {
-                completionClosure(appContext.mobileMapPackage?.lastSyncDate)
-            }
+            DispatchQueue.main.async { completionClosure(appContext.mobileMapPackage?.lastSyncDate) }
         }
     }
 }
