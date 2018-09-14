@@ -17,5 +17,14 @@ import ArcGIS
 
 extension AGSViewpoint {
     
-    static var sharedVisibleArea: AGSViewpoint?
+    static var sharedVisibleArea: AGSViewpoint? {
+        set {
+            if newValue?.targetGeometry != nil { storedSharedVisibleArea = newValue }
+        }
+        get {
+            return storedSharedVisibleArea
+        }
+    }
+    
+    private static var storedSharedVisibleArea: AGSViewpoint?
 }

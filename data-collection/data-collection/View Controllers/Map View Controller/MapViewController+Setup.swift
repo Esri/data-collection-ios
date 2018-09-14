@@ -24,7 +24,7 @@ extension MapViewController {
         mapView.interactionOptions.isMagnifierEnabled = false
         
         visibleAreaObserver = mapView.observe(\.visibleArea, options:[]) { (mapView, _) in
-            AGSViewpoint.sharedVisibleArea = mapView.currentViewpoint(with: .centerAndScale)
+            AGSViewpoint.sharedVisibleArea = mapView.currentViewpoint(with: .boundingGeometry)
         }
     }
     
