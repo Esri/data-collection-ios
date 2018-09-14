@@ -52,7 +52,23 @@ If there are changes made in the Original repository, you can sync the fork to k
 3. `git checkout master` to checkout your fork's local master branch.
 4. `git merge upstream/master` to sync your local `master` branch with `upstream/master`. **Note**: Your local changes will be retained and your fork's master branch will be in sync with the upstream repository.
 
-# TODO: APP & PROJECT CONFIGURATION
+### Configure the app
+
+The app can be run as is, but it's recommended you do some configuration to set up OAuth to be relevant to your users (certainly it should not be deployed without these changes):
+
+1. Register an ArcGIS Portal Application.
+2. Configure Data Collection project to reference that application.
+3. License the app to remove the Developer Mode watermark and for deployment.
+
+#### 1. Register an Application
+
+For OAuth configuration, create a new Application in your ArcGIS Portal to obtain a `Client ID` and configure a `Redirect URL`. The **Client ID** configures the ArcGIS Runtime to show your users, during the log in process, that the application was built by you and can be trusted. The **Redirect URL** configures the OAuth process to then return to your app once authentication is complete.
+
+1. Log in to [https://developers.arcgis.com](https://developers.arcgis.com) with either your ArcGIS Organizational Account or an ArcGIS Developer Account.
+2. Register a new Application. ![Register ArcGIS Application](./docs/images/Register-App.png)
+3. In the Authentication tab, note the **Client ID** and add a **Redirect URL**, e.g. `data-collection://auth`. We will use this URL in the **Configuring the project** section below.
+
+
 
 ## Learn More
 Learn more about Esri Example Apps [here](https://developers.arcgis.com/example-apps).
