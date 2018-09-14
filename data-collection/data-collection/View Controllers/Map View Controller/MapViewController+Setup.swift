@@ -23,8 +23,10 @@ extension MapViewController {
         mapView.releaseHardwareResourcesWhenBackgrounded = true
         mapView.interactionOptions.isMagnifierEnabled = false
         
-        visibleAreaObserver = mapView.observe(\.visibleArea, options:[]) { (mapView, _) in
-            AGSViewpoint.sharedVisibleArea = mapView.currentViewpoint(with: .boundingGeometry)
+        visibleAreaObserver = mapView.observe(\.isNavigating, options:[]) { (mapView, _) in
+            
+            guard !mapView.isNavigating else { return }
+            AppContext.sharedVisibleArea = mapView.currentViewpoint(with: .boundingGeometry)
         }
     }
     
