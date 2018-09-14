@@ -44,6 +44,10 @@ extension MapViewController {
                 self?.mapViewMode = .disabled
                 return
             }
+
+            if let sharedVisibleArea = AGSViewpoint.sharedVisibleArea {
+                self?.mapView.setViewpoint(sharedVisibleArea)
+            }
             
             self?.mapViewMode = .defaultView
             

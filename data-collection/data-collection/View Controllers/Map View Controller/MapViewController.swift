@@ -69,6 +69,8 @@ class MapViewController: UIViewController {
     @IBOutlet weak var maskViewContainer: UIView!
     
     var featureDetailViewBottomConstraint: NSLayoutConstraint!
+    
+    var visibleAreaObserver: NSKeyValueObservation?
 
     var identifyOperation: AGSCancelable?
     

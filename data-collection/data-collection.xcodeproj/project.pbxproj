@@ -60,6 +60,7 @@
 		948D84DA2142E29C00E2048F /* CGRect+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 948D84D92142E29C00E2048F /* CGRect+Extensions.swift */; };
 		948D84DF214324D800E2048F /* Timer+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 948D84DE214324D800E2048F /* Timer+Extensions.swift */; };
 		948D84E121484C7500E2048F /* URLComponents+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 948D84E021484C7500E2048F /* URLComponents+Extension.swift */; };
+		948D84E7214C4CF100E2048F /* AGSViewpoint+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 948D84E6214C4CF100E2048F /* AGSViewpoint+Extensions.swift */; };
 		94A8101D20AA1D7C00D4BC68 /* PopupNumberCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94A8101C20AA1D7C00D4BC68 /* PopupNumberCell.swift */; };
 		94A8102B20B33B9200D4BC68 /* PopupShortStringCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94A8102A20B33B9200D4BC68 /* PopupShortStringCell.swift */; };
 		94A8102D20B33C0E00D4BC68 /* PopupDateCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94A8102C20B33C0E00D4BC68 /* PopupDateCell.swift */; };
@@ -215,6 +216,7 @@
 		948D84D92142E29C00E2048F /* CGRect+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGRect+Extensions.swift"; sourceTree = "<group>"; };
 		948D84DE214324D800E2048F /* Timer+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Timer+Extensions.swift"; sourceTree = "<group>"; };
 		948D84E021484C7500E2048F /* URLComponents+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URLComponents+Extension.swift"; sourceTree = "<group>"; };
+		948D84E6214C4CF100E2048F /* AGSViewpoint+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AGSViewpoint+Extensions.swift"; sourceTree = "<group>"; };
 		94A8101C20AA1D7C00D4BC68 /* PopupNumberCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupNumberCell.swift; sourceTree = "<group>"; };
 		94A8102A20B33B9200D4BC68 /* PopupShortStringCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupShortStringCell.swift; sourceTree = "<group>"; };
 		94A8102C20B33C0E00D4BC68 /* PopupDateCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupDateCell.swift; sourceTree = "<group>"; };
@@ -573,6 +575,7 @@
 				94A8103A20B635A000D4BC68 /* AGSQueryParameters+Extensions.swift */,
 				94AB811B211E0AD300B9C920 /* AGSLicense+Extensions.swift */,
 				948D84CA213F578800E2048F /* AGSMap+Extensions.swift */,
+				948D84E6214C4CF100E2048F /* AGSViewpoint+Extensions.swift */,
 			);
 			path = ArcGIS;
 			sourceTree = "<group>";
@@ -952,6 +955,7 @@
 				946569122088020F00599E55 /* AGSPopup+Extensions.swift in Sources */,
 				948D84E121484C7500E2048F /* URLComponents+Extension.swift in Sources */,
 				9440D35120D4662E005ED582 /* CustomBehavior_NewTreeCondition.swift in Sources */,
+				948D84E7214C4CF100E2048F /* AGSViewpoint+Extensions.swift in Sources */,
 				94B375F4207E8E4800691F2A /* AGSJobStatus+Extensions.swift in Sources */,
 				94B375F8207E8E4800691F2A /* AGSDrawStatus+Extensions.swift in Sources */,
 				948D84DF214324D800E2048F /* Timer+Extensions.swift in Sources */,
