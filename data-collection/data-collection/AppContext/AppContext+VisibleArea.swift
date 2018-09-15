@@ -15,28 +15,10 @@
 import Foundation
 import ArcGIS
 
-extension AGSViewpoint: AppUserDefaultsProtocol {
-    
-    func storeViewPoint() {
-        
-        let json = try? self.toJSON()
-        AGSViewpoint.setUserDefault(json)
-    }
-    
-    static func getDefaultViewPoint() -> AGSViewpoint? {
-        
-        guard let viewPointJSON = AGSViewpoint.getUserDefaultValue() else { return nil }
-        let serializedJSON = try? AGSViewpoint.fromJSON(viewPointJSON)
-        return serializedJSON as? AGSViewpoint
-    }
-    
-    typealias ValueType = Any
-    
-    static let userDefaultsKey = "VisibleAreaDefaultsKey.\(AppConfiguration.webMapItemID)"
-}
-
 extension AppContext {
     
+    static let visibleAreaDefaultsKey = "VisibleAreaDefaultsKey.\(AppConfiguration.webMapItemID)"
+
     static var sharedVisibleArea: AGSViewpoint? {
         set {
             if newValue?.targetGeometry != nil { storedSharedVisibleArea = newValue }
@@ -46,13 +28,13 @@ extension AppContext {
         }
     }
     
-    private static var storedSharedVisibleArea: AGSViewpoint? = AGSViewpoint.getDefaultViewPoint() {
+    private static var storedSharedVisibleArea: AGSViewpoint? = AGSViewpoint.retrieveFromUserDefaults(withKey: visibleAreaDefaultsKey) {
         didSet {
             if let visibleArea = storedSharedVisibleArea {
-                visibleArea.storeViewPoint()
+                visibleArea.storeInUserDefaults(withKey: visibleAreaDefaultsKey)
             }
             else {
-                AGSViewpoint.clearUserDefaultValue()
+                UserDefaults.standard.set(nil, forKey: visibleAreaDefaultsKey)
             }
         }
     }
