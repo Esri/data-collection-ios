@@ -17,25 +17,24 @@ import ArcGIS
 
 extension AppContext {
     
-    static let visibleAreaDefaultsKey = "VisibleAreaDefaultsKey.\(AppConfiguration.webMapItemID)"
-
-    static var sharedVisibleArea: AGSViewpoint? {
-        set {
-            if newValue?.targetGeometry != nil { storedSharedVisibleArea = newValue }
-        }
-        get {
-            return storedSharedVisibleArea
-        }
-    }
+    var visibleAreaDefaultsKey: String { return "VisibleAreaDefaultsKey.\(AppConfiguration.webMapItemID)" }
     
-    private static var storedSharedVisibleArea: AGSViewpoint? = AGSViewpoint.retrieveFromUserDefaults(withKey: visibleAreaDefaultsKey) {
-        didSet {
-            if let visibleArea = storedSharedVisibleArea {
+    var sharedVisibleArea: AGSViewpoint? {
+        set {
+            guard newValue?.targetGeometry != nil else {
+                UserDefaults.standard.set(nil, forKey: visibleAreaDefaultsKey)
+                return
+            }
+            
+            if let visibleArea = newValue {
                 visibleArea.storeInUserDefaults(withKey: visibleAreaDefaultsKey)
             }
             else {
                 UserDefaults.standard.set(nil, forKey: visibleAreaDefaultsKey)
             }
+        }
+        get {
+            return AGSViewpoint.retrieveFromUserDefaults(withKey: visibleAreaDefaultsKey)
         }
     }
 }

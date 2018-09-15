@@ -60,8 +60,8 @@
 		948D84DA2142E29C00E2048F /* CGRect+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 948D84D92142E29C00E2048F /* CGRect+Extensions.swift */; };
 		948D84DF214324D800E2048F /* Timer+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 948D84DE214324D800E2048F /* Timer+Extensions.swift */; };
 		948D84E121484C7500E2048F /* URLComponents+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 948D84E021484C7500E2048F /* URLComponents+Extension.swift */; };
-		948D84ED214C713900E2048F /* AppContext+VisibleArea.swift in Sources */ = {isa = PBXBuildFile; fileRef = 948D84EC214C713900E2048F /* AppContext+VisibleArea.swift */; };
 		948D84EF214C84BD00E2048F /* AGSJSONSerializable+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 948D84EE214C84BD00E2048F /* AGSJSONSerializable+Extensions.swift */; };
+		948D84F1214C899600E2048F /* AppContext+VisibleArea.swift in Sources */ = {isa = PBXBuildFile; fileRef = 948D84F0214C899600E2048F /* AppContext+VisibleArea.swift */; };
 		94A8101D20AA1D7C00D4BC68 /* PopupNumberCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94A8101C20AA1D7C00D4BC68 /* PopupNumberCell.swift */; };
 		94A8102B20B33B9200D4BC68 /* PopupShortStringCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94A8102A20B33B9200D4BC68 /* PopupShortStringCell.swift */; };
 		94A8102D20B33C0E00D4BC68 /* PopupDateCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94A8102C20B33C0E00D4BC68 /* PopupDateCell.swift */; };
@@ -217,8 +217,8 @@
 		948D84D92142E29C00E2048F /* CGRect+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGRect+Extensions.swift"; sourceTree = "<group>"; };
 		948D84DE214324D800E2048F /* Timer+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Timer+Extensions.swift"; sourceTree = "<group>"; };
 		948D84E021484C7500E2048F /* URLComponents+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URLComponents+Extension.swift"; sourceTree = "<group>"; };
-		948D84EC214C713900E2048F /* AppContext+VisibleArea.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppContext+VisibleArea.swift"; sourceTree = "<group>"; };
 		948D84EE214C84BD00E2048F /* AGSJSONSerializable+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AGSJSONSerializable+Extensions.swift"; sourceTree = "<group>"; };
+		948D84F0214C899600E2048F /* AppContext+VisibleArea.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppContext+VisibleArea.swift"; sourceTree = "<group>"; };
 		94A8101C20AA1D7C00D4BC68 /* PopupNumberCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupNumberCell.swift; sourceTree = "<group>"; };
 		94A8102A20B33B9200D4BC68 /* PopupShortStringCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupShortStringCell.swift; sourceTree = "<group>"; };
 		94A8102C20B33C0E00D4BC68 /* PopupDateCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupDateCell.swift; sourceTree = "<group>"; };
@@ -516,7 +516,7 @@
 				94B375A7207E8D5600691F2A /* AppContext+WorkMode.swift */,
 				946D20B2212F5348001BF5CC /* AppContextChange.swift */,
 				94D544BA207FC15D00ED0D04 /* AppContextChangeHandler.swift */,
-				948D84EC214C713900E2048F /* AppContext+VisibleArea.swift */,
+				948D84F0214C899600E2048F /* AppContext+VisibleArea.swift */,
 			);
 			path = AppContext;
 			sourceTree = "<group>";
@@ -992,6 +992,7 @@
 				94B375C5207E8D5600691F2A /* AppNotifications.swift in Sources */,
 				946569142088023600599E55 /* AGSPopupManager+Extensions.swift in Sources */,
 				9440D35520D479B5005ED582 /* PopupLongStringCell.swift in Sources */,
+				948D84F1214C899600E2048F /* AppContext+VisibleArea.swift in Sources */,
 				9412D2172099382C0031F9EB /* RelatedRecordsPopupsViewController+DataSource.swift in Sources */,
 				94B0D32D20C84C390075EA7A /* UINavigationController+Extensions.swift in Sources */,
 				9451EC5220D0705700792FFC /* CustomBehavior_IdentifyNeighborhood.swift in Sources */,
@@ -1017,7 +1018,6 @@
 				94B375C8207E8D5600691F2A /* AppContext+WorkMode.swift in Sources */,
 				94D2714020D0315900304E27 /* CustomBehavior_Map.swift in Sources */,
 				946D20C22130C236001BF5CC /* AppMobileMapPackage.swift in Sources */,
-				948D84ED214C713900E2048F /* AppContext+VisibleArea.swift in Sources */,
 				945CEE7720DDC2AC00CD3E0D /* SVProgressHUD.m in Sources */,
 				94B0D32B20C84B010075EA7A /* RelatedRecordsPopupsViewController+RelatedRecordsListDelegate.swift in Sources */,
 				94D544BD207FC15D00ED0D04 /* DrawerViewController.swift in Sources */,

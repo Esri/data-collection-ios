@@ -26,7 +26,7 @@ extension MapViewController {
         visibleAreaObserver = mapView.observe(\.isNavigating, options:[]) { (mapView, _) in
             
             guard !mapView.isNavigating else { return }
-            AppContext.sharedVisibleArea = mapView.currentViewpoint(with: .boundingGeometry)
+            appContext.sharedVisibleArea = mapView.currentViewpoint(with: .boundingGeometry)
         }
     }
     

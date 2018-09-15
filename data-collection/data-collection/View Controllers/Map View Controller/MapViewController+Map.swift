@@ -45,7 +45,7 @@ extension MapViewController {
                 return
             }
 
-            if let sharedVisibleArea = AppContext.sharedVisibleArea {
+            if let sharedVisibleArea = appContext.sharedVisibleArea {
                 self?.mapView.setViewpoint(sharedVisibleArea)
             }
             
