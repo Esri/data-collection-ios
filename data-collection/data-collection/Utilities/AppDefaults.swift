@@ -30,10 +30,6 @@ extension AppUserDefaultsProtocol {
         UserDefaults.standard.set(value, forKey: userDefaultsKey)
     }
     
-    static func clearUserDefaultValue() {
-        UserDefaults.standard.set(nil, forKey: userDefaultsKey)
-    }
-    
     static func getUserDefaultValue() -> ValueType? {
         return UserDefaults.standard.value(forKey: userDefaultsKey) as? ValueType
     }
