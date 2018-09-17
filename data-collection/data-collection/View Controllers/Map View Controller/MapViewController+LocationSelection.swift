@@ -180,6 +180,7 @@ extension MapViewController {
     
     func prepareMapMaskViewForOfflineDownloadArea() {
         
+        currentPopup = nil
         mapViewMode = .offlineMask
     }
     

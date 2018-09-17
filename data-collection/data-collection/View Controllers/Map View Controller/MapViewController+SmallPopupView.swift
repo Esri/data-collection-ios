@@ -26,16 +26,9 @@ extension MapViewController {
         
         guard mapViewMode != .disabled else { return }
         
-        guard let manager = recordsManager else {
-            
-            mapViewMode = .defaultView
-            
-            relatedRecordHeaderLabel.text = nil
-            relatedRecordSubheaderLabel.text = nil
-            relatedRecordsNLabel.text = nil
-            
-            return
-        }
+        guard mapViewMode != .offlineMask else { return }
+        
+        guard let manager = recordsManager else { return }
         
         currentPopup!.select()
         

@@ -24,8 +24,8 @@ extension AppContainerViewController: DrawerViewControllerDelegate {
     
     func drawerViewController(didRequestWorkOffline drawerViewController: DrawerViewController) {
         if !appContext.setMapFromOfflineMobileMapPackage() {
-            drawerShowing = false
             mapViewController?.prepareMapMaskViewForOfflineDownloadArea()
+            drawerShowing = false
         }
     }
     
