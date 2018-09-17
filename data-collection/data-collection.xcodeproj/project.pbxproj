@@ -81,7 +81,6 @@
 		94B375C0207E8D5600691F2A /* AppFiles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94B3759E207E8D5600691F2A /* AppFiles.swift */; };
 		94B375C1207E8D5600691F2A /* AppConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94B3759F207E8D5600691F2A /* AppConfiguration.swift */; };
 		94B375C2207E8D5600691F2A /* AppOfflineMapJobConstructionInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94B375A0207E8D5600691F2A /* AppOfflineMapJobConstructionInfo.swift */; };
-		94B375C3207E8D5600691F2A /* AppDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94B375A1207E8D5600691F2A /* AppDefaults.swift */; };
 		94B375C4207E8D5600691F2A /* AppErrors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94B375A2207E8D5600691F2A /* AppErrors.swift */; };
 		94B375C5207E8D5600691F2A /* AppNotifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94B375A3207E8D5600691F2A /* AppNotifications.swift */; };
 		94B375C6207E8D5600691F2A /* AppLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94B375A4207E8D5600691F2A /* AppLocation.swift */; };
@@ -236,7 +235,6 @@
 		94B3759E207E8D5600691F2A /* AppFiles.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppFiles.swift; sourceTree = "<group>"; };
 		94B3759F207E8D5600691F2A /* AppConfiguration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppConfiguration.swift; sourceTree = "<group>"; };
 		94B375A0207E8D5600691F2A /* AppOfflineMapJobConstructionInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppOfflineMapJobConstructionInfo.swift; sourceTree = "<group>"; };
-		94B375A1207E8D5600691F2A /* AppDefaults.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDefaults.swift; sourceTree = "<group>"; };
 		94B375A2207E8D5600691F2A /* AppErrors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppErrors.swift; sourceTree = "<group>"; };
 		94B375A3207E8D5600691F2A /* AppNotifications.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppNotifications.swift; sourceTree = "<group>"; };
 		94B375A4207E8D5600691F2A /* AppLocation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppLocation.swift; sourceTree = "<group>"; };
@@ -491,7 +489,6 @@
 				94B375D5207E8DD600691F2A /* EditType.swift */,
 				94B3759E207E8D5600691F2A /* AppFiles.swift */,
 				94B375A0207E8D5600691F2A /* AppOfflineMapJobConstructionInfo.swift */,
-				94B375A1207E8D5600691F2A /* AppDefaults.swift */,
 				94B375A2207E8D5600691F2A /* AppErrors.swift */,
 				94B375A3207E8D5600691F2A /* AppNotifications.swift */,
 				94B375A4207E8D5600691F2A /* AppLocation.swift */,
@@ -1015,7 +1012,6 @@
 				94D544BD207FC15D00ED0D04 /* DrawerViewController.swift in Sources */,
 				94D544DA20852A5100ED0D04 /* ActivityBarView.swift in Sources */,
 				94B375D6207E8DD600691F2A /* ReverseGeocoderManager.swift in Sources */,
-				94B375C3207E8D5600691F2A /* AppDefaults.swift in Sources */,
 				94B375F9207E8E4800691F2A /* AGSArcGISFeature+Extensions.swift in Sources */,
 				94A8103B20B635A000D4BC68 /* AGSQueryParameters+Extensions.swift in Sources */,
 				94B375C7207E8D5600691F2A /* AppContext+Login.swift in Sources */,
