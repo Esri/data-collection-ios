@@ -217,7 +217,7 @@ class DrawerViewController: UIViewController {
     private func updateLoginButtonForAuthenticatedUsername(user: AGSPortalUser?) {
         
         if let currentUser = user {
-            loginButton.setAttributed(header: "Log out", subheader: currentUser.username, forControlStateColors: loginLogoutButtonControlStateColors, headerFont: .drawerButtonHeader, subheaderFont: .drawerButtonSubheader)
+            loginButton.setAttributed(header: currentUser.username ?? currentUser.email ?? "User", subheader: "Log out", forControlStateColors: loginLogoutButtonControlStateColors, headerFont: .drawerButtonHeader, subheaderFont: .drawerButtonSubheader)
         }
         else {
             loginButton.setAttributed(header: "Log in", forControlStateColors: loginLogoutButtonControlStateColors, headerFont: .drawerButtonHeader)

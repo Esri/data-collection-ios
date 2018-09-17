@@ -17,13 +17,13 @@ import UIKit.UIColor
 
 extension UIColor {
     
-    static let primary: UIColor = UIColor(red:0.66, green:0.81, blue:0.40, alpha:1.00)
+    static let primary: UIColor = #colorLiteral(red:0.66, green:0.81, blue:0.40, alpha:1.00)
     
     static let offline: UIColor = .darkGray
     static let offlineLight: UIColor = .gray
     static let offlineDark: UIColor = .black
     
-    static let accent: UIColor = UIColor(red:0.97, green:0.74, blue:0.18, alpha:1.00)
+    static let accent: UIColor = #colorLiteral(red:0.97, green:0.74, blue:0.18, alpha:1.00)
     
     static let tableCellTitle: UIColor = .gray
     static let tableCellValue: UIColor = .black
