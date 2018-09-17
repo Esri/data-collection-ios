@@ -87,7 +87,7 @@ import ArcGIS
      This property is initialized with the last selected Work mode.
      **Note: The app can have an offline map even in online work mode.
      */
-    var workMode: WorkMode = WorkMode.defaultWorkMode {
+    var workMode: WorkMode = WorkMode.retrieveDefaultWorkMode() {
         didSet {
             workMode.storeDefaultWorkMode()
             appNotificationCenter.post(name: .workModeDidChange, object: nil)

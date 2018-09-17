@@ -15,19 +15,19 @@
 import Foundation
 import ArcGIS
 
-class AppMobileMapPackage: AGSMobileMapPackage, AppUserDefaultsProtocol {
+class AppMobileMapPackage: AGSMobileMapPackage {
     
-    // MARK: Last Sync
+    static let userDefaultsKey = "AppMobileMapPackage.\(AppConfiguration.webMapItemID)"
     
     internal private(set) var lastSyncDate: Date? {
         didSet {
-            AppMobileMapPackage.setUserDefault(lastSyncDate)
+            UserDefaults.standard.set(lastSyncDate, forKey: AppMobileMapPackage.userDefaultsKey)
             appNotificationCenter.post(name: .lastSyncDidChange, object: nil)
         }
     }
     
     override init(fileURL: URL) {
-        self.lastSyncDate = AppMobileMapPackage.getUserDefaultValue()
+        self.lastSyncDate = UserDefaults.standard.value(forKey: AppMobileMapPackage.userDefaultsKey) as? Date
         super.init(fileURL: fileURL)
     }
     
@@ -45,11 +45,5 @@ class AppMobileMapPackage: AGSMobileMapPackage, AppUserDefaultsProtocol {
         
         return map.allOfflineTables.contains { $0.hasLocalEdits(since: lastSync) }
     }
-    
-    // MARK: User Defaults Protocol
-    
-    typealias ValueType = Date
-    
-    static let userDefaultsKey = "AppMobileMapPackage.\(AppConfiguration.webMapItemID)"
 }
 
