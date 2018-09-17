@@ -70,10 +70,8 @@ class AppContainerViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        adjustForDrawerShowing(isAnimated: false)
         adjustNavigationBarButtons()
-        
-        NotificationCenter.default.addObserver(self, selector: #selector(AppContainerViewController.deviceOrientationDidChange), name: NSNotification.Name.UIDeviceOrientationDidChange, object: nil)
+        adjustForDrawerShowing(isAnimated: false)
     }
     
     @IBAction func userTapsOutsideOfDrawer(_ sender: Any) {
@@ -117,8 +115,10 @@ class AppContainerViewController: UIViewController {
             jobStatusViewController = destination
         }
     }
-    
-    @objc func deviceOrientationDidChange() {
+
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransition(to: size, with: coordinator)
+        
         adjustForDrawerShowing(isAnimated: false)
     }
     
@@ -127,7 +127,9 @@ class AppContainerViewController: UIViewController {
         let animationDuration = 0.2
         drawerLeadingLayoutConstraint.constant = drawerShowing ? 0.0 : -contextView.frame.size.width
         
-        if drawerShowing { drawerViewController?.view.isHidden = false }
+        if drawerShowing {
+            drawerViewController?.view.isHidden = false
+        }
         
         UIView.animate(withDuration: animationDuration, delay: 0.0, options: .curveEaseOut, animations: { [weak self] in
             self?.view.layoutIfNeeded()
@@ -135,7 +137,9 @@ class AppContainerViewController: UIViewController {
         }) { [weak self] (_) in
             guard let strongSelf = self else { return }
             strongSelf.visualEffectView.isUserInteractionEnabled = strongSelf.drawerShowing
-            if !strongSelf.drawerShowing { strongSelf.drawerViewController?.view.isHidden = true }
+            if !strongSelf.drawerShowing {
+                strongSelf.drawerViewController?.view.isHidden = true
+            }
         }
     }
     
