@@ -15,16 +15,21 @@
 import Foundation
 import ArcGIS
 
-extension AGSJSONSerializable {
+extension UserDefaults {
     
-    static func retrieveFromUserDefaults(withKey key: String) -> Self? {
+    func set(_ jsonSerializable: AGSJSONSerializable?, forKey key: String) {
+        
+        guard let jsonValue = jsonSerializable else {
+            self.set((nil as Any?), forKey: key)
+            return
+        }
+        
         do {
-            guard let json = UserDefaults.standard.value(forKey: key) else { return nil }
-            return try Self.fromJSON(json) as? Self
+            let json = try jsonValue.toJSON()
+            set(json, forKey: key)
         }
         catch {
-            print("[Error: AGSJSONSerializable] could not serialize object from JSON.", error.localizedDescription)
+            print("[Error: AGSJSONSerializable] could not serialize object to JSON.", error.localizedDescription)
         }
-        return nil
-    }
+    }    
 }

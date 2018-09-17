@@ -22,16 +22,11 @@ extension AppContext {
     var sharedVisibleArea: AGSViewpoint? {
         set {
             guard newValue?.targetGeometry != nil else {
-                UserDefaults.standard.set(nil, forKey: visibleAreaDefaultsKey)
+                UserDefaults.standard.set((nil as Any?), forKey: visibleAreaDefaultsKey)
                 return
             }
             
-            if let visibleArea = newValue {
-                visibleArea.storeInUserDefaults(withKey: visibleAreaDefaultsKey)
-            }
-            else {
-                UserDefaults.standard.set(nil, forKey: visibleAreaDefaultsKey)
-            }
+            UserDefaults.standard.set(sharedVisibleArea, forKey: visibleAreaDefaultsKey)
         }
         get {
             return AGSViewpoint.retrieveFromUserDefaults(withKey: visibleAreaDefaultsKey)
