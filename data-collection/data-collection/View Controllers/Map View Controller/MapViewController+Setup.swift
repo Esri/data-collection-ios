@@ -13,6 +13,7 @@
 // limitations under the License.
 
 import Foundation
+import ArcGIS
 
 extension MapViewController {
     
@@ -21,6 +22,12 @@ extension MapViewController {
         mapView.touchDelegate = self
         mapView.releaseHardwareResourcesWhenBackgrounded = true
         mapView.interactionOptions.isMagnifierEnabled = false
+        
+        visibleAreaObserver = mapView.observe(\.isNavigating, options:[]) { (mapView, _) in
+            
+            guard !mapView.isNavigating else { return }
+            appContext.sharedVisibleArea = mapView.currentViewpoint(with: .boundingGeometry)
+        }
     }
     
     func setupActivityBarView() {
