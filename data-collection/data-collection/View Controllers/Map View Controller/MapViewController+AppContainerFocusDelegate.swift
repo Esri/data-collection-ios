@@ -19,6 +19,5 @@ extension MapViewController: AppContainerFocusDelegate {
     func controllerBecomingFocus() {
         
         refreshCurrentPopup()
-        updateSmallPopupViewForCurrentPopup()
     }    
 }

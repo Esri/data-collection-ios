@@ -19,7 +19,7 @@ extension MapViewController: AGSGeoViewTouchDelegate {
     
     func geoView(_ geoView: AGSGeoView, didTapAtScreenPoint screenPoint: CGPoint, mapPoint: AGSPoint) {
         
-        guard mapViewMode == .defaultView || mapViewMode == .selectedFeature else {
+        guard mapViewMode == .defaultView || mapViewMode == .selectedFeature(featureLoaded: false) || mapViewMode == .selectedFeature(featureLoaded: true) else {
             return
         }
         
@@ -29,7 +29,8 @@ extension MapViewController: AGSGeoViewTouchDelegate {
     private func query(_ geoView: AGSGeoView, atScreenPoint screenPoint: CGPoint, mapPoint: AGSPoint) {
 
         currentPopup = nil
-        
+        mapViewMode = .defaultView
+
         identifyOperation?.cancel()
         identifyOperation = nil
         
@@ -39,6 +40,7 @@ extension MapViewController: AGSGeoViewTouchDelegate {
                 print("[Error] identifying layers", error.localizedDescription)
                 self?.slideNotificationView.showLabel(withNotificationMessage: "Could not identify features.", forDuration: 2.0)
                 self?.currentPopup = nil
+                self?.mapViewMode = .defaultView
                 return
             }
             
@@ -46,6 +48,7 @@ extension MapViewController: AGSGeoViewTouchDelegate {
                 print("[Error] identifying layers, missing results")
                 self?.slideNotificationView.showLabel(withNotificationMessage: "Could not identify features.", forDuration: 2.0)
                 self?.currentPopup = nil
+                self?.mapViewMode = .defaultView
                 return
             }
             
@@ -57,6 +60,7 @@ extension MapViewController: AGSGeoViewTouchDelegate {
                 print("[Error] no found feature layer meets criteria")
                 self?.slideNotificationView.showLabel(withNotificationMessage: "Found no results.", forDuration: 2.0)
                 self?.currentPopup = nil
+                self?.mapViewMode = .defaultView
                 return
             }
             
@@ -64,10 +68,13 @@ extension MapViewController: AGSGeoViewTouchDelegate {
                 print("[Identify Layer] Found no results")
                 self?.slideNotificationView.showLabel(withNotificationMessage: "Found no results.", forDuration: 2.0)
                 self?.currentPopup = nil
+                self?.mapViewMode = .defaultView
                 return
             }
             
             self?.currentPopup = identifyResult.popups.popupNearestTo(mapPoint: mapPoint)
+            self?.mapViewMode = .selectedFeature(featureLoaded: false)
+            self?.refreshCurrentPopup()
         }
     }
 }

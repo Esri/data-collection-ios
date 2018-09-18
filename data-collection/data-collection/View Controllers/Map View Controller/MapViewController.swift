@@ -34,10 +34,10 @@ class MapViewController: UIViewController {
         case offlineExtent
     }
     
-    enum MapViewMode {
+    enum MapViewMode: Equatable {
         case defaultView
         case disabled
-        case selectedFeature
+        case selectedFeature(featureLoaded: Bool)
         case selectingFeature
         case offlineMask
     }
@@ -91,10 +91,6 @@ class MapViewController: UIViewController {
         willSet {
             recordsManager?.popup.clearSelection()
         }
-        didSet {
-            refreshCurrentPopup()
-            updateSmallPopupViewForCurrentPopup()
-        }
     }
     
     var mapViewMode: MapViewMode = .defaultView {
@@ -147,14 +143,6 @@ class MapViewController: UIViewController {
         displayInitialReachabilityMessage()
         
         refreshCurrentPopup()
-        updateSmallPopupViewForCurrentPopup()
-    }
-    
-    func refreshCurrentPopup() {
-        
-        if let popup = currentPopup, !popup.isFeatureAddedToTable {
-            currentPopup = nil
-        }
     }
     
     @IBAction func userRequestsReloadMap(_ sender: Any) {
@@ -217,6 +205,7 @@ class MapViewController: UIViewController {
     func subscribeToAppContextChanges() {
         
         let currentMapChange: AppContextChange = .currentMap { [weak self] currentMap in
+            self?.mapViewMode = .defaultView
             self?.currentPopup = nil
             self?.mapView.map = currentMap
             self?.loadMapViewMap()
