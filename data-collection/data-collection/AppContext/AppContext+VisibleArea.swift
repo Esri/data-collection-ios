@@ -26,7 +26,7 @@ extension AppContext {
                 return
             }
             
-            UserDefaults.standard.set(sharedVisibleArea, forKey: visibleAreaDefaultsKey)
+            UserDefaults.standard.set(newValue, forKey: visibleAreaDefaultsKey)
         }
         get {
             return AGSViewpoint.retrieveFromUserDefaults(withKey: visibleAreaDefaultsKey)
