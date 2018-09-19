@@ -14,13 +14,31 @@
 
 import Foundation
 
-protocol AppError: CustomNSError, LocalizedError { }
+protocol AppError: CustomNSError, LocalizedError {
+    var baseCode: AppErrorBaseCode { get }
+}
 
-struct AppErrorBaseCode {
+struct AppErrorBaseCode: RawRepresentable {
     
-    static let RelatedRecordsManagerError = 1000
-    static let FeatureTableError = 2000
-    static let PopupSortingError = 3000
-    static let AppGeocoderError = 4000
-    static let RelatedRecordsTableLoadError = 5000
+    typealias RawValue = Int
+    
+    var rawValue: RawValue
+    
+    init(_ rawValue: RawValue) {
+        self.rawValue = rawValue
+    }
+    
+    // Needed to satisfy the protocol requirement.
+    init?(rawValue: RawValue) {
+        self.init(rawValue)
+    }
+}
+
+extension AppErrorBaseCode {
+    
+    static let RelatedRecordsManagerError = AppErrorBaseCode(1000)
+    static let FeatureTableError = AppErrorBaseCode(2000)
+    static let PopupSortingError = AppErrorBaseCode(3000)
+    static let GeocoderResultsError = AppErrorBaseCode(4000)
+    static let RelatedRecordsTableLoadError = AppErrorBaseCode(5000)
 }

@@ -17,13 +17,15 @@ import ArcGIS
 
 enum RelatedRecordsManagerError: AppError {
     
+    var baseCode: AppErrorBaseCode { return .RelatedRecordsManagerError }
+    
     case featureMissingTable
     case missingManyToOneRelationship(String)
     case invalidPopup
     case cannotRelateFeatures
     
     var errorCode: Int {
-        let base = AppErrorBaseCode.RelatedRecordsManagerError
+        let base = baseCode.rawValue
         switch self {
         case .featureMissingTable:
             return base + 1

@@ -15,9 +15,11 @@
 import Foundation
 import ArcGIS
 
-enum FeatureTableError: AppError {
+enum FeatureTableError: Int, AppError {
     
-    case missingFeature
+    var baseCode: AppErrorBaseCode { return .FeatureTableError }
+    
+    case missingFeature = 1
     case missingFeatureTable
     case missingRelationshipInfos
     case multipleQueriesFailure
@@ -28,27 +30,7 @@ enum FeatureTableError: AppError {
     case cannotEditFeature
     
     var errorCode: Int {
-        let base = AppErrorBaseCode.FeatureTableError
-        switch self {
-        case .missingFeature:
-            return base + 1
-        case .missingFeatureTable:
-            return base + 2
-        case .missingRelationshipInfos:
-            return base + 3
-        case .multipleQueriesFailure:
-            return base + 4
-        case .queryResultsMissingFeatures:
-            return base + 5
-        case .queryResultsMissingPopups:
-            return base + 6
-        case .isNotArcGISFeatureTable:
-            return base + 7
-        case .isNotPopupEnabled:
-            return base + 8
-        case .cannotEditFeature:
-            return base + 9
-        }
+        return baseCode.rawValue + self.rawValue
     }
     
     var errorUserInfo: [String : Any] {

@@ -15,16 +15,14 @@
 import Foundation
 import ArcGIS
 
-enum RelatedRecordsTableLoadError: AppError {
+enum RelatedRecordsTableLoadError: Int, AppError {
     
-    case canceledLoad
+    var baseCode: AppErrorBaseCode { return .RelatedRecordsTableLoadError }
+    
+    case canceledLoad = 1
     
     var errorCode: Int {
-        let base = AppErrorBaseCode.RelatedRecordsTableLoadError
-        switch self {
-        case .canceledLoad:
-            return base + 1
-        }
+        return baseCode.rawValue + self.rawValue
     }
     
     var errorUserInfo: [String : Any] {

@@ -15,16 +15,14 @@
 import Foundation
 import ArcGIS
 
-enum AppGeocoderError: AppError {
+enum ReverseGeocoderManagerError: Int, AppError {
     
-    case missingAddressAttribute
+    var baseCode: AppErrorBaseCode { return .GeocoderResultsError }
+
+    case missingAddressAttribute = 1
     
     var errorCode: Int {
-        let base = AppErrorBaseCode.AppGeocoderError
-        switch self {
-        case .missingAddressAttribute:
-            return base + 1
-        }
+        return baseCode.rawValue + self.rawValue
     }
     
     var errorUserInfo: [String : Any] {
@@ -119,7 +117,7 @@ class ReverseGeocoderManager: AGSLoadableBase {
                     let attributesDict = first.attributes,
                     let address = attributesDict[Keys.address] as? String ?? attributesDict[Keys.matchAddress] as? String
                     else {
-                        completion(nil, AppGeocoderError.missingAddressAttribute)
+                        completion(nil, ReverseGeocoderManagerError.missingAddressAttribute)
                         return
                 }
                 completion(address, nil)

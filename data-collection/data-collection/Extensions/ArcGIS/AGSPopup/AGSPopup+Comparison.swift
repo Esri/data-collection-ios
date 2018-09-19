@@ -15,22 +15,16 @@
 import Foundation
 import ArcGIS
 
-enum PopupSortingError : AppError {
+enum PopupSortingError: Int, AppError {
     
-    case missingFields
+    var baseCode: AppErrorBaseCode { return .PopupSortingError }
+    
+    case missingFields = 1
     case badFields
     case invalidValueType
     
     var errorCode: Int {
-        let base = AppErrorBaseCode.PopupSortingError
-        switch self {
-        case .missingFields:
-            return base + 1
-        case .badFields:
-            return base + 2
-        case .invalidValueType:
-            return base + 3
-        }
+        return baseCode.rawValue + self.rawValue
     }
     
     var errorUserInfo: [String : Any] {
