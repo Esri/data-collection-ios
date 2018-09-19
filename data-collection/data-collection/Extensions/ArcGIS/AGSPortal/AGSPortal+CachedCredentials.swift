@@ -56,7 +56,7 @@ extension AGSPortal {
                 completion(newPortal, true)
             } else {
                 // Could not log in silently with cached credentials, so let's return a portal that doesn't require login
-                print("Error loading the new portal: \(error!.localizedDescription)")
+                print("[Error: Portal] couldn't load the new portal: \(error!.localizedDescription)")
                 guard let newURL = newPortal.url else {
                     // Fall back to ArcGIS Online
                     completion(AGSPortal.arcGISOnline(withLoginRequired: false), false)

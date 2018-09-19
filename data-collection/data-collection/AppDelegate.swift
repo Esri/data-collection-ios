@@ -25,21 +25,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // License the app
         AppDelegate.licenseApplication()
         
-        // Reachability
-        appReachability.resetAndStartListening()
-        
         // Enable credential cache auto sync
         AppDelegate.configCredentialCacheAutoSyncToKeychain()
         
         // Configure oAuth redirect URL
         AppDelegate.configOAuthRedirectURL()
+
+        // Configure file documents directories for offline usage
+        FileManager.buildOfflineMapDirectory()
+        
+        // Reachability
+        appReachability.resetAndStartListening()
         
         // Attempt to login from previously stored credentials
         appContext.logInCurrentPortalIfPossible()
         
-        // Configure file documents directories for offline usage
-        FileManager.buildOfflineMapDirectory()
-
         return true
     }
     
