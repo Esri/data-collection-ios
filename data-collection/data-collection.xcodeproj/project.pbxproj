@@ -314,8 +314,8 @@
 		94B375EF207E8E4800691F2A /* CGPoint+Modify.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CGPoint+Modify.swift"; sourceTree = "<group>"; };
 		94B3760B207EAE4600691F2A /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		94B3760D207EAEA100691F2A /* ArcGIS.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = ArcGIS.bundle; path = $HOME/Library/SDKs/ArcGIS/iOS/Frameworks/Static/ArcGIS.framework/Versions/Current/Resources/ArcGIS.bundle; sourceTree = "<group>"; };
-		94BA7D3920FD140500C78255 /* AppColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppColors.swift; sourceTree = "<group>"; };
-		94BA7D3B20FD151A00C78255 /* AppFonts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppFonts.swift; sourceTree = "<group>"; };
+		94BA7D3920FD140500C78255 /* UIColor+AppColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+AppColors.swift"; sourceTree = "<group>"; };
+		94BA7D3B20FD151A00C78255 /* UIFont+AppFonts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+AppFonts.swift"; sourceTree = "<group>"; };
 		94D2713A20CEF04F00304E27 /* RelatedRecordsPopupsViewController+EditingSessions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RelatedRecordsPopupsViewController+EditingSessions.swift"; sourceTree = "<group>"; };
 		94D2713D20D030D900304E27 /* CustomBehavior_ReverseGeocode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomBehavior_ReverseGeocode.swift; sourceTree = "<group>"; };
 		94D2713F20D0315900304E27 /* CustomBehavior_Map.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomBehavior_Map.swift; sourceTree = "<group>"; };
