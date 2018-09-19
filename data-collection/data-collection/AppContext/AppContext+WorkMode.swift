@@ -18,7 +18,7 @@ import ArcGIS
 enum WorkMode: Int {
     
     case online = 1
-    case offline = 2
+    case offline
     
     static let userDefaultsKey = "WorkMode.\(AppConfiguration.webMapItemID)"
     
@@ -34,6 +34,7 @@ enum WorkMode: Int {
 }
 
 // MARK: Offline Map
+
 extension AppContext {
     
     /**
