@@ -120,7 +120,9 @@ class AppContainerViewController: UIViewController {
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
         
-        adjustForDrawerShowing(isAnimated: false)
+        coordinator.animate(alongsideTransition: { (_) in
+            self.adjustForDrawerShowing(isAnimated: false)
+        }, completion: nil)
     }
     
     func adjustForDrawerShowing(isAnimated animated: Bool = true) {
