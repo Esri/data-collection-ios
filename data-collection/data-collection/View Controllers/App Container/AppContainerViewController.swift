@@ -70,10 +70,8 @@ class AppContainerViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        adjustForDrawerShowing(isAnimated: false)
         adjustNavigationBarButtons()
-        
-        NotificationCenter.default.addObserver(self, selector: #selector(AppContainerViewController.deviceOrientationDidChange), name: NSNotification.Name.UIDeviceOrientationDidChange, object: nil)
+        adjustForDrawerShowing(isAnimated: false)
     }
     
     @IBAction func userTapsOutsideOfDrawer(_ sender: Any) {
@@ -117,30 +115,28 @@ class AppContainerViewController: UIViewController {
             jobStatusViewController = destination
         }
     }
-    
-    @objc func deviceOrientationDidChange() {
+
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransition(to: size, with: coordinator)
+        
         adjustForDrawerShowing(isAnimated: false)
     }
     
     func adjustForDrawerShowing(isAnimated: Bool = true) {
         
-        let animationDuration = 0.2
-        drawerLeadingLayoutConstraint.constant = drawerShowing ? 0.0 : -contextView.frame.size.width
-        
-        if drawerShowing { drawerViewController?.view.isHidden = false }
+        let animationDuration = isAnimated ? 0.2 : 0.0
+
+        drawerLeadingLayoutConstraint.constant = drawerShowing ? 0.0 : -280.0
+        visualEffectView.isUserInteractionEnabled = drawerShowing
         
         UIView.animate(withDuration: animationDuration, delay: 0.0, options: .curveEaseOut, animations: { [weak self] in
             self?.view.layoutIfNeeded()
             self?.adjustVisualEffectViewBlurEffect()
-        }) { [weak self] (_) in
-            guard let strongSelf = self else { return }
-            strongSelf.visualEffectView.isUserInteractionEnabled = strongSelf.drawerShowing
-            if !strongSelf.drawerShowing { strongSelf.drawerViewController?.view.isHidden = true }
-        }
+        })
     }
     
     private func adjustVisualEffectViewBlurEffect() {
-        self.visualEffectView.effect = self.drawerShowing ? UIBlurEffect(style: .light) : nil
+        visualEffectView.effect = drawerShowing ? UIBlurEffect(style: .light) : nil
     }
     
     private func adjustVisualEffectViewIsUserInteractionEnabled() {
