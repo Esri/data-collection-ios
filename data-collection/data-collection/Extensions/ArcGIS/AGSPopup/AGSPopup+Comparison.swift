@@ -15,6 +15,40 @@
 import Foundation
 import ArcGIS
 
+enum PopupSortingError : AppError {
+    
+    case missingFields
+    case badFields
+    case invalidValueType
+    
+    var errorCode: Int {
+        let base = AppErrorBaseCode.PopupSortingError
+        switch self {
+        case .missingFields:
+            return base + 1
+        case .badFields:
+            return base + 2
+        case .invalidValueType:
+            return base + 3
+        }
+    }
+    
+    var errorUserInfo: [String : Any] {
+        switch self {
+        case .missingFields:
+            return [NSLocalizedDescriptionKey: "A popup you are comparing does not have any fields."]
+        case .badFields:
+            return [NSLocalizedDescriptionKey: "Both popups fields must be of the same type."]
+        case .invalidValueType:
+            return [NSLocalizedDescriptionKey: "A popup you are comparing contains an invalid type."]
+        }
+    }
+    
+    var localizedDescription: String {
+        return errorUserInfo[NSLocalizedDescriptionKey] as! String
+    }
+}
+
 extension AGSPopup {
     
     public static func < (lhs: AGSPopup, rhs: AGSPopup) throws -> Bool {

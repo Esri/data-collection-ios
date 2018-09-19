@@ -91,12 +91,14 @@ class RelatedRecordCell: UITableViewCell {
                 titleLabel.numberOfLines = 1
                 titleLabel.textColor = .tableCellTitle
                 titleLabel.font = .tableCellTitle
+                titleLabel.adjustsFontForContentSizeCategory = true
                 stackView.addArrangedSubview(titleLabel)
                 
                 let valueLabel = UILabel()
                 valueLabel.numberOfLines = 0
                 valueLabel.textColor = .tableCellValue
                 valueLabel.font = .tableCellValue
+                valueLabel.adjustsFontForContentSizeCategory = true
                 stackView.addArrangedSubview(valueLabel)
                 
                 attributes.append((titleLabel, valueLabel))
@@ -154,6 +156,7 @@ class RelatedRecordCell: UITableViewCell {
             emptyCellLabel = UILabel()
             emptyCellLabel?.numberOfLines = 1
             emptyCellLabel?.font = .tableCellTitle
+            emptyCellLabel?.adjustsFontForContentSizeCategory = true
             stackView.addArrangedSubview(emptyCellLabel!)
         }
         

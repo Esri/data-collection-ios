@@ -30,7 +30,7 @@ class JobStatusViewController: UIViewController {
     
     weak var delegate: JobStatusViewControllerDelegate?
     
-    var jobConstruct: AppOfflineMapJobConstructionInfo? {
+    var jobConstruct: OfflineMapJobConstruct? {
         didSet {
             mapJob = jobConstruct?.generateJob()
         }

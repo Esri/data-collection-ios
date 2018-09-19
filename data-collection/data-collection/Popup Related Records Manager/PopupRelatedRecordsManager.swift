@@ -15,6 +15,45 @@
 import Foundation
 import ArcGIS
 
+enum RelatedRecordsManagerError: AppError {
+    
+    case featureMissingTable
+    case missingManyToOneRelationship(String)
+    case invalidPopup
+    case cannotRelateFeatures
+    
+    var errorCode: Int {
+        let base = AppErrorBaseCode.RelatedRecordsManagerError
+        switch self {
+        case .featureMissingTable:
+            return base + 1
+        case .missingManyToOneRelationship(_):
+            return base + 2
+        case .invalidPopup:
+            return base + 3
+        case .cannotRelateFeatures:
+            return base + 4
+        }
+    }
+    
+    var errorUserInfo: [String : Any] {
+        switch self {
+        case .featureMissingTable:
+            return [NSLocalizedDescriptionKey: "Feature does not belong to a feature table"]
+        case .missingManyToOneRelationship(let str):
+            return [NSLocalizedDescriptionKey: "Missing value for many to one relationship \(str)"]
+        case .invalidPopup:
+            return [NSLocalizedDescriptionKey: "Popup with related records in invalid."]
+        case .cannotRelateFeatures:
+            return [NSLocalizedDescriptionKey: "Features or Relationship Info missing."]
+        }
+    }
+    
+    var localizedDescription: String {
+        return errorUserInfo[NSLocalizedDescriptionKey] as! String
+    }
+}
+
 class PopupRelatedRecordsManager: AGSPopupManager {
     
     private(set) var manyToOne = [ManyToOneManager]()

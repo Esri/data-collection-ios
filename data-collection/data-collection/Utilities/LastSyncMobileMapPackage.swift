@@ -15,19 +15,20 @@
 import Foundation
 import ArcGIS
 
-class AppMobileMapPackage: AGSMobileMapPackage {
+class LastSyncMobileMapPackage: AGSMobileMapPackage {
     
-    static let userDefaultsKey = "AppMobileMapPackage.\(AppConfiguration.webMapItemID)"
+    private let userDefaultsKey: String
     
     internal private(set) var lastSyncDate: Date? {
         didSet {
-            UserDefaults.standard.set(lastSyncDate, forKey: AppMobileMapPackage.userDefaultsKey)
+            UserDefaults.standard.set(lastSyncDate, forKey: userDefaultsKey)
             appNotificationCenter.post(name: .lastSyncDidChange, object: nil)
         }
     }
     
-    override init(fileURL: URL) {
-        self.lastSyncDate = UserDefaults.standard.value(forKey: AppMobileMapPackage.userDefaultsKey) as? Date
+    init(fileURL: URL, userDefaultsKey key: String) {
+        self.userDefaultsKey = key
+        self.lastSyncDate = UserDefaults.standard.value(forKey: key) as? Date
         super.init(fileURL: fileURL)
     }
     

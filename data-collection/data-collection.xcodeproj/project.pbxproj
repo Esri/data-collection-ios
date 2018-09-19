@@ -47,7 +47,7 @@
 		946D20BA213093DE001BF5CC /* JobStatusViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 946D20B9213093DE001BF5CC /* JobStatusViewController.storyboard */; };
 		946D20BC2130951B001BF5CC /* DrawerViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 946D20BB2130951B001BF5CC /* DrawerViewController.storyboard */; };
 		946D20BE2130965A001BF5CC /* MapViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 946D20BD2130965A001BF5CC /* MapViewController.storyboard */; };
-		946D20C22130C236001BF5CC /* AppMobileMapPackage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 946D20C12130C236001BF5CC /* AppMobileMapPackage.swift */; };
+		946D20C22130C236001BF5CC /* LastSyncMobileMapPackage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 946D20C12130C236001BF5CC /* LastSyncMobileMapPackage.swift */; };
 		948066332091474F00A398EA /* RelatedRecordsPopupViewControllers.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 948066322091474F00A398EA /* RelatedRecordsPopupViewControllers.storyboard */; };
 		948066362091483600A398EA /* RelatedRecordsPopupsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 948066352091483600A398EA /* RelatedRecordsPopupsViewController.swift */; };
 		948066382091595200A398EA /* PopupRelatedRecordsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 948066372091595200A398EA /* PopupRelatedRecordsManager.swift */; };
@@ -85,6 +85,7 @@
 		948D852E2151C4F900E2048F /* UIButton+ImageTint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 948D852D2151C4F900E2048F /* UIButton+ImageTint.swift */; };
 		948D85312151C80400E2048F /* UIView+Animation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 948D85302151C80400E2048F /* UIView+Animation.swift */; };
 		948D85332151C82C00E2048F /* UIView+Style.swift in Sources */ = {isa = PBXBuildFile; fileRef = 948D85322151C82C00E2048F /* UIView+Style.swift */; };
+		948D853E2151D8C900E2048F /* AGSArcGISFeatureTable+Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = 948D853D2151D8C900E2048F /* AGSArcGISFeatureTable+Error.swift */; };
 		94A8101D20AA1D7C00D4BC68 /* PopupNumberCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94A8101C20AA1D7C00D4BC68 /* PopupNumberCell.swift */; };
 		94A8102B20B33B9200D4BC68 /* PopupShortStringCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94A8102A20B33B9200D4BC68 /* PopupShortStringCell.swift */; };
 		94A8102D20B33C0E00D4BC68 /* PopupDateCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94A8102C20B33C0E00D4BC68 /* PopupDateCell.swift */; };
@@ -103,11 +104,11 @@
 		94B375BD207E8D5600691F2A /* AddressLocator.loc.xml in Resources */ = {isa = PBXBuildFile; fileRef = 94B37599207E8D5600691F2A /* AddressLocator.loc.xml */; };
 		94B375BE207E8D5600691F2A /* AddressLocator.lox in Resources */ = {isa = PBXBuildFile; fileRef = 94B3759A207E8D5600691F2A /* AddressLocator.lox */; };
 		94B375BF207E8D5600691F2A /* AddressLocator.loc in Resources */ = {isa = PBXBuildFile; fileRef = 94B3759B207E8D5600691F2A /* AddressLocator.loc */; };
-		94B375C0207E8D5600691F2A /* AppFiles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94B3759E207E8D5600691F2A /* AppFiles.swift */; };
+		94B375C0207E8D5600691F2A /* FileManager+AppFiles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94B3759E207E8D5600691F2A /* FileManager+AppFiles.swift */; };
 		94B375C1207E8D5600691F2A /* AppConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94B3759F207E8D5600691F2A /* AppConfiguration.swift */; };
-		94B375C2207E8D5600691F2A /* AppOfflineMapJobConstructionInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94B375A0207E8D5600691F2A /* AppOfflineMapJobConstructionInfo.swift */; };
+		94B375C2207E8D5600691F2A /* OfflineMapJobConstruct.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94B375A0207E8D5600691F2A /* OfflineMapJobConstruct.swift */; };
 		94B375C4207E8D5600691F2A /* AppErrors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94B375A2207E8D5600691F2A /* AppErrors.swift */; };
-		94B375C5207E8D5600691F2A /* AppNotifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94B375A3207E8D5600691F2A /* AppNotifications.swift */; };
+		94B375C5207E8D5600691F2A /* Notification+AppNotifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94B375A3207E8D5600691F2A /* Notification+AppNotifications.swift */; };
 		94B375C6207E8D5600691F2A /* AppLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94B375A4207E8D5600691F2A /* AppLocation.swift */; };
 		94B375C7207E8D5600691F2A /* AppContext+Login.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94B375A6207E8D5600691F2A /* AppContext+Login.swift */; };
 		94B375C8207E8D5600691F2A /* AppContext+WorkMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94B375A7207E8D5600691F2A /* AppContext+WorkMode.swift */; };
@@ -226,7 +227,7 @@
 		946D20B9213093DE001BF5CC /* JobStatusViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = JobStatusViewController.storyboard; sourceTree = "<group>"; };
 		946D20BB2130951B001BF5CC /* DrawerViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = DrawerViewController.storyboard; sourceTree = "<group>"; };
 		946D20BD2130965A001BF5CC /* MapViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = MapViewController.storyboard; sourceTree = "<group>"; };
-		946D20C12130C236001BF5CC /* AppMobileMapPackage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppMobileMapPackage.swift; sourceTree = "<group>"; };
+		946D20C12130C236001BF5CC /* LastSyncMobileMapPackage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LastSyncMobileMapPackage.swift; sourceTree = "<group>"; };
 		948066322091474F00A398EA /* RelatedRecordsPopupViewControllers.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = RelatedRecordsPopupViewControllers.storyboard; sourceTree = "<group>"; };
 		948066352091483600A398EA /* RelatedRecordsPopupsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RelatedRecordsPopupsViewController.swift; sourceTree = "<group>"; };
 		948066372091595200A398EA /* PopupRelatedRecordsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupRelatedRecordsManager.swift; sourceTree = "<group>"; };
@@ -264,6 +265,7 @@
 		948D852D2151C4F900E2048F /* UIButton+ImageTint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+ImageTint.swift"; sourceTree = "<group>"; };
 		948D85302151C80400E2048F /* UIView+Animation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Animation.swift"; sourceTree = "<group>"; };
 		948D85322151C82C00E2048F /* UIView+Style.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Style.swift"; sourceTree = "<group>"; };
+		948D853D2151D8C900E2048F /* AGSArcGISFeatureTable+Error.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AGSArcGISFeatureTable+Error.swift"; sourceTree = "<group>"; };
 		94A8101C20AA1D7C00D4BC68 /* PopupNumberCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupNumberCell.swift; sourceTree = "<group>"; };
 		94A8102A20B33B9200D4BC68 /* PopupShortStringCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupShortStringCell.swift; sourceTree = "<group>"; };
 		94A8102C20B33C0E00D4BC68 /* PopupDateCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupDateCell.swift; sourceTree = "<group>"; };
@@ -282,11 +284,11 @@
 		94B37599207E8D5600691F2A /* AddressLocator.loc.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = AddressLocator.loc.xml; sourceTree = "<group>"; };
 		94B3759A207E8D5600691F2A /* AddressLocator.lox */ = {isa = PBXFileReference; lastKnownFileType = file; path = AddressLocator.lox; sourceTree = "<group>"; };
 		94B3759B207E8D5600691F2A /* AddressLocator.loc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = AddressLocator.loc; sourceTree = "<group>"; };
-		94B3759E207E8D5600691F2A /* AppFiles.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppFiles.swift; sourceTree = "<group>"; };
+		94B3759E207E8D5600691F2A /* FileManager+AppFiles.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "FileManager+AppFiles.swift"; sourceTree = "<group>"; };
 		94B3759F207E8D5600691F2A /* AppConfiguration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppConfiguration.swift; sourceTree = "<group>"; };
-		94B375A0207E8D5600691F2A /* AppOfflineMapJobConstructionInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppOfflineMapJobConstructionInfo.swift; sourceTree = "<group>"; };
+		94B375A0207E8D5600691F2A /* OfflineMapJobConstruct.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OfflineMapJobConstruct.swift; sourceTree = "<group>"; };
 		94B375A2207E8D5600691F2A /* AppErrors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppErrors.swift; sourceTree = "<group>"; };
-		94B375A3207E8D5600691F2A /* AppNotifications.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppNotifications.swift; sourceTree = "<group>"; };
+		94B375A3207E8D5600691F2A /* Notification+AppNotifications.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Notification+AppNotifications.swift"; sourceTree = "<group>"; };
 		94B375A4207E8D5600691F2A /* AppLocation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppLocation.swift; sourceTree = "<group>"; };
 		94B375A6207E8D5600691F2A /* AppContext+Login.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AppContext+Login.swift"; sourceTree = "<group>"; };
 		94B375A7207E8D5600691F2A /* AppContext+WorkMode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AppContext+WorkMode.swift"; sourceTree = "<group>"; };
@@ -619,6 +621,7 @@
 				948D851D2151BFD900E2048F /* AGSArcGISFeatureTable+Popup.swift */,
 				940DA97A2098E1C600AB4BF6 /* AGSArcGISFeatureTable+Query.swift */,
 				948D851F2151C01500E2048F /* AGSArcGISFeatureTable+Edit.swift */,
+				948D853D2151D8C900E2048F /* AGSArcGISFeatureTable+Error.swift */,
 			);
 			path = AGSArcGISFeatureTable;
 			sourceTree = "<group>";
@@ -775,14 +778,8 @@
 			children = (
 				94B375BB207E8D5600691F2A /* EphemeralCache.swift */,
 				94B375D5207E8DD600691F2A /* EditType.swift */,
-				94B3759E207E8D5600691F2A /* AppFiles.swift */,
-				94B375A0207E8D5600691F2A /* AppOfflineMapJobConstructionInfo.swift */,
-				94B375A2207E8D5600691F2A /* AppErrors.swift */,
-				94B375A3207E8D5600691F2A /* AppNotifications.swift */,
-				94B375A4207E8D5600691F2A /* AppLocation.swift */,
-				94B375A9207E8D5600691F2A /* AppGlobals.swift */,
-				946D20A621250F46001BF5CC /* AppReachability.swift */,
-				946D20C12130C236001BF5CC /* AppMobileMapPackage.swift */,
+				94B375A0207E8D5600691F2A /* OfflineMapJobConstruct.swift */,
+				946D20C12130C236001BF5CC /* LastSyncMobileMapPackage.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -793,9 +790,9 @@
 				94B375A8207E8D5600691F2A /* AppContext.swift */,
 				94B375A6207E8D5600691F2A /* AppContext+Login.swift */,
 				94B375A7207E8D5600691F2A /* AppContext+WorkMode.swift */,
+				948D84F0214C899600E2048F /* AppContext+VisibleArea.swift */,
 				946D20B2212F5348001BF5CC /* AppContextChange.swift */,
 				94D544BA207FC15D00ED0D04 /* AppContextChangeHandler.swift */,
-				948D84F0214C899600E2048F /* AppContext+VisibleArea.swift */,
 			);
 			path = AppContext;
 			sourceTree = "<group>";
@@ -883,6 +880,8 @@
 		94B375EB207E8E4800691F2A /* Foundation */ = {
 			isa = PBXGroup;
 			children = (
+				94B375A3207E8D5600691F2A /* Notification+AppNotifications.swift */,
+				94B3759E207E8D5600691F2A /* FileManager+AppFiles.swift */,
 				946D20AA2126541C001BF5CC /* DateFormatter+AppFormats.swift */,
 				948D84D42142235B00E2048F /* Date+AppFormats.swift */,
 				946D20AC212E07FC001BF5CC /* URL+OfflineDirectories.swift */,
@@ -992,11 +991,15 @@
 			isa = PBXGroup;
 			children = (
 				94B3760B207EAE4600691F2A /* AppDelegate.swift */,
+				94B375A9207E8D5600691F2A /* AppGlobals.swift */,
 				94B3759F207E8D5600691F2A /* AppConfiguration.swift */,
+				946D20A621250F46001BF5CC /* AppReachability.swift */,
+				94B375A4207E8D5600691F2A /* AppLocation.swift */,
+				94B375A2207E8D5600691F2A /* AppErrors.swift */,
+				94B375A5207E8D5600691F2A /* AppContext */,
 				94B375D8207E8E4800691F2A /* Extensions */,
 				94B375D3207E8DD600691F2A /* Geocode Search */,
 				94D2713C20D02C0800304E27 /* Custom Behavior */,
-				94B375A5207E8D5600691F2A /* AppContext */,
 				94B3759D207E8D5600691F2A /* Utilities */,
 				9416A19120BF3283001377ED /* Popup Related Records Manager */,
 				94FA8B54207BF5DF00972C75 /* View Controllers */,
@@ -1207,7 +1210,7 @@
 				948D850A2151BA0100E2048F /* AGSPopup+Sort.swift in Sources */,
 				94D544D820852A5100ED0D04 /* ShrinkingView.swift in Sources */,
 				948D84D52142235B00E2048F /* Date+AppFormats.swift in Sources */,
-				94B375C2207E8D5600691F2A /* AppOfflineMapJobConstructionInfo.swift in Sources */,
+				94B375C2207E8D5600691F2A /* OfflineMapJobConstruct.swift in Sources */,
 				94B375FA207E8E4800691F2A /* UIViewController+Alert.swift in Sources */,
 				946569022087FAE700599E55 /* MapViewController+MapViewMode.swift in Sources */,
 				94AB310320B76A62003540D2 /* PopupEditableFieldCell.swift in Sources */,
@@ -1228,10 +1231,11 @@
 				94B375C9207E8D5600691F2A /* AppContext.swift in Sources */,
 				946D20AD212E07FC001BF5CC /* URL+OfflineDirectories.swift in Sources */,
 				94B375D2207E8D5600691F2A /* EphemeralCache.swift in Sources */,
+				948D853E2151D8C900E2048F /* AGSArcGISFeatureTable+Error.swift in Sources */,
 				94AB310520B7731A003540D2 /* PopupCodedValueCell.swift in Sources */,
 				948D85012151B82A00E2048F /* AGSArcGISFeature+RelatedRecords.swift in Sources */,
 				948D84DA2142E29C00E2048F /* CGRect+Modify.swift in Sources */,
-				94B375C0207E8D5600691F2A /* AppFiles.swift in Sources */,
+				94B375C0207E8D5600691F2A /* FileManager+AppFiles.swift in Sources */,
 				948D85262151C1F700E2048F /* UIViewController+Dismiss.swift in Sources */,
 				94D544BF207FC15D00ED0D04 /* AppContainerViewController.swift in Sources */,
 				94A8101D20AA1D7C00D4BC68 /* PopupNumberCell.swift in Sources */,
@@ -1289,7 +1293,7 @@
 				940DA9792097951000AB4BF6 /* PopupTextViewCell.swift in Sources */,
 				945CEE7620DDC2AC00CD3E0D /* SVProgressAnimatedView.m in Sources */,
 				94B375CA207E8D5600691F2A /* AppGlobals.swift in Sources */,
-				94B375C5207E8D5600691F2A /* AppNotifications.swift in Sources */,
+				94B375C5207E8D5600691F2A /* Notification+AppNotifications.swift in Sources */,
 				946569142088023600599E55 /* AGSPopupManager+Formatting.swift in Sources */,
 				9440D35520D479B5005ED582 /* PopupLongStringCell.swift in Sources */,
 				948D850C2151BA4E00E2048F /* AGSPopup+LayerSelection.swift in Sources */,
@@ -1320,7 +1324,7 @@
 				94B375C8207E8D5600691F2A /* AppContext+WorkMode.swift in Sources */,
 				948D85232151C11F00E2048F /* AGSPopupManager+FeatureTable.swift in Sources */,
 				94D2714020D0315900304E27 /* CustomBehavior_Map.swift in Sources */,
-				946D20C22130C236001BF5CC /* AppMobileMapPackage.swift in Sources */,
+				946D20C22130C236001BF5CC /* LastSyncMobileMapPackage.swift in Sources */,
 				945CEE7720DDC2AC00CD3E0D /* SVProgressHUD.m in Sources */,
 				94B0D32B20C84B010075EA7A /* RelatedRecordsPopupsViewController+RelatedRecordsListDelegate.swift in Sources */,
 				94D544BD207FC15D00ED0D04 /* DrawerViewController.swift in Sources */,

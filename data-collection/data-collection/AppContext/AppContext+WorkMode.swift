@@ -77,7 +77,8 @@ extension AppContext {
      */
     private func loadOfflineMobileMapPackage(_ completion: @escaping (AGSMap?) -> Void) {
         
-        self.mobileMapPackage = AppMobileMapPackage(fileURL: .offlineMapDirectoryURL(forWebMapItemID: AppConfiguration.webMapItemID))
+        self.mobileMapPackage = LastSyncMobileMapPackage(fileURL: .offlineMapDirectoryURL(forWebMapItemID: AppConfiguration.webMapItemID),
+                                                         userDefaultsKey: "LastSyncMobileMapPackage.\(AppConfiguration.webMapItemID)")
         
         guard let mmpk = self.mobileMapPackage else {
             hasOfflineMap = false

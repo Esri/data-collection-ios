@@ -70,7 +70,7 @@ import ArcGIS
      A reference to the offline mobile map package persists even if the user operates the app in online work mode to signify state.
      A nil `mobileMapPackage` signifies there is no offline mobile map package.
      */
-    var mobileMapPackage: AppMobileMapPackage?
+    var mobileMapPackage: LastSyncMobileMapPackage?
     
     var offlineMap: AGSMap? {
         return mobileMapPackage?.maps.first

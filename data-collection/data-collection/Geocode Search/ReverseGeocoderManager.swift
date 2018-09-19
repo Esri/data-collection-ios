@@ -15,6 +15,30 @@
 import Foundation
 import ArcGIS
 
+enum AppGeocoderError: AppError {
+    
+    case missingAddressAttribute
+    
+    var errorCode: Int {
+        let base = AppErrorBaseCode.AppGeocoderError
+        switch self {
+        case .missingAddressAttribute:
+            return base + 1
+        }
+    }
+    
+    var errorUserInfo: [String : Any] {
+        switch self {
+        case .missingAddressAttribute:
+            return [NSLocalizedDescriptionKey: "Missing Address (for online locator) or Match_addr (for offline locator) in attributes."]
+        }
+    }
+    
+    var localizedDescription: String {
+        return errorUserInfo[NSLocalizedDescriptionKey] as! String
+    }
+}
+
 class ReverseGeocoderManager: AGSLoadableBase {
     
     struct Keys {
@@ -25,23 +49,6 @@ class ReverseGeocoderManager: AGSLoadableBase {
     private let onlineLocatorTask = AGSLocatorTask(url: AppConfiguration.geocodeServiceURL)
     
     private let offlineLocatorTask = AGSLocatorTask(name: "AddressLocator")
-    
-//    private let onlineLocatorTask: AGSLocatorTask = {
-//        let locator: AGSLocatorTask! = AGSLocatorTask(url: AppConfiguration.geocodeServiceURL)
-//        guard locator != nil  else {
-//            fatalError("App must be configured with valid world geocoder service URL.")
-//        }
-//        return locator
-//    }()
-//
-//    private let offlineLocatorTask: AGSLocatorTask = {
-//        let offlineLocatorName = "AddressLocator"
-//        let locator: AGSLocatorTask! = AGSLocatorTask(name: offlineLocatorName)
-//        guard locator != nil  else {
-//            fatalError("App must be configured with offline locator named \(offlineLocatorName).")
-//        }
-//        return locator
-//    }()
     
     override func doCancelLoading() {
         

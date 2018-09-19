@@ -15,7 +15,7 @@
 import Foundation
 import ArcGIS
 
-enum AppOfflineMapJobConstructionInfo {
+enum OfflineMapJobConstruct {
     
     struct EphemeralCacheKeys {
         static let offlineMapJob = "EphemeralCache.AppOfflineMapJob.Key"
