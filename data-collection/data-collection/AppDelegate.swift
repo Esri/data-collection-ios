@@ -22,36 +22,39 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         
-        // License the app
+        // License the app.
         AppDelegate.licenseApplication()
         
-        // Enable credential cache auto sync
+        // Enable credential cache auto sync.
         AppDelegate.configCredentialCacheAutoSyncToKeychain()
         
-        // Configure oAuth redirect URL
+        // Configure oAuth redirect URL.
         AppDelegate.configOAuthRedirectURL()
 
-        // Configure file documents directories for offline usage
+        // Configure file documents directories for offline usage.
         FileManager.buildOfflineMapDirectory()
         
-        // Reachability
+        // Reset first reachability change status flag then start listening to reachability status changes.
         appReachability.resetAndStartListening()
         
-        // Attempt to login from previously stored credentials
+        // Attempt to login from previously stored credentials.
         appContext.logInCurrentPortalIfPossible()
         
         return true
     }
     
     func applicationWillEnterForeground(_ application: UIApplication) {
+        // Reset first reachability change status flag then start listening to reachability status changes.
         appReachability.resetAndStartListening()
     }
     
     func applicationWillResignActive(_ application: UIApplication) {
+        // Stop listening to reachability status changes.
         appReachability.stopListening()
     }
     
     func applicationWillTerminate(_ application: UIApplication) {
+        // Stop listening to reachability status changes.
         appReachability.stopListening()
     }
 }
@@ -66,7 +69,7 @@ extension AppDelegate {
         // to handle OAuth and call back to this application.
         if let urlComponents = URLComponents(url: url, resolvingAgainstBaseURL: false), urlComponents.scheme == AppConfiguration.urlScheme, urlComponents.host == AppConfiguration.urlAuthPath {
             
-            // Pass the OAuth callback through to the ArcGIS Runtime helper function
+            // Pass the OAuth callback through to the ArcGIS Runtime helper function.
             AGSApplicationDelegate.shared().application(app, open: url, options: options)
             
             // See if we were called back with confirmation that we're authorized.
