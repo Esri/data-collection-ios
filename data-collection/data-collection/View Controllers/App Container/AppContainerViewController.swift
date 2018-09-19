@@ -123,11 +123,11 @@ class AppContainerViewController: UIViewController {
         adjustForDrawerShowing(isAnimated: false)
     }
     
-    func adjustForDrawerShowing(isAnimated: Bool = true) {
+    func adjustForDrawerShowing(isAnimated animated: Bool = true) {
         
-        let animationDuration = 0.2
+        let animationDuration = animated ? 0.2 : 0.0
+        
         drawerLeadingLayoutConstraint.isActive = drawerShowing
-        drawerViewController?.view.isHidden = !drawerShowing
         drawerViewController?.view.isUserInteractionEnabled  = !drawerShowing
         visualEffectView.isUserInteractionEnabled = drawerShowing
         
