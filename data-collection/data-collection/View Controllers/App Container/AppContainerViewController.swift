@@ -33,14 +33,12 @@ class AppContainerViewController: UIViewController {
     
     @IBOutlet weak var outsideDrawerTapGestureRecognizer: UITapGestureRecognizer!
     
+    @IBOutlet var drawerLeadingLayoutConstraint: NSLayoutConstraint!
+    @IBOutlet var drawerTrailingLayoutConstraint: NSLayoutConstraint!
+    
     weak var drawerViewController: DrawerViewController?
     weak var mapViewController: MapViewController?
     weak var jobStatusViewController: JobStatusViewController?
-    
-    var dismissTimer: Timer?
-    
-    @IBOutlet var drawerLeadingLayoutConstraint: NSLayoutConstraint!
-    @IBOutlet var drawerTrailingLayoutConstraint: NSLayoutConstraint!
     
     var drawerShowing: Bool = false {
         didSet {
