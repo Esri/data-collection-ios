@@ -14,6 +14,10 @@
 
 import CoreLocation
 
+/// `AppLocation` handles changes to location authorization not handled by the SDK.
+/// - Note: Changes to the app's location authorization status can occur while the app
+/// is in the background. `AppLocation` processes these changes and exposes a
+/// `locationAuthorized: Bool` property that can be observed using KVO.
 @objcMembers class AppLocation: NSObject, CLLocationManagerDelegate {
         
     private let locationManager = CLLocationManager()
@@ -26,8 +30,13 @@ import CoreLocation
         process()
     }
     
+    /// Processes changes to the app's location permission authorization status.
+    /// Location is considered authorized when in use or always.
+    /// - Parameter status: the app's new/changed `CLAuthorizationStatus`.
+    /// - Note: `locationAuthorized` is set true also when `.notDetermined` because setting `mapView.locationDisplay.showLocation`
+    /// to true will initiate a request for location permissions via the ArcGIS SDK.
     private func process(status: CLAuthorizationStatus = CLLocationManager.authorizationStatus()) {
-        print("[App Location] authorization status: \(status)")
+        print("[App Location] Authorization status: \(status)")
         locationAuthorized = status == .authorizedWhenInUse || status == .authorizedAlways || status == .notDetermined
     }
     
