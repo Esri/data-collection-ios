@@ -40,6 +40,8 @@ import CoreLocation
         locationAuthorized = status == .authorizedWhenInUse || status == .authorizedAlways || status == .notDetermined
     }
     
+    // MARK: CLLocationManagerDelegate
+    
     internal func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
         process(status: status)
     }
