@@ -15,12 +15,19 @@
 import Foundation
 import UIKit
 
-extension UILabel {
+extension UIButton {
     
-    func considerEmptyString() {
-        guard let labelText = text, !labelText.isEmpty else {
-            text = " "
+    func buildImagesWithTintColors(forControlStateColors controlStateColors: [UIControlState: UIColor], fromControlStateImage controlState: UIControlState = .normal) {
+        
+        guard let normalImage = image(for: controlState) else {
+            print("[Tint Color Error] no default image for control state normal.")
             return
+        }
+        
+        for controlStateColor in controlStateColors {
+            if let controlStateImage = normalImage.renderImage(toMaskWithColor: controlStateColor.value) {
+                setImage(controlStateImage, for: controlStateColor.key)
+            }
         }
     }
 }

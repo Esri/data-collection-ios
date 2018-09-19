@@ -14,24 +14,6 @@
 
 import UIKit
 
-// MARK: UIView Animation
-
-// UIView Animation Callback
-
-typealias UIViewAnimations = () -> Void
-typealias UIViewAnimationCompletion = (Bool) -> Void
-// MARK: Style
-
-extension UIView {
-    
-    func stylizeBorder() {
-        layer.borderColor = UIColor.lightGray.withAlphaComponent(0.2).cgColor
-        layer.borderWidth = 1
-        layer.cornerRadius = 5
-        clipsToBounds = true
-    }
-}
-
 // MARK: Autolayout
 
 extension UIView {

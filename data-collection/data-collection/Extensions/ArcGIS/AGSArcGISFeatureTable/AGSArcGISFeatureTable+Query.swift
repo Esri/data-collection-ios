@@ -17,23 +17,6 @@ import ArcGIS
 
 extension AGSArcGISFeatureTable {
     
-    func isPopupEnabledFor(relationshipInfo: AGSRelationshipInfo) -> Bool {
-        
-        guard let relatedTables = relatedTables() else {
-            return false
-        }
-        
-        let operativeID = relationshipInfo.relatedTableID
-        
-        for table in relatedTables {
-            if table.serviceLayerID == operativeID {
-                return table.isPopupActuallyEnabled
-            }
-        }
-        
-        return false
-    }
-    
     @discardableResult
     func queryRelatedFeatures(forFeature feature: AGSArcGISFeature, relationship: AGSRelationshipInfo, completion: @escaping ([AGSRelatedFeatureQueryResult]?, Error?)->()) -> AGSCancelable? {
         
@@ -130,86 +113,5 @@ extension AGSArcGISFeatureTable {
             completion(popups, nil)
             return
         }
-    }
-    
-    func performEdit(feature: AGSArcGISFeature, completion: @escaping (Error?)->Void) {
-        
-        // Update
-        if canUpdate(feature) {
-            performEdit(type: .update, forFeature: feature, completion: completion)
-        }
-        // Add
-        else if canAddFeature {
-            performEdit(type: .add, forFeature: feature, completion: completion)
-        }
-        else {
-            completion(FeatureTableError.cannotEditFeature)
-        }
-    }
-    
-    func performDelete(feature: AGSArcGISFeature, completion: @escaping (Error?)->Void) {
-        
-        if canDelete(feature) {
-            performEdit(type: .delete, forFeature: feature, completion: completion)
-        }
-        else {
-            completion(FeatureTableError.cannotEditFeature)
-        }
-    }
-    
-    private func performEdit(type: EditType, forFeature feature: AGSArcGISFeature, completion: @escaping (Error?)->Void) {
-        
-        let editClosure:(Error?) -> Void = { error in
-            
-            guard error == nil else {
-                print("[Error: Feature Service Table] could not edit", error!.localizedDescription)
-                completion(error!)
-                return
-            }
-            
-            let updateObjectID: () -> Void = {
-                if type != .delete {
-                    feature.refreshObjectID()
-                }
-                else {
-                    feature.objectID = nil
-                }
-            }
-            
-            // If online, apply edits.
-            guard let serviceFeatureTable = self as? AGSServiceFeatureTable else {
-                updateObjectID()
-                completion(nil)
-                return
-            }
-
-            serviceFeatureTable.applyEdits(completion: { (results, error) in
-                
-                guard error == nil else {
-                    print("[Error: Feature Service Table] could not apply edits", error!.localizedDescription)
-                    updateObjectID()
-                    completion(error!)
-                    return
-                }
-                
-                updateObjectID()
-                completion(nil)
-            })
-        }
-        
-        switch type {
-        case .update: update(feature, completion: editClosure)
-        case .delete: delete(feature, completion: editClosure)
-        case .add: add(feature, completion: editClosure)
-        }
-    }
-    
-    func createPopup() -> AGSPopup? {
-        
-        guard canAddFeature, let feature = createFeature() as? AGSArcGISFeature, let popupDefinition = popupDefinition else {
-                return nil
-        }
-        
-        return AGSPopup(geoElement: feature, popupDefinition: popupDefinition)
     }
 }

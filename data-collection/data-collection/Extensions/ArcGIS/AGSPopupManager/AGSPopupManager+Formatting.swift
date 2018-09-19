@@ -49,12 +49,4 @@ extension AGSPopupManager {
         fieldIndex += 1
         return value
     }
-    
-    var table: AGSFeatureTable? {
-        return (popup.geoElement as? AGSArcGISFeature)?.featureTable
-    }
-    
-    var tableName: String? {
-        return table?.tableName
-    }
 }

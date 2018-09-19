@@ -15,28 +15,7 @@
 import Foundation
 import UIKit
 
-extension UIControlState: Hashable {
-
-    public var hashValue: Int {
-        return Int(rawValue)
-    }
-}
-
 extension UIButton {
-    
-    func setTintColors(forControlStateColors controlStateColors: [UIControlState: UIColor]) {
-        
-        guard let normalImage = image(for: .normal) else {
-            print("[Tint Color Error] no default image for control state normal.")
-            return
-        }
-        
-        for controlStateColor in controlStateColors {
-            if let controlStateImage = normalImage.renderImage(toMaskWithColor: controlStateColor.value) {
-                setImage(controlStateImage, for: controlStateColor.key)
-            }
-        }
-    }
     
     func setAttributed(header: String, subheader: String? = nil, forControlStateColors controlStateColors: [UIControlState: UIColor], headerFont: UIFont, subheaderFont: UIFont? = nil) {
         

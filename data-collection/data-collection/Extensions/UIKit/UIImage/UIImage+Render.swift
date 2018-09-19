@@ -74,7 +74,7 @@ extension UIImage {
         context.clip(to: CGRect(x: 0, y: 0, width: size.width, height: size.height), mask: cgImage!)
         context.fill(CGRect(x: 0, y: 0, width: size.width, height: size.height))
         
-        let coloredImg: UIImage? = UIGraphicsGetImageFromCurrentImageContext()
+        let coloredImg = UIGraphicsGetImageFromCurrentImageContext()
         
         UIGraphicsEndImageContext()
         

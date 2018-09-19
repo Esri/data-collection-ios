@@ -16,27 +16,6 @@ import UIKit
 
 extension UIViewController {
     
-    func dismissAbsolutely(animated: Bool, completion:(() -> Void)?) {
-        var toDismiss: UIViewController? = self
-        while toDismiss!.presentingViewController != nil {
-            toDismiss = toDismiss!.presentingViewController
-        }
-        toDismiss!.dismiss(animated: animated, completion: completion)
-    }
-    
-    func dismissAfter(_ interval: TimeInterval, animated: Bool, completion:(() -> Void)?) {
-        Timer.scheduledTimer(withTimeInterval: interval, repeats: false) { [weak self] (_) in
-            self?.dismiss(animated: animated, completion: completion)
-        }
-    }
-    
-    var isRootViewController: Bool {
-        return self == navigationController?.viewControllers.first
-    }
-}
-
-extension UIViewController {
-    
     func present(simpleAlertMessage message: String, animated: Bool = true, completion: (() -> Void)? = nil) {
         let alert = UIAlertController.simpleAlert(message: message)
         present(alert, animated: animated, completion: completion)

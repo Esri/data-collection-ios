@@ -73,10 +73,10 @@ class DrawerViewController: UIViewController {
     
     func setButtonImageTints() {
         
-        workOnlineButton.setTintColors(forControlStateColors: workModeControlStateColors)
-        workOfflineButton.setTintColors(forControlStateColors: workModeControlStateColors)
-        synchronizeOfflineMapButton.setTintColors(forControlStateColors: offlineActivityControlStateColors)
-        deleteOfflineMapButton.setTintColors(forControlStateColors: offlineActivityControlStateColors)
+        workOnlineButton.buildImagesWithTintColors(forControlStateColors: workModeControlStateColors)
+        workOfflineButton.buildImagesWithTintColors(forControlStateColors: workModeControlStateColors)
+        synchronizeOfflineMapButton.buildImagesWithTintColors(forControlStateColors: offlineActivityControlStateColors)
+        deleteOfflineMapButton.buildImagesWithTintColors(forControlStateColors: offlineActivityControlStateColors)
     }
     
     func setButtonAttributedTitles() {

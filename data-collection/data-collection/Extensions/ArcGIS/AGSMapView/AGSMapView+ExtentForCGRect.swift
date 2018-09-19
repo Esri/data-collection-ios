@@ -15,23 +15,6 @@
 import Foundation
 import ArcGIS
 
-// Centerpoint
-extension AGSMapView {
-    
-    var centerAGSPoint: AGSPoint {
-        return screen(toLocation: bounds.center)
-    }
-}
-
-// Rotation
-extension AGSMapView {
-
-    var isNorthFacingUp: Bool {
-        return rotation >= 359.5 || rotation <= 0.5
-    }
-}
-
-// Extent for CGRect
 extension AGSMapView {
     
     func convertExtent(fromRect rect: CGRect) -> AGSGeometry? {
