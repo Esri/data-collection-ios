@@ -17,10 +17,16 @@ import ArcGIS
 
 class AppConfiguration {
     
+    /// The id of your portal's web map.
     static let webMapItemID = "fcc7fc65bb96464c9c0986576c119a92"
     
+    /// The base portal's domain.
+    /// This is used to both build a `URL` to your portal as well as the base URL string used to check reachability.
+    /// - Note: exclude `http` or `https`, this is configured in `basePortalURL`.
     static let basePortalDomain = "www.arcgis.com"
     
+    /// The URL to the base portal.
+    /// - Note: A `fatalError` is thrown if a URL can't be built from the configuration.
     static let basePortalURL: URL = {
         guard let url = URL(string: "https://\(basePortalDomain)") else {
             fatalError("App Configuration must contain a valid portal service url.")
@@ -28,6 +34,9 @@ class AppConfiguration {
         return url
     }()
     
+    /// The URL to the world geocode service.
+    /// Swap out for another geocoder server if you prefer.
+    /// - Note: A `fatalError` is thrown if a URL can't be built from the configuration.
     static let geocodeServiceURL: URL = {
         guard let url = URL(string: "https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer") else {
             fatalError("App Configuration must contain a valid geocode service url.")
@@ -35,41 +44,38 @@ class AppConfiguration {
         return url
     }()
     
+    /// The App's URL scheme.
+    /// - The URL scheme must match the scheme in the **Current Redirect URIs** section of the Authentication tab within the Dashboard of the Developers site.
+    /// - The URL scheme must match the URL scheme in the **URL types** of the Xcode project configuration.
     static let urlScheme: String = "data-collection"
+    
+    /// The App's URL auth path.
+    /// - The URL scheme must match the path in the **Current Redirect URIs** section of the Authentication tab within the Dashboard of the Developers site.
     static let urlAuthPath: String = "auth"
+    
+    /// The App's full oAuth redirect url path.
+    /// - Note: the path is built using the above configured `urlScheme` and `urlAuthPath`.
     static let oAuthRedirectURLString: String = "\(urlScheme)://\(urlAuthPath)"
     
+    /// Used by the shared `AGSAuthenticationManager` to auto synchronize cached credentials to the device's keychain.
     static let keychainIdentifier: String = "\(appBundleID).keychain"
     
+    /// License the app by configuring with your organization's [license](https://developers.arcgis.com/arcgis-runtime/licensing/) key.
+    /// - Note: This step is optional during development but required for deployment. Licensing the app will remove the "Licensed for Developer Use Only" watermark on the map view.
     static let licenseKey: String = "fake_license_key"
+    
+    /// The App's public client ID.
+    /// The client ID is used by oAuth to authenticate a user.
     static let clientID: String = "h3em0ifYNGfz3uHX"
 }
 
-// MARK: Debug Request Logging
+// MARK: Portal From Configuration
 
 extension AppConfiguration {
     
-    static var logRequests: Bool {
-        set {
-            #if DEBUG
-            AGSRequestConfiguration.global().debugLogRequests = newValue
-            #else
-            print("Debug log requests disabled in release.")
-            #endif
-        }
-        get {
-            #if DEBUG
-            return AGSRequestConfiguration.global().debugLogRequests
-            #else
-            print("Debug log requests disabled in release.")
-            return false
-            #endif
-        }
-    }
-}
-
-extension AppConfiguration {
-    
+    /// Builds a portal based on the app's configuration.
+    /// - Parameter loginRequired: Whether or not you intend to access the portal anonymously or if you want to use a credential.
+    /// - Returns: A new configured `AGSPortal`.
     static func buildConfiguredPortal(loginRequired: Bool) -> AGSPortal {
         return AGSPortal(url: basePortalURL, loginRequired: loginRequired)
     }
