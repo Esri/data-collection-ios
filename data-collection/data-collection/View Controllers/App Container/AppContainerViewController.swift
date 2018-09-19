@@ -39,7 +39,8 @@ class AppContainerViewController: UIViewController {
     
     var dismissTimer: Timer?
     
-    @IBOutlet weak var drawerLeadingLayoutConstraint: NSLayoutConstraint!
+    @IBOutlet var drawerLeadingLayoutConstraint: NSLayoutConstraint!
+    @IBOutlet var drawerTrailingLayoutConstraint: NSLayoutConstraint!
     
     var drawerShowing: Bool = false {
         didSet {
@@ -125,22 +126,15 @@ class AppContainerViewController: UIViewController {
     func adjustForDrawerShowing(isAnimated: Bool = true) {
         
         let animationDuration = 0.2
-        drawerLeadingLayoutConstraint.constant = drawerShowing ? 0.0 : -contextView.frame.size.width
-        
-        if drawerShowing {
-            drawerViewController?.view.isHidden = false
-        }
+        drawerLeadingLayoutConstraint.isActive = drawerShowing
+        drawerViewController?.view.isHidden = !drawerShowing
+        drawerViewController?.view.isUserInteractionEnabled  = !drawerShowing
+        visualEffectView.isUserInteractionEnabled = drawerShowing
         
         UIView.animate(withDuration: animationDuration, delay: 0.0, options: .curveEaseOut, animations: { [weak self] in
             self?.view.layoutIfNeeded()
             self?.adjustVisualEffectViewBlurEffect()
-        }) { [weak self] (_) in
-            guard let strongSelf = self else { return }
-            strongSelf.visualEffectView.isUserInteractionEnabled = strongSelf.drawerShowing
-            if !strongSelf.drawerShowing {
-                strongSelf.drawerViewController?.view.isHidden = true
-            }
-        }
+        })
     }
     
     private func adjustVisualEffectViewBlurEffect() {

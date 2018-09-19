@@ -67,6 +67,7 @@
                             <constraint firstItem="i9b-2O-weT" firstAttribute="top" secondItem="7aD-6b-1jD" secondAttribute="top" id="Mh9-dQ-wnE"/>
                             <constraint firstAttribute="bottom" secondItem="jM0-uj-oBw" secondAttribute="bottom" id="ObW-gL-vKP"/>
                             <constraint firstItem="SqM-fs-kSs" firstAttribute="bottom" secondItem="7aD-6b-1jD" secondAttribute="bottom" id="QSf-fk-hOf"/>
+                            <constraint firstAttribute="leading" secondItem="jM0-uj-oBw" secondAttribute="trailing" priority="750" id="WlT-mD-h8Z"/>
                             <constraint firstItem="jM0-uj-oBw" firstAttribute="width" secondItem="7aD-6b-1jD" secondAttribute="width" multiplier="0.75" id="YOn-ym-Bbf"/>
                             <constraint firstItem="SqM-fs-kSs" firstAttribute="trailing" secondItem="7aD-6b-1jD" secondAttribute="trailing" id="Z1E-7Q-P07"/>
                             <constraint firstItem="i9b-2O-weT" firstAttribute="trailing" secondItem="7aD-6b-1jD" secondAttribute="trailing" id="cCY-ws-VgR"/>
@@ -99,6 +100,7 @@
                     <connections>
                         <outlet property="contextView" destination="jM0-uj-oBw" id="fJU-Ns-C0h"/>
                         <outlet property="drawerLeadingLayoutConstraint" destination="0Oj-ee-pbx" id="Ang-ob-QUz"/>
+                        <outlet property="drawerTrailingLayoutConstraint" destination="WlT-mD-h8Z" id="kkJ-FI-0wB"/>
                         <outlet property="leftBarButton" destination="Edn-bQ-dxc" id="hJZ-HM-EJ9"/>
                         <outlet property="mainMapView" destination="SqM-fs-kSs" id="C39-Kd-vlX"/>
                         <outlet property="outsideDrawerTapGestureRecognizer" destination="6zv-l3-HBD" id="5eh-Fq-Lxe"/>
