@@ -33,13 +33,12 @@ class AppContainerViewController: UIViewController {
     
     @IBOutlet weak var outsideDrawerTapGestureRecognizer: UITapGestureRecognizer!
     
+    @IBOutlet var drawerLeadingLayoutConstraint: NSLayoutConstraint!
+    @IBOutlet var drawerTrailingLayoutConstraint: NSLayoutConstraint!
+    
     weak var drawerViewController: DrawerViewController?
     weak var mapViewController: MapViewController?
     weak var jobStatusViewController: JobStatusViewController?
-    
-    var dismissTimer: Timer?
-    
-    @IBOutlet weak var drawerLeadingLayoutConstraint: NSLayoutConstraint!
     
     var drawerShowing: Bool = false {
         didSet {
@@ -70,10 +69,8 @@ class AppContainerViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        adjustForDrawerShowing(isAnimated: false)
         adjustNavigationBarButtons()
-        
-        NotificationCenter.default.addObserver(self, selector: #selector(AppContainerViewController.deviceOrientationDidChange), name: NSNotification.Name.UIDeviceOrientationDidChange, object: nil)
+        adjustForDrawerShowing(isAnimated: false)
     }
     
     @IBAction func userTapsOutsideOfDrawer(_ sender: Any) {
@@ -117,26 +114,27 @@ class AppContainerViewController: UIViewController {
             jobStatusViewController = destination
         }
     }
-    
-    @objc func deviceOrientationDidChange() {
-        adjustForDrawerShowing(isAnimated: false)
+
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransition(to: size, with: coordinator)
+        
+        coordinator.animate(alongsideTransition: { (_) in
+            self.adjustForDrawerShowing(isAnimated: false)
+        }, completion: nil)
     }
     
-    func adjustForDrawerShowing(isAnimated: Bool = true) {
+    func adjustForDrawerShowing(isAnimated animated: Bool = true) {
         
-        let animationDuration = 0.2
-        drawerLeadingLayoutConstraint.constant = drawerShowing ? 0.0 : -contextView.frame.size.width
+        let animationDuration = animated ? 0.2 : 0.0
         
-        if drawerShowing { drawerViewController?.view.isHidden = false }
+        drawerLeadingLayoutConstraint.isActive = drawerShowing
+        drawerViewController?.view.isUserInteractionEnabled  = !drawerShowing
+        visualEffectView.isUserInteractionEnabled = drawerShowing
         
         UIView.animate(withDuration: animationDuration, delay: 0.0, options: .curveEaseOut, animations: { [weak self] in
             self?.view.layoutIfNeeded()
             self?.adjustVisualEffectViewBlurEffect()
-        }) { [weak self] (_) in
-            guard let strongSelf = self else { return }
-            strongSelf.visualEffectView.isUserInteractionEnabled = strongSelf.drawerShowing
-            if !strongSelf.drawerShowing { strongSelf.drawerViewController?.view.isHidden = true }
-        }
+        })
     }
     
     private func adjustVisualEffectViewBlurEffect() {
