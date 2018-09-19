@@ -15,6 +15,11 @@
 import Foundation
 import ArcGIS
 
+extension Notification.Name {
+    static let currentPortalDidChange = Notification.Name("currentPortalDidChange")
+    static let workModeDidChange = Notification.Name("workModeDidChange")
+}
+
 @objcMembers class AppContext: NSObject {
     
     // MARK: Portal

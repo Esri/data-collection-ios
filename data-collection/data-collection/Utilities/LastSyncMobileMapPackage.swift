@@ -15,6 +15,10 @@
 import Foundation
 import ArcGIS
 
+extension Notification.Name {
+    static let lastSyncDidChange = Notification.Name("lastSyncDidChange")
+}
+
 class LastSyncMobileMapPackage: AGSMobileMapPackage {
     
     private let userDefaultsKey: String

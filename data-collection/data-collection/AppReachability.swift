@@ -14,6 +14,10 @@
 
 import Foundation
 
+extension Notification.Name {    
+    static let reachabilityDidChange = Notification.Name("reachabilityDidChange")
+}
+
 extension NetworkReachabilityManager {
     
     static let shared: NetworkReachabilityManager = {
