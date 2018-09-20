@@ -128,7 +128,7 @@ class AppContainerViewController: UIViewController {
         let animationDuration = animated ? 0.2 : 0.0
         
         drawerLeadingLayoutConstraint.isActive = drawerShowing
-        drawerViewController?.view.isUserInteractionEnabled  = !drawerShowing
+        drawerViewController?.view.isUserInteractionEnabled = drawerShowing
         visualEffectView.isUserInteractionEnabled = drawerShowing
         
         UIView.animate(withDuration: animationDuration, delay: 0.0, options: .curveEaseOut, animations: { [weak self] in
