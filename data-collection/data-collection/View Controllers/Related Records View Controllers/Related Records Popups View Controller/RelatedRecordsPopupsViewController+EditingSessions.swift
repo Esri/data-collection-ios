@@ -68,7 +68,7 @@ extension RelatedRecordsPopupsViewController {
                 
                 SVProgressHUD.show(withStatus: "Saving \(self?.popup.recordType.rawValue.capitalized ?? "Popup")...")
                 
-                if let childPopup = self?.popup, let manager = self?.parentRecordsManager, let relationship = manager.popup.relationship(withPopup: childPopup), relationship.isOneToMany {
+                if let childPopup = self?.popup, let manager = self?.parentRecordsManager, let relationship = manager.popup.oneToManyRelationship(withPopup: childPopup) {
                     
                     do {
                         try manager.edit(oneToMany: childPopup, forRelationship: relationship)
@@ -113,7 +113,7 @@ extension RelatedRecordsPopupsViewController {
     // MARK: Delete Feature
     private func delete(popup: AGSPopup, parentPopupManager: PopupRelatedRecordsManager?, completion: @escaping (Bool) -> Void) {
         
-        if let parentManager = parentPopupManager, let relationship = parentManager.popup.relationship(withPopup: popup), relationship.isOneToMany {
+        if let parentManager = parentPopupManager, let relationship = parentManager.popup.oneToManyRelationship(withPopup: popup) {
             
             do {
                 try parentManager.delete(oneToMany: popup, forRelationship: relationship)

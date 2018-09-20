@@ -45,6 +45,19 @@ enum PopupSortingError: Int, AppError {
 
 extension AGSPopup {
     
+    /// Facilitates sorting two `AGSPopup` objects for less than comparison based on the value of their first field.
+    ///
+    /// - Parameters:
+    ///   - lhs: Left pop-up in comparison.
+    ///   - rhs: Right pop-up in comparison.
+    ///
+    /// - Returns: Which pop-up's first field is less than the other.
+    ///
+    /// - Throws: If the two pop-ups first fields are not of the same data type.
+    ///
+    /// - Note: `AGSPopup` does not adhere to `Comparable` because this function needs to be able to `throw`
+    /// should the two first fields not be of the same type.
+    
     public static func < (lhs: AGSPopup, rhs: AGSPopup) throws -> Bool {
         
         guard let lhsField = lhs.popupDefinition.fields.first, let rhsField = rhs.popupDefinition.fields.first else {
@@ -88,6 +101,19 @@ extension AGSPopup {
             throw error
         }
     }
+    
+    /// Facilitates sorting two `AGSPopup` objects for greater than comparison based on the value of their first field.
+    ///
+    /// - Parameters:
+    ///   - lhs: Left pop-up in comparison.
+    ///   - rhs: Right pop-up in comparison.
+    ///
+    /// - Returns: Which pop-up's first field is greater than the other.
+    ///
+    /// - Throws: If the two pop-ups first fields are not of the same data type.
+    ///
+    /// - Note: `AGSPopup` does not adhere to `Comparable` because this function needs to be able to `throw`
+    /// should the two first fields not be of the same type.
     
     public static func > (lhs: AGSPopup, rhs: AGSPopup) throws -> Bool {
         

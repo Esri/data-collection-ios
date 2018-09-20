@@ -50,7 +50,8 @@ extension MapViewController: AGSGeoViewTouchDelegate {
             }
             
             let firstIdentifiableResult = identifyResults.first(where: { (identifyLayerResult) -> Bool in
-                return (identifyLayerResult.layerContent as? AGSFeatureLayer)?.isIdentifiable ?? false
+                guard let layer = identifyLayerResult.layerContent as? AGSFeatureLayer else { return false }
+                return AppRules.isLayerIdentifiable(layer)
             })
             
             guard let identifyResult = firstIdentifiableResult else {

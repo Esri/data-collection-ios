@@ -15,6 +15,10 @@
 import Foundation
 import ArcGIS
 
+/// Facilitates logging `AGSDrawStatus` to console.
+///
+/// - Note: Calling `description` directly is discouraged.
+
 extension AGSDrawStatus: CustomStringConvertible {
     
     public var description:String {

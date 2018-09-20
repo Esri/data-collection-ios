@@ -15,11 +15,43 @@
 import Foundation
 import ArcGIS
 
+enum MapViewError: Int, AppError {
+    
+    var baseCode: AppErrorBaseCode { return .MapViewError }
+    
+    case rectOutsideOfBounds = 1
+    
+    var errorCode: Int {
+        return baseCode.rawValue + self.rawValue
+    }
+    
+    var errorUserInfo: [String : Any] {
+        switch self {
+        case .rectOutsideOfBounds:
+            return [NSLocalizedDescriptionKey: "The CGRect provided is outside the bounds of the map view."]
+        }
+    }
+    
+    var localizedDescription: String {
+        return errorUserInfo[NSLocalizedDescriptionKey] as! String
+    }
+}
+
 extension AGSMapView {
     
-    func convertExtent(fromRect rect: CGRect) -> AGSGeometry? {
+    /// Facilitates converting a `CGRect` to an `AGSPolygon` in relation to the `AGSMapView`'s bounds.
+    ///
+    /// - Parameter rect: The rect in point space that is to be converted to a spatial rectangular polygon.
+    ///
+    /// - Returns: The newly created geometry.
+    ///
+    /// - Throws: An error if the `fromRect` parameter cannot be contained by the map view's bounds.
+    
+    func convertExtent(fromRect rect: CGRect) throws -> AGSGeometry {
         
-        guard bounds.contains(rect) else { return nil }
+        guard bounds.contains(rect) else {
+            throw MapViewError.rectOutsideOfBounds
+        }
         
         let nw = rect.origin
         let ne = CGPoint(x: rect.maxX, y: rect.minY)

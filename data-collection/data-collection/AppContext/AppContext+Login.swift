@@ -41,6 +41,7 @@ extension AppContext {
     }
     
     /// Trigger a log in sequence to a portal by building a portal where `loginRequired` is `true`.
+    ///
     /// - Note: The SDK will present a modal login web view.
     func login() { 
         // Setting `loginRequired` to `true` will force a login prompt to present.
@@ -48,6 +49,7 @@ extension AppContext {
     }
     
     /// Log out in the app and from the portal.
+    ///
     /// The app does this by removing all cached credentials and no longer requiring authentication in the portal.
     func logout() {
         // We want to remove cached credentials upon logout.

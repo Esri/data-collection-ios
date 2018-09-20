@@ -17,7 +17,16 @@ import ArcGIS
 
 extension AGSJSONSerializable {
     
-    static func retrieveFromUserDefaults(withKey key: String) -> Self? {
+    /// Facilitates retrieving and serializing an `AGSJSONSerializable` JSON object from `UserDefaults`.
+    ///
+    /// Serializing `AGSJSONSerializable` objects to JSON allows them to be stored in `UserDefaults`.
+    ///
+    /// - Parameters:
+    ///     - withKey: `UserDefaults` key.
+    ///
+    /// - SeeAlso: `UserDefaults+AGSJSONSerializable` `func set(_ jsonSerializable: AGSJSONSerializable?, forKey key: String)`
+    
+    static func retrieveFromUserDefaults(forKey key: String) -> Self? {
         do {
             guard let json = UserDefaults.standard.value(forKey: key) else { return nil }
             return try Self.fromJSON(json) as? Self

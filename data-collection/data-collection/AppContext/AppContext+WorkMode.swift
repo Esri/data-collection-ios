@@ -15,12 +15,15 @@
 import Foundation
 import ArcGIS
 
+/// The app's work mode can be `online` or `offline` .
+/// `WorkMode` is an enum `Int` (raw representable) for easy storage into `UserDefaults`.
+/// - Note: Cases start at 1 because `UserDefaults` returns `0` if no value is set for integer key.
 enum WorkMode: Int {
     
     case online = 1
     case offline
     
-    static let userDefaultsKey = "WorkMode.\(AppConfiguration.webMapItemID)"
+    private static let userDefaultsKey = "WorkMode.\(AppConfiguration.webMapItemID)"
     
     func storeDefaultWorkMode() {
         UserDefaults.standard.set(self.rawValue, forKey: WorkMode.userDefaultsKey)
@@ -37,12 +40,10 @@ enum WorkMode: Int {
 
 extension AppContext {
     
-    /**
-     Upon launch, we want to load the offline map if it exists and set the `currentMap` according to the app's work mode.
-     
-     **Note: it is possible for the app to retrieve, load and maintain a reference to an offline map even if the user defaults work mode is online.
-     This is so that the user can switch between online and offline maps easily.
-     */
+    /// Upon launch, we want to load the offline map if it exists and set the `currentMap` according to the app's work mode.
+    /// If
+    /// - Note: It is possible for the app to retrieve, load and maintain a reference to an offline map even if the user defaults work mode is online.
+    /// This is so that the user can switch between online and offline maps easily.
     func loadOfflineMobileMapPackageAndSetMapForCurrentWorkMode() {
         
         loadOfflineMobileMapPackage { [weak self] (map) in
@@ -56,9 +57,7 @@ extension AppContext {
         }
     }
     
-    /**
-     After a successful download we want to load the offline map if it exists and set it to `currentMap`.
-     */
+    /// After a successful download we want to load the offline map if it exists and set it to `currentMap`.
     func loadOfflineMobileMapPackageAndSetMap() {
         
         loadOfflineMobileMapPackage { [weak self] (map) in
@@ -72,10 +71,8 @@ extension AppContext {
         }
     }
     
-    /**
-     This private function handles loading the `AGSMobileMapPackage`, setting the kv-observable `hasOfflineMap` boolean property
-     and returning an AGSMap.
-     */
+    /// This private function handles loading the `AGSMobileMapPackage`, setting the kv-observable `hasOfflineMap` boolean property.
+    /// and returning an AGSMap.
     private func loadOfflineMobileMapPackage(_ completion: @escaping (AGSMap?) -> Void) {
         
         self.mobileMapPackage = LastSyncMobileMapPackage(fileURL: .offlineMapDirectoryURL(forWebMapItemID: AppConfiguration.webMapItemID),

@@ -31,19 +31,19 @@ class AppContextChangeHandler {
         switch change {
             
         case .currentMap(let closure):
-            let observeCurrentMap = appContext.observe(\.currentMap, options:[.new, .old]) { (_, _) in
+            let observeCurrentMap = appContext.observe(\.currentMap) { (_, _) in
                 DispatchQueue.main.async { closure(appContext.currentMap) }
             }
             appObservations.append(observeCurrentMap)
             
         case .hasOfflineMap(let closure):
-            let observeOfflineMap = appContext.observe(\.hasOfflineMap, options: [.new, .old]) { (_, _) in
+            let observeOfflineMap = appContext.observe(\.hasOfflineMap) { (_, _) in
                 DispatchQueue.main.async { closure(appContext.hasOfflineMap) }
             }
             appObservations.append(observeOfflineMap)
             
         case .locationAuthorization(let closure):
-            let observeLocationAuthorization = appLocation.observe(\.locationAuthorized, options:[.new, .old]) { (_, _) in
+            let observeLocationAuthorization = appLocation.observe(\.locationAuthorized) { (_, _) in
                 DispatchQueue.main.async { closure(appLocation.locationAuthorized) }
             }
             appObservations.append(observeLocationAuthorization)
@@ -82,16 +82,14 @@ class AppContextChangeHandler {
     
     @objc private func recieveWorkModeNotification(notification: Notification) {
         
-        if let change = appChanges[AppContextChange.Key.workMode],
-            let completionClosure = change.notificationClosure as? (WorkMode) -> Void  {
+        if let change = appChanges[AppContextChange.Key.workMode], let completionClosure = change.notificationClosure as? (WorkMode) -> Void  {
             DispatchQueue.main.async { completionClosure(appContext.workMode) }
         }
     }
     
     @objc private func recieveLastSyncNotification(notification: Notification) {
         
-        if let change = appChanges[AppContextChange.Key.lastSync],
-            let completionClosure = change.notificationClosure as? (Date?) -> Void  {
+        if let change = appChanges[AppContextChange.Key.lastSync], let completionClosure = change.notificationClosure as? (Date?) -> Void  {
             DispatchQueue.main.async { completionClosure(appContext.mobileMapPackage?.lastSyncDate) }
         }
     }

@@ -21,7 +21,7 @@ extension RelatedRecordsPopupsViewController: RelatedRecordsListViewControllerDe
         
         navigationController?.popViewController(animated: true)
         
-        guard let info = self.popup.relationship(withPopup: relatedPopup) else {
+        guard let info = self.popup.oneToManyRelationship(withPopup: relatedPopup) else {
             present(simpleAlertMessage: "Uh Oh! An unknown error occurred.")
             return
         }

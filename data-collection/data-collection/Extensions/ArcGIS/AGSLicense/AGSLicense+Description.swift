@@ -15,6 +15,10 @@
 import Foundation
 import ArcGIS
 
+// These extensions offer a console-readable description of an ArcGIS license.
+//
+// - Note: These descriptions are not to be conveyed to the end-user.
+
 extension AGSLicense {
     open override var description: String {
         guard self.licenseType != .developer else {

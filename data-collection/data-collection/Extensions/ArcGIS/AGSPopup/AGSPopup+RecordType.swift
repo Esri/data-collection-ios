@@ -18,10 +18,13 @@ import ArcGIS
 extension AGSPopup {
     
     enum RecordType: String {
-        case record, feature // a more descriptive popup record type
-        case popup // the fallback general record type
+        /// A more descriptive popup record type, can be either `.record` or `.feature`
+        case record, feature
+        /// The fallback general record type
+        case popup
     }
     
+    /// Facilitates determing what type of pop-up is in question, whether it is a symbolizable feature or table record.
     var recordType: RecordType {
         
         guard let feature = geoElement as? AGSArcGISFeature, let featureTable = feature.featureTable as? AGSArcGISFeatureTable else {

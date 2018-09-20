@@ -28,6 +28,7 @@ enum FeatureTableError: Int, AppError {
     case isNotArcGISFeatureTable
     case isNotPopupEnabled
     case cannotEditFeature
+    case featuresAreNotFromTheSameTable
     
     var errorCode: Int {
         return baseCode.rawValue + self.rawValue
@@ -53,6 +54,8 @@ enum FeatureTableError: Int, AppError {
             return [NSLocalizedDescriptionKey: "Feature table is not popup enabled."]
         case .cannotEditFeature:
             return [NSLocalizedDescriptionKey: "Feature table cannot edit (add/update) feature."]
+        case .featuresAreNotFromTheSameTable:
+            return [NSLocalizedDescriptionKey: "Features are not from the same table."]
         }
     }
     

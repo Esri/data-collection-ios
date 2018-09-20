@@ -13,13 +13,8 @@
 // limitations under the License.
 
 import Foundation
-import ArcGIS
 
-extension AGSPopup {
-    
-    /// Facilitates casting a pop-up's feature (optionally) to an `AGSArcGISFeature`.
-    var feature: AGSArcGISFeature? {
-        return geoElement as? AGSArcGISFeature
-    }
+extension Notification.Name {
+    static let currentPortalDidChange = Notification.Name("currentPortalDidChange")
+    static let workModeDidChange = Notification.Name("workModeDidChange")
 }
-

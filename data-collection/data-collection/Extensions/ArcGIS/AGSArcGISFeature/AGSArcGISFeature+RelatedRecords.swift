@@ -17,17 +17,11 @@ import ArcGIS
 
 extension AGSArcGISFeature {
     
-    var relatedRecordsInfos: [AGSRelationshipInfo]? {
+    /// Facilitates retrieving one to many relationship info objects associated with a feature.
+    var oneToManyRelationshipInfos: [AGSRelationshipInfo]? {
         guard let table = featureTable as? AGSArcGISFeatureTable, let layerInfo = table.layerInfo else {
             return nil
         }
         return layerInfo.relationshipInfos.filter({ (info) -> Bool in info.cardinality == .oneToMany })
-    }
-    
-    var relatedRecordsCount: Int {
-        guard let infos = relatedRecordsInfos else {
-            return 0
-        }
-        return infos.count
     }
 }

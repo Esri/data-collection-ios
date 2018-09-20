@@ -17,6 +17,10 @@ import ArcGIS
 
 extension AGSMap {
     
+    /// Facilitates return **all** offline tables contained in a map, both from feature layers and feature tables.
+    ///
+    /// This can be used to compute if there have been changes to the offline map since the date it was last synchronized.
+    
     var allOfflineTables: [AGSGeodatabaseFeatureTable] {
 
         return tables.compactMap { return ($0 as? AGSGeodatabaseFeatureTable) } +

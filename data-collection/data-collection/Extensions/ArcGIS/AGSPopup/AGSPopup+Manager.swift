@@ -17,11 +17,19 @@ import ArcGIS
 
 extension AGSPopup {
     
-    var asManager: AGSPopupManager {
+    /// Facilitates building a pop-up manager from a pop-up.
+    ///
+    /// - Returns: The newly created pop-up manager.
+    
+    func asManager() -> AGSPopupManager {
         return AGSPopupManager(popup: self)
     }
     
+    /// Facilitates determining if a pop-up is editable.
+    ///
+    /// - Note: This property should be used sparingly due to the memory cost incurred by the operation.
+    
     var isEditable: Bool {
-        return asManager.shouldAllowEdit
+        return asManager().shouldAllowEdit
     }
 }

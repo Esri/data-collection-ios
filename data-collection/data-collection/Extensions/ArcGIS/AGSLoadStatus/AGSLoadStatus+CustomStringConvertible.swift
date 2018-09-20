@@ -15,6 +15,10 @@
 import Foundation
 import ArcGIS
 
+/// Facilitates logging `AGSLoadStatus` to console.
+///
+/// - Note: Calling `description` directly is discouraged.
+
 extension AGSLoadStatus: CustomStringConvertible {
     
     public var description:String {

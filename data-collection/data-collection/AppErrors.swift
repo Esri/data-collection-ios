@@ -41,4 +41,5 @@ extension AppErrorBaseCode {
     static let PopupSortingError = AppErrorBaseCode(3000)
     static let GeocoderResultsError = AppErrorBaseCode(4000)
     static let RelatedRecordsTableLoadError = AppErrorBaseCode(5000)
+    static let MapViewError = AppErrorBaseCode(6000)
 }

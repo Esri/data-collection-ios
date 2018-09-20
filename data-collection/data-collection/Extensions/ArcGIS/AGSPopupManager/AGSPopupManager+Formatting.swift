@@ -17,16 +17,11 @@ import ArcGIS
 
 extension AGSPopupManager {
     
-    public func labelTitle(fieldIndex: Int) -> String? {
-        
-        guard fieldIndex < displayFields.count else {
-            return nil
-        }
-        
-        return displayFields[fieldIndex].label
-    }
+    /// Assists in providing the next subsequent popup value provided an `inout` index.
+    ///
+    /// This is helpful in allowing the popup manager to maintain the index for it's next requested value.
     
-    public func labelValue(fieldIndex: Int) -> String? {
+    public func nextDisplayFieldStringValue(fieldIndex: inout Int) -> String? {
         
         guard fieldIndex < displayFields.count else {
             return nil
@@ -34,17 +29,6 @@ extension AGSPopupManager {
         
         let field = displayFields[fieldIndex]
         let value = formattedValue(for: field)
-        
-        return value
-    }
-    
-    public func nextFieldStringValue(fieldIndex: inout Int) -> String? {
-        
-        guard fieldIndex < displayFields.count else {
-            return nil
-        }
-        
-        let value = labelValue(fieldIndex: fieldIndex)
         
         fieldIndex += 1
         return value

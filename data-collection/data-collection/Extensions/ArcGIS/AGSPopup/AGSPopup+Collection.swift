@@ -17,24 +17,36 @@ import ArcGIS
 
 extension Collection where Iterator.Element == AGSPopup {
     
-    /**
-     This function is used to find the nearest point in a collection of points to another point.
-     
-     Querying a feature layer returns a collection of features, the order for which was in the order
-     the feature was discovered in traverse by the backing service as opposed to distance from the query's point.
-     */
+    /// This function is used to find the nearest point in a collection of points to another point.
+    ///
+    /// - Parameter mapPoint: The point with which to compare geometries.
+    ///
+    /// - Returns: a pop-up contained in a collection that is nearest to the mapPoint parameter.
+    
     func popupNearestTo(mapPoint: AGSPoint) -> AGSPopup? {
         
-        guard !isEmpty else {
-            return nil
+        guard !isEmpty else { return nil }
+        
+        var nearestPopup: (popup: AGSPopup, delta: Double)?
+        
+        for popup in self {
+            
+            guard let popupPoint = popup.geoElement.geometry else { continue }
+            
+            // We can use the `AGSGeometryEngine` to calculate the distance (`Double`) between two geometries.
+            let delta = AGSGeometryEngine.distanceBetweenGeometry1(mapPoint, geometry2: popupPoint)
+            
+            guard let nearest = nearestPopup else {
+                nearestPopup = (popup, delta)
+                continue
+            }
+            
+            // Update nearestPopup if this popup is closer.
+            if delta < nearest.delta {
+                nearestPopup = (popup, delta)
+            }
         }
         
-        let sorted = self.sorted(by: { (popupA, popupB) -> Bool in
-            let deltaA = AGSGeometryEngine.distanceBetweenGeometry1(mapPoint, geometry2: popupA.geoElement.geometry!)
-            let deltaB = AGSGeometryEngine.distanceBetweenGeometry1(mapPoint, geometry2: popupB.geoElement.geometry!)
-            return deltaA < deltaB
-        })
-        
-        return sorted.first
+        return nearestPopup?.popup
     }
 }

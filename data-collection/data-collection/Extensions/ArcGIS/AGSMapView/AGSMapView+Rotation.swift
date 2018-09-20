@@ -17,6 +17,7 @@ import ArcGIS
 
 extension AGSMapView {
     
+    /// Facilitating determining if the `AGSMapView` is facing (nearly) true-north.
     var isNorthFacingUp: Bool {
         return rotation >= 359.5 || rotation <= 0.5
     }

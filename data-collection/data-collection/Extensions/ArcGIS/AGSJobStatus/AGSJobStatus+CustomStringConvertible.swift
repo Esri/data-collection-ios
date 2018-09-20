@@ -15,6 +15,10 @@
 import Foundation
 import ArcGIS
 
+/// Facilitates logging `AGSJobStatus` to console.
+///
+/// - Note: Calling `description` directly is discouraged.
+
 extension AGSJobStatus: CustomStringConvertible {
     
     public var description: String {

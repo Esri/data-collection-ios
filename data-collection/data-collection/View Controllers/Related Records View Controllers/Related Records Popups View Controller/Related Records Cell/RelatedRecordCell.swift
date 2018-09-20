@@ -67,7 +67,7 @@ class RelatedRecordCell: UITableViewCell {
     
     func updateCellContent() {
 
-        guard let manager = popup?.asManager else {
+        guard let manager = popup?.asManager() else {
             updateEmptyCellContent()
             return
         }
@@ -129,11 +129,14 @@ class RelatedRecordCell: UITableViewCell {
         for attribute in attributes {
             
             let titleLabel = attribute.title
-            titleLabel.text = manager.labelTitle(fieldIndex: popupIndex)
-            let valueLabel = attribute.value
-            valueLabel.text = manager.nextFieldStringValue(fieldIndex: &popupIndex)
             
-            // TODO workout constraints issue
+            if popupIndex < manager.displayFields.count {
+                titleLabel.text = manager.displayFields[popupIndex].label
+            }
+            
+            let valueLabel = attribute.value
+            valueLabel.text = manager.nextDisplayFieldStringValue(fieldIndex: &popupIndex)
+            
             titleLabel.considerEmptyString()
             valueLabel.considerEmptyString()
         }

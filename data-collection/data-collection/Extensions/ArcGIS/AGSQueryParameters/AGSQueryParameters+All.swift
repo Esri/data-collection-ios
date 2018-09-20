@@ -17,6 +17,8 @@ import ArcGIS
 
 extension AGSQueryParameters {
     
+    /// A static function that creates an `AGSQueryParameters` specifiying the query is requested all features contained by the table.
+    
     static func all() -> AGSQueryParameters {
         let query = AGSQueryParameters()
         query.whereClause = "1 = 1"

@@ -17,6 +17,17 @@ import ArcGIS
 
 extension AGSArcGISFeatureTable {
     
+    /// Single function to query for related records for a specific table relationship of either service feature table (online) or geodatabase feature table (offline).
+    ///
+    /// This function returns all query results regardless of table type.
+    ///
+    /// - Parameters:
+    ///     - feature: feature of which related records are requested.
+    ///     - relationship: which related table to query.
+    ///     - completion: closure providing an array of `AGSRelatedFeatureQueryResult` or an `Error` but not both.
+    ///
+    /// - Returns: optionally nil `AGSCancelable` object. Maintaining a reference to this cancelable object allows the app to cancel the query in favor of a new query.
+    
     @discardableResult
     func queryRelatedFeatures(forFeature feature: AGSArcGISFeature, relationship: AGSRelationshipInfo, completion: @escaping ([AGSRelatedFeatureQueryResult]?, Error?)->()) -> AGSCancelable? {
         
@@ -35,6 +46,19 @@ extension AGSArcGISFeatureTable {
         }
     }
     
+    /// Single function to query for related records converted to pop-ups for a specific table relationship of either service feature table (online) or geodatabase feature table (offline).
+    ///
+    /// This function offers all query results as popups regardless of table type.
+    ///
+    /// - Parameters:
+    ///     - feature: feature of which related records are requested.
+    ///     - relationship: which related table to query.
+    ///     - completion: closure providing an array of `AGSPopup` or an `Error` but not both.
+    ///
+    /// - Returns: optionally nil `AGSCancelable` object. Maintaining a reference to this cancelable object allows the app to cancel the query in favor of a new query.
+    ///
+    /// - SeeAlso: `queryRelatedFeatures(forFeature feature: AGSArcGISFeature, relationship: AGSRelationshipInfo, completion: @escaping ([AGSRelatedFeatureQueryResult]?, Error?) -> ()) -> AGSCancelable?`
+    
     @discardableResult
     func queryRelatedFeaturesAsPopups(forFeature feature: AGSArcGISFeature, relationship: AGSRelationshipInfo, completion: @escaping ([AGSPopup]?, Error?)->()) -> AGSCancelable? {
         
@@ -50,14 +74,25 @@ extension AGSArcGISFeatureTable {
                 return
             }
             
-            guard let popups = features.asPopups() else {
-                completion(nil, FeatureTableError.isNotPopupEnabled)
-                return
+            do {
+                let popups = try features.asPopups()
+                completion(popups, nil)
             }
-            
-            completion(popups, nil)
+            catch {
+                completion(nil, error)
+            }
         }
     }
+    
+    /// Single function to query all features of either service feature table (online) or geodatabase feature table (offline).
+    ///
+    /// This function offers a feature query result regardless of table type as well as the optional ability to sort.
+    ///
+    /// - Parameters:
+    ///     - sorted: optional sort order, defaulted nil.
+    ///     - completion: closure providing an `AGSFeatureQueryResult` object or an `Error` but not both.
+    ///
+    /// - Returns: optionally nil `AGSCancelable` object. Maintaining a reference to this cancelable object allows the app to cancel the query in favor of a new query.
     
     @discardableResult
     func queryAllFeatures(sorted: AGSOrderBy? = nil, completion: @escaping (AGSFeatureQueryResult?, Error?) -> Void) -> AGSCancelable? {
@@ -83,6 +118,18 @@ extension AGSArcGISFeatureTable {
         }
     }
     
+    /// Single function to query all features converted to pop-ups of either service feature table (online) or geodatabase feature table (offline).
+    ///
+    /// This function offers an array of pop-ups regardless of table type as well as the optional ability to sort.
+    ///
+    /// - Parameters:
+    ///     - sorted: optional sort order, defaulted nil.
+    ///     - completion: closure providing an array of `AGSPopup` objects or an `Error` but not both.
+    ///
+    /// - Returns: optionally nil `AGSCancelable` object. Maintaining a reference to this cancelable object allows the app to cancel the query in favor of a new query.
+    ///
+    /// - SeeAlso: `func queryAllFeatures(sorted: AGSOrderBy? = nil, completion: @escaping (AGSFeatureQueryResult?, Error?) -> Void) -> AGSCancelable?`
+    
     @discardableResult
     func queryAllFeaturesAsPopups(sorted: AGSOrderBy? = nil, completion: @escaping ([AGSPopup]?, Error?) -> Void) -> AGSCancelable? {
         
@@ -105,13 +152,13 @@ extension AGSArcGISFeatureTable {
                 return
             }
             
-            guard let popups = features.asPopups() else {
-                completion(nil, FeatureTableError.isNotPopupEnabled)
-                return
+            do {
+                let popups = try features.asPopups()
+                completion(popups, nil)
             }
-            
-            completion(popups, nil)
-            return
+            catch {
+                completion(nil, error)
+            }
         }
     }
 }

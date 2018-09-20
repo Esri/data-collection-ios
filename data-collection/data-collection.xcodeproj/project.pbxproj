@@ -34,7 +34,6 @@
 		946569122088020F00599E55 /* AGSPopup+Feature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 946569112088020F00599E55 /* AGSPopup+Feature.swift */; };
 		946569142088023600599E55 /* AGSPopupManager+Formatting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 946569132088023600599E55 /* AGSPopupManager+Formatting.swift */; };
 		9465691A2088028E00599E55 /* AGSRelationshipInfo+Role.swift in Sources */ = {isa = PBXBuildFile; fileRef = 946569192088028E00599E55 /* AGSRelationshipInfo+Role.swift */; };
-		9465691C208802AE00599E55 /* AGSFeatureLayer+Rules.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9465691B208802AE00599E55 /* AGSFeatureLayer+Rules.swift */; };
 		9465691E208802CE00599E55 /* AGSFeatureTable+PopupEnabled.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9465691D208802CE00599E55 /* AGSFeatureTable+PopupEnabled.swift */; };
 		946569292089066800599E55 /* MapViewController+Map.swift in Sources */ = {isa = PBXBuildFile; fileRef = 946569282089066800599E55 /* MapViewController+Map.swift */; };
 		946D20A721250F46001BF5CC /* AppReachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 946D20A621250F46001BF5CC /* AppReachability.swift */; };
@@ -65,7 +64,6 @@
 		948D84F3215015A300E2048F /* UserDefaults+AGSJSONSerializable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 948D84F2215015A300E2048F /* UserDefaults+AGSJSONSerializable.swift */; };
 		948D84F82151B46000E2048F /* AGSMapView+Centerpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 948D84F72151B46000E2048F /* AGSMapView+Centerpoint.swift */; };
 		948D84FA2151B48400E2048F /* AGSMapView+Rotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 948D84F92151B48400E2048F /* AGSMapView+Rotation.swift */; };
-		948D84FF2151B55A00E2048F /* AGSArcGISFeature+Popup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 948D84FE2151B55A00E2048F /* AGSArcGISFeature+Popup.swift */; };
 		948D85012151B82A00E2048F /* AGSArcGISFeature+RelatedRecords.swift in Sources */ = {isa = PBXBuildFile; fileRef = 948D85002151B82A00E2048F /* AGSArcGISFeature+RelatedRecords.swift */; };
 		948D85032151B85200E2048F /* AGSArcGISFeature+Collection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 948D85022151B85200E2048F /* AGSArcGISFeature+Collection.swift */; };
 		948D85062151B93800E2048F /* AGSPopup+Comparison.swift in Sources */ = {isa = PBXBuildFile; fileRef = 948D85052151B93800E2048F /* AGSPopup+Comparison.swift */; };
@@ -157,6 +155,8 @@
 		94D544D920852A5100ED0D04 /* PinDropView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94D544D420852A5100ED0D04 /* PinDropView.swift */; };
 		94D544DA20852A5100ED0D04 /* ActivityBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94D544D520852A5100ED0D04 /* ActivityBarView.swift */; };
 		94DDEA782153022D00DA533C /* NetworkReachabilityManager+CustomStringConvertible.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94DDEA772153022D00DA533C /* NetworkReachabilityManager+CustomStringConvertible.swift */; };
+		94DDEA7A2154130000DA533C /* AppContext+NotificationNames.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94DDEA792154130000DA533C /* AppContext+NotificationNames.swift */; };
+		94DDEA7C215426D300DA533C /* AppRules.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94DDEA7B215426D300DA533C /* AppRules.swift */; };
 		94FA8B25207BF2CD00972C75 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94FA8B24207BF2CD00972C75 /* MapViewController.swift */; };
 		94FA8B28207BF2CD00972C75 /* AppContainerViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 94FA8B26207BF2CD00972C75 /* AppContainerViewController.storyboard */; };
 		94FA8B2D207BF2CD00972C75 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 94FA8B2B207BF2CD00972C75 /* LaunchScreen.storyboard */; };
@@ -214,7 +214,6 @@
 		946569112088020F00599E55 /* AGSPopup+Feature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AGSPopup+Feature.swift"; sourceTree = "<group>"; };
 		946569132088023600599E55 /* AGSPopupManager+Formatting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AGSPopupManager+Formatting.swift"; sourceTree = "<group>"; };
 		946569192088028E00599E55 /* AGSRelationshipInfo+Role.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AGSRelationshipInfo+Role.swift"; sourceTree = "<group>"; };
-		9465691B208802AE00599E55 /* AGSFeatureLayer+Rules.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AGSFeatureLayer+Rules.swift"; sourceTree = "<group>"; };
 		9465691D208802CE00599E55 /* AGSFeatureTable+PopupEnabled.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AGSFeatureTable+PopupEnabled.swift"; sourceTree = "<group>"; };
 		946569282089066800599E55 /* MapViewController+Map.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MapViewController+Map.swift"; sourceTree = "<group>"; };
 		946D20A621250F46001BF5CC /* AppReachability.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppReachability.swift; sourceTree = "<group>"; };
@@ -245,7 +244,6 @@
 		948D84F2215015A300E2048F /* UserDefaults+AGSJSONSerializable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserDefaults+AGSJSONSerializable.swift"; sourceTree = "<group>"; };
 		948D84F72151B46000E2048F /* AGSMapView+Centerpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AGSMapView+Centerpoint.swift"; sourceTree = "<group>"; };
 		948D84F92151B48400E2048F /* AGSMapView+Rotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AGSMapView+Rotation.swift"; sourceTree = "<group>"; };
-		948D84FE2151B55A00E2048F /* AGSArcGISFeature+Popup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AGSArcGISFeature+Popup.swift"; sourceTree = "<group>"; };
 		948D85002151B82A00E2048F /* AGSArcGISFeature+RelatedRecords.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AGSArcGISFeature+RelatedRecords.swift"; sourceTree = "<group>"; };
 		948D85022151B85200E2048F /* AGSArcGISFeature+Collection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AGSArcGISFeature+Collection.swift"; sourceTree = "<group>"; };
 		948D85052151B93800E2048F /* AGSPopup+Comparison.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AGSPopup+Comparison.swift"; sourceTree = "<group>"; };
@@ -338,6 +336,8 @@
 		94D544D420852A5100ED0D04 /* PinDropView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PinDropView.swift; sourceTree = "<group>"; };
 		94D544D520852A5100ED0D04 /* ActivityBarView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivityBarView.swift; sourceTree = "<group>"; };
 		94DDEA772153022D00DA533C /* NetworkReachabilityManager+CustomStringConvertible.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NetworkReachabilityManager+CustomStringConvertible.swift"; sourceTree = "<group>"; };
+		94DDEA792154130000DA533C /* AppContext+NotificationNames.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppContext+NotificationNames.swift"; sourceTree = "<group>"; };
+		94DDEA7B215426D300DA533C /* AppRules.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppRules.swift; sourceTree = "<group>"; };
 		94FA8B1F207BF2CD00972C75 /* data-collection.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "data-collection.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		94FA8B24207BF2CD00972C75 /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		94FA8B27207BF2CD00972C75 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/AppContainerViewController.storyboard; sourceTree = "<group>"; };
@@ -536,7 +536,6 @@
 			isa = PBXGroup;
 			children = (
 				94B375E2207E8E4800691F2A /* AGSArcGISFeature+FeatureTable.swift */,
-				948D84FE2151B55A00E2048F /* AGSArcGISFeature+Popup.swift */,
 				948D85002151B82A00E2048F /* AGSArcGISFeature+RelatedRecords.swift */,
 				948D85022151B85200E2048F /* AGSArcGISFeature+Collection.swift */,
 			);
@@ -565,14 +564,6 @@
 				946569192088028E00599E55 /* AGSRelationshipInfo+Role.swift */,
 			);
 			path = AGSRelationshipInfo;
-			sourceTree = "<group>";
-		};
-		948D85162151BE7D00E2048F /* AGSFeatureLayer */ = {
-			isa = PBXGroup;
-			children = (
-				9465691B208802AE00599E55 /* AGSFeatureLayer+Rules.swift */,
-			);
-			path = AGSFeatureLayer;
 			sourceTree = "<group>";
 		};
 		948D85172151BEAF00E2048F /* AGSFeatureTable */ = {
@@ -791,6 +782,7 @@
 				94B375A6207E8D5600691F2A /* AppContext+Login.swift */,
 				94B375A7207E8D5600691F2A /* AppContext+WorkMode.swift */,
 				948D84F0214C899600E2048F /* AppContext+VisibleArea.swift */,
+				94DDEA792154130000DA533C /* AppContext+NotificationNames.swift */,
 				946D20B2212F5348001BF5CC /* AppContextChange.swift */,
 				94D544BA207FC15D00ED0D04 /* AppContextChangeHandler.swift */,
 			);
@@ -847,7 +839,6 @@
 				948D85192151BF0D00E2048F /* AGSLicense */,
 				948D85182151BEDF00E2048F /* AGSQueryParameters */,
 				948D85172151BEAF00E2048F /* AGSFeatureTable */,
-				948D85162151BE7D00E2048F /* AGSFeatureLayer */,
 				948D85152151BE4000E2048F /* AGSRelationshipInfo */,
 				948D85042151B8B300E2048F /* AGSPopup */,
 				948D84FD2151B53300E2048F /* AGSArcGISFeature */,
@@ -1003,6 +994,7 @@
 				94B3759F207E8D5600691F2A /* AppConfiguration.swift */,
 				946D20A621250F46001BF5CC /* AppReachability.swift */,
 				94B375A4207E8D5600691F2A /* AppLocation.swift */,
+				94DDEA7B215426D300DA533C /* AppRules.swift */,
 				94B375A2207E8D5600691F2A /* AppErrors.swift */,
 				94B375A5207E8D5600691F2A /* AppContext */,
 				94B375D8207E8E4800691F2A /* Extensions */,
@@ -1259,7 +1251,6 @@
 				948D84C92139B27D00E2048F /* Bundle+Version.swift in Sources */,
 				946569122088020F00599E55 /* AGSPopup+Feature.swift in Sources */,
 				948D84E121484C7500E2048F /* URLComponents+Parameter.swift in Sources */,
-				948D84FF2151B55A00E2048F /* AGSArcGISFeature+Popup.swift in Sources */,
 				9440D35120D4662E005ED582 /* CustomBehavior_NewTreeCondition.swift in Sources */,
 				94B375F4207E8E4800691F2A /* AGSJobStatus+CustomStringConvertible.swift in Sources */,
 				94B375F8207E8E4800691F2A /* AGSDrawStatus+CustomStringConvertible.swift in Sources */,
@@ -1303,6 +1294,7 @@
 				945CEE7620DDC2AC00CD3E0D /* SVProgressAnimatedView.m in Sources */,
 				94B375CA207E8D5600691F2A /* AppGlobals.swift in Sources */,
 				946569142088023600599E55 /* AGSPopupManager+Formatting.swift in Sources */,
+				94DDEA7A2154130000DA533C /* AppContext+NotificationNames.swift in Sources */,
 				9440D35520D479B5005ED582 /* PopupLongStringCell.swift in Sources */,
 				948D850C2151BA4E00E2048F /* AGSPopup+LayerSelection.swift in Sources */,
 				948D84F1214C899600E2048F /* AppContext+VisibleArea.swift in Sources */,
@@ -1327,7 +1319,6 @@
 				946D20A721250F46001BF5CC /* AppReachability.swift in Sources */,
 				9412D215209937E50031F9EB /* RelatedRecordsPopupsViewController+Delegate.swift in Sources */,
 				948D84EF214C84BD00E2048F /* AGSJSONSerializable+UserDefaults.swift in Sources */,
-				9465691C208802AE00599E55 /* AGSFeatureLayer+Rules.swift in Sources */,
 				94A8103720B6306600D4BC68 /* RelatedRecordsListViewController.swift in Sources */,
 				94B375C8207E8D5600691F2A /* AppContext+WorkMode.swift in Sources */,
 				948D85232151C11F00E2048F /* AGSPopupManager+FeatureTable.swift in Sources */,
@@ -1343,6 +1334,7 @@
 				94A8103B20B635A000D4BC68 /* AGSQueryParameters+All.swift in Sources */,
 				948D85312151C80400E2048F /* UIView+Animation.swift in Sources */,
 				94B375C7207E8D5600691F2A /* AppContext+Login.swift in Sources */,
+				94DDEA7C215426D300DA533C /* AppRules.swift in Sources */,
 				94656910208800E100599E55 /* MapViewController+TouchDelegate.swift in Sources */,
 				94B37603207E8E4800691F2A /* CGPoint+Modify.swift in Sources */,
 			);

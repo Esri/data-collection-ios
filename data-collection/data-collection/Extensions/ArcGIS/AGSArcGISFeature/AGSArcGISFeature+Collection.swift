@@ -17,30 +17,30 @@ import ArcGIS
 
 extension Collection where Iterator.Element == AGSArcGISFeature {
     
-    func asPopups() -> [AGSPopup]? {
-        
-        var popups = [AGSPopup]()
+    /// Builds an array of `AGSPopup` objects of same-table feature (`AGSArcGISFeature`) objects.
+    ///
+    /// - Returns: An array of pop-up objects that can be empty.
+    ///
+    /// - Throws: An error if the first feature table in the collection is not popup enabled
+    /// or if subsequent features are not of the same table as the first.
+    
+    func asPopups() throws -> [AGSPopup] {
         
         guard let first = first else {
-            return popups
+            return [AGSPopup]()
         }
         
         guard let firstFeatureTable = first.featureTable, firstFeatureTable.isPopupActuallyEnabled else {
-            return nil
+            throw FeatureTableError.isNotPopupEnabled
         }
         
-        for feature in self {
+        return try map { (feature: AGSArcGISFeature) -> AGSPopup in
             
-            guard let featureTable = feature.featureTable, featureTable == firstFeatureTable else {
-                print("[Error] all features must be of the same table")
-                return nil
+            guard let featureTable = feature.featureTable, featureTable == firstFeatureTable, featureTable.isPopupActuallyEnabled, let popupDefinition = featureTable.popupDefinition else {
+                throw FeatureTableError.featuresAreNotFromTheSameTable
             }
             
-            if let popup = feature.asPopup() {
-                popups.append(popup)
-            }
-        }
-        
-        return popups
+            return AGSPopup(geoElement: feature, popupDefinition: popupDefinition)
+        }        
     }
 }

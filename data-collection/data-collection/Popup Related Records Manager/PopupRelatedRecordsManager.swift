@@ -137,7 +137,7 @@ class PopupRelatedRecordsManager: AGSPopupManager {
         
         guard
             let feature = popup.geoElement as? AGSArcGISFeature,
-            let relatedRecordsInfos = feature.relatedRecordsInfos,
+            let relatedRecordsInfos = feature.oneToManyRelationshipInfos,
             let featureTable = feature.featureTable as? AGSArcGISFeatureTable
             else {
                 completion()

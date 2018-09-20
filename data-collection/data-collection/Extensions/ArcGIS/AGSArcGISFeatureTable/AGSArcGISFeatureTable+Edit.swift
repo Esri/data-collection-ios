@@ -17,13 +17,21 @@ import ArcGIS
 
 extension AGSArcGISFeatureTable {
     
+    /// Facilitates adding or updating a feature, if possible.
+    ///
+    /// - Parameters:
+    ///     - feature: the modified feature to persist.
+    ///     - completion: closure containing an `Error`, if one occured.
+    ///
+    /// - SeeAlso: `private func performEdit(type: EditType, forFeature feature: AGSArcGISFeature, completion: @escaping (Error?)->Void)`
+    
     func performEdit(feature: AGSArcGISFeature, completion: @escaping (Error?)->Void) {
         
         // Update
         if canUpdate(feature) {
             performEdit(type: .update, forFeature: feature, completion: completion)
         }
-            // Add
+        // Add
         else if canAddFeature {
             performEdit(type: .add, forFeature: feature, completion: completion)
         }
@@ -31,6 +39,14 @@ extension AGSArcGISFeatureTable {
             completion(FeatureTableError.cannotEditFeature)
         }
     }
+    
+    /// Facilitates deleting a feature, if possible.
+    ///
+    /// - Parameters:
+    ///     - feature: the feature to delete.
+    ///     - completion: closure containing an `Error`, if one occured.
+    ///
+    /// - SeeAlso: `private func performEdit(type: EditType, forFeature feature: AGSArcGISFeature, completion: @escaping (Error?)->Void)`
     
     func performDelete(feature: AGSArcGISFeature, completion: @escaping (Error?)->Void) {
         
@@ -41,6 +57,16 @@ extension AGSArcGISFeatureTable {
             completion(FeatureTableError.cannotEditFeature)
         }
     }
+    
+    /// Single function for performing edits of a feature.
+    ///
+    /// If the feature table is a service feature table (online), the function will also apply the edits remotely,
+    /// refreshing the local record in the process.
+    ///
+    /// - Parameters:
+    ///     - type: `.add`, `.update` or `.delete` the record.
+    ///     - forFeature: the feature to edit.
+    ///     - completion: closure containing an `Error`, if one occured.
     
     private func performEdit(type: EditType, forFeature feature: AGSArcGISFeature, completion: @escaping (Error?)->Void) {
         

@@ -15,6 +15,7 @@
 import Foundation
 import ArcGIS
 
+// Computed variables that allow the pop-up manager to more quickly access it's pop-up's feature's underlying table.
 extension AGSPopupManager {
     
     var table: AGSFeatureTable? {

@@ -17,6 +17,12 @@ import ArcGIS
 
 extension AGSFeatureTable {
     
+    /// This computed property informs the app if the feature table has popups enabled and that the table contains it's cooresponding pop-up definition.
+    ///
+    /// - Attention: It is possible for pop-ups to be enabled on a table where that table does not contain a pop-up definition.
+    /// This behavior might change in future releases of the ArcGIS Runtime.
+    /// If this change is enacted, the continued use of this property shouldn't break the app.
+    
     var isPopupActuallyEnabled: Bool {
         return isPopupEnabled && popupDefinition != nil
     }

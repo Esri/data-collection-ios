@@ -16,34 +16,18 @@ import Foundation
 import ArcGIS
 
 extension AGSPopup {
+
+    /// Facilitates finding a one-to-many `AGSRelationshipInfo` associated between one pop-up and another.
+    ///
+    /// - Parameter popup: The pop-up with which to investigate for a relationship.
+    ///
+    /// - Returns: An `AGSRelationshipInfo`, if one exists between the two pop-ups.
     
-    func relate(toPopup popup: AGSPopup, relationshipInfo info: AGSRelationshipInfo) {
+    func oneToManyRelationship(withPopup popup: AGSPopup) -> AGSRelationshipInfo? {
         
         guard
             let feature = geoElement as? AGSArcGISFeature,
-            let relatedFeature = popup.geoElement as? AGSArcGISFeature
-            else {
-                return
-        }
-        feature.relate(to: relatedFeature, relationshipInfo: info)
-    }
-    
-    func unrelate(toPopup popup: AGSPopup) {
-        
-        guard
-            let feature = geoElement as? AGSArcGISFeature,
-            let relatedFeature = popup.geoElement as? AGSArcGISFeature
-            else {
-                return
-        }
-        feature.unrelate(to: relatedFeature)
-    }
-    
-    func relationship(withPopup popup: AGSPopup) -> AGSRelationshipInfo? {
-        
-        guard
-            let feature = geoElement as? AGSArcGISFeature,
-            let relationships = feature.relatedRecordsInfos,
+            let relationships = feature.oneToManyRelationshipInfos,
             let relatedFeature = popup.geoElement as? AGSArcGISFeature,
             let relatedFeatureTable = relatedFeature.featureTable as? AGSArcGISFeatureTable
             else {

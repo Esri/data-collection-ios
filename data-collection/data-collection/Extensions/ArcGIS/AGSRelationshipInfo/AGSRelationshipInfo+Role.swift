@@ -17,10 +17,12 @@ import ArcGIS
 
 extension AGSRelationshipInfo {
     
+    /// Facilitates asking a relationship info object if it is the colloquial many-to-one relationship type.
     public var isManyToOne: Bool {
         return cardinality == .oneToMany && role == .destination
     }
     
+    /// Facilitates asking a relationship info object if it is the colloquial one-to-many relationship type.
     public var isOneToMany: Bool {
         return cardinality == .oneToMany && role == .origin
     }

@@ -16,13 +16,13 @@ import Foundation
 import ArcGIS
 
 extension AGSPortal {
-    /**
-     Returns an AGSPortal that is logged in if cached credentials allow.
-     
-     - Parameters:
-     - portalURL: A URL to a custom portal. If nil, ArcGIS Online is used.
-     - completion: A block that receives the AGSPortal and a Bool. The Bool is true if the portal could be logged in to using cached credentials, or false otherwise.
-     */
+    
+     /// Returns an AGSPortal that is logged in if cached credentials allow.
+     ///
+     /// - Parameters:
+     /// - portalURL: A URL to a custom portal. If nil, ArcGIS Online is used.
+     /// - completion: A block that receives the AGSPortal and a Bool. The Bool is true if the portal could be logged in to using cached credentials, or false otherwise.
+    
     static func bestPortalFromCachedCredentials(portalURL: URL, completion: @escaping ((AGSPortal, Bool) -> Void)) {
         // The credential cache will have at most one valid cached credential. We want to see if it will log us into the portal.
         //

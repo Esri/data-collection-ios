@@ -17,6 +17,14 @@ import ArcGIS
 
 extension AGSArcGISFeature {
     
+    /// Facilitates getting and setting a feature's (AGSArcGISFeature) object ID.
+    ///
+    /// - Note: The object ID is indicative of the following:
+    /// * If nil, the feature is **not** a member of it's table.
+    /// * If negative, the feature is a member only of it's local geodatabase table.
+    /// * If positive, the feature is a member of it's service feature table as well as it's local table.
+    /// Remember to call `refreshObjectID()` on a feature to ensure it's `objectID` matches the object ID of the cooresponding remote record.
+    
     var objectID: Int64? {
         get {
             guard let featureTable = featureTable as? AGSArcGISFeatureTable else {

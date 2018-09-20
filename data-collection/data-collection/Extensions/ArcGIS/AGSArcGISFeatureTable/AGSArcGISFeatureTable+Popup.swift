@@ -17,6 +17,13 @@ import ArcGIS
 
 extension AGSArcGISFeatureTable {
     
+    /// Facilitates the table checking if popups are enabled for a table it is related to.
+    ///
+    /// - Parameters:
+    ///     - relationshipInfo: The relationship information defining which related table it is to check for.
+    ///
+    /// - Returns: `Bool` whether pop-ups are enabled on the related table.
+    
     func isPopupEnabledFor(relationshipInfo: AGSRelationshipInfo) -> Bool {
         
         guard let relatedTables = relatedTables() else {
@@ -33,6 +40,10 @@ extension AGSArcGISFeatureTable {
         
         return false
     }
+    
+    /// Facilitates the table to optionally create a pop-up provided it's able to.
+    ///
+    /// - Returns: a pop-up, if one was able to be created.
     
     func createPopup() -> AGSPopup? {
         

@@ -17,6 +17,7 @@ import ArcGIS
 
 extension AGSMapView {
     
+    /// Facilitates converting the CG center point of the `AGSMapView` to a spatial `AGSPoint`, using the map's projection.
     var centerAGSPoint: AGSPoint {
         return screen(toLocation: bounds.center)
     }

@@ -17,8 +17,10 @@ import ArcGIS
 
 extension AppContext {
     
-    var visibleAreaDefaultsKey: String { return "VisibleAreaDefaultsKey.\(AppConfiguration.webMapItemID)" }
+    private var visibleAreaDefaultsKey: String { return "VisibleAreaDefaultsKey.\(AppConfiguration.webMapItemID)" }
     
+    /// Setting and getting the shared visible area interfaces directly in and out of `UserDefaults`.
+    /// This allows the app to restore the map view's current visible area from a previous session.
     var sharedVisibleArea: AGSViewpoint? {
         set {
             guard newValue?.targetGeometry != nil else {
@@ -29,7 +31,7 @@ extension AppContext {
             UserDefaults.standard.set(newValue, forKey: visibleAreaDefaultsKey)
         }
         get {
-            return AGSViewpoint.retrieveFromUserDefaults(withKey: visibleAreaDefaultsKey)
+            return AGSViewpoint.retrieveFromUserDefaults(forKey: visibleAreaDefaultsKey)
         }
     }
 }
