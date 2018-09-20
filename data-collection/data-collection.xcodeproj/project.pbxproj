@@ -53,9 +53,8 @@
 		948D84C72136094900E2048F /* CellReuseIdentifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 948D84C62136094900E2048F /* CellReuseIdentifiers.swift */; };
 		948D84C92139B27D00E2048F /* Bundle+Version.swift in Sources */ = {isa = PBXBuildFile; fileRef = 948D84C82139B27D00E2048F /* Bundle+Version.swift */; };
 		948D84CB213F578800E2048F /* AGSMap+GeodatabaseFeatureTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 948D84CA213F578800E2048F /* AGSMap+GeodatabaseFeatureTable.swift */; };
-		948D84CF2142227900E2048F /* Bool+Alpha.swift in Sources */ = {isa = PBXBuildFile; fileRef = 948D84CE2142227900E2048F /* Bool+Alpha.swift */; };
+		948D84CF2142227900E2048F /* CGFloat+Bool.swift in Sources */ = {isa = PBXBuildFile; fileRef = 948D84CE2142227900E2048F /* CGFloat+Bool.swift */; };
 		948D84D52142235B00E2048F /* Date+AppFormats.swift in Sources */ = {isa = PBXBuildFile; fileRef = 948D84D42142235B00E2048F /* Date+AppFormats.swift */; };
-		948D84D72142237E00E2048F /* Double+Radians.swift in Sources */ = {isa = PBXBuildFile; fileRef = 948D84D62142237E00E2048F /* Double+Radians.swift */; };
 		948D84DA2142E29C00E2048F /* CGRect+Modify.swift in Sources */ = {isa = PBXBuildFile; fileRef = 948D84D92142E29C00E2048F /* CGRect+Modify.swift */; };
 		948D84DF214324D800E2048F /* Timer+Typealias.swift in Sources */ = {isa = PBXBuildFile; fileRef = 948D84DE214324D800E2048F /* Timer+Typealias.swift */; };
 		948D84E121484C7500E2048F /* URLComponents+Parameter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 948D84E021484C7500E2048F /* URLComponents+Parameter.swift */; };
@@ -157,6 +156,7 @@
 		94DDEA782153022D00DA533C /* NetworkReachabilityManager+CustomStringConvertible.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94DDEA772153022D00DA533C /* NetworkReachabilityManager+CustomStringConvertible.swift */; };
 		94DDEA7A2154130000DA533C /* AppContext+NotificationNames.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94DDEA792154130000DA533C /* AppContext+NotificationNames.swift */; };
 		94DDEA7C215426D300DA533C /* AppRules.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94DDEA7B215426D300DA533C /* AppRules.swift */; };
+		94DDEA7E215463AC00DA533C /* CGAffineTransform+Rotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94DDEA7D215463AC00DA533C /* CGAffineTransform+Rotation.swift */; };
 		94FA8B25207BF2CD00972C75 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94FA8B24207BF2CD00972C75 /* MapViewController.swift */; };
 		94FA8B28207BF2CD00972C75 /* AppContainerViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 94FA8B26207BF2CD00972C75 /* AppContainerViewController.storyboard */; };
 		94FA8B2D207BF2CD00972C75 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 94FA8B2B207BF2CD00972C75 /* LaunchScreen.storyboard */; };
@@ -233,9 +233,8 @@
 		948D84C62136094900E2048F /* CellReuseIdentifiers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellReuseIdentifiers.swift; sourceTree = "<group>"; };
 		948D84C82139B27D00E2048F /* Bundle+Version.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bundle+Version.swift"; sourceTree = "<group>"; };
 		948D84CA213F578800E2048F /* AGSMap+GeodatabaseFeatureTable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AGSMap+GeodatabaseFeatureTable.swift"; sourceTree = "<group>"; };
-		948D84CE2142227900E2048F /* Bool+Alpha.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bool+Alpha.swift"; sourceTree = "<group>"; };
+		948D84CE2142227900E2048F /* CGFloat+Bool.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGFloat+Bool.swift"; sourceTree = "<group>"; };
 		948D84D42142235B00E2048F /* Date+AppFormats.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+AppFormats.swift"; sourceTree = "<group>"; };
-		948D84D62142237E00E2048F /* Double+Radians.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Double+Radians.swift"; sourceTree = "<group>"; };
 		948D84D92142E29C00E2048F /* CGRect+Modify.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGRect+Modify.swift"; sourceTree = "<group>"; };
 		948D84DE214324D800E2048F /* Timer+Typealias.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Timer+Typealias.swift"; sourceTree = "<group>"; };
 		948D84E021484C7500E2048F /* URLComponents+Parameter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URLComponents+Parameter.swift"; sourceTree = "<group>"; };
@@ -338,6 +337,7 @@
 		94DDEA772153022D00DA533C /* NetworkReachabilityManager+CustomStringConvertible.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NetworkReachabilityManager+CustomStringConvertible.swift"; sourceTree = "<group>"; };
 		94DDEA792154130000DA533C /* AppContext+NotificationNames.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppContext+NotificationNames.swift"; sourceTree = "<group>"; };
 		94DDEA7B215426D300DA533C /* AppRules.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppRules.swift; sourceTree = "<group>"; };
+		94DDEA7D215463AC00DA533C /* CGAffineTransform+Rotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGAffineTransform+Rotation.swift"; sourceTree = "<group>"; };
 		94FA8B1F207BF2CD00972C75 /* data-collection.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "data-collection.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		94FA8B24207BF2CD00972C75 /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		94FA8B27207BF2CD00972C75 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/AppContainerViewController.storyboard; sourceTree = "<group>"; };
@@ -471,15 +471,6 @@
 				94D544BC207FC15D00ED0D04 /* JobStatusViewController.swift */,
 			);
 			path = "Job Status View Controller";
-			sourceTree = "<group>";
-		};
-		948D84D82142E22B00E2048F /* Swift */ = {
-			isa = PBXGroup;
-			children = (
-				948D84CE2142227900E2048F /* Bool+Alpha.swift */,
-				948D84D62142237E00E2048F /* Double+Radians.swift */,
-			);
-			path = Swift;
 			sourceTree = "<group>";
 		};
 		948D84DD2142E6ED00E2048F /* Dispatch */ = {
@@ -819,7 +810,6 @@
 			isa = PBXGroup;
 			children = (
 				94B375DA207E8E4800691F2A /* ArcGIS */,
-				948D84D82142E22B00E2048F /* Swift */,
 				94B375EB207E8E4800691F2A /* Foundation */,
 				948D84DD2142E6ED00E2048F /* Dispatch */,
 				94B375EE207E8E4800691F2A /* Core Graphics */,
@@ -889,6 +879,8 @@
 			children = (
 				94B375EF207E8E4800691F2A /* CGPoint+Modify.swift */,
 				948D84D92142E29C00E2048F /* CGRect+Modify.swift */,
+				948D84CE2142227900E2048F /* CGFloat+Bool.swift */,
+				94DDEA7D215463AC00DA533C /* CGAffineTransform+Rotation.swift */,
 			);
 			path = "Core Graphics";
 			sourceTree = "<group>";
@@ -1266,9 +1258,8 @@
 				948D84F82151B46000E2048F /* AGSMapView+Centerpoint.swift in Sources */,
 				94B37600207E8E4800691F2A /* UIAlertController+Alert.swift in Sources */,
 				948D84C72136094900E2048F /* CellReuseIdentifiers.swift in Sources */,
-				948D84CF2142227900E2048F /* Bool+Alpha.swift in Sources */,
+				948D84CF2142227900E2048F /* CGFloat+Bool.swift in Sources */,
 				946569042087FB5000599E55 /* MapViewController+LocationSelection.swift in Sources */,
-				948D84D72142237E00E2048F /* Double+Radians.swift in Sources */,
 				9412D213209937950031F9EB /* RelatedRecordCell.swift in Sources */,
 				94FA8B25207BF2CD00972C75 /* MapViewController.swift in Sources */,
 				948D85122151BB3600E2048F /* AGSPopup+FeatureTable.swift in Sources */,
@@ -1320,6 +1311,7 @@
 				9412D215209937E50031F9EB /* RelatedRecordsPopupsViewController+Delegate.swift in Sources */,
 				948D84EF214C84BD00E2048F /* AGSJSONSerializable+UserDefaults.swift in Sources */,
 				94A8103720B6306600D4BC68 /* RelatedRecordsListViewController.swift in Sources */,
+				94DDEA7E215463AC00DA533C /* CGAffineTransform+Rotation.swift in Sources */,
 				94B375C8207E8D5600691F2A /* AppContext+WorkMode.swift in Sources */,
 				948D85232151C11F00E2048F /* AGSPopupManager+FeatureTable.swift in Sources */,
 				94D2714020D0315900304E27 /* CustomBehavior_Map.swift in Sources */,

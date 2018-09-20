@@ -14,9 +14,13 @@
 
 import Foundation
 
-extension Double {
+extension CGAffineTransform {
     
-    var asRadians: Double {
-        return (self / 180.0) * .pi
+    init(rotationDegree degree: Double) {
+        #if os(iOS)
+        self = CGAffineTransform(rotationAngle: -((CGFloat(degree) / 180.0) * .pi))
+        #elseif os(macOS)
+        self = CGAffineTransform(rotationAngle: ((CGFloat(degree) / 180.0) * .pi))
+        #endif
     }
 }

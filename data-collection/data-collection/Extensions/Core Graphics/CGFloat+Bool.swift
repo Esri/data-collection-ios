@@ -14,11 +14,9 @@
 
 import Foundation
 
-extension Bool {
+extension CGFloat {
     
-    var asAlpha: CGFloat {
-        get {
-            return self ? CGFloat(1.0) : CGFloat(0.0)
-        }
+    init(_ bool: Bool) {
+        self = bool ? 1.0 : 0.0
     }
 }
