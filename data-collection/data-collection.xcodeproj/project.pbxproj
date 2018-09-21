@@ -37,8 +37,7 @@
 		9465691E208802CE00599E55 /* AGSFeatureTable+PopupEnabled.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9465691D208802CE00599E55 /* AGSFeatureTable+PopupEnabled.swift */; };
 		946569292089066800599E55 /* MapViewController+Map.swift in Sources */ = {isa = PBXBuildFile; fileRef = 946569282089066800599E55 /* MapViewController+Map.swift */; };
 		946D20A721250F46001BF5CC /* AppReachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 946D20A621250F46001BF5CC /* AppReachability.swift */; };
-		946D20AB2126541C001BF5CC /* DateFormatter+AppFormats.swift in Sources */ = {isa = PBXBuildFile; fileRef = 946D20AA2126541C001BF5CC /* DateFormatter+AppFormats.swift */; };
-		946D20AD212E07FC001BF5CC /* URL+OfflineDirectories.swift in Sources */ = {isa = PBXBuildFile; fileRef = 946D20AC212E07FC001BF5CC /* URL+OfflineDirectories.swift */; };
+		946D20AB2126541C001BF5CC /* AppDateFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 946D20AA2126541C001BF5CC /* AppDateFormatter.swift */; };
 		946D20AF212F50EB001BF5CC /* AppContextAwareNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 946D20AE212F50EB001BF5CC /* AppContextAwareNavigationController.swift */; };
 		946D20B3212F5348001BF5CC /* AppContextChange.swift in Sources */ = {isa = PBXBuildFile; fileRef = 946D20B2212F5348001BF5CC /* AppContextChange.swift */; };
 		946D20B521307FE1001BF5CC /* MapViewController+AppContainerFocusDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 946D20B421307FE1001BF5CC /* MapViewController+AppContainerFocusDelegate.swift */; };
@@ -54,9 +53,7 @@
 		948D84C92139B27D00E2048F /* Bundle+Version.swift in Sources */ = {isa = PBXBuildFile; fileRef = 948D84C82139B27D00E2048F /* Bundle+Version.swift */; };
 		948D84CB213F578800E2048F /* AGSMap+GeodatabaseFeatureTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 948D84CA213F578800E2048F /* AGSMap+GeodatabaseFeatureTable.swift */; };
 		948D84CF2142227900E2048F /* CGFloat+Conversions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 948D84CE2142227900E2048F /* CGFloat+Conversions.swift */; };
-		948D84D52142235B00E2048F /* Date+AppFormats.swift in Sources */ = {isa = PBXBuildFile; fileRef = 948D84D42142235B00E2048F /* Date+AppFormats.swift */; };
 		948D84DA2142E29C00E2048F /* CGRect+Modify.swift in Sources */ = {isa = PBXBuildFile; fileRef = 948D84D92142E29C00E2048F /* CGRect+Modify.swift */; };
-		948D84DF214324D800E2048F /* Timer+Typealias.swift in Sources */ = {isa = PBXBuildFile; fileRef = 948D84DE214324D800E2048F /* Timer+Typealias.swift */; };
 		948D84E121484C7500E2048F /* URLComponents+Parameter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 948D84E021484C7500E2048F /* URLComponents+Parameter.swift */; };
 		948D84EF214C84BD00E2048F /* AGSJSONSerializable+UserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 948D84EE214C84BD00E2048F /* AGSJSONSerializable+UserDefaults.swift */; };
 		948D84F1214C899600E2048F /* AppContext+VisibleArea.swift in Sources */ = {isa = PBXBuildFile; fileRef = 948D84F0214C899600E2048F /* AppContext+VisibleArea.swift */; };
@@ -217,8 +214,7 @@
 		9465691D208802CE00599E55 /* AGSFeatureTable+PopupEnabled.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AGSFeatureTable+PopupEnabled.swift"; sourceTree = "<group>"; };
 		946569282089066800599E55 /* MapViewController+Map.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MapViewController+Map.swift"; sourceTree = "<group>"; };
 		946D20A621250F46001BF5CC /* AppReachability.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppReachability.swift; sourceTree = "<group>"; };
-		946D20AA2126541C001BF5CC /* DateFormatter+AppFormats.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DateFormatter+AppFormats.swift"; sourceTree = "<group>"; };
-		946D20AC212E07FC001BF5CC /* URL+OfflineDirectories.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URL+OfflineDirectories.swift"; sourceTree = "<group>"; };
+		946D20AA2126541C001BF5CC /* AppDateFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDateFormatter.swift; sourceTree = "<group>"; };
 		946D20AE212F50EB001BF5CC /* AppContextAwareNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppContextAwareNavigationController.swift; sourceTree = "<group>"; };
 		946D20B2212F5348001BF5CC /* AppContextChange.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppContextChange.swift; sourceTree = "<group>"; };
 		946D20B421307FE1001BF5CC /* MapViewController+AppContainerFocusDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MapViewController+AppContainerFocusDelegate.swift"; sourceTree = "<group>"; };
@@ -234,9 +230,7 @@
 		948D84C82139B27D00E2048F /* Bundle+Version.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bundle+Version.swift"; sourceTree = "<group>"; };
 		948D84CA213F578800E2048F /* AGSMap+GeodatabaseFeatureTable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AGSMap+GeodatabaseFeatureTable.swift"; sourceTree = "<group>"; };
 		948D84CE2142227900E2048F /* CGFloat+Conversions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGFloat+Conversions.swift"; sourceTree = "<group>"; };
-		948D84D42142235B00E2048F /* Date+AppFormats.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+AppFormats.swift"; sourceTree = "<group>"; };
 		948D84D92142E29C00E2048F /* CGRect+Modify.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGRect+Modify.swift"; sourceTree = "<group>"; };
-		948D84DE214324D800E2048F /* Timer+Typealias.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Timer+Typealias.swift"; sourceTree = "<group>"; };
 		948D84E021484C7500E2048F /* URLComponents+Parameter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URLComponents+Parameter.swift"; sourceTree = "<group>"; };
 		948D84EE214C84BD00E2048F /* AGSJSONSerializable+UserDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AGSJSONSerializable+UserDefaults.swift"; sourceTree = "<group>"; };
 		948D84F0214C899600E2048F /* AppContext+VisibleArea.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppContext+VisibleArea.swift"; sourceTree = "<group>"; };
@@ -862,12 +856,8 @@
 		94B375EB207E8E4800691F2A /* Foundation */ = {
 			isa = PBXGroup;
 			children = (
-				946D20AA2126541C001BF5CC /* DateFormatter+AppFormats.swift */,
-				948D84D42142235B00E2048F /* Date+AppFormats.swift */,
-				946D20AC212E07FC001BF5CC /* URL+OfflineDirectories.swift */,
 				948D84E021484C7500E2048F /* URLComponents+Parameter.swift */,
 				948D84C82139B27D00E2048F /* Bundle+Version.swift */,
-				948D84DE214324D800E2048F /* Timer+Typealias.swift */,
 				948D84F2215015A300E2048F /* UserDefaults+AGSJSONSerializable.swift */,
 			);
 			path = Foundation;
@@ -988,6 +978,7 @@
 				94DDEA7B215426D300DA533C /* AppRules.swift */,
 				94B375A2207E8D5600691F2A /* AppErrors.swift */,
 				94B3759E207E8D5600691F2A /* AppFiles.swift */,
+				946D20AA2126541C001BF5CC /* AppDateFormatter.swift */,
 				94B375A5207E8D5600691F2A /* AppContext */,
 				94B375D8207E8E4800691F2A /* Extensions */,
 				94B375D3207E8DD600691F2A /* Geocode Search */,
@@ -1201,7 +1192,6 @@
 				94AB811C211E0AD300B9C920 /* AGSLicense+Description.swift in Sources */,
 				948D850A2151BA0100E2048F /* AGSPopup+Sort.swift in Sources */,
 				94D544D820852A5100ED0D04 /* ShrinkingView.swift in Sources */,
-				948D84D52142235B00E2048F /* Date+AppFormats.swift in Sources */,
 				94B375C2207E8D5600691F2A /* OfflineMapJobConstruct.swift in Sources */,
 				94B375FA207E8E4800691F2A /* UIViewController+Alert.swift in Sources */,
 				946569022087FAE700599E55 /* MapViewController+MapViewMode.swift in Sources */,
@@ -1221,7 +1211,6 @@
 				94D544D920852A5100ED0D04 /* PinDropView.swift in Sources */,
 				946D20B3212F5348001BF5CC /* AppContextChange.swift in Sources */,
 				94B375C9207E8D5600691F2A /* AppContext.swift in Sources */,
-				946D20AD212E07FC001BF5CC /* URL+OfflineDirectories.swift in Sources */,
 				94B375D2207E8D5600691F2A /* EphemeralCache.swift in Sources */,
 				948D853E2151D8C900E2048F /* AGSArcGISFeatureTable+Error.swift in Sources */,
 				94AB310520B7731A003540D2 /* PopupCodedValueCell.swift in Sources */,
@@ -1234,7 +1223,7 @@
 				94D544D720852A5100ED0D04 /* CompassView.swift in Sources */,
 				94B375FB207E8E4800691F2A /* UIButton+AttributedTitle.swift in Sources */,
 				94B375F6207E8E4800691F2A /* AGSPortal+CachedCredentials.swift in Sources */,
-				946D20AB2126541C001BF5CC /* DateFormatter+AppFormats.swift in Sources */,
+				946D20AB2126541C001BF5CC /* AppDateFormatter.swift in Sources */,
 				940DA977209794E200AB4BF6 /* PopupTextFieldCell.swift in Sources */,
 				94A8102F20B33C3B00D4BC68 /* PopupIDCell.swift in Sources */,
 				94D544D620852A5100ED0D04 /* SlideNotificationView.swift in Sources */,
@@ -1246,7 +1235,6 @@
 				9440D35120D4662E005ED582 /* CustomBehavior_NewTreeCondition.swift in Sources */,
 				94B375F4207E8E4800691F2A /* AGSJobStatus+CustomStringConvertible.swift in Sources */,
 				94B375F8207E8E4800691F2A /* AGSDrawStatus+CustomStringConvertible.swift in Sources */,
-				948D84DF214324D800E2048F /* Timer+Typealias.swift in Sources */,
 				94D2714520D0578C00304E27 /* ManyToOneManager.swift in Sources */,
 				94B375FD207E8E4800691F2A /* UIColor+Modify.swift in Sources */,
 				94DDEA782153022D00DA533C /* NetworkReachabilityManager+CustomStringConvertible.swift in Sources */,

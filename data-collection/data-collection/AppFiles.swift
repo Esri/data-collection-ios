@@ -49,3 +49,32 @@ class AppFiles {
         try fm.removeItem(at: url)
     }
 }
+
+extension URL {
+    
+    /// Builds an app-specific URL to where the offline map is be stored as it downloads to the temporary directory.
+    ///
+    /// - Parameter itemID: The portal itemID that corresponds to your web map.
+    ///
+    /// - Returns: App-specific URL.
+    
+    static func temporaryOfflineMapDirectoryURL(forWebMapItemID itemID: String) -> URL {
+        return URL(fileURLWithPath: NSTemporaryDirectory())
+            .appendingPathComponent(AppFiles.OfflineDirectoryComponents.dataCollection)
+            .appendingPathComponent(AppFiles.OfflineDirectoryComponents.offlineMap)
+            .appendingPathComponent(itemID)
+    }
+    
+    /// Builds an app-specific URL to where the offline map is stored in the documents directory.
+    ///
+    /// - Parameter itemID: The portal itemID that corresponds to your web map.
+    ///
+    /// - Returns: App-specific URL.
+    
+    static func offlineMapDirectoryURL(forWebMapItemID itemID: String) -> URL {
+        return FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
+            .appendingPathComponent(AppFiles.OfflineDirectoryComponents.dataCollection)
+            .appendingPathComponent(AppFiles.OfflineDirectoryComponents.offlineMap)
+            .appendingPathComponent(itemID)
+    }
+}

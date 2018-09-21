@@ -16,9 +16,21 @@ import Foundation
 
 extension URLComponents {
     
+    /// Facilitates retrieving the value for a query parameter name, if one exists.
+    ///
+    /// - Parameter name: The query parameter name for which we would like the value.
+    ///
+    /// - Returns: The value as a string, if one exits.
+    
     func queryParameter(named name:String) -> String? {
-        return self.queryItems?.filter({ $0.name == name }).first?.value
+        return self.queryItems?.first(where: { (item) -> Bool in item.name == name })?.value
     }
+    
+    /// Informs the app if a URL has a certain parameter.
+    ///
+    /// - Parameter name: The query parameter name for which we would like to determine if it exists.
+    ///
+    /// - Returns: Whether the parameter name does exist or not.
     
     func hasParameter(named name: String) -> Bool {
         return queryParameter(named: name) != nil

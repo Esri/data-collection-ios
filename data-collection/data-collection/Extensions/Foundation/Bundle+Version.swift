@@ -19,13 +19,25 @@ extension Bundle {
     
     private static let agsBundle = AGSBundle()
     
-    private static var sdkBundleVersion: String {
+    /// An end-user printable string representation the ArcGIS Bundle version shipped with the app.
+    ///
+    /// For example, "2000"
+    
+    static var sdkBundleVersion: String {
         return (agsBundle?.object(forInfoDictionaryKey: "CFBundleVersion") as? String) ?? "?"
     }
     
-    private static var sdkVersion: String {
+    /// An end-user printable string representation the ArcGIS SDK version shipped with the app.
+    ///
+    /// For example, "100.0.0"
+    
+    static var sdkVersion: String {
         return (agsBundle?.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String) ?? "?"
     }
+    
+    /// Builds an end-user printable string representation the ArcGIS Bundle shipped with the app.
+    ///
+    /// For example, "ArcGIS Runtime SDK 100.0.0 (2000)"
     
     static var ArcGISSDKVersionString: String {
         return "ArcGIS Runtime SDK \(sdkVersion) (\(sdkBundleVersion))"
@@ -34,17 +46,33 @@ extension Bundle {
 
 extension Bundle {
     
-    private static var appDisplayName: String {
+    /// An end-user printable string representation the app display name.
+    ///
+    /// For example, "Data Collection"
+    
+    static var appDisplayName: String {
         return (main.object(forInfoDictionaryKey: "CFBundleDisplayName") as? String) ?? "?"
     }
     
-    private static var appVersion: String {
+    /// An end-user printable string representation the app version number.
+    ///
+    /// For example, "1.0"
+    
+    static var appVersion: String {
         return (main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String) ?? "?"
     }
     
-    private static var appBundleVersion: String {
+    /// An end-user printable string representation the app bundle number.
+    ///
+    /// For example, "10"
+    
+    static var appBundleVersion: String {
         return (main.object(forInfoDictionaryKey: "CFBundleVersion") as? String) ?? "?"
     }
+    
+    /// Builds an end-user printable string representation the app name and version.
+    ///
+    /// For example, "Data Collection 1.0 (10)"
     
     static var AppNameVersionString: String {
         return "\(appDisplayName) \(appVersion) (\(appBundleVersion))"

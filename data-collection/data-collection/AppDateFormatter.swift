@@ -14,11 +14,17 @@
 
 import Foundation
 
-extension DateFormatter {
+class AppDateFormatter: DateFormatter {
     
-    private static let appShared = DateFormatter()
+    private static let appShared = AppDateFormatter()
     
     private static let appFormatterQueue = DispatchQueue(label: "\(appBundleID).dateFormatter")
+    
+    /// Uses static synchronous dispatch queue to produce a formatted date.
+    ///
+    /// - Parameter date: The `Date` to format.
+    ///
+    /// - Returns: A string formatted with date style `.medium` and time style `.none`.
     
     static func format(mediumDate date: Date) -> String {
         
@@ -30,6 +36,12 @@ extension DateFormatter {
             return appShared.string(from: date)
         }
     }
+    
+    /// Uses static synchronous dispatch queue to produce a formatted date (and time).
+    ///
+    /// - Parameter date: The `Date` to format.
+    ///
+    /// - Returns: A string formatted with date style `.short` and time style `.short`.
     
     static func format(shortDateTime date: Date) -> String {
         
