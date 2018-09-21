@@ -20,7 +20,8 @@ extension AppContainerViewController: MapViewControllerDelegate {
     func mapViewController(_ mapViewController: MapViewController, didSelect extent: AGSGeometry) {
         
         do {
-            try FileManager.default.prepareTemporaryOfflineMapDirectory()
+            try appFiles.prepareTemporaryOfflineMapDirectory()
+            try appFiles.prepareOfflineMapDirectory()
         }
         catch {
             print("[Error]", error.localizedDescription)

@@ -18,15 +18,15 @@ extension URL {
     
     static func temporaryOfflineMapDirectoryURL(forWebMapItemID itemID: String) -> URL {
         return URL(fileURLWithPath: NSTemporaryDirectory())
-            .appendingPathComponent(FileManager.OfflineDirectoryComponents.dataCollection)
-            .appendingPathComponent(FileManager.OfflineDirectoryComponents.offlineMap)
+            .appendingPathComponent(AppFiles.OfflineDirectoryComponents.dataCollection)
+            .appendingPathComponent(AppFiles.OfflineDirectoryComponents.offlineMap)
             .appendingPathComponent(itemID)
     }
     
     static func offlineMapDirectoryURL(forWebMapItemID itemID: String) -> URL {
         return FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
-            .appendingPathComponent(FileManager.OfflineDirectoryComponents.dataCollection)
-            .appendingPathComponent(FileManager.OfflineDirectoryComponents.offlineMap)
+            .appendingPathComponent(AppFiles.OfflineDirectoryComponents.dataCollection)
+            .appendingPathComponent(AppFiles.OfflineDirectoryComponents.offlineMap)
             .appendingPathComponent(itemID)
     }
 }

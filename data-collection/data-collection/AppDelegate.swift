@@ -30,9 +30,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         // Configure oAuth redirect URL.
         AppDelegate.configOAuthRedirectURL()
-
-        // Configure file documents directories for offline usage.
-        FileManager.buildOfflineMapDirectory()
         
         // Reset first reachability change status flag then start listening to reachability status changes.
         appReachability.resetAndStartListening()
@@ -97,14 +94,13 @@ extension AppDelegate {
 
 extension AppDelegate {
     
+    /// Facilitates licensing the ArcGIS application with the configured license key.
     static func licenseApplication() {
-        
         do {
             try AGSArcGISRuntimeEnvironment.setLicenseKey(AppConfiguration.licenseKey)
         } catch {
-            print("Error licensing app: \(error.localizedDescription)")
+            print("[Error: AGSArcGISRuntimeEnvironment] Error licensing app: \(error.localizedDescription)")
         }
-        
         print("[ArcGIS Runtime License] \(AGSArcGISRuntimeEnvironment.license())")
     }
 }

@@ -15,9 +15,10 @@
 import Foundation
 import ArcGIS
 
-extension FileManager {
+/// This class is used for creating and removing directories and items needed for the app in the device's file documents directory.
+class AppFiles {
     
-    // MARK: Components and Extensions
+    private var fm: FileManager { return FileManager.default }
     
     struct OfflineDirectoryComponents {
         
@@ -25,25 +26,26 @@ extension FileManager {
         static let offlineMap = "offlineMap"
     }
     
+    /// Builds a temporary directory, if needed, to store a map as it downloads.
+    ///
+    /// - Throws: FileManager errors thrown as a result of building the temporary offline map directory.
     func prepareTemporaryOfflineMapDirectory() throws {
         
         let url: URL = .temporaryOfflineMapDirectoryURL(forWebMapItemID: AppConfiguration.webMapItemID)
-        
-        try FileManager.default.createDirectory(at: url, withIntermediateDirectories: true)
-        try FileManager.default.removeItem(at: url)
+        try fm.createDirectory(at: url, withIntermediateDirectories: true)
+        try fm.removeItem(at: url)
     }
     
-    // MARK: Offline Directory
+    // MARK: Offline Directory    
+    func prepareOfflineMapDirectory() throws {
+        
+        let url: URL = .offlineMapDirectoryURL(forWebMapItemID: AppConfiguration.webMapItemID)
+        try fm.createDirectory(at: url, withIntermediateDirectories: true, attributes: nil)
+    }
     
-    static func buildOfflineMapDirectory() {
+    func deleteContentsOfOfflineMapDirectory() throws {
         
-        let path: URL = .offlineMapDirectoryURL(forWebMapItemID: AppConfiguration.webMapItemID)
-        
-        do {
-            try FileManager.default.createDirectory(at: path, withIntermediateDirectories: true, attributes: nil)
-        }
-        catch {
-            print("[Error: AppFiles] could not create directory: \(path) with error:", error.localizedDescription)
-        }
+        let url: URL = .offlineMapDirectoryURL(forWebMapItemID: AppConfiguration.webMapItemID)
+        try fm.removeItem(at: url)
     }
 }

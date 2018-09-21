@@ -148,13 +148,12 @@ extension AppContext {
         hasOfflineMap = false
 
         do {
-            try FileManager.default.removeItem(at: .offlineMapDirectoryURL(forWebMapItemID: AppConfiguration.webMapItemID))
+            try appFiles.deleteContentsOfOfflineMapDirectory()
+            try appFiles.prepareOfflineMapDirectory()
         }
         catch {
             throw error
         }
-                
-        FileManager.buildOfflineMapDirectory()
     }
     
     /**

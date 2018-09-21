@@ -20,3 +20,10 @@ extension CGFloat {
         self = bool ? 1.0 : 0.0
     }
 }
+
+extension CGFloat {
+    
+    var degreeToRadian: CGFloat {
+        return (self / 180.0) * .pi
+    }
+}

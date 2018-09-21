@@ -18,9 +18,9 @@ extension CGAffineTransform {
     
     init(rotationDegree degree: Double) {
         #if os(iOS)
-        self = CGAffineTransform(rotationAngle: -((CGFloat(degree) / 180.0) * .pi))
+        self = CGAffineTransform(rotationAngle: -CGFloat(degree).degreeToRadian)
         #elseif os(macOS)
-        self = CGAffineTransform(rotationAngle: ((CGFloat(degree) / 180.0) * .pi))
+        self = CGAffineTransform(rotationAngle: CGFloat(degree).degreeToRadian)
         #endif
     }
 }
