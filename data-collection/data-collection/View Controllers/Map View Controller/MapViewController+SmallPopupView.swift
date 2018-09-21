@@ -24,7 +24,7 @@ extension MapViewController {
     
     func refreshCurrentPopup() {
         
-        guard self.mapViewMode == .selectedFeature(featureLoaded: true) || self.mapViewMode == .selectedFeature(featureLoaded: false), let manager = recordsManager else {
+        guard case MapViewMode.selectedFeature = mapViewMode, let manager = recordsManager else {
             return
         }
         
