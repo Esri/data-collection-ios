@@ -22,15 +22,19 @@ extension MapViewController {
         performSegue(withIdentifier: "modallyPresentRelatedRecordsPopupViewController", sender: nil)
     }
     
-    func updateSmallPopupViewForCurrentPopup() {
+    func refreshCurrentPopup() {
         
-        guard mapViewMode != .disabled else { return }
+        guard case MapViewMode.selectedFeature = mapViewMode, let manager = recordsManager else {
+            return
+        }
         
-        guard mapViewMode != .offlineMask else { return }
+        guard manager.popup.isFeatureAddedToTable else {
+            currentPopup = nil
+            mapViewMode = .defaultView
+            return
+        }
         
-        guard let manager = recordsManager else { return }
-        
-        currentPopup!.select()
+        manager.popup.select()
         
         manager.loadRelatedRecords { [weak self] in
             
@@ -63,7 +67,7 @@ extension MapViewController {
                 self?.addPopupRelatedRecordButton.isHidden = !canAdd
             }
             
-            self?.mapViewMode = .selectedFeature
+            self?.mapViewMode = .selectedFeature(featureLoaded: true)
         }
     }
 }

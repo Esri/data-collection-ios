@@ -71,10 +71,10 @@ extension MapViewController {
             hideMapMaskViewForOfflineDownloadArea()
             locationSelectionType = .newFeature
             
-        case .selectedFeature:
+        case .selectedFeature(let loaded):
             pinDropView.pinDropped = false
             animations = [ selectViewVisible(false),
-                           smallPopViewVisible(true),
+                           smallPopViewVisible(loaded),
                            mapViewVisible(true) ]
             hideMapMaskViewForOfflineDownloadArea()
             

@@ -120,6 +120,7 @@ extension MapViewController {
             let newPopup = featureTable.createPopup()
             else {
                 present(simpleAlertMessage: "Uh Oh! You are unable to add a new feature.")
+                mapViewMode = .defaultView
                 return
         }
         
