@@ -18,7 +18,7 @@ import UIKit
 
 extension UIView {
     
-    func addStackviewAndConstrainToEdges(_ stackView: UIStackView) {
+    func addStackviewAndConstrainToEdges(_ stackView: UIStackView, reduceAxisPriority reduce: Bool = true) {
 
         addSubview(stackView)
         
@@ -29,17 +29,20 @@ extension UIView {
         let top = stackView.topAnchor.constraint(equalTo: topAnchor, constant: 0)
         let bottom = stackView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: 0)
         
-        switch stackView.axis {
+        if reduce {
             
-        case .horizontal:
-            leading.priority = UILayoutPriority(999)
-            trailing.priority = UILayoutPriority(999)
-
-        case .vertical:
-            top.priority = UILayoutPriority(999)
-            bottom.priority = UILayoutPriority(999)
+            switch stackView.axis {
+                
+            case .horizontal:
+                leading.priority = UILayoutPriority(999)
+                trailing.priority = UILayoutPriority(999)
+                
+            case .vertical:
+                top.priority = UILayoutPriority(999)
+                bottom.priority = UILayoutPriority(999)
+            }
         }
-        
+
         NSLayoutConstraint.activate([leading, trailing, top, bottom])
     }
 }

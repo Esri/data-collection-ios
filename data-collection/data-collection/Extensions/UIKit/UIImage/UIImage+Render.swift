@@ -16,19 +16,24 @@ import UIKit
 
 extension UIImage {
     
-    /**
-     This UIImage extension function returns a new copy of an image that is resized, circled and given a white stroke weight.
-     */
-    func circularThumbnail(ofSize desiredWH: CGFloat, strokeColor: UIColor) -> UIImage? {
+    /// Builds a copy of an image that is resized, clipped by a circle and given a stroke weight.
+    ///
+    /// - Parameters:
+    ///   - diameter: The diameter of the rendered circular thumbnail.
+    ///   - stroke: Tuple (color, weight) (optional).
+    /// - Returns: A new `UIImage`.
+    
+    func circularThumbnail(ofSize diameter: CGFloat, stroke: (color: UIColor, weight: CGFloat)?) -> UIImage? {
         
-        let scale = min(size.width/desiredWH, size.height/desiredWH)
+        // We want to crop a UIImage to a specific size and to scale (considering of the device's screen resolution).
+        let scale = min(size.width/diameter, size.height/diameter)
         
         let newSize = CGSize(width: size.width/scale, height: size.height/scale)
-        let newOrigin = CGPoint(x: (desiredWH - newSize.width)/2, y: (desiredWH - newSize.height)/2)
+        let newOrigin = CGPoint(x: (diameter - newSize.width)/2, y: (diameter - newSize.height)/2)
         
         let thumbRect = CGRect(origin: newOrigin, size: newSize).integral
         
-        UIGraphicsBeginImageContextWithOptions(CGSize(width: desiredWH, height: desiredWH), false, 0)
+        UIGraphicsBeginImageContextWithOptions(CGSize(width: diameter, height: diameter), false, 0)
         
         guard let context = UIGraphicsGetCurrentContext() else {
             UIGraphicsEndImageContext()
@@ -37,6 +42,7 @@ extension UIImage {
         
         context.saveGState()
         
+        // Build a circular path.
         let path = UIBezierPath(roundedRect: thumbRect, cornerRadius: min(thumbRect.width/2, thumbRect.height/2))
         context.beginPath()
         context.addPath(path.cgPath)
@@ -45,9 +51,12 @@ extension UIImage {
         
         draw(in: thumbRect)
         
-        strokeColor.setStroke()
-        path.lineWidth = 1 * UIScreen.main.scale
-        path.stroke()
+        // Draw a stroke weight provided parameters
+        if let stroke = stroke {
+            stroke.color.setStroke()
+            path.lineWidth = stroke.weight * UIScreen.main.scale
+            path.stroke()
+        }
         
         let result = UIGraphicsGetImageFromCurrentImageContext()
         
@@ -56,9 +65,13 @@ extension UIImage {
         return result
     }
     
-    /**
-     This UIImage extension function returns a new copy of an image applying a color mask.
-     */
+    /// This UIImage extension function returns a new copy of an image applying a color mask.
+    
+    /// Builds a copy of an image applying a color mask.
+    ///
+    /// - Parameter color: The color to apply to the color mask.
+    /// - Returns: A new `UIImage`.
+    
     func renderImage(toMaskWithColor color: UIColor) -> UIImage? {
         
         UIGraphicsBeginImageContextWithOptions(size, false, scale)

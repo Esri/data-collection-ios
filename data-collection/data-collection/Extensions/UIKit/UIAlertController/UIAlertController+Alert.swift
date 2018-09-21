@@ -16,12 +16,39 @@ import UIKit
 
 extension UIAlertController {
     
+    /// Facilitates building a single button `UIAlertController` with a message.
+    ///
+    /// You may optionally provide additional parameters including the title, the action button title and an action closure.
+    ///
+    /// - Parameters:
+    ///   - title: The title of the alert (optional).
+    ///   - message: The message body of the alert.
+    ///   - actionTitle: The title of the alert's dismiss button (optional), the default value is `"OK"`.
+    ///   - action: A closure triggered upon tapping the action button (optional).
+    ///
+    /// - Returns: A newly created and configured single button `UIAlertController` of style `.alert`.
+    
     static func simpleAlert(title:String? = nil, message:String, actionTitle:String = "OK", action:((UIAlertAction)->Void)? = nil) -> UIAlertController {
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         let action = UIAlertAction(title: actionTitle, style: .default, handler: action)
         alert.addAction(action)
         return alert
     }
+    
+    /// Facilitates building a two-button `UIAlertController` with a message.
+    ///
+    /// The alert contains an action button and a cancel button, by default.
+    ///
+    /// - Parameters:
+    ///   - title: The title of the alert (optional).
+    ///   - message: The message body of the alert.
+    ///   - actionTitle: The title of the alert's action button.
+    ///   - action: A closure triggered upon tapping the action button (optional).
+    ///   - isDestructive: A `Bool` specifiying if the action button should be configured as destructive (optional), the default value is `false`.
+    ///   - cancelTitle: The title of the alert's cancel button, the default value is "Cancel".
+    ///   - cancel: A closure triggered upon tapping the cancel button (optional).
+    ///
+    /// - Returns: A newly created and configured two-button button `UIAlertController` of style `.alert`.
     
     static func multiAlert(title:String? = nil, message:String, actionTitle:String, action:((UIAlertAction)->Void)? = nil, isDestructive: Bool = false, cancelTitle:String = "Cancel", cancel:((UIAlertAction)->Void)? = nil) -> UIAlertController {
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)

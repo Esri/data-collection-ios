@@ -15,6 +15,7 @@
 import Foundation
 import UIKit.UIColor
 
+// These colors are used throughout the application, when colors are generated at runtime.
 extension UIColor {
     
     static let primary: UIColor = #colorLiteral(red:0.66, green:0.81, blue:0.40, alpha:1.00)

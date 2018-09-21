@@ -16,12 +16,24 @@ import Foundation
 
 extension CGFloat {
     
+    /// Builds a `CGFloat` from `true` or `false`.
+    ///
+    /// * `true` produces a value of 1.0
+    /// * `false` produces a value of 0.0
+    ///
+    /// - Parameter bool: The value you would like to convert.
+    ///
+    /// - Note: This can be used to convert a `Bool` to a Core Graphics usable float value where the range of
+    /// animatable values are between 0.0 and 1.0, for example, `alpha`.
+    
     init(_ bool: Bool) {
         self = bool ? 1.0 : 0.0
     }
 }
 
 extension CGFloat {
+    
+    /// Facilitates converting degree value to it's cooresponding radian value.
     
     var degreeToRadian: CGFloat {
         return (self / 180.0) * .pi

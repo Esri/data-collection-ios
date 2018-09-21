@@ -15,6 +15,7 @@
 import Foundation
 import UIKit.UIFont
 
+// These fonts are used throughout the application, when fonts are generated at runtime.
 extension UIFont {
     
     static var tableCellTitle: UIFont {

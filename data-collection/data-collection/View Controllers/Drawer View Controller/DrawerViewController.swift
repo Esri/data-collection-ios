@@ -185,7 +185,7 @@ class DrawerViewController: UIViewController {
         
         if let currentUser = user {
             
-            let fallbackProfileImage = UIImage(named: "MissingProfile")!.withRenderingMode(.alwaysOriginal).circularThumbnail(ofSize: 36, strokeColor: .loginLogoutNormal)
+            let fallbackProfileImage = UIImage(named: "MissingProfile")!.withRenderingMode(.alwaysOriginal).circularThumbnail(ofSize: 36, stroke: (color: .loginLogoutNormal, weight: 1))
             
             guard let image = currentUser.thumbnail else {
                 loginButton.setImage(fallbackProfileImage, for: .normal)
@@ -201,7 +201,7 @@ class DrawerViewController: UIViewController {
                     return
                 }
                 
-                guard let img = image.image, let profImage = img.circularThumbnail(ofSize: 36, strokeColor: .loginLogoutNormal) else {
+                guard let img = image.image, let profImage = img.circularThumbnail(ofSize: 36, stroke: (color: .loginLogoutNormal, weight: 1)) else {
                     print("[Error: User Thumbnail Image Load] image processing error.")
                     return
                 }

@@ -17,6 +17,9 @@ import UIKit
 
 extension UILabel {
     
+    /// Because a `UIStackView` removes an empty label, this function keeps the empty label in place
+    /// and from being removed by the stack view.
+    
     func considerEmptyString() {
         if let labelText = text, labelText.isEmpty {
             text = " "

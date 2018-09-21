@@ -17,6 +17,8 @@ import UIKit
 
 extension UIStoryboardSegue {
     
+    /// Facilitates getting the destination view controller if the destination view controller is contained by a `UINavigationController`.
+    
     var navigationDestination: UIViewController? {
         return (destination as? UINavigationController)?.topViewController
     }

@@ -16,6 +16,13 @@ import Foundation
 
 extension CGAffineTransform {
     
+    /// Builds a new `CGAffineTransform` from degress, rather than radians.
+    ///
+    /// - Parameter degree: The degree value to be made into a `CGAffineTransform`.
+    ///
+    /// - Note: Because of how `CGAffineTransform` is used by either iOS or macOS, a precompiler macro
+    /// negates the radian value, if on iOS.
+    
     init(rotationDegree degree: Double) {
         #if os(iOS)
         self = CGAffineTransform(rotationAngle: -CGFloat(degree).degreeToRadian)

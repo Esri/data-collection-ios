@@ -16,19 +16,39 @@ import CoreGraphics
 
 extension CGPoint {
     
+    /// Builds a new `CGPoint` by modifying x.
+    ///
+    /// - Parameter xDelta: By how much to modify x.
+    ///
+    /// - Returns: A new point with a new, modified x value.
+    
     func modified(x xDelta: CGFloat) -> CGPoint {
         return CGPoint(x: x + xDelta, y: y)
     }
+    
+    /// Builds a new `CGPoint` by modifying y.
+    ///
+    /// - Parameter yDelta: By how much to modify y.
+    ///
+    /// - Returns: A new point with a new, modified y value.
     
     func modified(y yDelta: CGFloat) -> CGPoint {
         return CGPoint(x: x, y: y + yDelta)
     }
     
-    mutating func modify(x: CGFloat) {
-        self = modified(x: x)
+    /// Modifies a point's x value in place.
+    ///
+    /// - Parameter xDelta: By how much to modify x.
+    
+    mutating func modify(x xDelta: CGFloat) {
+        self = modified(x: xDelta)
     }
     
-    mutating func modify(y: CGFloat) {
-        self = modified(y: y)
+    /// Modifies a point's y value in place.
+    ///
+    /// - Parameter yDelta: By how much to modify y.
+    
+    mutating func modify(y yDelta: CGFloat) {
+        self = modified(y: yDelta)
     }
 }
