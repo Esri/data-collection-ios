@@ -17,7 +17,7 @@ import UIKit
 
 extension UIButton {
     
-    func setAttributed(header: String, subheader: String? = nil, forControlStateColors controlStateColors: [UIControlState: UIColor], headerFont: UIFont, subheaderFont: UIFont? = nil) {
+    func setAttributed(header: (title: String, font: UIFont), subheader: (title: String, font: UIFont)? = nil, forControlStateColors controlStateColors: [UIControlState: UIColor]) {
         
         var attributedTitleString: NSMutableAttributedString
         
@@ -25,28 +25,28 @@ extension UIButton {
 
         for (state, color) in controlStateColors {
             
-            var headerLength = header.count
+            var headerLength = header.title.count
             
             let headerRange = NSRange(location: headerLocation, length: headerLength)
             
-            attributedTitleString = NSMutableAttributedString(string: header)
-            attributedTitleString.addAttributes([.foregroundColor : color, .font: headerFont], range: headerRange)
+            attributedTitleString = NSMutableAttributedString(string: header.title)
+            attributedTitleString.addAttributes([.foregroundColor : color, .font: header.font], range: headerRange)
 
-            if let subheader = subheader, let subheaderFont = subheaderFont {
+            if let subheader = subheader {
 
                 let newline = "\n"
                 
                 headerLength += newline.count
                 
                 let subheaderLocation = headerLength
-                let subheaderLength = subheader.count
+                let subheaderLength = subheader.title.count
                 
-                let subheaderAttributedString = NSAttributedString(string: "\(newline)\(subheader)")
+                let subheaderAttributedString = NSAttributedString(string: "\(newline)\(subheader.title)")
                 attributedTitleString.append(subheaderAttributedString)
                 
                 let subheaderRange = NSRange(location: subheaderLocation, length: subheaderLength)
                 
-                attributedTitleString.addAttributes([.foregroundColor : color, .font: subheaderFont], range: subheaderRange)
+                attributedTitleString.addAttributes([.foregroundColor : color, .font: subheader.font], range: subheaderRange)
                 
                 titleLabel?.numberOfLines = 2
             }

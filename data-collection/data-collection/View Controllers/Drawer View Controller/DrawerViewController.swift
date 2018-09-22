@@ -82,10 +82,10 @@ class DrawerViewController: UIViewController {
     func setButtonAttributedTitles() {
         
         updateLoginButtonForAuthenticatedUsername(user: appContext.portal.user)
-        workOnlineButton.setAttributed(header: "Work Online", forControlStateColors: workModeControlStateColors, headerFont: .drawerButtonHeader)
-        workOfflineButton.setAttributed(header: "Work Offline", forControlStateColors: workModeControlStateColors, headerFont: .drawerButtonHeader)
+        workOnlineButton.setAttributed(header: (title: "Work Online", font: .drawerButtonHeader), forControlStateColors: workModeControlStateColors)
+        workOfflineButton.setAttributed(header: (title: "Work Offline", font: .drawerButtonHeader), forControlStateColors: workModeControlStateColors)
         updateSynchronizeButtonForLastSync(date: appContext.mobileMapPackage?.lastSyncDate)
-        deleteOfflineMapButton.setAttributed(header: "Delete Offline Map", forControlStateColors: offlineActivityControlStateColors, headerFont: .drawerButtonHeader)
+        deleteOfflineMapButton.setAttributed(header: (title: "Delete Offline Map", font: .drawerButtonHeader), forControlStateColors: offlineActivityControlStateColors)
     }
     
     @IBAction func userRequestsLoginLogout(_ sender: Any) {
@@ -157,10 +157,10 @@ class DrawerViewController: UIViewController {
         workOnlineButton.backgroundColor = appContext.workMode == .online ? .accent : .clear
 
         if appReachability.isReachable {
-            workOnlineButton.setAttributed(header: appContext.workMode == .online ? "Working Online" : "Work Online", forControlStateColors: workModeControlStateColors, headerFont: .drawerButtonHeader)
+            workOnlineButton.setAttributed(header: (title: appContext.workMode == .online ? "Working Online" : "Work Online", font: .drawerButtonHeader), forControlStateColors: workModeControlStateColors)
         }
         else {
-            workOnlineButton.setAttributed(header: appContext.workMode == .online ? "Working Online" : "Work Online", subheader: "no network connectivity", forControlStateColors: workModeControlStateColors, headerFont: .drawerButtonHeader, subheaderFont: .drawerButtonSubheader)
+            workOnlineButton.setAttributed(header: (title: appContext.workMode == .online ? "Working Online" : "Work Online", font: .drawerButtonHeader), subheader: (title: "no network connectivity", font: .drawerButtonSubheader) , forControlStateColors: workModeControlStateColors)
         }
         
         workOfflineButton.isEnabled = appContext.hasOfflineMap || appReachability.isReachable
@@ -168,10 +168,10 @@ class DrawerViewController: UIViewController {
         workOfflineButton.backgroundColor = appContext.workMode == .offline ? .accent : .clear
         
         if !appContext.hasOfflineMap {
-            workOfflineButton.setAttributed(header: appContext.workMode == .offline ? "Working Offline" : "Work Offline", subheader: "download map", forControlStateColors: workModeControlStateColors, headerFont: .drawerButtonHeader, subheaderFont: .drawerButtonSubheader)
+            workOfflineButton.setAttributed(header: (title: appContext.workMode == .offline ? "Working Offline" : "Work Offline", font: .drawerButtonHeader), subheader: (title: "download map", font: .drawerButtonSubheader) ,forControlStateColors: workModeControlStateColors)
         }
         else {
-            workOfflineButton.setAttributed(header: appContext.workMode == .offline ? "Working Offline" : "Work Offline", forControlStateColors: workModeControlStateColors, headerFont: .drawerButtonHeader)
+            workOfflineButton.setAttributed(header: (title: appContext.workMode == .offline ? "Working Offline" : "Work Offline", font: .drawerButtonHeader), forControlStateColors: workModeControlStateColors)
         }
 
         synchronizeOfflineMapButton.isEnabled = appContext.hasOfflineMap && appReachability.isReachable
@@ -217,10 +217,10 @@ class DrawerViewController: UIViewController {
     private func updateLoginButtonForAuthenticatedUsername(user: AGSPortalUser?) {
         
         if let currentUser = user {
-            loginButton.setAttributed(header: currentUser.username ?? currentUser.email ?? "User", subheader: "Log out", forControlStateColors: loginLogoutButtonControlStateColors, headerFont: .drawerButtonHeader, subheaderFont: .drawerButtonSubheader)
+            loginButton.setAttributed(header: (title: currentUser.username ?? currentUser.email ?? "User", font: .drawerButtonHeader), subheader: (title: "Log out", font: .drawerButtonSubheader), forControlStateColors: loginLogoutButtonControlStateColors)
         }
         else {
-            loginButton.setAttributed(header: "Log in", forControlStateColors: loginLogoutButtonControlStateColors, headerFont: .drawerButtonHeader)
+            loginButton.setAttributed(header: (title: "Log in", font: .drawerButtonHeader), forControlStateColors: loginLogoutButtonControlStateColors)
         }
     }
     
@@ -253,10 +253,10 @@ class DrawerViewController: UIViewController {
     func updateSynchronizeButtonForLastSync(date: Date?) {
         
         if let lastSynchronized = date {
-            synchronizeOfflineMapButton.setAttributed(header: "Synchronize Offline Map", subheader: "last sync \(AppDateFormatter.format(shortDateTime: lastSynchronized))", forControlStateColors: offlineActivityControlStateColors, headerFont: .drawerButtonHeader, subheaderFont: .drawerButtonSubheader)
+            synchronizeOfflineMapButton.setAttributed(header: (title: "Synchronize Offline Map", font: .drawerButtonHeader), subheader: (title: "last sync \(AppDateFormatter.format(shortDateTime: lastSynchronized))", font: .drawerButtonSubheader), forControlStateColors: offlineActivityControlStateColors)
         }
         else {
-            synchronizeOfflineMapButton.setAttributed(header: "Synchronize Offline Map", forControlStateColors: offlineActivityControlStateColors, headerFont: .drawerButtonHeader)
+            synchronizeOfflineMapButton.setAttributed(header: (title: "Synchronize Offline Map", font: .drawerButtonHeader), forControlStateColors: offlineActivityControlStateColors)
         }
     }
 }

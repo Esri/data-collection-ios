@@ -16,7 +16,8 @@ import UIKit
 
 extension UIView {
     
-    func stylizeBorder() {
+    /// Styles the view's border like that of a 
+    func stylizeLikeTextFieldBorder() {
         layer.borderColor = UIColor.lightGray.withAlphaComponent(0.2).cgColor
         layer.borderWidth = 1
         layer.cornerRadius = 5
