@@ -15,6 +15,14 @@
 import Foundation
 import ArcGIS
 
+/// Behavior specific to the _Trees of Portland_ web map.
+///
+/// When creating a new tree, this function populates the condition attribute with a default value. 
+/// The default value is "good".
+///
+/// - Param:
+///     - popup: The new tree.
+
 func configureDefaultCondition(forPopup popup: AGSPopup) {
     
     let conditionKey = "Condition"
