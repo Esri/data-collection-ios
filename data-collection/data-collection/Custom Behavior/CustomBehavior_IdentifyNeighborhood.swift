@@ -15,6 +15,16 @@
 import Foundation
 import ArcGIS
 
+/// Behavior specific to the _Trees of Portland_ web map.
+///
+/// When creating a new tree, this function queries the neighbhoords layer to populate the created tree's
+/// attributes dictionary with the resulting neighborhood's name.
+///
+/// - Param:
+///     - popup: The new tree.
+///     - point: The point used in the spatial query.
+///     - completion: The callback called upon completion. The operation is successful or fails, silently.
+
 func enrich(popup: AGSPopup, withNeighborhoodIdentifyForPoint point: AGSPoint, completion: @escaping () -> Void) {
     
     guard let map = appContext.currentMap else {
@@ -23,6 +33,7 @@ func enrich(popup: AGSPopup, withNeighborhoodIdentifyForPoint point: AGSPoint, c
         return
     }
     
+    // First, find the map's neighborhoods layer.
     let foundNeighborhoodLayer = map.operationalLayers.first { (layer) -> Bool in
         
         guard let featureLayer = layer as? AGSFeatureLayer, let featureTable = featureLayer.featureTable as? AGSArcGISFeatureTable else {
@@ -39,10 +50,13 @@ func enrich(popup: AGSPopup, withNeighborhoodIdentifyForPoint point: AGSPoint, c
         return
     }
     
+    // The neighborhoods layer's geometry is a polygon. So, we want to build a spatial query 
+    // providing the point parameter and specifying the spatial relationship 'within'.
     let query = AGSQueryParameters()
     query.geometry = point
     query.spatialRelationship = .within
     
+    // Next, perform the query.
     neighborhoodFeatureTable.queryFeatures(with: query) { (result, error) in
         
         guard error == nil else {
@@ -51,6 +65,7 @@ func enrich(popup: AGSPopup, withNeighborhoodIdentifyForPoint point: AGSPoint, c
             return
         }
         
+        // There should be zero or one result, unwrap the the result if the query returns one.
         guard let features = result, let feature = features.featureEnumerator().nextObject() as? AGSArcGISFeature else {
             print("[Neighborhood Feature Table] point outside neighborhood boundaries.")
             completion()
@@ -60,6 +75,7 @@ func enrich(popup: AGSPopup, withNeighborhoodIdentifyForPoint point: AGSPoint, c
         let neighbohoodKey = "NAME"
         let treeKey = "Neighborhood"
         
+        // Finally, populate the attributes dictionary with the results of the query.
         if feature.attributes[neighbohoodKey] != nil && popup.geoElement.attributes[treeKey] != nil {
             popup.geoElement.attributes[treeKey] = feature.attributes[neighbohoodKey]
         }
