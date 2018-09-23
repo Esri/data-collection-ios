@@ -16,6 +16,13 @@ import UIKit
 
 extension UIViewController {
     
+    /// Facilitates dismissing the view controller after a time interval.
+    ///
+    /// - Parameters:
+    ///   - interval: The `TimeInterval` to wait before the view controller is dismissed.
+    ///   - animated: If the view controller should animate it's dismissal.
+    ///   - completion: A closure that is performed upon completion of the view controller's dismissal.
+    ///
     func dismissAfter(_ interval: TimeInterval, animated: Bool, completion:(() -> Void)?) {
         Timer.scheduledTimer(withTimeInterval: interval, repeats: false) { [weak self] (_) in
             self?.dismiss(animated: animated, completion: completion)

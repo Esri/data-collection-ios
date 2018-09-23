@@ -30,6 +30,6 @@ var appNotificationCenter: NotificationCenter {
     return NotificationCenter.default
 }
 
-let appReverseGeocoder = ReverseGeocoderManager()
+let appReverseGeocoder = AppReverseGeocoderManager()
 
 let appFiles = AppFiles()

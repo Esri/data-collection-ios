@@ -16,7 +16,7 @@ import Foundation
 import UIKit.UIControl
 
 extension UIControlState: Hashable {
-    
+    // Conforms `UIControlState` to `Hashable` so that a control state can be used as a Dictionary key.
     public var hashValue: Int {
         return Int(rawValue)
     }

@@ -17,10 +17,17 @@ import UIKit
 
 extension UIButton {
     
+    /// The facilitates generating a single image to be used as a color mask for a button's image and
+    /// generates then sets a new button image for every (control state, color) combo.
+    ///
+    /// - Parameters:
+    ///   - controlStateColors: A dictionary of control states (keys) and their cooresponding colors (values).
+    ///   - controlState: The control state containing the mask image, default value is `.normal`.
+    ///
     func buildImagesWithTintColors(forControlStateColors controlStateColors: [UIControlState: UIColor], fromControlStateImage controlState: UIControlState = .normal) {
         
         guard let normalImage = image(for: controlState) else {
-            print("[Tint Color Error] no default image for control state normal.")
+            print("[Tint Color Error] no default image for control state: \(controlState).")
             return
         }
         

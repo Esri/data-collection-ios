@@ -17,27 +17,36 @@ import UIKit
 
 extension UIButton {
     
+    /// Facilitates formatting a button's title with a header and an optional subheader offering
+    /// the ability to specify a color for a series of control states.
+    ///
+    /// - Parameters:
+    ///   - header: Two value tuple with a title string and title font.
+    ///   - subheader: Two value tuple with a title string and title font (optional).
+    ///   - controlStateColors: A dictionary of control states (keys) and their cooresponding colors (values).
+    ///
     func setAttributed(header: (title: String, font: UIFont), subheader: (title: String, font: UIFont)? = nil, forControlStateColors controlStateColors: [UIControlState: UIColor]) {
         
-        var attributedTitleString: NSMutableAttributedString
-        
-        let headerLocation = 0
-
+        // We want to build a NSAttributedString for every (control state: color) combo.
         for (state, color) in controlStateColors {
             
+            // This is needed for building attributes of the NSAttributedString.
             var headerLength = header.title.count
             
-            let headerRange = NSRange(location: headerLocation, length: headerLength)
+            let headerRange = NSRange(location: 0, length: headerLength)
             
-            attributedTitleString = NSMutableAttributedString(string: header.title)
+            // Format the header portion of the NSAttributedString.
+            let attributedTitleString = NSMutableAttributedString(string: header.title)
             attributedTitleString.addAttributes([.foregroundColor : color, .font: header.font], range: headerRange)
 
+            // Continue buliding the NSAttributedString if subheader has been provided.
             if let subheader = subheader {
 
+                // Start with a new line.
                 let newline = "\n"
                 
+                // Calculate the length of the subheader for building attributes of the NSAttributedString.
                 headerLength += newline.count
-                
                 let subheaderLocation = headerLength
                 let subheaderLength = subheader.title.count
                 
@@ -46,6 +55,7 @@ extension UIButton {
                 
                 let subheaderRange = NSRange(location: subheaderLocation, length: subheaderLength)
                 
+                // Format the subheader portion of the NSAttributedString.
                 attributedTitleString.addAttributes([.foregroundColor : color, .font: subheader.font], range: subheaderRange)
                 
                 titleLabel?.numberOfLines = 2

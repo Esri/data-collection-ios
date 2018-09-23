@@ -37,15 +37,18 @@ enum ReverseGeocoderManagerError: Int, AppError {
     }
 }
 
-class ReverseGeocoderManager: AGSLoadableBase {
+/// This class facilitates reverse geocoding, contingent on app work mode and reachability.
+class AppReverseGeocoderManager: AGSLoadableBase {
     
     struct Keys {
         static let address = "Address"
         static let matchAddress = "Match_addr"
     }
     
+    // Online locator using the world geocoder service.
     private let onlineLocatorTask = AGSLocatorTask(url: AppConfiguration.geocodeServiceURL)
     
+    // Offline locator using the side loaded 'AddressLocator'.
     private let offlineLocatorTask = AGSLocatorTask(name: "AddressLocator")
     
     override func doCancelLoading() {
@@ -61,6 +64,7 @@ class ReverseGeocoderManager: AGSLoadableBase {
         
         dispatchGroup.enter(n: 2)
         
+        // Load online locator.
         onlineLocatorTask.load { (error) in
             if error != nil {
                 print("[Error] Online Locator Task error", error!.localizedDescription)
@@ -69,6 +73,7 @@ class ReverseGeocoderManager: AGSLoadableBase {
             dispatchGroup.leave()
         }
         
+        // Load offline locator.
         offlineLocatorTask.load { (error) in
             if error != nil {
                 print("[Error] Offline Locator Task error", error!.localizedDescription)
@@ -77,11 +82,18 @@ class ReverseGeocoderManager: AGSLoadableBase {
             dispatchGroup.leave()
         }
         
+        // Finish loading with an error, if there is one.
         dispatchGroup.notify(queue: OperationQueue.current?.underlyingQueue ?? .main) { [weak self] in
             self?.loadDidFinishWithError(loadError)
         }
     }
     
+    /// Facilitates reverse geocoding an address with a point.
+    ///
+    /// - Parameters:
+    ///   - point: The point used in the reverse geocode operation.
+    ///   - completion: A closure containing either the address or an error and not both.
+    ///
     internal func reverseGeocode(forPoint point: AGSPoint, completion: @escaping (String?, Error?)->Void) {
         
         load { [weak self] error in
@@ -95,16 +107,22 @@ class ReverseGeocoderManager: AGSLoadableBase {
             
             let locatorTask: AGSLocatorTask
             
+            // We want to use the online locator if the work mode is online and the app has reachability.
             if appContext.workMode == .online && appReachability.isReachable {
                 locatorTask = strongSelf.onlineLocatorTask
             }
+            // Otherwise, we'll use the offline locator.
             else {
                 locatorTask = strongSelf.offlineLocatorTask
             }
             
+            // We need to set the geocode parameters for storage true because the results of this reverse geocode is persisted to a table.
+            // Please familiarize yourself with the implications of this credits-consuming operation:
+            // https://developers.arcgis.com/rest/geocode/api-reference/geocoding-free-vs-paid.htm
             let params = AGSReverseGeocodeParameters()
             params.forStorage = true
             
+            // Perform the reverse geocode task.
             locatorTask.reverseGeocode(withLocation: point, parameters: params) { (geoCodeResults: [AGSGeocodeResult]?, error: Error?) in
                 
                 guard error == nil else {
