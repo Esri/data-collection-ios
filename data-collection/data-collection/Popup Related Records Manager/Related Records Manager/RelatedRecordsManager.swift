@@ -15,6 +15,9 @@
 import Foundation
 import ArcGIS
 
+/// Represents and manages the related records of a popup and one of it's relationship infos.
+///
+/// This class is to not to be used directly but instead to be subclassed.
 class RelatedRecordsManager {
     
     weak internal private(set) var popup: AGSPopup?
@@ -32,6 +35,10 @@ class RelatedRecordsManager {
         self.popup = popup
     }
     
+    /// Loads the related record(s) provided a popup, relationship info and related table.
+    ///
+    /// - Parameter completion: Either an array of related pop-ups or an error, but not both.
+    ///
     func load(records completion: @escaping ([AGSPopup]?, Error?) -> Void) {
         
         guard let feature = self.popup?.geoElement as? AGSArcGISFeature else {

@@ -14,6 +14,9 @@
 
 import Foundation
 
+/// A `UINavigationController` concrete subclass that monitors changes to the app context's work mode
+/// and adjusts the bar's tint color accordingly.
+///
 class AppContextAwareNavigationController: UINavigationController {
     
     let changeHandler = AppContextChangeHandler()

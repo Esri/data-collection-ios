@@ -15,8 +15,10 @@
 import Foundation
 import ArcGIS
 
+/// Represents and manages a many-to-one related records of a popup.
 class ManyToOneManager: RelatedRecordsManager {
     
+    // Returns first a staged
     var relatedPopup: AGSPopup? {
         get {
             return stagedRelatedPopup ?? currentRelatedPopup

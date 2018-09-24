@@ -27,6 +27,7 @@ extension RelatedRecordsPopupsViewController {
     
     override func numberOfSections(in tableView: UITableView) -> Int {
         
+        // The number of sections is defined as (n) many-to-one related tables + 1.
         var nSections = 1
         nSections += recordsManager.manyToOne.count
         

@@ -25,16 +25,20 @@ class RelatedRecordsPopupsViewController: UITableViewController, BackButtonDeleg
     
     var popupModeButton: UIBarButtonItem?
     
+    // The popup in question.
     var popup: AGSPopup! {
         didSet {
             recordsManager = PopupRelatedRecordsManager(popup: popup)
         }
     }
     
+    // We want to hang on to references to the records manager and the parent records manager.
+    // This way, if there are changes to the pop-up in question, if it is related to another record,
+    // that record can update accordingly.
     var parentRecordsManager: PopupRelatedRecordsManager?
-    
     var recordsManager: PopupRelatedRecordsManager!
     
+    // We only want to load related records from the top level identify.
     var shouldLoadRelatedRecords: Bool {
         return parentRecordsManager == nil
     }
@@ -60,17 +64,22 @@ class RelatedRecordsPopupsViewController: UITableViewController, BackButtonDeleg
         tableView.register(RelatedRecordCell.self, forCellReuseIdentifier: ReuseIdentifiers.relatedRecordCell)
         tableView.register(DeleteRecordCell.self, forCellReuseIdentifier: ReuseIdentifiers.deletePopupCell)
         
+        // The contents of a pop-up field is dynamic and thus the size of a table view cell's content view must be able to change.
         tableView.rowHeight = UITableViewAutomaticDimension
         
+        // Editing is enabled only if the pop-up in question can be edited.
         if recordsManager.shouldAllowEdit {
             popupModeButton = UIBarButtonItem(title: "Edit", style: .plain, target: self, action: #selector(VC.userRequestsTogglePopupMode(_:)))
             self.navigationItem.rightBarButtonItem = popupModeButton
         }
         
+        // A root view controller does not contain a back button.
+        // If this is the case, we want to build a cancel button.
         if isRootViewController {
             self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(VC.userTappedRootLeftBarButton(_:)))
         }
         
+        // Load related records.
         if shouldLoadRelatedRecords {
             loadingRelatedRecords = true
             recordsManager.loadRelatedRecords { [weak self] in
@@ -88,6 +97,8 @@ class RelatedRecordsPopupsViewController: UITableViewController, BackButtonDeleg
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
+        // This unwraps if the user is editing a many-to-one record.
+        // A table view is presented with all records from the many-to-one table, for selection.
         if let destination = segue.destination as? RelatedRecordsListViewController {
             if let table = EphemeralCache.get(objectForKey: EphemeralCacheKeys.tableList) as? AGSArcGISFeatureTable {
                 destination.featureTable = table
@@ -96,10 +107,13 @@ class RelatedRecordsPopupsViewController: UITableViewController, BackButtonDeleg
         }
     }
     
+    // This function allows the view controller to intercept and stop the navigation controller from popping the view controller, should certain conditions not be met.
     func interceptNavigationBackActionShouldPopViewController() -> Bool {
         
+        // The view controller should be popped if the pop-up is not being edited.
         let shouldPop = !recordsManager.isEditing
         
+        // If the pop-up is being edited, we want to ask the user if they want to end the pop-up editing session.
         if !shouldPop {
             endPopupEditMode() { [weak self] _ in
                 self?.popDismiss()
@@ -123,6 +137,7 @@ class RelatedRecordsPopupsViewController: UITableViewController, BackButtonDeleg
     
     // MARK : Editing Popup UI
     
+    // This function is only performed if the view controller is the root view controller of it's navigation controller.
     @objc func userTappedRootLeftBarButton(_ sender: Any?) {
         
         if recordsManager.isEditing {
@@ -137,10 +152,13 @@ class RelatedRecordsPopupsViewController: UITableViewController, BackButtonDeleg
         }
     }
     
+    // This checks if the pop-up in question is newly created and the user no longer wants to save or,
+    // if the pop-up is already a member of the table.
     private func endPopupEditMode(_ completion: ((_ shouldDismiss: Bool) -> Void)? = nil) {
 
-        var action: ((UIAlertAction) -> Void)!
+        let action: ((UIAlertAction) -> Void)
         
+        // If the pop-up is already a member, we want to cancel editing of the pop-up and not dismiss the view controller.
         if popup.isFeatureAddedToTable {
             action = { [weak self] (_) in
                 self?.recordsManager.cancelEditing()
@@ -148,6 +166,7 @@ class RelatedRecordsPopupsViewController: UITableViewController, BackButtonDeleg
                 completion?(false)
             }
         }
+        // If the pop-up is not a member, we can discard the pop-up altogether and dismiss the view controller.
         else {
             action = { (_) in
                 completion?(true)

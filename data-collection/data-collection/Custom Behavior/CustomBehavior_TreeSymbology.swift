@@ -92,7 +92,7 @@ func updateSymbology(withTreeManager treeManager: PopupRelatedRecordsManager, co
 extension RelatedRecordsPopupsViewController {
     
     /// Facilitates enacting the custom symbology behavior.
-    func customTreeBehavior(_ completion: @escaping () -> Void) {
+    func checkIfShouldPerformCustomBehavior(_ completion: @escaping () -> Void) {
         
         if shouldEnactCustomBehavior {
             

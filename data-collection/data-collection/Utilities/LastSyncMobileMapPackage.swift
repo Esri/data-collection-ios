@@ -19,6 +19,9 @@ extension Notification.Name {
     static let lastSyncDidChange = Notification.Name("lastSyncDidChange")
 }
 
+/// This concrete `AGSMobileMapPackage` subclass maintains the date a mobile map package was taken offline and
+/// reports whether the offline map has been edited since the last synchronization.
+///
 class LastSyncMobileMapPackage: AGSMobileMapPackage {
     
     private let userDefaultsKey: String
@@ -36,14 +39,17 @@ class LastSyncMobileMapPackage: AGSMobileMapPackage {
         super.init(fileURL: fileURL)
     }
     
+    /// Should be called when a map has downloaded or synchronized successfully.
     func setLastSyncNow() {
         lastSyncDate = Date()
     }
     
+    /// Should be called when a map is deleted.
     func clearLastSyncDate() {
         lastSyncDate = nil
     }
     
+    /// Determines if the offline map has made edits since the last time it was synchronized.
     var hasLocalEdits: Bool {
         
         guard let lastSync = lastSyncDate, let map = maps.first else { return false }

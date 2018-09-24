@@ -17,6 +17,7 @@ import ArcGIS
 
 extension RelatedRecordsPopupsViewController: RelatedRecordsListViewControllerDelegate {
     
+    // This function is called when the user selects a new many-to-one related record.
     func relatedRecordsListViewController(_ viewController: RelatedRecordsListViewController, didSelectPopup relatedPopup: AGSPopup) {
         
         navigationController?.popViewController(animated: true)
@@ -37,6 +38,7 @@ extension RelatedRecordsPopupsViewController: RelatedRecordsListViewControllerDe
         tableView.reloadData()
     }
     
+    // This function is called automatically by the app if there is an error loading records from their table.
     func relatedRecordsListViewControllerDidCancel(_ viewController: RelatedRecordsListViewController) {
         
         navigationController?.popViewController(animated: true)

@@ -15,10 +15,15 @@
 import Foundation
 import ArcGIS
 
+/// Represents and manages the one-to-many related records of a popup.
 class OneToManyManager: RelatedRecordsManager {
     
     internal private(set) var relatedPopups = [AGSPopup]()
     
+    /// Calls the super class load function and maintains a reference to the results.
+    ///
+    /// - Parameter completion: a closure containing an error, if there is one.
+    ///
     func load(records completion: @escaping (Error?) -> Void) {
         
         super.load { [weak self] (popupsResults, error) in
@@ -33,14 +38,17 @@ class OneToManyManager: RelatedRecordsManager {
                 return
             }
             
+            // Hold on to the related popupss.
             self?.relatedPopups = popups
             
+            // Finally, sort the one-to-many related records.
             self?.sortRelatedRecords()
             
             completion(nil)
         }
     }
     
+    /// Relates a new one-to-many record to the managed one.
     func editRelatedPopup(_ editedRelatedPopup: AGSPopup) throws {
         
         guard
@@ -51,17 +59,19 @@ class OneToManyManager: RelatedRecordsManager {
                 throw RelatedRecordsManagerError.cannotRelateFeatures
         }
         
+        // Relate the two records.
         feature.relate(to: relatedFeature, relationshipInfo: info)
         
+        // Maintain a reference to the new related record.
         if !relatedPopups.contains(editedRelatedPopup) {
             relatedPopups.append(editedRelatedPopup)
         }
         
+        // Sort all related records.
         sortRelatedRecords()
     }
     
-    
-    
+    /// Unrelates a one-to-many record from the managed one.
     func deleteRelatedPopup(_ removedRelatedPopup: AGSPopup) throws {
         
         guard
@@ -72,6 +82,7 @@ class OneToManyManager: RelatedRecordsManager {
                 throw RelatedRecordsManagerError.cannotRelateFeatures
         }
         
+        // Unrelate the two records
         feature.unrelate(to: relatedFeature)
         
         let foundPopupIndex = relatedPopups.index { (popup) -> Bool in
@@ -90,9 +101,11 @@ class OneToManyManager: RelatedRecordsManager {
             throw RelatedRecordsManagerError.cannotRelateFeatures
         }
         
+        // Remove the reference to the unrelated record.
         relatedPopups.remove(at: popupIndex)
     }
     
+    /// Sorts the one-to-many records in descending order.
     private func sortRelatedRecords() {
         do {
             try relatedPopups.sortPopupsByFirstField(.descending)
@@ -105,6 +118,12 @@ class OneToManyManager: RelatedRecordsManager {
 
 extension OneToManyManager {
     
+    /// Facilitates providing the popup for an index path.
+    ///
+    /// - Parameter indexPath: The index path of the pop-up in question.
+    ///
+    /// - Returns: A pop-up, if there is one.
+    ///
     func popup(forIndexPath indexPath: IndexPath) -> AGSPopup? {
         
         // Add an extra row at the top to add feature if that table permits it.

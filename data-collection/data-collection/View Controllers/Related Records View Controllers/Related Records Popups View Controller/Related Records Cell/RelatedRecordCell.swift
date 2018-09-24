@@ -72,17 +72,22 @@ class RelatedRecordCell: UITableViewCell {
             return
         }
         
-        // 0. Clear empty cell label
+        // Clear empty cell label.
         if emptyCellLabel != nil {
             stackView.removeArrangedSubview(emptyCellLabel!)
             emptyCellLabel!.removeFromSuperview()
             emptyCellLabel = nil
         }
         
-        // 1. Determine n attributes not to exceed max attributes
+        // Determine (n) attributes to display, not to exceed max attributes.
         let nAttributes = min(maxAttributes, manager.displayFields.count)
         
-        // 2. Adjust for correct n attributes
+        guard nAttributes > 0 else {
+            updateEmptyCellContent()
+            return
+        }
+        
+        // Adjust for correct (n) attributes.
         if attributes.count < nAttributes {
             
             while attributes.count != nAttributes {
@@ -114,8 +119,6 @@ class RelatedRecordCell: UITableViewCell {
                 
                 let last = attributes.removeLast()
                 
-                // TODO consider how removing Auto Layout constraints
-                
                 stackView.removeArrangedSubview(last.title)
                 last.title.removeFromSuperview()
                 stackView.removeArrangedSubview(last.value)
@@ -123,9 +126,10 @@ class RelatedRecordCell: UITableViewCell {
             }
         }
         
-        // 3. Populate attribute labels with content from popup (manager)
+        // Populate attribute labels with content from popup (manager).
         var popupIndex = 0
         
+        // Configure (n) attributes.
         for attribute in attributes {
             
             let titleLabel = attribute.title

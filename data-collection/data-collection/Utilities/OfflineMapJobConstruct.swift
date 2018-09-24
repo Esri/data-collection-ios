@@ -15,6 +15,8 @@
 import Foundation
 import ArcGIS
 
+/// Cases of this `enum` provide the context through which offline map jobs generate and how they report to the end-user.
+///
 enum OfflineMapJobConstruct {
     
     struct EphemeralCacheKeys {
