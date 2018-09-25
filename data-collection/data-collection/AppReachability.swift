@@ -21,7 +21,9 @@ extension Notification.Name {
 extension NetworkReachabilityManager {
     
     /// A singleton `NetworkReachabilityManager` configured with the base portal domain.
+    ///
     /// - Note: The first notification is ignored and all subsequent changes are posted to the NotificationCenter.
+    ///
     /// - SeeAlso: AppContextChangeHandler.swift
     static let shared: NetworkReachabilityManager = {
         

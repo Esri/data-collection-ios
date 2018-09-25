@@ -20,11 +20,13 @@ class AppDateFormatter: DateFormatter {
     
     private static let appFormatterQueue = DispatchQueue(label: "\(appBundleID).dateFormatter")
     
-    /// Uses static synchronous dispatch queue to produce a formatted date.
+    /// Produce a formatted date.
     ///
     /// - Parameter date: The `Date` to format.
     ///
     /// - Returns: A string formatted with date style `.medium` and time style `.none`.
+    ///
+    /// - Note: Uses a static synchronous dispatch queue to format the date.
     
     static func format(mediumDate date: Date) -> String {
         
@@ -37,12 +39,14 @@ class AppDateFormatter: DateFormatter {
         }
     }
     
-    /// Uses static synchronous dispatch queue to produce a formatted date (and time).
+    /// Produce a formatted date and time.
     ///
     /// - Parameter date: The `Date` to format.
     ///
     /// - Returns: A string formatted with date style `.short` and time style `.short`.
-    
+    ///
+    /// - Note: Uses a static synchronous dispatch queue to format the date.
+
     static func format(shortDateTime date: Date) -> String {
         
         return appFormatterQueue.sync {

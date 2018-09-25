@@ -29,6 +29,7 @@ import ArcGIS
     /// The app's current portal.
     ///
     /// The portal drives whether the user is logged in or not.
+    ///
     /// When set, the portal is configured for OAuth authentication so that if login is required,
     /// the Runtime SDK and iOS can work together to authenticate the current user.
     var portal:AGSPortal = AppConfiguration.buildConfiguredPortal(loginRequired: false) {
@@ -60,8 +61,9 @@ import ArcGIS
     
     /// The app's current map.
     ///
-    /// The current map is derived from a portal web map, the same we bmap can be taken offline or can be nil.
-    /// - Note: `MapViewController` updates the it's AGSMapView's AGSMap upon observed changes.
+    /// The current map is derived from a portal web map, the same web map can be taken offline or can be nil.
+    ///
+    /// - Note: `MapViewController` updates its AGSMapView's AGSMap upon observed changes.
     dynamic var currentMap: AGSMap?
     
     var isCurrentMapLoaded: Bool {
@@ -70,23 +72,24 @@ import ArcGIS
     
     // MARK: Offline Map
     
-    /// The app's currently loaded offline mobile map package.
+    /// The app's currently downloaded offline mobile map package.
     ///
     /// - Note: A reference to the offline mobile map package persists even if the user operates the app in online work mode to signify state.
-    /// - Note: A nil `mobileMapPackage` signifies there is no offline mobile map package.
+    /// - Note: A nil `mobileMapPackage` signifies there is no offline mobile map package currently downloaded to the device.
     var mobileMapPackage: LastSyncMobileMapPackage?
     
     var offlineMap: AGSMap? {
         return mobileMapPackage?.maps.first
     }
     
-    /// An kv-observable boolean value that signifies if the app has a loaded offline `mobileMapPackage`.
+    /// A kv-observable boolean value that signifies if the app has a downloaded offline `mobileMapPackage`.
     dynamic var hasOfflineMap: Bool = false
     
     /// The app's current work mode.
     ///
     /// This property is initialized with the work mode from the user's last session.
-    /// -Note: The app can have an offline map even when working online.
+    ///
+    /// - Note: The app can have an offline map even when working online.
     var workMode: WorkMode = WorkMode.retrieveDefaultWorkMode() {
         didSet {
             workMode.storeDefaultWorkMode()
