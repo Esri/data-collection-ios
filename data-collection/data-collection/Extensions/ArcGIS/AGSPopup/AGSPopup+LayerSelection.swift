@@ -17,12 +17,12 @@ import ArcGIS
 
 extension AGSPopup {
     
-    /// Facilitates deselecting the pop-up's feature within it's containing layer.
+    /// Deselect the pop-up's feature within it's containing layer.
     func clearSelection() {
         feature?.featureTable?.featureLayer?.clearSelection()
     }
     
-    /// Facilitates selecting the pop-up's feature within it's containing layer.
+    /// Select the pop-up's feature within it's containing layer.
     func select() {
         guard let feature = feature else { return }
         feature.featureTable?.featureLayer?.select(feature)
