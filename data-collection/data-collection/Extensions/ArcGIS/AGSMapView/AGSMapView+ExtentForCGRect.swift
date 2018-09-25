@@ -39,7 +39,7 @@ enum MapViewError: Int, AppError {
 
 extension AGSMapView {
     
-    /// Facilitates converting a `CGRect` to an `AGSPolygon` in relation to the `AGSMapView`'s bounds.
+    /// Convert a `CGRect` to an `AGSPolygon` in relation to the `AGSMapView`'s bounds.
     ///
     /// - Parameter rect: The rect in point space that is to be converted to a spatial rectangular polygon.
     ///
