@@ -22,9 +22,9 @@ extension AGSArcGISFeatureTable {
     /// This function returns all query results regardless of table type.
     ///
     /// - Parameters:
-    ///     - feature: feature of which related records are requested.
-    ///     - relationship: which related table to query.
-    ///     - completion: closure providing an array of `AGSRelatedFeatureQueryResult` or an `Error` but not both.
+    ///     - feature: Feature of which related records are requested.
+    ///     - relationship: Which related table to query.
+    ///     - completion: Closure providing an array of `AGSRelatedFeatureQueryResult` or an `Error` but not both.
     ///
     /// - Returns: Optionally nil `AGSCancelable` object. Maintaining a reference to this cancelable object allows the app to cancel the query in favor of a new query.
     
@@ -51,9 +51,9 @@ extension AGSArcGISFeatureTable {
     /// This function offers all query results as popups regardless of table type.
     ///
     /// - Parameters:
-    ///     - feature: feature of which related records are requested.
-    ///     - relationship: which related table to query.
-    ///     - completion: closure providing an array of `AGSPopup` or an `Error` but not both.
+    ///     - feature: Feature of which related records are requested.
+    ///     - relationship: Which related table to query.
+    ///     - completion: Closure providing an array of `AGSPopup` or an `Error` but not both.
     ///
     /// - Returns: Optionally nil `AGSCancelable` object. Maintaining a reference to this cancelable object allows the app to cancel the query in favor of a new query.
     ///
@@ -89,8 +89,8 @@ extension AGSArcGISFeatureTable {
     /// This function offers a feature query result regardless of table type as well as the optional ability to sort.
     ///
     /// - Parameters:
-    ///     - sorted: optional sort order, defaulted nil.
-    ///     - completion: closure providing an `AGSFeatureQueryResult` object or an `Error` but not both.
+    ///     - sorted: Optional sort order, defaulted nil.
+    ///     - completion: Closure providing an `AGSFeatureQueryResult` object or an `Error` but not both.
     ///
     /// - Returns: Optionally nil `AGSCancelable` object. Maintaining a reference to this cancelable object allows the app to cancel the query in favor of a new query.
     
@@ -123,8 +123,8 @@ extension AGSArcGISFeatureTable {
     /// This function offers an array of pop-ups regardless of table type as well as the optional ability to sort.
     ///
     /// - Parameters:
-    ///     - sorted: optional sort order, defaulted nil.
-    ///     - completion: closure providing an array of `AGSPopup` objects or an `Error` but not both.
+    ///     - sorted: Optional sort order, defaulted nil.
+    ///     - completion: Closure providing an array of `AGSPopup` objects or an `Error` but not both.
     ///
     /// - Returns: Optionally nil `AGSCancelable` object. Maintaining a reference to this cancelable object allows the app to cancel the query in favor of a new query.
     ///
