@@ -20,8 +20,10 @@ extension AppContext {
     private var visibleAreaDefaultsKey: String { return "VisibleAreaDefaultsKey.\(AppConfiguration.webMapItemID)" }
     
     /// The shared visible area `AGSViewpoint`.
-    /// - The `AGSViewpoint` is serialized and stored in `UserDefaults`.
-    /// - This allows the app to restore the map view's current visible area from a previous session.
+    ///
+    /// This allows the app to restore the map view's current visible area from a previous session.
+    ///
+    /// - Note: The `AGSViewpoint` is serialized and stored in `UserDefaults`.
     var sharedVisibleArea: AGSViewpoint? {
         set {
             guard newValue?.targetGeometry != nil else {

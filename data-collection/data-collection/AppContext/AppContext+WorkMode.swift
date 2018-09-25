@@ -41,7 +41,8 @@ enum WorkMode: Int {
 extension AppContext {
     
     /// Load the offline map if it exists and set the `currentMap` according to the app's work mode.
-    /// - Note: This is called on application launch.
+    ///
+    /// This is called on application launch.
     /// - Note: It is possible for the app to retrieve, load and maintain a reference to an offline map even if the stored `WorkMode` is `online`.
     /// This is so that the user can switch between online and offline maps easily.
     func loadOfflineMobileMapPackageAndSetMapForCurrentWorkMode() {
@@ -106,7 +107,8 @@ extension AppContext {
 
     
     /// Swap from the online map to the offline map.
-    /// - Note: The offline map is opened from the downloaded `AGSMobileMapPackage`.
+    ///
+    /// The offline map is opened from the downloaded `AGSMobileMapPackage`.
     /// - Note: This requires and assumes that `loadOfflineMobileMapPackageAndSetBestMap()` or `loadDownloaded(::)` has been previously called.
     func setMapFromOfflineMobileMapPackage() -> Bool {
         
