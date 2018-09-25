@@ -18,9 +18,7 @@ extension MapViewController {
     
     func adjustForMapViewMode(from: MapViewMode?, to: MapViewMode) {
         
-        if let from = from, from == to {
-            return
-        }
+        if let from = from, from == to { return }
         
         let smallPopViewVisible: (Bool) -> UIViewAnimations = { [weak self] (visible) in
             return {

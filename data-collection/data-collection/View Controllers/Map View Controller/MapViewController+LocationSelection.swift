@@ -55,12 +55,12 @@ extension MapViewController {
     @IBAction func userDidCancelSelectLocation(_ sender: Any) {
         
         switch locationSelectionType {
+            
         case .newFeature:
             EphemeralCache.remove(objectForKey: EphemeralCacheKeys.newNonSpatialFeature)
-            break
+
         case .offlineExtent:
             hideMapMaskViewForOfflineDownloadArea()
-            break
         }
         
         mapViewMode = .defaultView
