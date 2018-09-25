@@ -17,7 +17,7 @@ import ArcGIS
 
 extension Collection where Iterator.Element == AGSArcGISFeature {
     
-    /// Builds an array of `AGSPopup` objects of same-table feature (`AGSArcGISFeature`) objects.
+    /// Build an array of `AGSPopup` objects of same-table feature (`AGSArcGISFeature`) objects.
     ///
     /// - Returns: An array of pop-up objects that can be empty.
     ///

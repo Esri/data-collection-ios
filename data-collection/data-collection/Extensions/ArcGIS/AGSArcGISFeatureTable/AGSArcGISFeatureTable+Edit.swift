@@ -17,7 +17,7 @@ import ArcGIS
 
 extension AGSArcGISFeatureTable {
     
-    /// Facilitates adding or updating a feature, if possible.
+    /// Add or update a feature, if possible.
     ///
     /// - Parameters:
     ///     - feature: the modified feature to persist.
@@ -40,7 +40,7 @@ extension AGSArcGISFeatureTable {
         }
     }
     
-    /// Facilitates deleting a feature, if possible.
+    /// Delete a feature, if possible.
     ///
     /// - Parameters:
     ///     - feature: the feature to delete.
@@ -58,7 +58,7 @@ extension AGSArcGISFeatureTable {
         }
     }
     
-    /// Single function for performing edits of a feature.
+    /// Perform edits of a feature.
     ///
     /// If the feature table is a service feature table (online), the function will also apply the edits remotely,
     /// refreshing the local record in the process.
