@@ -16,7 +16,7 @@ import Foundation
 
 extension URLComponents {
     
-    /// Facilitates retrieving the value for a query parameter name, if one exists.
+    /// Retrieve the value for a query parameter name, if one exists.
     ///
     /// - Parameter name: The query parameter name for which we would like the value.
     ///
@@ -26,7 +26,7 @@ extension URLComponents {
         return self.queryItems?.first(where: { (item) -> Bool in item.name == name })?.value
     }
     
-    /// Informs the app if a URL has a certain parameter.
+    /// Determine if a URL has a certain parameter.
     ///
     /// - Parameter name: The query parameter name for which we would like to determine if it exists.
     ///

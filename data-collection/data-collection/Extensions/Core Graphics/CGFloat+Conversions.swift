@@ -33,7 +33,7 @@ extension CGFloat {
 
 extension CGFloat {
     
-    /// Facilitates converting degree value to it's cooresponding radian value.
+    /// Convert a degree value to its corresponding radian value.
     
     var degreeToRadian: CGFloat {
         return (self / 180.0) * .pi
