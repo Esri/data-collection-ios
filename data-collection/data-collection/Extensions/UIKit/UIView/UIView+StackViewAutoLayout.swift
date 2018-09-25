@@ -21,7 +21,7 @@ extension UIView {
     /// Add a `UIStackView` child view and constrain the stack view to leading, trailing, top, and bottom anchors.
     ///
     /// - Parameters:
-    ///   - stackView: The stack view to subview.
+    ///   - stackView: The stack view to add as a subview.
     ///   - reduce: If the caller would like to modify the stack view's constraint priority to less than required (1000), axis dependent.
     ///   This is desireable for a scenario where a `UIStackView` is added to the `contentView` of a `UITableViewCell`, for example.
     
