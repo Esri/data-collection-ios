@@ -27,7 +27,7 @@ extension AppContext {
             }
             
             // Only try logging in if the current portal isn't logged in (user == nil)
-            // That is, we got here because the AuthenticationManager is being called back from some in-line OAuth
+            // That is, we got here because the AGSAuthenticationManager is being called back from some in-line OAuth
             // success based off a call to a service (an explicit login would set portal.user != nil).
             if let portalURL = appContext.portal.url, appContext.portal.user == nil {
                 AGSPortal.bestPortalFromCachedCredentials(portalURL: portalURL) { newPortalInstance, didLogIn in
@@ -42,7 +42,7 @@ extension AppContext {
     
     /// Trigger a log in sequence to a portal by building a portal where `loginRequired` is `true`.
     ///
-    /// - Note: The SDK will present a modal login web view.
+    /// - Note: The ArcGIS Runtime SDK will present a modal login web view if it cannot find any suitable cached credentials.
     func login() { 
         // Setting `loginRequired` to `true` will force a login prompt to present.
         portal = AppConfiguration.buildConfiguredPortal(loginRequired: true)

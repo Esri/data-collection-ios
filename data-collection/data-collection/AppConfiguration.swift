@@ -45,27 +45,29 @@ class AppConfiguration {
     }()
     
     /// The App's URL scheme.
-    /// - The URL scheme must match the scheme in the **Current Redirect URIs** section of the Authentication tab within the Dashboard of the Developers site.
+    /// - The URL scheme must match the scheme in the **Current Redirect URIs** section of the **Authentication** tab within the [Dashboard of the ArcGIS for Developers site](https://developers.arcgis.com/applications).
     /// - The URL scheme must match the URL scheme in the **URL types** of the Xcode project configuration.
     static let urlScheme: String = "data-collection"
     
     /// The App's URL auth path.
-    /// - The URL scheme must match the path in the **Current Redirect URIs** section of the Authentication tab within the Dashboard of the Developers site.
+    /// - The URL scheme must match the path in the **Current Redirect URIs** section of the **Authentication** tab within the Dashboard of the Developers site.
     static let urlAuthPath: String = "auth"
     
     /// The App's full oAuth redirect url path.
-    /// - Note: the path is built using the above configured `urlScheme` and `urlAuthPath`.
+    /// - Note: The path is built using the above configured `urlScheme` and `urlAuthPath`. E.g. `data-collection://auth`.
     static let oAuthRedirectURLString: String = "\(urlScheme)://\(urlAuthPath)"
     
     /// Used by the shared `AGSAuthenticationManager` to auto synchronize cached credentials to the device's keychain.
     static let keychainIdentifier: String = "\(appBundleID).keychain"
     
-    /// License the app by configuring with your organization's [license](https://developers.arcgis.com/arcgis-runtime/licensing/) key.
-    /// - Note: This step is optional during development but required for deployment. Licensing the app will remove the "Licensed for Developer Use Only" watermark on the map view.
+    /// Your organization's ArcGIS Runtime [license](https://developers.arcgis.com/arcgis-runtime/licensing/) key.
+    /// - This step is optional during development but required for deployment.
+    /// - Licensing the app will remove the "Licensed for Developer Use Only" watermark on the map view.
     static let licenseKey: String = "fake_license_key"
     
     /// The App's public client ID.
-    /// The client ID is used by oAuth to authenticate a user.
+    /// - The client ID is used by oAuth to authenticate a user.
+    /// - The client ID can be found in the **Credentials** section of the **Authentication** tab within the [Dashboard of the ArcGIS for Developers site](https://developers.arcgis.com/applications).
     static let clientID: String = "h3em0ifYNGfz3uHX"
 }
 
@@ -73,8 +75,8 @@ class AppConfiguration {
 
 extension AppConfiguration {
     
-    /// Builds a portal based on the app's configuration.
-    /// - Parameter loginRequired: Whether or not you intend to access the portal anonymously or if you want to use a credential.
+    /// Build an `AGSPortal` based on the app's configuration.
+    /// - Parameter loginRequired: `false` if you intend to access the portal anonymously. `true` if you want to use a credential (the ArcGIS Runtime SDK will present a modal login web view if needed).
     /// - Returns: A new configured `AGSPortal`.
     static func buildConfiguredPortal(loginRequired: Bool) -> AGSPortal {
         return AGSPortal(url: basePortalURL, loginRequired: loginRequired)
