@@ -16,7 +16,7 @@ import UIKit
 
 extension UIViewController {
     
-    /// Facilitates building and presenting a simple alert message, in one line of code.
+    /// Build and present a simple alert message.
     ///
     /// - Parameters:
     ///   - message: The message to display to the end user.
@@ -28,7 +28,7 @@ extension UIViewController {
         present(alert, animated: animated, completion: completion)
     }
 
-    /// Facilitates building and presenting a simple alert message prompting the user to log-in, in one line of code.
+    /// Build and present a simple alert message prompting the user to log-in.
     ///
     /// - Parameters:
     ///   - message: The message to display to the end user.
@@ -42,7 +42,7 @@ extension UIViewController {
         present(alert, animated: animated, completion: completion)
     }
 
-    /// Facilitates building and presenting a simple alert message prompting the user to modify their settings, in one line of code.
+    /// Build and present a simple alert message prompting the user to modify their settings.
     ///
     /// - Parameters:
     ///   - message: The message to display to the end user.
@@ -60,7 +60,7 @@ extension UIViewController {
         present(alert, animated: animated, completion: completion)
     }
 
-    /// Facilitates building and presenting a multi alert message prompting the user to confirm an action, in one line of code.
+    /// Build and present a multi alert message prompting the user to confirm an action.
     ///
     /// - Parameters:
     ///   - message: The message to display to the end user.

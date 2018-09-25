@@ -18,7 +18,7 @@ import UIKit
 
 extension UIView {
     
-    /// Adds a `UIStackView` to it's subviews and constrains the stack view to leading, trailing, top, and bottom anchors.
+    /// Add a `UIStackView` child view and constrain the stack view to leading, trailing, top, and bottom anchors.
     ///
     /// - Parameters:
     ///   - stackView: The stack view to subview.

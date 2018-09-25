@@ -16,7 +16,7 @@ import UIKit
 
 extension UIImage {
     
-    /// Builds a copy of an image that is resized, clipped by a circle and given a stroke weight.
+    /// Build a copy of an image that is resized, clipped by a circle and given a stroke weight.
     ///
     /// - Parameters:
     ///   - diameter: The diameter of the rendered circular thumbnail.
@@ -65,9 +65,7 @@ extension UIImage {
         return result
     }
     
-    /// This UIImage extension function returns a new copy of an image applying a color mask.
-    
-    /// Builds a copy of an image applying a color mask.
+    /// Make a copy of an image applying a color mask.
     ///
     /// - Parameter color: The color to apply to the color mask.
     /// - Returns: A new `UIImage`.
