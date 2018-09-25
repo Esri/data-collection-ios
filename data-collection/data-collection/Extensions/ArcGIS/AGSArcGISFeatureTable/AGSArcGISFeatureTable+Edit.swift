@@ -43,8 +43,8 @@ extension AGSArcGISFeatureTable {
     /// Delete a feature, if possible.
     ///
     /// - Parameters:
-    ///     - feature: the feature to delete.
-    ///     - completion: closure containing an `Error`, if one occured.
+    ///     - feature: The feature to delete.
+    ///     - completion: Closure containing an `Error`, if one occured.
     ///
     /// - SeeAlso: `private func performEdit(type: EditType, forFeature feature: AGSArcGISFeature, completion: @escaping (Error?)->Void)`
     
@@ -65,8 +65,8 @@ extension AGSArcGISFeatureTable {
     ///
     /// - Parameters:
     ///     - type: `.add`, `.update` or `.delete` the record.
-    ///     - forFeature: the feature to edit.
-    ///     - completion: closure containing an `Error`, if one occured.
+    ///     - forFeature: The feature to edit.
+    ///     - completion: Closure containing an `Error`, if one occured.
     
     private func performEdit(type: EditType, forFeature feature: AGSArcGISFeature, completion: @escaping (Error?)->Void) {
         
