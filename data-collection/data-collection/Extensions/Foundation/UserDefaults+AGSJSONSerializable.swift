@@ -17,7 +17,7 @@ import ArcGIS
 
 extension UserDefaults {
     
-    /// Facilitates serializing and setting an `AGSJSONSerializable` JSON object to `UserDefaults`.
+    /// Write an `AGSJSONSerializable` ArcGIS Runtime object to `UserDefaults`.
     ///
     /// Serializing `AGSJSONSerializable` objects to JSON allows them to be stored in `UserDefaults`.
     ///
