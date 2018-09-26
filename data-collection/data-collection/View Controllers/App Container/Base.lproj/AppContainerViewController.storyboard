@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="czy-FD-PCO">
+    <device id="retina5_9" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
+        <capability name="Navigation items with more than one left or right bar item" minToolsVersion="7.0"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--MapViewController-->
+        <scene sceneID="jJe-S8-Gqk">
+            <objects>
+                <viewControllerPlaceholder storyboardName="MapViewController" id="pfT-7o-CMH" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="XdO-ov-0Ky" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1629" y="498"/>
+        </scene>
+        <!--JobStatusViewController-->
+        <scene sceneID="EbG-gf-GdC">
+            <objects>
+                <viewControllerPlaceholder storyboardName="JobStatusViewController" id="a5o-fl-Axh" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="jew-ji-PMG" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1658" y="316"/>
+        </scene>
+        <!--Data Collection-->
+        <scene sceneID="kjr-Uq-KXN">
+            <objects>
+                <viewController id="gv8-gM-I2q" customClass="AppContainerViewController" customModule="data_collection" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="7aD-6b-1jD">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SqM-fs-kSs">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
+                                <connections>
+                                    <segue destination="pfT-7o-CMH" kind="embed" id="Fia-MY-ifJ"/>
+                                </connections>
+                            </containerView>
+                            <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="i9b-2O-weT">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
+                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="r6d-Pa-KHq">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                    <gestureRecognizers/>
+                                    <connections>
+                                        <outletCollection property="gestureRecognizers" destination="6zv-l3-HBD" appends="YES" id="gYC-l0-gLl"/>
+                                    </connections>
+                                </view>
+                                <blurEffect style="dark"/>
+                            </visualEffectView>
+                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jM0-uj-oBw">
+                                <rect key="frame" x="0.0" y="88" width="281.33333333333331" height="724"/>
+                                <connections>
+                                    <segue destination="du0-7A-Co4" kind="embed" id="ITx-cb-RZr"/>
+                                </connections>
+                            </containerView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="jM0-uj-oBw" firstAttribute="leading" secondItem="7aD-6b-1jD" secondAttribute="leading" id="0Oj-ee-pbx"/>
+                            <constraint firstAttribute="bottom" secondItem="i9b-2O-weT" secondAttribute="bottom" id="CEg-lY-iAk"/>
+                            <constraint firstItem="i9b-2O-weT" firstAttribute="top" secondItem="7aD-6b-1jD" secondAttribute="top" id="Mh9-dQ-wnE"/>
+                            <constraint firstAttribute="bottom" secondItem="jM0-uj-oBw" secondAttribute="bottom" id="ObW-gL-vKP"/>
+                            <constraint firstItem="SqM-fs-kSs" firstAttribute="bottom" secondItem="7aD-6b-1jD" secondAttribute="bottom" id="QSf-fk-hOf"/>
+                            <constraint firstAttribute="leading" secondItem="jM0-uj-oBw" secondAttribute="trailing" priority="750" id="WlT-mD-h8Z"/>
+                            <constraint firstItem="jM0-uj-oBw" firstAttribute="width" secondItem="7aD-6b-1jD" secondAttribute="width" multiplier="0.75" id="YOn-ym-Bbf"/>
+                            <constraint firstItem="SqM-fs-kSs" firstAttribute="trailing" secondItem="7aD-6b-1jD" secondAttribute="trailing" id="Z1E-7Q-P07"/>
+                            <constraint firstItem="i9b-2O-weT" firstAttribute="trailing" secondItem="7aD-6b-1jD" secondAttribute="trailing" id="cCY-ws-VgR"/>
+                            <constraint firstItem="SqM-fs-kSs" firstAttribute="top" secondItem="7aD-6b-1jD" secondAttribute="top" id="fle-SX-WDQ"/>
+                            <constraint firstItem="SqM-fs-kSs" firstAttribute="leading" secondItem="7aD-6b-1jD" secondAttribute="leading" id="haH-eg-g0o"/>
+                            <constraint firstItem="jM0-uj-oBw" firstAttribute="top" secondItem="y4d-m7-pvI" secondAttribute="top" id="lNi-aq-hcg"/>
+                            <constraint firstItem="i9b-2O-weT" firstAttribute="leading" secondItem="7aD-6b-1jD" secondAttribute="leading" id="xGQ-4J-2cm"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="y4d-m7-pvI"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="Data Collection" id="Sig-Uc-vuA">
+                        <barButtonItem key="leftBarButtonItem" image="Hamburger" id="Edn-bQ-dxc">
+                            <connections>
+                                <action selector="userRequestsToggleDrawer:" destination="gv8-gM-I2q" id="sfq-m3-IDr"/>
+                            </connections>
+                        </barButtonItem>
+                        <rightBarButtonItems>
+                            <barButtonItem enabled="NO" systemItem="add" id="kzH-BP-lEk">
+                                <connections>
+                                    <action selector="userTapsRightButton:" destination="gv8-gM-I2q" id="aDP-Qy-iNH"/>
+                                </connections>
+                            </barButtonItem>
+                            <barButtonItem image="ZoomLocation" id="4mE-vI-ORJ">
+                                <connections>
+                                    <action selector="userTapsSecondRightButton:" destination="gv8-gM-I2q" id="QRZ-lR-FZp"/>
+                                </connections>
+                            </barButtonItem>
+                        </rightBarButtonItems>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="contextView" destination="jM0-uj-oBw" id="fJU-Ns-C0h"/>
+                        <outlet property="drawerLeadingLayoutConstraint" destination="0Oj-ee-pbx" id="Ang-ob-QUz"/>
+                        <outlet property="drawerTrailingLayoutConstraint" destination="WlT-mD-h8Z" id="kkJ-FI-0wB"/>
+                        <outlet property="leftBarButton" destination="Edn-bQ-dxc" id="hJZ-HM-EJ9"/>
+                        <outlet property="mainMapView" destination="SqM-fs-kSs" id="C39-Kd-vlX"/>
+                        <outlet property="outsideDrawerTapGestureRecognizer" destination="6zv-l3-HBD" id="5eh-Fq-Lxe"/>
+                        <outlet property="rightBarButton" destination="kzH-BP-lEk" id="uD4-AT-tie"/>
+                        <outlet property="secondRightBarButton" destination="4mE-vI-ORJ" id="J36-YH-tlF"/>
+                        <outlet property="visualEffectView" destination="i9b-2O-weT" id="qdB-ju-GT8"/>
+                        <segue destination="a5o-fl-Axh" kind="presentation" identifier="presentJobStatusViewController" modalPresentationStyle="overCurrentContext" modalTransitionStyle="crossDissolve" id="KR0-1A-xne"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="uue-fL-u5t" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="6zv-l3-HBD">
+                    <connections>
+                        <action selector="userTapsOutsideOfDrawer:" destination="gv8-gM-I2q" id="8Td-VW-RXK"/>
+                    </connections>
+                </tapGestureRecognizer>
+            </objects>
+            <point key="canvasLocation" x="953" y="416"/>
+        </scene>
+        <!--App Context Aware Navigation Controller-->
+        <scene sceneID="4f0-wp-SMt">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="czy-FD-PCO" customClass="AppContextAwareNavigationController" customModule="data_collection" customModuleProvider="target" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" barStyle="black" id="VrT-XK-pBA">
+                        <rect key="frame" x="0.0" y="44" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="tintColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="barTintColor" red="0.6588235294" green="0.81176470590000005" blue="0.40000000000000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <textAttributes key="titleTextAttributes">
+                            <color key="textColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        </textAttributes>
+                        <textAttributes key="largeTitleTextAttributes">
+                            <color key="textColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        </textAttributes>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="gv8-gM-I2q" kind="relationship" relationship="rootViewController" id="gxB-vI-uH7"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="XuT-Pi-9hz" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="132" y="415"/>
+        </scene>
+        <!--DrawerViewController-->
+        <scene sceneID="3s9-LR-qkh">
+            <objects>
+                <viewControllerPlaceholder storyboardName="DrawerViewController" id="du0-7A-Co4" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="7TR-Dl-U0G" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="952" y="911"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="Hamburger" width="25" height="25"/>
+        <image name="ZoomLocation" width="20" height="20"/>
+    </resources>
+</document>

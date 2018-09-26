@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="wi2-LE-L7E">
+    <device id="retina5_9" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Job Status View Controller-->
+        <scene sceneID="1Dx-sU-WuZ">
+            <objects>
+                <viewController id="wi2-LE-L7E" customClass="JobStatusViewController" customModule="data_collection" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Yl1-bm-N5h">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Aru-y8-8m0">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
+                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="4hc-Ox-lNT">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                </view>
+                                <blurEffect style="dark"/>
+                            </visualEffectView>
+                            <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="cbB-aM-87m">
+                                <rect key="frame" x="16" y="405" width="343" height="2"/>
+                                <color key="progressTintColor" red="0.6588235294" green="0.81176470590000005" blue="0.40000000000000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="trackTintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </progressView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Downloading Offline Map" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cgZ-dL-zfG">
+                                <rect key="frame" x="16" y="345" width="343" height="44"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="44" id="V33-yu-5gB"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8HX-1A-MyG">
+                                <rect key="frame" x="131.66666666666666" y="455" width="112" height="62"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="62" id="8lt-ne-GaK"/>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="112" id="9rJ-TT-jqm"/>
+                                </constraints>
+                                <state key="normal" title="Cancel">
+                                    <color key="titleColor" red="0.6588235294" green="0.81176470590000005" blue="0.40000000000000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="userDidTapCancelJob:" destination="wi2-LE-L7E" eventType="touchUpInside" id="yRV-Ep-hja"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="tintColor" red="0.56600448749999999" green="0.69739838649999997" blue="0.34364558169999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="cgZ-dL-zfG" firstAttribute="leading" secondItem="Xfs-RY-Yc2" secondAttribute="leading" constant="16" id="ChT-eX-sT2"/>
+                            <constraint firstItem="8HX-1A-MyG" firstAttribute="centerX" secondItem="Yl1-bm-N5h" secondAttribute="centerX" id="Ek1-Zs-Daz"/>
+                            <constraint firstItem="cbB-aM-87m" firstAttribute="centerX" secondItem="Yl1-bm-N5h" secondAttribute="centerX" id="EzF-zD-0Ql"/>
+                            <constraint firstItem="cbB-aM-87m" firstAttribute="trailing" secondItem="Yl1-bm-N5h" secondAttribute="trailingMargin" id="MAM-Re-h7p"/>
+                            <constraint firstItem="cbB-aM-87m" firstAttribute="leading" secondItem="Yl1-bm-N5h" secondAttribute="leadingMargin" id="NVo-nw-1GH"/>
+                            <constraint firstItem="8HX-1A-MyG" firstAttribute="top" secondItem="cbB-aM-87m" secondAttribute="bottom" constant="48" id="QDI-bR-nuv"/>
+                            <constraint firstItem="cbB-aM-87m" firstAttribute="top" secondItem="cgZ-dL-zfG" secondAttribute="bottom" constant="16" id="Vci-XF-wmn"/>
+                            <constraint firstItem="Xfs-RY-Yc2" firstAttribute="trailing" secondItem="cgZ-dL-zfG" secondAttribute="trailing" constant="16" id="Wtl-FE-SyD"/>
+                            <constraint firstItem="Aru-y8-8m0" firstAttribute="top" secondItem="Yl1-bm-N5h" secondAttribute="top" id="a2v-VY-xFG"/>
+                            <constraint firstItem="Aru-y8-8m0" firstAttribute="leading" secondItem="Yl1-bm-N5h" secondAttribute="leading" id="ifx-jM-pNN"/>
+                            <constraint firstItem="Aru-y8-8m0" firstAttribute="trailing" secondItem="Yl1-bm-N5h" secondAttribute="trailing" id="n45-Hf-nRL"/>
+                            <constraint firstItem="cbB-aM-87m" firstAttribute="centerY" secondItem="Yl1-bm-N5h" secondAttribute="centerY" id="xCF-qz-vFw"/>
+                            <constraint firstAttribute="bottom" secondItem="Aru-y8-8m0" secondAttribute="bottom" id="yqD-4m-q6I"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="Xfs-RY-Yc2"/>
+                    </view>
+                    <connections>
+                        <outlet property="cancelButton" destination="8HX-1A-MyG" id="OG9-aS-DY3"/>
+                        <outlet property="jobStatusLabel" destination="cgZ-dL-zfG" id="JTZ-Hv-gSt"/>
+                        <outlet property="jobStatusProgressView" destination="cbB-aM-87m" id="mDv-oX-63c"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="FsC-au-qgA" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1781" y="-480"/>
+        </scene>
+    </scenes>
+</document>

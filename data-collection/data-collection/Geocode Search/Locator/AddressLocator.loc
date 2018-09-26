@@ -1,0 +1,68 @@
+
+LocFileUseUTF8 = True
+Category = Address
+Description = US Single House Addresses
+
+UseRelativePaths = true
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;  Properties Required by ArcGIS
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+CLSID = {DA70B7E3-10B2-42E3-BFF7-6C81355862BC}
+UICLSID = {AE5A3A0E-F756-11D2-9F4F-00C04F8ED1C4}
+MinimumMatchScore = 93
+MinimumCandidateScore = 75
+SpellingSensitivity = 80
+MatchIfScoresTie = true
+WriteXYCoordFields = true
+WriteStandardizedAddressField = false
+WriteReferenceIDField = false
+WritePercentAlongField = false
+
+BatchPresortInputs = State
+BatchPresortInputs = ZIP
+BatchPresortInputs = City
+
+DefaultLanguage = en
+GeometryFromDisplayFields = false
+LocatorWorkspaceString = ProgID = esriDataSourcesFile.ShapefileWorkspaceFactory; Path = \\Mac\Home\Documents\Runtime\ExampleApps\TreeSurvey\PortlandOpenData\Locator_1\locator\AddressLocator_fromArcMap\v101\
+MaxCandidates = 200
+MaxPerfectCandidates = 200
+RebuildStartTime = 131635954093320000
+RebuildStartTimeAscii = 10:16:49 AM
+ReturnPostalAdminsInMatchAddr = true
+RuntimeMemoryLimit = 512000000
+SafeLocatorName = AddressLocator_fromArcMap
+SearchTimeout = 1
+ShowElapsedTime = false
+ShowStAddr = true
+StorageSegmentSizeKB = 128
+StoreStandardizedRefData = true
+SupportsCR311929 = false
+SupportsHouseNoUnit = true
+SupportsIndex64 = true
+SupportsPointAddressNumber = true
+SupportsStreetAddressNumber = false
+SupportsSubAddress = false
+SupportsUSZoneOrder = true
+SupportsWeightedHouseNumber = true
+TransliteratedLanguageCode = xx
+UseMultithreading = True
+UseSuggestions = True
+WriteAbbrStateName = false
+WriteAdditionalOutputFields = false
+WriteBlockIDField = false
+WriteCountyName = false
+WriteDebugFields = false
+WriteDispXDispYFields = true
+WriteDisplayExtentFields = true
+WriteFullStateName = true
+WriteGlobalizedFields = false
+WriteLocalizedFields = true
+WriteLocatorSpecificFields = false
+WriteUnitInfoFields = false
+reportScorePerComponent = false
+supportsEmptyHouseNumber = false
+supportsIntersections = false
+supportsOptionalZone = false
