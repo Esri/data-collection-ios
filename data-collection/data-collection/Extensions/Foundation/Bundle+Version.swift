@@ -19,7 +19,7 @@ extension Bundle {
     
     private static let agsBundle = AGSBundle()
     
-    /// An end-user printable string representation the ArcGIS Bundle version shipped with the app.
+    /// An end-user printable string representation of the ArcGIS Bundle version shipped with the app.
     ///
     /// For example, "2000"
     
@@ -27,7 +27,7 @@ extension Bundle {
         return (agsBundle?.object(forInfoDictionaryKey: "CFBundleVersion") as? String) ?? "?"
     }
     
-    /// An end-user printable string representation the ArcGIS SDK version shipped with the app.
+    /// An end-user printable string representation of the ArcGIS Runtime SDK version shipped with the app.
     ///
     /// For example, "100.0.0"
     
@@ -35,7 +35,7 @@ extension Bundle {
         return (agsBundle?.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String) ?? "?"
     }
     
-    /// Builds an end-user printable string representation the ArcGIS Bundle shipped with the app.
+    /// Builds an end-user printable string representation of the ArcGIS Bundle shipped with the app.
     ///
     /// For example, "ArcGIS Runtime SDK 100.0.0 (2000)"
     
@@ -46,7 +46,7 @@ extension Bundle {
 
 extension Bundle {
     
-    /// An end-user printable string representation the app display name.
+    /// An end-user printable string representation of the app display name.
     ///
     /// For example, "Data Collection"
     
@@ -54,7 +54,7 @@ extension Bundle {
         return (main.object(forInfoDictionaryKey: "CFBundleDisplayName") as? String) ?? "?"
     }
     
-    /// An end-user printable string representation the app version number.
+    /// An end-user printable string representation of the app version number.
     ///
     /// For example, "1.0"
     
@@ -62,7 +62,7 @@ extension Bundle {
         return (main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String) ?? "?"
     }
     
-    /// An end-user printable string representation the app bundle number.
+    /// An end-user printable string representation of the app bundle number.
     ///
     /// For example, "10"
     
@@ -70,7 +70,7 @@ extension Bundle {
         return (main.object(forInfoDictionaryKey: "CFBundleVersion") as? String) ?? "?"
     }
     
-    /// Builds an end-user printable string representation the app name and version.
+    /// Builds an end-user printable string representation of the app name and version.
     ///
     /// For example, "Data Collection 1.0 (10)"
     

@@ -17,7 +17,7 @@ import ArcGIS
 
 extension AGSPopup {
 
-    /// Facilitates finding a one-to-many `AGSRelationshipInfo` associated between one pop-up and another.
+    /// Find a one-to-many `AGSRelationshipInfo` associated between one pop-up and another.
     ///
     /// - Parameter popup: The pop-up with which to investigate for a relationship.
     ///

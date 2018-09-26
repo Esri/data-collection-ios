@@ -129,7 +129,7 @@ class MapViewController: UIViewController {
         // Begin listening to changes to the app context.
         subscribeToAppContextChanges()
         
-        // Load mapd from the app context.
+        // Load map from the app context.
         appContext.loadOfflineMobileMapPackageAndSetMapForCurrentWorkMode()
         
         // If location permission has been authorized, start the location display.

@@ -16,17 +16,17 @@ import UIKit
 
 extension UIColor {
     
-    /// Facilitates making a slightly "lighter" version of the color.
+    /// Make a slightly "lighter" version of the color.
     var lighter: UIColor {
         return addBrightness(0.1)
     }
     
-    /// Facilitates making a slightly "darker" version of the color.
+    /// Make a slightly "darker" version of the color.
     var darker: UIColor {
         return removeBrightness(0.1)
     }
     
-    /// Returns a new color by reducing the brightness in HSB.
+    /// Generate a new color by reducing the brightness in HSB.
     ///
     /// - Parameters:
     ///   - val: By how much to reduce the brightness.
@@ -45,7 +45,7 @@ extension UIColor {
         return UIColor(hue: h, saturation: s, brightness: max(b - val, 0.0), alpha: (alpha == nil || alpha == -1) ? a : alpha!)
     }
     
-    /// Returns a new color by increasing the brightness in HSB.
+    /// Generate a new color by increasing the brightness in HSB.
     ///
     /// - Parameters:
     ///   - val: By how much to increase the brightness.

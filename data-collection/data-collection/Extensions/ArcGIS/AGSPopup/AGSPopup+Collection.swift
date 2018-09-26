@@ -17,11 +17,11 @@ import ArcGIS
 
 extension Collection where Iterator.Element == AGSPopup {
     
-    /// This function is used to find the nearest point in a collection of points to another point.
+    /// Return the collection's `AGSPopup` representing the feature nearest to a given map point.
     ///
     /// - Parameter mapPoint: The point with which to compare geometries.
     ///
-    /// - Returns: a pop-up contained in a collection that is nearest to the mapPoint parameter.
+    /// - Returns: The collection's pop-up for the feature nearest to the mapPoint parameter.
     
     func popupNearestTo(mapPoint: AGSPoint) -> AGSPopup? {
         

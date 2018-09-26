@@ -17,7 +17,7 @@ import ArcGIS
 
 extension AGSArcGISFeatureTable {
     
-    /// Facilitates adding or updating a feature, if possible.
+    /// Add or update a feature, if possible.
     ///
     /// - Parameters:
     ///     - feature: the modified feature to persist.
@@ -40,11 +40,11 @@ extension AGSArcGISFeatureTable {
         }
     }
     
-    /// Facilitates deleting a feature, if possible.
+    /// Delete a feature, if possible.
     ///
     /// - Parameters:
-    ///     - feature: the feature to delete.
-    ///     - completion: closure containing an `Error`, if one occured.
+    ///     - feature: The feature to delete.
+    ///     - completion: Closure containing an `Error`, if one occured.
     ///
     /// - SeeAlso: `private func performEdit(type: EditType, forFeature feature: AGSArcGISFeature, completion: @escaping (Error?)->Void)`
     
@@ -58,15 +58,15 @@ extension AGSArcGISFeatureTable {
         }
     }
     
-    /// Single function for performing edits of a feature.
+    /// Perform edits of a feature.
     ///
     /// If the feature table is a service feature table (online), the function will also apply the edits remotely,
     /// refreshing the local record in the process.
     ///
     /// - Parameters:
     ///     - type: `.add`, `.update` or `.delete` the record.
-    ///     - forFeature: the feature to edit.
-    ///     - completion: closure containing an `Error`, if one occured.
+    ///     - forFeature: The feature to edit.
+    ///     - completion: Closure containing an `Error`, if one occured.
     
     private func performEdit(type: EditType, forFeature feature: AGSArcGISFeature, completion: @escaping (Error?)->Void) {
         

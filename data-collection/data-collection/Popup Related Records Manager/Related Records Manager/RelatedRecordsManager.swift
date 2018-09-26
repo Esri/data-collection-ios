@@ -35,7 +35,7 @@ class RelatedRecordsManager {
         self.popup = popup
     }
     
-    /// Loads the related record(s) provided a popup, relationship info and related table.
+    /// Load the related record(s) provided a popup, relationship info and related table.
     ///
     /// - Parameter completion: Either an array of related pop-ups or an error, but not both.
     ///

@@ -24,7 +24,7 @@ extension AGSPopup {
         case popup
     }
     
-    /// Facilitates determing what type of pop-up is in question, whether it is a symbolizable feature or table record.
+    /// Determine whether the popup represents a symbolizable feature or table record.
     var recordType: RecordType {
         
         guard let feature = geoElement as? AGSArcGISFeature, let featureTable = feature.featureTable as? AGSArcGISFeatureTable else {

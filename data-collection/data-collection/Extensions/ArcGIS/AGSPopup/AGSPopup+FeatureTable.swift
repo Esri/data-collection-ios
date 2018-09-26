@@ -17,12 +17,12 @@ import ArcGIS
 
 extension AGSPopup {
     
-    /// Facilitates determining if a pop-up's feature has persisted to it's table.
+    /// Determine if a pop-up's feature has persisted to it's table.
     var isFeatureAddedToTable: Bool {
         return (geoElement as? AGSArcGISFeature)?.objectID != nil
     }
     
-    /// Facilitates getting the pop-up's feature's containing table name.
+    /// The pop-up's feature's containing table name.
     var tableName: String? {
         return (geoElement as? AGSArcGISFeature)?.featureTable?.tableName
     }

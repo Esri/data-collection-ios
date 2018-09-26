@@ -17,7 +17,7 @@ import ArcGIS
 
 extension Array where Element == AGSPopup {
     
-    /// Sorts in-place pop-ups in ascending or descending order.
+    /// Sorts pop-ups in-place in ascending or descending order.
     ///
     /// - Throws: If the array of popups first field values aren't all of the same type.
     

@@ -16,7 +16,7 @@ import UIKit
 
 extension UIAlertController {
     
-    /// Facilitates building a single button `UIAlertController` with a message.
+    /// Build a single button `UIAlertController` with a message.
     ///
     /// You may optionally provide additional parameters including the title, the action button title and an action closure.
     ///
@@ -35,7 +35,7 @@ extension UIAlertController {
         return alert
     }
     
-    /// Facilitates building a two-button `UIAlertController` with a message.
+    /// Build a two-button `UIAlertController` with a message.
     ///
     /// The alert contains an action button and a cancel button, by default.
     ///

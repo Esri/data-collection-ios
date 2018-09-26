@@ -17,7 +17,7 @@ import ArcGIS
 
 extension AGSPopup {
     
-    /// Facilitates building a pop-up manager from a pop-up.
+    /// Build a pop-up manager from a pop-up.
     ///
     /// - Returns: The newly created pop-up manager.
     
@@ -25,7 +25,7 @@ extension AGSPopup {
         return AGSPopupManager(popup: self)
     }
     
-    /// Facilitates determining if a pop-up is editable.
+    /// Determine if a pop-up is editable.
     ///
     /// - Note: This property should be used sparingly due to the memory cost incurred by the operation.
     

@@ -20,7 +20,7 @@ class OneToManyManager: RelatedRecordsManager {
     
     internal private(set) var relatedPopups = [AGSPopup]()
     
-    /// Calls the super class load function and maintains a reference to the results.
+    /// Call the super class load function and maintain a reference to the results.
     ///
     /// - Parameter completion: a closure containing an error, if there is one.
     ///
@@ -48,7 +48,7 @@ class OneToManyManager: RelatedRecordsManager {
         }
     }
     
-    /// Relates a new one-to-many record to the managed one.
+    /// Relate a new one-to-many record to the managed one.
     func editRelatedPopup(_ editedRelatedPopup: AGSPopup) throws {
         
         guard
@@ -71,7 +71,7 @@ class OneToManyManager: RelatedRecordsManager {
         sortRelatedRecords()
     }
     
-    /// Unrelates a one-to-many record from the managed one.
+    /// Unrelate a one-to-many record from the managed one.
     func deleteRelatedPopup(_ removedRelatedPopup: AGSPopup) throws {
         
         guard
@@ -105,7 +105,7 @@ class OneToManyManager: RelatedRecordsManager {
         relatedPopups.remove(at: popupIndex)
     }
     
-    /// Sorts the one-to-many records in descending order.
+    /// Sort the one-to-many records in descending order.
     private func sortRelatedRecords() {
         do {
             try relatedPopups.sortPopupsByFirstField(.descending)
@@ -118,7 +118,7 @@ class OneToManyManager: RelatedRecordsManager {
 
 extension OneToManyManager {
     
-    /// Facilitates providing the popup for an index path.
+    /// Provide the popup for an index path.
     ///
     /// - Parameter indexPath: The index path of the pop-up in question.
     ///

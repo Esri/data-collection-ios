@@ -17,7 +17,7 @@ import UIKit
 
 extension UIButton {
     
-    /// Facilitates formatting a button's title with a header and an optional subheader offering
+    /// Format a button's title with a header and an optional subheader offering
     /// the ability to specify a color for a series of control states.
     ///
     /// - Parameters:

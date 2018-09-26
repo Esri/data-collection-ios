@@ -17,8 +17,8 @@ import UIKit
 
 extension UIButton {
     
-    /// The facilitates generating a single image to be used as a color mask for a button's image and
-    /// generates then sets a new button image for every (control state, color) combo.
+    /// Generate a single image to be used as a color mask for a button's image and set a new button image as apprpopriate
+    /// for every (control state, color) combo.
     ///
     /// - Parameters:
     ///   - controlStateColors: A dictionary of control states (keys) and their cooresponding colors (values).

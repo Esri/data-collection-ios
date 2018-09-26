@@ -17,7 +17,7 @@ import ArcGIS
 
 extension AGSArcGISFeature {
     
-    /// Facilitates retrieving one to many relationship info objects associated with a feature.
+    /// The one-to-many relationship info objects associated with a feature.
     var oneToManyRelationshipInfos: [AGSRelationshipInfo]? {
         guard let table = featureTable as? AGSArcGISFeatureTable, let layerInfo = table.layerInfo else {
             return nil

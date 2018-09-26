@@ -17,7 +17,7 @@ import ArcGIS
 
 extension AGSPopup {
     
-    /// Facilitates casting a pop-up's feature (optionally) to an `AGSArcGISFeature`.
+    /// Cast a pop-up's feature to an `AGSArcGISFeature` if possible.
     var feature: AGSArcGISFeature? {
         return geoElement as? AGSArcGISFeature
     }

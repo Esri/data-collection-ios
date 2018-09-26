@@ -15,7 +15,7 @@
 import Foundation
 import UIKit
 
-/// Objects that adhere to this protocol offer ability to intercept the `UINavigationBarDelegate`
+/// Objects that adhere to this protocol offer the ability to intercept the `UINavigationBarDelegate`
 /// method `public func navigationBar(_ navigationBar: UINavigationBar, shouldPop item: UINavigationItem) -> Bool`
 /// and thus can conditionally stop the UINavigationController from popping, should certain
 /// requirements not yet be met.
@@ -28,7 +28,7 @@ public protocol BackButtonDelegate {
 
 extension UINavigationController: UINavigationBarDelegate  {
     
-    /// This method should never be called directly.
+    // This method should never be called directly.
 
     public func navigationBar(_ navigationBar: UINavigationBar, shouldPop item: UINavigationItem) -> Bool {
         

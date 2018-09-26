@@ -88,11 +88,11 @@ class AppReverseGeocoderManager: AGSLoadableBase {
         }
     }
     
-    /// Facilitates reverse geocoding an address with a point.
+    /// Reverse geocode an address from a map point.
     ///
     /// - Parameters:
     ///   - point: The point used in the reverse geocode operation.
-    ///   - completion: A closure containing either the address or an error and not both.
+    ///   - completion: A closure containing either an address or an error (but not both).
     ///
     internal func reverseGeocode(forPoint point: AGSPoint, completion: @escaping (String?, Error?)->Void) {
         

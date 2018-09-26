@@ -15,8 +15,9 @@
 import Foundation
 import ArcGIS
 
-/// Quickly determines if the app is configured to consume the _Trees of Portland_ web map,
-/// and thus should perform custom behaviors required of that web map.
+/// Determine if the app is configured to consume the _Trees of Portland_ web map.
+///
+/// If `true`, the app will perform custom behaviors required of that web map.
 var shouldEnactCustomBehavior: Bool {
     
     // The Trees of Portland item ID.

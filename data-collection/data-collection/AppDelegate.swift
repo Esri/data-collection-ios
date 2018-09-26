@@ -66,7 +66,7 @@ extension AppDelegate {
         // to handle OAuth and call back to this application.
         if let urlComponents = URLComponents(url: url, resolvingAgainstBaseURL: false), urlComponents.scheme == AppConfiguration.urlScheme, urlComponents.host == AppConfiguration.urlAuthPath {
             
-            // Pass the OAuth callback through to the ArcGIS Runtime helper function.
+            // Pass the OAuth callback through to the ArcGIS Runtime SDK's helper function.
             AGSApplicationDelegate.shared().application(app, open: url, options: options)
             
             // See if we were called back with confirmation that we're authorized.
@@ -94,7 +94,10 @@ extension AppDelegate {
 
 extension AppDelegate {
     
-    /// Facilitates licensing the ArcGIS application with the configured license key.
+    /// License the ArcGIS application with the configured ArcGIS Runtime deployment license key.
+    ///
+    /// - Note: An invalid key does not throw an exception, but simply fails to license the app,
+    ///   falling back to Developer Mode (which will display a watermark on the map view).
     static func licenseApplication() {
         do {
             try AGSArcGISRuntimeEnvironment.setLicenseKey(AppConfiguration.licenseKey)

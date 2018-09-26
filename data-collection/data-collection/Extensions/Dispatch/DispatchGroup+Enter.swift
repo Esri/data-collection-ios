@@ -16,7 +16,7 @@ import Foundation
 
 extension DispatchGroup {
     
-    /// Facilitates entering a dispatch group a known number of times.
+    /// Enter a dispatch group a known number of times.
     ///
     /// - Parameter times: (n) number of times you know you want to enter the dispatch group.
     

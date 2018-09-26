@@ -16,7 +16,7 @@ import Foundation
 import ArcGIS
 
 /// The app's work mode can be `online` or `offline` .
-/// `WorkMode` is an enum `Int` (raw representable) for easy storage into `UserDefaults`.
+/// `WorkMode` is an enum `Int` (raw representable) for easy storage in `UserDefaults`.
 /// - Note: Cases start at 1 because `UserDefaults` returns `0` if no value is set for integer key.
 enum WorkMode: Int {
     
@@ -40,9 +40,10 @@ enum WorkMode: Int {
 
 extension AppContext {
     
-    /// Upon launch, we want to load the offline map if it exists and set the `currentMap` according to the app's work mode.
-    /// If
-    /// - Note: It is possible for the app to retrieve, load and maintain a reference to an offline map even if the user defaults work mode is online.
+    /// Load the offline map if it exists and set the `currentMap` according to the app's work mode.
+    ///
+    /// This is called on application launch.
+    /// - Note: It is possible for the app to retrieve, load and maintain a reference to an offline map even if the stored `WorkMode` is `online`.
     /// This is so that the user can switch between online and offline maps easily.
     func loadOfflineMobileMapPackageAndSetMapForCurrentWorkMode() {
         
@@ -57,7 +58,7 @@ extension AppContext {
         }
     }
     
-    /// After a successful download we want to load the offline map if it exists and set it to `currentMap`.
+    /// Load the offline map (if it has been downloaded) and set it to `currentMap`.
     func loadOfflineMobileMapPackageAndSetMap() {
         
         loadOfflineMobileMapPackage { [weak self] (map) in
@@ -71,8 +72,7 @@ extension AppContext {
         }
     }
     
-    /// This private function handles loading the `AGSMobileMapPackage`, setting the kv-observable `hasOfflineMap` boolean property.
-    /// and returning an AGSMap.
+    /// Load the downloaded `AGSMobileMapPackage` if possible, setting the kv-observable `hasOfflineMap` boolean property and returning an AGSMap.
     private func loadOfflineMobileMapPackage(_ completion: @escaping (AGSMap?) -> Void) {
         
         self.mobileMapPackage = LastSyncMobileMapPackage(fileURL: .offlineMapDirectoryURL(forWebMapItemID: AppConfiguration.webMapItemID),
@@ -105,10 +105,11 @@ extension AppContext {
         return offlineMap
     }
 
-    /**
-     This function assumes `loadOfflineMobileMapPackageAndSetBestMap()` or `loadDownloaded(::)` has been previously called,
-     calling this function at the moment a user wishes to swap maps from the online map to the offline mobile map package.
-     */
+    
+    /// Swap from the online map to the offline map.
+    ///
+    /// The offline map is opened from the downloaded `AGSMobileMapPackage`.
+    /// - Note: This requires and assumes that `loadOfflineMobileMapPackageAndSetBestMap()` or `loadDownloaded(::)` has been previously called.
     func setMapFromOfflineMobileMapPackage() -> Bool {
         
         guard let currentOfflineMap = offlineMap else {
@@ -137,10 +138,8 @@ extension AppContext {
         }
     }
     
-    /**
-     This function is concerned with deleting the entire contents of a downloaded mobile map package and
-     then preparing the directory for the next offline map.
-     */
+
+    /// Clean up and remove any downloaded `AGSMobileMapPackage`, and prepare the local storage directory for the next offline map.
     func deleteOfflineMap() throws {
         
         mobileMapPackage?.clearLastSyncDate()
@@ -156,9 +155,7 @@ extension AppContext {
         }
     }
     
-    /**
-     This function deletes an offline map and then attempts to set the current map to the online web map and work mode to online.
-     */
+    /// Delete any offline map then attempt to set the current map to the online web map, and the work mode to online.
     func deleteOfflineMapAndAttemptToGoOnline() throws {
         
         do {
@@ -180,9 +177,7 @@ extension AppContext {
 // MARK: Online Map
 extension AppContext {
     
-    /**
-     This function builds a web map stored in the portal and sets it to the current map and the work mode to online.
-     */
+    /// Open a web map stored in the portal. Set it to the current map and the work mode to online.
     func setWorkModeOnlineWithMapFromPortal() {
         
         let portalItem = AGSPortalItem(portal: portal, itemID: AppConfiguration.webMapItemID)

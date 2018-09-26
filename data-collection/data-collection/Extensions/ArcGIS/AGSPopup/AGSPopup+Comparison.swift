@@ -45,7 +45,7 @@ enum PopupSortingError: Int, AppError {
 
 extension AGSPopup {
     
-    /// Facilitates sorting two `AGSPopup` objects for less than comparison based on the value of their first field.
+    /// Compare two `AGSPopup` objects for less than comparison based on the value of their first field.
     ///
     /// - Parameters:
     ///   - lhs: Left pop-up in comparison.
@@ -102,7 +102,7 @@ extension AGSPopup {
         }
     }
     
-    /// Facilitates sorting two `AGSPopup` objects for greater than comparison based on the value of their first field.
+    /// Compare two `AGSPopup` objects for greater than comparison based on the value of their first field.
     ///
     /// - Parameters:
     ///   - lhs: Left pop-up in comparison.

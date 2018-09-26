@@ -17,8 +17,10 @@ import UIKit
 
 extension UILabel {
     
-    /// Because a `UIStackView` removes an empty label, this function keeps the empty label in place
-    /// and from being removed by the stack view.
+    /// Modify a UILabel representing an empty string to ensure it is not automatically hidden by a `UIStackView`.
+    ///
+    /// Because a `UIStackView` removes an empty label, this function ensures the empty label remains in place
+    /// and from being removed by the stack view by setting its text to a single space.
     
     func considerEmptyString() {
         if let labelText = text, labelText.isEmpty {

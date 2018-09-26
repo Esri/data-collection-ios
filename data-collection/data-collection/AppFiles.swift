@@ -26,7 +26,7 @@ class AppFiles {
         static let offlineMap = "offlineMap"
     }
     
-    /// Builds a temporary directory, if needed, to store a map as it downloads.
+    /// Build a temporary directory, if needed, to store a map as it downloads.
     ///
     /// - Throws: FileManager errors thrown as a result of building the temporary offline map directory.
     func prepareTemporaryOfflineMapDirectory() throws {
@@ -52,7 +52,7 @@ class AppFiles {
 
 extension URL {
     
-    /// Builds an app-specific URL to where the offline map is be stored as it downloads to the temporary directory.
+    /// Build an app-specific URL to a temporary directory used to store the offline map during download.
     ///
     /// - Parameter itemID: The portal itemID that corresponds to your web map.
     ///
@@ -65,7 +65,7 @@ extension URL {
             .appendingPathComponent(itemID)
     }
     
-    /// Builds an app-specific URL to where the offline map is stored in the documents directory.
+    /// Build an app-specific URL to where the offline map is stored in the documents directory once downloaded.
     ///
     /// - Parameter itemID: The portal itemID that corresponds to your web map.
     ///

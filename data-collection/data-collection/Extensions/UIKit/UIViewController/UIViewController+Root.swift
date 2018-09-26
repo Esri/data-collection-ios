@@ -16,7 +16,7 @@ import UIKit
 
 extension UIViewController {
     
-    /// Facilitate determinig if the view controller is the first view controller (root) in the navigation controller's view controller stack.
+    /// Determine if the view controller is the first view controller (root) in the navigation controller's view controller stack.
     ///
     var isRootViewController: Bool {
         return self == navigationController?.viewControllers.first

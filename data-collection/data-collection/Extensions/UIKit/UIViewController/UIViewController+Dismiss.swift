@@ -16,7 +16,7 @@ import UIKit
 
 extension UIViewController {
     
-    /// Facilitates dismissing the view controller after a time interval.
+    /// Dismiss the view controller after a time interval.
     ///
     /// - Parameters:
     ///   - interval: The `TimeInterval` to wait before the view controller is dismissed.

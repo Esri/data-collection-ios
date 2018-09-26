@@ -17,7 +17,7 @@ import ArcGIS
 
 extension AGSArcGISFeatureTable {
     
-    /// Facilitates the table checking if popups are enabled for a table it is related to.
+    /// Check if popups are enabled for a related table.
     ///
     /// - Parameters:
     ///     - relationshipInfo: The relationship information defining which related table it is to check for.
@@ -41,7 +41,7 @@ extension AGSArcGISFeatureTable {
         return false
     }
     
-    /// Facilitates the table to optionally create a pop-up provided it's able to.
+    /// Create a pop-up for a new feature if possible.
     ///
     /// - Returns: a pop-up, if one was able to be created.
     

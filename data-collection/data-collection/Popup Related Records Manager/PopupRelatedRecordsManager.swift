@@ -66,9 +66,9 @@ class PopupRelatedRecordsManager: AGSPopupManager {
     
     // MARK: Popup Manager Editing Session
     
-    /// Cancels editing the pop-up's attributes as well as the editing it's many-to-one records.
+    /// Cancel editing the pop-up's attributes as well as its many-to-one records.
     ///
-    /// - Note: Many to one records are included in edits to the pop-up because the pop-up is the child
+    /// - Note: Many-to-one records are included in edits to the pop-up because the pop-up is the child
     /// in the relationship.
     ///
     override func cancelEditing() {
@@ -82,9 +82,9 @@ class PopupRelatedRecordsManager: AGSPopupManager {
         super.cancelEditing()
     }
     
-    /// Finishes editing of the pop-up's attributes as well as editing it's many-to-one records.
+    /// Finish editing the pop-up's attributes as well as it's many-to-one records.
     ///
-    /// - Note: Many to one records are included in edits to the pop-up because the pop-up is the child
+    /// - Note: Many-to-one records are included in edits to the pop-up because the pop-up is the child
     /// in the relationship.
     ///
     override func finishEditing(completion: @escaping (Error?) -> Void) {
@@ -115,7 +115,7 @@ class PopupRelatedRecordsManager: AGSPopupManager {
     
     // MARK: Custom Validation
     
-    /// Determines if the pop-up and related record editing session has validation errors.
+    /// Determine if the pop-up and related record editing session have validation errors.
     ///
     /// First, the validation checks if all composite many-to-one relationships have a record.
     /// Then, the manager checks if each editable display field validates.
@@ -146,7 +146,7 @@ class PopupRelatedRecordsManager: AGSPopupManager {
         return invalids
     }
     
-    /// Loads the pop-up's related records.
+    /// Load the pop-up's related records.
     ///
     /// - Parameter completion: The closure performed when all related records have loaded.
     ///
@@ -225,7 +225,7 @@ class PopupRelatedRecordsManager: AGSPopupManager {
     
     // MARK: Many To One
 
-    /// Stages and relates a new many-to-one record for a particular relationship info.
+    /// Stage and relate a new many-to-one record for a particular relationship info.
     ///
     /// - Parameters:
     ///   - popup: The new record to relate.
@@ -257,7 +257,7 @@ class PopupRelatedRecordsManager: AGSPopupManager {
     
     // MARK: One To Many
     
-    /// Stages and relates a new one-to-many record for a particular relationship info.
+    /// Stage and relate a new one-to-many record for a particular relationship info.
     ///
     /// - Parameters:
     ///   - popup: The new record to relate.
@@ -292,7 +292,7 @@ class PopupRelatedRecordsManager: AGSPopupManager {
         }
     }
 
-    /// Unrelates a one-to-many record for a particular relationship info.
+    /// Unrelate a one-to-many record for a particular relationship info.
     ///
     /// - Parameters:
     ///   - popup: The new record to unrelate.
@@ -330,7 +330,7 @@ class PopupRelatedRecordsManager: AGSPopupManager {
 
 extension PopupRelatedRecordsManager {
     
-    /// Facilitates providing a pop-up field for an index path.
+    /// Provide a pop-up field for an `UITableView` index path.
     ///
     /// This function is designed to be used with a `UITableViewDataSource`.
     ///
@@ -346,7 +346,7 @@ extension PopupRelatedRecordsManager {
         return attributeFields[indexPath.row]
     }
     
-    /// Facilitates providing a pop-up related records manager for an index path.
+    /// Provide a pop-up related records manager for an index path.
     ///
     /// This function is designed to be used with a `UITableViewDataSource`.
     /// This function will check if the index path references a related records manager within the many-to-one section
@@ -376,7 +376,7 @@ extension PopupRelatedRecordsManager {
 extension PopupRelatedRecordsManager {
     
     
-    /// Asks if the index path lies within the attributes section.
+    /// Does the index path lie within the attributes section?
     ///
     /// This function is designed to be used with a `UITableViewDataSource`.
     ///
@@ -395,7 +395,7 @@ extension PopupRelatedRecordsManager {
         return indexPath.row < nFields
     }
     
-    /// Asks if the index path lies within the many-to-one section.
+    /// Does the index path lie within the many-to-one section?
     ///
     /// This function is designed to be used with a `UITableViewDataSource`.
     ///
@@ -415,7 +415,7 @@ extension PopupRelatedRecordsManager {
         return manyToOne.count > offsetIndex
     }
 
-    /// Asks if the index path lies within the one-to-many section.
+    /// Does the index path lies within the one-to-many section?
     ///
     /// This function is designed to be used with a `UITableViewDataSource`.
     ///

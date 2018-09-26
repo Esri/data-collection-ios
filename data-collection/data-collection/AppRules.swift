@@ -67,7 +67,7 @@ class AppRules {
 
 extension Collection where Iterator.Element == AGSFeatureLayer {
     
-    /// An array of layers that adhere to the app imposed rule, is layer addable.
+    /// An array of layers that adhere to the app imposed rule "is layer addable".
     ///
     /// - Note: This can be used by an `AGSMap` to determine which of it's `operationalLayers` can be added to within this app.
     

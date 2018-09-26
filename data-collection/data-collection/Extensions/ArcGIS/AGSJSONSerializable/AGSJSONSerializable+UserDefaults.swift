@@ -17,7 +17,7 @@ import ArcGIS
 
 extension AGSJSONSerializable {
     
-    /// Facilitates retrieving and serializing an `AGSJSONSerializable` JSON object from `UserDefaults`.
+    /// Retrieve a JSON object from `UserDefaults` and instantiate an appropriate ArcGIS Runtime object if possible.
     ///
     /// Serializing `AGSJSONSerializable` objects to JSON allows them to be stored in `UserDefaults`.
     ///

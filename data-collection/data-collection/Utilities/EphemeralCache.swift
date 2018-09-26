@@ -14,12 +14,12 @@
 
 import Foundation
 
-/// A singleton, thread-safe caching system that allows you to set `AnyObject` that is both retrieved and removed from the cache upon the first get of that object.
+/// A singleton, thread-safe caching system that allows you to set `AnyObject` that is both retrieved
+/// and removed from the cache upon the first get of that object.
 ///
-/// The `EphemeralCachce` accomplishes this using `NSCache` and a concurrent `DispatchQueue` (with a barrier flag).
-///
+/// - Note: The `EphemeralCache` uses `NSCache` and a concurrent `DispatchQueue` (with a barrier flag).
 class EphemeralCache {
-    
+
     private static let shared = EphemeralCache()
     
     private var cache = NSCache<AnyObject, AnyObject>()
