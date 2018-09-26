@@ -47,7 +47,7 @@ extension AGSArcGISFeatureTable {
     
     func createPopup() -> AGSPopup? {
         
-        guard canAddFeature, let feature = createFeature() as? AGSArcGISFeature, let popupDefinition = popupDefinition else {
+        guard canAddFeature, let popupDefinition = popupDefinition, let feature = createFeature() as? AGSArcGISFeature else {
             return nil
         }
         
