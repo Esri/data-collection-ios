@@ -63,7 +63,7 @@ class AppConfiguration {
     /// Your organization's ArcGIS Runtime [license](https://developers.arcgis.com/arcgis-runtime/licensing/) key.
     /// - This step is optional during development but required for deployment.
     /// - Licensing the app will remove the "Licensed for Developer Use Only" watermark on the map view.
-    static let licenseKey: String = "fake_license_key"
+    static let licenseKey: String = "your_license_key"
     
     /// The App's public client ID.
     /// - The client ID is used by oAuth to authenticate a user.
