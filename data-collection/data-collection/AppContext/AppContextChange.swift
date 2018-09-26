@@ -32,7 +32,7 @@ enum AppContextChange {
             self.init(rawValue)
         }
         
-        static let currentPortal = Key("AppContextChangeKey.currentPortal")
+        static let currentPortal = Key("AppContextChange.currentPortal")
         static let currentMap = Key("AppContextChange.currentMap")
         static let hasOfflineMap = Key("AppContextChange.hasOfflineMap")
         static let locationAuthorization = Key("AppContextChange.locationAuthorization")

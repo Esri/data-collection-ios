@@ -40,16 +40,16 @@ extension MapViewController {
             
             var fallbackIndex = 0
             
-            let fallbackPopupManager = self?.currentPopup?.asManager
+            let fallbackPopupManager = self?.currentPopup?.asManager()
             
-            if let manyToOneManager = self?.recordsManager?.manyToOne.first?.relatedPopup?.asManager {
+            if let manyToOneManager = self?.recordsManager?.manyToOne.first?.relatedPopup?.asManager() {
                 var destinationIndex = 0
-                self?.relatedRecordHeaderLabel.text = manyToOneManager.nextFieldStringValue(fieldIndex: &destinationIndex) ?? fallbackPopupManager?.nextFieldStringValue(fieldIndex: &fallbackIndex)
-                self?.relatedRecordSubheaderLabel.text = manyToOneManager.nextFieldStringValue(fieldIndex: &destinationIndex) ?? fallbackPopupManager?.nextFieldStringValue(fieldIndex: &fallbackIndex)
+                self?.relatedRecordHeaderLabel.text = manyToOneManager.nextDisplayFieldStringValue(fieldIndex: &destinationIndex) ?? fallbackPopupManager?.nextDisplayFieldStringValue(fieldIndex: &fallbackIndex)
+                self?.relatedRecordSubheaderLabel.text = manyToOneManager.nextDisplayFieldStringValue(fieldIndex: &destinationIndex) ?? fallbackPopupManager?.nextDisplayFieldStringValue(fieldIndex: &fallbackIndex)
             }
             else {
-                self?.relatedRecordHeaderLabel.text = fallbackPopupManager?.nextFieldStringValue(fieldIndex: &fallbackIndex)
-                self?.relatedRecordSubheaderLabel.text = fallbackPopupManager?.nextFieldStringValue(fieldIndex: &fallbackIndex)
+                self?.relatedRecordHeaderLabel.text = fallbackPopupManager?.nextDisplayFieldStringValue(fieldIndex: &fallbackIndex)
+                self?.relatedRecordSubheaderLabel.text = fallbackPopupManager?.nextDisplayFieldStringValue(fieldIndex: &fallbackIndex)
             }
             
             if let oneToMany = self?.recordsManager?.oneToMany.first {
@@ -58,7 +58,7 @@ extension MapViewController {
                 self?.relatedRecordsNLabel.text = "\(n) \(name)"
             }
             else {
-                self?.relatedRecordsNLabel.text = fallbackPopupManager?.nextFieldStringValue(fieldIndex: &fallbackIndex)
+                self?.relatedRecordsNLabel.text = fallbackPopupManager?.nextDisplayFieldStringValue(fieldIndex: &fallbackIndex)
             }
             
             self?.addPopupRelatedRecordButton.isHidden = false

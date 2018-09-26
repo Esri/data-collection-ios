@@ -40,6 +40,7 @@ final class PopupCodedValueCell: PopupTextFieldCell, UIPickerViewDelegate, UIPic
     
     @objc func textFieldEditingDidBegin(_ textField: UITextField) {
         
+        // The picker view is substituted in place of a keyboard.
         let pickerView = UIPickerView()
         pickerView.delegate = self
         pickerView.dataSource = self

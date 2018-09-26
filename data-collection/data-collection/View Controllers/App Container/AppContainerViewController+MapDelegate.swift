@@ -20,7 +20,8 @@ extension AppContainerViewController: MapViewControllerDelegate {
     func mapViewController(_ mapViewController: MapViewController, didSelect extent: AGSGeometry) {
         
         do {
-            try FileManager.default.prepareTemporaryOfflineMapDirectory()
+            try appFiles.prepareTemporaryOfflineMapDirectory()
+            try appFiles.prepareOfflineMapDirectory()
         }
         catch {
             print("[Error]", error.localizedDescription)
@@ -35,9 +36,9 @@ extension AppContainerViewController: MapViewControllerDelegate {
         
         let scale = mapViewController.mapView.mapScale
         let directory: URL = .temporaryOfflineMapDirectoryURL(forWebMapItemID: AppConfiguration.webMapItemID)
-        let offlineJob = AppOfflineMapJobConstructionInfo.downloadMapOffline(map, directory, extent, scale)
+        let offlineJob = OfflineMapJobConstruct.downloadMapOffline(map, directory, extent, scale)
         
-        EphemeralCache.set(object: offlineJob, forKey: AppOfflineMapJobConstructionInfo.EphemeralCacheKeys.offlineMapJob)
+        EphemeralCache.set(object: offlineJob, forKey: OfflineMapJobConstruct.EphemeralCacheKeys.offlineMapJob)
         
         performSegue(withIdentifier: "presentJobStatusViewController", sender: nil)
     }

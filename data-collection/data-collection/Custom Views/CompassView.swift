@@ -90,7 +90,7 @@ class CompassView: UIButton {
     private func transform(forRotation rotation: Double) {
         compassFadeTriggerTimer?.invalidate()
         compassFadeTriggerTimer = nil
-        transform = CGAffineTransform(rotationAngle: CGFloat(-rotation.asRadians))
+        transform = CGAffineTransform(rotationDegree: rotation)
     }
     
     private func adjustForNorth() {

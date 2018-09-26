@@ -15,6 +15,7 @@
 import UIKit
 import ArcGIS
 
+/// This class displays a single pop-up field in a field cell.
 class PopupReadonlyFieldCell: UITableViewCell, PopupFieldCellProtocol {
     
     var field: AGSPopupField?
@@ -37,11 +38,13 @@ class PopupReadonlyFieldCell: UITableViewCell, PopupFieldCellProtocol {
         
         titleLabel.textColor = .tableCellTitle
         titleLabel.font = .tableCellTitle
+        titleLabel.adjustsFontForContentSizeCategory = true
         titleLabel.heightAnchor.constraint(equalToConstant: titleLabel.font.lineHeight).isActive = true
         stackView.addArrangedSubview(titleLabel)
         
         valueLabel.textColor = .tableCellValue
         valueLabel.font = .tableCellValue
+        valueLabel.adjustsFontForContentSizeCategory = true
         valueLabel.numberOfLines = 0
         
         insertValueLabel()
@@ -76,6 +79,7 @@ class PopupReadonlyFieldCell: UITableViewCell, PopupFieldCellProtocol {
         titleLabel.text = field.label
         valueLabel.text = popupManager.formattedValue(for: field)
         
+        // Because a `UIStackView` hides empty labels, this function ensures empty labels persist.
         titleLabel.considerEmptyString()
         valueLabel.considerEmptyString()
     }

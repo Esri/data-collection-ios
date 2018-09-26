@@ -88,10 +88,7 @@ class SlideNotificationView: UIView {
         }
         
         let completion: UIViewAnimationCompletion = { [weak self] (_) in
-            
-            let block: TimerBlock = { (_) in self?.hideLabel() }
-            
-            self?.hideLabelTimer = Timer.scheduledTimer(withTimeInterval: duration, repeats: false, block: block)
+            self?.hideLabelTimer = Timer.scheduledTimer(withTimeInterval: duration, repeats: false, block: { (_) in self?.hideLabel() })
         }
         
         UIView.animate(withDuration: slideAnimationDuration, delay: 0.0, options: .curveEaseOut, animations: animations, completion: completion)

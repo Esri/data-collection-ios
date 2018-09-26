@@ -15,6 +15,7 @@
 import UIKit
 import ArcGIS
 
+/// A generic subclass of `PopupReadonlyFieldCell` that allows the cell to be configured to view or edit a pop-up field.
 class PopupEditableFieldCell<ViewType: UIView>: PopupReadonlyFieldCell {
     
     internal var valueEditView: ViewType?

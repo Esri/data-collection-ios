@@ -76,7 +76,6 @@ extension RelatedRecordsPopupsViewController {
             
             rrvc.popup = childPopup
             rrvc.parentRecordsManager = parentRecordsManager
-//            self.navigationController?.pushViewController(rrvc, animated: true)
             show(rrvc, sender: self)
             
             return
@@ -94,6 +93,7 @@ extension RelatedRecordsPopupsViewController {
     
     override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         
+        // If the view controller is loading related records, we want to add an activity indicator view in the table view's header.
         guard section == 0, loadingRelatedRecords else {
             return nil
         }
@@ -116,6 +116,7 @@ extension RelatedRecordsPopupsViewController {
     
     override func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
         
+        // We don't want to offer edit row actions to pop-up fields.
         guard
             recordsManager.indexPathWithinOneToMany(indexPath),
             let cell = tableView.cellForRow(at: indexPath) as? RelatedRecordCell,
@@ -126,6 +127,7 @@ extension RelatedRecordsPopupsViewController {
         
         var actions = [UITableViewRowAction]()
         
+        // Add an edit action, if editable.
         if childPopup.isEditable {
             let editAction = UITableViewRowAction(style: UITableViewRowActionStyle.default, title: "Edit") { [weak self] (action, indexPath) in
                 self?.closeEditingSessionAndBeginEditing(childPopup: childPopup)
@@ -135,6 +137,7 @@ extension RelatedRecordsPopupsViewController {
             actions.append(editAction)
         }
 
+        // Add delete action, if can delete.
         if let feature = childPopup.geoElement as? AGSArcGISFeature, let featureTable = feature.featureTable as? AGSArcGISFeatureTable, featureTable.canDelete(feature) {
             let deleteAction = UITableViewRowAction(style: UITableViewRowActionStyle.default, title: "Delete") { [weak self] (action, indexPath) in
                 self?.present(confirmationAlertMessage: "Are you sure you want to delete this \(childPopup.title ?? "record")?", confirmationTitle: "Delete", confirmationAction: { [weak self] (_) in

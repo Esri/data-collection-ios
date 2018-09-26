@@ -15,13 +15,20 @@
 import Foundation
 import ArcGIS
 
+/// Determine if the app is configured to consume the _Trees of Portland_ web map.
+///
+/// If `true`, the app will perform custom behaviors required of that web map.
 var shouldEnactCustomBehavior: Bool {
     
+    // The Trees of Portland item ID.
+    // See: https://www.arcgis.com/home/item.html?id=fcc7fc65bb96464c9c0986576c119a92
     let treesOfPortlandWebmapItemID = "fcc7fc65bb96464c9c0986576c119a92"
     
+    // The current map's item will be an `AGSPortalItem` if the current map is a portal web map.
     if let portalItem = appContext.currentMap?.item as? AGSPortalItem {
         return portalItem.itemID == treesOfPortlandWebmapItemID
     }
+    // The current map's item will be an `AGSLocalItem` if the current map is an offline map.
     else if let localItem = appContext.currentMap?.item as? AGSLocalItem {
         return localItem.originalPortalItemID == treesOfPortlandWebmapItemID
     }

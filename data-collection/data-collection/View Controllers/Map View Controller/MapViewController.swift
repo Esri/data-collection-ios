@@ -108,39 +108,39 @@ class MapViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // MAPVIEW
+        // Assign the map view touch delegate and other configurations.
         setupMapView()
         
-        // ACTIVITY BAR
+        // Builds and constrains the activity view to the map view.
         setupActivityBarView()
         
-        // SETUPS
+        // Ensure the map view attribution bar top auto layout constraint is attached to the small pop-up view.
         setupMapViewAttributionBarAutoLayoutConstraints()
         
-        // SMALL POPUP
+        // Set up the small pop-up view.
         setupSmallPopupView()
 
-        // MAPVIEWMODE
+        // Set initial map view mode.
         adjustForMapViewMode(from: nil, to: mapViewMode)
         
-        // LOCATION SELECTION TYPE
-        adjustForLocationSelectionType()
-        
-        // COMPASS
+        // Associate the compass view to the map view.
         compassView.mapView = mapView
         
+        // Begin listening to changes to the app context.
         subscribeToAppContextChanges()
         
-        // Load Map and Services
+        // Load map from the app context.
         appContext.loadOfflineMobileMapPackageAndSetMapForCurrentWorkMode()
+        
+        // If location permission has been authorized, start the location display.
+        adjustForLocationAuthorizationStatus()
+        
+        // If device is not reachable upon launch, inform the end-user.
+        displayInitialReachabilityMessage()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
-        adjustForLocationAuthorizationStatus()
-        
-        displayInitialReachabilityMessage()
         
         refreshCurrentPopup()
     }
@@ -216,11 +216,9 @@ class MapViewController: UIViewController {
         }
 
         let workModeChange: AppContextChange = .workMode { [weak self] workMode in
-            DispatchQueue.main.async { [weak self] in
-                self?.activityBarView.colorA = (workMode == .online) ? UIColor.primary.lighter : .offlineLight
-                self?.activityBarView.colorB = (workMode == .online) ? UIColor.primary.darker : .offlineDark
-                self?.slideNotificationView.messageBackgroundColor = (workMode == .online) ? UIColor.primary.lighter : .offlineDark
-            }
+            self?.activityBarView.colorA = (workMode == .online) ? UIColor.primary.lighter : UIColor.offline.lighter
+            self?.activityBarView.colorB = (workMode == .online) ? UIColor.primary.darker : UIColor.offline.darker
+            self?.slideNotificationView.messageBackgroundColor = (workMode == .online) ? UIColor.primary.lighter : UIColor.offline.darker
         }
         
         let reachabilityChange: AppContextChange = .reachability { [weak self] reachable in

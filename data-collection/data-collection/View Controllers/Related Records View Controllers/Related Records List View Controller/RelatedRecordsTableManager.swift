@@ -15,6 +15,28 @@
 import Foundation
 import ArcGIS
 
+enum RelatedRecordsTableLoadError: Int, AppError {
+    
+    var baseCode: AppErrorBaseCode { return .RelatedRecordsTableLoadError }
+    
+    case canceledLoad = 1
+    
+    var errorCode: Int {
+        return baseCode.rawValue + self.rawValue
+    }
+    
+    var errorUserInfo: [String : Any] {
+        switch self {
+        case .canceledLoad:
+            return [NSLocalizedDescriptionKey: "Did cancel load."]
+        }
+    }
+    
+    var canceledLoad: String {
+        return errorUserInfo[NSLocalizedDescriptionKey] as! String
+    }
+}
+
 class RelatedRecordsTableManager: AGSLoadableBase {
     
     let featureTable: AGSArcGISFeatureTable
@@ -30,7 +52,7 @@ class RelatedRecordsTableManager: AGSLoadableBase {
     override func doCancelLoading() {
         query?.cancel()
         popups.removeAll()
-        loadDidFinishWithError(AppLoadableError.canceledLoad)
+        loadDidFinishWithError(RelatedRecordsTableLoadError.canceledLoad)
     }
     
     override func doStartLoading(_ retrying: Bool) {

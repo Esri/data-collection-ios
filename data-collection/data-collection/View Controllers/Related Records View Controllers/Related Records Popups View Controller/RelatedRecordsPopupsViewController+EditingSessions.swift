@@ -17,9 +17,11 @@ import ArcGIS
 
 extension RelatedRecordsPopupsViewController {
     
-    func editPopup(_ wantsEdit: Bool, completion: ((_ proceed: Bool) -> Void)? = nil) {
+    // This function is called to start or end editing the pop-up, with a completion closure.
+    func editPopup(_ startEditing: Bool, completion: ((_ proceed: Bool) -> Void)? = nil) {
         
-        if wantsEdit {
+        // Calls for the editing session to start, if possible.
+        if startEditing {
             
             guard !recordsManager.isEditing else {
                 completion?(true)
@@ -35,6 +37,7 @@ extension RelatedRecordsPopupsViewController {
             adjustViewControllerForEditState()
             completion?(true)
         }
+        // Finishes the editing session, if possible.
         else {
             
             guard recordsManager.isEditing else {
@@ -44,14 +47,14 @@ extension RelatedRecordsPopupsViewController {
             
             let invalids = recordsManager.validatePopup()
             
-            // 1. Check Validity
+            // Before saving, check that the pop-up and related records are valid.
             guard invalids.isEmpty else {
                 self.present(simpleAlertMessage: "You cannot save this \(popup.recordType.rawValue). There \(invalids.count == 1 ? "is" : "are") \(invalids.count) invalid field\(invalids.count == 1 ? "" : "s").")
                 completion?(false)
                 return
             }
             
-            // 2. Finish Editing
+            // Then, finish editing the pop-up.
             recordsManager.finishEditing { [weak self] (error) in
                 
                 guard
@@ -68,7 +71,7 @@ extension RelatedRecordsPopupsViewController {
                 
                 SVProgressHUD.show(withStatus: "Saving \(self?.popup.recordType.rawValue.capitalized ?? "Popup")...")
                 
-                if let childPopup = self?.popup, let manager = self?.parentRecordsManager, let relationship = manager.popup.relationship(withPopup: childPopup), relationship.isOneToMany {
+                if let childPopup = self?.popup, let manager = self?.parentRecordsManager, let relationship = manager.popup.oneToManyRelationship(withPopup: childPopup) {
                     
                     do {
                         try manager.edit(oneToMany: childPopup, forRelationship: relationship)
@@ -81,6 +84,7 @@ extension RelatedRecordsPopupsViewController {
                     }
                 }
                 
+                // Finally, persist the changes to the feature table.
                 featureTable.performEdit(feature: feature, completion: { [weak self] (error) in
                     
                     SVProgressHUD.dismiss()
@@ -92,12 +96,14 @@ extension RelatedRecordsPopupsViewController {
                     
                     self?.adjustViewControllerForEditState()
                     
-                    self?.customTreeBehavior { completion?(true) }
+                    // If the web map in question is Trees of Portland, perform an additional custom behavior, else finish.
+                    self?.checkIfShouldPerformCustomBehavior() { completion?(true) }
                 })
             }
         }
     }
     
+    // Presents a confirmation message alerting the user they must finish or cancel the pop-up editing session before proceeding.
     func attemptToSavePopup(_ completion: @escaping (_ shouldProceed: Bool) -> Void) {
         
         guard recordsManager.isEditing else {
@@ -111,9 +117,12 @@ extension RelatedRecordsPopupsViewController {
     }
     
     // MARK: Delete Feature
+    
+    // Unrelates, if needed, and deletes a record from it's table.
     private func delete(popup: AGSPopup, parentPopupManager: PopupRelatedRecordsManager?, completion: @escaping (Bool) -> Void) {
         
-        if let parentManager = parentPopupManager, let relationship = parentManager.popup.relationship(withPopup: popup), relationship.isOneToMany {
+        // If the record is in a relationship, unrelate the two.
+        if let parentManager = parentPopupManager, let relationship = parentManager.popup.oneToManyRelationship(withPopup: popup) {
             
             do {
                 try parentManager.delete(oneToMany: popup, forRelationship: relationship)
@@ -130,6 +139,7 @@ extension RelatedRecordsPopupsViewController {
             return
         }
         
+        // Delete the record from the table.
         featureTable.performDelete(feature: feature) { [weak self] (error) in
             
             guard error == nil else {
@@ -138,10 +148,11 @@ extension RelatedRecordsPopupsViewController {
                 return
             }
             
-            self?.customTreeBehavior { completion(true) }
+            self?.checkIfShouldPerformCustomBehavior { completion(true) }
         }
     }
     
+    // Confirms with the user their intention to delete a record and performs the delete, if they confirm.
     func deletePopupAndDismissViewController() {
         
         present(confirmationAlertMessage: "Are you sure you want to delete \(popup.recordType.rawValue)?", confirmationTitle: "Delete", confirmationAction: { [weak self] (_) in
@@ -167,6 +178,8 @@ extension RelatedRecordsPopupsViewController {
             }, animated: true, completion: nil)
     }
     
+    // In order to delete a child record, an editing session of the pop-up must be closed.
+    // If editing, this function confirms with the user their intention to save the currently active editing session before deleting the child pop-up.
     func closeEditingSessionAndDelete(childPopup: AGSPopup) {
         
         let deletePopup: (AGSPopup) -> Void = { childPopup in
@@ -186,7 +199,7 @@ extension RelatedRecordsPopupsViewController {
         
         if recordsManager.isEditing {
             
-            // save first
+            // Save the pop-up first.
             attemptToSavePopup { [weak self] (shouldProceed: Bool) in
                 
                 guard shouldProceed else {
@@ -202,6 +215,8 @@ extension RelatedRecordsPopupsViewController {
         }
     }
     
+    // In order to edit a child one-to-many record, an editing session of the pop-up must be closed.
+    // If editing, this function confirms with the user their intention to save the currently active editing session before editing the child pop-up.
     func closeEditingSessionAndBeginEditing(childPopup: AGSPopup) {
         
         let beginEditing: (AGSPopup) -> Void = { [weak self] childPopup in

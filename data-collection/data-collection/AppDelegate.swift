@@ -22,36 +22,36 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         
-        // License the app
+        // License the app.
         AppDelegate.licenseApplication()
         
-        // Reachability
-        appReachability.resetAndStartListening()
-        
-        // Enable credential cache auto sync
+        // Enable credential cache auto sync.
         AppDelegate.configCredentialCacheAutoSyncToKeychain()
         
-        // Configure oAuth redirect URL
+        // Configure oAuth redirect URL.
         AppDelegate.configOAuthRedirectURL()
         
-        // Attempt to login from previously stored credentials
+        // Reset first reachability change status flag then start listening to reachability status changes.
+        appReachability.resetAndStartListening()
+        
+        // Attempt to login from previously stored credentials.
         appContext.logInCurrentPortalIfPossible()
         
-        // Configure file documents directories for offline usage
-        FileManager.buildOfflineMapDirectory()
-
         return true
     }
     
     func applicationWillEnterForeground(_ application: UIApplication) {
+        // Reset first reachability change status flag then start listening to reachability status changes.
         appReachability.resetAndStartListening()
     }
     
     func applicationWillResignActive(_ application: UIApplication) {
+        // Stop listening to reachability status changes.
         appReachability.stopListening()
     }
     
     func applicationWillTerminate(_ application: UIApplication) {
+        // Stop listening to reachability status changes.
         appReachability.stopListening()
     }
 }
@@ -66,7 +66,7 @@ extension AppDelegate {
         // to handle OAuth and call back to this application.
         if let urlComponents = URLComponents(url: url, resolvingAgainstBaseURL: false), urlComponents.scheme == AppConfiguration.urlScheme, urlComponents.host == AppConfiguration.urlAuthPath {
             
-            // Pass the OAuth callback through to the ArcGIS Runtime helper function
+            // Pass the OAuth callback through to the ArcGIS Runtime SDK's helper function.
             AGSApplicationDelegate.shared().application(app, open: url, options: options)
             
             // See if we were called back with confirmation that we're authorized.
@@ -94,14 +94,16 @@ extension AppDelegate {
 
 extension AppDelegate {
     
+    /// License the ArcGIS application with the configured ArcGIS Runtime deployment license key.
+    ///
+    /// - Note: An invalid key does not throw an exception, but simply fails to license the app,
+    ///   falling back to Developer Mode (which will display a watermark on the map view).
     static func licenseApplication() {
-        
         do {
             try AGSArcGISRuntimeEnvironment.setLicenseKey(AppConfiguration.licenseKey)
         } catch {
-            print("Error licensing app: \(error.localizedDescription)")
+            print("[Error: AGSArcGISRuntimeEnvironment] Error licensing app: \(error.localizedDescription)")
         }
-        
         print("[ArcGIS Runtime License] \(AGSArcGISRuntimeEnvironment.license())")
     }
 }

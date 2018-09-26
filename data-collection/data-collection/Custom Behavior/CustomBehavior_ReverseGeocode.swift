@@ -15,10 +15,22 @@
 import Foundation
 import ArcGIS
 
+/// Behavior specific to the _Trees of Portland_ web map.
+///
+/// When creating a new tree, this function uses a geocoder to reverse-geocode an address, provided a point.
+///
+/// - Param:
+///     - popup: The new tree.
+///     - point: The point used to reverse-geocode for an address.
+///     - completion: The callback called upon completion. The operation finishes successfully or fails, silently.
+
 func enrich(popup: AGSPopup, withReverseGeocodedDataForPoint point: AGSPoint, completion: @escaping () -> Void) {
     
     let addressKey = "Address"
     
+    // Use the geocoder to reverse geocode an address from a point.
+    // If the app is working online, the world geocoder service is used.
+    // If the app is working offline, the side loaded geocoder is used.
     appReverseGeocoder.reverseGeocode(forPoint: point) { (address, error)  in
         
         guard error == nil else {

@@ -12,7 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import Foundation
 import UIKit
 
 final class PopupDateCell: PopupTextFieldCell {
@@ -41,10 +40,10 @@ final class PopupDateCell: PopupTextFieldCell {
         updateCellValue(sender.date)
 
         guard let field = field else {
-            valueEditView?.text = sender.date.mediumDateFormatted
+            valueEditView?.text = AppDateFormatter.format(mediumDate: sender.date)
             return
         }
         
-        valueEditView?.text = popupManager?.formattedValue(for: field) ?? sender.date.mediumDateFormatted
+        valueEditView?.text = popupManager?.formattedValue(for: field) ?? AppDateFormatter.format(mediumDate: sender.date)
     }
 }

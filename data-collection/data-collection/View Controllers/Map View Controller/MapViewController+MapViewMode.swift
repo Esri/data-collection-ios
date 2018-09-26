@@ -18,20 +18,18 @@ extension MapViewController {
     
     func adjustForMapViewMode(from: MapViewMode?, to: MapViewMode) {
         
-        if let from = from, from == to {
-            return
-        }
+        if let from = from, from == to { return }
         
         let smallPopViewVisible: (Bool) -> UIViewAnimations = { [weak self] (visible) in
             return {
-                self?.smallPopupView.alpha = visible.asAlpha
+                self?.smallPopupView.alpha = CGFloat(visible)
                 self?.featureDetailViewBottomConstraint.constant = visible ? 8 : 28
             }
         }
         
         let selectViewVisible: (Bool) -> UIViewAnimations = { [weak self] (visible) in
             return {
-                self?.selectView.alpha = visible.asAlpha
+                self?.selectView.alpha = CGFloat(visible)
                 guard let selectViewHeight = self?.selectView.frame.height else {
                     return
                 }

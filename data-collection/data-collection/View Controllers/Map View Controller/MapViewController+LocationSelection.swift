@@ -55,12 +55,12 @@ extension MapViewController {
     @IBAction func userDidCancelSelectLocation(_ sender: Any) {
         
         switch locationSelectionType {
+            
         case .newFeature:
             EphemeralCache.remove(objectForKey: EphemeralCacheKeys.newNonSpatialFeature)
-            break
+
         case .offlineExtent:
             hideMapMaskViewForOfflineDownloadArea()
-            break
         }
         
         mapViewMode = .defaultView
@@ -199,11 +199,13 @@ extension MapViewController {
     
     private func prepareForOfflineMapDownloadJob() {
         
-        guard let geometry = mapView.convertExtent(fromRect: maskViewController.maskRect) else {
-            present(simpleAlertMessage: "Could not determine extent for offline map.")
-            return
+        do {
+            let geometry = try mapView.convertExtent(fromRect: maskViewController.maskRect)
+            delegate?.mapViewController(self, didSelect: geometry)
         }
-        
-        delegate?.mapViewController(self, didSelect: geometry)
+        catch {
+            print("[Error: AGSMapView]", error.localizedDescription)
+            present(simpleAlertMessage: "Could not determine extent for offline map.")
+        }
     }
 }

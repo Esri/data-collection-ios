@@ -15,16 +15,27 @@
 import Foundation
 import ArcGIS
 
+/// Behavior specific to the _Trees of Portland_ web map.
+///
+/// When creating or updating an inspection, this function is used to update the symbology of the parent tree
+/// according to which inspection's date is newest.
+///
+/// - Param:
+///     - treeManager: The tree's manager object.
+///     - completion: The callback called upon completion. The operation is successful or fails, silently.
+
 func updateSymbology(withTreeManager treeManager: PopupRelatedRecordsManager, completion: @escaping () -> Void) {
     
     // This function will be called only after the inspections array has been sorted by inspection date
 
+    // First, find the tree's inspection manager.
     guard let inspectionsManager = treeManager.oneToMany.first(where: { (manager) -> Bool in manager.name == "Inspections" }) else {
         print("[Error: Update Symbology] could not find inspections manager.")
         completion()
         return
     }
     
+    // Next, ensure the tree record can update.
     guard
         let treeFeature = treeManager.popup.geoElement as? AGSArcGISFeature,
         let treeFeatureTable = treeFeature.featureTable as? AGSArcGISFeatureTable,
@@ -36,6 +47,7 @@ func updateSymbology(withTreeManager treeManager: PopupRelatedRecordsManager, co
         return
     }
     
+    // Then, find the newest inspection.
     guard
         let newestInspection = inspectionsManager.relatedPopups.first,
         let newestInspectionFeature = newestInspection.geoElement as? AGSArcGISFeature,
@@ -62,9 +74,11 @@ func updateSymbology(withTreeManager treeManager: PopupRelatedRecordsManager, co
         return
     }
     
+    // Update the condtion and dbh of the tree reflecting those of the newest inspection.
     treeFeature.attributes[conditionKey] = newestInspectionFeature.attributes[conditionKey]
     treeFeature.attributes[dbhKey] = newestInspectionFeature.attributes[dbhKey]
     
+    // Finally, persist the change to the table.
     treeFeatureTable.performEdit(feature: treeFeature) { (error) in
         
         if let error = error {
@@ -77,7 +91,8 @@ func updateSymbology(withTreeManager treeManager: PopupRelatedRecordsManager, co
 
 extension RelatedRecordsPopupsViewController {
     
-    func customTreeBehavior(_ completion: @escaping () -> Void) {
+    /// Facilitates enacting the custom symbology behavior.
+    func checkIfShouldPerformCustomBehavior(_ completion: @escaping () -> Void) {
         
         if shouldEnactCustomBehavior {
             
