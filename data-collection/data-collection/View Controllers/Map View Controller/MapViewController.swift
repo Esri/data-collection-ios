@@ -216,11 +216,9 @@ class MapViewController: UIViewController {
         }
 
         let workModeChange: AppContextChange = .workMode { [weak self] workMode in
-            DispatchQueue.main.async { [weak self] in
-                self?.activityBarView.colorA = (workMode == .online) ? UIColor.primary.lighter : .offlineLight
-                self?.activityBarView.colorB = (workMode == .online) ? UIColor.primary.darker : .offlineDark
-                self?.slideNotificationView.messageBackgroundColor = (workMode == .online) ? UIColor.primary.lighter : .offlineDark
-            }
+            self?.activityBarView.colorA = (workMode == .online) ? UIColor.primary.lighter : UIColor.offline.lighter
+            self?.activityBarView.colorB = (workMode == .online) ? UIColor.primary.darker : UIColor.offline.darker
+            self?.slideNotificationView.messageBackgroundColor = (workMode == .online) ? UIColor.primary.lighter : UIColor.offline.darker
         }
         
         let reachabilityChange: AppContextChange = .reachability { [weak self] reachable in
