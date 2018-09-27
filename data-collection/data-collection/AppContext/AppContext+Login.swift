@@ -54,7 +54,7 @@ extension AppContext {
     func logout() {
         // We want to remove cached credentials upon logout.
         AGSAuthenticationManager.shared().credentialCache.removeAllCredentials()
-        // We want to remove cached credentials from geo-coder services
+        // We want to remove cached credentials from geo-coder services, in case they are cached.
         appReverseGeocoder.removeCredentialsFromServices()
         // Setting `loginRequired` to `false` will allow unauthenticated users to consume the map (but not edit!)
         portal = AppConfiguration.buildConfiguredPortal(loginRequired: false)
