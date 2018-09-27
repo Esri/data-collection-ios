@@ -136,6 +136,7 @@ extension MapViewController {
             return
         }
         
+        SVProgressHUD.setContainerView(self.view)
         SVProgressHUD.show(withStatus: "Preparing new \(newPopup.tableName ?? "record").")
         
         let centerPoint = mapView.centerAGSPoint
@@ -148,6 +149,7 @@ extension MapViewController {
             EphemeralCache.set(object: newPopup, forKey: EphemeralCacheKeys.newSpatialFeature)
             
             SVProgressHUD.dismiss()
+            SVProgressHUD.setContainerView(nil)
             
             self?.performSegue(withIdentifier: "modallyPresentRelatedRecordsPopupViewController", sender: nil)
         }
