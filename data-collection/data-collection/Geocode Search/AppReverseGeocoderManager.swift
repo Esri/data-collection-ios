@@ -51,6 +51,11 @@ class AppReverseGeocoderManager: AGSLoadableBase {
     // Offline locator using the side loaded 'AddressLocator'.
     private let offlineLocatorTask = AGSLocatorTask(name: "AddressLocator")
     
+    func removeCredentialsFromServices() {
+        onlineLocatorTask.credential = nil
+        offlineLocatorTask.credential = nil
+    }
+    
     override func doCancelLoading() {
         
         onlineLocatorTask.cancelLoad()
