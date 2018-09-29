@@ -35,48 +35,40 @@ func updateSymbology(withTreeManager treeManager: PopupRelatedRecordsManager, co
         return
     }
     
+    let conditionKey = "Condition"
+    let dbhKey = "DBH"
+    
     // Next, ensure the tree record can update.
     guard
         let treeFeature = treeManager.popup.geoElement as? AGSArcGISFeature,
         let treeFeatureTable = treeFeature.featureTable as? AGSArcGISFeatureTable,
         treeFeatureTable.canUpdate(treeFeature),
-        treeFeatureTable.tableName == "Trees"
+        treeFeatureTable.tableName == "Trees",
+        treeFeature.attributes[conditionKey] != nil,
+        treeFeature.attributes[dbhKey] != nil
         else {
-        print("[Error: Update Symbology] could not find tree table or update tree.")
+        print("[Error: Update Symbology] tree feature not configured properly.")
         completion()
         return
     }
     
     // Then, find the newest inspection.
-    guard
-        let newestInspection = inspectionsManager.relatedPopups.first,
+    if let newestInspection = inspectionsManager.relatedPopups.first,
         let newestInspectionFeature = newestInspection.geoElement as? AGSArcGISFeature,
         let newestInspectionFeatureTable = newestInspectionFeature.featureTable as? AGSArcGISFeatureTable,
-        newestInspectionFeatureTable.tableName == "Inspections"
-        else {
-            print("[Error: Update Symbology] could not find inspections table.")
-            completion()
-            return
+        newestInspectionFeatureTable.tableName == "Inspections",
+        newestInspectionFeature.attributes[conditionKey] != nil,
+        newestInspectionFeature.attributes[dbhKey] != nil {
+         // Update the condtion and dbh of the tree reflecting those of the newest inspection.
+        treeFeature.attributes[conditionKey] = newestInspectionFeature.attributes[conditionKey]
+        treeFeature.attributes[dbhKey] = newestInspectionFeature.attributes[dbhKey]
     }
-    
-    let conditionKey = "Condition"
-    let dbhKey = "DBH"
-    
-    guard treeFeature.attributes[conditionKey] != nil, treeFeature.attributes[dbhKey] != nil else {
-        print("[Error: Update Symbology] tree attributes doesn't contain condition or dbh keys.")
-        completion()
-        return
+    // Unless there is no newest inspection.
+    else {
+         // Update the condtion and dbh of the tree to reflect a missing inspection.
+        treeFeature.attributes[conditionKey] = NSNull()
+        treeFeature.attributes[dbhKey] = NSNull()
     }
-    
-    guard newestInspectionFeature.attributes[conditionKey] != nil, newestInspectionFeature.attributes[dbhKey] != nil else {
-        print("[Error: Update Symbology] inspection attributes doesn't contain condition or dbh keys.")
-        completion()
-        return
-    }
-    
-    // Update the condtion and dbh of the tree reflecting those of the newest inspection.
-    treeFeature.attributes[conditionKey] = newestInspectionFeature.attributes[conditionKey]
-    treeFeature.attributes[dbhKey] = newestInspectionFeature.attributes[dbhKey]
     
     // Finally, persist the change to the table.
     treeFeatureTable.performEdit(feature: treeFeature) { (error) in
