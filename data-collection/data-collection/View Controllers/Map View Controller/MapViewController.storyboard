@@ -85,7 +85,7 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="A LONG ADDRESS COULD POSSIBLY " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.75" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="6lj-pJ-A8j">
-                                                <rect key="frame" x="16" y="46" width="191" height="17"/>
+                                                <rect key="frame" x="16" y="46" width="187" height="17"/>
                                                 <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
@@ -99,7 +99,7 @@
                                         </subviews>
                                         <color key="backgroundColor" white="1" alpha="0.80000000000000004" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
-                                            <constraint firstItem="yVa-3F-14f" firstAttribute="leading" secondItem="6lj-pJ-A8j" secondAttribute="trailing" id="1CX-1k-No9"/>
+                                            <constraint firstItem="yVa-3F-14f" firstAttribute="leading" secondItem="6lj-pJ-A8j" secondAttribute="trailing" constant="4" id="1CX-1k-No9"/>
                                             <constraint firstItem="qdc-PH-C8o" firstAttribute="leading" secondItem="XFk-gB-uaM" secondAttribute="leading" constant="16" id="K8W-fV-ksf"/>
                                             <constraint firstItem="qdc-PH-C8o" firstAttribute="top" secondItem="XFk-gB-uaM" secondAttribute="top" constant="8" id="dy5-71-0Yh"/>
                                             <constraint firstItem="6lj-pJ-A8j" firstAttribute="top" secondItem="qdc-PH-C8o" secondAttribute="bottom" constant="8" id="eL2-vv-IXL"/>
