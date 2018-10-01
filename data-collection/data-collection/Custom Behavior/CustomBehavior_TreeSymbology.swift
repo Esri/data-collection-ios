@@ -56,12 +56,10 @@ func updateSymbology(withTreeManager treeManager: PopupRelatedRecordsManager, co
     if let newestInspection = inspectionsManager.relatedPopups.first,
         let newestInspectionFeature = newestInspection.geoElement as? AGSArcGISFeature,
         let newestInspectionFeatureTable = newestInspectionFeature.featureTable as? AGSArcGISFeatureTable,
-        newestInspectionFeatureTable.tableName == "Inspections",
-        newestInspectionFeature.attributes[conditionKey] != nil,
-        newestInspectionFeature.attributes[dbhKey] != nil {
+        newestInspectionFeatureTable.tableName == "Inspections" {
          // Update the condtion and dbh of the tree reflecting those of the newest inspection.
-        treeFeature.attributes[conditionKey] = newestInspectionFeature.attributes[conditionKey]
-        treeFeature.attributes[dbhKey] = newestInspectionFeature.attributes[dbhKey]
+        treeFeature.attributes[conditionKey] = newestInspectionFeature.attributes[conditionKey] ?? NSNull()
+        treeFeature.attributes[dbhKey] = newestInspectionFeature.attributes[dbhKey] ?? NSNull()
     }
     // Unless there is no newest inspection.
     else {
