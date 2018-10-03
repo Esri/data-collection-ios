@@ -68,6 +68,7 @@ class AppConfiguration {
     /// The App's public client ID.
     /// - The client ID is used by oAuth to authenticate a user.
     /// - The client ID can be found in the **Credentials** section of the **Authentication** tab within the [Dashboard of the ArcGIS for Developers site](https://developers.arcgis.com/applications).
+    /// - Note: Change this to reflect your organization's client ID.
     static let clientID: String = "h3em0ifYNGfz3uHX"
 }
 
