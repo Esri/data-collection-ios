@@ -20,9 +20,7 @@ import ArcGIS
 /// When creating a new tree, this function populates the condition attribute with a default value. 
 /// The default value is "good".
 ///
-/// - Param:
-///     - popup: The new tree.
-
+/// - Parameters popup: The new tree.
 func configureDefaultCondition(forPopup popup: AGSPopup) {
     
     let conditionKey = "Condition"

@@ -19,11 +19,10 @@ import ArcGIS
 ///
 /// When creating a new tree, this function uses a geocoder to reverse-geocode an address, provided a point.
 ///
-/// - Param:
+/// - Parameters:
 ///     - popup: The new tree.
 ///     - point: The point used to reverse-geocode for an address.
 ///     - completion: The callback called upon completion. The operation finishes successfully or fails, silently.
-
 func enrich(popup: AGSPopup, withReverseGeocodedDataForPoint point: AGSPoint, completion: @escaping () -> Void) {
     
     let addressKey = "Address"

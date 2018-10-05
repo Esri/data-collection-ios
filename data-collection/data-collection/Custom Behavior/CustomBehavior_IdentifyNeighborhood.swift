@@ -20,11 +20,10 @@ import ArcGIS
 /// When creating a new tree, this function queries the neighbhoords layer to populate the created tree's
 /// attributes dictionary with the resulting neighborhood's name.
 ///
-/// - Param:
+/// - Parameters:
 ///     - popup: The new tree.
 ///     - point: The point used in the spatial query.
 ///     - completion: The callback called upon completion. The operation is successful or fails, silently.
-
 func enrich(popup: AGSPopup, withNeighborhoodIdentifyForPoint point: AGSPoint, completion: @escaping () -> Void) {
     
     guard let map = appContext.currentMap else {
