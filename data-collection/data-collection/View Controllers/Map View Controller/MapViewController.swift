@@ -132,7 +132,7 @@ class MapViewController: UIViewController {
         // Load map from the app context.
         appContext.loadOfflineMobileMapPackageAndSetMapForCurrentWorkMode()
         
-        // If location permission has been authorized, start the location display.
+        // Adjust location display for app location authorization status. If location authorized is undetermined, this will prompt the user for authorization.
         adjustForLocationAuthorizationStatus()
         
         // If device is not reachable upon launch, inform the end-user.
