@@ -20,10 +20,9 @@ import ArcGIS
 /// When creating or updating an inspection, this function is used to update the symbology of the parent tree
 /// according to which inspection's date is newest.
 ///
-/// - Param:
+/// - Parameters:
 ///     - treeManager: The tree's manager object.
 ///     - completion: The callback called upon completion. The operation is successful or fails, silently.
-
 func updateSymbology(withTreeManager treeManager: PopupRelatedRecordsManager, completion: @escaping () -> Void) {
     
     // This function will be called only after the inspections array has been sorted by inspection date
