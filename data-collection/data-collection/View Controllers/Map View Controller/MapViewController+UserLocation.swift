@@ -39,16 +39,14 @@ extension MapViewController {
         
         mapView.locationDisplay.showLocation = appLocation.locationAuthorized
         mapView.locationDisplay.showAccuracy = appLocation.locationAuthorized
+    }
+    
+    func startLocationDisplay() {
         
-        if appLocation.locationAuthorized {
-            mapView.locationDisplay.start { (err) in
-                if let error = err {
-                    print("[Error] Cannot display user location: \(error.localizedDescription)")
-                }
+        mapView.locationDisplay.start { (err) in
+            if let error = err {
+                print("[Error] Cannot display user location: \(error.localizedDescription)")
             }
-        }
-        else {
-            mapView.locationDisplay.stop()
         }
     }
 }
