@@ -129,7 +129,7 @@ extension RelatedRecordsPopupsViewController {
         
         // Add an edit action, if editable.
         if childPopup.isEditable {
-            let editAction = UITableViewRowAction(style: UITableViewRowAction.Style.default, title: "Edit") { [weak self] (action, indexPath) in
+            let editAction = UITableViewRowAction(style: .default, title: "Edit") { [weak self] (action, indexPath) in
                 self?.closeEditingSessionAndBeginEditing(childPopup: childPopup)
             }
             
@@ -139,7 +139,7 @@ extension RelatedRecordsPopupsViewController {
 
         // Add delete action, if can delete.
         if let feature = childPopup.geoElement as? AGSArcGISFeature, let featureTable = feature.featureTable as? AGSArcGISFeatureTable, featureTable.canDelete(feature) {
-            let deleteAction = UITableViewRowAction(style: UITableViewRowAction.Style.default, title: "Delete") { [weak self] (action, indexPath) in
+            let deleteAction = UITableViewRowAction(style: .default, title: "Delete") { [weak self] (action, indexPath) in
                 self?.present(confirmationAlertMessage: "Are you sure you want to delete this \(childPopup.title ?? "record")?", confirmationTitle: "Delete", confirmationAction: { [weak self] (_) in
                     self?.closeEditingSessionAndDelete(childPopup: childPopup)
                 })

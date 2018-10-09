@@ -55,7 +55,7 @@ extension UIViewController {
                 self?.present(simpleAlertMessage: "Error opening Settings App.")
                 return
             }
-            UIApplication.shared.open(url, options: convertToUIApplicationOpenExternalURLOptionsKeyDictionary([:]), completionHandler: nil)
+            UIApplication.shared.open(url, options: [:], completionHandler: nil)
         }, isDestructive: false)
         present(alert, animated: animated, completion: completion)
     }
@@ -71,10 +71,4 @@ extension UIViewController {
         let alert = UIAlertController.multiAlert(message: message, actionTitle: confirmationTitle, action: confirmationAction, isDestructive: true)
         present(alert, animated: animated, completion: completion)
     }
-}
-
-
-// Helper function inserted by Swift 4.2 migrator.
-fileprivate func convertToUIApplicationOpenExternalURLOptionsKeyDictionary(_ input: [String: Any]) -> [UIApplication.OpenExternalURLOptionsKey: Any] {
-	return Dictionary(uniqueKeysWithValues: input.map { key, value in (UIApplication.OpenExternalURLOptionsKey(rawValue: key), value)})
 }
