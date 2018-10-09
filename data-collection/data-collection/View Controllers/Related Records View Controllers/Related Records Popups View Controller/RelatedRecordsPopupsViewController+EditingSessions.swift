@@ -221,10 +221,10 @@ extension RelatedRecordsPopupsViewController {
         
         let beginEditing: (AGSPopup) -> Void = { [weak self] childPopup in
             
-            guard let strongSelf = self else { return }
+            guard let self = self else { return }
             
-            guard let rrvc = self?.storyboard?.instantiateViewController(withIdentifier: "RelatedRecordsPopupsViewController") as? RelatedRecordsPopupsViewController, let parentRecordsManager = self?.recordsManager else {
-                self?.present(simpleAlertMessage: "An unknown error occurred!")
+            guard let rrvc = self.storyboard?.instantiateViewController(withIdentifier: "RelatedRecordsPopupsViewController") as? RelatedRecordsPopupsViewController, let parentRecordsManager = self.recordsManager else {
+                self.present(simpleAlertMessage: "An unknown error occurred!")
                 return
             }
             
@@ -232,7 +232,7 @@ extension RelatedRecordsPopupsViewController {
             rrvc.parentRecordsManager = parentRecordsManager
             rrvc.editPopup(true)
             
-            strongSelf.show(rrvc, sender: strongSelf)
+            self.show(rrvc, sender: self)
         }
         
         if recordsManager.isEditing {
