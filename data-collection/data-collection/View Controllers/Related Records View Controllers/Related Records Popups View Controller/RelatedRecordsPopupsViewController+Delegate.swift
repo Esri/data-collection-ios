@@ -102,7 +102,7 @@ extension RelatedRecordsPopupsViewController {
         let container = UIView(frame: CGRect(x: 0.0, y: 0.0, width: tableView.frame.size.width, height: containerHeight))
         container.backgroundColor = .clear
         
-        let activity = UIActivityIndicatorView(activityIndicatorStyle: .gray)
+        let activity = UIActivityIndicatorView(style: .gray)
         activity.startAnimating()
         
         container.addSubview(activity)
@@ -110,7 +110,7 @@ extension RelatedRecordsPopupsViewController {
         return container
     }
     
-    override func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCellEditingStyle {
+    override func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
         return .none
     }
     
@@ -129,7 +129,7 @@ extension RelatedRecordsPopupsViewController {
         
         // Add an edit action, if editable.
         if childPopup.isEditable {
-            let editAction = UITableViewRowAction(style: UITableViewRowActionStyle.default, title: "Edit") { [weak self] (action, indexPath) in
+            let editAction = UITableViewRowAction(style: UITableViewRowAction.Style.default, title: "Edit") { [weak self] (action, indexPath) in
                 self?.closeEditingSessionAndBeginEditing(childPopup: childPopup)
             }
             
@@ -139,7 +139,7 @@ extension RelatedRecordsPopupsViewController {
 
         // Add delete action, if can delete.
         if let feature = childPopup.geoElement as? AGSArcGISFeature, let featureTable = feature.featureTable as? AGSArcGISFeatureTable, featureTable.canDelete(feature) {
-            let deleteAction = UITableViewRowAction(style: UITableViewRowActionStyle.default, title: "Delete") { [weak self] (action, indexPath) in
+            let deleteAction = UITableViewRowAction(style: UITableViewRowAction.Style.default, title: "Delete") { [weak self] (action, indexPath) in
                 self?.present(confirmationAlertMessage: "Are you sure you want to delete this \(childPopup.title ?? "record")?", confirmationTitle: "Delete", confirmationAction: { [weak self] (_) in
                     self?.closeEditingSessionAndDelete(childPopup: childPopup)
                 })

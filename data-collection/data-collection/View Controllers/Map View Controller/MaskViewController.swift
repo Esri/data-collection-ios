@@ -40,7 +40,7 @@ class MaskViewController: UIViewController {
         let path = UIBezierPath(rect: maskView.frame)
         let maskLayer = CAShapeLayer()
         path.append(UIBezierPath(rect: view.bounds))
-        maskLayer.fillRule = kCAFillRuleEvenOdd
+        maskLayer.fillRule = CAShapeLayerFillRule.evenOdd
         maskLayer.path = path.cgPath
         self.view.layer.mask = maskLayer
         

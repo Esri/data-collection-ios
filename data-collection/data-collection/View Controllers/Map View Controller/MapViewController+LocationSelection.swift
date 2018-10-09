@@ -190,13 +190,13 @@ extension MapViewController {
     func presentMapMaskViewForOfflineDownloadArea() {
         
         maskViewContainer.isHidden = false
-        view.bringSubview(toFront: maskViewController.view)
+        view.bringSubviewToFront(maskViewController.view)
     }
     
     func hideMapMaskViewForOfflineDownloadArea() {
 
         maskViewContainer.isHidden = true
-        view.sendSubview(toBack: maskViewController.view)
+        view.sendSubviewToBack(maskViewController.view)
     }
     
     private func prepareForOfflineMapDownloadJob() {

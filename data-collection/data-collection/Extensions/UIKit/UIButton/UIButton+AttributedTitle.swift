@@ -25,7 +25,7 @@ extension UIButton {
     ///   - subheader: Two value tuple with a title string and title font (optional).
     ///   - controlStateColors: A dictionary of control states (keys) and their cooresponding colors (values).
     ///
-    func setAttributed(header: (title: String, font: UIFont), subheader: (title: String, font: UIFont)? = nil, forControlStateColors controlStateColors: [UIControlState: UIColor]) {
+    func setAttributed(header: (title: String, font: UIFont), subheader: (title: String, font: UIFont)? = nil, forControlStateColors controlStateColors: [UIControl.State: UIColor]) {
         
         // We want to build a NSAttributedString for every (control state: color) combo.
         for (state, color) in controlStateColors {
