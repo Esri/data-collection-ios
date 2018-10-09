@@ -38,19 +38,19 @@ class DrawerViewController: UIViewController {
     
     let changeHandler = AppContextChangeHandler()
     
-    let loginLogoutButtonControlStateColors: [UIControlState: UIColor] = {
+    let loginLogoutButtonControlStateColors: [UIControl.State: UIColor] = {
         return [.normal: .loginLogoutNormal,
                 .highlighted: .loginLogoutHighlighted]
     }()
     
-    let workModeControlStateColors: [UIControlState: UIColor] = {
+    let workModeControlStateColors: [UIControl.State: UIColor] = {
         return [.normal: .workModeNormal,
                 .highlighted: .workModeHighlighted,
                 .selected: .workModeSelected,
                 .disabled: .workModeDisabled]
     }()
     
-    let offlineActivityControlStateColors: [UIControlState: UIColor] = {
+    let offlineActivityControlStateColors: [UIControl.State: UIColor] = {
         return [.normal: .offlineActivityNormal,
                 .highlighted: .offlineActivityHighlighted,
                 .selected: .offlineActivitySelected,

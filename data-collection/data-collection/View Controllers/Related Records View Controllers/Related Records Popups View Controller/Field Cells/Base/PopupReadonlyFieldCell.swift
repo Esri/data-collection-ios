@@ -25,7 +25,7 @@ class PopupReadonlyFieldCell: UITableViewCell, PopupFieldCellProtocol {
     let titleLabel = UILabel()
     let valueLabel = UILabel()
     
-    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
         stackView.layoutMargins = UIEdgeInsets(top: 16, left: 16, bottom: 16, right: 16)

@@ -103,7 +103,7 @@ class AppReverseGeocoderManager: AGSLoadableBase {
         
         load { [weak self] error in
 
-            guard let strongSelf = self else { return }
+            guard let self = self else { return }
 
             guard error == nil else {
                 completion(nil, error)
@@ -114,11 +114,11 @@ class AppReverseGeocoderManager: AGSLoadableBase {
             
             // We want to use the online locator if the work mode is online and the app has reachability.
             if appContext.workMode == .online && appReachability.isReachable {
-                locatorTask = strongSelf.onlineLocatorTask
+                locatorTask = self.onlineLocatorTask
             }
             // Otherwise, we'll use the offline locator.
             else {
-                locatorTask = strongSelf.offlineLocatorTask
+                locatorTask = self.offlineLocatorTask
             }
             
             // We need to set the geocode parameters for storage true because the results of this reverse geocode is persisted to a table.

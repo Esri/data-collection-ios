@@ -20,7 +20,7 @@ class DeleteRecordCell: UITableViewCell {
     private let stackView = UIStackView()
     private let deleteLabel = UILabel()
     
-    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
         accessoryType = .none

@@ -43,9 +43,9 @@ import ArcGIS
                     print("[Portal] loaded")
                 }
                 
-                guard let strongSelf = self else { return }
+                guard let self = self else { return }
                 
-                let userDescription = strongSelf.portal.user != nil ? "logged in (\(strongSelf.portal.user!.username ?? "no username"))" : "logged out"
+                let userDescription = self.portal.user != nil ? "logged in (\(self.portal.user!.username ?? "no username"))" : "logged out"
                 print("[Authentication] user is \(userDescription).")
                 
                 appNotificationCenter.post(name: .currentPortalDidChange, object: nil)

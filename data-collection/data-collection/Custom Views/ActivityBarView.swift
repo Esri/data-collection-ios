@@ -78,7 +78,7 @@ class ActivityBarView: UIView {
         UIView.animate(withDuration: 0.1, animations: { [weak self] in
             self?.alpha = 1.0
         }, completion: { [weak self] (completion) in
-            UIView.animate(withDuration: 0.2, delay: 0.0, options: [.autoreverse, .`repeat`], animations: {
+            UIView.animate(withDuration: 0.2, delay: 0.0, options: [.autoreverse, .repeat], animations: {
                 self?.swapBackgroundColor()
             })
         })

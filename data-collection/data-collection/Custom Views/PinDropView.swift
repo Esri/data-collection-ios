@@ -123,7 +123,7 @@ class PinDropView: UIView {
             
             CATransaction.begin()
             CATransaction.setAnimationDuration(animationDuration)
-            CATransaction.setAnimationTimingFunction(CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseIn))
+            CATransaction.setAnimationTimingFunction(CAMediaTimingFunction(name: .easeIn))
             
             let pinDrop = CABasicAnimation(keyPath: "position")
             pinDrop.fromValue = pinLayer.position.modified(y: -30.0)
@@ -156,7 +156,7 @@ class PinDropView: UIView {
             
             CATransaction.begin()
             CATransaction.setAnimationDuration(animationDuration)
-            CATransaction.setAnimationTimingFunction(CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseIn))
+            CATransaction.setAnimationTimingFunction(CAMediaTimingFunction(name: .easeIn))
             
             let pinOpacity = CABasicAnimation(keyPath: "opacity")
             pinOpacity.fromValue = 1

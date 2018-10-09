@@ -24,7 +24,7 @@ extension UIButton {
     ///   - controlStateColors: A dictionary of control states (keys) and their cooresponding colors (values).
     ///   - controlState: The control state containing the mask image, default value is `.normal`.
     ///
-    func buildImagesWithTintColors(forControlStateColors controlStateColors: [UIControlState: UIColor], fromControlStateImage controlState: UIControlState = .normal) {
+    func buildImagesWithTintColors(forControlStateColors controlStateColors: [UIControl.State: UIColor], fromControlStateImage controlState: UIControl.State = .normal) {
         
         guard let normalImage = image(for: controlState) else {
             print("[Tint Color Error] no default image for control state: \(controlState).")

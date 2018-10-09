@@ -51,7 +51,7 @@ extension UIViewController {
     ///
     func present(settingsAlertMessage message: String, animated: Bool = true, completion: (() -> Void)? = nil) {
         let alert = UIAlertController.multiAlert(message: message, actionTitle: "Settings", action: { [weak self] (action) in
-            guard let url = URL(string: UIApplicationOpenSettingsURLString), UIApplication.shared.canOpenURL(url) else {
+            guard let url = URL(string: UIApplication.openSettingsURLString), UIApplication.shared.canOpenURL(url) else {
                 self?.present(simpleAlertMessage: "Error opening Settings App.")
                 return
             }
@@ -72,4 +72,3 @@ extension UIViewController {
         present(alert, animated: animated, completion: completion)
     }
 }
-
