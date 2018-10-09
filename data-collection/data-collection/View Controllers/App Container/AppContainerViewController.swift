@@ -78,7 +78,7 @@ class AppContainerViewController: UIViewController {
     }
     
     @IBAction func userRequestsToggleDrawer(_ sender: Any) {
-        drawerShowing = !drawerShowing
+        drawerShowing.toggle()
     }
     
     private func informChildViewControllersOfFocus() {
