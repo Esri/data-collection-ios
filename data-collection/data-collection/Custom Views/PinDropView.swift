@@ -107,8 +107,8 @@ class PinDropView: UIView {
         let shadowX = (frame.size.width/2.0) - (shadowLayer.frame.size.width/2.0)
         let shadowY = pinY+(idealHeight/2.0) - (shadowLayer.frame.size.height/2.0)
         
-        pinLayer.frame.modify(origin: CGPoint(x: pinX, y: pinY))
-        shadowLayer.frame.modify(origin: CGPoint(x: shadowX, y: shadowY))
+        pinLayer.frame.origin = CGPoint(x: pinX, y: pinY)
+        shadowLayer.frame.origin = CGPoint(x: shadowX, y: shadowY)
 
     }
     
