@@ -35,20 +35,4 @@ extension CGPoint {
     func modified(y yDelta: CGFloat) -> CGPoint {
         return CGPoint(x: x, y: y + yDelta)
     }
-    
-    /// Modifies a point's x value in place.
-    ///
-    /// - Parameter xDelta: By how much to modify x.
-    
-    mutating func modify(x xDelta: CGFloat) {
-        self = modified(x: xDelta)
-    }
-    
-    /// Modifies a point's y value in place.
-    ///
-    /// - Parameter yDelta: By how much to modify y.
-    
-    mutating func modify(y yDelta: CGFloat) {
-        self = modified(y: yDelta)
-    }
 }
