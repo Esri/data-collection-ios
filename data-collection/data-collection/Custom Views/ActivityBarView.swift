@@ -19,8 +19,7 @@ class ActivityBarView: UIView {
     
     init(mapView: AGSMapView, colors:(a: UIColor, b: UIColor)) {
         self.mapView = mapView
-        self.colorA = colors.a
-        self.colorB = colors.b
+        self.colors = colors
         
         super.init(frame: .zero)
         
@@ -43,13 +42,7 @@ class ActivityBarView: UIView {
     
     weak var mapView: AGSMapView?
     
-    var colorA: UIColor {
-        didSet {
-            updateAnimationsForNewColor()
-        }
-    }
-    
-    var colorB: UIColor {
+    var colors: (a: UIColor, b: UIColor) {
         didSet {
             updateAnimationsForNewColor()
         }
@@ -66,28 +59,28 @@ class ActivityBarView: UIView {
         }
     }
     
-    public func resetBackgroundColor() {
-        isAnimating = false
-        backgroundColor = colorA
-    }
-    
     private func startProgressAnimation() {
         isAnimating = true
         alpha = 1.0
         isHidden = false
+        backgroundColor = colors.a
+        
+        let swapAnimation: (Bool) -> Void = { [weak self] (_) in
+            guard let self = self else { return }
+            UIView.animate(withDuration: 0.2, delay: 0.0, options: [.autoreverse, .repeat], animations: {
+                self.backgroundColor = self.colors.b
+            })
+        }
+        
         UIView.animate(withDuration: 0.1, animations: { [weak self] in
             self?.alpha = 1.0
-        }, completion: { [weak self] (completion) in
-            UIView.animate(withDuration: 0.2, delay: 0.0, options: [.autoreverse, .repeat], animations: {
-                self?.swapBackgroundColor()
-            })
-        })
+        }, completion: swapAnimation)
     }
     
     private func stopProgressAnimation() {
         isAnimating = false
         layer.removeAllAnimations()
-        resetBackgroundColor()
+        backgroundColor = colors.a
         UIView.animate(withDuration: 0.1, animations: { [weak self] in
             self?.alpha = 0.0
         }, completion: {  [weak self] (completion) in
@@ -99,9 +92,5 @@ class ActivityBarView: UIView {
         alpha = 0.0
         isHidden = true
         layer.removeAllAnimations()
-    }
-    
-    private func swapBackgroundColor() {
-        backgroundColor = backgroundColor == colorA ? colorB : colorA
     }
 }
