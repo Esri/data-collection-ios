@@ -31,7 +31,7 @@ class PopupTextFieldCell: PopupEditableFieldCell<UITextField> {
 
         valueEditView?.isEnabled = isValueEditable
         valueEditView?.addTarget(self, action: #selector(PopupTextFieldCell.textFieldDidChange(_:)), for: .editingChanged)
-        valueEditView?.heightAnchor.constraint(greaterThanOrEqualToConstant: valueEditView?.frame.size.height ?? 25.0).isActive = true
+        valueEditView?.heightAnchor.constraint(greaterThanOrEqualToConstant: valueEditView?.frame.height ?? 25.0).isActive = true
 
         super.insertValueEditView()
     }
@@ -39,7 +39,7 @@ class PopupTextFieldCell: PopupEditableFieldCell<UITextField> {
     public override func removeValueEditView() {
         
         valueEditView?.removeTarget(self, action: #selector(PopupTextFieldCell.textFieldDidChange(_:)), for: .editingChanged)
-        valueEditView?.heightAnchor.constraint(greaterThanOrEqualToConstant: valueEditView?.frame.size.height ?? 25.0).isActive = false
+        valueEditView?.heightAnchor.constraint(greaterThanOrEqualToConstant: valueEditView?.frame.height ?? 25.0).isActive = false
         
         super.removeValueEditView()
     }

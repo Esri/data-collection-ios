@@ -99,7 +99,7 @@ extension RelatedRecordsPopupsViewController {
         }
         
         let containerHeight: CGFloat = 35.0
-        let container = UIView(frame: CGRect(x: 0.0, y: 0.0, width: tableView.frame.size.width, height: containerHeight))
+        let container = UIView(frame: CGRect(x: 0.0, y: 0.0, width: tableView.frame.width, height: containerHeight))
         container.backgroundColor = .clear
         
         let activity = UIActivityIndicatorView(style: .gray)

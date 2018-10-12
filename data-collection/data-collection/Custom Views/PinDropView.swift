@@ -99,13 +99,13 @@ class PinDropView: UIView {
          */
         
         // ideal height of pin and shadow
-        let idealHeight = pinLayer.frame.size.height*2.0
+        let idealHeight = pinLayer.frame.height*2.0
         // pin origin
-        let pinX = (frame.size.width/2.0) - (pinLayer.frame.size.width/2.0)
-        let pinY = (frame.size.height/2.0) - (idealHeight/2.0)
+        let pinX = (frame.width/2.0) - (pinLayer.frame.width/2.0)
+        let pinY = (frame.height/2.0) - (idealHeight/2.0)
         // shadow origin
-        let shadowX = (frame.size.width/2.0) - (shadowLayer.frame.size.width/2.0)
-        let shadowY = pinY+(idealHeight/2.0) - (shadowLayer.frame.size.height/2.0)
+        let shadowX = (frame.width/2.0) - (shadowLayer.frame.width/2.0)
+        let shadowY = pinY+(idealHeight/2.0) - (shadowLayer.frame.height/2.0)
         
         pinLayer.frame.origin = CGPoint(x: pinX, y: pinY)
         shadowLayer.frame.origin = CGPoint(x: shadowX, y: shadowY)
