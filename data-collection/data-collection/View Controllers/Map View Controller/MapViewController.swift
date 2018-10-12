@@ -216,8 +216,8 @@ class MapViewController: UIViewController {
         }
 
         let workModeChange: AppContextChange = .workMode { [weak self] workMode in
-            self?.activityBarView.colorA = (workMode == .online) ? UIColor.primary.lighter : UIColor.offline.lighter
-            self?.activityBarView.colorB = (workMode == .online) ? UIColor.primary.darker : UIColor.offline.darker
+            let color: UIColor = (workMode == .online) ? .primary : .offline
+            self?.activityBarView.colors = (color.lighter, color.darker)
             self?.slideNotificationView.messageBackgroundColor = (workMode == .online) ? UIColor.primary.lighter : UIColor.offline.darker
         }
         
