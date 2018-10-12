@@ -113,7 +113,7 @@ class SlideNotificationView: UIView {
     }
     
     private func hideNotificationLabel() {
-        topSlideConstraint.constant = -bounds.size.height
+        topSlideConstraint.constant = -bounds.height
         layoutIfNeeded()
     }
     
