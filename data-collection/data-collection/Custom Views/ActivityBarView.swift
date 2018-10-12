@@ -65,8 +65,8 @@ class ActivityBarView: UIView {
         isHidden = false
         backgroundColor = colors.a
         
-        let swapAnimation: (Bool) -> Void = { [weak self] (_) in
-            guard let self = self else { return }
+        let swapAnimation: (Bool) -> Void = { [weak self] (completed) in
+            guard let self = self, completed else { return }
             UIView.animate(withDuration: 0.2, delay: 0.0, options: [.autoreverse, .repeat], animations: {
                 self.backgroundColor = self.colors.b
             })
