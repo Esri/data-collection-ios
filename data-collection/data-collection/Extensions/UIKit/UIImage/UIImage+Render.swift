@@ -65,30 +65,19 @@ extension UIImage {
         return result
     }
     
-    /// Make a copy of an image applying a color mask.
+    /// Makes a copy of an image applying a color mask.
     ///
     /// - Parameter color: The color to apply to the color mask.
     /// - Returns: A new `UIImage`.
-    
-    func renderImage(toMaskWithColor color: UIColor) -> UIImage? {
-        
-        UIGraphicsBeginImageContextWithOptions(size, false, scale)
-        
-        guard let context = UIGraphicsGetCurrentContext() else {
-            UIGraphicsEndImageContext()
-            return nil
+    func renderImage(toMaskWithColor color: UIColor) -> UIImage {
+        let graphicsRenderer = UIGraphicsImageRenderer(size: size, format: .init(for: traitCollection))
+        return graphicsRenderer.image { (context) in
+            color.setFill()
+            context.cgContext.translateBy(x: 0, y: size.height)
+            context.cgContext.scaleBy(x: 1.0, y: -1.0)
+            let rect = CGRect(origin: .zero, size: size)
+            context.cgContext.clip(to: rect, mask: cgImage!)
+            context.fill(rect)
         }
-        
-        color.setFill()
-        context.translateBy(x: 0, y: size.height)
-        context.scaleBy(x: 1.0, y: -1.0)
-        context.clip(to: CGRect(x: 0, y: 0, width: size.width, height: size.height), mask: cgImage!)
-        context.fill(CGRect(x: 0, y: 0, width: size.width, height: size.height))
-        
-        let coloredImg = UIGraphicsGetImageFromCurrentImageContext()
-        
-        UIGraphicsEndImageContext()
-        
-        return coloredImg
     }
 }
