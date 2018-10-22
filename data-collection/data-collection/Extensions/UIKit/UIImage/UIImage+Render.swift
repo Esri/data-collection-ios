@@ -15,54 +15,42 @@
 import UIKit
 
 extension UIImage {
-    
     /// Build a copy of an image that is resized, clipped by a circle and given a stroke weight.
     ///
     /// - Parameters:
     ///   - diameter: The diameter of the rendered circular thumbnail.
     ///   - stroke: Tuple (color, weight) (optional).
     /// - Returns: A new `UIImage`.
-    
     func circularThumbnail(ofSize diameter: CGFloat, stroke: (color: UIColor, weight: CGFloat)?) -> UIImage? {
-        
         // We want to crop a UIImage to a specific size and to scale (considering of the device's screen resolution).
-        let scale = min(size.width/diameter, size.height/diameter)
+        let scale = min(size.width, size.height) / diameter
         
-        let newSize = CGSize(width: size.width/scale, height: size.height/scale)
-        let newOrigin = CGPoint(x: (diameter - newSize.width)/2, y: (diameter - newSize.height)/2)
+        let newSize = CGSize(width: size.width / scale, height: size.height / scale)
+        let newOrigin = CGPoint(x: (diameter - newSize.width) / 2, y: (diameter - newSize.height) / 2)
         
         let thumbRect = CGRect(origin: newOrigin, size: newSize).integral
         
-        UIGraphicsBeginImageContextWithOptions(CGSize(width: diameter, height: diameter), false, 0)
-        
-        guard let context = UIGraphicsGetCurrentContext() else {
-            UIGraphicsEndImageContext()
-            return nil
+        let graphicsRenderer = UIGraphicsImageRenderer(size: CGSize(width: diameter, height: diameter), format: .init(for: traitCollection))
+        let image = graphicsRenderer.image { (context) in
+            // Build a circular path.
+            let path = UIBezierPath(roundedRect: thumbRect, cornerRadius: min(thumbRect.width/2, thumbRect.height/2))
+            context.cgContext.beginPath()
+            context.cgContext.addPath(path.cgPath)
+            context.cgContext.closePath()
+            context.cgContext.clip()
+            
+            context.cgContext.translateBy(x: 0, y: diameter)
+            context.cgContext.scaleBy(x: 1.0, y: -1.0)
+            context.cgContext.draw(cgImage!, in: thumbRect)
+            
+            // Draw a stroke weight provided parameters
+            if let (color, weight) = stroke {
+                color.setStroke()
+                path.lineWidth = weight * UIScreen.main.scale
+                path.stroke()
+            }
         }
-        
-        context.saveGState()
-        
-        // Build a circular path.
-        let path = UIBezierPath(roundedRect: thumbRect, cornerRadius: min(thumbRect.width/2, thumbRect.height/2))
-        context.beginPath()
-        context.addPath(path.cgPath)
-        context.closePath()
-        context.clip()
-        
-        draw(in: thumbRect)
-        
-        // Draw a stroke weight provided parameters
-        if let stroke = stroke {
-            stroke.color.setStroke()
-            path.lineWidth = stroke.weight * UIScreen.main.scale
-            path.stroke()
-        }
-        
-        let result = UIGraphicsGetImageFromCurrentImageContext()
-        
-        UIGraphicsEndImageContext()
-        
-        return result
+        return image
     }
     
     /// Makes a copy of an image applying a color mask.
