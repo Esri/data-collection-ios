@@ -1038,6 +1038,7 @@
 				94FA8B1B207BF2CD00972C75 /* Sources */,
 				94FA8B1C207BF2CD00972C75 /* Frameworks */,
 				94FA8B1D207BF2CD00972C75 /* Resources */,
+				94AEFD2A217F8F69004339B9 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -1170,6 +1171,26 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		94AEFD2A217F8F69004339B9 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if [ -e $HOME/.xcode-run-scripts/arcgis-build-number-run-script.sh ]; then\n$HOME/.xcode-run-scripts/arcgis-build-number-run-script.sh -p ios -o $PROJECT_DIR/..\nelse\necho \"Cannot update ArcGIS build number.\"\nfi\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		94FA8B1B207BF2CD00972C75 /* Sources */ = {
