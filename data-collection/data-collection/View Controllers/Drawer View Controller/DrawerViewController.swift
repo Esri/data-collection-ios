@@ -36,26 +36,20 @@ class DrawerViewController: UIViewController {
     
     weak var delegate: DrawerViewControllerDelegate?
     
-    let changeHandler = AppContextChangeHandler()
+    private let changeHandler = AppContextChangeHandler()
     
-    let loginLogoutButtonControlStateColors: [UIControl.State: UIColor] = {
-        return [.normal: .loginLogoutNormal,
-                .highlighted: .loginLogoutHighlighted]
-    }()
+    private let loginLogoutButtonControlStateColors: [UIControl.State: UIColor] = [.normal: .loginLogoutNormal,
+                                                                                   .highlighted: .loginLogoutHighlighted]
     
-    let workModeControlStateColors: [UIControl.State: UIColor] = {
-        return [.normal: .workModeNormal,
-                .highlighted: .workModeHighlighted,
-                .selected: .workModeSelected,
-                .disabled: .workModeDisabled]
-    }()
+    private let workModeControlStateColors: [UIControl.State: UIColor] = [.normal: .workModeNormal,
+                                                                          .highlighted: .workModeHighlighted,
+                                                                          .selected: .workModeSelected,
+                                                                          .disabled: .workModeDisabled]
     
-    let offlineActivityControlStateColors: [UIControl.State: UIColor] = {
-        return [.normal: .offlineActivityNormal,
-                .highlighted: .offlineActivityHighlighted,
-                .selected: .offlineActivitySelected,
-                .disabled: .offlineActivityDisabled]
-    }()
+    private let offlineActivityControlStateColors: [UIControl.State: UIColor] = [.normal: .offlineActivityNormal,
+                                                                                 .highlighted: .offlineActivityHighlighted,
+                                                                                 .selected: .offlineActivitySelected,
+                                                                                 .disabled: .offlineActivityDisabled]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -66,12 +60,12 @@ class DrawerViewController: UIViewController {
         subscribeToAppContextChanges()
     }
     
-    func setAppVersionLabel() {
+    private func setAppVersionLabel() {
         
         appVersionLabel.text = "\(Bundle.AppNameVersionString)\n\(Bundle.ArcGISSDKVersionString)"
     }
     
-    func setButtonImageTints() {
+    private func setButtonImageTints() {
         
         workOnlineButton.buildImagesWithTintColors(forControlStateColors: workModeControlStateColors)
         workOfflineButton.buildImagesWithTintColors(forControlStateColors: workModeControlStateColors)
@@ -79,7 +73,7 @@ class DrawerViewController: UIViewController {
         deleteOfflineMapButton.buildImagesWithTintColors(forControlStateColors: offlineActivityControlStateColors)
     }
     
-    func setButtonAttributedTitles() {
+    private func setButtonAttributedTitles() {
         
         updateLoginButtonForAuthenticatedUsername(user: appContext.portal.user)
         workOnlineButton.setAttributed(header: (title: "Work Online", font: .drawerButtonHeader), forControlStateColors: workModeControlStateColors)
@@ -224,7 +218,7 @@ class DrawerViewController: UIViewController {
         }
     }
     
-    func subscribeToAppContextChanges() {
+    private func subscribeToAppContextChanges() {
         
         let currentPortalChange: AppContextChange = .currentPortal { [weak self] portal in
             self?.updateLoginButtonForAuthenticatedUserProfileImage(user: portal.user)
@@ -250,7 +244,7 @@ class DrawerViewController: UIViewController {
         changeHandler.subscribe(toChanges: [currentPortalChange, workModeChange, reachabilityChange, lastSyncChange, hasOfflineMapChange])
     }
     
-    func updateSynchronizeButtonForLastSync(date: Date?) {
+    private func updateSynchronizeButtonForLastSync(date: Date?) {
         
         if let lastSynchronized = date {
             synchronizeOfflineMapButton.setAttributed(header: (title: "Synchronize Offline Map", font: .drawerButtonHeader), subheader: (title: "last sync \(AppDateFormatter.format(shortDateTime: lastSynchronized))", font: .drawerButtonSubheader), forControlStateColors: offlineActivityControlStateColors)

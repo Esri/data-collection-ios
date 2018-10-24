@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="tff-pw-9ak">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="tff-pw-9ak">
     <device id="retina5_9" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14283.14"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -17,12 +18,12 @@
                         <rect key="frame" x="0.0" y="0.0" width="300" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="App Version SDK Version" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PyC-UU-GZQ">
-                                <rect key="frame" x="16" y="605" width="268" height="28"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="App Version SDK Version" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PyC-UU-GZQ">
+                                <rect key="frame" x="16" y="598" width="268" height="35"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="28" id="d4f-tq-f0q"/>
+                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="35" id="d4f-tq-f0q"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="12"/>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleFootnote"/>
                                 <color key="textColor" red="0.91953521573604058" green="0.91953521573604058" blue="0.91953521573604058" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <nil key="highlightedColor"/>
                             </label>
@@ -38,6 +39,9 @@
                                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                         <inset key="titleEdgeInsets" minX="8" minY="0.0" maxX="0.0" maxY="0.0"/>
                                         <state key="normal" title="Log in" image="UserLoginIcon"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="boolean" keyPath="adjustsFontForContentSizeCategory" value="YES"/>
+                                        </userDefinedRuntimeAttributes>
                                         <connections>
                                             <action selector="userRequestsLoginLogout:" destination="tff-pw-9ak" eventType="touchUpInside" id="9KY-4Z-SsG"/>
                                         </connections>
@@ -47,13 +51,13 @@
                                 <constraints>
                                     <constraint firstItem="19y-Pi-gQF" firstAttribute="top" secondItem="g0m-dF-Inv" secondAttribute="top" constant="16" id="7di-3S-lQL"/>
                                     <constraint firstAttribute="bottom" secondItem="19y-Pi-gQF" secondAttribute="bottom" constant="16" id="LaC-e3-H4b"/>
-                                    <constraint firstAttribute="height" constant="76" id="Xhs-AS-ual"/>
+                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="76" id="Xhs-AS-ual"/>
                                     <constraint firstAttribute="trailing" secondItem="19y-Pi-gQF" secondAttribute="trailing" constant="16" id="dJO-x2-gje"/>
                                     <constraint firstItem="19y-Pi-gQF" firstAttribute="leading" secondItem="g0m-dF-Inv" secondAttribute="leading" constant="16" id="yaA-R0-gln"/>
                                 </constraints>
                             </view>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" bouncesZoom="NO" translatesAutoresizingMaskIntoConstraints="NO" id="D9i-NW-FC3">
-                                <rect key="frame" x="0.0" y="76" width="300" height="529"/>
+                                <rect key="frame" x="0.0" y="76" width="300" height="522"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nLI-GB-Tum" userLabel="Content View">
                                         <rect key="frame" x="0.0" y="0.0" width="300" height="265"/>
@@ -62,13 +66,13 @@
                                                 <rect key="frame" x="16" y="16" width="268" height="40"/>
                                                 <color key="backgroundColor" red="0.96078431369999995" green="0.69019607839999997" blue="0.14117647059999999" alpha="1" colorSpace="calibratedRGB"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="height" constant="40" id="K69-4s-I61"/>
+                                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="40" id="K69-4s-I61"/>
                                                 </constraints>
                                                 <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                 <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <inset key="contentEdgeInsets" minX="8" minY="0.0" maxX="0.0" maxY="0.0"/>
                                                 <inset key="titleEdgeInsets" minX="9" minY="0.0" maxX="0.0" maxY="0.0"/>
-                                                <state key="normal" title="Work Online" image="CloudConnected">
+                                                <state key="normal" title="Work Online" image="OnlineMode">
                                                     <color key="titleColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 </state>
                                                 <state key="disabled">
@@ -84,6 +88,7 @@
                                                     <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
                                                         <integer key="value" value="4"/>
                                                     </userDefinedRuntimeAttribute>
+                                                    <userDefinedRuntimeAttribute type="boolean" keyPath="adjustsFontForContentSizeCategory" value="YES"/>
                                                 </userDefinedRuntimeAttributes>
                                                 <connections>
                                                     <action selector="userRequestsWorkOnline:" destination="tff-pw-9ak" eventType="touchUpInside" id="fsS-E9-UVp"/>
@@ -99,13 +104,13 @@
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bBY-Xa-AVq">
                                                 <rect key="frame" x="16" y="89" width="268" height="40"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="height" constant="40" id="DFh-Iy-uin"/>
+                                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="40" id="DFh-Iy-uin"/>
                                                 </constraints>
                                                 <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                 <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <inset key="contentEdgeInsets" minX="8" minY="0.0" maxX="0.0" maxY="0.0"/>
                                                 <inset key="titleEdgeInsets" minX="8" minY="0.0" maxX="0.0" maxY="0.0"/>
-                                                <state key="normal" title="Work Offline" image="CloudNoConnection">
+                                                <state key="normal" title="Work Offline" image="OfflineMode">
                                                     <color key="titleColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 </state>
                                                 <state key="disabled" image="CloudNoConnection">
@@ -121,6 +126,7 @@
                                                     <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
                                                         <integer key="value" value="4"/>
                                                     </userDefinedRuntimeAttribute>
+                                                    <userDefinedRuntimeAttribute type="boolean" keyPath="adjustsFontForContentSizeCategory" value="YES"/>
                                                 </userDefinedRuntimeAttributes>
                                                 <connections>
                                                     <action selector="userRequestsWorkOffline:" destination="tff-pw-9ak" eventType="touchUpInside" id="94w-9e-agk"/>
@@ -129,7 +135,7 @@
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nly-Js-OCy">
                                                 <rect key="frame" x="16" y="145" width="268" height="40"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="height" constant="40" id="NAo-aQ-Cdq"/>
+                                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="40" id="NAo-aQ-Cdq"/>
                                                 </constraints>
                                                 <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                 <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -147,6 +153,9 @@
                                                 <state key="highlighted" image="Synchronize">
                                                     <color key="titleColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 </state>
+                                                <userDefinedRuntimeAttributes>
+                                                    <userDefinedRuntimeAttribute type="boolean" keyPath="adjustsFontForContentSizeCategory" value="YES"/>
+                                                </userDefinedRuntimeAttributes>
                                                 <connections>
                                                     <action selector="userRequestsSynchronizeOfflineMap:" destination="tff-pw-9ak" eventType="touchUpInside" id="gp6-RM-tgc"/>
                                                 </connections>
@@ -154,7 +163,7 @@
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PEO-mf-oZz">
                                                 <rect key="frame" x="16" y="201" width="268" height="40"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="height" constant="40" id="gbR-Km-W2G"/>
+                                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="40" id="gbR-Km-W2G"/>
                                                 </constraints>
                                                 <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                 <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -172,6 +181,9 @@
                                                 <state key="highlighted" image="GarbageBin">
                                                     <color key="titleColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 </state>
+                                                <userDefinedRuntimeAttributes>
+                                                    <userDefinedRuntimeAttribute type="boolean" keyPath="adjustsFontForContentSizeCategory" value="YES"/>
+                                                </userDefinedRuntimeAttributes>
                                                 <connections>
                                                     <action selector="userRequestsDeleteOfflineMap:" destination="tff-pw-9ak" eventType="touchUpInside" id="ktf-ns-FPY"/>
                                                 </connections>
@@ -242,10 +254,12 @@
         </scene>
     </scenes>
     <resources>
-        <image name="CloudConnected" width="20" height="13"/>
-        <image name="CloudNoConnection" width="22" height="17"/>
-        <image name="GarbageBin" width="16" height="16"/>
-        <image name="Synchronize" width="17" height="19"/>
+        <image name="CloudConnected" width="24" height="24"/>
+        <image name="CloudNoConnection" width="24" height="24"/>
+        <image name="GarbageBin" width="24" height="24"/>
+        <image name="OfflineMode" width="24" height="24"/>
+        <image name="OnlineMode" width="24" height="24"/>
+        <image name="Synchronize" width="24" height="24"/>
         <image name="UserLoginIcon" width="36" height="36"/>
     </resources>
 </document>
