@@ -154,6 +154,7 @@
 		94DDEA7A2154130000DA533C /* AppContext+NotificationNames.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94DDEA792154130000DA533C /* AppContext+NotificationNames.swift */; };
 		94DDEA7C215426D300DA533C /* AppRules.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94DDEA7B215426D300DA533C /* AppRules.swift */; };
 		94DDEA7E215463AC00DA533C /* CGAffineTransform+Rotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94DDEA7D215463AC00DA533C /* CGAffineTransform+Rotation.swift */; };
+		94F71D4421812A4700A8898A /* UIButton+Accessibility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94F71D4321812A4700A8898A /* UIButton+Accessibility.swift */; };
 		94FA8B25207BF2CD00972C75 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94FA8B24207BF2CD00972C75 /* MapViewController.swift */; };
 		94FA8B28207BF2CD00972C75 /* AppContainerViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 94FA8B26207BF2CD00972C75 /* AppContainerViewController.storyboard */; };
 		94FA8B2D207BF2CD00972C75 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 94FA8B2B207BF2CD00972C75 /* LaunchScreen.storyboard */; };
@@ -332,6 +333,7 @@
 		94DDEA792154130000DA533C /* AppContext+NotificationNames.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppContext+NotificationNames.swift"; sourceTree = "<group>"; };
 		94DDEA7B215426D300DA533C /* AppRules.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppRules.swift; sourceTree = "<group>"; };
 		94DDEA7D215463AC00DA533C /* CGAffineTransform+Rotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGAffineTransform+Rotation.swift"; sourceTree = "<group>"; };
+		94F71D4321812A4700A8898A /* UIButton+Accessibility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+Accessibility.swift"; sourceTree = "<group>"; };
 		94FA8B1F207BF2CD00972C75 /* data-collection.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "data-collection.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		94FA8B24207BF2CD00972C75 /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		94FA8B27207BF2CD00972C75 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/AppContainerViewController.storyboard; sourceTree = "<group>"; };
@@ -634,6 +636,7 @@
 			children = (
 				94B375E5207E8E4800691F2A /* UIButton+AttributedTitle.swift */,
 				948D852D2151C4F900E2048F /* UIButton+ImageTint.swift */,
+				94F71D4321812A4700A8898A /* UIButton+Accessibility.swift */,
 			);
 			path = UIButton;
 			sourceTree = "<group>";
@@ -1191,6 +1194,7 @@
 				94B375FA207E8E4800691F2A /* UIViewController+Alert.swift in Sources */,
 				946569022087FAE700599E55 /* MapViewController+MapViewMode.swift in Sources */,
 				94AB310320B76A62003540D2 /* PopupEditableFieldCell.swift in Sources */,
+				94F71D4421812A4700A8898A /* UIButton+Accessibility.swift in Sources */,
 				94A8102D20B33C0E00D4BC68 /* PopupDateCell.swift in Sources */,
 				948D85102151BAF500E2048F /* AGSPopup+RelatedRecords.swift in Sources */,
 				948D84F3215015A300E2048F /* UserDefaults+AGSJSONSerializable.swift in Sources */,

@@ -47,7 +47,7 @@ class AppContextChangeHandler {
                 DispatchQueue.main.async { closure(appLocation.locationAuthorized) }
             }
             appObservations.append(observeLocationAuthorization)
-        
+            
         case .currentPortal(_):
             appChanges[change.key] = change
             appNotificationCenter.addObserver(self, selector: #selector(AppContextChangeHandler.recieveCurrentPortalNotification(notification:)), name: .currentPortalDidChange, object: nil)
@@ -63,6 +63,10 @@ class AppContextChangeHandler {
         case .lastSync(_):
             appChanges[change.key] = change
             appNotificationCenter.addObserver(self, selector: #selector(AppContextChangeHandler.recieveLastSyncNotification(notification:)), name: .lastSyncDidChange, object: nil)
+            
+        case .contentSize(_):
+            appChanges[change.key] = change
+            appNotificationCenter.addObserver(self, selector: #selector(AppContextChangeHandler.adjustContentSizeCategory(notification:)), name: UIContentSizeCategory.didChangeNotification, object: nil)
         }
     }
     
@@ -91,6 +95,13 @@ class AppContextChangeHandler {
         
         if let change = appChanges[AppContextChange.Key.lastSync], let completionClosure = change.notificationClosure as? (Date?) -> Void  {
             DispatchQueue.main.async { completionClosure(appContext.mobileMapPackage?.lastSyncDate) }
+        }
+    }
+    
+    @objc private func adjustContentSizeCategory(notification: Notification) {
+        
+        if let change = appChanges[AppContextChange.Key.contentSize], let completionClosure = change.notificationClosure as? (UIContentSizeCategory) -> Void  {
+            DispatchQueue.main.async { completionClosure(UIApplication.shared.preferredContentSizeCategory) }
         }
     }
 }
