@@ -61,7 +61,7 @@ class MapViewController: UIViewController {
     @IBOutlet weak var relatedRecordSubheaderLabel: UILabel!
     @IBOutlet weak var relatedRecordsNLabel: UILabel!
     
-    @IBOutlet weak var selectViewTopConstraint: NSLayoutConstraint!
+    @IBOutlet var selectViewTopConstraint: NSLayoutConstraint!
     @IBOutlet weak var selectViewHeaderLabel: UILabel!
     @IBOutlet weak var selectViewSubheaderLabel: UILabel!
     
