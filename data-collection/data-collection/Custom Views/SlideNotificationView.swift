@@ -56,6 +56,8 @@ class SlideNotificationView: UIView {
         label.font = UIFont.preferredFont(forTextStyle: .footnote)
         label.textAlignment = .center
         label.translatesAutoresizingMaskIntoConstraints = false
+        label.allowsDefaultTighteningForTruncation = true
+        label.adjustsFontForContentSizeCategory = true
         label.backgroundColor = messageBackgroundColor ?? .darkGray
         label.textColor = messageTextColor ?? .white
         label.numberOfLines = 1
@@ -83,6 +85,8 @@ class SlideNotificationView: UIView {
         
         hideNotificationLabel()
         
+        label.isHidden = false
+        
         let animations: UIViewAnimations = { [weak self] in
             self?.showNotificationLabel()
         }
@@ -101,6 +105,7 @@ class SlideNotificationView: UIView {
         }
         
         let completion: UIViewAnimationCompletion = { [weak self] (_) in
+            self?.label.isHidden = true
             self?.clearTimer()
         }
         
