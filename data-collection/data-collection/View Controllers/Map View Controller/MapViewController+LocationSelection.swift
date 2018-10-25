@@ -20,18 +20,18 @@ extension MapViewController.LocationSelectionViewType {
     var headerText: String {
         switch self {
         case .newFeature:
-            return "Choose the location"
+            return "Choose location"
         case .offlineExtent:
-            return "Select the region of the map to take offline"
+            return "Choose extent"
         }
     }
     
     var subheaderText: String {
         switch self {
         case .newFeature:
-            return "Pan and zoom map under pin"
+            return "Pan & zoom map under pin"
         case .offlineExtent:
-            return "Pan and zoom map within the rectangle"
+            return "Pan & zoom map within region"
         }
     }
 }
