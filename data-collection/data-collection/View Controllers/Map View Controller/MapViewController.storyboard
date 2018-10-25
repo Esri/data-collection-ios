@@ -53,7 +53,7 @@
                                     <segue destination="ZtZ-f6-rZp" kind="embed" id="VcP-nO-K0c"/>
                                 </connections>
                             </containerView>
-                            <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="nd8-Es-e3p" customClass="SlideNotificationView" customModule="data_collection" customModuleProvider="target">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nd8-Es-e3p" customClass="SlideNotificationView" customModule="data_collection" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="44" width="375" height="32"/>
                                 <constraints>
                                     <constraint firstAttribute="height" relation="lessThanOrEqual" constant="56" id="Mtc-Ya-1cz"/>
@@ -74,10 +74,10 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wWn-Jn-iZF" customClass="ShrinkingView" customModule="data_collection" customModuleProvider="target">
                                 <rect key="frame" x="16" y="668.66666666666663" width="343" height="93.333333333333371"/>
                                 <subviews>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XFk-gB-uaM">
+                                    <view contentMode="scaleToFill" verticalHuggingPriority="249" translatesAutoresizingMaskIntoConstraints="NO" id="XFk-gB-uaM">
                                         <rect key="frame" x="0.0" y="15" width="343" height="78.333333333333329"/>
                                         <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="1000" text="Related Records Header" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsLetterSpacingToFitWidth="YES" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qdc-PH-C8o">
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="1000" text="Related Records Header" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsLetterSpacingToFitWidth="YES" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qdc-PH-C8o">
                                                 <rect key="frame" x="16" y="15.999999999999998" width="257" height="20.333333333333329"/>
                                                 <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                                 <nil key="textColor"/>
@@ -87,13 +87,13 @@
                                                 <rect key="frame" x="16" y="44.333333333333371" width="311" height="18"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="1000" text="Related Records Sub" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsLetterSpacingToFitWidth="YES" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eWg-bj-9Qn">
-                                                        <rect key="frame" x="0.0" y="0.0" width="152.33333333333334" height="18"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="153.66666666666666" height="18"/>
                                                         <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
                                                         <nil key="textColor"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="right" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="1000" text="(n) Related Records" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsLetterSpacingToFitWidth="YES" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ahu-50-KaZ">
-                                                        <rect key="frame" x="160.33333333333337" y="0.0" width="150.66666666666663" height="18"/>
+                                                        <rect key="frame" x="161.66666666666663" y="0.0" width="149.33333333333337" height="18"/>
                                                         <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
                                                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <nil key="highlightedColor"/>
@@ -116,15 +116,14 @@
                                             </userDefinedRuntimeAttribute>
                                         </userDefinedRuntimeAttributes>
                                     </view>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hFk-4Y-xfb">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hFk-4Y-xfb">
                                         <rect key="frame" x="281" y="4" width="46" height="46"/>
                                         <color key="backgroundColor" red="0.6588235294" green="0.81176470590000005" blue="0.40000000000000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="46" id="SXt-9j-7zo"/>
                                             <constraint firstAttribute="height" constant="46" id="hcY-de-Odo"/>
                                         </constraints>
-                                        <fontDescription key="fontDescription" type="system" pointSize="32"/>
-                                        <state key="normal" title="+">
+                                        <state key="normal" image="AddFeature">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         </state>
                                         <userDefinedRuntimeAttributes>
@@ -141,8 +140,8 @@
                                     <constraint firstItem="hFk-4Y-xfb" firstAttribute="leading" secondItem="qdc-PH-C8o" secondAttribute="trailing" constant="8" id="FwY-tM-ewH"/>
                                     <constraint firstAttribute="trailing" secondItem="hFk-4Y-xfb" secondAttribute="trailing" constant="16" id="HwB-lg-tdW"/>
                                     <constraint firstAttribute="bottom" secondItem="XFk-gB-uaM" secondAttribute="bottom" id="JGd-E7-7IZ"/>
+                                    <constraint firstAttribute="height" relation="lessThanOrEqual" constant="220" id="Mg3-NB-yYT"/>
                                     <constraint firstAttribute="trailing" secondItem="XFk-gB-uaM" secondAttribute="trailing" id="eb1-4B-ks6"/>
-                                    <constraint firstAttribute="height" relation="lessThanOrEqual" constant="260" id="fRU-xB-67c"/>
                                     <constraint firstItem="XFk-gB-uaM" firstAttribute="top" secondItem="wWn-Jn-iZF" secondAttribute="top" constant="15" id="hwk-9y-OSI"/>
                                     <constraint firstItem="hFk-4Y-xfb" firstAttribute="top" secondItem="wWn-Jn-iZF" secondAttribute="top" constant="4" id="mn1-Xi-EN2"/>
                                     <constraint firstItem="XFk-gB-uaM" firstAttribute="leading" secondItem="wWn-Jn-iZF" secondAttribute="leading" id="zPS-Yk-arx"/>
@@ -318,6 +317,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="AddFeature" width="24" height="24"/>
         <image name="Cancel" width="32" height="32"/>
         <image name="Checkmark" width="32" height="32"/>
         <image name="Compass" width="28" height="28"/>
