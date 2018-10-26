@@ -56,7 +56,7 @@ extension AppContext {
         AGSAuthenticationManager.shared().credentialCache.removeAllCredentials()
         // We want to remove cached credentials from geo-coder services, in case they are cached.
         appReverseGeocoder.removeCredentialsFromServices()
-        // We want to remove cached credentials from all service feature tables
+        // We want to remove cached credentials from all service feature tables.
         currentMap?.clearRemoteResourcesCachedCredentials()
         // Setting `loginRequired` to `false` will allow unauthenticated users to consume the map (but not edit!)
         portal = AppConfiguration.buildConfiguredPortal(loginRequired: false)
