@@ -20,13 +20,13 @@ extension AGSMap {
     
     func clearRemoteResourcesCachedCredentials() {
         
-        // clear all tables
+        // Clear all tables.
         tables.forEach { ($0 as? AGSRemoteResource)?.credential = nil }
         
-        // clear all layers, and basemap layers
+        // Clear all layers, and basemap layers.
         [operationalLayers, basemap.baseLayers, basemap.referenceLayers].forEach { (candidate) in
             
-            // if the layer itself is a remote resource, clear the credential
+            // If the layer itself is a remote resource, clear the credential.
             candidate.forEach {
                 ($0 as? AGSRemoteResource)?.credential = nil
                 (($0 as? AGSFeatureLayer)?.featureTable as? AGSRemoteResource)?.credential = nil
