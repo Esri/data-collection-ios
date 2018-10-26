@@ -226,6 +226,8 @@ class MapViewController: UIViewController {
         }
         
         let currentPortalChange: AppContextChange = .currentPortal { [weak self] portal in
+            self?.mapViewMode = .defaultView
+            self?.currentPopup = nil
             self?.loadMapViewMap()
         }
 
