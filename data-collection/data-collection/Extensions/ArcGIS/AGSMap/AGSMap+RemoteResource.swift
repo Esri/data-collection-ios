@@ -16,20 +16,21 @@ import ArcGIS
 
 extension AGSMap {
     
-    /// Return **many** remote resources contained in a map, considering feature layers, feature tables and the basemap.
-    ///
-    /// This can be used to clear cached credentials.
+    /// Clears remote resources contained in a map, considering feature layers, feature tables and the basemap.
     
-    var knownRemoteResources: [AGSRemoteResource] {
+    func clearRemoteResourcesCachedCredentials() {
         
-        var remoteResources = [AGSRemoteResource]()
+        // clear all tables
+        tables.forEach { ($0 as? AGSRemoteResource)?.credential = nil }
         
-        remoteResources += tables.compactMap { return ($0 as? AGSRemoteResource) }
-        remoteResources += operationalLayers.compactMap { return $0 as? AGSRemoteResource }
-        remoteResources += operationalLayers.compactMap { return ($0 as? AGSFeatureLayer)?.featureTable as? AGSRemoteResource }
-        remoteResources += basemap.baseLayers.compactMap { return $0 as? AGSRemoteResource }
-        remoteResources += basemap.referenceLayers.compactMap { return $0 as? AGSRemoteResource }
-
-        return remoteResources
+        // clear all layers, and basemap layers
+        [operationalLayers, basemap.baseLayers, basemap.referenceLayers].forEach { (candidate) in
+            
+            // if the layer itself is a remote resource, clear the credential
+            candidate.forEach {
+                ($0 as? AGSRemoteResource)?.credential = nil
+                (($0 as? AGSFeatureLayer)?.featureTable as? AGSRemoteResource)?.credential = nil
+            }
+        }
     }
 }
