@@ -61,7 +61,7 @@ extension MapViewController {
                 self?.relatedRecordsNLabel.text = fallbackPopupManager?.nextDisplayFieldStringValue(fieldIndex: &fallbackIndex)
             }
             
-            self?.addPopupRelatedRecordButton.isHidden = false
+            self?.addPopupRelatedRecordButton.isHidden = true
             
             if let canAdd = self?.recordsManager?.oneToMany.first?.relatedTable?.canAddFeature {
                 self?.addPopupRelatedRecordButton.isHidden = !canAdd
