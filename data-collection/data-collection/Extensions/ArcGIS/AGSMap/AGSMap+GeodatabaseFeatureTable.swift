@@ -26,10 +26,4 @@ extension AGSMap {
         return tables.compactMap { return ($0 as? AGSGeodatabaseFeatureTable) } +
             operationalLayers.compactMap { return (($0 as? AGSFeatureLayer)?.featureTable as? AGSGeodatabaseFeatureTable) }
     }
-    
-    var allServiceTables: [AGSServiceFeatureTable] {
-        
-        return tables.compactMap { return ($0 as? AGSServiceFeatureTable) } +
-            operationalLayers.compactMap { return (($0 as? AGSFeatureLayer)?.featureTable as? AGSServiceFeatureTable) }
-    }
 }

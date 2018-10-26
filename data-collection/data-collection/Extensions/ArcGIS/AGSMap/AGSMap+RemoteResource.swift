@@ -1,0 +1,35 @@
+//// Copyright 2018 Esri
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//   http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+import ArcGIS
+
+extension AGSMap {
+    
+    /// Return **many** remote resources contained in a map, considering feature layers, feature tables and the basemap.
+    ///
+    /// This can be used to clear cached credentials.
+    
+    var knownRemoteResources: [AGSRemoteResource] {
+        
+        var remoteResources = [AGSRemoteResource]()
+        
+        remoteResources += tables.compactMap { return ($0 as? AGSRemoteResource) }
+        remoteResources += operationalLayers.compactMap { return $0 as? AGSRemoteResource }
+        remoteResources += operationalLayers.compactMap { return ($0 as? AGSFeatureLayer)?.featureTable as? AGSRemoteResource }
+        remoteResources += basemap.baseLayers.compactMap { return $0 as? AGSRemoteResource }
+        remoteResources += basemap.referenceLayers.compactMap { return $0 as? AGSRemoteResource }
+
+        return remoteResources
+    }
+}
