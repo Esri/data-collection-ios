@@ -80,7 +80,7 @@ extension AGSArcGISFeatureTable {
             
             let updateObjectID: () -> Void = {
                 if type != .delete {
-                    feature.refreshObjectID()
+                    feature.refresh()
                 }
                 else {
                     feature.objectID = nil
