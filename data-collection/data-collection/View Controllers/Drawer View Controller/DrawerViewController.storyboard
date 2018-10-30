@@ -68,7 +68,7 @@
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" selected="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" adjustsImageSizeForAccessibilityContentSizeCategory="YES" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="8f1-WT-qtw">
                                                 <rect key="frame" x="16" y="16" width="268" height="40"/>
-                                                <color key="backgroundColor" red="0.96078431369999995" green="0.69019607839999997" blue="0.14117647059999999" alpha="1" colorSpace="calibratedRGB"/>
+                                                <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="40" id="K69-4s-I61"/>
                                                 </constraints>

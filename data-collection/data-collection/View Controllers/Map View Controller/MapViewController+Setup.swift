@@ -55,7 +55,7 @@ extension MapViewController {
     }
     
     func setupSmallPopupView() {
-        
+        addPopupRelatedRecordButton.backgroundColor = .primary
         smallPopupView.addTarget(self, action: #selector(MapViewController.didTapSmallPopupView(_:)), for: .touchUpInside)
     }
 }

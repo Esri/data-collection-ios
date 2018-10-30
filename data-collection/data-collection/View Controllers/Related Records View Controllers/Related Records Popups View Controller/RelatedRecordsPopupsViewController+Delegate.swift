@@ -105,7 +105,6 @@ extension RelatedRecordsPopupsViewController {
         container.backgroundColor = .clear
         
         let activity = UIActivityIndicatorView(style: .gray)
-        activity.color = .primary
         activity.accessibilityLabel = "Loading Related Records"
         activity.startAnimating()
         

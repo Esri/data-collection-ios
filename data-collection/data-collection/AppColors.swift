@@ -45,3 +45,23 @@ extension UIColor {
     static let offlineActivitySelected: UIColor = .lightGray
     static let offlineActivityDisabled: UIColor = UIColor(white: 0.5, alpha: 0.5)
 }
+
+extension AppDelegate {
+    
+    static func setAppApperanceWithAppColors() {
+        
+        UINavigationBar.appearance().titleTextAttributes = [.foregroundColor : UIColor.tint]
+        UINavigationBar.appearance().tintColor = .tint
+        
+        UIButton.appearance(whenContainedInInstancesOf: [UINavigationBar.self]).tintColor = .tint
+        UIButton.appearance().tintColor = .primary
+        
+        UIView.appearance(whenContainedInInstancesOf: [UIAlertController.self]).tintColor = .primary
+        
+        UIProgressView.appearance().tintColor = .primary
+        UIProgressView.appearance().progressTintColor = .primary
+        UIProgressView.appearance().trackTintColor = .tint
+        
+        UIActivityIndicatorView.appearance().color = .primary
+    }
+}

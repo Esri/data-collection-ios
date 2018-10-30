@@ -111,7 +111,7 @@ extension RelatedRecordsPopupsViewController {
             return
         }
         
-        present(confirmationAlertMessage: "You must save first.", confirmationTitle: "Save", confirmationAction: { [weak self] (_) in
+        present(confirmationAlertMessage: "You must save first.", confirmationTitle: "Save", isDestructive: false, confirmationAction: { [weak self] (_) in
             self?.editPopup(false, completion: completion)
         })
     }

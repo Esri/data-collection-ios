@@ -24,12 +24,11 @@
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 </view>
+                                <color key="tintColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <blurEffect style="dark"/>
                             </visualEffectView>
                             <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="cbB-aM-87m">
                                 <rect key="frame" x="16" y="405" width="343" height="2"/>
-                                <color key="progressTintColor" red="0.6588235294" green="0.81176470590000005" blue="0.40000000000000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <color key="trackTintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </progressView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Downloading Offline Map" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cgZ-dL-zfG">
                                 <rect key="frame" x="16" y="345" width="343" height="44"/>
@@ -47,9 +46,7 @@
                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="112" id="9rJ-TT-jqm"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
-                                <state key="normal" title="Cancel">
-                                    <color key="titleColor" red="0.6588235294" green="0.81176470590000005" blue="0.40000000000000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                </state>
+                                <state key="normal" title="Cancel"/>
                                 <connections>
                                     <action selector="userDidTapCancelJob:" destination="wi2-LE-L7E" eventType="touchUpInside" id="yRV-Ep-hja"/>
                                 </connections>
