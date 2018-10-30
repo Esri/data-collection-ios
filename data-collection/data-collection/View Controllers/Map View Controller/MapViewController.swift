@@ -224,13 +224,7 @@ class MapViewController: UIViewController {
         let reachabilityChange: AppContextChange = .reachability { [weak self] reachable in
             self?.displayReachabilityMessage(isReachable: reachable)
         }
-        
-        let currentPortalChange: AppContextChange = .currentPortal { [weak self] portal in
-            self?.mapViewMode = .defaultView
-            self?.currentPopup = nil
-            self?.loadMapViewMap()
-        }
 
-        changeHandler.subscribe(toChanges: [currentMapChange, locationAuthorizationChange, workModeChange, reachabilityChange, currentPortalChange])
+        changeHandler.subscribe(toChanges: [currentMapChange, locationAuthorizationChange, workModeChange, reachabilityChange])
     }
 }
