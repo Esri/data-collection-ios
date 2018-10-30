@@ -97,6 +97,7 @@ class RelatedRecordCell: UITableViewCell {
                 titleLabel.textColor = .tableCellTitle
                 titleLabel.font = .tableCellTitle
                 titleLabel.adjustsFontForContentSizeCategory = true
+                titleLabel.setContentCompressionResistancePriority(.required, for: .vertical)
                 stackView.addArrangedSubview(titleLabel)
                 
                 let valueLabel = UILabel()
@@ -104,6 +105,7 @@ class RelatedRecordCell: UITableViewCell {
                 valueLabel.textColor = .tableCellValue
                 valueLabel.font = .tableCellValue
                 valueLabel.adjustsFontForContentSizeCategory = true
+                valueLabel.setContentCompressionResistancePriority(.required, for: .vertical)
                 stackView.addArrangedSubview(valueLabel)
                 
                 attributes.append((titleLabel, valueLabel))
@@ -161,9 +163,10 @@ class RelatedRecordCell: UITableViewCell {
         
         if emptyCellLabel == nil {
             emptyCellLabel = UILabel()
-            emptyCellLabel?.numberOfLines = 1
-            emptyCellLabel?.font = .tableCellTitle
-            emptyCellLabel?.adjustsFontForContentSizeCategory = true
+            emptyCellLabel!.numberOfLines = 1
+            emptyCellLabel!.font = .tableCellTitle
+            emptyCellLabel!.adjustsFontForContentSizeCategory = true
+            emptyCellLabel!.setContentCompressionResistancePriority(.required, for: .vertical)
             stackView.addArrangedSubview(emptyCellLabel!)
         }
         

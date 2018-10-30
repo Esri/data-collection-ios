@@ -22,16 +22,16 @@ class PopupTextFieldCell: PopupEditableFieldCell<UITextField> {
         if valueEditView == nil {
             
             valueEditView = UITextField(frame: .zero)
-            valueEditView?.textColor = .tableCellValue
-            valueEditView?.font = .tableCellValue
-            valueEditView?.sizeToFit()
-            valueEditView?.borderStyle = .roundedRect
-            valueEditView?.keyboardType = keyboardType
+            valueEditView!.textColor = .tableCellValue
+            valueEditView!.font = .tableCellValue
+            valueEditView!.sizeToFit()
+            valueEditView!.borderStyle = .roundedRect
+            valueEditView!.keyboardType = keyboardType
+            valueEditView!.setContentCompressionResistancePriority(.required, for: .vertical)
         }
 
-        valueEditView?.isEnabled = isValueEditable
-        valueEditView?.addTarget(self, action: #selector(PopupTextFieldCell.textFieldDidChange(_:)), for: .editingChanged)
-        valueEditView?.heightAnchor.constraint(greaterThanOrEqualToConstant: valueEditView?.frame.height ?? 25.0).isActive = true
+        valueEditView!.isEnabled = isValueEditable
+        valueEditView!.addTarget(self, action: #selector(PopupTextFieldCell.textFieldDidChange(_:)), for: .editingChanged)
 
         super.insertValueEditView()
     }
@@ -39,7 +39,6 @@ class PopupTextFieldCell: PopupEditableFieldCell<UITextField> {
     public override func removeValueEditView() {
         
         valueEditView?.removeTarget(self, action: #selector(PopupTextFieldCell.textFieldDidChange(_:)), for: .editingChanged)
-        valueEditView?.heightAnchor.constraint(greaterThanOrEqualToConstant: valueEditView?.frame.height ?? 25.0).isActive = false
         
         super.removeValueEditView()
     }

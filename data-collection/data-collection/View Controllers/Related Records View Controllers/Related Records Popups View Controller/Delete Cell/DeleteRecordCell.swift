@@ -34,6 +34,8 @@ class DeleteRecordCell: UITableViewCell {
         deleteLabel.textColor = .invalid
         deleteLabel.font = .tableCellValue
         deleteLabel.textAlignment = .center
+        deleteLabel.adjustsFontForContentSizeCategory = true
+        deleteLabel.setContentCompressionResistancePriority(.required, for: .vertical)
         deleteLabel.numberOfLines = 1
         deleteLabel.text = "Delete"
         
