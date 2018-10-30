@@ -82,13 +82,16 @@ extension RelatedRecordsPopupsViewController {
         }
     }
     
+    fileprivate var activityIndicatorViewHeight: CGFloat { return 35.0 }
+    
     override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         
-        guard section == 0, loadingRelatedRecords else {
-            return 0.0
+        if section == 0 {
+            return loadingRelatedRecords ? activityIndicatorViewHeight : 0.0
         }
-        
-        return 35.0
+        else {
+            return UITableView.automaticDimension
+        }
     }
     
     override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
@@ -98,11 +101,12 @@ extension RelatedRecordsPopupsViewController {
             return nil
         }
         
-        let containerHeight: CGFloat = 35.0
-        let container = UIView(frame: CGRect(x: 0.0, y: 0.0, width: tableView.frame.width, height: containerHeight))
+        let container = UIView(frame: CGRect(x: 0.0, y: 0.0, width: tableView.frame.width, height: activityIndicatorViewHeight))
         container.backgroundColor = .clear
         
         let activity = UIActivityIndicatorView(style: .gray)
+        activity.color = .primary
+        activity.accessibilityLabel = "Loading Related Records"
         activity.startAnimating()
         
         container.addSubview(activity)
