@@ -49,6 +49,7 @@ class DrawerViewController: UIViewController {
         loginBannerView.backgroundColor = .gray
         
         setAppVersionLabel()
+        configureButtonTitleLabels()
         setButtonImageTints()
         setButtonAttributedTitles()
         subscribeToAppContextChanges()
@@ -57,6 +58,15 @@ class DrawerViewController: UIViewController {
     private func setAppVersionLabel() {
         
         appVersionLabel.text = "\(Bundle.AppNameVersionString)\n\(Bundle.ArcGISSDKVersionString)"
+    }
+    
+    private func configureButtonTitleLabels() {
+        [loginButton, workOnlineButton, workOfflineButton, synchronizeOfflineMapButton, deleteOfflineMapButton].forEach { (button) in
+            button!.titleLabel?.numberOfLines = 0
+            button!.titleLabel?.adjustsFontForContentSizeCategory = true
+            button!.titleLabel?.allowsDefaultTighteningForTruncation = true
+            button!.titleLabel?.minimumScaleFactor = 0.5
+        }
     }
     
     private func setButtonImageTints() {
