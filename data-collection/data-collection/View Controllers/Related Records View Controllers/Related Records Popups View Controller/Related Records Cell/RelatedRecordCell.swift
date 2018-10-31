@@ -60,7 +60,6 @@ class RelatedRecordCell: UITableViewCell {
     
     private func setAccessoryViewAddIndicator() {
         let button = UIButton(type: .contactAdd)
-        button.tintColor = .primary
         button.isUserInteractionEnabled = false
         accessoryView = button
     }
@@ -184,7 +183,7 @@ class RelatedRecordCell: UITableViewCell {
             }
             else {
                 setAccessoryViewNone()
-                emptyCellLabel?.textColor = .missing
+                emptyCellLabel?.textColor = .tableCellTitle
                 emptyCellLabel?.text = "(Empty \(table?.tableName ?? "related") record)"
             }
         }

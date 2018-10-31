@@ -18,32 +18,41 @@ import UIKit.UIColor
 // These colors are used throughout the application, when colors are generated at runtime.
 extension UIColor {
     
-    static let primary: UIColor = #colorLiteral(red:0.66, green:0.81, blue:0.40, alpha:1.00)
+    // MARK: General
     
-    static let offline: UIColor = .darkGray
+    static let primary = #colorLiteral(red: 0.3783819885, green: 0.6019210188, blue: 0.2394252939, alpha: 1)
     
-    static let accent: UIColor = #colorLiteral(red:0.97, green:0.74, blue:0.18, alpha:1.00)
+    static let offline = #colorLiteral(red: 0.2605174184, green: 0.2605243921, blue: 0.260520637, alpha: 1)
     
-    static let tableCellTitle: UIColor = .gray
-    static let tableCellValue: UIColor = .black
+    static let tint    = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
     
-    static let invalid: UIColor = .red
-    static let missing: UIColor = .lightGray
+    static let accent  = #colorLiteral(red: 0.8965646404, green: 0.6249603194, blue: 0.0001723665575, alpha: 1)
+
+    static let invalid = #colorLiteral(red: 1, green: 0, blue: 0, alpha: 1)
     
-    static let tint: UIColor = .white
+    // MARK: Table View Cells
     
-    static let loginLogoutNormal: UIColor = .white
-    static let loginLogoutHighlighted: UIColor = .lightGray
+    static let tableCellTitle = #colorLiteral(red: 0.5, green: 0.5, blue: 0.5, alpha: 1)
+    static let tableCellValue = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
     
-    static let workModeNormal: UIColor = .darkGray
-    static let workModeHighlighted: UIColor = .lightGray
-    static let workModeSelected: UIColor = .white
-    static let workModeDisabled: UIColor = UIColor(white: 0.5, alpha: 0.5)
+    static let tableCellEditAction   = #colorLiteral(red: 1, green: 0.5, blue: 0, alpha: 1)
+    static let tableCellDeleteAction = #colorLiteral(red: 1, green: 0, blue: 0, alpha: 1)
     
-    static let offlineActivityNormal: UIColor = .darkGray
-    static let offlineActivityHighlighted: UIColor = .lightGray
-    static let offlineActivitySelected: UIColor = .lightGray
-    static let offlineActivityDisabled: UIColor = UIColor(white: 0.5, alpha: 0.5)
+    // MARK: Drawer View
+    
+    static let loginLogoutBackground  = #colorLiteral(red: 0.5, green: 0.5, blue: 0.5, alpha: 1)
+    static let loginLogoutNormal      = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
+    static let loginLogoutHighlighted = #colorLiteral(red: 0.666667, green: 0.666667, blue: 0.666667, alpha: 1)
+    
+    static let workModeNormal      = #colorLiteral(red: 0.333333, green: 0.333333, blue: 0.333333, alpha: 1)
+    static let workModeHighlighted = #colorLiteral(red: 0.666667, green: 0.666667, blue: 0.666667, alpha: 1)
+    static let workModeSelected    = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
+    static let workModeDisabled    = #colorLiteral(red: 0.5, green: 0.5, blue: 0.5, alpha: 0.5)
+    
+    static let offlineActivityNormal      = #colorLiteral(red: 0.333333, green: 0.333333, blue: 0.333333, alpha: 1)
+    static let offlineActivityHighlighted = #colorLiteral(red: 0.666667, green: 0.666667, blue: 0.666667, alpha: 1)
+    static let offlineActivitySelected    = #colorLiteral(red: 0.666667, green: 0.666667, blue: 0.666667, alpha: 1)
+    static let offlineActivityDisabled    = #colorLiteral(red: 0.5, green: 0.5, blue: 0.5, alpha: 0.5)
 }
 
 extension AppDelegate {

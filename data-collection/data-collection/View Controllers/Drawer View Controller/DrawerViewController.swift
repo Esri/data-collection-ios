@@ -28,6 +28,7 @@ protocol DrawerViewControllerDelegate: AnyObject {
 class DrawerViewController: UIViewController {
     
     @IBOutlet weak var loginButton: UIButton!
+    @IBOutlet weak var loginBannerView: UIView!
     @IBOutlet weak var workOnlineButton: UIButton!
     @IBOutlet weak var workOfflineButton: UIButton!
     @IBOutlet weak var synchronizeOfflineMapButton: UIButton!
@@ -53,7 +54,9 @@ class DrawerViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+        loginBannerView.backgroundColor = .loginLogoutBackground
+        
         setAppVersionLabel()
         setButtonImageTints()
         setButtonAttributedTitles()

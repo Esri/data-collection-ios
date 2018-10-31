@@ -136,7 +136,7 @@ extension RelatedRecordsPopupsViewController {
                 self?.closeEditingSessionAndBeginEditing(childPopup: childPopup)
             }
             
-            editAction.backgroundColor = .orange
+            editAction.backgroundColor = .tableCellEditAction
             actions.append(editAction)
         }
 
@@ -148,7 +148,7 @@ extension RelatedRecordsPopupsViewController {
                 })
             }
             
-            deleteAction.backgroundColor = .red
+            deleteAction.backgroundColor = .tableCellDeleteAction
             actions.append(deleteAction)
         }
         
