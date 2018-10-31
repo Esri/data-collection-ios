@@ -26,23 +26,25 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Could not load map." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rjg-aP-1qN">
-                                <rect key="frame" x="110.66666666666667" y="357.66666666666669" width="153.66666666666663" height="21"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="21" id="aqR-lF-jkh"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="w1m-XM-YEC">
-                                <rect key="frame" x="140.66666666666666" y="394.66666666666669" width="94" height="33"/>
-                                <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
-                                <state key="normal" title="Reload Map"/>
-                                <connections>
-                                    <action selector="userRequestsReloadMap:" destination="nEg-xi-PLM" eventType="touchUpInside" id="qbv-Jz-37t"/>
-                                </connections>
-                            </button>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" spacing="6" translatesAutoresizingMaskIntoConstraints="NO" id="F31-4h-0fs">
+                                <rect key="frame" x="110.66666666666667" y="376.33333333333331" width="153.66666666666663" height="59.333333333333314"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Could not load map." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rjg-aP-1qN">
+                                        <rect key="frame" x="0.0" y="0.0" width="153.66666666666666" height="20.333333333333332"/>
+                                        <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="w1m-XM-YEC">
+                                        <rect key="frame" x="0.0" y="26.333333333333371" width="153.66666666666666" height="33"/>
+                                        <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
+                                        <state key="normal" title="Reload Map"/>
+                                        <connections>
+                                            <action selector="userRequestsReloadMap:" destination="nEg-xi-PLM" eventType="touchUpInside" id="qbv-Jz-37t"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                            </stackView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Iie-Za-UAs" customClass="AGSMapView">
                                 <rect key="frame" x="0.0" y="44" width="375" height="768"/>
                                 <color key="backgroundColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -232,23 +234,25 @@
                             <constraint firstItem="Axc-7B-KP8" firstAttribute="top" secondItem="pcE-3a-4ld" secondAttribute="topMargin" id="7qv-Gr-L1t"/>
                             <constraint firstItem="pcE-3a-4ld" firstAttribute="trailing" secondItem="Iie-Za-UAs" secondAttribute="trailing" id="9Hy-gf-Vkm"/>
                             <constraint firstItem="673-08-WQO" firstAttribute="bottom" secondItem="Iie-Za-UAs" secondAttribute="bottom" id="Afj-mH-cGM"/>
-                            <constraint firstItem="w1m-XM-YEC" firstAttribute="centerX" secondItem="5HZ-r9-azH" secondAttribute="centerX" id="Fd6-nF-Sp6"/>
                             <constraint firstItem="JPL-Oj-pCs" firstAttribute="centerX" secondItem="Iie-Za-UAs" secondAttribute="centerX" id="Mcl-Sm-zBv"/>
                             <constraint firstItem="nd8-Es-e3p" firstAttribute="trailing" secondItem="Iie-Za-UAs" secondAttribute="trailing" id="Mr4-HZ-mff"/>
-                            <constraint firstItem="rjg-aP-1qN" firstAttribute="centerX" secondItem="5HZ-r9-azH" secondAttribute="centerX" id="Nbe-HX-i6t"/>
                             <constraint firstItem="5HZ-r9-azH" firstAttribute="trailing" secondItem="wWn-Jn-iZF" secondAttribute="trailing" constant="16" id="Pbc-7m-8Mf"/>
+                            <constraint firstItem="5HZ-r9-azH" firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="F31-4h-0fs" secondAttribute="bottom" constant="16" id="QJO-Vv-BTt"/>
                             <constraint firstItem="Iie-Za-UAs" firstAttribute="leading" secondItem="kpE-SF-vK8" secondAttribute="leading" id="S1O-WV-qr3"/>
                             <constraint firstItem="5HZ-r9-azH" firstAttribute="bottom" secondItem="wWn-Jn-iZF" secondAttribute="bottom" constant="16" placeholder="YES" id="Sgu-yL-0My"/>
-                            <constraint firstItem="w1m-XM-YEC" firstAttribute="top" secondItem="rjg-aP-1qN" secondAttribute="bottom" constant="16" id="TVB-ZK-qWS"/>
+                            <constraint firstItem="5HZ-r9-azH" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="F31-4h-0fs" secondAttribute="trailing" constant="16" id="TsY-fd-uEY"/>
                             <constraint firstItem="pcE-3a-4ld" firstAttribute="top" secondItem="Iie-Za-UAs" secondAttribute="top" id="VKC-6t-gAW"/>
                             <constraint firstItem="5HZ-r9-azH" firstAttribute="trailing" secondItem="bCz-JE-wcZ" secondAttribute="trailing" constant="16" id="XEj-x9-f2d"/>
                             <constraint firstItem="nd8-Es-e3p" firstAttribute="leading" secondItem="Iie-Za-UAs" secondAttribute="leading" id="XMa-xj-WIv"/>
                             <constraint firstItem="pcE-3a-4ld" firstAttribute="leading" secondItem="Iie-Za-UAs" secondAttribute="leading" id="ZLu-Qi-UfN"/>
-                            <constraint firstItem="w1m-XM-YEC" firstAttribute="centerY" secondItem="5HZ-r9-azH" secondAttribute="centerY" id="ZQC-hI-cw7"/>
                             <constraint firstItem="bCz-JE-wcZ" firstAttribute="top" secondItem="pcE-3a-4ld" secondAttribute="bottom" constant="16" id="Zvi-Yi-VqY"/>
                             <constraint firstItem="wWn-Jn-iZF" firstAttribute="leading" secondItem="5HZ-r9-azH" secondAttribute="leading" constant="16" id="dKi-4X-nCw"/>
                             <constraint firstItem="pcE-3a-4ld" firstAttribute="bottom" secondItem="Iie-Za-UAs" secondAttribute="top" priority="750" id="dXB-SL-3DH"/>
+                            <constraint firstItem="F31-4h-0fs" firstAttribute="centerX" secondItem="kpE-SF-vK8" secondAttribute="centerX" id="eQu-OE-y9o"/>
                             <constraint firstAttribute="trailing" secondItem="Iie-Za-UAs" secondAttribute="trailing" id="evB-78-ejO"/>
+                            <constraint firstItem="F31-4h-0fs" firstAttribute="top" relation="greaterThanOrEqual" secondItem="5HZ-r9-azH" secondAttribute="top" constant="16" id="f2f-8h-KbL"/>
+                            <constraint firstItem="F31-4h-0fs" firstAttribute="centerY" secondItem="kpE-SF-vK8" secondAttribute="centerY" id="g2Q-Rz-iii"/>
+                            <constraint firstItem="F31-4h-0fs" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="5HZ-r9-azH" secondAttribute="leading" constant="16" id="gN2-ao-Ckm"/>
                             <constraint firstItem="Axc-7B-KP8" firstAttribute="bottom" secondItem="pcE-3a-4ld" secondAttribute="bottomMargin" id="gzV-Qs-t66"/>
                             <constraint firstItem="Axc-7B-KP8" firstAttribute="trailing" secondItem="pcE-3a-4ld" secondAttribute="trailingMargin" id="hmF-Zg-Zb8"/>
                             <constraint firstItem="Iie-Za-UAs" firstAttribute="top" secondItem="5HZ-r9-azH" secondAttribute="top" id="jsM-rh-24s"/>
