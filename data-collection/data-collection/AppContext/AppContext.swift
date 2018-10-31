@@ -36,17 +36,22 @@ import ArcGIS
         didSet {
             portal.load { [weak self] (error: Error?) in
                 
-                if let error = error {
-                    print("[Error: Portal Load Status]", error.localizedDescription)
-                }
-                else {
-                    print("[Portal] loaded")
-                }
-                
                 guard let self = self else { return }
-                
+
+                guard error == nil else {
+                    print("[Error: Portal Load Status]", error!.localizedDescription)
+                    if self.workMode == .online {
+                        self.currentMap = nil
+                    }
+                    return
+                }
+
                 let userDescription = self.portal.user != nil ? "logged in (\(self.portal.user!.username ?? "no username"))" : "logged out"
-                print("[Authentication] user is \(userDescription).")
+                print("[Portal] user is \(userDescription).")
+                
+                if self.workMode == .online {
+                    self.setWorkModeOnlineWithMapFromPortal()
+                }
                 
                 appNotificationCenter.post(name: .currentPortalDidChange, object: nil)
             }
