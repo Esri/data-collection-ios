@@ -36,7 +36,7 @@ class PopupReadonlyFieldCell: UITableViewCell, PopupFieldCellProtocol {
 
         contentView.addStackviewAndConstrainToEdges(stackView)
         
-        titleLabel.textColor = .tableCellTitle
+        titleLabel.textColor = .gray
         titleLabel.font = .tableCellTitle
         titleLabel.adjustsFontForContentSizeCategory = true
         titleLabel.setContentCompressionResistancePriority(.required, for: .vertical)
@@ -45,7 +45,7 @@ class PopupReadonlyFieldCell: UITableViewCell, PopupFieldCellProtocol {
         // Add Title Label
         stackView.addArrangedSubview(titleLabel)
         
-        valueLabel.textColor = .tableCellValue
+        valueLabel.textColor = .black
         valueLabel.font = .tableCellValue
         valueLabel.adjustsFontForContentSizeCategory = true
         valueLabel.setContentCompressionResistancePriority(.required, for: .vertical)

@@ -26,40 +26,14 @@ extension UIColor {
     // Color symbolizing offline work mode.
     static let offline = #colorLiteral(red: 0.2605174184, green: 0.2605243921, blue: 0.260520637, alpha: 1)
     
-    // Bar button items (text and image)
-    static let tint    = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
+    // Contrasting both primary and offline, bar button items (text and image).
+    static let tint = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
     
-    // Contrasting both primary and offline.
-    static let accent  = #colorLiteral(red: 0.8965646404, green: 0.6249603194, blue: 0.0001723665575, alpha: 1)
+    // Contrasting both primary and offline, used in the drawer.
+    static let accent = #colorLiteral(red: 0.8965646404, green: 0.6249603194, blue: 0.0001723665575, alpha: 1)
 
-    // Color symbolizing invalid popup fields
-    static let invalid = #colorLiteral(red: 1, green: 0, blue: 0, alpha: 1)
-    
-    // MARK: Actions
-    
-    static let editAction   = #colorLiteral(red: 1, green: 0.5, blue: 0, alpha: 1)
-    static let deleteAction = #colorLiteral(red: 1, green: 0, blue: 0, alpha: 1)
-    
-    // MARK: Table View Cells
-    
-    static let tableCellTitle = #colorLiteral(red: 0.5, green: 0.5, blue: 0.5, alpha: 1)
-    static let tableCellValue = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
-    
-    // MARK: Drawer View
-    
-    static let loginLogoutBackground  = #colorLiteral(red: 0.5, green: 0.5, blue: 0.5, alpha: 1)
-    static let loginLogoutNormal      = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
-    static let loginLogoutHighlighted = #colorLiteral(red: 0.666667, green: 0.666667, blue: 0.666667, alpha: 1)
-    
-    static let workModeNormal      = #colorLiteral(red: 0.333333, green: 0.333333, blue: 0.333333, alpha: 1)
-    static let workModeHighlighted = #colorLiteral(red: 0.666667, green: 0.666667, blue: 0.666667, alpha: 1)
-    static let workModeSelected    = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
-    static let workModeDisabled    = #colorLiteral(red: 0.5, green: 0.5, blue: 0.5, alpha: 0.5)
-    
-    static let offlineActivityNormal      = #colorLiteral(red: 0.333333, green: 0.333333, blue: 0.333333, alpha: 1)
-    static let offlineActivityHighlighted = #colorLiteral(red: 0.666667, green: 0.666667, blue: 0.666667, alpha: 1)
-    static let offlineActivitySelected    = #colorLiteral(red: 0.666667, green: 0.666667, blue: 0.666667, alpha: 1)
-    static let offlineActivityDisabled    = #colorLiteral(red: 0.5, green: 0.5, blue: 0.5, alpha: 0.5)
+    // Color symbolizing destructive and invalid.
+    static let destructive = #colorLiteral(red: 1, green: 0, blue: 0, alpha: 1)
 }
 
 extension AppDelegate {

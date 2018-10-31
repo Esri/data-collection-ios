@@ -39,23 +39,14 @@ class DrawerViewController: UIViewController {
     
     private let changeHandler = AppContextChangeHandler()
     
-    private let loginLogoutButtonControlStateColors: [UIControl.State: UIColor] = [.normal: .loginLogoutNormal,
-                                                                                   .highlighted: .loginLogoutHighlighted]
-    
-    private let workModeControlStateColors: [UIControl.State: UIColor] = [.normal: .workModeNormal,
-                                                                          .highlighted: .workModeHighlighted,
-                                                                          .selected: .workModeSelected,
-                                                                          .disabled: .workModeDisabled]
-    
-    private let offlineActivityControlStateColors: [UIControl.State: UIColor] = [.normal: .offlineActivityNormal,
-                                                                                 .highlighted: .offlineActivityHighlighted,
-                                                                                 .selected: .offlineActivitySelected,
-                                                                                 .disabled: .offlineActivityDisabled]
+    private let loginLogoutButtonControlStateColors: [UIControl.State: UIColor] = [.normal: .white, .highlighted: .gray]
+    private let workModeControlStateColors: [UIControl.State: UIColor] = [.normal: .darkGray, .highlighted: .gray, .selected: .white, .disabled: UIColor(white: 0.5, alpha: 1)]
+    private let offlineActivityControlStateColors: [UIControl.State: UIColor] = [.normal: .darkGray, .highlighted: .gray, .selected: .gray, .disabled: UIColor(white: 0.5, alpha: 1)]
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        loginBannerView.backgroundColor = .loginLogoutBackground
+        loginBannerView.backgroundColor = .gray
         
         setAppVersionLabel()
         setButtonImageTints()
@@ -165,10 +156,13 @@ class DrawerViewController: UIViewController {
         workOfflineButton.backgroundColor = appContext.workMode == .offline ? .accent : .clear
         
         if !appContext.hasOfflineMap {
-            workOfflineButton.setAttributed(header: (title: appContext.workMode == .offline ? "Working Offline" : "Work Offline", font: .drawerButtonHeader), subheader: (title: "download map", font: .drawerButtonSubheader) ,forControlStateColors: workModeControlStateColors)
+            workOfflineButton.setAttributed(header: (title: appContext.workMode == .offline ? "Working Offline" : "Work Offline", font: .drawerButtonHeader),
+                                            subheader: (title: "download map", font: .drawerButtonSubheader),
+                                            forControlStateColors: workModeControlStateColors)
         }
         else {
-            workOfflineButton.setAttributed(header: (title: appContext.workMode == .offline ? "Working Offline" : "Work Offline", font: .drawerButtonHeader), forControlStateColors: workModeControlStateColors)
+            workOfflineButton.setAttributed(header: (title: appContext.workMode == .offline ? "Working Offline" : "Work Offline", font: .drawerButtonHeader),
+                                            forControlStateColors: workModeControlStateColors)
         }
 
         synchronizeOfflineMapButton.isEnabled = appContext.hasOfflineMap && appReachability.isReachable
@@ -182,7 +176,7 @@ class DrawerViewController: UIViewController {
         
         if let currentUser = user {
             
-            let fallbackProfileImage = UIImage(named: "MissingProfile")!.withRenderingMode(.alwaysOriginal).circularThumbnail(ofSize: 36, stroke: (color: .loginLogoutNormal, weight: 1))
+            let fallbackProfileImage = UIImage(named: "MissingProfile")!.withRenderingMode(.alwaysOriginal).circularThumbnail(ofSize: 36, stroke: (color: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1), weight: 1))
             
             guard let image = currentUser.thumbnail else {
                 loginButton.setImage(fallbackProfileImage, for: .normal)
@@ -198,7 +192,7 @@ class DrawerViewController: UIViewController {
                     return
                 }
                 
-                guard let img = image.image, let profImage = img.circularThumbnail(ofSize: 36, stroke: (color: .loginLogoutNormal, weight: 1)) else {
+                guard let img = image.image, let profImage = img.circularThumbnail(ofSize: 36, stroke: (color: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1), weight: 1)) else {
                     print("[Error: User Thumbnail Image Load] image processing error.")
                     return
                 }

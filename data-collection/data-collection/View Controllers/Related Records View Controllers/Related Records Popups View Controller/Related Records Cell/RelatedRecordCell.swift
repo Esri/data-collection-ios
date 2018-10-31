@@ -93,7 +93,7 @@ class RelatedRecordCell: UITableViewCell {
                 
                 let titleLabel = UILabel()
                 titleLabel.numberOfLines = 1
-                titleLabel.textColor = .tableCellTitle
+                titleLabel.textColor = .gray
                 titleLabel.font = .tableCellTitle
                 titleLabel.adjustsFontForContentSizeCategory = true
                 titleLabel.setContentCompressionResistancePriority(.required, for: .vertical)
@@ -101,7 +101,7 @@ class RelatedRecordCell: UITableViewCell {
                 
                 let valueLabel = UILabel()
                 valueLabel.numberOfLines = 0
-                valueLabel.textColor = .tableCellValue
+                valueLabel.textColor = .black
                 valueLabel.font = .tableCellValue
                 valueLabel.adjustsFontForContentSizeCategory = true
                 valueLabel.setContentCompressionResistancePriority(.required, for: .vertical)
@@ -178,12 +178,12 @@ class RelatedRecordCell: UITableViewCell {
         if info.isManyToOne {
             if editingPopup {
                 setAccessoryViewDisclosureIndicator()
-                emptyCellLabel?.textColor = info.isComposite ? .invalid : .tableCellTitle
+                emptyCellLabel?.textColor = info.isComposite ? .destructive : .gray
                 emptyCellLabel?.text = "Select \(table?.tableName ?? "related record")"
             }
             else {
                 setAccessoryViewNone()
-                emptyCellLabel?.textColor = .tableCellTitle
+                emptyCellLabel?.textColor = .gray
                 emptyCellLabel?.text = "(Empty \(table?.tableName ?? "related") record)"
             }
         }
