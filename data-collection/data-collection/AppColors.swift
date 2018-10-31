@@ -20,23 +20,30 @@ extension UIColor {
     
     // MARK: General
     
+    // The general of the app and color symbolizing online work mode.
     static let primary = #colorLiteral(red: 0.3783819885, green: 0.6019210188, blue: 0.2394252939, alpha: 1)
     
+    // Color symbolizing offline work mode.
     static let offline = #colorLiteral(red: 0.2605174184, green: 0.2605243921, blue: 0.260520637, alpha: 1)
     
+    // Bar button items (text and image)
     static let tint    = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
     
+    // Contrasting both primary and offline.
     static let accent  = #colorLiteral(red: 0.8965646404, green: 0.6249603194, blue: 0.0001723665575, alpha: 1)
 
+    // Color symbolizing invalid popup fields
     static let invalid = #colorLiteral(red: 1, green: 0, blue: 0, alpha: 1)
+    
+    // MARK: Actions
+    
+    static let editAction   = #colorLiteral(red: 1, green: 0.5, blue: 0, alpha: 1)
+    static let deleteAction = #colorLiteral(red: 1, green: 0, blue: 0, alpha: 1)
     
     // MARK: Table View Cells
     
     static let tableCellTitle = #colorLiteral(red: 0.5, green: 0.5, blue: 0.5, alpha: 1)
     static let tableCellValue = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
-    
-    static let tableCellEditAction   = #colorLiteral(red: 1, green: 0.5, blue: 0, alpha: 1)
-    static let tableCellDeleteAction = #colorLiteral(red: 1, green: 0, blue: 0, alpha: 1)
     
     // MARK: Drawer View
     
