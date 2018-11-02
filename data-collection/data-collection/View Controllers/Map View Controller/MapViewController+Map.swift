@@ -38,7 +38,7 @@ extension MapViewController {
                     self?.present(loginAlertMessage: "You must log in to access this resource.")
                 }
                 else {
-                    self?.present(simpleAlertMessage: "Couldn't load map. \(error.localizedDescription).")
+                    self?.present(simpleAlertMessage: error.localizedDescription)
                 }
                 
                 self?.mapViewMode = .disabled
