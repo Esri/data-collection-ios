@@ -29,40 +29,49 @@ extension MapViewController {
         
         let loadCompletion: ((Error?) -> Void)? = { [weak self] (error) in
             
+            guard let self = self else { return }
+            
             guard error == nil else {
                 let error = (error! as NSError)
 
                 print("[Error: Map Load]", "code: \(error.code)", error.localizedDescription)
                 
                 if AGSServicesErrorCode(rawValue: error.code) == .tokenRequired, !appContext.isLoggedIn {
-                    self?.present(loginAlertMessage: "You must log in to access this resource.")
+                    self.present(loginAlertMessage: "You must log in to access this resource.")
                 }
                 else {
-                    self?.present(simpleAlertMessage: error.localizedDescription)
+                    self.present(simpleAlertMessage: error.localizedDescription)
                 }
                 
-                self?.mapViewMode = .disabled
+                self.mapViewMode = .disabled
                 return
             }
 
             if let sharedVisibleArea = appContext.sharedVisibleArea {
-                self?.mapView.setViewpoint(sharedVisibleArea)
+                if let offlineMap = appContext.offlineMap, offlineMap == map {
+                    if let offlineMapInitialViewpoint = offlineMap.initialViewpoint,
+                        AGSGeometryEngine.geometry(offlineMapInitialViewpoint.targetGeometry, intersects: sharedVisibleArea.targetGeometry) {
+                        self.mapView.setViewpoint(sharedVisibleArea)
+                    }
+                }
+                else {
+                    self.mapView.setViewpoint(sharedVisibleArea)
+                }
             }
             
-            self?.mapViewMode = .defaultView
+            self.mapViewMode = .defaultView
             
-            // 1 set map title from map definition
-            self?.delegate?.mapViewController(self!, didUpdateTitle: map.item?.title ?? "Map")
+            self.delegate?.mapViewController(self, didUpdateTitle: map.item?.title ?? "Map")
             
             guard let operationalLayers = map.operationalLayers as? [AGSFeatureLayer] else {
-                self?.delegate?.mapViewController(self!, shouldAllowNewFeature: false)
+                self.delegate?.mapViewController(self, shouldAllowNewFeature: false)
                 return
             }
             
-            AGSLoadObjects(operationalLayers, { [weak self] (_) in
+            AGSLoadObjects(operationalLayers, { (_) in
                 
                 let flag = !operationalLayers.featureAddableLayers.isEmpty
-                self?.delegate?.mapViewController(self!, shouldAllowNewFeature: flag)
+                self.delegate?.mapViewController(self, shouldAllowNewFeature: flag)
             })
         }
         
