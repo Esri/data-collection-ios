@@ -15,24 +15,19 @@
 import UIKit
 import ArcGIS
 
-extension RelatedRecordsPopupsViewController: RelatedRecordsListViewControllerDelegate {
+extension RichPopupViewController: RelatedRecordsListViewControllerDelegate {
     
     // This function is called when the user selects a new many-to-one related record.
     func relatedRecordsListViewController(_ viewController: RelatedRecordsListViewController, didSelectPopup relatedPopup: AGSPopup) {
         
         navigationController?.popViewController(animated: true)
         
-        guard let info = self.popup.oneToManyRelationship(withPopup: relatedPopup) else {
-            present(simpleAlertMessage: "Uh Oh! An unknown error occurred.")
-            return
-        }
-        
         do {
-            try recordsManager.update(manyToOne: relatedPopup, forRelationship: info)
+            try popupManager.update(relatedPopup)
         }
         catch {
-            print("[Error] couldn't update related record", error.localizedDescription)
-            present(simpleAlertMessage: "Uh Oh! You couldn't update the related record.")
+            print("[Error] couldn't update related record", error)
+            present(simpleAlertMessage: error.localizedDescription)
         }
         
         tableView.reloadData()

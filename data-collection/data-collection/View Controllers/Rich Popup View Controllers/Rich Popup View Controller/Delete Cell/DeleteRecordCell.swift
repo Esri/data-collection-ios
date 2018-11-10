@@ -46,7 +46,7 @@ class DeleteRecordCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func configure(forPopup popup: AGSPopup) {
-        deleteLabel.text = "Delete \(popup.recordType.rawValue.capitalized)"
+    func configure(withRecordTypeName name: String) {
+        deleteLabel.text = "Delete \(name.capitalized)"
     }
 }

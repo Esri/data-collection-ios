@@ -23,32 +23,33 @@ struct RelatedRecordsPreferences {
 }
 
 
-extension RelatedRecordsPopupsViewController {
+extension RichPopupViewController {
     
     override func numberOfSections(in tableView: UITableView) -> Int {
         
+        var n = 1
+
         // The number of sections is defined as (n) many-to-one related tables + 1.
-        var nSections = 1
-        nSections += recordsManager.manyToOne.count
+        n += popup.relationships?.manyToOne.count ?? 0
         
         if let feature = popup.geoElement as? AGSArcGISFeature, let featureTable = feature.featureTable as? AGSArcGISFeatureTable, featureTable.canDelete(feature) {
-            nSections += 1
+            n += 1
         }
         
-        return nSections
+        return n
     }
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         
-        guard section > 0 else {
+        guard section > 0, let managers = popup.relationships?.oneToMany else {
             return nil
         }
         
         // Section Header for One To Many records
         let offset = section - 1
         
-        if recordsManager.oneToMany.count > offset {
-            return recordsManager.oneToMany[offset].name
+        if managers.count > offset {
+            return popup.relationships?.oneToMany[offset].name ?? nil
         }
         
         return nil
@@ -56,14 +57,14 @@ extension RelatedRecordsPopupsViewController {
         
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        if recordsManager.indexPathWithinAttributes(indexPath) {
+        if popupManager.indexPathWithinAttributes(indexPath) {
 
-            let field = recordsManager.attributeField(forIndexPath: indexPath)!
-            let fieldType = recordsManager.fieldType(for: field)
+            let field = popupManager.attributeField(forIndexPath: indexPath)!
+            let fieldType = popupManager.fieldType(for: field)
             
             let cell: PopupFieldCellProtocol!
             
-            if let _ = recordsManager.domain(for: field) as? AGSCodedValueDomain {
+            if popupManager.domain(for: field) is AGSCodedValueDomain {
                 cell = tableView.dequeueReusableCell(withIdentifier: ReuseIdentifiers.codedValueCell, for: indexPath) as! PopupCodedValueCell
             }
             else {
@@ -83,34 +84,34 @@ extension RelatedRecordsPopupsViewController {
                 }
             }
             
-            cell.popupManager = recordsManager
+            cell.popupManager = popupManager
             cell.field = field
             cell.updateCellContent()
             
             return cell as! UITableViewCell
         }
-        else if recordsManager.indexPathWithinManyToOne(indexPath) {
+        else if popupManager.indexPathWithinManyToOne(indexPath) {
             
             let cell = tableView.dequeueReusableCell(withIdentifier: ReuseIdentifiers.relatedRecordCell, for: indexPath) as! RelatedRecordCell
-            let manager = recordsManager.relatedRecordManager(forIndexPath: indexPath) as! ManyToOneManager
-            cell.table = manager.relatedTable
-            cell.popup = manager.relatedPopup
-            cell.relationshipInfo = manager.relationshipInfo
+            let relationship = popupManager.relationship(forIndexPath: indexPath) as! ManyToOneRelationship
+            cell.table = relationship.relatedTable
+            cell.popup = relationship.relatedPopup
+            cell.relationshipInfo = relationship.relationshipInfo
             cell.maxAttributes = RelatedRecordsPreferences.manyToOneCellAttributeCount
-            cell.editingPopup = recordsManager.isEditing
+            cell.editingPopup = popupManager.isEditing
             cell.updateCellContent()
             
             return cell
         }
-        else if recordsManager.indexPathWithinOneToMany(indexPath) {
+        else if popupManager.indexPathWithinOneToMany(indexPath) {
             
             let cell = tableView.dequeueReusableCell(withIdentifier: ReuseIdentifiers.relatedRecordCell, for: indexPath) as! RelatedRecordCell
-            let manager = recordsManager.relatedRecordManager(forIndexPath: indexPath) as! OneToManyManager
-            cell.table = manager.relatedTable
-            cell.popup = manager.popup(forIndexPath: indexPath)
-            cell.relationshipInfo = manager.relationshipInfo
+            let relationship = popupManager.relationship(forIndexPath: indexPath) as! OneToManyRelationship
+            cell.table = relationship.relatedTable
+            cell.popup = relationship.popup(forIndexPath: indexPath)
+            cell.relationshipInfo = relationship.relationshipInfo
             cell.maxAttributes = RelatedRecordsPreferences.oneToManyCellAttributeCount
-            cell.editingPopup = recordsManager.isEditing
+            cell.editingPopup = popupManager.isEditing
             cell.updateCellContent()
             
             return cell
@@ -118,7 +119,7 @@ extension RelatedRecordsPopupsViewController {
         else {
             
             let cell = tableView.dequeueReusableCell(withIdentifier: ReuseIdentifiers.deletePopupCell, for: indexPath) as! DeleteRecordCell
-            cell.configure(forPopup: popup)
+            cell.configure(withRecordTypeName: popup.recordType.rawValue)
             return cell
         }
     }
@@ -139,14 +140,21 @@ extension RelatedRecordsPopupsViewController {
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
         if section == 0 {
-            let nFields = recordsManager.isEditing ? recordsManager.editableDisplayFields.count : recordsManager.displayFields.count
-            return nFields + recordsManager.manyToOne.count
-        }
-        else if recordsManager.oneToMany.count > section - 1 {
-            let index = section - 1
-            var nRows = recordsManager.oneToMany[index].relatedPopups.count
             
-            if let table = recordsManager.oneToMany[index].relatedTable, table.canAddFeature {
+            var nFields = popupManager.isEditing ? popupManager.editableDisplayFields.count : popupManager.displayFields.count
+            
+            if let managers = popup.relationships?.manyToOne {
+                nFields += managers.count
+            }
+            
+            return nFields
+        }
+        else if let managers = popup.relationships?.oneToMany, managers.count > section - 1 {
+            
+            let index = section - 1
+            var nRows = managers[index].relatedPopups.count
+            
+            if let table = managers[index].relatedTable, table.canAddFeature {
                 nRows += 1
             }
             

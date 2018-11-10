@@ -124,14 +124,29 @@ extension MapViewController {
                 return
         }
         
-        EphemeralCache.set(object: newPopup, forKey: EphemeralCacheKeys.newNonSpatialFeature)
+        let newRichPopup = RichPopup(popup: newPopup)
         
-        mapViewMode = .selectingFeature
+        SVProgressHUD.show(withStatus: "Creating \(newRichPopup.tableName ?? "Feature")")
+        
+        newRichPopup.relationships?.load(completion: { [weak self] (error) in
+            
+            SVProgressHUD.dismiss()
+            
+            guard let self = self else { return }
+            
+            if let error = error  {
+                self.present(simpleAlertMessage: error.localizedDescription)
+            }
+            else {
+                EphemeralCache.set(object: newRichPopup, forKey: EphemeralCacheKeys.newNonSpatialFeature)
+                self.mapViewMode = .selectingFeature
+            }
+        })
     }
     
     private func prepareNewFeatureForEdit() {
         
-        guard let newPopup = EphemeralCache.get(objectForKey: EphemeralCacheKeys.newNonSpatialFeature) as? AGSPopup else {
+        guard let newPopup = EphemeralCache.get(objectForKey: EphemeralCacheKeys.newNonSpatialFeature) as? RichPopup else {
             present(simpleAlertMessage: "Uh Oh! You are unable to add a new record.")
             return
         }

@@ -19,7 +19,7 @@ import ArcGIS
 class PopupReadonlyFieldCell: UITableViewCell, PopupFieldCellProtocol {
     
     var field: AGSPopupField?
-    weak var popupManager: PopupRelatedRecordsManager?
+    weak var popupManager: RichPopupManager?
     
     let stackView = UIStackView()
     let titleLabel = UILabel()

@@ -15,12 +15,12 @@
 import UIKit
 import ArcGIS
 
-extension RelatedRecordsPopupsViewController {
+extension RichPopupViewController {
     
     override func tableView(_ tableView: UITableView, shouldHighlightRowAt indexPath: IndexPath) -> Bool {
 
         // We only want to highlight related records
-        return !recordsManager.indexPathWithinAttributes(indexPath)
+        return !popupManager.indexPathWithinAttributes(indexPath)
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -38,9 +38,9 @@ extension RelatedRecordsPopupsViewController {
         
         // Any other action should only want to allow selection of related records
         guard let cell = selectedCell as? RelatedRecordCell else { return }
-        
+                
         // Should edit M:1 Related Record
-        if indexPath.section == 0, recordsManager.isEditing {
+        if indexPath.section == 0, popupManager.isEditing {
             
             guard let table = cell.table else { return }
             
@@ -51,7 +51,7 @@ extension RelatedRecordsPopupsViewController {
         }
         
         // Should edit existing 1:M Related Record
-        if indexPath.section > 0, let childPopup = cell.popup, recordsManager.isEditing {
+        if indexPath.section > 0, let childPopup = cell.popup, popupManager.isEditing {
             
             closeEditingSessionAndBeginEditing(childPopup: childPopup)
             
@@ -72,10 +72,10 @@ extension RelatedRecordsPopupsViewController {
         }
         
         // Requesting view popup
-        if let rrvc = storyboard?.instantiateViewController(withIdentifier: "RelatedRecordsPopupsViewController") as? RelatedRecordsPopupsViewController, let childPopup = cell.popup, let parentRecordsManager = recordsManager {
+        if let rrvc = storyboard?.instantiateViewController(withIdentifier: "RichPopupViewController") as? RichPopupViewController, let childPopup = cell.popup {
             
-            rrvc.popup = childPopup
-            rrvc.parentRecordsManager = parentRecordsManager
+            rrvc.popup = RichPopup(popup: childPopup)
+            rrvc.parentPopup = popup
             show(rrvc, sender: self)
             
             return
@@ -84,17 +84,18 @@ extension RelatedRecordsPopupsViewController {
     
     override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         
-        guard section == 0, loadingRelatedRecords else {
+        if section == 0, popup.relationships?.loadStatus == .loading {
+            return 35.0
+        }
+        else {
             return 0.0
         }
-        
-        return 35.0
     }
     
     override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         
         // If the view controller is loading related records, we want to add an activity indicator view in the table view's header.
-        guard section == 0, loadingRelatedRecords else {
+        guard section == 0, popup.relationships?.loadStatus == .loading else {
             return nil
         }
         
@@ -118,7 +119,7 @@ extension RelatedRecordsPopupsViewController {
         
         // We don't want to offer edit row actions to pop-up fields.
         guard
-            recordsManager.indexPathWithinOneToMany(indexPath),
+            popupManager.indexPathWithinOneToMany(indexPath),
             let cell = tableView.cellForRow(at: indexPath) as? RelatedRecordCell,
             let childPopup = cell.popup
             else {
@@ -129,8 +130,12 @@ extension RelatedRecordsPopupsViewController {
         
         // Add an edit action, if editable.
         if childPopup.isEditable {
+            
             let editAction = UITableViewRowAction(style: .default, title: "Edit") { [weak self] (action, indexPath) in
-                self?.closeEditingSessionAndBeginEditing(childPopup: childPopup)
+                
+                guard let self = self else { return }
+                
+                self.closeEditingSessionAndBeginEditing(childPopup: childPopup)
             }
             
             editAction.backgroundColor = .orange
@@ -139,9 +144,16 @@ extension RelatedRecordsPopupsViewController {
 
         // Add delete action, if can delete.
         if let feature = childPopup.geoElement as? AGSArcGISFeature, let featureTable = feature.featureTable as? AGSArcGISFeatureTable, featureTable.canDelete(feature) {
+            
             let deleteAction = UITableViewRowAction(style: .default, title: "Delete") { [weak self] (action, indexPath) in
-                self?.present(confirmationAlertMessage: "Are you sure you want to delete this \(childPopup.title ?? "record")?", confirmationTitle: "Delete", confirmationAction: { [weak self] (_) in
-                    self?.closeEditingSessionAndDelete(childPopup: childPopup)
+                
+                guard let self = self else { return }
+                
+                self.present(confirmationAlertMessage: "Are you sure you want to delete this \(childPopup.title ?? "record")?", confirmationTitle: "Delete", confirmationAction: { [weak self] (_) in
+                    
+                    guard let self = self else { return }
+                    
+                    self.closeEditingSessionAndDelete(childPopup: childPopup)
                 })
             }
             

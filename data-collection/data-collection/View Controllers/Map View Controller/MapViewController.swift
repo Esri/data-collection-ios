@@ -74,22 +74,9 @@ class MapViewController: UIViewController {
 
     var identifyOperation: AGSCancelable?
     
-    var currentPopup: AGSPopup? {
-        set {
-            if let popup = newValue {
-                recordsManager = PopupRelatedRecordsManager(popup: popup)
-            } else {
-                recordsManager = nil
-            }
-        }
-        get {
-            return recordsManager?.popup
-        }
-    }
-    
-    internal private(set) var recordsManager: PopupRelatedRecordsManager? {
+    var currentPopup: RichPopup? {
         willSet {
-            recordsManager?.popup.clearSelection()
+            currentPopup?.clearSelection()
         }
     }
     
@@ -153,37 +140,47 @@ class MapViewController: UIViewController {
         
         guard
             let parentPopup = currentPopup,
-            let featureTable = recordsManager?.oneToMany.first?.relatedTable,
-            let childPopup = featureTable.createPopup()
+            let parentRelationships = parentPopup.relationships,
+            let childPopup = parentPopup.relationships?.oneToMany.first?.relatedTable?.createPopup()
             else {
             present(simpleAlertMessage: "Uh Oh! You are unable to add a new related record.")
             return
         }
         
         SVProgressHUD.show(withStatus: "Creating new \(childPopup.title ?? "related record").")
-        
-        let parentPopupManager = PopupRelatedRecordsManager(popup: parentPopup)
-        
-        parentPopupManager.loadRelatedRecords { [weak self] in
+
+        parentRelationships.load { [weak self] (error) in
             
-            EphemeralCache.set(object: (parentPopupManager, childPopup), forKey: EphemeralCacheKeys.newRelatedRecord)
-            SVProgressHUD.dismiss()
-            self?.performSegue(withIdentifier: "modallyPresentRelatedRecordsPopupViewController", sender: nil)
+            defer {
+                SVProgressHUD.dismiss()
+            }
+            
+            guard let self = self else { return }
+            
+            guard error == nil else {
+                self.present(simpleAlertMessage: error!.localizedDescription)
+                return
+            }
+            
+            EphemeralCache.set(object: (parentPopup, RichPopup(popup: childPopup)), forKey: EphemeralCacheKeys.newRelatedRecord)
+            
+            self.performSegue(withIdentifier: "modallyPresentRelatedRecordsPopupViewController", sender: nil)
         }
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
-        if let destination = segue.navigationDestination as? RelatedRecordsPopupsViewController {
-            if let newPopup = EphemeralCache.get(objectForKey: EphemeralCacheKeys.newSpatialFeature) as? AGSPopup {
+        if let destination = segue.navigationDestination as? RichPopupViewController {
+            if let newPopup = EphemeralCache.get(objectForKey: EphemeralCacheKeys.newSpatialFeature) as? RichPopup {
                 currentPopup = newPopup
+                mapViewMode = .selectedFeature(featureLoaded: false)
                 destination.popup = newPopup
-                destination.editPopup(true)
+                destination.shouldBeginEditPopupUponLoad = true
             }
-            else if let (parentPopupManager, childPopup) = EphemeralCache.get(objectForKey: EphemeralCacheKeys.newRelatedRecord) as? (PopupRelatedRecordsManager, AGSPopup) {
-                destination.parentRecordsManager = parentPopupManager
+            else if let (parentPopup, childPopup) = EphemeralCache.get(objectForKey: EphemeralCacheKeys.newRelatedRecord) as? (RichPopup, RichPopup) {
+                destination.parentPopup = parentPopup
                 destination.popup = childPopup
-                destination.editPopup(true)
+                destination.shouldBeginEditPopupUponLoad = true
             }
             else {
                 destination.popup = currentPopup!

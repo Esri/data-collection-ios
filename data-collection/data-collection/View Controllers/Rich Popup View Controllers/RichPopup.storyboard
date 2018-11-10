@@ -1,17 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="cE9-eE-cIE">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="cE9-eE-cIE">
     <device id="retina5_9" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14283.14"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
         <!--Popup-->
         <scene sceneID="7TV-vb-exo">
             <objects>
-                <tableViewController storyboardIdentifier="RelatedRecordsPopupsViewController" title="Popup" id="QbY-UE-L23" customClass="RelatedRecordsPopupsViewController" customModule="data_collection" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="RichPopupViewController" title="Popup" id="QbY-UE-L23" customClass="RichPopupViewController" customModule="data_collection" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="QuK-Md-VzN">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -21,8 +22,15 @@
                             <outlet property="delegate" destination="QbY-UE-L23" id="wOR-iB-9yQ"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Popup" id="c2z-4c-LO6"/>
+                    <navigationItem key="navigationItem" title="Popup" id="c2z-4c-LO6">
+                        <barButtonItem key="rightBarButtonItem" title="Edit" id="Wnf-HI-Nv9">
+                            <connections>
+                                <action selector="userRequestsTogglePopupMode:" destination="QbY-UE-L23" id="brx-l5-0Tz"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
+                        <outlet property="popupEditButton" destination="Wnf-HI-Nv9" id="507-Xi-cjK"/>
                         <segue destination="oGY-sB-Q3j" kind="show" identifier="selectRelatedRecordSegue" id="2Rv-VZ-xlL"/>
                     </connections>
                 </tableViewController>

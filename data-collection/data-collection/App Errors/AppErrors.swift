@@ -36,10 +36,16 @@ struct AppErrorBaseCode: RawRepresentable {
 
 extension AppErrorBaseCode {
     
-    static let RelatedRecordsManagerError = AppErrorBaseCode(1000)
+    static let RichPopupManagerError = AppErrorBaseCode(1000)
     static let FeatureTableError = AppErrorBaseCode(2000)
     static let PopupSortingError = AppErrorBaseCode(3000)
     static let GeocoderResultsError = AppErrorBaseCode(4000)
-    static let RelatedRecordsTableLoadError = AppErrorBaseCode(5000)
+    static let RelatedRecordsTableLoadError = AppErrorBaseCode(5000) // Currently, unused. Preserving value.
     static let MapViewError = AppErrorBaseCode(6000)
+    static let LoadableError = AppErrorBaseCode(7000)
+    static let UnknownError = AppErrorBaseCode(8000)
+    static let InvalidOperation = AppErrorBaseCode(9000)
+
 }
+
+

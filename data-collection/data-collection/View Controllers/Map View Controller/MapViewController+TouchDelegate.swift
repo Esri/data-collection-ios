@@ -72,7 +72,12 @@ extension MapViewController: AGSGeoViewTouchDelegate {
             }
             
             // Use the geometry engine to determine the nearest pop-up to the touch point.
-            self?.currentPopup = identifyResult.popups.popupNearestTo(mapPoint: mapPoint)
+            if let nearest = identifyResult.popups.popupNearestTo(mapPoint: mapPoint) {
+                self?.currentPopup = RichPopup(popup: nearest)
+            }
+            else {
+                self?.currentPopup = nil
+            }
             
             // Set the map view mode to selected feature
             self?.mapViewMode = .selectedFeature(featureLoaded: false)

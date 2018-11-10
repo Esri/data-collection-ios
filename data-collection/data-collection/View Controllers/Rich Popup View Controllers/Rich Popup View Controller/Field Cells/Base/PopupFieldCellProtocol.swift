@@ -18,7 +18,7 @@ import UIKit
 protocol PopupFieldCellProtocol: AnyObject {
     
     var field: AGSPopupField? { get set }
-    var popupManager: PopupRelatedRecordsManager? { get set }
+    var popupManager: RichPopupManager? { get set }
     
     func updateCellContent()
 }

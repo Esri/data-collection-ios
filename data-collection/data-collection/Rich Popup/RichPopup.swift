@@ -12,16 +12,19 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import Foundation
 import ArcGIS
 
-extension AGSArcGISFeature {
+class RichPopup: AGSPopup {
     
-    /// The one-to-many relationship info objects associated with a feature.
-    var oneToManyRelationshipInfos: [AGSRelationshipInfo]? {
-        guard let table = featureTable as? AGSArcGISFeatureTable, let layerInfo = table.layerInfo else {
-            return nil
-        }
-        return layerInfo.relationshipInfos.filter({ (info) -> Bool in info.cardinality == .oneToMany })
+    // MARK: Initializer
+    
+    init(popup: AGSPopup) {
+        super.init(geoElement: popup.geoElement, popupDefinition: popup.popupDefinition)
     }
+    
+    // MARK: Relationships
+
+    lazy private(set) var relationships: Relationships? = {
+        return Relationships(popup: self)
+    }()
 }

@@ -15,54 +15,26 @@
 import Foundation
 import ArcGIS
 
-enum RelatedRecordsManagerError: AppError {
-    
-    var baseCode: AppErrorBaseCode { return .RelatedRecordsManagerError }
-    
-    case featureMissingTable
-    case missingManyToOneRelationship(String)
-    case invalidPopup
-    case cannotRelateFeatures
-    
-    var errorCode: Int {
-        let base = baseCode.rawValue
-        switch self {
-        case .featureMissingTable:
-            return base + 1
-        case .missingManyToOneRelationship(_):
-            return base + 2
-        case .invalidPopup:
-            return base + 3
-        case .cannotRelateFeatures:
-            return base + 4
-        }
-    }
-    
-    var errorUserInfo: [String : Any] {
-        switch self {
-        case .featureMissingTable:
-            return [NSLocalizedDescriptionKey: "Feature does not belong to a feature table"]
-        case .missingManyToOneRelationship(let str):
-            return [NSLocalizedDescriptionKey: "Missing value for many to one relationship \(str)"]
-        case .invalidPopup:
-            return [NSLocalizedDescriptionKey: "Popup with related records in invalid."]
-        case .cannotRelateFeatures:
-            return [NSLocalizedDescriptionKey: "Features or Relationship Info missing."]
-        }
-    }
-    
-    var localizedDescription: String {
-        return errorUserInfo[NSLocalizedDescriptionKey] as! String
-    }
-}
-
 /// A concrete subclass of `AGSPopupManager` that augments the pop-up manager with the ability to manage
 /// the popup as well as it's related records.
 ///
-class PopupRelatedRecordsManager: AGSPopupManager {
+class RichPopupManager: AGSPopupManager {
     
-    private(set) var manyToOne = [ManyToOneManager]()
-    private(set) var oneToMany = [OneToManyManager]()
+    // MARK: Initialization
+    
+    var richPopup: RichPopup {
+        return popup as! RichPopup
+    }
+    
+    // Init requires a RichPopup
+    init(richPopup: RichPopup) {
+        super.init(popup: richPopup)
+    }
+    
+    // Closes access to the init() initializer.
+    private override init() {
+        super.init()
+    }
     
     // MARK: Popup Manager Editing Session
     
@@ -73,13 +45,19 @@ class PopupRelatedRecordsManager: AGSPopupManager {
     ///
     override func cancelEditing() {
         
-        // First, all staged many to one record changes are canceled.
-        manyToOne.forEach { (manager) in
-            manager.cancelChange()
+        // As we leave this scope, the manager cancels editing it's attributes.
+        defer {
+            super.cancelEditing()
         }
         
-        // Then, the manager cancels editing it's attributes.
-        super.cancelEditing()
+        guard richPopup.relationships?.loadStatus == .loaded else {
+            return
+        }
+        
+        // First, all staged many to one record changes are canceled.
+        richPopup.relationships?.manyToOne.forEach { (manager) in
+            manager.cancelChange()
+        }
     }
     
     /// Finish editing the pop-up's attributes as well as it's many-to-one records.
@@ -89,27 +67,50 @@ class PopupRelatedRecordsManager: AGSPopupManager {
     ///
     override func finishEditing(completion: @escaping (Error?) -> Void) {
         
-        // First, all staged many to one record changes are commited.
-        var relatedRecordsError: Error?
+        var relatedRecordsErrors = [Error]()
         
-        for manager in manyToOne {
-            do {
-                try manager.commitChange()
-            }
-            catch {
-                relatedRecordsError = error
+        // First, all staged many to one record changes are commited and features are related.
+        if richPopup.relationships?.loadStatus == .loaded, let managers = richPopup.relationships?.manyToOne {
+            
+            for manager in managers {
+                
+                guard let info = manager.relationshipInfo else {
+                    manager.cancelChange()
+                    continue
+                }
+                
+                guard
+                    let feature = manager.popup?.geoElement as? AGSArcGISFeature,
+                    let relatedFeature = manager.relatedPopup?.geoElement as? AGSArcGISFeature
+                    else {
+                        
+                        if info.isComposite {
+                            relatedRecordsErrors.append(RichPopupManagerError.missingManyToOneRelationship(manager.name ?? "Unknown"))
+                        }
+                        
+                        manager.cancelChange()
+                        continue
+                }
+                
+                manager.commitChange()
+                
+                feature.relate(to: relatedFeature, relationshipInfo: info)
             }
         }
         
         // Then, the manager finishes editing it's attributes.
         super.finishEditing { (error) in
             
-            guard error == nil, relatedRecordsError == nil else {
-                completion(RelatedRecordsManagerError.invalidPopup)
-                return
+            if let error = error {
+                relatedRecordsErrors.append(error)
             }
             
-            completion(error)
+            if !relatedRecordsErrors.isEmpty {
+                completion(RichPopupManagerError.invalidPopup(relatedRecordsErrors))
+            }
+            else {
+                completion(nil)
+            }
         }
     }
     
@@ -130,15 +131,18 @@ class PopupRelatedRecordsManager: AGSPopupManager {
         
         var invalids = [Error]()
         
-        // Check M:1 relationships, if composite.
-        invalids += manyToOne
-            .filter { record in
-                guard let info = record.relationshipInfo else { return false }
-                
-                if info.isComposite { return record.relatedPopup == nil }
-                else { return false }
-            }
-            .map { return RelatedRecordsManagerError.missingManyToOneRelationship($0.name ?? "Unknown") as Error }
+        // Check M:1 relationships.
+        if let managers = richPopup.relationships?.manyToOne {
+            
+            invalids += managers
+                .filter { record in
+                    guard let info = record.relationshipInfo else { return false }
+                    
+                    if info.isComposite { return record.relatedPopup == nil }
+                    else { return false }
+                }
+                .map { return RichPopupManagerError.missingManyToOneRelationship($0.name ?? "Unknown") as Error }
+        }
         
         // Check validity on all popup editable display fields.
         invalids += editableDisplayFields.compactMap { return validationError(for: $0) }
@@ -146,80 +150,34 @@ class PopupRelatedRecordsManager: AGSPopupManager {
         return invalids
     }
     
-    /// Load the pop-up's related records.
-    ///
-    /// - Parameter completion: The closure performed when all related records have loaded.
-    ///
-    func loadRelatedRecords(_ completion: @escaping ()->Void) {
+    func update(_ popup: AGSPopup) throws {
         
-        manyToOne.removeAll()
-        oneToMany.removeAll()
-        
-        guard
-            let feature = popup.geoElement as? AGSArcGISFeature,
-            let relatedRecordsInfos = feature.oneToManyRelationshipInfos,
-            let featureTable = feature.featureTable as? AGSArcGISFeatureTable
-            else {
-                completion()
-                return
-        }
-
-        let dispatchGroup = DispatchGroup()
-
-        // Iterate through the feature's related record infos.
-        for info in relatedRecordsInfos {
-            
-            // Ensure popup's are enabled for the relationship info.
-            guard featureTable.isPopupEnabledFor(relationshipInfo: info) else {
-                continue
-            }
-            
-            // Find the table on the other end of the relationship.
-            let foundRelatedTable = featureTable.relatedTables()?.first { $0.serviceLayerID == info.relatedTableID }
-            
-            // Build a many-to-one related record manager.
-            if info.isManyToOne, let manager = ManyToOneManager(relationshipInfo: info, table: foundRelatedTable, popup: popup) {
-                
-                dispatchGroup.enter()
-                
-                manager.load { [weak self] (error) in
-                    
-                    defer {
-                        dispatchGroup.leave()
-                    }
-                    
-                    guard error == nil else {
-                        print("[Error: Many To One Manager]", error!.localizedDescription)
-                        return
-                    }
-                    
-                    self?.manyToOne.append(manager)
-                }
-            }
-            // Or, build a one-to-many related record manager.
-            else if info.isOneToMany, let manager = OneToManyManager(relationshipInfo: info, table: foundRelatedTable, popup: popup) {
-                
-                dispatchGroup.enter()
-                
-                manager.load { [weak self] (error) in
-                    
-                    defer {
-                        dispatchGroup.leave()
-                    }
-                    
-                    guard error == nil else {
-                        print("[Error: Many To One Manager]", error!.localizedDescription)
-                        return
-                    }
-                    
-                    self?.oneToMany.append(manager)
-                }
-            }
+        guard let info = self.popup.relationship(toPopup: popup) else {
+            throw UnknownError
         }
         
-        // Finally, call the completion closure.
-        dispatchGroup.notify(queue: DispatchQueue.main) {
-            completion()
+        if info.isManyToOne {
+            try update(manyToOne: popup, forRelationship: info)
+        }
+        else if info.isOneToMany {
+            try update(oneToMany: popup, forRelationship: info)
+        }
+        else {
+            throw InvalidOperationError
+        }
+    }
+    
+    func remove(_ popup: AGSPopup) throws {
+        
+        guard let info = self.popup.relationship(toPopup: popup) else {
+            throw UnknownError
+        }
+        
+        if info.isOneToMany {
+            try delete(oneToMany: popup, forRelationship: info)
+        }
+        else {
+            throw InvalidOperationError
         }
     }
     
@@ -233,13 +191,21 @@ class PopupRelatedRecordsManager: AGSPopupManager {
     ///
     /// - Throws: An error if there is a problem staging or relating the new record.
     ///
-    func update(manyToOne popup: AGSPopup?, forRelationship info: AGSRelationshipInfo) throws {
+    private func update(manyToOne popup: AGSPopup, forRelationship info: AGSRelationshipInfo) throws {
         
-        guard isEditing else {
-            throw RelatedRecordsManagerError.cannotRelateFeatures
+        guard richPopup.relationships?.loadStatus == .loaded else {
+            throw richPopup.relationships?.loadError ?? UnknownError
         }
         
-        let foundManager = manyToOne.first { (manager) -> Bool in
+        guard isEditing else {
+            throw InvalidOperationError
+        }
+        
+        guard !info.isComposite else {
+            throw RichPopupManagerError.cannotRelateFeatures
+        }
+        
+        let foundManager = richPopup.relationships?.manyToOne.first { (manager) -> Bool in
             
             guard let relationshipInfo = manager.relationshipInfo else {
                 return false
@@ -249,9 +215,10 @@ class PopupRelatedRecordsManager: AGSPopupManager {
         }
         
         guard let manager = foundManager else {
-            throw RelatedRecordsManagerError.cannotRelateFeatures
+            throw RichPopupManagerError.cannotRelateFeatures
         }
         
+        // Stage the related popup. Relating the pop-up will come if the user saves the session.
         manager.relatedPopup = popup
     }
     
@@ -265,13 +232,17 @@ class PopupRelatedRecordsManager: AGSPopupManager {
     ///
     /// - Throws: An error if there is a problem staging or relating the new record.
     ///
-    func edit(oneToMany popup: AGSPopup, forRelationship info: AGSRelationshipInfo) throws {
+    private func update(oneToMany popup: AGSPopup, forRelationship info: AGSRelationshipInfo) throws {
         
-        guard !isEditing else {
-            throw RelatedRecordsManagerError.cannotRelateFeatures
+        guard richPopup.relationships?.loadStatus == .loaded else {
+            throw richPopup.relationships?.loadError ?? UnknownError
         }
         
-        let foundManager = oneToMany.first { (manager) -> Bool in
+        guard !isEditing else {
+            throw InvalidOperationError
+        }
+        
+        let foundManager = richPopup.relationships?.oneToMany.first { (manager) -> Bool in
             
             guard let relationshipInfo = manager.relationshipInfo else {
                 return false
@@ -279,17 +250,21 @@ class PopupRelatedRecordsManager: AGSPopupManager {
             
             return relationshipInfo == info
         }
+        
+        guard
+            let feature = popup.geoElement as? AGSArcGISFeature,
+            let relationship = foundManager,
+            let relatedFeature = relationship.popup?.geoElement as? AGSArcGISFeature,
+            let info = relationship.relationshipInfo
+            else {
+                throw RichPopupManagerError.cannotRelateFeatures
+        }
+        
+        // Relate the two records.
+        feature.relate(to: relatedFeature, relationshipInfo: info)
 
-        guard let manager = foundManager else {
-            throw RelatedRecordsManagerError.cannotRelateFeatures
-        }
-
-        do {
-            try manager.editRelatedPopup(popup)
-        }
-        catch {
-            throw error
-        }
+        // Add the popup to the model, if it not already there, and sort.
+        relationship.editRelatedPopup(popup)
     }
 
     /// Unrelate a one-to-many record for a particular relationship info.
@@ -300,13 +275,17 @@ class PopupRelatedRecordsManager: AGSPopupManager {
     ///
     /// - Throws: An error if there is a problem unrelating the new record.
     ///
-    func delete(oneToMany popup: AGSPopup, forRelationship info: AGSRelationshipInfo) throws {
+    private func delete(oneToMany popup: AGSPopup, forRelationship info: AGSRelationshipInfo) throws {
 
-        guard !isEditing else {
-            throw RelatedRecordsManagerError.cannotRelateFeatures
+        guard richPopup.relationships?.loadStatus == .loaded else {
+            throw richPopup.relationships?.loadError ?? UnknownError
         }
         
-        let foundManager = oneToMany.first { (manager) -> Bool in
+        guard !isEditing else {
+            throw InvalidOperationError
+        }
+        
+        let foundRelationship = richPopup.relationships?.oneToMany.first { (manager) -> Bool in
             
             guard let relationshipInfo = manager.relationshipInfo else {
                 return false
@@ -315,20 +294,22 @@ class PopupRelatedRecordsManager: AGSPopupManager {
             return relationshipInfo == info
         }
 
-        guard let manager = foundManager else {
-            throw RelatedRecordsManagerError.cannotRelateFeatures
+        guard
+            let feature = popup.geoElement as? AGSArcGISFeature,
+            let relationship = foundRelationship,
+            let relatedFeature = relationship.popup?.geoElement as? AGSArcGISFeature else {
+            throw RichPopupManagerError.cannotRelateFeatures
         }
+        
+        // Unrelate the two records.
+        feature.unrelate(to: relatedFeature)
 
-        do {
-            try manager.deleteRelatedPopup(popup)
-        }
-        catch {
-            throw error
-        }
+        // Delete the popup from the model.
+        relationship.deleteRelatedPopup(popup)
     }
 }
 
-extension PopupRelatedRecordsManager {
+extension RichPopupManager {
     
     /// Provide a pop-up field for an `UITableView` index path.
     ///
@@ -354,26 +335,30 @@ extension PopupRelatedRecordsManager {
     ///
     /// - Parameter indexPath: The index path of the pop-up field.
     ///
-    func relatedRecordManager(forIndexPath indexPath: IndexPath) -> RelatedRecordsManager? {
+    func relationship(forIndexPath indexPath: IndexPath) -> Relationship? {
+        
+        guard richPopup.relationships?.loadStatus == .loaded else {
+            return nil
+        }
         
         if indexPathWithinManyToOne(indexPath) {
             
             let rowOffset = isEditing ? editableDisplayFields.count : displayFields.count
             let rowIndex = indexPath.row - rowOffset
-            return manyToOne[rowIndex]
+            return richPopup.relationships?.manyToOne[rowIndex]
         }
         else if indexPathWithinOneToMany(indexPath) {
             
             let sectionOffset = 1
             let sectionIndex = indexPath.section - sectionOffset
-            return oneToMany[sectionIndex]
+            return richPopup.relationships?.oneToMany[sectionIndex]
         }
         
         return nil
     }
 }
 
-extension PopupRelatedRecordsManager {
+extension RichPopupManager {
     
     
     /// Does the index path lie within the attributes section?
@@ -404,15 +389,15 @@ extension PopupRelatedRecordsManager {
     /// - Returns: If the index path lies within the many-to-one section.
     ///
     func indexPathWithinManyToOne(_ indexPath: IndexPath) -> Bool {
-
-        guard indexPath.section == 0 else {
+        
+        guard indexPath.section == 0, richPopup.relationships?.loadStatus == .loaded, let managers = richPopup.relationships?.manyToOne else {
             return false
         }
 
         let rowOffset = isEditing ? editableDisplayFields.count : displayFields.count
         let offsetIndex = indexPath.row - rowOffset
 
-        return manyToOne.count > offsetIndex
+        return managers.count > offsetIndex
     }
 
     /// Does the index path lies within the one-to-many section?
@@ -424,19 +409,19 @@ extension PopupRelatedRecordsManager {
     /// - Returns: If the index path lies within the one-to-many section.
     ///
     func indexPathWithinOneToMany(_ indexPath: IndexPath) -> Bool {
-
-        guard indexPath.section > 0 else {
+        
+        guard indexPath.section > 0, richPopup.relationships?.loadStatus == .loaded, let managers = richPopup.relationships?.oneToMany else {
             return false
         }
 
         let sectionOffset = 1
         let sectionIndex = indexPath.section - sectionOffset
 
-        guard oneToMany.count > sectionIndex else {
+        guard managers.count > sectionIndex else {
             return false
         }
 
-        let manager = oneToMany[sectionIndex]
+        let manager = managers[sectionIndex]
 
         var rowOffset = 0
         if let table = manager.relatedTable, table.canAddFeature {
@@ -447,6 +432,10 @@ extension PopupRelatedRecordsManager {
     }
     
     func indexPathWithinRelatedRecords(_ indexPath: IndexPath) -> Bool {
+        
+        guard richPopup.relationships?.loadStatus == .loaded else {
+            return false
+        }
         
         return indexPathWithinManyToOne(indexPath) || indexPathWithinOneToMany(indexPath)
     }

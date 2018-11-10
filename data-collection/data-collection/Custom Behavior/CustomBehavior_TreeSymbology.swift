@@ -23,12 +23,12 @@ import ArcGIS
 /// - Parameters:
 ///     - treeManager: The tree's manager object.
 ///     - completion: The callback called upon completion. The operation is successful or fails, silently.
-func updateSymbology(withTreeManager treeManager: PopupRelatedRecordsManager, completion: @escaping () -> Void) {
+func updateSymbology(withTreePopup treePopup: RichPopup, completion: @escaping () -> Void) {
     
     // This function will be called only after the inspections array has been sorted by inspection date
 
     // First, find the tree's inspection manager.
-    guard let inspectionsManager = treeManager.oneToMany.first(where: { (manager) -> Bool in manager.name == "Inspections" }) else {
+    guard let inspectionsManager = treePopup.relationships?.oneToMany.first(where: { (manager) -> Bool in manager.name == "Inspections" }) else {
         print("[Error: Update Symbology] could not find inspections manager.")
         completion()
         return
@@ -39,7 +39,7 @@ func updateSymbology(withTreeManager treeManager: PopupRelatedRecordsManager, co
     
     // Next, ensure the tree record can update.
     guard
-        let treeFeature = treeManager.popup.geoElement as? AGSArcGISFeature,
+        let treeFeature = treePopup.geoElement as? AGSArcGISFeature,
         let treeFeatureTable = treeFeature.featureTable as? AGSArcGISFeatureTable,
         treeFeatureTable.canUpdate(treeFeature),
         treeFeatureTable.tableName == "Trees",
@@ -75,32 +75,5 @@ func updateSymbology(withTreeManager treeManager: PopupRelatedRecordsManager, co
         }
         
         completion()
-    }
-}
-
-extension RelatedRecordsPopupsViewController {
-    
-    /// Facilitates enacting the custom symbology behavior.
-    func checkIfShouldPerformCustomBehavior(_ completion: @escaping () -> Void) {
-        
-        if shouldEnactCustomBehavior {
-            
-            let isTreeManager: (PopupRelatedRecordsManager) -> Bool = { manager in
-                return manager.tableName == "Trees"
-            }
-            
-            if isTreeManager(recordsManager) {
-                updateSymbology(withTreeManager: recordsManager) { completion() }
-            }
-            else if let parentManager = parentRecordsManager, isTreeManager(parentManager) {
-                updateSymbology(withTreeManager: parentManager) { completion() }
-            }
-            else {
-                completion()
-            }
-        }
-        else {
-            completion()
-        }
     }
 }

@@ -15,28 +15,6 @@
 import Foundation
 import ArcGIS
 
-enum RelatedRecordsTableLoadError: Int, AppError {
-    
-    var baseCode: AppErrorBaseCode { return .RelatedRecordsTableLoadError }
-    
-    case canceledLoad = 1
-    
-    var errorCode: Int {
-        return baseCode.rawValue + self.rawValue
-    }
-    
-    var errorUserInfo: [String : Any] {
-        switch self {
-        case .canceledLoad:
-            return [NSLocalizedDescriptionKey: "Did cancel load."]
-        }
-    }
-    
-    var canceledLoad: String {
-        return errorUserInfo[NSLocalizedDescriptionKey] as! String
-    }
-}
-
 class RelatedRecordsTableManager: AGSLoadableBase {
     
     let featureTable: AGSArcGISFeatureTable
@@ -50,9 +28,15 @@ class RelatedRecordsTableManager: AGSLoadableBase {
     }
     
     override func doCancelLoading() {
-        query?.cancel()
+        
+        if let cancelableQuery = query {
+            cancelableQuery.cancel()
+        }
+        else {
+            loadDidFinishWithError(UserCancelledError)
+        }
+        
         popups.removeAll()
-        loadDidFinishWithError(RelatedRecordsTableLoadError.canceledLoad)
     }
     
     override func doStartLoading(_ retrying: Bool) {
@@ -67,18 +51,20 @@ class RelatedRecordsTableManager: AGSLoadableBase {
         
         query = featureTable.queryAllFeaturesAsPopups(sorted: sorted) { [weak self] (popups, error) in
             
+            guard let self = self else { return }
+            
             guard error == nil else {
-                self?.loadDidFinishWithError(error!)
+                self.loadDidFinishWithError(error!)
                 return
             }
             
             guard let popups = popups else {
-                self?.loadDidFinishWithError(FeatureTableError.queryResultsMissingPopups)
+                self.loadDidFinishWithError(UnknownError)
                 return
             }
             
-            self?.popups = popups
-            self?.loadDidFinishWithError(nil)
+            self.popups = popups
+            self.loadDidFinishWithError(nil)
         }
     }
 }
