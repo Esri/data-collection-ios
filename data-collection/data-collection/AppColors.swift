@@ -21,19 +21,19 @@ extension UIColor {
     // MARK: General
     
     // The general of the app and color symbolizing online work mode.
-    static let primary = #colorLiteral(red: 0.3783819885, green: 0.6019210188, blue: 0.2394252939, alpha: 1)
+    static let primary = UIColor(named: "primary")!
     
     // Color symbolizing offline work mode.
-    static let offline = #colorLiteral(red: 0.2605174184, green: 0.2605243921, blue: 0.260520637, alpha: 1)
+    static let offline = UIColor(named: "offline")!
     
     // Contrasting both primary and offline, bar button items (text and image).
-    static let tint = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
+    static let tint = UIColor(named: "tint")!
     
     // Contrasting both primary and offline, used in the drawer.
-    static let accent = #colorLiteral(red: 0.8965646404, green: 0.6249603194, blue: 0.0001723665575, alpha: 1)
+    static let accent = UIColor(named: "accent")!
 
     // Color symbolizing destructive and invalid.
-    static let destructive = #colorLiteral(red: 1, green: 0, blue: 0, alpha: 1)
+    static var destructive = UIColor(named: "destructive")!
 }
 
 extension AppDelegate {

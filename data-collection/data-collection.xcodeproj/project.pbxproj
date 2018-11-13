@@ -20,6 +20,7 @@
 		9440D35520D479B5005ED582 /* PopupLongStringCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9440D35420D479B5005ED582 /* PopupLongStringCell.swift */; };
 		9440D35C20DC2809005ED582 /* CustomBehavior_TreeSymbology.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9440D35B20DC2809005ED582 /* CustomBehavior_TreeSymbology.swift */; };
 		9451EC5220D0705700792FFC /* CustomBehavior_IdentifyNeighborhood.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9451EC5120D0705700792FFC /* CustomBehavior_IdentifyNeighborhood.swift */; };
+		9458E2A5219B542700D18CEE /* HouseColors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9458E2A4219B542700D18CEE /* HouseColors.xcassets */; };
 		945CEE7520DDC2AC00CD3E0D /* SVRadialGradientLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 945CEE6B20DDC2AC00CD3E0D /* SVRadialGradientLayer.m */; };
 		945CEE7620DDC2AC00CD3E0D /* SVProgressAnimatedView.m in Sources */ = {isa = PBXBuildFile; fileRef = 945CEE6E20DDC2AC00CD3E0D /* SVProgressAnimatedView.m */; };
 		945CEE7720DDC2AC00CD3E0D /* SVProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 945CEE7120DDC2AC00CD3E0D /* SVProgressHUD.m */; };
@@ -192,6 +193,7 @@
 		9440D35420D479B5005ED582 /* PopupLongStringCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupLongStringCell.swift; sourceTree = "<group>"; };
 		9440D35B20DC2809005ED582 /* CustomBehavior_TreeSymbology.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomBehavior_TreeSymbology.swift; sourceTree = "<group>"; };
 		9451EC5120D0705700792FFC /* CustomBehavior_IdentifyNeighborhood.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomBehavior_IdentifyNeighborhood.swift; sourceTree = "<group>"; };
+		9458E2A4219B542700D18CEE /* HouseColors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = HouseColors.xcassets; sourceTree = "<group>"; };
 		945CEE6B20DDC2AC00CD3E0D /* SVRadialGradientLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVRadialGradientLayer.m; sourceTree = "<group>"; };
 		945CEE6C20DDC2AC00CD3E0D /* SVIndefiniteAnimatedView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVIndefiniteAnimatedView.h; sourceTree = "<group>"; };
 		945CEE6D20DDC2AC00CD3E0D /* SVProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVProgressHUD.h; sourceTree = "<group>"; };
@@ -1006,6 +1008,7 @@
 			isa = PBXGroup;
 			children = (
 				94B375B4207E8D5600691F2A /* data-collection-Bridging-Header.h */,
+				9458E2A4219B542700D18CEE /* HouseColors.xcassets */,
 				94D544C8207FC67B00ED0D04 /* AppIcon.xcassets */,
 				94D544C7207FC67A00ED0D04 /* Assets.xcassets */,
 				94B3760D207EAEA100691F2A /* ArcGIS.bundle */,
@@ -1150,6 +1153,7 @@
 				946D20BA213093DE001BF5CC /* JobStatusViewController.storyboard in Resources */,
 				945CEE7920DDC2AC00CD3E0D /* SVProgressHUD.bundle in Resources */,
 				94B375BC207E8D5600691F2A /* AddressLocator.locb in Resources */,
+				9458E2A5219B542700D18CEE /* HouseColors.xcassets in Resources */,
 				94B375BE207E8D5600691F2A /* AddressLocator.lox in Resources */,
 				946D20BC2130951B001BF5CC /* DrawerViewController.storyboard in Resources */,
 				94D544CA207FC67B00ED0D04 /* AppIcon.xcassets in Resources */,
