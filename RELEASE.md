@@ -2,7 +2,7 @@
 
 ## Major Features and Improvements
 
-- UI elements dynamic font sizing is introduced to improve accessibility.
+- UI elements dynamic type is introduced to improve accessibility.
 - Higher contrast colors are chosen to improve accessibility.
 - Massive overhaul of `AppColors`. Specifying colors has moved from storyboards into code. Statically set your organizations colors and see those colors accross the app through conformance to `UIApperance`.
 
