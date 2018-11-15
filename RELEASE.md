@@ -2,15 +2,20 @@
 
 ## Major Features and Improvements
 
-- UI elements dynamic type is introduced to improve accessibility.
+**Accessibility**
+
+- UI elements now leverage Dynamic Type to improve accessibility.
 - Higher contrast colors are chosen to improve accessibility.
-- Massive overhaul of `AppColors`. Specifying colors has moved from storyboards into code. Statically set your organizations colors and see those colors accross the app through conformance to `UIApperance`.
+
+**AppColors**
+
+- This release contains a massive overhaul of `AppColors.swift`. The app globalizes house colors via an Xcode asset catalog named `HouseColors.xcassets`. House colors can be accessed both in storyboards and in code (and conformance to `UIApperance`). Specify your organization's colors in the Xcode asset catalog and see your colors across the app.
 
 # Release 1.0
 
 **Initial Release**
 
-An example app used for collecting survey data about city trees in Portland, OR, built generic such that your organization can access it's own portal web maps with little to no changes to code.
+An example app used for collecting survey data about city trees in Portland, OR, built generic such that your organization can access its own portal web maps with little to no changes to code.
 
 Mobile Data Collection leverages several aspects of the Runtime SDK including:
 
