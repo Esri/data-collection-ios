@@ -65,16 +65,16 @@ class SlideNotificationView: UIView {
         addSubview(label)
         
         // Set top, leading and trailing anchors equal to superview's.
-        let top = label.topAnchor.constraint(equalTo: topAnchor, constant: 0.0)
-        let leading = label.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 0.0)
-        let trailing = label.trailingAnchor.constraint(equalTo: trailingAnchor, constant: 0.0)
+        let top = label.topAnchor.constraint(equalTo: topAnchor)
+        let leading = label.leadingAnchor.constraint(equalTo: leadingAnchor)
+        let trailing = label.trailingAnchor.constraint(equalTo: trailingAnchor)
         
         // Build a reference to the top anchor constraint
         topSlideConstraint = top
 
         // Add a bottom anchor constraint that is equal to the superview's *top anchor* with a lower priority.
         // This anchor will become active when `topSlideConstraint` is disabled.
-        let bottom = label.bottomAnchor.constraint(equalTo: topAnchor, constant: 0.0)
+        let bottom = label.bottomAnchor.constraint(equalTo: topAnchor)
         bottom.priority = .defaultHigh
         
         // Set a height constraint.
