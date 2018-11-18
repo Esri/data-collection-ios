@@ -47,14 +47,26 @@ extension MapViewController {
                 return
             }
 
+            // We want to apply the previous session's shared visible area (the extent of the map view) to the newly loaded map.
+            // So, we must determine if the previous session's shared visible area can be applied to the newly loaded map.
+            // Retrieve a visible area from the previous app session.
             if let sharedVisibleArea = appContext.sharedVisibleArea {
+                
+                // Is the newly loaded map the offline map?
                 if let offlineMap = appContext.offlineMap, offlineMap == map {
-                    if let offlineMapInitialViewpoint = offlineMap.initialViewpoint,
-                        AGSGeometryEngine.geometry(offlineMapInitialViewpoint.targetGeometry, intersects: sharedVisibleArea.targetGeometry) {
-                        self.mapView.setViewpoint(sharedVisibleArea)
+                    
+                    // Get the initial viewpoint of the offline map
+                    if let offlineMapInitialViewpoint = offlineMap.initialViewpoint {
+                        
+                        // If the previous session's shared visible area intersects with the offline map's geometry, we can set
+                        if AGSGeometryEngine.geometry(offlineMapInitialViewpoint.targetGeometry, intersects: sharedVisibleArea.targetGeometry) {
+                            self.mapView.setViewpoint(sharedVisibleArea)
+                        }
                     }
                 }
                 else {
+                    // Because the newly loaded map is an online map and has no defined extent,
+                    // we can safely set the viewpoint from the previous session's shared visible area.
                     self.mapView.setViewpoint(sharedVisibleArea)
                 }
             }
