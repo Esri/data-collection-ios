@@ -60,7 +60,7 @@ extension MapViewController {
                     if let offlineMapInitialViewpoint = offlineMap.initialViewpoint {
                         
                         // We set the shared the viewpoint to the previous session's shared visible area only if the two extents intersect.
-                        // Otherwise, the map loads with an indeterminate grid.
+                        // Otherwise, the map loads outside the extent of the offline map, showing a grid in indeterminate space.
                         if AGSGeometryEngine.geometry(offlineMapInitialViewpoint.targetGeometry, intersects: sharedVisibleArea.targetGeometry) {
                             self.mapView.setViewpoint(sharedVisibleArea)
                         }
