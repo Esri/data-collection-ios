@@ -18,30 +18,40 @@ import UIKit.UIColor
 // These colors are used throughout the application, when colors are generated at runtime.
 extension UIColor {
     
-    static let primary: UIColor = #colorLiteral(red:0.66, green:0.81, blue:0.40, alpha:1.00)
+    // MARK: General
     
-    static let offline: UIColor = .darkGray
+    // The general of the app and color symbolizing online work mode.
+    static let primary = UIColor(named: "primary")!
     
-    static let accent: UIColor = #colorLiteral(red:0.97, green:0.74, blue:0.18, alpha:1.00)
+    // Color symbolizing offline work mode.
+    static let offline = UIColor(named: "offline")!
     
-    static let tableCellTitle: UIColor = .gray
-    static let tableCellValue: UIColor = .black
+    // Contrasting both primary and offline, bar button items (text and image).
+    static let tint = UIColor(named: "tint")!
     
-    static let invalid: UIColor = .red
-    static let missing: UIColor = .lightGray
+    // Contrasting both primary and offline, used in the drawer.
+    static let accent = UIColor(named: "accent")!
+
+    // Color symbolizing destructive and invalid.
+    static var destructive = UIColor(named: "destructive")!
+}
+
+extension AppDelegate {
     
-    static let tint: UIColor = .white
-    
-    static let loginLogoutNormal: UIColor = .white
-    static let loginLogoutHighlighted: UIColor = .lightGray
-    
-    static let workModeNormal: UIColor = .darkGray
-    static let workModeHighlighted: UIColor = .lightGray
-    static let workModeSelected: UIColor = .white
-    static let workModeDisabled: UIColor = UIColor(white: 0.5, alpha: 0.5)
-    
-    static let offlineActivityNormal: UIColor = .darkGray
-    static let offlineActivityHighlighted: UIColor = .lightGray
-    static let offlineActivitySelected: UIColor = .lightGray
-    static let offlineActivityDisabled: UIColor = UIColor(white: 0.5, alpha: 0.5)
+    static func setAppApperanceWithAppColors() {
+        
+        UINavigationBar.appearance().titleTextAttributes = [.foregroundColor : UIColor.tint]
+        UINavigationBar.appearance().tintColor = .tint
+        
+        UIButton.appearance(whenContainedInInstancesOf: [UINavigationBar.self]).tintColor = .tint
+        UIButton.appearance().tintColor = .primary
+        
+        UIView.appearance(whenContainedInInstancesOf: [UIAlertController.self]).tintColor = .primary
+        
+        UIProgressView.appearance().tintColor = .primary
+        UIProgressView.appearance().progressTintColor = .primary
+        UIProgressView.appearance().trackTintColor = .tint
+        
+        UIActivityIndicatorView.appearance().color = .primary
+    }
 }

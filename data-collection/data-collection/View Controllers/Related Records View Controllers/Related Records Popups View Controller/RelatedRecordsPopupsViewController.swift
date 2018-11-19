@@ -66,6 +66,8 @@ class RelatedRecordsPopupsViewController: UITableViewController, BackButtonDeleg
         
         // The contents of a pop-up field is dynamic and thus the size of a table view cell's content view must be able to change.
         tableView.rowHeight = UITableView.automaticDimension
+        tableView.sectionHeaderHeight = UITableView.automaticDimension
+        tableView.sectionFooterHeight = UITableView.automaticDimension
         
         // Editing is enabled only if the pop-up in question can be edited.
         if recordsManager.shouldAllowEdit {

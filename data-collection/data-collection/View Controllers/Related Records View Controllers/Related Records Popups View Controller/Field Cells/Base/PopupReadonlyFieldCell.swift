@@ -36,17 +36,22 @@ class PopupReadonlyFieldCell: UITableViewCell, PopupFieldCellProtocol {
 
         contentView.addStackviewAndConstrainToEdges(stackView)
         
-        titleLabel.textColor = .tableCellTitle
+        titleLabel.textColor = .gray
         titleLabel.font = .tableCellTitle
         titleLabel.adjustsFontForContentSizeCategory = true
-        titleLabel.heightAnchor.constraint(equalToConstant: titleLabel.font.lineHeight).isActive = true
+        titleLabel.setContentCompressionResistancePriority(.required, for: .vertical)
+        titleLabel.numberOfLines = 0
+        
+        // Add Title Label
         stackView.addArrangedSubview(titleLabel)
         
-        valueLabel.textColor = .tableCellValue
+        valueLabel.textColor = .black
         valueLabel.font = .tableCellValue
         valueLabel.adjustsFontForContentSizeCategory = true
+        valueLabel.setContentCompressionResistancePriority(.required, for: .vertical)
         valueLabel.numberOfLines = 0
         
+        // Add Value Label
         insertValueLabel()
     }
     

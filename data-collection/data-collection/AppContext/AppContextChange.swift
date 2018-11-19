@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import Foundation
+import UIKit
 import ArcGIS
 
 enum AppContextChange {
@@ -39,6 +39,7 @@ enum AppContextChange {
         static let reachability = Key("AppContextChange.reachability")
         static let workMode = Key("AppContextChange.workMode")
         static let lastSync = Key("AppContextChange.lastSync")
+        static let contentSize = Key("AppContextChange.contentSize")
     }
     
     case currentPortal((AGSPortal) -> Void)
@@ -48,6 +49,7 @@ enum AppContextChange {
     case reachability((Bool) -> Void)
     case workMode((WorkMode) -> Void)
     case lastSync((Date?) -> Void)
+    case contentSize((UIContentSizeCategory) -> Void)
     
     var notificationClosure: Any {
         switch self {
@@ -64,6 +66,8 @@ enum AppContextChange {
         case .workMode(let closure):
             return closure
         case .lastSync(let closure):
+            return closure
+        case .contentSize(let closure):
             return closure
         }
     }
@@ -84,6 +88,8 @@ enum AppContextChange {
             return Key.workMode
         case .lastSync(_):
             return Key.lastSync
+        case .contentSize(_):
+            return Key.contentSize
         }
     }
 }
