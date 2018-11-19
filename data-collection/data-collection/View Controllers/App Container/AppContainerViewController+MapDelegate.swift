@@ -34,7 +34,7 @@ extension AppContainerViewController: MapViewControllerDelegate {
             return
         }
         
-        let scale = mapViewController.mapView.mapScale
+        let scale = map.minScale
         let directory: URL = .temporaryOfflineMapDirectoryURL(forWebMapItemID: AppConfiguration.webMapItemID)
         let offlineJob = OfflineMapJobConstruct.downloadMapOffline(map, directory, extent, scale)
         
