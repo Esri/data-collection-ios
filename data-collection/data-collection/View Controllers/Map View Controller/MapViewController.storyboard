@@ -56,7 +56,7 @@
                                     <segue destination="ZtZ-f6-rZp" kind="embed" id="VcP-nO-K0c"/>
                                 </connections>
                             </containerView>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nd8-Es-e3p" customClass="SlideNotificationView" customModule="data_collection" customModuleProvider="target">
+                            <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="nd8-Es-e3p" customClass="SlideNotificationView" customModule="data_collection" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="44" width="375" height="32"/>
                                 <constraints>
                                     <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="32" id="TUB-b0-OlH"/>
@@ -120,7 +120,7 @@
                                     </view>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hFk-4Y-xfb">
                                         <rect key="frame" x="281" y="4" width="46" height="46"/>
-                                        <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <color key="backgroundColor" name="primary"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="46" id="SXt-9j-7zo"/>
                                             <constraint firstAttribute="height" constant="46" id="hcY-de-Odo"/>
