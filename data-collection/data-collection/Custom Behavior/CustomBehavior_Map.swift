@@ -21,8 +21,8 @@ import ArcGIS
 var shouldEnactCustomBehavior: Bool {
     
     // The Trees of Portland item ID.
-    // See: https://www.arcgis.com/home/item.html?id=fcc7fc65bb96464c9c0986576c119a92
-    let treesOfPortlandWebmapItemID = "fcc7fc65bb96464c9c0986576c119a92"
+    // See: https://www.arcgis.com/home/item.html?id=16f1b8ba37b44dc3884afc8d5f454dd2
+    let treesOfPortlandWebmapItemID = "16f1b8ba37b44dc3884afc8d5f454dd2"
     
     // The current map's item will be an `AGSPortalItem` if the current map is a portal web map.
     if let portalItem = appContext.currentMap?.item as? AGSPortalItem {
