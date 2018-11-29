@@ -82,10 +82,12 @@ extension RichPopupViewController {
         }
     }
     
+    fileprivate var activityIndicatorViewHeight: CGFloat { return 35.0 }
+    
     override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         
         if section == 0, popup.relationships?.loadStatus == .loading {
-            return 35.0
+            return activityIndicatorViewHeight
         }
         else {
             return 0.0
@@ -99,11 +101,11 @@ extension RichPopupViewController {
             return nil
         }
         
-        let containerHeight: CGFloat = 35.0
-        let container = UIView(frame: CGRect(x: 0.0, y: 0.0, width: tableView.frame.width, height: containerHeight))
+        let container = UIView(frame: CGRect(x: 0.0, y: 0.0, width: tableView.frame.width, height: activityIndicatorViewHeight))
         container.backgroundColor = .clear
         
         let activity = UIActivityIndicatorView(style: .gray)
+        activity.accessibilityLabel = "Loading Related Records"
         activity.startAnimating()
         
         container.addSubview(activity)

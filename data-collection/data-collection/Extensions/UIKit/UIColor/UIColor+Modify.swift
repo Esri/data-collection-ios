@@ -17,16 +17,22 @@ import UIKit
 extension UIColor {
     
     /// Make a slightly "lighter" version of the color.
+    ///
+    /// - Note: This function will not work with sRGB color space.
     var lighter: UIColor {
         return addBrightness(0.1)
     }
     
     /// Make a slightly "darker" version of the color.
+    ///
+    /// - Note: This function will not work with sRGB color space.
     var darker: UIColor {
         return removeBrightness(0.1)
     }
     
     /// Generate a new color by reducing the brightness in HSB.
+    ///
+    /// - Note: This function will not work with sRGB color space.
     ///
     /// - Parameters:
     ///   - val: By how much to reduce the brightness.
@@ -46,6 +52,8 @@ extension UIColor {
     }
     
     /// Generate a new color by increasing the brightness in HSB.
+    ///
+    /// - Note: This function will not work with sRGB color space.
     ///
     /// - Parameters:
     ///   - val: By how much to increase the brightness.

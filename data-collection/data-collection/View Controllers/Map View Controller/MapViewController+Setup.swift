@@ -55,7 +55,6 @@ extension MapViewController {
     }
     
     func setupSmallPopupView() {
-        
         smallPopupView.addTarget(self, action: #selector(MapViewController.didTapSmallPopupView(_:)), for: .touchUpInside)
     }
 }

@@ -67,8 +67,8 @@ extension UIViewController {
     ///   - animated: Whether the alert animates upon presentation. The default value is true.
     ///   - completion: The call back called by the UIAlertController after presentation has completed. The default value is nil.
     ///
-    func present(confirmationAlertMessage message: String, confirmationTitle: String, confirmationAction:((UIAlertAction)->Void)?, animated: Bool = true, isDestructive: Bool = true, completion: (() -> Void)? = nil) {
-        let alert = UIAlertController.multiAlert(message: message, actionTitle: confirmationTitle, action: confirmationAction, isDestructive: true)
+    func present(confirmationAlertMessage message: String, confirmationTitle: String, isDestructive: Bool = true, confirmationAction:((UIAlertAction)->Void)?, animated: Bool = true, completion: (() -> Void)? = nil) {
+        let alert = UIAlertController.multiAlert(message: message, actionTitle: confirmationTitle, action: confirmationAction, isDestructive: isDestructive)
         present(alert, animated: animated, completion: completion)
     }
 }

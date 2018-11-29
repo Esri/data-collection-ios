@@ -28,16 +28,17 @@ class PopupTextViewCell: PopupEditableFieldCell<UITextView>, UITextViewDelegate 
         if valueEditView == nil {
             
             valueEditView = UITextView(frame: .zero)
-            valueEditView?.textColor = .tableCellValue
-            valueEditView?.font = .tableCellValue
-            valueEditView?.sizeToFit()
-            valueEditView?.stylizeLikeTextFieldBorder()
-            valueEditView?.keyboardType = keyboardType
+            valueEditView!.textColor = .black
+            valueEditView!.font = .tableCellValue
+            valueEditView!.sizeToFit()
+            valueEditView!.stylizeLikeTextFieldBorder()
+            valueEditView!.keyboardType = keyboardType
+            valueEditView!.setContentCompressionResistancePriority(.required, for: .vertical)
         }
 
-        valueEditView?.isEditable = isValueEditable
-        valueEditView?.delegate = self
-        valueEditView?.heightAnchor.constraint(greaterThanOrEqualToConstant: viewHeight).isActive = true
+        valueEditView!.isEditable = isValueEditable
+        valueEditView!.delegate = self
+        valueEditView!.heightAnchor.constraint(greaterThanOrEqualToConstant: viewHeight).isActive = true
 
         super.insertValueEditView()
     }

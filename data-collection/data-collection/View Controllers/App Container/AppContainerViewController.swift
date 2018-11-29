@@ -35,6 +35,10 @@ class AppContainerViewController: UIViewController {
     
     @IBOutlet var drawerLeadingLayoutConstraint: NSLayoutConstraint!
     @IBOutlet var drawerTrailingLayoutConstraint: NSLayoutConstraint!
+    @IBOutlet var drawerDesiredWidthLayoutConstraint: NSLayoutConstraint!
+    @IBOutlet var drawerAccessibleWidthLayoutConstraint: NSLayoutConstraint!
+    
+    private let changeHandler = AppContextChangeHandler()
     
     weak var drawerViewController: DrawerViewController?
     weak var mapViewController: MapViewController?
@@ -71,6 +75,8 @@ class AppContainerViewController: UIViewController {
         
         adjustNavigationBarButtons()
         adjustForDrawerShowing(isAnimated: false)
+        subscribeToContentSizeCategoryChanges()
+        adjustForContentSize()
     }
     
     @IBAction func userTapsOutsideOfDrawer(_ sender: Any) {
@@ -79,6 +85,29 @@ class AppContainerViewController: UIViewController {
     
     @IBAction func userRequestsToggleDrawer(_ sender: Any) {
         drawerShowing.toggle()
+    }
+    
+    private func subscribeToContentSizeCategoryChanges() {
+        
+        let contentSizeChange: AppContextChange = .contentSize { [weak self] (category) in
+            self?.adjustForContentSize(category: category)
+        }
+        
+        changeHandler.subscribe(toChange: contentSizeChange)
+    }
+    
+    private func adjustForContentSize(category: UIContentSizeCategory = UIApplication.shared.preferredContentSizeCategory) {
+        
+        if category.isAccessibilityCategory {
+            drawerDesiredWidthLayoutConstraint.isActive = false
+            drawerAccessibleWidthLayoutConstraint.isActive = true
+        }
+        else {
+            drawerDesiredWidthLayoutConstraint.isActive = true
+            drawerAccessibleWidthLayoutConstraint.isActive = false
+        }
+        
+        view.layoutIfNeeded()
     }
     
     private func informChildViewControllersOfFocus() {

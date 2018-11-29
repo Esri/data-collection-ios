@@ -60,7 +60,6 @@ class RelatedRecordCell: UITableViewCell {
     
     private func setAccessoryViewAddIndicator() {
         let button = UIButton(type: .contactAdd)
-        button.tintColor = .primary
         button.isUserInteractionEnabled = false
         accessoryView = button
     }
@@ -94,16 +93,18 @@ class RelatedRecordCell: UITableViewCell {
                 
                 let titleLabel = UILabel()
                 titleLabel.numberOfLines = 1
-                titleLabel.textColor = .tableCellTitle
+                titleLabel.textColor = .gray
                 titleLabel.font = .tableCellTitle
                 titleLabel.adjustsFontForContentSizeCategory = true
+                titleLabel.setContentCompressionResistancePriority(.required, for: .vertical)
                 stackView.addArrangedSubview(titleLabel)
                 
                 let valueLabel = UILabel()
                 valueLabel.numberOfLines = 0
-                valueLabel.textColor = .tableCellValue
+                valueLabel.textColor = .black
                 valueLabel.font = .tableCellValue
                 valueLabel.adjustsFontForContentSizeCategory = true
+                valueLabel.setContentCompressionResistancePriority(.required, for: .vertical)
                 stackView.addArrangedSubview(valueLabel)
                 
                 attributes.append((titleLabel, valueLabel))
@@ -161,9 +162,10 @@ class RelatedRecordCell: UITableViewCell {
         
         if emptyCellLabel == nil {
             emptyCellLabel = UILabel()
-            emptyCellLabel?.numberOfLines = 1
-            emptyCellLabel?.font = .tableCellTitle
-            emptyCellLabel?.adjustsFontForContentSizeCategory = true
+            emptyCellLabel!.numberOfLines = 1
+            emptyCellLabel!.font = .tableCellTitle
+            emptyCellLabel!.adjustsFontForContentSizeCategory = true
+            emptyCellLabel!.setContentCompressionResistancePriority(.required, for: .vertical)
             stackView.addArrangedSubview(emptyCellLabel!)
         }
         
@@ -176,12 +178,12 @@ class RelatedRecordCell: UITableViewCell {
         if info.isManyToOne {
             if editingPopup {
                 setAccessoryViewDisclosureIndicator()
-                emptyCellLabel?.textColor = info.isComposite ? .invalid : .tableCellTitle
+                emptyCellLabel?.textColor = info.isComposite ? .destructive : .gray
                 emptyCellLabel?.text = "Select \(table?.tableName ?? "related record")"
             }
             else {
                 setAccessoryViewNone()
-                emptyCellLabel?.textColor = .missing
+                emptyCellLabel?.textColor = .gray
                 emptyCellLabel?.text = "(Empty \(table?.tableName ?? "related") record)"
             }
         }

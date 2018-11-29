@@ -31,6 +31,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Configure oAuth redirect URL.
         AppDelegate.configOAuthRedirectURL()
         
+        // Configure default app colors.
+        AppDelegate.setAppApperanceWithAppColors()
+        
         // Reset first reachability change status flag then start listening to reachability status changes.
         appReachability.resetAndStartListening()
         

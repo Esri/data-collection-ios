@@ -22,24 +22,24 @@ extension MapViewController {
         
         let smallPopViewVisible: (Bool) -> UIViewAnimations = { [weak self] (visible) in
             return {
-                self?.smallPopupView.alpha = CGFloat(visible)
-                self?.featureDetailViewBottomConstraint.constant = visible ? 8 : 28
+                guard let self = self else { return }
+                self.smallPopupView.alpha = CGFloat(visible)
+                self.featureDetailViewBottomConstraint.constant = visible ? 8 : 28
             }
         }
         
         let selectViewVisible: (Bool) -> UIViewAnimations = { [weak self] (visible) in
             return {
-                self?.selectView.alpha = CGFloat(visible)
-                guard let selectViewHeight = self?.selectView.frame.height else {
-                    return
-                }
-                self?.selectViewTopConstraint.constant = visible ? 0 : -selectViewHeight
+                guard let self = self else { return }
+                self.selectView.alpha = CGFloat(visible)
+                self.selectViewTopConstraint.isActive = visible
             }
         }
         
         let mapViewVisible: (Bool) -> UIViewAnimations = { [weak self] (visible) in
             return {
-                self?.mapView.alpha = visible ? 1.0 : 0.0
+                guard let self = self else { return }
+                self.mapView.alpha = CGFloat(visible)
             }
         }
         
