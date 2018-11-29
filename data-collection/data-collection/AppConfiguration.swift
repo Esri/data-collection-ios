@@ -18,7 +18,7 @@ import ArcGIS
 class AppConfiguration {
     
     /// The id of your portal's web map.
-    static let webMapItemID = "fcc7fc65bb96464c9c0986576c119a92"
+    static let webMapItemID = "16f1b8ba37b44dc3884afc8d5f454dd2"
     
     /// The base portal's domain.
     /// This is used to both build a `URL` to your portal as well as the base URL string used to check reachability.
