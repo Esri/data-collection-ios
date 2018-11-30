@@ -33,7 +33,7 @@ class RelatedRecordsTableManager: AGSLoadableBase {
             cancelableQuery.cancel()
         }
         else {
-            loadDidFinishWithError(UserCancelledError)
+            loadDidFinishWithError(NSError.userCancelled)
         }
         
         popups.removeAll()
@@ -59,7 +59,7 @@ class RelatedRecordsTableManager: AGSLoadableBase {
             }
             
             guard let popups = popups else {
-                self.loadDidFinishWithError(UnknownError)
+                self.loadDidFinishWithError(NSError.unknown)
                 return
             }
             

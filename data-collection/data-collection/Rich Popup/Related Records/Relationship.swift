@@ -70,7 +70,7 @@ class Relationship: AGSLoadableBase {
             }
             
             guard let popups = popupsResults else {
-                self.loadDidFinishWithError(FeatureTableError.queryResultsMissingPopups)
+                self.loadDidFinishWithError(NSError.unknown)
                 return
             }
             
@@ -85,7 +85,7 @@ class Relationship: AGSLoadableBase {
         cancelableQuery?.cancel()
         
         // Pass user did cancel error.
-        loadDidFinishWithError(UserCancelledError)
+        loadDidFinishWithError(NSError.userCancelled)
     }
     
     // MARK: For Subclassing Eyes

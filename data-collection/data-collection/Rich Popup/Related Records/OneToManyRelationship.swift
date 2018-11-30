@@ -37,11 +37,9 @@ class OneToManyRelationship: Relationship {
         
         // Maintain a reference to the new related record.
         
-        let record = relatedPopups.first(where: { (popup) -> Bool in
+        if !relatedPopups.contains(where: { (popup) -> Bool in
             return (popup.geoElement as? AGSArcGISFeature)?.objectID == (editedRelatedPopup.geoElement as? AGSArcGISFeature)?.objectID
-        })
-        
-        if record == nil {
+        }) {
             relatedPopups.append(editedRelatedPopup)
         }
         

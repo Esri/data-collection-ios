@@ -126,7 +126,7 @@ extension MapViewController {
         
         let newRichPopup = RichPopup(popup: newPopup)
         
-        SVProgressHUD.show(withStatus: "Creating \(newRichPopup.tableName ?? "Feature")")
+        SVProgressHUD.show(withStatus: String(format: "Creating %@", (newRichPopup.tableName ?? "Feature")))
         
         newRichPopup.relationships?.load(completion: { [weak self] (error) in
             
@@ -152,13 +152,13 @@ extension MapViewController {
         }
         
         SVProgressHUD.setContainerView(self.view)
-        SVProgressHUD.show(withStatus: "Preparing new \(newPopup.tableName ?? "record").")
+        SVProgressHUD.show(withStatus: String(format: "Preparing new %@.", (newPopup.tableName ?? "record")))
         
         let centerPoint = mapView.centerAGSPoint
         
         // Custom Behavior
         
-        let proceedAfterCustomBehavior: () -> Void = { [weak self] in
+        func proceedAfterCustomBehavior() {
             
             newPopup.geoElement.geometry = centerPoint
             EphemeralCache.set(object: newPopup, forKey: EphemeralCacheKeys.newSpatialFeature)
@@ -166,7 +166,7 @@ extension MapViewController {
             SVProgressHUD.dismiss()
             SVProgressHUD.setContainerView(nil)
             
-            self?.performSegue(withIdentifier: "modallyPresentRelatedRecordsPopupViewController", sender: nil)
+            self.performSegue(withIdentifier: "modallyPresentRelatedRecordsPopupViewController", sender: nil)
         }
         
         if shouldEnactCustomBehavior {

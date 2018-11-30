@@ -134,10 +134,8 @@ extension RichPopupViewController {
         if childPopup.isEditable {
             
             let editAction = UITableViewRowAction(style: .default, title: "Edit") { [weak self] (action, indexPath) in
-                
-                guard let self = self else { return }
-                
-                self.closeEditingSessionAndBeginEditing(childPopup: childPopup)
+
+                self?.closeEditingSessionAndBeginEditing(childPopup: childPopup)
             }
             
             editAction.backgroundColor = .orange
@@ -151,11 +149,9 @@ extension RichPopupViewController {
                 
                 guard let self = self else { return }
                 
-                self.present(confirmationAlertMessage: "Are you sure you want to delete this \(childPopup.title ?? "record")?", confirmationTitle: "Delete", confirmationAction: { [weak self] (_) in
-                    
-                    guard let self = self else { return }
-                    
-                    self.closeEditingSessionAndDelete(childPopup: childPopup)
+                self.present(confirmationAlertMessage: String(format: "Are you sure you want to delete this %@?", (childPopup.title ?? "record")), confirmationTitle: "Delete", confirmationAction: { [weak self] (_) in
+
+                    self?.closeEditingSessionAndDelete(childPopup: childPopup)
                 })
             }
             

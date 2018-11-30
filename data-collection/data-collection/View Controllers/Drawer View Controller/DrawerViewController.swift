@@ -57,7 +57,7 @@ class DrawerViewController: UIViewController {
     
     private func setAppVersionLabel() {
         
-        appVersionLabel.text = "\(Bundle.AppNameVersionString)\n\(Bundle.ArcGISSDKVersionString)"
+        appVersionLabel.text = String(format: "%@\n%@", Bundle.AppNameVersionString, Bundle.ArcGISSDKVersionString)
     }
     
     private func configureButtonTitleLabels() {
@@ -254,10 +254,13 @@ class DrawerViewController: UIViewController {
     private func updateSynchronizeButtonForLastSync(date: Date?) {
         
         if let lastSynchronized = date {
-            synchronizeOfflineMapButton.setAttributed(header: (title: "Synchronize Offline Map", font: .drawerButtonHeader), subheader: (title: "last sync \(AppDateFormatter.format(shortDateTime: lastSynchronized))", font: .drawerButtonSubheader), forControlStateColors: offlineActivityControlStateColors)
+            synchronizeOfflineMapButton.setAttributed(header: (title: "Synchronize Offline Map", font: .drawerButtonHeader),
+                                                      subheader: (title: String(format: "last sync %@", AppDateFormatter.format(shortDateTime: lastSynchronized)), font: .drawerButtonSubheader),
+                                                      forControlStateColors: offlineActivityControlStateColors)
         }
         else {
-            synchronizeOfflineMapButton.setAttributed(header: (title: "Synchronize Offline Map", font: .drawerButtonHeader), forControlStateColors: offlineActivityControlStateColors)
+            synchronizeOfflineMapButton.setAttributed(header: (title: "Synchronize Offline Map", font: .drawerButtonHeader),
+                                                      forControlStateColors: offlineActivityControlStateColors)
         }
     }
 }

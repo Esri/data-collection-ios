@@ -21,7 +21,7 @@ extension NetworkReachabilityManager.NetworkReachabilityStatus: CustomStringConv
         case .notReachable:
             return "Not reachable"
         case .reachable(let type):
-            return "Reachable via \(String(describing: type))"
+            return String(format: "Reachable via %@", String(describing: type))
         case .unknown:
             return "Unknown"
         }

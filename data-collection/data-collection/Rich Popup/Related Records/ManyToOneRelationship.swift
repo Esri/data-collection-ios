@@ -18,7 +18,7 @@ import ArcGIS
 /// Represents and manages a many-to-one related records of a popup.
 class ManyToOneRelationship: Relationship {
     
-    /// If a change to the related pop-up is staged, that pop-up is returned first, followed by the current related pop-up.
+    /// The staged related pop-up or the current related pop-up if a change has not been staged.
     var relatedPopup: AGSPopup? {
         get {
             return stagedRelatedPopup ?? currentRelatedPopup

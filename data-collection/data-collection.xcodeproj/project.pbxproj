@@ -441,13 +441,6 @@
 			path = "Rich Popup";
 			sourceTree = "<group>";
 		};
-		944433E121AC752400E96A6E /* AGSLoadable */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = AGSLoadable;
-			sourceTree = "<group>";
-		};
 		944433E421AC766000E96A6E /* App Errors */ = {
 			isa = PBXGroup;
 			children = (
@@ -860,7 +853,6 @@
 				948D84FB2151B4E400E2048F /* AGSPortal */,
 				948D84F62151B44800E2048F /* AGSMapView */,
 				948D84F52151B43C00E2048F /* AGSJobStatus */,
-				944433E121AC752400E96A6E /* AGSLoadable */,
 				948D84F42151B42D00E2048F /* AGSLoadStatus */,
 			);
 			path = ArcGIS;

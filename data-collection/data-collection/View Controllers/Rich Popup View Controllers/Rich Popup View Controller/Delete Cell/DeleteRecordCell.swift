@@ -49,6 +49,6 @@ class DeleteRecordCell: UITableViewCell {
     }
     
     func configure(withRecordTypeName name: String) {
-        deleteLabel.text = "Delete \(name.capitalized)"
+        deleteLabel.text = String(format: "Delete %@", name.capitalized)
     }
 }

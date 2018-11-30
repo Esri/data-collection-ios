@@ -23,7 +23,7 @@ extension AGSPopup {
     ///
     /// - Returns: An `AGSRelationshipInfo`, if one exists between the two pop-ups.
     ///
-    func relationship(toPopup popup: AGSPopup) -> AGSRelationshipInfo? {
+    func relationship(to popup: AGSPopup) -> AGSRelationshipInfo? {
         
         guard
             let feature = geoElement as? AGSArcGISFeature,

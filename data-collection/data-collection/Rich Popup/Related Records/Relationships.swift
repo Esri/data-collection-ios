@@ -50,7 +50,7 @@ class Relationships: AGSLoadableBase {
         
         clear()
         
-        loadDidFinishWithError(UserCancelledError)
+        loadDidFinishWithError(NSError.userCancelled)
     }
     
     override func doStartLoading(_ retrying: Bool) {
@@ -60,7 +60,7 @@ class Relationships: AGSLoadableBase {
         }
         
         guard let popup = popup else {
-            loadDidFinishWithError(UnknownError)
+            loadDidFinishWithError(NSError.unknown)
             return
         }
         
@@ -138,7 +138,7 @@ class Relationships: AGSLoadableBase {
                 }
             }
             
-            if errors.count > 0 {
+            if !errors.isEmpty {
                 self.loadDidFinishWithError(LoadableError.multiLoadableFailure("related records", errors))
             }
             else {

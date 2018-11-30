@@ -179,12 +179,12 @@ class RelatedRecordCell: UITableViewCell {
             if editingPopup {
                 setAccessoryViewDisclosureIndicator()
                 emptyCellLabel?.textColor = info.isComposite ? .destructive : .gray
-                emptyCellLabel?.text = "Select \(table?.tableName ?? "related record")"
+                emptyCellLabel?.text = String(format: "Select %@", (table?.tableName ?? "related record"))
             }
             else {
                 setAccessoryViewNone()
                 emptyCellLabel?.textColor = .gray
-                emptyCellLabel?.text = "(Empty \(table?.tableName ?? "related") record)"
+                emptyCellLabel?.text = String(format: "(Empty %@ record)", (table?.tableName ?? "related"))
             }
         }
         else {
@@ -195,7 +195,7 @@ class RelatedRecordCell: UITableViewCell {
                 setAccessoryViewDisclosureIndicator()
             }
             emptyCellLabel?.textColor = .primary
-            emptyCellLabel?.text = "Add \(table?.tableName ?? "related record")"
+            emptyCellLabel?.text = String(format: "Add %@", (table?.tableName ?? "related record"))
         }
     }
 }

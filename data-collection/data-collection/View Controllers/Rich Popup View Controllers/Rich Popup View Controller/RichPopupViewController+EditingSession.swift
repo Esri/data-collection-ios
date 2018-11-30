@@ -33,13 +33,16 @@ extension RichPopupViewController {
         
         // Popup manager must not be in an editing session already.
         guard !self.popupManager.isEditing else {
-            throw InvalidOperationError
+            throw NSError.invalidOperation
         }
         
         // Editing must be enabled.
-        guard self.popupManager.shouldAllowEdit, self.popupManager.startEditing() else {
+        guard self.popupManager.shouldAllowEdit else {
             throw RichPopupManagerError.editingNotPermitted
         }
+        
+        // Start editing
+        self.popupManager.startEditing()
     }
     
     // MARK: Cancel Session
@@ -84,7 +87,7 @@ extension RichPopupViewController {
                 return
             }
             
-            SVProgressHUD.show(withStatus: "Saving \(self.popup.recordType.rawValue.capitalized)...")
+            SVProgressHUD.show(withStatus: String(format: "Saving %@...", self.popup.recordType.rawValue.capitalized))
             
             // 2. Update parent pop-up
             self.updateParentPopup { [weak self] (error) in
@@ -108,10 +111,11 @@ extension RichPopupViewController {
                     if let error = error {
                         self.present(simpleAlertMessage: error.localizedDescription)
                         completion?(false)
-                        return
+                    }
+                    else {
+                        completion?(true)
                     }
                     
-                    completion?(true)
                 }
             }
         }
@@ -121,7 +125,7 @@ extension RichPopupViewController {
         
         // Popup manager must not be in an editing session already.
         guard self.popupManager.isEditing else {
-            completion(InvalidOperationError)
+            completion(NSError.invalidOperation)
             return
         }
         
@@ -151,9 +155,8 @@ extension RichPopupViewController {
         // Parent pop-up relationships must be loaded to make edits.
         guard parentPopup?.relationships?.loadStatus == .loaded else {
             
-            let error = parentPopup?.relationships?.loadError ?? UnknownError
+            let error = parentPopup?.relationships?.loadError ?? NSError.unknown
             completion(error)
-            
             return
         }
         
@@ -198,18 +201,18 @@ extension RichPopupViewController {
     // Confirms with the user their intention to delete a record and performs the delete, if they confirm.
     func deletePopupAndDismissViewController() {
         
-        present(confirmationAlertMessage: "Are you sure you want to delete the \(popup.recordType.rawValue)?", confirmationTitle: "Delete", confirmationAction: { [weak self] (_) in
+        present(confirmationAlertMessage: String(format: "Are you sure you want to delete the %@?", popup.recordType.rawValue), confirmationTitle: "Delete", confirmationAction: { [weak self] (_) in
             
             guard let self = self else { return }
             
-            SVProgressHUD.show(withStatus: "Deleting \(self.popup.recordType.rawValue).")
+            SVProgressHUD.show(withStatus: String(format: "Deleting %@.", self.popup.recordType.rawValue))
             
             self.delete(popup: self.popup, parentPopupManager: self.parentPopupManager) { (success) in
                 
                 SVProgressHUD.dismiss()
                 
                 if !success {
-                    self.present(simpleAlertMessage: "Couldn't delete \(self.popup.recordType.rawValue).")
+                    self.present(simpleAlertMessage: String(format: "Couldn't delete %@.", self.popup.recordType.rawValue))
                 }
                 
                 self.popDismiss()
@@ -222,9 +225,9 @@ extension RichPopupViewController {
     // If editing, this function confirms with the user their intention to save the currently active editing session before deleting the child pop-up.
     func closeEditingSessionAndDelete(childPopup: AGSPopup) {
         
-        let deletePopup: (AGSPopup) -> Void = { childPopup in
+        func delete(child childPopup: AGSPopup) {
             
-            SVProgressHUD.show(withStatus: "Deleting child \(childPopup.recordType.rawValue)")
+            SVProgressHUD.show(withStatus: String(format: "Deleting child %@.", childPopup.recordType.rawValue))
             
             self.delete(popup: childPopup, parentPopupManager: self.popupManager) { (success) in
                 
@@ -233,7 +236,7 @@ extension RichPopupViewController {
                 self.adjustViewControllerForEditingState()
                 
                 if !success {
-                    self.present(simpleAlertMessage: "Could not delete child \(childPopup.recordType.rawValue)")
+                    self.present(simpleAlertMessage: String(format: "Could not delete child %@.", childPopup.recordType.rawValue))
                 }
             }
         }
@@ -246,15 +249,15 @@ extension RichPopupViewController {
                 guard let self = self else { return }
                 
                 guard shouldProceed else {
-                    self.present(simpleAlertMessage: "Could not edit this \(self.popup.recordType.rawValue).")
+                    self.present(simpleAlertMessage: String(format: "Could not edit this %@.", self.popup.recordType.rawValue))
                     return
                 }
                 
-                deletePopup(childPopup)
+                delete(child: childPopup)
             }
         }
         else {
-            deletePopup(childPopup)
+            delete(child: childPopup)
         }
     }
     
@@ -262,9 +265,7 @@ extension RichPopupViewController {
     // If editing, this function confirms with the user their intention to save the currently active editing session before editing the child pop-up.
     func closeEditingSessionAndBeginEditing(childPopup: AGSPopup) {
         
-        let beginEditing: (AGSPopup) -> Void = { [weak self] childPopup in
-            
-            guard let self = self else { return }
+        func beginEditing(child childPopup: AGSPopup) {
             
             guard let rrvc = self.storyboard?.instantiateViewController(withIdentifier: "RichPopupViewController") as? RichPopupViewController else {
                 self.present(simpleAlertMessage: "An unknown error occurred!")
@@ -287,15 +288,15 @@ extension RichPopupViewController {
                 
                 guard shouldProceed else {
                     
-                    self.present(simpleAlertMessage: "Could not edit this \(self.popup.recordType.rawValue).")
+                    self.present(simpleAlertMessage: String(format: "Could not edit this %@.", self.popup.recordType.rawValue))
                     return
                 }
                 
-                beginEditing(childPopup)
+                beginEditing(child: childPopup)
             }
         }
         else {
-            beginEditing(childPopup)
+            beginEditing(child: childPopup)
         }
     }
     

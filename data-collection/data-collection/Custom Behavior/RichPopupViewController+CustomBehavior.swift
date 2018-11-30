@@ -22,7 +22,7 @@ extension RichPopupViewController {
         
         if shouldEnactCustomBehavior {
             
-            let isTreeManager: (RichPopupManager) -> Bool = { manager in
+            func isTreeManager(_ manager: RichPopupManager) -> Bool {
                 return manager.tableName == "Trees"
             }
             

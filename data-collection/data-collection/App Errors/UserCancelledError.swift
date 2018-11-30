@@ -14,4 +14,9 @@
 
 import Foundation
 
-let UserCancelledError = NSError(domain: "\(appBundleID).AppError.UserCancelledError", code: NSUserCancelledError, userInfo: [NSLocalizedDescriptionKey: "User did cancel."])
+extension NSError {
+    
+    static var userCancelled: NSError {
+        return NSError(domain: "\(appBundleID).AppError.UserCancelledError", code: NSUserCancelledError, userInfo: [NSLocalizedDescriptionKey: "User did cancel."])
+    }
+}

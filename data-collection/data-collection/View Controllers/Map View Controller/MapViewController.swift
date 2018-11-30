@@ -147,13 +147,11 @@ class MapViewController: UIViewController {
             return
         }
         
-        SVProgressHUD.show(withStatus: "Creating new \(childPopup.title ?? "related record").")
+        SVProgressHUD.show(withStatus: String(format: "Creating new %@.", (childPopup.title ?? "related record")))
 
         parentRelationships.load { [weak self] (error) in
             
-            defer {
-                SVProgressHUD.dismiss()
-            }
+            SVProgressHUD.dismiss()
             
             guard let self = self else { return }
             
@@ -196,7 +194,7 @@ class MapViewController: UIViewController {
     }
     
     private func displayReachabilityMessage(isReachable reachable: Bool) {
-        slideNotificationView.showLabel(withNotificationMessage: "Device \(reachable ? "gained" : "lost") connection to the network.", forDuration: 6.0)
+        slideNotificationView.showLabel(withNotificationMessage: String(format: "Device %@ connection to the network.", (reachable ? "gained" : "lost")), forDuration: 6.0)
     }
     
     func subscribeToAppContextChanges() {
