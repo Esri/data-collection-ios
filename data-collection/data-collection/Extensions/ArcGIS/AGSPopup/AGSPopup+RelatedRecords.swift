@@ -22,18 +22,21 @@ extension AGSPopup {
     /// - Parameter popup: The pop-up with which to investigate for a relationship.
     ///
     /// - Returns: An `AGSRelationshipInfo`, if one exists between the two pop-ups.
-    
-    func oneToManyRelationship(withPopup popup: AGSPopup) -> AGSRelationshipInfo? {
+    ///
+    func relationship(to popup: AGSPopup) -> AGSRelationshipInfo? {
         
         guard
             let feature = geoElement as? AGSArcGISFeature,
-            let relationships = feature.oneToManyRelationshipInfos,
+            let featureTable = feature.featureTable as? AGSArcGISFeatureTable,
+            let layerInfo = featureTable.layerInfo,
             let relatedFeature = popup.geoElement as? AGSArcGISFeature,
             let relatedFeatureTable = relatedFeature.featureTable as? AGSArcGISFeatureTable
             else {
                 return nil
         }
-        
-        return relationships.first { (info) -> Bool in return info.relatedTableID == relatedFeatureTable.serviceLayerID }
+                
+        return layerInfo.relationshipInfos.first { (info) -> Bool in
+            return info.relatedTableID == relatedFeatureTable.serviceLayerID
+        }
     }
 }

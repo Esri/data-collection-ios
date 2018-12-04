@@ -24,51 +24,67 @@ extension MapViewController {
     
     func refreshCurrentPopup() {
         
-        guard case MapViewMode.selectedFeature = mapViewMode, let manager = recordsManager else {
+        guard case MapViewMode.selectedFeature = mapViewMode, let popup = currentPopup else {
             return
         }
         
-        guard manager.popup.isFeatureAddedToTable else {
+        guard popup.isFeatureAddedToTable else {
             currentPopup = nil
             mapViewMode = .defaultView
             return
         }
         
-        manager.popup.select()
+        popup.select()
         
-        manager.loadRelatedRecords { [weak self] in
+        if let popupRelationships = popup.relationships {
             
-            var fallbackIndex = 0
-            
-            let fallbackPopupManager = self?.currentPopup?.asManager()
-            
-            if let manyToOneManager = self?.recordsManager?.manyToOne.first?.relatedPopup?.asManager() {
-                var destinationIndex = 0
-                self?.relatedRecordHeaderLabel.text = manyToOneManager.nextDisplayFieldStringValue(fieldIndex: &destinationIndex) ?? fallbackPopupManager?.nextDisplayFieldStringValue(fieldIndex: &fallbackIndex)
-                self?.relatedRecordSubheaderLabel.text = manyToOneManager.nextDisplayFieldStringValue(fieldIndex: &destinationIndex) ?? fallbackPopupManager?.nextDisplayFieldStringValue(fieldIndex: &fallbackIndex)
+            popupRelationships.load { [weak self] (error) in
+                
+                if let error = error {
+                    print("[Error: RichPopup] relationships load error: \(error)")
+                }
+                
+                self?.populateContentIntoSmallPopupView(popup)
             }
-            else {
-                self?.relatedRecordHeaderLabel.text = fallbackPopupManager?.nextDisplayFieldStringValue(fieldIndex: &fallbackIndex)
-                self?.relatedRecordSubheaderLabel.text = fallbackPopupManager?.nextDisplayFieldStringValue(fieldIndex: &fallbackIndex)
-            }
-            
-            if let oneToMany = self?.recordsManager?.oneToMany.first {
-                let n = oneToMany.relatedPopups.count
-                let name = oneToMany.relatedTable?.tableName ?? "Records"
-                self?.relatedRecordsNLabel.text = "\(n) \(name)"
-            }
-            else {
-                self?.relatedRecordsNLabel.text = fallbackPopupManager?.nextDisplayFieldStringValue(fieldIndex: &fallbackIndex)
-            }
-            
-            if let canAdd = self?.recordsManager?.oneToMany.first?.relatedTable?.canAddFeature {
-                self?.addPopupRelatedRecordButton.isHidden = !canAdd
-            }
-            else {
-                self?.addPopupRelatedRecordButton.isHidden = true
-            }
-            
-            self?.mapViewMode = .selectedFeature(featureLoaded: true)
         }
+        else {
+            
+            populateContentIntoSmallPopupView(popup)
+        }
+    }
+    
+    private func populateContentIntoSmallPopupView(_ popup: RichPopup) {
+        
+        var fallbackIndex = 0
+        
+        let fallbackPopupManager = popup.asManager()
+        
+        if let manyToOneManager = popup.relationships?.manyToOne.first?.relatedPopup?.asManager() {
+            var destinationIndex = 0
+            self.relatedRecordHeaderLabel.text = manyToOneManager.nextDisplayFieldStringValue(fieldIndex: &destinationIndex) ?? fallbackPopupManager.nextDisplayFieldStringValue(fieldIndex: &fallbackIndex)
+            self.relatedRecordSubheaderLabel.text = manyToOneManager.nextDisplayFieldStringValue(fieldIndex: &destinationIndex) ?? fallbackPopupManager.nextDisplayFieldStringValue(fieldIndex: &fallbackIndex)
+        }
+        else {
+            self.relatedRecordHeaderLabel.text = fallbackPopupManager.nextDisplayFieldStringValue(fieldIndex: &fallbackIndex)
+            self.relatedRecordSubheaderLabel.text = fallbackPopupManager.nextDisplayFieldStringValue(fieldIndex: &fallbackIndex)
+        }
+        
+        if let oneToMany = popup.relationships?.oneToMany.first {
+            let n = oneToMany.relatedPopups.count
+            let name = oneToMany.relatedTable?.tableName ?? "Records"
+            self.relatedRecordsNLabel.text = "\(n) \(name)"
+        }
+        else {
+            self.relatedRecordsNLabel.text = fallbackPopupManager.nextDisplayFieldStringValue(fieldIndex: &fallbackIndex)
+        }
+        
+        if let canAdd = popup.relationships?.oneToMany.first?.relatedTable?.canAddFeature {
+            self.addPopupRelatedRecordButton.isHidden = !canAdd
+        }
+        else {
+            self.addPopupRelatedRecordButton.isHidden = true
+        }
+        
+        self.mapViewMode = .selectedFeature(featureLoaded: true)
     }
 }

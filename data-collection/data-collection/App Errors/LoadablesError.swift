@@ -14,28 +14,28 @@
 
 import Foundation
 
-extension NetworkReachabilityManager.NetworkReachabilityStatus: CustomStringConvertible {
+enum LoadableError: AppError {
     
-    public var description: String {
+    var baseCode: AppErrorBaseCode { return .LoadableError }
+    
+    case multiLoadableFailure(String, [Error])
+    
+    var errorCode: Int {
+        let base = baseCode.rawValue
         switch self {
-        case .notReachable:
-            return "Not reachable"
-        case .reachable(let type):
-            return String(format: "Reachable via %@", String(describing: type))
-        case .unknown:
-            return "Unknown"
+        case .multiLoadableFailure(_):
+            return base + 1
         }
     }
-}
-
-extension NetworkReachabilityManager.ConnectionType: CustomStringConvertible {
     
-    public var description: String {
+    var errorUserInfo: [String : Any] {
         switch self {
-        case .ethernetOrWiFi:
-            return "Ethernet or WiFi"
-        case .wwan:
-            return "WWAN"
+        case .multiLoadableFailure(let objectLocalizedDescription, let errors):
+            return [NSLocalizedDescriptionKey: String(format: "Error loading %@.", objectLocalizedDescription.localizedLowercase), NSUnderlyingErrorKey: errors]
         }
+    }
+    
+    var localizedDescription: String {
+        return errorUserInfo[NSLocalizedDescriptionKey] as! String
     }
 }

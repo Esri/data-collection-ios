@@ -124,26 +124,41 @@ extension MapViewController {
                 return
         }
         
-        EphemeralCache.set(object: newPopup, forKey: EphemeralCacheKeys.newNonSpatialFeature)
+        let newRichPopup = RichPopup(popup: newPopup)
         
-        mapViewMode = .selectingFeature
+        SVProgressHUD.show(withStatus: String(format: "Creating %@", (newRichPopup.tableName ?? "Feature")))
+        
+        newRichPopup.relationships?.load(completion: { [weak self] (error) in
+            
+            SVProgressHUD.dismiss()
+            
+            guard let self = self else { return }
+            
+            if let error = error  {
+                self.present(simpleAlertMessage: error.localizedDescription)
+            }
+            else {
+                EphemeralCache.set(object: newRichPopup, forKey: EphemeralCacheKeys.newNonSpatialFeature)
+                self.mapViewMode = .selectingFeature
+            }
+        })
     }
     
     private func prepareNewFeatureForEdit() {
         
-        guard let newPopup = EphemeralCache.get(objectForKey: EphemeralCacheKeys.newNonSpatialFeature) as? AGSPopup else {
+        guard let newPopup = EphemeralCache.get(objectForKey: EphemeralCacheKeys.newNonSpatialFeature) as? RichPopup else {
             present(simpleAlertMessage: "Uh Oh! You are unable to add a new record.")
             return
         }
         
         SVProgressHUD.setContainerView(self.view)
-        SVProgressHUD.show(withStatus: "Preparing new \(newPopup.tableName ?? "record").")
+        SVProgressHUD.show(withStatus: String(format: "Preparing new %@.", (newPopup.tableName ?? "record")))
         
         let centerPoint = mapView.centerAGSPoint
         
         // Custom Behavior
         
-        let proceedAfterCustomBehavior: () -> Void = { [weak self] in
+        func proceedAfterCustomBehavior() {
             
             newPopup.geoElement.geometry = centerPoint
             EphemeralCache.set(object: newPopup, forKey: EphemeralCacheKeys.newSpatialFeature)
@@ -151,7 +166,7 @@ extension MapViewController {
             SVProgressHUD.dismiss()
             SVProgressHUD.setContainerView(nil)
             
-            self?.performSegue(withIdentifier: "modallyPresentRelatedRecordsPopupViewController", sender: nil)
+            self.performSegue(withIdentifier: "modallyPresentRelatedRecordsPopupViewController", sender: nil)
         }
         
         if shouldEnactCustomBehavior {

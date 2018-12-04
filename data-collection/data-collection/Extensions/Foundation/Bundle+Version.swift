@@ -40,7 +40,7 @@ extension Bundle {
     /// For example, "ArcGIS Runtime SDK 100.0.0 (2000)"
     
     static var ArcGISSDKVersionString: String {
-        return "ArcGIS Runtime SDK \(sdkVersion) (\(sdkBundleVersion))"
+        return String(format: "ArcGIS Runtime SDK %@ (%@)", sdkVersion, sdkBundleVersion)
     }
 }
 
@@ -75,6 +75,6 @@ extension Bundle {
     /// For example, "Data Collection 1.0 (10)"
     
     static var AppNameVersionString: String {
-        return "\(appDisplayName) \(appVersion) (\(appBundleVersion))"
+        return String(format: "%@ %@ (%@)", appDisplayName, appVersion, appBundleVersion )
     }
 }
