@@ -29,40 +29,64 @@ extension MapViewController {
         
         let loadCompletion: ((Error?) -> Void)? = { [weak self] (error) in
             
+            guard let self = self else { return }
+            
             guard error == nil else {
                 let error = (error! as NSError)
 
                 print("[Error: Map Load]", "code: \(error.code)", error.localizedDescription)
                 
                 if AGSServicesErrorCode(rawValue: error.code) == .tokenRequired, !appContext.isLoggedIn {
-                    self?.present(loginAlertMessage: "You must log in to access this resource.")
+                    self.present(loginAlertMessage: "You must log in to access this resource.")
                 }
                 else {
-                    self?.present(simpleAlertMessage: error.localizedDescription)
+                    self.present(simpleAlertMessage: error.localizedDescription)
                 }
                 
-                self?.mapViewMode = .disabled
+                self.mapViewMode = .disabled
                 return
             }
 
+            // We want to view the new map at the same extent as we had previously seen in the previous map session, essentially picking up where we left off.
+            // So, we must determine if the previous session's shared visible area can be applied to the newly loaded map.
+            
+            // Retrieve a visible area from the previous app session.
             if let sharedVisibleArea = appContext.sharedVisibleArea {
-                self?.mapView.setViewpoint(sharedVisibleArea)
+                
+                // Is the newly loaded map the offline map?
+                if let offlineMap = appContext.offlineMap, offlineMap == map {
+                    
+                    // Get the initial viewpoint of the offline map
+                    if let offlineMapInitialViewpoint = offlineMap.initialViewpoint {
+                        
+                        // We set the shared the viewpoint to the previous session's shared visible area only if the two extents intersect.
+                        // Otherwise, the map loads outside the extent of the offline map, showing a grid in indeterminate space.
+                        if AGSGeometryEngine.geometry(offlineMapInitialViewpoint.targetGeometry, intersects: sharedVisibleArea.targetGeometry) {
+                            self.mapView.setViewpoint(sharedVisibleArea)
+                        }
+                    }
+                }
+                else {
+                    // Because the newly loaded map is an online map and has no defined extent,
+                    // we can safely set the viewpoint from the previous session's shared visible area.
+                    self.mapView.setViewpoint(sharedVisibleArea)
+                }
             }
             
-            self?.mapViewMode = .defaultView
+            self.mapViewMode = .defaultView
             
-            // 1 set map title from map definition
-            self?.delegate?.mapViewController(self!, didUpdateTitle: map.item?.title ?? "Map")
+            self.delegate?.mapViewController(self, didUpdateTitle: map.item?.title ?? "Map")
             
             guard let operationalLayers = map.operationalLayers as? [AGSFeatureLayer] else {
-                self?.delegate?.mapViewController(self!, shouldAllowNewFeature: false)
+                self.delegate?.mapViewController(self, shouldAllowNewFeature: false)
                 return
             }
             
             AGSLoadObjects(operationalLayers, { [weak self] (_) in
+                guard let self = self else { return }
                 
                 let flag = !operationalLayers.featureAddableLayers.isEmpty
-                self?.delegate?.mapViewController(self!, shouldAllowNewFeature: flag)
+                self.delegate?.mapViewController(self, shouldAllowNewFeature: flag)
             })
         }
         
