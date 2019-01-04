@@ -84,7 +84,7 @@ class Relationships: AGSLoadableBase {
         for info in layerInfo.relationshipInfos {
             
             // Ensure popup's are enabled for this relationship info.
-            guard featureTable.isPopupEnabledFor(relationshipInfo: info) else {
+            guard featureTable.isPopupEnabled(for: info) else {
                 continue
             }
             

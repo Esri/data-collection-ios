@@ -16,29 +16,19 @@ import Foundation
 import ArcGIS
 
 extension AGSArcGISFeatureTable {
-    
-    /// Check if popups are enabled for a related table.
+    /// Checks if popups are enabled for a related table.
     ///
-    /// - Parameters:
-    ///     - relationshipInfo: The relationship information defining which related table it is to check for.
-    ///
-    /// - Returns: `Bool` whether pop-ups are enabled on the related table.
-    
-    func isPopupEnabledFor(relationshipInfo: AGSRelationshipInfo) -> Bool {
-        
-        guard let relatedTables = relatedTables() else {
+    /// - Parameter relationshipInfo: The relationship information defining
+    /// which related table it is to check for.
+    /// - Returns: A Boolean value indicating whether pop-ups are enabled on the
+    /// related table.
+    func isPopupEnabled(for relationshipInfo: AGSRelationshipInfo) -> Bool {
+        let operativeID = relationshipInfo.relatedTableID
+        if let table = relatedTables()?.first(where: { $0.serviceLayerID == operativeID }) {
+            return table.isPopupActuallyEnabled
+        } else {
             return false
         }
-        
-        let operativeID = relationshipInfo.relatedTableID
-        
-        for table in relatedTables {
-            if table.serviceLayerID == operativeID {
-                return table.isPopupActuallyEnabled
-            }
-        }
-        
-        return false
     }
     
     /// Create a pop-up for a new feature if possible.
