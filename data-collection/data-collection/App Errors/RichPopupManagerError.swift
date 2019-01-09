@@ -23,6 +23,9 @@ enum RichPopupManagerError: AppError {
     case cannotRelateFeatures
     case manyToOneRecordEditingErrors([Error])
     case editingNotPermitted
+    case newOneToManyRelatedRecordError
+    case viewRelatedRecordError
+    case oneToManyRecordDeletionErrors([Error])
     
     var errorCode: Int {
         let base = baseCode.rawValue
@@ -37,6 +40,12 @@ enum RichPopupManagerError: AppError {
             return base + 4
         case .editingNotPermitted:
             return base + 5
+        case .newOneToManyRelatedRecordError:
+            return base + 6
+        case .viewRelatedRecordError:
+            return base + 7
+        case .oneToManyRecordDeletionErrors(_):
+            return base + 8
         }
     }
     
@@ -54,6 +63,13 @@ enum RichPopupManagerError: AppError {
                     NSUnderlyingErrorKey: errors]
         case .editingNotPermitted:
             return [NSLocalizedDescriptionKey: "Editing isn't permitted for this popup."]
+        case .newOneToManyRelatedRecordError:
+            return [NSLocalizedDescriptionKey: "Cannot add a new one to many related record while editing this record."]
+        case .viewRelatedRecordError:
+            return [NSLocalizedDescriptionKey: "Cannot view this related record while editing this record."]
+        case .oneToManyRecordDeletionErrors(let errors):
+            return [NSLocalizedDescriptionKey: "Error deleting \(errors.count) one to many record(s).",
+                NSUnderlyingErrorKey: errors]
         }
     }
     

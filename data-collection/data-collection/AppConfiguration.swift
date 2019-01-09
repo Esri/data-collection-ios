@@ -17,7 +17,7 @@ import ArcGIS
 
 class AppConfiguration {
     
-    /// The id of your portal's web map.
+    /// The ID of your portal's [web map](https://runtime.maps.arcgis.com/home/item.html?id=16f1b8ba37b44dc3884afc8d5f454dd2).
     static let webMapItemID = "16f1b8ba37b44dc3884afc8d5f454dd2"
     
     /// The base portal's domain.

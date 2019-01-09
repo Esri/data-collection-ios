@@ -18,13 +18,14 @@ import ArcGIS
 /// Represents and manages the related records of a popup and one of it's relationship infos.
 ///
 /// This class is to not to be used directly but instead intended to be subclassed.
+///
 class Relationship: AGSLoadableBase {
     
     weak private(set) var popup: AGSPopup?
     weak private(set) var relationshipInfo: AGSRelationshipInfo?
     weak private(set) var relatedTable: AGSArcGISFeatureTable?
     
-    init?(relationshipInfo info: AGSRelationshipInfo, table: AGSArcGISFeatureTable?, popup: AGSPopup) {
+    init?(relationshipInfo info: AGSRelationshipInfo, table: AGSArcGISFeatureTable, popup: AGSPopup) {
         
         guard info.cardinality == .oneToMany else {
             return nil
@@ -35,8 +36,20 @@ class Relationship: AGSLoadableBase {
         self.popup = popup
     }
     
+    var isStillValidRelationship: Bool {
+        return popup != nil && relationshipInfo != nil && relatedTable != nil
+    }
+    
     var name: String? {
         return relatedTable?.tableName
+    }
+    
+    var canAddRecord: Bool {
+        return relatedTable?.canAddFeature ?? false
+    }
+    
+    func createNewRecord() -> AGSPopup? {
+        return relatedTable?.createPopup()
     }
     
     // MARK: AGSLoadableBase
@@ -99,4 +112,50 @@ class Relationship: AGSLoadableBase {
     /// - Parameter popups: the collection of popups returned by the load process.
     func processRecords(_ popups: [AGSPopup]) { }
     
+    /// Relate a new record record to the one managed.
+    ///
+    /// - Parameter editedRelatedPopup: the record to relate to the one managed.
+    ///
+    func editRelatedPopup(_ editedRelatedPopup: AGSPopup) { }
+    
+    /// Unrelate a record from the one managed.
+    ///
+    /// - Parameter removedRelatedPopup: the recored to remove from the managed popup.
+    ///
+    func removeRelatedPopup(_ removedRelatedPopup: AGSPopup) { }
+    
+}
+
+extension Relationship {
+    
+    // MARK: Fetch and sort all related records for the many to one relationship.
+    // This is intended to be used by `ManyToOneRelationship`.
+    func queryAndSortAllRelatedPopups(_ completion: @escaping (Error?, [AGSPopup]?) -> Void) {
+        
+        guard let featureTable = relatedTable else {
+            completion(NSError.unknown, nil)
+            return
+        }
+        
+        var sorted: AGSOrderBy?
+        
+        if let definition = featureTable.popupDefinition, let field = definition.fields.first {
+            sorted = AGSOrderBy(fieldName: field.fieldName, sortOrder: .ascending)
+        }
+        
+        featureTable.queryAllFeaturesAsPopups(sorted: sorted) { (popups, error) in
+            
+            if let error = error {
+                completion(error, nil)
+                return
+            }
+            
+            guard let popups = popups else {
+                completion(NSError.unknown, nil)
+                return
+            }
+            
+            completion(nil, popups)
+        }
+    }
 }

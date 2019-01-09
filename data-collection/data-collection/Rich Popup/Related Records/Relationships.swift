@@ -94,13 +94,14 @@ class Relationships: AGSLoadableBase {
             }
             
             // Find the table on the other end of the relationship.
-            let foundRelatedTable = featureTable.relatedTables()?.first { $0.serviceLayerID == info.relatedTableID }
-            
-            if info.isManyToOne, let relationship = ManyToOneRelationship(relationshipInfo: info, table: foundRelatedTable, popup: popup) {
-                loadables.append(relationship)
-            }
-            else if info.isOneToMany, let relationship = OneToManyRelationship(relationshipInfo: info, table: foundRelatedTable, popup: popup) {
-                loadables.append(relationship)
+            if let foundRelatedTable = featureTable.relatedTables()?.first(where: { $0.serviceLayerID == info.relatedTableID }) {
+                
+                if info.isManyToOne, let relationship = ManyToOneRelationship(relationshipInfo: info, table: foundRelatedTable, popup: popup) {
+                    loadables.append(relationship)
+                }
+                else if info.isOneToMany, let relationship = OneToManyRelationship(relationshipInfo: info, table: foundRelatedTable, popup: popup) {
+                    loadables.append(relationship)
+                }
             }
         }
         

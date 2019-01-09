@@ -29,11 +29,8 @@ class OneToManyRelationship: Relationship {
         // Finally, sort the one-to-many related records.
         sortRelatedRecords()
     }
-    
-    /// Relate a new one-to-many record to the one managed.
-    ///
-    /// - Parameter editedRelatedPopup: the record to relate to the one managed.
-    func editRelatedPopup(_ editedRelatedPopup: AGSPopup) {
+
+    override func editRelatedPopup(_ editedRelatedPopup: AGSPopup) {
         
         // Maintain a reference to the new related record.
         
@@ -46,11 +43,8 @@ class OneToManyRelationship: Relationship {
         // Sort all related records.
         sortRelatedRecords()
     }
-    
-    /// Unrelate a one-to-many record from the managed popup.
-    ///
-    /// - Parameter removedRelatedPopup: the recored to delete from the managed popup.
-    func deleteRelatedPopup(_ removedRelatedPopup: AGSPopup) {
+
+    override func removeRelatedPopup(_ removedRelatedPopup: AGSPopup) {
         
         let recordIndex = relatedPopups.firstIndex { (popup) -> Bool in
             return (popup.geoElement as? AGSArcGISFeature)?.objectID == (removedRelatedPopup.geoElement as? AGSArcGISFeature)?.objectID
@@ -62,6 +56,7 @@ class OneToManyRelationship: Relationship {
     }
     
     /// Sort the one-to-many records in descending order.
+    ///
     private func sortRelatedRecords() {
         do {
             try relatedPopups.sortPopupsByFirstField(.descending)
@@ -84,7 +79,8 @@ extension OneToManyRelationship {
         
         // Add an extra row at the top to add feature if that table permits it.
         var rowOffset = 0
-        if let table = relatedTable, table.canAddFeature {
+        
+        if canAddRecord {
             rowOffset += 1
         }
         

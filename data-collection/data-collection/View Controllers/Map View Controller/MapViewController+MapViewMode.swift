@@ -67,7 +67,8 @@ extension MapViewController {
                            smallPopViewVisible(false),
                            mapViewVisible(true) ]
             hideMapMaskViewForOfflineDownloadArea()
-            locationSelectionType = .newFeature
+            selectViewHeaderLabel.text = "Choose location"
+            selectViewSubheaderLabel.text = "Pan & zoom map under pin"
             
         case .selectedFeature(let loaded):
             pinDropView.pinDropped = false
@@ -82,7 +83,8 @@ extension MapViewController {
                            smallPopViewVisible(false),
                            mapViewVisible(true) ]
             presentMapMaskViewForOfflineDownloadArea()
-            locationSelectionType = .offlineExtent
+            selectViewHeaderLabel.text = "Choose extent"
+            selectViewSubheaderLabel.text = "Pan & zoom map within region"
         }
         
         UIView.animate(withDuration: 0.2) { [weak self] in

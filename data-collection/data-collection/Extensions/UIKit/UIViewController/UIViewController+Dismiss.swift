@@ -28,4 +28,20 @@ extension UIViewController {
             self?.dismiss(animated: animated, completion: completion)
         }
     }
+    
+    func popDismiss(animated: Bool, completion: (() -> Void)?) {
+        
+        if let navigationController = navigationController {
+            
+            if isRootViewController {
+                dismiss(animated: animated, completion: completion)
+            }
+            else {
+                navigationController.popViewController(animated: animated)
+            }
+        }
+        else {
+            dismiss(animated: animated, completion: completion)
+        }
+    }
 }

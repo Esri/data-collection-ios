@@ -29,7 +29,7 @@ extension MapViewController: AGSGeoViewTouchDelegate {
     private func query(_ geoView: AGSGeoView, atScreenPoint screenPoint: CGPoint, mapPoint: AGSPoint) {
 
         // Remove references to current pop-up and set the map view mode to default.
-        currentPopup = nil
+        clearCurrentPopup()
         mapViewMode = .defaultView
 
         // If an identify operation is running, cancel it.
@@ -39,23 +39,21 @@ extension MapViewController: AGSGeoViewTouchDelegate {
         // Identify layers for the geo view's tap point.
         identifyOperation = geoView.identifyLayers(atScreenPoint: screenPoint, tolerance: 10, returnPopupsOnly: true, maximumResultsPerLayer: 5) { [weak self] (result, error) in
             
+            guard let self = self else { return }
+            
             // A successful result will not have an error.
             if let error = error {
                 print("[Error] identifying layers", error.localizedDescription)
-                self?.slideNotificationView.showLabel(withNotificationMessage: "Could not identify features.", forDuration: 2.0)
-                self?.currentPopup = nil
-                self?.mapViewMode = .defaultView
+                self.slideNotificationView.showLabel(withNotificationMessage: "Could not identify features.", forDuration: 2.0)
+                self.clearCurrentPopup()
+                self.mapViewMode = .defaultView
                 return
             }
             
-            guard let identifyResults = result else {
-                print("[Error] identifying layers, missing results")
-                self?.slideNotificationView.showLabel(withNotificationMessage: "Could not identify features.", forDuration: 2.0)
-                self?.currentPopup = nil
-                self?.mapViewMode = .defaultView
-                return
-            }
+            assert(result != nil, "If there is no error, results must always be returned. Something very wrong happened.")
             
+            let identifyResults = result!
+
             // Find the first layer that is identifiable.
             let firstIdentifiableResult = identifyResults.first(where: { (identifyLayerResult) -> Bool in
                 guard let layer = identifyLayerResult.layerContent as? AGSFeatureLayer else { return false }
@@ -64,26 +62,26 @@ extension MapViewController: AGSGeoViewTouchDelegate {
             
             // Inform the user if the identify did not yeild any results.
             guard let identifyResult = firstIdentifiableResult, identifyResult.popups.count > 0 else {
-                print("[Error] no found feature layer meets criteria")
-                self?.slideNotificationView.showLabel(withNotificationMessage: "Found no results.", forDuration: 2.0)
-                self?.currentPopup = nil
-                self?.mapViewMode = .defaultView
+                self.slideNotificationView.showLabel(withNotificationMessage: "Found no results.", forDuration: 2.0)
+                self.clearCurrentPopup()
+                self.mapViewMode = .defaultView
                 return
             }
             
             // Use the geometry engine to determine the nearest pop-up to the touch point.
             if let nearest = identifyResult.popups.popupNearestTo(mapPoint: mapPoint) {
-                self?.currentPopup = RichPopup(popup: nearest)
+                let richPopup = RichPopup(popup: nearest)
+                self.setCurrentPopup(popup: richPopup)
             }
             else {
-                self?.currentPopup = nil
+                self.clearCurrentPopup()
             }
             
             // Set the map view mode to selected feature
-            self?.mapViewMode = .selectedFeature(featureLoaded: false)
+            self.mapViewMode = .selectedFeature(featureLoaded: false)
             
             // Load the new current pop up
-            self?.refreshCurrentPopup()
+            self.refreshCurrentPopup()
         }
     }
 }

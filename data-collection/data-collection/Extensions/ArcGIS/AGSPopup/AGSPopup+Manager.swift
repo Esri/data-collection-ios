@@ -24,12 +24,4 @@ extension AGSPopup {
     func asManager() -> AGSPopupManager {
         return AGSPopupManager(popup: self)
     }
-    
-    /// Determine if a pop-up is editable.
-    ///
-    /// - Note: This property should be used sparingly due to the memory cost incurred by the operation.
-    
-    var isEditable: Bool {
-        return asManager().shouldAllowEdit
-    }
 }
