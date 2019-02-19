@@ -357,7 +357,7 @@ class RichPopupViewController: SegmentedViewController {
                 
                 guard let self = self else { return }
                 
-                self.popupManager.checkIfShouldPerformCustomBehavior { completion?(nil) }
+                self.popupManager.conditionallyPerformCustomBehavior { completion?(nil) }
 
                 if let error = error {
                     completion?(error)

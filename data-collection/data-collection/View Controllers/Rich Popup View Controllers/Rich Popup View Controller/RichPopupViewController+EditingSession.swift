@@ -83,7 +83,7 @@ extension RichPopupViewController {
             
             // An extra check is performed for the sake of the _Trees of Portland_ web map story.
             // This line can be removed without any consequence.
-            self.popupManager.checkIfShouldPerformCustomBehavior { completion(nil) }
+            self.popupManager.conditionallyPerformCustomBehavior { completion(nil) }
         })
     }
 }

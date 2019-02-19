@@ -17,17 +17,17 @@ import ArcGIS
 
 extension RichPopupManager {
     
-    func checkIfShouldPerformCustomBehavior(_ completion: @escaping () -> Void) {
+    func conditionallyPerformCustomBehavior(_ completion: @escaping () -> Void) {
         
         if shouldEnactCustomBehavior {
             
             if tableName == "Trees" {
-                updateSymbology(withTreePopup: richPopup) { completion() }
+                updateSymbology(withTreePopup: richPopup, completion: completion)
             }
             else if let parent = parentOneToManyManagersCurrentlyMaintained().first(where: { (manager) in
                 manager.tableName == "Trees"
             }) {
-                updateSymbology(withTreePopup: parent.richPopup) { completion() }
+                updateSymbology(withTreePopup: parent.richPopup, completion: completion)
             }
             else {
                 completion()

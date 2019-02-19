@@ -106,7 +106,6 @@ extension AGSArcGISFeatureTable {
                     })
                 }
                 else {
-                    print("success")
                     updateObjectID()
                     completion(nil)
                 }

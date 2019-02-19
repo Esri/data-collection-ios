@@ -14,7 +14,6 @@
 
 import Foundation
 import UIKit.UIColor
-import QuickLook.QLPreviewController
 
 // These colors are used throughout the application, when colors are generated at runtime.
 extension UIColor {
@@ -47,7 +46,7 @@ extension AppDelegate {
         
         // App specific navigation controllers.
         // This includes any navigation controller found in app project storyboards.
-        UINavigationBar.appearance(whenContainedInInstancesOf: [UINavigationBar.self, AppContextAwareNavigationController.self]).titleTextAttributes = [.foregroundColor : UIColor.tint]
+        UINavigationBar.appearance(whenContainedInInstancesOf: [AppContextAwareNavigationController.self]).titleTextAttributes = [.foregroundColor : UIColor.tint]
         UIBarButtonItem.appearance(whenContainedInInstancesOf: [UINavigationBar.self, AppContextAwareNavigationController.self]).tintColor = .tint
         
         UIBarButtonItem.appearance(whenContainedInInstancesOf: [UIToolbar.self]).tintColor = .primary
@@ -64,6 +63,6 @@ extension AppDelegate {
         
         UISegmentedControl.appearance().tintColor = .primary
         
-        StyledFirstResponderLabel.borderColor = .primary
+        StyledFirstResponderLabel.appearance().tintColor = .primary
     }
 }

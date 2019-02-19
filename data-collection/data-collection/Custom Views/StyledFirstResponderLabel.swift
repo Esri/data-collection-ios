@@ -14,25 +14,23 @@
 
 import UIKit
 
-protocol StyledFirstResponderLabelDelegate {
+protocol StyledFirstResponderLabelDelegate: AnyObject {
     func inputViewForStyledFirstResponderLabel(_ label: StyledFirstResponderLabel) -> UIView?
 }
 
 @IBDesignable
 class StyledFirstResponderLabel: UILabel {
     
-    static var borderColor: UIColor?
-    
     private let defaultBorderColor: UIColor = UIColor(white: 0.8, alpha: 1.0)
     
     private var derivedBorderColor: UIColor?
     
-    @IBInspectable var borderColor: UIColor {
+    @IBInspectable override dynamic var tintColor: UIColor! {
         set {
             derivedBorderColor = newValue
         }
         get {
-            return derivedBorderColor ?? StyledFirstResponderLabel.borderColor ?? defaultBorderColor
+            return derivedBorderColor ?? defaultBorderColor
         }
     }
     
@@ -42,11 +40,8 @@ class StyledFirstResponderLabel: UILabel {
     }
     
     override var isUserInteractionEnabled: Bool {
-        get {
-            return super.isUserInteractionEnabled
-        }
-        set {
-            super.isUserInteractionEnabled = newValue
+        didSet {
+            guard isUserInteractionEnabled != oldValue else { return }
             stylize()
         }
     }
@@ -87,7 +82,7 @@ class StyledFirstResponderLabel: UILabel {
         initialize()
     }
     
-    var delegate: StyledFirstResponderLabelDelegate?
+    weak var delegate: StyledFirstResponderLabelDelegate?
     
     private func initialize() {
         
@@ -98,7 +93,6 @@ class StyledFirstResponderLabel: UILabel {
         let tap = UITapGestureRecognizer(target: self, action: #selector(userDidTapLabel(_:)))
         self.addGestureRecognizer(tap)
         
-        backgroundColor = .clear
         stylize()
     }
     
@@ -107,7 +101,7 @@ class StyledFirstResponderLabel: UILabel {
         if isUserInteractionEnabled {
             
             if isFirstResponder {
-                layer.borderColor = borderColor.cgColor
+                layer.borderColor = tintColor.cgColor
             }
             else {
                 layer.borderColor = defaultBorderColor.cgColor
@@ -123,8 +117,6 @@ class StyledFirstResponderLabel: UILabel {
             layer.borderWidth = 0
             layer.cornerRadius = 0
             clipsToBounds = false
-            
-            backgroundColor = .clear
         }
     }
     

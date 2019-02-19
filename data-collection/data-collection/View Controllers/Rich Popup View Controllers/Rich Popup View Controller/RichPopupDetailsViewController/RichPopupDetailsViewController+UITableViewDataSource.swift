@@ -111,7 +111,7 @@ extension RichPopupDetailsViewController {
                     cell = tableView.dequeueReusableCell(withIdentifier: "PopupAttributeReadonlyCell") as! PopupAttributeReadonlyCell
                     
                 default:
-                    assertionFailure("Data Collection doesn't currently support the \(fieldType) field type.")
+                    assertionFailure("Data Collection doesn't currently support the \(String(describing: fieldType)) field type.")
                     return UITableViewCell()
                 }
             }

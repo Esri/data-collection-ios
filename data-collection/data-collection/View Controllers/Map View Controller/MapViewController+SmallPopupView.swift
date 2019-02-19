@@ -69,13 +69,13 @@ extension MapViewController {
             
             var manyToOneAttributes = AGSPopupManager.generateDisplayAttributes(forPopup: firstManyToOne, max: 2)
             
-            relatedRecordHeaderLabel.text = AGSPopupManager.nextDisplayAttribute(priorityAttributes: &manyToOneAttributes, backupAttributes: &backupAttributes)?.value
-            relatedRecordSubheaderLabel.text = AGSPopupManager.nextDisplayAttribute(priorityAttributes: &manyToOneAttributes, backupAttributes: &backupAttributes)?.value
+            relatedRecordHeaderLabel.text = (manyToOneAttributes.popFirst() ?? backupAttributes.popFirst())?.value
+            relatedRecordSubheaderLabel.text = (manyToOneAttributes.popFirst() ?? backupAttributes.popFirst())?.value
         }
         else {
             
-            relatedRecordHeaderLabel.text = AGSPopupManager.nextDisplayAttribute(&backupAttributes)?.value
-            relatedRecordSubheaderLabel.text = AGSPopupManager.nextDisplayAttribute(&backupAttributes)?.value
+            relatedRecordHeaderLabel.text = backupAttributes.popFirst()?.value
+            relatedRecordSubheaderLabel.text = backupAttributes.popFirst()?.value
         }
         
         // MARK: Right side of the small pop-up view, concerns the first one-to-many relationship.
@@ -91,7 +91,7 @@ extension MapViewController {
         }
         else {
             
-            relatedRecordsNLabel.text = AGSPopupManager.nextDisplayAttribute(&backupAttributes)?.value
+            relatedRecordsNLabel.text = backupAttributes.popFirst()?.value
             addPopupRelatedRecordButton.isHidden = true
         }
         
@@ -99,27 +99,12 @@ extension MapViewController {
     }
 }
 
-private extension AGSPopupManager {
+private extension Array {
     
-    static func nextDisplayAttribute(_ attributes: inout [DisplayAttribute]) -> DisplayAttribute? {
-        
-        if !attributes.isEmpty {
-            return attributes.remove(at: 0)
-        }
-        else {
-            return nil
-        }
-    }
-    
-    static func nextDisplayAttribute(priorityAttributes: inout [DisplayAttribute], backupAttributes: inout [DisplayAttribute]) -> DisplayAttribute? {
-        
-        if !priorityAttributes.isEmpty {
-            return priorityAttributes.remove(at: 0)
-        }
-        else if !backupAttributes.isEmpty {
-            return backupAttributes.remove(at: 0)
-        }
-        else {
+    mutating func popFirst() -> Element? {
+        if !isEmpty {
+            return removeFirst()
+        } else {
             return nil
         }
     }

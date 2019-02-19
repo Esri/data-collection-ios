@@ -76,7 +76,7 @@ extension MapViewController {
                 action.addAction(addFeature)
             }
             
-            let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+            let cancel = UIAlertAction(title: "Cancel", style: .cancel)
             action.addAction(cancel)
             
             present(action, animated: true, completion: nil)
