@@ -53,7 +53,7 @@ extension RichPopupDetailsViewController {
                 else {
                     do {
                         
-                        let newPopupManager = try popupManager.buildRichPopupManagerForExistingRecordAtIndexPath(indexPath)
+                        let newPopupManager = try popupManager.buildRichPopupManagerForExistingRecord(at: indexPath)
                         assert(newPopupManager != nil, "If no error is thrown and no new popup manager is returned, something is wrong with the builder popup manager.")
                         
                         if let popupManager = newPopupManager {
@@ -87,7 +87,7 @@ extension RichPopupDetailsViewController {
                 else if popupManager.indexPathWithinOneToMany(indexPath) {
                     
                     do {
-                        let newPopupManager = try popupManager.buildRichPopupManagerForExistingRecordAtIndexPath(indexPath)
+                        let newPopupManager = try popupManager.buildRichPopupManagerForExistingRecord(at: indexPath)
                         assert(newPopupManager != nil, "If no error is thrown and no new popup manager is returned, something is wrong with the builder popup manager.")
                         
                         if let popupManager = newPopupManager {

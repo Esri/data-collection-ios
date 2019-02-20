@@ -82,6 +82,8 @@ class Relationship: AGSLoadableBase {
                 return
             }
             
+            assert(popupsResults != nil, "Something went very wrong.")
+            
             guard let popups = popupsResults else {
                 self.loadDidFinishWithError(NSError.unknown)
                 return
@@ -137,10 +139,13 @@ extension Relationship {
             return
         }
         
-        var sorted: AGSOrderBy?
+        let sorted: AGSOrderBy?
         
         if let definition = featureTable.popupDefinition, let field = definition.fields.first {
             sorted = AGSOrderBy(fieldName: field.fieldName, sortOrder: .ascending)
+        }
+        else {
+            sorted = nil
         }
         
         featureTable.queryAllFeaturesAsPopups(sorted: sorted) { (popups, error) in

@@ -133,7 +133,7 @@ class MapViewController: UIViewController {
         let relatedManager: RichPopupManager
         
         do {
-            if let newManager = try manager.buildRichPopupManagerForNewOneToManyRecordForRelationship(relationship) {
+            if let newManager = try manager.buildRichPopupManagerForNewOneToManyRecord(for: relationship) {
                 relatedManager = newManager
             }
             else {

@@ -16,9 +16,9 @@ import ArcGIS
 
 class RichPopupStagedAttachment: NSObject, RichPopupPreviewableAttachment {
     
-    private(set) var attachmentData: Data
+    let attachmentData: Data
     
-    private(set) var attachmentMimeType: String
+    let attachmentMimeType: String
     
     var name: String?
     

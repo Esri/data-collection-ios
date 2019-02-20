@@ -22,7 +22,7 @@ extension RichPopupAttachmentsViewController {
         if isEditing {
             
             let isAddAttachmentCell = tableView.cellForRow(at: indexPath) is PopupAddAttachmentCell
-            let isStagedAttachmentCell = popupAttachmentsManager.attachmentAt(index: indexPath.row) is RichPopupStagedAttachment
+            let isStagedAttachmentCell = popupAttachmentsManager.attachment(at: indexPath.row) is RichPopupStagedAttachment
             
             return (isAddAttachmentCell || isStagedAttachmentCell) ? indexPath : nil
         }
@@ -37,7 +37,7 @@ extension RichPopupAttachmentsViewController {
         if indexPath.section == 1, editingStyle == .delete {
             
             // Delete Attachment
-            if popupAttachmentsManager.deleteAttachmentAt(index: indexPath.row) {
+            if popupAttachmentsManager.deleteAttachment(at: indexPath.row) {
                 
                 // Update Table
                 tableView.beginUpdates()
@@ -57,7 +57,7 @@ extension RichPopupAttachmentsViewController {
         }
         
         if isEditing {
-            if let attachment = popupAttachmentsManager.attachmentAt(index: indexPath.row) as? RichPopupStagedAttachment {
+            if let attachment = popupAttachmentsManager.attachment(at: indexPath.row) as? RichPopupStagedAttachment {
                 delegate?.attachmentsViewController(self, selectedEditStagedAttachment: attachment)
             }
         }

@@ -73,7 +73,7 @@ extension RichPopupViewController: RichPopupDetailsViewControllerDelegate {
         // Use this local scope function to build a view controller to display and edit a new one-to-many related record.
         func buildChildViewController() {
             do {
-                if let newPopupManager = try popupManager.buildRichPopupManagerForNewOneToManyRecordForRelationship(relationship) {
+                if let newPopupManager = try popupManager.buildRichPopupManagerForNewOneToManyRecord(for: relationship) {
                     
                     let richPopupViewController = storyboard?.instantiateViewController(withIdentifier: "RichPopupViewController") as? RichPopupViewController
                     

@@ -43,7 +43,7 @@ class ManyToOneRelationship: Relationship {
     /// The popup that could be persisted, if `commitChange()` is called.
     private var stagedRelatedPopup: AGSPopup?
     
-    /// If true, the user is requesting to remove the related popup.
+    /// If `true`, the user is requesting to remove the related popup.
     private var stagedToRemove: Bool = false
     
     // Overrides the superclass method, stores a references to the record.

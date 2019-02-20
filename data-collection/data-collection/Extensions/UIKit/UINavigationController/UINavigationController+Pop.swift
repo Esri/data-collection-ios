@@ -14,15 +14,16 @@
 
 import Foundation
 
-extension UIView {
+extension UINavigationController {
     
-    @IBInspectable
-    var cornerRadius: CGFloat {
-        get {
-            return layer.cornerRadius
-        }
-        set {
-            layer.cornerRadius = newValue
+    func popViewController(animated: Bool, completion: (() -> Void)?) {
+
+        if let transitionCoordinator = transitionCoordinator {
+            transitionCoordinator.animate(alongsideTransition: nil) { (_) in
+                completion?()
+            }
+        } else {
+            completion?()
         }
     }
 }

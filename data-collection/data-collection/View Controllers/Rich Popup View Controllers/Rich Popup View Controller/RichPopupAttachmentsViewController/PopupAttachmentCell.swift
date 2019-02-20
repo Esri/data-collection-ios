@@ -15,9 +15,7 @@
 import UIKit
 
 class PopupAttachmentCell: UITableViewCell {
-    
-    static let byteCountFormatter = ByteCountFormatter()
-    
+        
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var sizeLabel: UILabel!
     @IBOutlet weak var attachmentImageView: UIImageView!

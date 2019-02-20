@@ -21,7 +21,7 @@ extension AGSPopupManager {
     ///
     /// This is helpful in allowing the popup manager to maintain the index for it's next requested value.
     ///
-    public func nextDisplayFieldStringValue(fieldIndex: inout Int) -> String? {
+    private func nextDisplayFieldStringValue(fieldIndex: inout Int) -> String? {
         
         guard fieldIndex < displayFields.count else {
             return nil
@@ -34,9 +34,9 @@ extension AGSPopupManager {
         return value
     }
     
-    public typealias DisplayAttribute = (title: String, value: String?)
+    typealias DisplayAttribute = (title: String, value: String?)
     
-    public static func generateDisplayAttributes(forPopup popup: AGSPopup, max n: Int) -> [DisplayAttribute] {
+    static func generateDisplayAttributes(forPopup popup: AGSPopup, max n: Int) -> [DisplayAttribute] {
         
         let manager = AGSPopupManager(popup: popup)
         

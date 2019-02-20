@@ -18,13 +18,9 @@ extension RichPopupAttachmentsViewController: RichPopupAttachmentsManagerDelegat
     
     func richPopupAttachmentsManager(_ manager: RichPopupAttachmentsManager, generatedThumbnailForAttachment attachment: RichPopupPreviewableAttachment) {
         
-        if let indexPath = manager.indexPathFor(attachment: attachment) {
-            
-            DispatchQueue.main.async { [weak self] in
-                
-                self?.tableView.beginUpdates()
+        DispatchQueue.main.async { [weak self] in
+            if let indexPath = manager.indexPathFor(attachment: attachment) {
                 self?.tableView.reloadRows(at: [indexPath], with: .none)
-                self?.tableView.endUpdates()
             }
         }
     }

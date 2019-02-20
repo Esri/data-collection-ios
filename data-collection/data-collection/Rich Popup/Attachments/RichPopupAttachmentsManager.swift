@@ -14,7 +14,7 @@
 
 import ArcGIS
 
-protocol RichPopupAttachmentsManagerDelegate: class {
+protocol RichPopupAttachmentsManagerDelegate: AnyObject {
     func richPopupAttachmentsManager(_ manager: RichPopupAttachmentsManager, generatedThumbnailForAttachment attachment: RichPopupPreviewableAttachment)
 }
 
@@ -94,11 +94,13 @@ class RichPopupAttachmentsManager: AGSLoadableBase {
     }
     
     
-    func deleteAttachmentAt(index: Int) -> Bool {
+    func deleteAttachment(at index: Int) -> Bool {
+        
+        assert(index < attachmentsCount, "Index \(index) out of range 0..<\(attachmentsCount).")
         
         guard index < attachmentsCount else { return false }
         
-        if index < fetchedAttachments.count {
+        if index < fetchedAttachments.endIndex {
             let attachment = fetchedAttachments.remove(at: index)
             popupAttachmentsManager.deleteAttachment(attachment)
         }
@@ -137,14 +139,14 @@ class RichPopupAttachmentsManager: AGSLoadableBase {
         
     func discardStagedAttachments() {
         
-        self.fetchedAttachments = popupAttachmentsManager.filteredAndSortedAttachments()
-        self.stagedAttachments.removeAll()
+        fetchedAttachments = popupAttachmentsManager.filteredAndSortedAttachments()
+        stagedAttachments.removeAll()
     }
     
     private func clear() {
         
-        fetchedAttachments = [AGSPopupAttachment]()
-        stagedAttachments = [RichPopupStagedAttachment]()
+        fetchedAttachments.removeAll()
+        stagedAttachments.removeAll()
     }
     
     private class CachedImage: NSObject {
@@ -158,7 +160,7 @@ class RichPopupAttachmentsManager: AGSLoadableBase {
     
     private var thumbnailCache = NSCache<AnyObject, CachedImage>()
     
-    func cachedThumbnailFor(attachment: RichPopupPreviewableAttachment) -> UIImage? {
+    func cachedThumbnail(for attachment: RichPopupPreviewableAttachment) -> UIImage? {
         
         if let cachedImage = thumbnailCache.object(forKey: attachment) {
             return cachedImage.image
@@ -170,7 +172,7 @@ class RichPopupAttachmentsManager: AGSLoadableBase {
     
     // MARK: Loading Attachment and Generating Thumbnails
 
-    func generateThumbnail(for attachment: RichPopupPreviewableAttachment, size: Float, indexPath: IndexPath) throws {
+    func generateThumbnail(for attachment: RichPopupPreviewableAttachment, size: Float) throws {
         
         guard thumbnailCache.object(forKey: attachment) == nil else {
             return
@@ -204,9 +206,9 @@ class RichPopupAttachmentsManager: AGSLoadableBase {
         }
     }
     
-    func loadAttachmentAtIndex(_ index: Int) throws {
+    func loadAttachment(at index: Int) throws {
         
-        guard let attachment = attachmentAt(index: index) else {
+        guard let attachment = attachment(at: index) else {
             throw NSError.invalidOperation
         }
         
@@ -222,11 +224,13 @@ extension RichPopupAttachmentsManager {
         return fetchedAttachments.count + stagedAttachments.count
     }
     
-    func attachmentAt(index: Int) -> RichPopupPreviewableAttachment? {
+    func attachment(at index: Int) -> RichPopupPreviewableAttachment? {
     
+        assert(index < attachmentsCount, "Index \(index) out of range 0..<\(attachmentsCount).")
+        
         guard index < attachmentsCount else { return nil }
         
-        if index < fetchedAttachments.count {
+        if index < fetchedAttachments.endIndex {
             return fetchedAttachments[index]
         }
         else {

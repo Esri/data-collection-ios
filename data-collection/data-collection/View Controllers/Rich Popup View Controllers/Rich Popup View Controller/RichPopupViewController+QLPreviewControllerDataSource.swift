@@ -24,13 +24,13 @@ extension RichPopupViewController: QLPreviewControllerDataSource {
         
         // Allow the popup attachments manager to determine if the attachment is `AGSLoadable` and to load it.
         do {
-            try attachmentsViewController.popupAttachmentsManager.loadAttachmentAtIndex(index)
+            try attachmentsViewController.popupAttachmentsManager.loadAttachment(at: index)
         }
         catch {
             assertionFailure("Index out of range of popup attachment manager.")
         }
         
         // Return the attachment for a given index.
-        return attachmentsViewController.popupAttachmentsManager.attachmentAt(index: index)!
+        return attachmentsViewController.popupAttachmentsManager.attachment(at: index)!
     }
 }

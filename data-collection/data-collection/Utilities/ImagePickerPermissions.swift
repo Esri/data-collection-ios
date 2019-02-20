@@ -116,14 +116,7 @@ public struct ImagePickerPermissions {
         
         guard let delegate = self.delegate else { return }
         
-        var permissions = [ImagePickerPermission]()
-        
-        types.forEach { (type) in
-            
-            if let permission = type.permission {
-                permissions.append(permission)
-            }
-        }
+        let permissions = types.compactMap { $0.permission }
         
         func select(permission: ImagePickerPermission) {
             
@@ -149,13 +142,13 @@ public struct ImagePickerPermissions {
                     if let settingsUrl = URL(string: UIApplication.openSettingsURLString), UIApplication.shared.canOpenURL(settingsUrl) {
                         
                         let settingsAction = UIAlertAction(title: "Settings", style: .default, handler: { _ in
-                            UIApplication.shared.open(settingsUrl, completionHandler: nil)
+                            UIApplication.shared.open(settingsUrl)
                         })
                         
                         alert.addAction(settingsAction)
                     }
                     
-                    viewController.present(alert, animated: true, completion: nil)
+                    viewController.present(alert, animated: true)
                     
                     // Finish with no image picker.
                     delegate.imagePickerPermissionsFinishedWith(imagePicker: nil)
@@ -194,7 +187,7 @@ public struct ImagePickerPermissions {
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
         alertController.addAction(cancelAction)
         
-        viewController.present(alertController, animated: true, completion: nil)
+        viewController.present(alertController, animated: true)
     }
 }
 

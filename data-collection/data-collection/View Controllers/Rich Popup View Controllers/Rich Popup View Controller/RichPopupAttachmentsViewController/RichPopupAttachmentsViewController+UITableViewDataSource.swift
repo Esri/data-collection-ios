@@ -61,18 +61,18 @@ extension RichPopupAttachmentsViewController {
             
             let cell = tableView.dequeueReusableCell(withIdentifier: "PopupAttachmentCell") as! PopupAttachmentCell
             
-            if let attachment = popupAttachmentsManager.attachmentAt(index: indexPath.row) {
+            if let attachment = popupAttachmentsManager.attachment(at: indexPath.row) {
                 
                 cell.attachmentImageView.image = attachment.type.icon
                 
                 let size = max(cell.attachmentImageView.bounds.width, cell.attachmentImageView.bounds.height)
                 
-                if let image = popupAttachmentsManager.cachedThumbnailFor(attachment: attachment) {
+                if let image = popupAttachmentsManager.cachedThumbnail(for: attachment) {
                     cell.attachmentImageView.image = image
                 }
                 else {
-                    try? popupAttachmentsManager.generateThumbnail(for: attachment, size: Float(size), indexPath: indexPath)
                     cell.attachmentImageView.image = attachment.type.icon
+                    try? popupAttachmentsManager.generateThumbnail(for: attachment, size: Float(size))
                 }
                 
                 let noName = "(no name)"
@@ -85,7 +85,7 @@ extension RichPopupAttachmentsViewController {
                 }
                 
                 if let attachment = attachment as? AGSPopupAttachment {
-                    cell.sizeLabel.text = PopupAttachmentCell.byteCountFormatter.string(fromByteCount: Int64(attachment.actualSizeInBytes))
+                    cell.sizeLabel.text = RichPopupAttachmentsViewController.byteCountFormatter.string(fromByteCount: Int64(attachment.actualSizeInBytes))
                     cell.accessoryType = .none
                     cell.editingAccessoryType = .none
                 }

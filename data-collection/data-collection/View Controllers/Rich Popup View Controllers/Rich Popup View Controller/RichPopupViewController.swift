@@ -254,7 +254,7 @@ class RichPopupViewController: SegmentedViewController {
                 if (!self.popupManager.popup.isFeatureAddedToTable) {
                     
                     // Dismiss the view controller.
-                    self.popDismiss(animated: true, completion: nil)
+                    self.popDismiss(animated: true)
                 }
                 else {
                     self.updateViewControllerUI(animated: animated)
@@ -319,7 +319,7 @@ class RichPopupViewController: SegmentedViewController {
                 self.present(simpleAlertMessage: "Something went wrong. Could not delete the record. \(error.localizedDescription)")
             }
             else {
-                self.popDismiss(animated: true, completion: nil)
+                self.popDismiss(animated: true)
             }
         }
     }
@@ -427,7 +427,7 @@ class RichPopupViewController: SegmentedViewController {
     
     @objc func userRequestsDismissViewController(_ sender: AnyObject) {
         
-        self.popDismiss(animated: true, completion: nil)
+        self.popDismiss(animated: true)
     }
     
     // MARK: Image Picker Permissions
@@ -438,4 +438,3 @@ class RichPopupViewController: SegmentedViewController {
         return imagePickerPermissions
     }()
 }
-

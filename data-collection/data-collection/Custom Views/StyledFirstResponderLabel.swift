@@ -49,10 +49,13 @@ class StyledFirstResponderLabel: UILabel {
     private let horizontalInset: CGFloat = 7.0
     private let verticalInset: CGFloat = 5.0
     
+    private lazy var insets: UIEdgeInsets = {
+        return UIEdgeInsets(top: verticalInset, left: horizontalInset, bottom: verticalInset, right: horizontalInset)
+    }()
+
     override func drawText(in rect: CGRect) {
         
         if isUserInteractionEnabled {
-            let insets = UIEdgeInsets.init(top: verticalInset, left: horizontalInset, bottom: verticalInset, right: horizontalInset)
             super.drawText(in: rect.inset(by: insets))
         }
         else {

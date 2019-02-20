@@ -76,9 +76,9 @@ class RichPopupManager: AGSPopupManager {
         var relatedRecordsErrors = [Error]()
         
         // First, all staged many to one record changes are commited and features are related.
-        if richPopup.relationships?.loadStatus == .loaded, let manyToOneManagers = richPopup.relationships?.manyToOne {
+        if let relationships = richPopup.relationships, relationships.loadStatus == .loaded {
             
-            let managers = manyToOneManagers
+            let managers = relationships.manyToOne
             
             for manager in managers {
                 
@@ -106,7 +106,9 @@ class RichPopupManager: AGSPopupManager {
         }
         
         // Then, update any parent one-to-many records.
-        parentOneToManyManagers.keyEnumerator().allObjects.compactMap({ $0 as? Relationship }).forEach { (relationship) in
+        let relationships = parentOneToManyManagers.keyEnumerator().allObjects as! [Relationship]
+        
+        relationships.forEach { (relationship) in
             
             if let parentManager = parentOneToManyManagers.object(forKey: relationship) {
                 do {
@@ -169,11 +171,9 @@ class RichPopupManager: AGSPopupManager {
         
         // Check M:1 relationships.
         // Only M:1 relationships can be edited during an editing session.
-        if let manyToOneManagers = richPopup.relationships?.manyToOne {
+        if let relationships = richPopup.relationships {
             
-            let managers = manyToOneManagers
-            
-            invalids += managers
+            invalids += relationships.manyToOne
                 .filter { record in
                     let isComposite = record.relationshipInfo?.isComposite ?? false
                     return isComposite && record.relatedPopup == nil
@@ -342,7 +342,7 @@ class RichPopupManager: AGSPopupManager {
             }
         }
         
-        if relatedRecordsErrors.count > 0 {
+        if !relatedRecordsErrors.isEmpty {
             throw RichPopupManagerError.oneToManyRecordDeletionErrors(relatedRecordsErrors)
         }
     }
@@ -399,7 +399,7 @@ class RichPopupManager: AGSPopupManager {
     /// - NOTE: Use this function to create a new one-to-many related record pop-up manager so that changes made to the new record
     /// are also reflected by this, the parent pop-up manager.
     ///
-    public func buildRichPopupManagerForNewOneToManyRecordForRelationship(_ relationship: Relationship) throws -> RichPopupManager? {
+    func buildRichPopupManagerForNewOneToManyRecord(for relationship: Relationship) throws -> RichPopupManager? {
         
         guard self.richPopup.relationships?.loadStatus == .loaded else {
             throw self.richPopup.relationships?.loadError ?? NSError.unknown
@@ -426,7 +426,7 @@ class RichPopupManager: AGSPopupManager {
     /// - NOTE: Use this function to create a new one-to-many related record pop-up manager so that changes made to the new record
     /// are also reflected by this, the parent pop-up manager.
     ///
-    public func buildRichPopupManagerForExistingRecordAtIndexPath(_ indexPath: IndexPath) throws -> RichPopupManager? {
+    public func buildRichPopupManagerForExistingRecord(at indexPath: IndexPath) throws -> RichPopupManager? {
         
         guard self.richPopup.relationships?.loadStatus == .loaded else {
             throw self.richPopup.relationships?.loadError ?? NSError.unknown

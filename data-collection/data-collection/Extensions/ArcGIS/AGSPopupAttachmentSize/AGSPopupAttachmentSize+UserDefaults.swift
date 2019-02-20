@@ -25,6 +25,6 @@ extension AGSPopupAttachmentSize {
     static func retrieveDefaultPopupAttachmentSize() -> AGSPopupAttachmentSize {
         
         let storedRaw = UserDefaults.standard.integer(forKey: AGSPopupAttachmentSize.userDefaultsKey)
-        return AGSPopupAttachmentSize(rawValue: storedRaw) ?? AGSPopupAttachmentSize.actual
+        return AGSPopupAttachmentSize(rawValue: storedRaw) ?? .actual
     }
 }

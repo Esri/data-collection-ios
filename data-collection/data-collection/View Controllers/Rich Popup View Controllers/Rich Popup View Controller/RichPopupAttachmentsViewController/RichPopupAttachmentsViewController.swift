@@ -35,6 +35,8 @@ class RichPopupAttachmentsViewController: UITableViewController {
     
     var delegate: RichPopupAttachmentsViewControllerDelegate?
     
+    static let byteCountFormatter = ByteCountFormatter()
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
