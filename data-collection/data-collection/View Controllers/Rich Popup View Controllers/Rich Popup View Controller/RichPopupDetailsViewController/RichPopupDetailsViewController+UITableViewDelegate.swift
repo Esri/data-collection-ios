@@ -15,7 +15,7 @@
 import ArcGIS
 import UIKit
 
-extension RichPopupDetailsViewController {
+extension RichPopupDetailsViewController /* UITableViewDelegate */ {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         

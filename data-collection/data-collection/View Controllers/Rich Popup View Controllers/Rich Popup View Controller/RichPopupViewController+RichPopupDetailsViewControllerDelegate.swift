@@ -66,6 +66,10 @@ extension RichPopupViewController: RichPopupDetailsViewControllerDelegate {
             // Pushes and shows the new view controller onto the navigation stack.
             show(richPopupViewController, sender: self)
         }
+        else {
+            
+            present(simpleAlertMessage: "Unable to show record.")
+        }
     }
     
     func detailsViewController(_ detailsViewController: RichPopupDetailsViewController, selectedAddNewOneToManyRelatedRecordForRelationship relationship: OneToManyRelationship) {

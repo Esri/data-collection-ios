@@ -18,7 +18,7 @@ extension RichPopupViewController: RichPopupSelectRelatedRecordViewControllerDel
     
     func richPopupSelectRelatedRecordViewController(_ richPopupSelectRelatedRecordViewController: RichPopupSelectRelatedRecordViewController, didSelectPopup popup: AGSPopup) {
         
-        navigationController?.popViewController(animated: true)
+        navigationController?.popToViewController(self, animated: true)
         
         // Stages the new relation. (Does not yet commit the staged record.)
         do {

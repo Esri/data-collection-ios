@@ -15,7 +15,7 @@
 import UIKit
 import ArcGIS
 
-protocol RichPopupAttachmentsViewControllerDelegate {
+protocol RichPopupAttachmentsViewControllerDelegate: AnyObject {
     func attachmentsViewControllerDidRequestAddAttachment(_ attachmentsViewController: RichPopupAttachmentsViewController)
     func attachmentsViewController(_ attachmentsViewController: RichPopupAttachmentsViewController, selectedEditStagedAttachment attachment: RichPopupStagedAttachment)
     func attachmentsViewController(_ attachmentsViewController: RichPopupAttachmentsViewController, selectedViewAttachmentAtIndex index: Int)
@@ -33,7 +33,7 @@ class RichPopupAttachmentsViewController: UITableViewController {
         return popupManager.richPopupAttachmentManager!
     }
     
-    var delegate: RichPopupAttachmentsViewControllerDelegate?
+    weak var delegate: RichPopupAttachmentsViewControllerDelegate?
     
     static let byteCountFormatter = ByteCountFormatter()
     

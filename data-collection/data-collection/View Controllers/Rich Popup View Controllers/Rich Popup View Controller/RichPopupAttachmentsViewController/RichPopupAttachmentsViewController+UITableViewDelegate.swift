@@ -15,7 +15,7 @@
 import ArcGIS
 import UIKit
 
-extension RichPopupAttachmentsViewController {
+extension RichPopupAttachmentsViewController /* UITableViewDelegate */ {
     
     override func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
         
@@ -28,6 +28,16 @@ extension RichPopupAttachmentsViewController {
         }
         else {
             return indexPath
+        }
+    }
+    
+    override func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
+        
+        if tableView.cellForRow(at: indexPath) is PopupAddAttachmentCell {
+            return .none
+        }
+        else {
+            return .delete
         }
     }
     
@@ -64,6 +74,11 @@ extension RichPopupAttachmentsViewController {
         else {
             delegate?.attachmentsViewController(self, selectedViewAttachmentAtIndex: indexPath.row)
         }
+    }
+    
+    override func tableView(_ tableView: UITableView, shouldIndentWhileEditingRowAt indexPath: IndexPath) -> Bool {
+        
+        return !(tableView.cellForRow(at: indexPath) is PopupAddAttachmentCell)
     }
 }
 

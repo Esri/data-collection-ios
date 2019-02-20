@@ -28,7 +28,7 @@ class PopupAttributeDateCell: UITableViewCell {
     
     private var value: AttributeValue = ("", nil)
     
-    var delegate: PopupAttributeCellDelegate?
+    weak var delegate: PopupAttributeCellDelegate?
     
     override func setEditing(_ editing: Bool, animated: Bool) {
         super.setEditing(editing, animated: animated)

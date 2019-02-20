@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import Foundation
+import UIKit
 
 extension RichPopupViewController: ImagePickerPermissionsDelegate {
     
@@ -24,7 +24,7 @@ extension RichPopupViewController: ImagePickerPermissionsDelegate {
         
         if let imagePicker = imagePicker {
             imagePicker.delegate = self
-            self.present(imagePicker, animated: true, completion: nil)
+            self.present(imagePicker, animated: true)
         }
         else {
             present(simpleAlertMessage: "Something went wrong adding the image attachment.")

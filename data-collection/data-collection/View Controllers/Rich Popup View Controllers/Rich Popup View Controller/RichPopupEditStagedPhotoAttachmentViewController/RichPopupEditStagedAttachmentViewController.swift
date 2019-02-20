@@ -18,9 +18,10 @@ import ArcGIS
 private extension Int {
     
     // Convenience static naming of table view sections.
-    static let NameSection = 0
-    static let PreferredSizeSection = 1
+    static let nameSection = 0
+    static let preferredSizeSection = 1
 }
+
 
 private extension AGSPopupAttachmentSize {
     
@@ -54,7 +55,7 @@ class RichPopupEditStagedAttachmentViewController: UITableViewController, UIText
     }
     
     override func viewWillDisappear(_ animated: Bool) {
-        super.viewDidDisappear(animated)
+        super.viewWillDisappear(animated)
         
         if attachmentNameTextField.isFirstResponder {
             attachmentNameTextField.resignFirstResponder()
@@ -119,7 +120,7 @@ class RichPopupEditStagedAttachmentViewController: UITableViewController, UIText
         })
         else { return nil }
         
-        let indexPath = IndexPath(row: currentIndex, section: .PreferredSizeSection)
+        let indexPath = IndexPath(row: currentIndex, section: .preferredSizeSection)
         
         return tableView.cellForRow(at: indexPath)
     }
@@ -130,7 +131,7 @@ class RichPopupEditStagedAttachmentViewController: UITableViewController, UIText
         
         tableView.deselectRow(at: indexPath, animated: true)
         
-        if indexPath.section == .PreferredSizeSection {
+        if indexPath.section == .preferredSizeSection {
             if let cell = tableView.cellForRow(at: indexPath) {
                 
                 // Set the selected value.
@@ -151,7 +152,7 @@ class RichPopupEditStagedAttachmentViewController: UITableViewController, UIText
     
     override func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
         
-        if indexPath.section == .PreferredSizeSection {
+        if indexPath.section == .preferredSizeSection {
             if let currentCell = cellForMappedAttachmentSize(stagedAttachment.preferredSize) {
                 
                 // Remove checkmark, preparing for new selection.

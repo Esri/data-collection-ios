@@ -15,7 +15,7 @@
 import ArcGIS
 import UIKit
 
-extension RichPopupDetailsViewController {
+extension RichPopupDetailsViewController /* UITableViewDataSource */ {
     
     override func numberOfSections(in tableView: UITableView) -> Int {
         
@@ -82,7 +82,7 @@ extension RichPopupDetailsViewController {
             
             if let domain = popupManager.domain(for: field) as? AGSCodedValueDomain {
                 
-                let domainCell = tableView.dequeueReusableCell(withIdentifier: "PopupAttributeDomainCell") as! PopupAttributeDomainCell
+                let domainCell = tableView.dequeueReusableCell(withIdentifier: "PopupAttributeDomainCell", for: indexPath) as! PopupAttributeDomainCell
                 domainCell.domain = domain
                 cell = domainCell
             }
@@ -90,27 +90,29 @@ extension RichPopupDetailsViewController {
                 switch (fieldType, field.stringFieldOption) {
                     
                 case (.int16, _), (.int32, _), (.float, _), (.double, _):
-                    let textFieldCell = tableView.dequeueReusableCell(withIdentifier: "PopupAttributeTextFieldCell") as! PopupAttributeTextFieldCell
+                    let textFieldCell = tableView.dequeueReusableCell(withIdentifier: "PopupAttributeTextFieldCell", for: indexPath) as! PopupAttributeTextFieldCell
                     textFieldCell.attributeValueTextField.keyboardType = .numberPad
                     cell = textFieldCell
                     
                 case (.text, .multiLine), (.text, .richText):
-                    let textViewCell = tableView.dequeueReusableCell(withIdentifier: "PopupAttributeTextViewCell") as! PopupAttributeTextViewCell
+                    let textViewCell = tableView.dequeueReusableCell(withIdentifier: "PopupAttributeTextViewCell", for: indexPath) as! PopupAttributeTextViewCell
                     textViewCell.attributeValueTextView.keyboardType = .default
                     cell = textViewCell
                     
                 case (.text, .singleLine), (.text, .unknown):
-                    let textFieldCell = tableView.dequeueReusableCell(withIdentifier: "PopupAttributeTextFieldCell") as! PopupAttributeTextFieldCell
+                    let textFieldCell = tableView.dequeueReusableCell(withIdentifier: "PopupAttributeTextFieldCell", for: indexPath) as! PopupAttributeTextFieldCell
                     textFieldCell.attributeValueTextField.keyboardType = .default
                     cell = textFieldCell
                     
                 case (.date, _):
-                    cell = tableView.dequeueReusableCell(withIdentifier: "PopupAttributeDateCell") as! PopupAttributeDateCell
+                    cell = tableView.dequeueReusableCell(withIdentifier: "PopupAttributeDateCell", for: indexPath) as! PopupAttributeDateCell
                     
                 case (.GUID, _), (.OID, _), (.globalID, _), (.unknown, _):
-                    cell = tableView.dequeueReusableCell(withIdentifier: "PopupAttributeReadonlyCell") as! PopupAttributeReadonlyCell
+                    cell = tableView.dequeueReusableCell(withIdentifier: "PopupAttributeReadonlyCell", for: indexPath) as! PopupAttributeReadonlyCell
                     
                 default:
+                    
+                    // Data Collection currently does not support field types: `.geometry`, `.raster`, and `.xml`.
                     assertionFailure("Data Collection doesn't currently support the \(String(describing: fieldType)) field type.")
                     return UITableViewCell()
                 }
@@ -146,7 +148,7 @@ extension RichPopupDetailsViewController {
                 
                 if let relatedPopup = relationship.relatedPopup {
                     attributes = AGSPopupManager.generateDisplayAttributes(forPopup: relatedPopup, max: 2)
-                    manyToOneCell.set(attributes: attributes)
+                    manyToOneCell.setAttributes(attributes)
                 }
                 else {
                     manyToOneCell.setMissingValueFor(tableName: relationship.name)
@@ -159,7 +161,7 @@ extension RichPopupDetailsViewController {
                 let addOneToManyCell = tableView.dequeueReusableCell(withIdentifier: "PopupNewOneToManyRecordCell", for: indexPath) as! PopupNewRelatedRecordCell
                 
                 if let relationship = popupManager.relationship(forIndexPath: indexPath) as? OneToManyRelationship {
-                    addOneToManyCell.set(tableName: relationship.name)
+                    addOneToManyCell.setTableName(relationship.name)
                 }
                 
                 return addOneToManyCell
@@ -174,7 +176,7 @@ extension RichPopupDetailsViewController {
                     attributes = AGSPopupManager.generateDisplayAttributes(forPopup: relatedPopup, max: 3)
                 }
                 
-                oneToManyCell.set(attributes: attributes)
+                oneToManyCell.setAttributes(attributes)
                 return oneToManyCell
             }
             else {

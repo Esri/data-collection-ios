@@ -18,17 +18,8 @@ class PopupNewRelatedRecordCell: UITableViewCell {
     
     @IBOutlet weak var newRelatedRecordTitleLabel: UILabel!
     
-    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
-        initialize()
-    }
-    
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        initialize()
-    }
-    
-    private func initialize() {
         
         let add = UIButton(type: .contactAdd)
         add.isUserInteractionEnabled = false
@@ -36,7 +27,7 @@ class PopupNewRelatedRecordCell: UITableViewCell {
         editingAccessoryView = add
     }
 
-    func set(tableName: String?) {
+    func setTableName(_ tableName: String?) {
         
         if let name = tableName {
             newRelatedRecordTitleLabel.text = String(format: "Add %@", name)

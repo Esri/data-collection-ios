@@ -15,7 +15,7 @@
 import ArcGIS
 import UIKit
 
-protocol RichPopupSelectRelatedRecordViewControllerDelegate {
+protocol RichPopupSelectRelatedRecordViewControllerDelegate: AnyObject {
     func richPopupSelectRelatedRecordViewController(_ richPopupSelectRelatedRecordViewController: RichPopupSelectRelatedRecordViewController, didSelectPopup popup: AGSPopup)
 }
 
@@ -25,12 +25,12 @@ class RichPopupSelectRelatedRecordViewController: UITableViewController {
     
     var currentRelatedPopup: AGSPopup?
     
-    var delegate: RichPopupSelectRelatedRecordViewControllerDelegate?
+    weak var delegate: RichPopupSelectRelatedRecordViewControllerDelegate?
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        if let current = currentRelatedPopup, let index = popups.firstIndex(where: { (popup) -> Bool in return popup == current }) {
+        if let current = currentRelatedPopup, let index = popups.firstIndex(where: { $0 == current }) {
             let indexPath = IndexPath(row: index, section: 0)
             tableView.selectRow(at: indexPath, animated: false, scrollPosition: .middle)
         }

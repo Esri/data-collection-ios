@@ -73,7 +73,7 @@ class PopupRelatedRecordCell: UITableViewCell {
         stackView.addArrangedSubview(tableNameLabel!)
     }
     
-    func set(attributes: [RelatedRecordAttribute]) {
+    func setAttributes(_ attributes: [RelatedRecordAttribute]) {
         
         // Adjust for correct (n) attributes.
         adjustForAttribute(count: attributes.count)

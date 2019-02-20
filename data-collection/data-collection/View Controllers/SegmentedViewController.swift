@@ -27,25 +27,27 @@ class SegmentedViewController: UIViewController {
         visualEffectView.translatesAutoresizingMaskIntoConstraints = false
         
         // Build 1pt spacer view.
-        let spacer = UIView(frame: .zero)
+        let spacer = UIView()
         spacer.backgroundColor = UIColor(white: 0.75, alpha: 1.0)
         spacer.translatesAutoresizingMaskIntoConstraints = false
         
         // Add and constrain spacer.
         visualEffectView.contentView.addSubview(spacer)
         
-        var constraints = [NSLayoutConstraint]()
-        constraints.append( spacer.leadingAnchor.constraint(equalTo: visualEffectView.contentView.leadingAnchor) )
-        constraints.append( spacer.trailingAnchor.constraint(equalTo: visualEffectView.contentView.trailingAnchor) )
-        constraints.append( spacer.bottomAnchor.constraint(equalTo: visualEffectView.contentView.bottomAnchor) )
-        constraints.append( spacer.heightAnchor.constraint(equalToConstant: (1.0/UIScreen.main.scale)) )
+        let constraints = [
+            spacer.leadingAnchor.constraint(equalTo: visualEffectView.contentView.leadingAnchor),
+            spacer.trailingAnchor.constraint(equalTo: visualEffectView.contentView.trailingAnchor),
+            spacer.bottomAnchor.constraint(equalTo: visualEffectView.contentView.bottomAnchor),
+            spacer.heightAnchor.constraint(equalToConstant: 1 / UIScreen.main.scale)
+        ]
+
         NSLayoutConstraint.activate(constraints)
         
         return visualEffectView
     }()
     
     let segmentedControl: UISegmentedControl = {
-        let segmentedControl = UISegmentedControl(frame: .zero)
+        let segmentedControl = UISegmentedControl()
         segmentedControl.translatesAutoresizingMaskIntoConstraints = false
         segmentedControl.addTarget(self, action: #selector(segmentedControlValueDidChange(_:)), for: .valueChanged)
         return segmentedControl
@@ -64,7 +66,7 @@ class SegmentedViewController: UIViewController {
     /// Should override and provide array of segue identifiers.
     public func segmentedViewControllerChildIdentifiers() -> [String] { return [] }
     
-    private var childrenIdentifiers: [String]!
+    private var childrenIdentifiers = [String]()
     
     // MARK: Segmented View Controllers
     
@@ -164,7 +166,6 @@ class SegmentedViewController: UIViewController {
         
         func addAndConstrainViewControllerView(_ to: UIViewController) {
             
-            to.loadViewIfNeeded()
             to.view.translatesAutoresizingMaskIntoConstraints = false
             self.view.addSubview(to.view)
             self.view.sendSubviewToBack(to.view)

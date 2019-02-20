@@ -67,7 +67,7 @@ class RichPopupViewController: SegmentedViewController {
     
     // MARK: Quick Look
     
-    private(set) lazy var previewController: QLPreviewController = {
+    private(set) lazy var previewController: QLPreviewController = { [unowned self] in
         let previewController = QLPreviewController()
         previewController.dataSource = self
         return previewController
@@ -204,7 +204,7 @@ class RichPopupViewController: SegmentedViewController {
     // Adding the persist flag introduces the ability to 'cancel' an edit session, as is supported by the pop-up manager.
     private func setEditing(_ editing: Bool, animated: Bool, persist: Bool) {
         
-        self.detailsViewController?.resignFirstResponder()
+        self.detailsViewController?.resignCurrentFirstResponder()
         
         if editing {
             
@@ -416,7 +416,7 @@ class RichPopupViewController: SegmentedViewController {
         if isRootViewController {
             
             // Build dismiss button
-            dismissButton = UIBarButtonItem.init(barButtonSystemItem: .done, target: self, action: #selector(userRequestsDismissViewController(_:)))
+            dismissButton = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(userRequestsDismissViewController(_:)))
             
             if !isEditing {
                 // Assign left bar button
@@ -432,7 +432,7 @@ class RichPopupViewController: SegmentedViewController {
     
     // MARK: Image Picker Permissions
     
-    private(set) lazy var imagePickerPermissions: ImagePickerPermissions = {
+    private(set) lazy var imagePickerPermissions: ImagePickerPermissions = { [unowned self] in
         var imagePickerPermissions = ImagePickerPermissions()
         imagePickerPermissions.delegate = self
         return imagePickerPermissions

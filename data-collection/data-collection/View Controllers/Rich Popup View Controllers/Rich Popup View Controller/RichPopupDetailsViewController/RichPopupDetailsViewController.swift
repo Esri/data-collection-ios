@@ -15,7 +15,7 @@
 import UIKit
 import ArcGIS
 
-protocol RichPopupDetailsViewControllerDelegate {
+protocol RichPopupDetailsViewControllerDelegate: AnyObject {
     func detailsViewController(_ detailsViewController: RichPopupDetailsViewController, selectedEditManyToOneRelationship relationship: ManyToOneRelationship)
     func detailsViewController(_ detailsViewController: RichPopupDetailsViewController, selectedViewRelatedPopup manager: RichPopupManager)
     func detailsViewController(_ detailsViewController: RichPopupDetailsViewController, selectedAddNewOneToManyRelatedRecordForRelationship relationship: OneToManyRelationship)
@@ -48,29 +48,24 @@ class RichPopupDetailsViewController: UITableViewController {
             
             // Load relationships before reloading table view.
             if let relationships = popupManager.richPopup.relationships {
+                
                 relationships.load { [weak self] (error) in
                     guard let self = self else { return }
                     self.tableView.reloadData()
                 }
-            }
-            else {
-                tableView.reloadData()
             }
         }
     }
     
     weak var currentFirstResponder: UIResponder?
     
-    @discardableResult
-    override func resignFirstResponder() -> Bool {
+    func resignCurrentFirstResponder() {
         
-        if let responder = currentFirstResponder {
+        if let responder = currentFirstResponder, responder.isFirstResponder {
             responder.resignFirstResponder()
         }
         
         currentFirstResponder = nil
-        
-        return super.resignFirstResponder()
     }
     
     override func setEditing(_ editing: Bool, animated: Bool) {

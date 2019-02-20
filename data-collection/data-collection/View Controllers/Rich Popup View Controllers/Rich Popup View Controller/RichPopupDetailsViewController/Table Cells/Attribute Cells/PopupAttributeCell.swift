@@ -14,7 +14,7 @@
 
 import Foundation
 
-protocol PopupAttributeCell: class {
+protocol PopupAttributeCell: AnyObject {
     
     typealias AttributeValue = (formatted: String, raw: Any?)
     
@@ -26,7 +26,7 @@ protocol PopupAttributeCell: class {
     var delegate: PopupAttributeCellDelegate? { get set }
 }
 
-protocol PopupAttributeCellDelegate {
+protocol PopupAttributeCellDelegate: AnyObject {
     @discardableResult func popupAttributeCell(_ cell: PopupAttributeCell, valueDidChange value: Any?) -> String
     func popupAttributeCell(_ cell: PopupAttributeCell, didBecomeFirstResponder firstResponder: UIResponder)
 }

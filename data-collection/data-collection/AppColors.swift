@@ -59,6 +59,8 @@ extension AppDelegate {
         UIProgressView.appearance().progressTintColor = .primary
         UIProgressView.appearance().trackTintColor = .tint
         
+        UIImageView.appearance().tintColor = .primary
+        
         UIActivityIndicatorView.appearance().color = .primary
         
         UISegmentedControl.appearance().tintColor = .primary

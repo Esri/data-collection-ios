@@ -30,6 +30,6 @@ extension RichPopupViewController: UIImagePickerControllerDelegate {
             present(simpleAlertMessage: "Something went wrong adding the image attachment.")
         }
         
-        picker.dismiss(animated: true, completion: nil)
+        picker.dismiss(animated: true)
     }
 }
