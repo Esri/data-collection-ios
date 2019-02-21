@@ -84,14 +84,9 @@ class RichPopupEditStagedAttachmentViewController: UITableViewController, UIText
         if let textField = sender as? UITextField, textField == attachmentNameTextField {
             
             // Limit input to 40 characters.
-            // The SDK truncates attachment names to 40 characters.
+            // A known issue requires attachment names to be no longer than 40 characters.
             if let text = textField.text, text.count > 40 {
-                
-                let offset = String.Index(encodedOffset: 40)
-                
-                let truncated = String(text[..<offset])
-                
-                attachmentNameTextField.text = truncated
+                attachmentNameTextField.text = String(text.prefix(40))
             }
             
             stagedAttachment.name = attachmentNameTextField.text
