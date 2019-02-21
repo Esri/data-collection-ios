@@ -62,7 +62,12 @@ class RichPopupViewController: SegmentedViewController {
     
     private func adjustViewControllerForWorkMode() {
         // Match the segmented control's tint color with that of the navigation bar's.
-        segmentedControl.tintColor = appContext.workMode == .online ? .primary : .offline
+        switch appContext.workMode {
+        case .online:
+            segmentedControl.tintColor = .primary
+        case .offline:
+            segmentedControl.tintColor = .offline
+        }
     }
     
     // MARK: Quick Look

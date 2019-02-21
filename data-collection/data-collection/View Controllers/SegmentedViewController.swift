@@ -202,7 +202,10 @@ class SegmentedViewController: UIViewController {
             // 7. Point to current view controller.
             currentViewController = to
             
-            // 8. Finish.
+            // 8. Specify editing state.
+            currentViewController?.setEditing(isEditing, animated: false)
+            
+            // 9. Finish.
             view.layoutIfNeeded()
         }
             // This is the first time a child view controller is embed.
@@ -244,9 +247,7 @@ class SegmentedViewController: UIViewController {
     override func setEditing(_ editing: Bool, animated: Bool) {
         super.setEditing(editing, animated: animated)
         
-        childrenViewControllers.forEach { (child) in
-            child.setEditing(editing, animated: animated)
-        }
+        currentViewController?.setEditing(isEditing, animated: false)
     }
 }
 

@@ -225,9 +225,7 @@ extension RichPopupAttachmentsManager {
     }
     
     func attachment(at index: Int) -> RichPopupPreviewableAttachment? {
-    
-        assert(index < attachmentsCount, "Index \(index) out of range 0..<\(attachmentsCount).")
-        
+            
         guard index < attachmentsCount else { return nil }
         
         if index < fetchedAttachments.endIndex {
