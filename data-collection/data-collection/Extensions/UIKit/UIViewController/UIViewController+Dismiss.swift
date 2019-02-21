@@ -37,7 +37,7 @@ extension UIViewController {
                 dismiss(animated: animated, completion: completion)
             }
             else {
-                navigationController.popViewController(animated: true)
+                navigationController.popViewController(animated: animated)
             }
         }
         else {
