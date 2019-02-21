@@ -59,7 +59,7 @@ extension AppDelegate {
         UIProgressView.appearance().progressTintColor = .primary
         UIProgressView.appearance().trackTintColor = .tint
         
-        UIImageView.appearance().tintColor = .primary
+        UIImageView.appearance(whenContainedInInstancesOf: [UITableViewCell.self]).tintColor = .primary
         
         UIActivityIndicatorView.appearance().color = .primary
         
