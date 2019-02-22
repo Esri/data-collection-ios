@@ -217,6 +217,24 @@ extension RichPopupDetailsViewController /* UITableViewDataSource */ {
         return container
     }
     
+    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        
+        if isEditing {
+            return nil
+        }
+        else {
+            guard section > 0 else { return nil }
+            
+            let offset = section - 1
+            
+            guard let relationships = popupManager.richPopup.relationships, relationships.oneToMany.endIndex > offset else {
+                return nil
+            }
+            
+            return relationships.oneToMany[offset].name
+        }
+    }
+    
     override func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
         return .none
     }
