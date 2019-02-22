@@ -25,7 +25,7 @@ class PopupAttributeTextViewCell: UITableViewCell {
     @IBOutlet weak var attributeValueTextView: StyledTextView! {
         didSet {
             attributeValueTextView.delegate = self
-            attributeValueTextView.setEditing(isEditing)
+            attributeValueTextView.isUserInteractionEnabled = isEditing
         }
     }
     
@@ -33,12 +33,7 @@ class PopupAttributeTextViewCell: UITableViewCell {
     
     override func setEditing(_ editing: Bool, animated: Bool) {
         super.setEditing(editing, animated: animated)
-        
-        attributeValueTextView.isSelectable = editing
-        attributeValueTextView.isEditable = editing
-        attributeValueTextView.isScrollEnabled = editing
-        
-        attributeValueTextView.setEditing(editing)
+        attributeValueTextView.isUserInteractionEnabled = editing
     }
 }
 

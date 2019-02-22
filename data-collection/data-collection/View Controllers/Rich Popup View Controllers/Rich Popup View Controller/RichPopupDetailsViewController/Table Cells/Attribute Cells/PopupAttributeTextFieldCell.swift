@@ -35,8 +35,6 @@ class PopupAttributeTextFieldCell: UITableViewCell {
         super.setEditing(editing, animated: animated)
         
         attributeValueTextField.isUserInteractionEnabled = editing
-    
-        attributeValueTextField.setEditing(editing)
     }
     
     @objc func textFieldDidChange(_ textField: UITextField) {

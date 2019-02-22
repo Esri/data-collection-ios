@@ -16,7 +16,20 @@ import UIKit
 
 class StyledTextField: UITextField {
     
-    func setEditing(_ editing: Bool) {
-        borderStyle = editing ? .roundedRect : .none
+    override var isUserInteractionEnabled: Bool {
+        didSet {
+            guard isUserInteractionEnabled != oldValue else { return }
+            stylize()
+        }
+    }
+    
+    private func stylize() {
+        
+        if isUserInteractionEnabled {
+            borderStyle = .roundedRect
+        }
+        else {
+            borderStyle = .none
+        }
     }
 }

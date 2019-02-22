@@ -16,9 +16,16 @@ import UIKit
 
 class StyledTextView: UITextView {
     
-    func setEditing(_ editing: Bool) {
+    override var isUserInteractionEnabled: Bool {
+        didSet {
+            guard isUserInteractionEnabled != oldValue else { return }
+            stylize()
+        }
+    }
+    
+    private func stylize() {
         
-        if editing {
+        if isUserInteractionEnabled {
             
             // Text container text inset and padding
             textContainerInset = UIEdgeInsets(top: 8, left: 0, bottom: 8, right: 0)
