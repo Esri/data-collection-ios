@@ -185,6 +185,9 @@ class RichPopupViewController: SegmentedViewController {
             // Removes Cancel button, if there is one. Will replace back bar button with dismiss bar button, if there is one.
             self.navigationItem.leftBarButtonItem = self.dismissButton
         }
+        
+        // If this is a newly added record, we will need to add a delete button.
+        conditionallyAddDeleteButton()
     }
     
     // MARK: Edit Pop-up
@@ -288,7 +291,7 @@ class RichPopupViewController: SegmentedViewController {
     
     private func conditionallyAddDeleteButton() {
         
-        if popupManager.shouldAllowDelete {
+        if popupManager.shouldAllowDelete, deleteButton == nil {
             
             // Reveal toolbar
             navigationController?.isToolbarHidden = false
