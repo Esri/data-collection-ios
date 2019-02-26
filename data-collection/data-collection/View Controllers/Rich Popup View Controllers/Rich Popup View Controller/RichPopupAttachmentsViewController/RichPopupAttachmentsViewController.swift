@@ -66,5 +66,38 @@ class RichPopupAttachmentsViewController: UITableViewController {
         
         tableView.reloadData()
     }
+    
+    // MARK: configured section adjustment
+    
+    enum AttachmentsTableSection {
+        case addAttachment, attachmentsList
+    }
+    
+    func activeAttachmentsTableSections() -> [AttachmentsTableSection] {
+        
+        var sections = [AttachmentsTableSection]()
+        
+        if popupManager.shouldAllowEditAttachments {
+            sections.append(.addAttachment)
+        }
+        
+        if popupManager.shouldShowAttachments {
+            sections.append(.attachmentsList)
+        }
+        
+        return sections
+    }
+    
+    func adjustedAttachmentsTableSection(for section: Int) -> AttachmentsTableSection? {
+        
+        let sections = activeAttachmentsTableSections()
+        
+        guard section < sections.count else {
+            assertionFailure("Section \(section) outside the active attachments table sections range 0..<\(sections.count)")
+            return nil
+        }
+        
+        return sections[section]
+    }
 }
 
