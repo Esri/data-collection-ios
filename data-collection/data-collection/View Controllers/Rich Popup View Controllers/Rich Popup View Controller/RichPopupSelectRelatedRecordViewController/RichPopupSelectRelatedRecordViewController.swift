@@ -21,7 +21,7 @@ protocol RichPopupSelectRelatedRecordViewControllerDelegate: AnyObject {
 
 class RichPopupSelectRelatedRecordViewController: UITableViewController {
     
-    var popups: [AGSPopup]!
+    var popups = [AGSPopup]()
     
     var currentRelatedPopup: AGSPopup?
     
