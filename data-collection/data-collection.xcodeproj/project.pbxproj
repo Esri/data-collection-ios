@@ -162,6 +162,7 @@
 		94C550F22212129D00DD7E40 /* StyledTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94C550F12212129D00DD7E40 /* StyledTextView.swift */; };
 		94C550F42212138D00DD7E40 /* StyledTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94C550F32212138D00DD7E40 /* StyledTextField.swift */; };
 		94C550F622123C2E00DD7E40 /* PopupSelectRelatedRecordCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94C550F522123C2E00DD7E40 /* PopupSelectRelatedRecordCell.swift */; };
+		94C5511F2224BD4E00DD7E40 /* UINavigationController+PopCompletion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94C5511E2224BD4E00DD7E40 /* UINavigationController+PopCompletion.swift */; };
 		94D2713E20D030D900304E27 /* CustomBehavior_ReverseGeocode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94D2713D20D030D900304E27 /* CustomBehavior_ReverseGeocode.swift */; };
 		94D2714020D0315900304E27 /* CustomBehavior_Map.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94D2713F20D0315900304E27 /* CustomBehavior_Map.swift */; };
 		94D2714320D0578000304E27 /* OneToManyRelationship.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94D2714220D0578000304E27 /* OneToManyRelationship.swift */; };
@@ -371,6 +372,7 @@
 		94C550F12212129D00DD7E40 /* StyledTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StyledTextView.swift; sourceTree = "<group>"; };
 		94C550F32212138D00DD7E40 /* StyledTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StyledTextField.swift; sourceTree = "<group>"; };
 		94C550F522123C2E00DD7E40 /* PopupSelectRelatedRecordCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupSelectRelatedRecordCell.swift; sourceTree = "<group>"; };
+		94C5511E2224BD4E00DD7E40 /* UINavigationController+PopCompletion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UINavigationController+PopCompletion.swift"; sourceTree = "<group>"; };
 		94D2713D20D030D900304E27 /* CustomBehavior_ReverseGeocode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomBehavior_ReverseGeocode.swift; sourceTree = "<group>"; };
 		94D2713F20D0315900304E27 /* CustomBehavior_Map.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomBehavior_Map.swift; sourceTree = "<group>"; };
 		94D2714220D0578000304E27 /* OneToManyRelationship.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OneToManyRelationship.swift; sourceTree = "<group>"; };
@@ -953,6 +955,7 @@
 		94B375E3207E8E4800691F2A /* UIKit */ = {
 			isa = PBXGroup;
 			children = (
+				94C5511D2224BD2A00DD7E40 /* UINavigationController */,
 				94C550EE22120A1A00DD7E40 /* UITextField */,
 				94C550EB221209EF00DD7E40 /* UITextView */,
 				94C550E8221207A800DD7E40 /* UIResponder */,
@@ -1012,6 +1015,14 @@
 				94C550EF22120A3500DD7E40 /* UITextField+InputAccessoryView.swift */,
 			);
 			path = UITextField;
+			sourceTree = "<group>";
+		};
+		94C5511D2224BD2A00DD7E40 /* UINavigationController */ = {
+			isa = PBXGroup;
+			children = (
+				94C5511E2224BD4E00DD7E40 /* UINavigationController+PopCompletion.swift */,
+			);
+			path = UINavigationController;
 			sourceTree = "<group>";
 		};
 		94D2713C20D02C0800304E27 /* Custom Behavior */ = {
@@ -1495,6 +1506,7 @@
 				945CEE7720DDC2AC00CD3E0D /* SVProgressHUD.m in Sources */,
 				945F455D21EFA90C00F2DCBC /* AGSPopupAttachmentSize+UserDefaults.swift in Sources */,
 				9487944022022724007BC15E /* RichPopupDetailsViewController+PopupAttributeCellDelegate.swift in Sources */,
+				94C5511F2224BD4E00DD7E40 /* UINavigationController+PopCompletion.swift in Sources */,
 				948794362200CEB4007BC15E /* RichPopupViewController+ImagePickerPermissionsDelegate.swift in Sources */,
 				9487943C2200CF52007BC15E /* RichPopupViewController+QLPreviewControllerDataSource.swift in Sources */,
 				945F454121E7D11D00F2DCBC /* PopupAttributeDateCell.swift in Sources */,
