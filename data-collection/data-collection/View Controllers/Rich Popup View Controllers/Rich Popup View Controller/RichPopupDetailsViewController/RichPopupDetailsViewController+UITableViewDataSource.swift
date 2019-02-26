@@ -109,10 +109,12 @@ extension RichPopupDetailsViewController /* UITableViewDataSource */ {
                     
                 case (.GUID, _), (.OID, _), (.globalID, _), (.unknown, _):
                     cell = tableView.dequeueReusableCell(withIdentifier: "PopupAttributeReadonlyCell", for: indexPath) as! PopupAttributeReadonlyCell
+                
+                // Data Collection currently does not support field types: `.geometry`, `.raster`, `.XML` and `.blob`.
+                case (.geometry, _), (.raster, _), (.XML, _), (.blob, _):
+                    fallthrough
                     
                 default:
-                    
-                    // Data Collection currently does not support field types: `.geometry`, `.raster`, and `.xml`.
                     assertionFailure("Data Collection doesn't currently support the \(String(describing: fieldType)) field type.")
                     return UITableViewCell()
                 }
