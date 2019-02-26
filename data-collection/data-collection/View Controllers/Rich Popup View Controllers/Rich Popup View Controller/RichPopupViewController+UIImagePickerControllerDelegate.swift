@@ -18,6 +18,10 @@ extension RichPopupViewController: UIImagePickerControllerDelegate {
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         
+        guard !isProcessingNewAttachmentImage else { return }
+        
+        isProcessingNewAttachmentImage = true
+        
         if let newAttachment = RichPopupStagedPhotoAttachment(imagePickerMediaInfo: info) {
             
             // After selecting a size, that size is stored in `UserDefaults`. Default the new attachment with the last selected size.
@@ -30,6 +34,11 @@ extension RichPopupViewController: UIImagePickerControllerDelegate {
             present(simpleAlertMessage: "Something went wrong adding the image attachment.")
         }
         
-        picker.dismiss(animated: true)
+        picker.dismiss(animated: true) { [weak self] in
+
+            guard let self = self else { return }
+            
+            self.isProcessingNewAttachmentImage = false
+        }
     }
 }

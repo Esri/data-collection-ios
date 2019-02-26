@@ -445,4 +445,6 @@ class RichPopupViewController: SegmentedViewController {
         imagePickerPermissions.delegate = self
         return imagePickerPermissions
     }()
+    
+    var isProcessingNewAttachmentImage: Bool = false
 }

@@ -64,7 +64,9 @@ class RichPopupAttachmentsViewController: UITableViewController {
         
         popupAttachmentsManager.add(stagedAttachment: attachment)
         
-        tableView.reloadData()
+        if let indexPath = popupAttachmentsManager.indexPathFor(attachment: attachment) {
+            tableView.insertRows(at: [indexPath], with: .automatic)
+        }
     }
     
     // MARK: configured section adjustment
