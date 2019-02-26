@@ -27,7 +27,7 @@ extension UIColor {
     static let offline = UIColor(named: "offline")!
     
     // Contrasting both primary and offline, bar button items (text and image).
-    static let tint = UIColor(named: "tint")!
+    static let contrasting = UIColor(named: "contrasting")!
     
     // Contrasting both primary and offline, used in the drawer.
     static let accent = UIColor(named: "accent")!
@@ -46,8 +46,8 @@ extension AppDelegate {
         
         // App specific navigation controllers.
         // This includes any navigation controller found in app project storyboards.
-        UINavigationBar.appearance(whenContainedInInstancesOf: [AppContextAwareNavigationController.self]).titleTextAttributes = [.foregroundColor : UIColor.tint]
-        UIBarButtonItem.appearance(whenContainedInInstancesOf: [UINavigationBar.self, AppContextAwareNavigationController.self]).tintColor = .tint
+        UINavigationBar.appearance(whenContainedInInstancesOf: [AppContextAwareNavigationController.self]).titleTextAttributes = [.foregroundColor : UIColor.contrasting]
+        UIBarButtonItem.appearance(whenContainedInInstancesOf: [UINavigationBar.self, AppContextAwareNavigationController.self]).tintColor = .contrasting
         
         UIBarButtonItem.appearance(whenContainedInInstancesOf: [UIToolbar.self]).tintColor = .primary
         
@@ -57,7 +57,7 @@ extension AppDelegate {
         
         UIProgressView.appearance().tintColor = .primary
         UIProgressView.appearance().progressTintColor = .primary
-        UIProgressView.appearance().trackTintColor = .tint
+        UIProgressView.appearance().trackTintColor = .contrasting
         
         UIImageView.appearance(whenContainedInInstancesOf: [UITableViewCell.self]).tintColor = .primary
         

@@ -260,7 +260,7 @@ class MapViewController: UIViewController {
             
             self.activityBarView.colors = (color.lighter, color.darker)
             self.slideNotificationView.messageBackgroundColor = (workMode == .online) ? UIColor.primary.lighter : UIColor.offline.darker
-            self.slideNotificationView.messageTextColor = .tint
+            self.slideNotificationView.messageTextColor = .contrasting
         }
         
         let reachabilityChange: AppContextChange = .reachability { [weak self] reachable in
