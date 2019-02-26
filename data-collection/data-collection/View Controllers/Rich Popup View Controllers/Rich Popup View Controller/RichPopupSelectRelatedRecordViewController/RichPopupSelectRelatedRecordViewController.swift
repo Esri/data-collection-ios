@@ -30,7 +30,7 @@ class RichPopupSelectRelatedRecordViewController: UITableViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        if let current = currentRelatedPopup, let index = popups.firstIndex(where: { $0 == current }) {
+        if let current = currentRelatedPopup, let index = popups.firstIndex(of: current) {
             let indexPath = IndexPath(row: index, section: 0)
             tableView.selectRow(at: indexPath, animated: false, scrollPosition: .middle)
         }
