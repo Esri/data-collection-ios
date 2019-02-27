@@ -15,4 +15,4 @@
 import UIKit
 
 // Automatic conformance
-extension UITextView: UIResponderInputAccessoryViewSetEnabled { }
+extension UITextView: UIResponderInputAccessoryViewProtocol { }

@@ -66,11 +66,16 @@ extension RichPopupAttachmentsViewController /* UITableViewDataSource */ {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        if indexPath.section == 0, popupManager.shouldAllowEditAttachments {
+        guard let section = adjustedAttachmentsTableSection(for: indexPath.section) else {
+            assertionFailure("Data source discrepancy.")
+            return UITableViewCell()
+        }
+
+        if section == .addAttachment {
             return tableView.dequeueReusableCell(withIdentifier: "PopupAddAttachmentCell", for: indexPath)
         }
         else {
-            
+
             let cell = tableView.dequeueReusableCell(withIdentifier: "PopupAttachmentCell", for: indexPath) as! PopupAttachmentCell
             
             if let attachment = popupAttachmentsManager.attachment(at: indexPath.row) {

@@ -14,6 +14,6 @@
 
 import UIKit
 
-protocol UIResponderInputAccessoryViewSetEnabled {
+protocol UIResponderInputAccessoryViewProtocol {
     var inputAccessoryView: UIView? { get set }
 }

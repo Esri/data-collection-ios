@@ -154,7 +154,7 @@ class StyledFirstResponderLabel: UILabel {
     private var _inputAccessoryView: UIView?
 }
 
-extension StyledFirstResponderLabel: UIResponderInputAccessoryViewSetEnabled {
+extension StyledFirstResponderLabel: UIResponderInputAccessoryViewProtocol {
     
     override var inputAccessoryView: UIView? {
         get {

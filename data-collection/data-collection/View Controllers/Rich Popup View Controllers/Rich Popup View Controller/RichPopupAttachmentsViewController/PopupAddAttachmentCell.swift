@@ -31,9 +31,4 @@ class PopupAddAttachmentCell: UITableViewCell {
         let imageView = UIImageView(image: image)
         accessoryView = imageView
     }
-    
-    // We want to override the default table view cell editing behavior, because the cell remains the same either in or out of editing mode.
-    override func setEditing(_ editing: Bool, animated: Bool) {
-        return
-    }
 }

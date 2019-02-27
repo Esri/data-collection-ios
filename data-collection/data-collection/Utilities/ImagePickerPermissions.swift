@@ -72,7 +72,7 @@ fileprivate extension ImagePickerPermission {
     }
 }
 
-public protocol ImagePickerPermissionsDelegate {
+public protocol ImagePickerPermissionsDelegate: AnyObject {
     
     func imagePickerPermissionsRequestsPresentingViewController() -> UIViewController
     func imagePickerPermissionsFinishedWith(imagePicker: UIImagePickerController?)
@@ -99,7 +99,7 @@ public struct ImagePickerPermissions {
         }
     }
     
-    public var delegate: ImagePickerPermissionsDelegate?
+    public weak var delegate: ImagePickerPermissionsDelegate?
     
     /// Begins the process of obtaining an image.
     ///

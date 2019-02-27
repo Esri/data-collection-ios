@@ -55,12 +55,12 @@ enum RichPopupManagerError: AppError {
             return [NSLocalizedDescriptionKey: String(format: "Missing value for many to one relationship %@", str)]
         case .invalidPopup(let errors):
             return [NSLocalizedDescriptionKey: String(format: "The record contains %d invalid field(s).", errors.count),
-                    NSUnderlyingErrorKey: errors]
+                    MultipleUnderlyingErrorsKey: errors]
         case .cannotRelateFeatures:
             return [NSLocalizedDescriptionKey: "Cannot relate features."]
         case .manyToOneRecordEditingErrors(let errors):
             return [NSLocalizedDescriptionKey: String(format: "Error editing %d many to one record(s).", errors.count),
-                    NSUnderlyingErrorKey: errors]
+                    MultipleUnderlyingErrorsKey: errors]
         case .editingNotPermitted:
             return [NSLocalizedDescriptionKey: "Editing isn't permitted for this popup."]
         case .newOneToManyRelatedRecordError:
@@ -69,7 +69,7 @@ enum RichPopupManagerError: AppError {
             return [NSLocalizedDescriptionKey: "Cannot view this related record while editing this record."]
         case .oneToManyRecordDeletionErrors(let errors):
             return [NSLocalizedDescriptionKey: String(format: "Error deleting %d one to many record(s).", errors.count),
-                    NSUnderlyingErrorKey: errors]
+                    MultipleUnderlyingErrorsKey: errors]
         }
     }
     

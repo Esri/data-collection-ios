@@ -27,7 +27,7 @@ class RichPopupDetailsViewController: UITableViewController {
     
     var shouldLoadRichPopupRelatedRecords: Bool = true
     
-    var delegate: RichPopupDetailsViewControllerDelegate?
+    weak var delegate: RichPopupDetailsViewControllerDelegate?
     
     // MARK: View Controller Lifecycle
     

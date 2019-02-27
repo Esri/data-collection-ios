@@ -15,4 +15,4 @@
 import Foundation
 
 // Automatic conformance
-extension UITextField: UIResponderInputAccessoryViewSetEnabled { }
+extension UITextField: UIResponderInputAccessoryViewProtocol { }

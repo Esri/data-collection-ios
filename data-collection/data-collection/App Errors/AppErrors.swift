@@ -49,4 +49,4 @@ extension AppErrorBaseCode {
     static let InvalidOperation = AppErrorBaseCode(9000)
 }
 
-
+let MultipleUnderlyingErrorsKey: String = "MultipleUnderlyingErrorsKey"

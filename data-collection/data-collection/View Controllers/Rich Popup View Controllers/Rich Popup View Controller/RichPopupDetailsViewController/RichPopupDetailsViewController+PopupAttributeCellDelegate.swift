@@ -20,7 +20,7 @@ extension RichPopupDetailsViewController: PopupAttributeCellDelegate {
     func popupAttributeCell(_ cell: PopupAttributeCell, didBecomeFirstResponder firstResponder: UIResponder) {
         
         // Add a hide keyboard for table cells that contain a first responder.
-        if var responder = firstResponder as? UIResponderInputAccessoryViewSetEnabled {
+        if var responder = firstResponder as? UIResponderInputAccessoryViewProtocol {
             
             let toolbar = UIToolbar(frame:CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 50))
             toolbar.barStyle = .default
