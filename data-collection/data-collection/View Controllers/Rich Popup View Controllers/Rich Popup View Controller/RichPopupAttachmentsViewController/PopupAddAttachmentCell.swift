@@ -30,5 +30,6 @@ class PopupAddAttachmentCell: UITableViewCell {
         let image = #imageLiteral(resourceName: "Camera")
         let imageView = UIImageView(image: image)
         accessoryView = imageView
+        editingAccessoryView = imageView
     }
 }
