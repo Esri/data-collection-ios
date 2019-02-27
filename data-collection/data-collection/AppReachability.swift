@@ -36,7 +36,7 @@ extension NetworkReachabilityManager {
             if firstReachabilityChangeStatusFlag {
                 NotificationCenter.default.post(name: .reachabilityDidChange, object: nil)
             } else {
-                firstReachabilityChangeStatusFlag = false
+                firstReachabilityChangeStatusFlag = true
             }
         }
         
