@@ -123,10 +123,8 @@ class MapViewController: UIViewController {
         
         assert(currentPopupManager != nil, "This function should not be reached if a popup is not currently selected.")
         
-        let manager = currentPopupManager!
-        
-        guard let relationships = manager.richPopup.relationships, let relationship = relationships.oneToMany.first else {
-            present(simpleAlertMessage: "You are unable to add a new related record.")
+        guard let manager = currentPopupManager, let relationships = manager.richPopup.relationships, let relationship = relationships.oneToMany.first else {
+            present(simpleAlertMessage: "Unable to add a new related record.")
             return
         }
 
@@ -137,12 +135,12 @@ class MapViewController: UIViewController {
                 relatedManager = newManager
             }
             else {
-                present(simpleAlertMessage: "You are unable to add a new related record.")
+                present(simpleAlertMessage: "Unable to add a new related record.")
                 return
             }
         }
         catch {
-            present(simpleAlertMessage: "You are unable to add a new related record. \(error.localizedDescription)")
+            present(simpleAlertMessage: "Unable to add a new related record. \(error.localizedDescription)")
             return
         }
 

@@ -31,15 +31,15 @@ class RichPopupStagedAttachment: NSObject, RichPopupPreviewableAttachment {
         super.init()
     }
     
-    /// Optionally, specify a previewItemURL is you would like this staged attachment available to QLPreviewController.
+    /// Optionally, specify a `previewItemURL` if you would like this staged attachment available to `QLPreviewController`.
     var previewItemURL: URL?
     
-    /// Complete with a UIImage if you would like an image displayed in the list of Attachments.
+    /// Complete with a `UIImage` if you would like an image displayed in the list of attachments.
     func generateThumbnail(withSize: Float, scaleMode: AGSImageScaleMode, completion: @escaping (UIImage?) -> Void) {
         completion(nil)
     }
     
-    /// This is only relevent if the attachmentType is `.image` type.
+    /// This is only relevant when `attachmentType` is `.image`.
     var preferredSize: AGSPopupAttachmentSize = .actual
     
     /// Specify which attachment type, this will drive which attachment cell fallback image is displayed.

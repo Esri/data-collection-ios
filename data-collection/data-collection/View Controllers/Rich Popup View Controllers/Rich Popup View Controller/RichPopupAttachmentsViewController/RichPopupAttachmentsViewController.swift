@@ -65,7 +65,9 @@ class RichPopupAttachmentsViewController: UITableViewController {
         popupAttachmentsManager.add(stagedAttachment: attachment)
         
         if let indexPath = popupAttachmentsManager.indexPathFor(attachment: attachment) {
-            tableView.insertRows(at: [indexPath], with: .automatic)
+            tableView.performBatchUpdates({
+                tableView.insertRows(at: [indexPath], with: .automatic)
+            }, completion: nil)
         }
     }
     

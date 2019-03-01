@@ -38,9 +38,16 @@ extension RichPopupDetailsViewController /* UITableViewDataSource */ {
         
         if section == 0 {
             
-            var nFields = popupManager.isEditing ? popupManager.editableDisplayFields.count : popupManager.displayFields.count
+            var nFields: Int
             
-            if let managers = popupManager.richPopup.relationships?.manyToOne, popupManager.richPopup.relationships?.loadStatus == .loaded {
+            if popupManager.isEditing {
+                nFields = popupManager.editableDisplayFields.count
+            }
+            else {
+                nFields = popupManager.displayFields.count
+            }
+            
+            if popupManager.richPopup.relationships?.loadStatus == .loaded, let managers = popupManager.richPopup.relationships?.manyToOne {
                 nFields += managers.count
             }
             
@@ -80,8 +87,9 @@ extension RichPopupDetailsViewController /* UITableViewDataSource */ {
             
             let cell: PopupAttributeCell!
             
+            // If the field is contextualized by a domain, we'll allow the domain to inform editing values of the field.
             if let domain = popupManager.domain(for: field) as? AGSCodedValueDomain {
-                
+                // Tapping the first responder of a domain cell triggers a picker view containing all coded value domain options.
                 let domainCell = tableView.dequeueReusableCell(withIdentifier: "PopupAttributeDomainCell", for: indexPath) as! PopupAttributeDomainCell
                 domainCell.domain = domain
                 cell = domainCell

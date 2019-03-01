@@ -91,7 +91,7 @@ extension MapViewController {
             let featureTable = featureLayer.featureTable as? AGSArcGISFeatureTable,
             let newPopup = featureTable.createPopup()
             else {
-                present(simpleAlertMessage: "You are unable to add a new feature.")
+                present(simpleAlertMessage: "Unable to add a new feature.")
                 mapViewMode = .defaultView
                 return
         }
@@ -129,7 +129,7 @@ extension MapViewController {
     private func prepareNewFeatureForEdit() {
         
         guard let newPopup = EphemeralCache.get(objectForKey: EphemeralCacheKeys.newNonSpatialFeature) as? RichPopup else {
-            present(simpleAlertMessage: "You are unable to add a new record.")
+            present(simpleAlertMessage: "Unable to add a new record.")
             return
         }
         

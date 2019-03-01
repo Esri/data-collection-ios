@@ -20,61 +20,30 @@ extension RichPopupAttachmentsViewController /* UITableViewDataSource */ {
     override func numberOfSections(in tableView: UITableView) -> Int {
         
         return activeAttachmentsTableSections().count
-//        if popupManager.attachmentsNoAccess {
-//            return 0
-//        }
-//        if popupManager.attachmentsShowOnly || popupManager.attachmentsEditOnly {
-//            return 1
-//        }
-//        else {
-//            return 2
-//        }
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-        if let adjustedSection = adjustedAttachmentsTableSection(for: section) {
-            
-            switch adjustedSection {
-                
-            case .addAttachment:
-                return 1
-            case .attachmentsList:
-                return popupAttachmentsManager.attachmentsCount
-            }
-        }
-        else {
+        guard let adjustedSection = adjustedAttachmentsTableSection(for: section) else {
             return 0
         }
-//        if tableView.numberOfSections == 1 {
-//            if popupManager.attachmentsEditOnly {
-//                return 1
-//            }
-//            else {
-//                return popupAttachmentsManager.attachmentsCount
-//            }
-//        }
-//        else {
-//            if section == 0 {
-//                return 1
-//            }
-//            else {
-//                return popupAttachmentsManager.attachmentsCount
-//            }
-//        }
+
+        switch adjustedSection {
+        case .addAttachment:
+            return 1
+        case .attachmentsList:
+            return popupAttachmentsManager.attachmentsCount
+        }
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        guard let section = adjustedAttachmentsTableSection(for: indexPath.section) else {
-            assertionFailure("Data source discrepancy.")
-            return UITableViewCell()
-        }
+        let section = adjustedAttachmentsTableSection(for: indexPath.section)
 
         if section == .addAttachment {
             return tableView.dequeueReusableCell(withIdentifier: "PopupAddAttachmentCell", for: indexPath)
         }
-        else {
+        else if section == .attachmentsList {
 
             let cell = tableView.dequeueReusableCell(withIdentifier: "PopupAttachmentCell", for: indexPath) as! PopupAttachmentCell
             
@@ -110,11 +79,15 @@ extension RichPopupAttachmentsViewController /* UITableViewDataSource */ {
             
             return cell
         }
+        else {
+            assertionFailure("Data source discrepancy.")
+            return UITableViewCell()
+        }
     }
     
     override func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
         
-        if let adjustedSection = adjustedAttachmentsTableSection(for: section), adjustedSection == .attachmentsList, popupAttachmentsManager.hasStagedAttachments {
+        if adjustedAttachmentsTableSection(for: section) == .attachmentsList, popupAttachmentsManager.hasStagedAttachments {
             return "Only new attachments can be edited."
         }
         else {

@@ -19,24 +19,23 @@ extension RichPopupAttachmentsViewController /* UITableViewDelegate */ {
     
     override func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
         
+        // If editing, only permit selection of add attachment cell as well as staged attachments.
+        // (This excludes existing `AGSPopupAttachment`s)
         if isEditing {
             
-            if let section = adjustedAttachmentsTableSection(for: indexPath.section) {
-                
-                if section == .addAttachment {
-                    return indexPath
-                }
-                else if section == .attachmentsList, popupAttachmentsManager.attachment(at: indexPath.row) is RichPopupStagedAttachment {
-                    return indexPath
-                }
-                else {
-                    return nil
-                }
+            let section = adjustedAttachmentsTableSection(for: indexPath.section)
+            
+            if section == .addAttachment {
+                return indexPath
+            }
+            else if section == .attachmentsList, popupAttachmentsManager.attachment(at: indexPath.row) is RichPopupStagedAttachment {
+                return indexPath
             }
             else {
                 return nil
             }
         }
+        // If not editing, permit selection of all cells.
         else {
             return indexPath
         }
@@ -44,7 +43,7 @@ extension RichPopupAttachmentsViewController /* UITableViewDelegate */ {
     
     override func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
         
-        if let section = adjustedAttachmentsTableSection(for: indexPath.section), section == .addAttachment {
+        if adjustedAttachmentsTableSection(for: indexPath.section) == .addAttachment {
             return .none
         }
         else {
@@ -54,15 +53,15 @@ extension RichPopupAttachmentsViewController /* UITableViewDelegate */ {
     
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         
-        if let section = adjustedAttachmentsTableSection(for: indexPath.section), section == .attachmentsList, editingStyle == .delete {
+        if adjustedAttachmentsTableSection(for: indexPath.section) == .attachmentsList, editingStyle == .delete {
             
             // Delete Attachment
             if popupAttachmentsManager.deleteAttachment(at: indexPath.row) {
                 
                 // Update Table
-                tableView.beginUpdates()
-                tableView.deleteRows(at: [indexPath], with: .bottom)
-                tableView.endUpdates()
+                tableView.performBatchUpdates({
+                    tableView.deleteRows(at: [indexPath], with: .bottom)
+                }, completion: nil)
             }
         }
     }
@@ -71,28 +70,20 @@ extension RichPopupAttachmentsViewController /* UITableViewDelegate */ {
         
         tableView.deselectRow(at: indexPath, animated: true)
         
-        guard let section = adjustedAttachmentsTableSection(for: indexPath.section) else {
-            return
-        }
-        
-        if section == .addAttachment {
+        if adjustedAttachmentsTableSection(for: indexPath.section) == .addAttachment {
             delegate?.attachmentsViewControllerDidRequestAddAttachment(self)
         }
         else if isEditing, let attachment = popupAttachmentsManager.attachment(at: indexPath.row) as? RichPopupStagedAttachment {
             delegate?.attachmentsViewController(self, selectedEditStagedAttachment: attachment)
         }
         else if !isEditing {
-             delegate?.attachmentsViewController(self, selectedViewAttachmentAtIndex: indexPath.row)
+            delegate?.attachmentsViewController(self, selectedViewAttachmentAtIndex: indexPath.row)
         }
     }
     
     override func tableView(_ tableView: UITableView, shouldIndentWhileEditingRowAt indexPath: IndexPath) -> Bool {
         
-        guard let section = adjustedAttachmentsTableSection(for: indexPath.section) else {
-            return false
-        }
-        
-        return section != .addAttachment
+        return adjustedAttachmentsTableSection(for: indexPath.section) != .addAttachment
     }
 }
 
