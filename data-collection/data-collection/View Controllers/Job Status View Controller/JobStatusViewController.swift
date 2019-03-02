@@ -66,22 +66,34 @@ class JobStatusViewController: UIViewController {
         // As the job progresses, the progress view will reflect accordingly.
         jobStatusProgressView.observedProgress = job.progress
         
-        // Start the job. We have no need for a status handler closure.
-        job.start(statusHandler: nil) { [weak self] (result, error) in
-
+        // Job message index, for printing.
+        var i = 0
+        
+        job.start(statusHandler: { (_) in
+            
+            // Print Job messages to console.
+            while i < job.messages.count {
+                let message = job.messages[i]
+                print("[Job: \(i)] \(message.message)")
+                i += 1
+            }
+            
+        }) { [weak self] (result, error) in
+            
+            guard let self = self else { return }
+            
             // If there is an error, the job was not successful.
-            guard error == nil else {
-                self?.handleJob(error: error!)
+            if let error = error {
+                self.handleJob(error: error)
                 return
             }
             
             // Handle the successful completion of the job.
             if let result = result {
-                self?.handleJob(result: result)
+                self.handleJob(result: result)
             }
             else {
-                print("[Job Status View Controller: Job Failure] something went very wrong.")
-                self?.handleJobFailure()
+                self.handleJobFailure()
             }
         }
     }

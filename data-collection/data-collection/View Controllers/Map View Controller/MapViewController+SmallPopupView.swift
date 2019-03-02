@@ -18,23 +18,26 @@ import ArcGIS
 extension MapViewController {
     
     @objc func didTapSmallPopupView(_ sender: Any) {
-        guard currentPopup != nil else { return }
+        guard currentPopupManager != nil else { return }
         performSegue(withIdentifier: "modallyPresentRelatedRecordsPopupViewController", sender: nil)
     }
     
     func refreshCurrentPopup() {
         
-        guard case MapViewMode.selectedFeature = mapViewMode, let popup = currentPopup else {
+        guard case MapViewMode.selectedFeature = mapViewMode, let popup = currentPopupManager?.richPopup else {
             return
         }
         
         guard popup.isFeatureAddedToTable else {
-            currentPopup = nil
+            clearCurrentPopup()
             mapViewMode = .defaultView
             return
         }
         
-        popup.select()
+        // Select the underlying feature
+        if let feature = popup.feature {
+            feature.featureTable?.featureLayer?.select(feature)
+        }
         
         if let popupRelationships = popup.relationships {
             
@@ -44,7 +47,9 @@ extension MapViewController {
                     print("[Error: RichPopup] relationships load error: \(error)")
                 }
                 
-                self?.populateContentIntoSmallPopupView(popup)
+                guard let self = self else { return }
+                
+                self.populateContentIntoSmallPopupView(popup)
             }
         }
         else {
@@ -55,36 +60,52 @@ extension MapViewController {
     
     private func populateContentIntoSmallPopupView(_ popup: RichPopup) {
         
-        var fallbackIndex = 0
+        // Build a backup list of attributes from the top display attributes from the identified pop-up.
+        var backupAttributes = AGSPopupManager.generateDisplayAttributes(forPopup: popup, max: 3)
         
-        let fallbackPopupManager = popup.asManager()
+        // MARK: Left side of the small pop-up view, concerns the first many-to-one relationship.
         
-        if let manyToOneManager = popup.relationships?.manyToOne.first?.relatedPopup?.asManager() {
-            var destinationIndex = 0
-            self.relatedRecordHeaderLabel.text = manyToOneManager.nextDisplayFieldStringValue(fieldIndex: &destinationIndex) ?? fallbackPopupManager.nextDisplayFieldStringValue(fieldIndex: &fallbackIndex)
-            self.relatedRecordSubheaderLabel.text = manyToOneManager.nextDisplayFieldStringValue(fieldIndex: &destinationIndex) ?? fallbackPopupManager.nextDisplayFieldStringValue(fieldIndex: &fallbackIndex)
+        if let firstManyToOne = popup.relationships?.manyToOne.first?.relatedPopup {
+            
+            var manyToOneAttributes = AGSPopupManager.generateDisplayAttributes(forPopup: firstManyToOne, max: 2)
+            
+            relatedRecordHeaderLabel.text = (manyToOneAttributes.popFirst() ?? backupAttributes.popFirst())?.value
+            relatedRecordSubheaderLabel.text = (manyToOneAttributes.popFirst() ?? backupAttributes.popFirst())?.value
         }
         else {
-            self.relatedRecordHeaderLabel.text = fallbackPopupManager.nextDisplayFieldStringValue(fieldIndex: &fallbackIndex)
-            self.relatedRecordSubheaderLabel.text = fallbackPopupManager.nextDisplayFieldStringValue(fieldIndex: &fallbackIndex)
+            
+            relatedRecordHeaderLabel.text = backupAttributes.popFirst()?.value
+            relatedRecordSubheaderLabel.text = backupAttributes.popFirst()?.value
         }
         
-        if let oneToMany = popup.relationships?.oneToMany.first {
-            let n = oneToMany.relatedPopups.count
-            let name = oneToMany.relatedTable?.tableName ?? "Records"
-            self.relatedRecordsNLabel.text = "\(n) \(name)"
+        // MARK: Right side of the small pop-up view, concerns the first one-to-many relationship.
+        
+        if let firstOneToMany = popup.relationships?.oneToMany.first {
+            
+            let n = firstOneToMany.relatedPopups.count
+            let name = firstOneToMany.name ?? "Records"
+            let value = "\(n) \(name)"
+            
+            relatedRecordsNLabel.text = value
+            addPopupRelatedRecordButton.isHidden = !firstOneToMany.canAddRecord
         }
         else {
-            self.relatedRecordsNLabel.text = fallbackPopupManager.nextDisplayFieldStringValue(fieldIndex: &fallbackIndex)
+            
+            relatedRecordsNLabel.text = backupAttributes.popFirst()?.value
+            addPopupRelatedRecordButton.isHidden = true
         }
         
-        if let canAdd = popup.relationships?.oneToMany.first?.relatedTable?.canAddFeature {
-            self.addPopupRelatedRecordButton.isHidden = !canAdd
+        mapViewMode = .selectedFeature(featureLoaded: true)
+    }
+}
+
+private extension Array {
+    
+    mutating func popFirst() -> Element? {
+        if !isEmpty {
+            return removeFirst()
+        } else {
+            return nil
         }
-        else {
-            self.addPopupRelatedRecordButton.isHidden = true
-        }
-        
-        self.mapViewMode = .selectedFeature(featureLoaded: true)
     }
 }

@@ -73,12 +73,13 @@ extension AGSArcGISFeatureTable {
         let editClosure:(Error?) -> Void = { error in
             
             guard error == nil else {
-                print("[Error: Feature Service Table] could not edit", error!.localizedDescription)
+                print("[Error: Feature Table] could not edit:", error!.localizedDescription)
                 completion(error!)
                 return
             }
             
             let updateObjectID: () -> Void = {
+                
                 if type != .delete {
                     feature.refresh()
                 }
@@ -94,17 +95,20 @@ extension AGSArcGISFeatureTable {
                 return
             }
             
-            serviceFeatureTable.applyEdits(completion: { (results, error) in
+            serviceFeatureTable.applyEdits(completion: { (results, applyEditsError) in
                 
-                guard error == nil else {
-                    print("[Error: Feature Service Table] could not apply edits", error!.localizedDescription)
-                    updateObjectID()
-                    completion(error!)
-                    return
+                if let error = applyEditsError {
+                    print("[Error: Service Feature Table] could not apply edits:", error)
+                    // If there was an error applying the edits to the service feature table, roll back the local edits.
+                    serviceFeatureTable.undoLocalEdits(completion: { (undoError) in
+                        updateObjectID()
+                        completion(error)
+                    })
                 }
-                
-                updateObjectID()
-                completion(nil)
+                else {
+                    updateObjectID()
+                    completion(nil)
+                }
             })
         }
         

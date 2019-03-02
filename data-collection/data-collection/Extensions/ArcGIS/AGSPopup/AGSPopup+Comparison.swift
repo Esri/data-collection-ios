@@ -158,4 +158,8 @@ extension AGSPopup {
             throw error
         }
     }
+    
+    public static func == (lhs: AGSPopup, rhs: AGSPopup) -> Bool {
+        return (lhs.geoElement as? AGSArcGISFeature)?.objectID == (rhs.geoElement as? AGSArcGISFeature)?.objectID
+    }
 }

@@ -31,7 +31,7 @@ enum LoadableError: AppError {
     var errorUserInfo: [String : Any] {
         switch self {
         case .multiLoadableFailure(let objectLocalizedDescription, let errors):
-            return [NSLocalizedDescriptionKey: String(format: "Error loading %@.", objectLocalizedDescription.localizedLowercase), NSUnderlyingErrorKey: errors]
+            return [NSLocalizedDescriptionKey: String(format: "Error loading %@.", objectLocalizedDescription.localizedLowercase),          MultipleUnderlyingErrorsKey: errors]
         }
     }
     

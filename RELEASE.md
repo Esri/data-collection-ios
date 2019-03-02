@@ -4,8 +4,12 @@
 
 **RichPopup, Relationships, RichPopupViewController**
 
-- Introduces `RichPopup` which contains a new paradigm for loading related records via an `AGSLoadable` `Relationships` object, a pattern found throughout ArcGIS.
-- As a result, `RichPopupViewController` has underwent a series of changes, bug fixes and upgrades as well.
+- Introduces `RichPopup` which retrieves related records via an `AGSLoadable` implementation.
+- As a result, `RichPopupViewController` has undergone a series of changes, bug fixes and upgrades.
+
+**Attachments**
+
+- View and edit pop-up photo attachments, add new ones from camera or library.
 
 **AppErrors**
 

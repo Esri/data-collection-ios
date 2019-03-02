@@ -1,4 +1,4 @@
-//// Copyright 2018 Esri
+//// Copyright 2019 Esri
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -12,226 +12,439 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import Foundation
+import UIKit
+import QuickLook
 import ArcGIS
 
-class RichPopupViewController: UITableViewController, BackButtonDelegate {
+class RichPopupViewController: SegmentedViewController {
     
-    struct EphemeralCacheKeys {
-        static let tableList = "EphemeralCache.RichPopupViewController.TableList.Key"
-    }
+    // MARK: Rich Popup
     
-    // MARK: Pop-up and Parent Pop-up
-    
-    // We want to hang on to references to the pop-up manager and the parent pop-up manager.
-    // This way, if there are changes to the pop-up in question, if it is related to another record,
-    // that record can update accordingly.
-    
-    // The pop-up in question.
-    // Considered the "child" if related to the `parentPopup`.
-    var popup: RichPopup! {
+    var popupManager: RichPopupManager!
+
+    var shouldLoadRichPopupRelatedRecords: Bool = true {
         didSet {
-            popupManager = RichPopupManager(richPopup: popup)
+            detailsViewController?.shouldLoadRichPopupRelatedRecords = shouldLoadRichPopupRelatedRecords
         }
     }
     
-    private(set) var popupManager: RichPopupManager!
+    // MARK: Segmented View Controller
     
-    // The parent pop-up.
-    var parentPopup: RichPopup? {
-        didSet {
-            if let parentPopup = parentPopup {
-                parentPopupManager = RichPopupManager(richPopup: parentPopup)
-            }
-            else {
-                parentPopupManager = nil
-            }
+    // Returns an array of `SegmentedViewSegue` identifiers telling the segmented view controller which child view controllers to segment and embed.
+    override func segmentedViewControllerChildIdentifiers() -> [String] {
+        
+        guard popupManager != nil else { return [String]() }
+        
+        var childrenIdentifiers = ["RichPopupDetails"]
+        
+        if !popupManager.attachmentsNoAccess {
+            childrenIdentifiers.append("RichPopupAttachments")
+        }
+        
+        return childrenIdentifiers
+    }
+    
+    // MARK: App Context Change Handling
+    
+    private let changeHandler = AppContextChangeHandler()
+    
+    private func subscribeToAppContextChanges() {
+        
+        let workModeChange = AppContextChange.workMode { [weak self] (_) in
+            
+            guard let self = self else { return }
+            
+            self.adjustViewControllerForWorkMode()
+        }
+        
+        changeHandler.subscribe(toChange: workModeChange)
+    }
+    
+    private func adjustViewControllerForWorkMode() {
+        // Match the segmented control's tint color with that of the navigation bar's.
+        switch appContext.workMode {
+        case .online:
+            segmentedControl.tintColor = .primary
+        case .offline:
+            segmentedControl.tintColor = .offline
         }
     }
     
-    private(set) var parentPopupManager: RichPopupManager?
+    // MARK: Quick Look
     
-    var shouldBeginEditPopupUponLoad: Bool = false
+    private(set) lazy var previewController: QLPreviewController = { [unowned self] in
+        let previewController = QLPreviewController()
+        previewController.dataSource = self
+        return previewController
+    }()
+    
+    // MARK: View Controller Lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+        // Set title
         title = popupManager.title
         
-        // Register the various table cell types.
-        tableView.register(PopupReadonlyFieldCell.self, forCellReuseIdentifier: ReuseIdentifiers.popupReadonlyCell)
-        tableView.register(PopupNumberCell.self, forCellReuseIdentifier: ReuseIdentifiers.popupNumberCell)
-        tableView.register(PopupShortStringCell.self, forCellReuseIdentifier: ReuseIdentifiers.popupShortTextCell)
-        tableView.register(PopupLongStringCell.self, forCellReuseIdentifier: ReuseIdentifiers.popupLongTextCell)
-        tableView.register(PopupDateCell.self, forCellReuseIdentifier: ReuseIdentifiers.popupDateCell)
-        tableView.register(PopupIDCell.self, forCellReuseIdentifier: ReuseIdentifiers.popupIDCell)
-        tableView.register(PopupCodedValueCell.self, forCellReuseIdentifier: ReuseIdentifiers.codedValueCell)
-        tableView.register(RelatedRecordCell.self, forCellReuseIdentifier: ReuseIdentifiers.relatedRecordCell)
-        tableView.register(DeleteRecordCell.self, forCellReuseIdentifier: ReuseIdentifiers.deletePopupCell)
+        // Add dismiss button
+        conditionallyAddDismissButton()
         
-        // The contents of a pop-up field is dynamic and thus the size of a table view cell's content view must be able to change.
-        tableView.rowHeight = UITableView.automaticDimension
-        tableView.sectionHeaderHeight = UITableView.automaticDimension
-        tableView.sectionFooterHeight = UITableView.automaticDimension
+        // Add edit button
+        conditionallyAddEditButton()
         
-        // Editing is enabled only if the pop-up in question can be edited.
-        if !popupManager.shouldAllowEdit {
-            removeEditBarButtonItem()
-        }
+        // Add delete button
+        conditionallyAddDeleteButton()
         
-        // A root view controller does not contain a back button. If this is the case, we want to build a dimiss/cancel button.
-        if isRootViewController {
-            addDismissalLeftBarButtonItem()
-        }
+        // Begin listening for app context changes.
+        subscribeToAppContextChanges()
+        
+        // Adjust visuals to reflect current work mode.
+        adjustViewControllerForWorkMode()
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
-        loadRichPopupRelationships()
-    }
+    // MARK: Children
     
-    private func loadRichPopupRelationships() {
+    var detailsViewController: RichPopupDetailsViewController!
+    
+    var attachmentsViewController: RichPopupAttachmentsViewController!
+    
+    // MARK: Segues (Including Children Segues)
+    
+    override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
         
-        if parentPopupManager == nil, let relationships = popup.relationships {
+        if identifier == "RichPopupEditStagedPhotoAttachment" {
             
-            popupEditButton?.isEnabled = false
-            
-            relationships.load { [weak self] (error) in
+            guard EphemeralCache.has(objectForKey: "RichPopupEditStagedPhotoAttachment.EphemeralCacheKey") else {
                 
-                guard let self = self else { return }
-                
-                self.popupEditButton?.isEnabled = true
-                
-                if let error = error {
-                    self.present(simpleAlertMessage: error.localizedDescription)
-                }
-                
-                self.beginEditingSessionIfRequested()
+                present(simpleAlertMessage: "Something went wrong, you are unable to edit this attachment.")
+                return false
             }
+            
+            return true
+        }
+        else if identifier == "RichPopupSelectRelatedRecord" {
+            
+            guard EphemeralCache.has(objectForKey: "RichPopupSelectRelatedRecord.EphemeralCacheKey") else {
+                
+                present(simpleAlertMessage: "Something went wrong, you are unable to edit this related record.")
+                return false
+            }
+            return true
         }
         else {
-            self.beginEditingSessionIfRequested()
+            return true
         }
-    }
-    
-    private func beginEditingSessionIfRequested() {
-        
-        if shouldBeginEditPopupUponLoad {
-            
-            shouldBeginEditPopupUponLoad = false
-            beginEditingSession()
-        }
-        
-        adjustViewControllerForEditingState()
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        super.prepare(for: segue, sender: sender)
         
-        // This unwraps if the user is editing a many-to-one record.
-        // A table view is presented with all records from the many-to-one table, for selection.
-        if let destination = segue.destination as? RelatedRecordsListViewController {
-            if let table = EphemeralCache.get(objectForKey: EphemeralCacheKeys.tableList) as? AGSArcGISFeatureTable {
-                destination.featureTable = table
-                destination.delegate = self
+        if let details = segue.destination as? RichPopupDetailsViewController {
+            
+            details.delegate = self
+            details.popupManager = self.popupManager
+            details.shouldLoadRichPopupRelatedRecords = shouldLoadRichPopupRelatedRecords
+            
+            self.detailsViewController = details
+        }
+        else if let attachments = segue.destination as? RichPopupAttachmentsViewController {
+            
+            attachments.delegate = self
+            attachments.popupManager = self.popupManager
+            
+            // Begin loading attachments on background thread.
+            attachments.popupAttachmentsManager.load(completion: nil)
+            
+            self.attachmentsViewController = attachments
+        }
+        else if let edit = segue.destination as? RichPopupEditStagedAttachmentViewController {
+            
+            if let attachment = EphemeralCache.get(objectForKey: "RichPopupEditStagedPhotoAttachment.EphemeralCacheKey") as? RichPopupStagedAttachment {
+                edit.stagedAttachment = attachment as RichPopupStagedAttachment
+            }
+        }
+        else if let related = segue.destination as? RichPopupSelectRelatedRecordViewController {
+            
+            if let (popups, current) = EphemeralCache.get(objectForKey: "RichPopupSelectRelatedRecord.EphemeralCacheKey") as? ([AGSPopup], AGSPopup?) {
+                related.popups = popups
+                related.currentRelatedPopup = current
+                related.delegate = self
             }
         }
     }
+
+    private func updateViewControllerUI(animated: Bool) {
+        
+        super.setEditing(popupManager.isEditing, animated: animated)
+        
+        if self.popupManager.isEditing {
+            // Add Cancel button. Will hide back bar button, if there is one.
+            navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(userRequestsCancelEditingPopup(_:)))
+        }
+        else {
+            // Removes Cancel button, if there is one. Will replace back bar button with dismiss bar button, if there is one.
+            self.navigationItem.leftBarButtonItem = self.dismissButton
+        }
+        
+        // If this is a newly added record, we will need to add a delete button.
+        conditionallyAddDeleteButton()
+    }
     
-    // This function allows the view controller to intercept and stop the navigation controller from popping the view controller, should certain conditions not be met.
-    func interceptNavigationBackActionShouldPopViewController() -> Bool {
+    // MARK: Edit Pop-up
+    
+    private func conditionallyAddEditButton() {
         
-        // The view controller should be popped if the pop-up is not being edited.
-        let shouldPop = !popupManager.isEditing
+        if popupManager.shouldAllowEdit {
+            navigationItem.rightBarButtonItem = editButtonItem
+        }
+    }
+    
+    // This function is called when the `editButtonItem` is tapped. The `editButtonItem` is tapped only to start or finish (save) an edit session.
+    // This function will not be called when the user would like to cancel an edit session.
+    override func setEditing(_ editing: Bool, animated: Bool) {
+        self.setEditing(editing, animated: animated, persist: true)
+    }
+    
+    @objc func userRequestsCancelEditingPopup(_ sender: Any) {
+        self.setEditing(false, animated: true, persist: false)
+    }
+    
+    // Adding the persist flag introduces the ability to 'cancel' an edit session, as is supported by the pop-up manager.
+    private func setEditing(_ editing: Bool, animated: Bool, persist: Bool) {
         
-        // If the pop-up is being edited, we want to ask the user if they want to end the pop-up editing session.
-        if !shouldPop {
+        self.detailsViewController?.resignCurrentFirstResponder()
+        
+        if editing {
             
-            cancelEditingSession() { [weak self] _ in
+            // User is requesting to begin an editing session.
+            defer {
+                self.updateViewControllerUI(animated: animated)
+            }
+        
+            // User is requesting to start an editing session.
+            guard popupManager.shouldAllowEdit, popupManager.startEditing() else {
+                self.present(simpleAlertMessage: "Could not edit pop-up.")
+                return
+            }
+        }
+        else if persist {
+            
+            // User is requesting to finish (and save) the editing session.
+            disableUserInteraction(status: "Saving Record")
+            
+            // User is requesting to finish an editing session.
+            finishEditingSession { [weak self] (error) in
                 
                 guard let self = self else { return }
                 
-                self.popDismiss()
+                if let error = error {
+                    self.present(simpleAlertMessage: "Could not save record. \(error.localizedDescription)")
+                }
+                
+                self.updateViewControllerUI(animated: animated)
+                
+                self.enableUserInteraction()
             }
-        }
-        
-        return shouldPop
-    }
-    
-    // MARK: Edit Mode UI
-    
-    @IBOutlet weak var popupEditButton: UIBarButtonItem?
-    
-    private func removeEditBarButtonItem() {
-        
-        let barButtonIndex = navigationItem.rightBarButtonItems?.firstIndex(where: { (barButtonItem) -> Bool in
-            return barButtonItem == popupEditButton
-        })
-        
-        if let index = barButtonIndex {
-            navigationItem.rightBarButtonItems?.remove(at: index)
-        }
-        
-        popupEditButton = nil
-    }
-    
-    @IBAction func userRequestsTogglePopupMode(_ sender: Any) {
-        
-        if !popupManager.isEditing {
-            
-            beginEditingSession()
-            
-            adjustViewControllerForEditingState()
         }
         else {
             
-            finishEditingSession() { [weak self] _ in
+            // User is requesting to cancel an editing session.
+            // Ask them for confirmation first.
+            confirmCancelEditingSession() { [weak self] (error) in
                 
                 guard let self = self else { return }
                 
-                self.adjustViewControllerForEditingState()
-            }
-        }
-    }
-    
-    // MARK: Left Bar Button Item & Dismissal
-    
-    
-    private func addDismissalLeftBarButtonItem() {
-        
-        self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Dismiss", style: .plain, target: self, action: #selector(RichPopupViewController.userTappedRootLeftBarButton(_:)))
-    }
-    
-    // This function is only performed if the view controller is the root view controller of it's navigation controller.
-    @objc func userTappedRootLeftBarButton(_ sender: Any?) {
-        
-        if popupManager.isEditing {
-            
-            cancelEditingSession() { [weak self] (shouldDismiss) in
+                if let error = error {
+                    self.present(simpleAlertMessage: "Something went wrong. \(error.localizedDescription)")
+                }
                 
-                guard let self = self else { return }
-                
-                if shouldDismiss {
-                    self.popDismiss()
+                // If the feature is not added to the the table, we can dismiss the view controller.
+                if (!self.popupManager.popup.isFeatureAddedToTable) {
+                    
+                    // Dismiss the view controller.
+                    self.popDismiss(animated: true)
                 }
                 else {
-                    self.adjustViewControllerForEditingState()
+                    self.updateViewControllerUI(animated: animated)
                 }
             }
         }
-        else {
-            popDismiss()
+    }
+    
+    private func confirmCancelEditingSession(_ completion: ((Error?) -> Void)? = nil) {
+        
+        let cancelAction: ((UIAlertAction) -> Void) = { [weak self] (_) in
+            
+            guard let self = self else { return }
+            
+            self.popupManager.cancelEditing()
+            
+            completion?(nil)
+        }
+        
+        present(confirmationAlertMessage: "Discard changes?", confirmationTitle: "Discard", confirmationAction: cancelAction)
+    }
+    
+    // MARK: Delete Pop-up
+    
+    private var deleteButton: UIBarButtonItem?
+    
+    private func conditionallyAddDeleteButton() {
+        
+        if popupManager.shouldAllowDelete, deleteButton == nil {
+            
+            // Reveal toolbar
+            navigationController?.isToolbarHidden = false
+            
+            // Add delete bar button item with flexible space on either side
+            var items = [UIBarButtonItem]()
+            
+            items.append( UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil) )
+            
+            let delete = UIBarButtonItem(title: String(format: "Delete %@", popupManager.title ?? "Record"),
+                                     style: .plain,
+                                    target: self,
+                                    action: #selector(userRequestsDeletePopup(_:)))
+            
+            delete.tintColor = .destructive
+            items.append( delete )
+            
+            items.append( UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil) )
+            
+            deleteButton = delete
+
+            toolbarItems = items
         }
     }
     
-    func popDismiss(animated: Bool = true) {
+    @objc func userRequestsDeletePopup(_ sender: AnyObject) {
         
-        if isRootViewController {
-            dismiss(animated: animated, completion: nil)
-        }
-        else {
-            navigationController?.popViewController(animated: animated)
+        confirmDeleteRecord { [weak self] (error) in
+            
+            guard let self = self else { return }
+            
+            if let error = error {
+                self.present(simpleAlertMessage: "Something went wrong. Could not delete the record. \(error.localizedDescription)")
+            }
+            else {
+                self.popDismiss(animated: true)
+            }
         }
     }
-}
+    
+    private func confirmDeleteRecord(_ completion: ((Error?) -> Void)? = nil) {
+        
+        guard
+            let feature = popupManager.popup.geoElement as? AGSArcGISFeature,
+            let featureTable = feature.featureTable as? AGSArcGISFeatureTable,
+            featureTable.canDelete(feature) else {
+    
+            completion?(NSError.invalidOperation)
+                
+            return
+        }
+        
+        let deleteAction: ((UIAlertAction) -> Void) = { [weak self] (_) in
+            
+            guard let self = self else { return }
+            
+            self.disableUserInteraction(status: "Deleting Record")
+            
+            self.popupManager.cancelEditing()
+            
+            do {
+                try self.popupManager.deleteRichPopup()
+            }
+            catch {
+                completion?(error)
+                return 
+            }
+            
+            // Delete the record from the table.
+            featureTable.performDelete(feature: feature) { [weak self] (error) in
+                
+                guard let self = self else { return }
+                
+                self.popupManager.conditionallyPerformCustomBehavior { completion?(nil) }
 
+                if let error = error {
+                    completion?(error)
+                }
+                else {
+                    completion?(nil)
+                }
+                
+                self.enableUserInteraction()
+            }
+        }
+        
+        present(confirmationAlertMessage: String(format: "Delete %@", popupManager.title ?? "Record"), confirmationTitle: "Delete", confirmationAction: deleteAction)
+    }
+    
+    // MARK: Activity Status (Async load, save, delete)
+    
+    func disableUserInteraction(status: String?) {
+        
+        // Disable contents of view (children)
+        view.isUserInteractionEnabled = false
+        
+        // Disable interaction with the view controller.
+        deleteButton?.isEnabled = false
+        navigationItem.leftBarButtonItem?.isEnabled = false
+        navigationItem.backBarButtonItem?.isEnabled = false
+        navigationItem.rightBarButtonItem?.isEnabled = false
+        
+        if let status = status {
+            // Display status message with activity indicator.
+            SVProgressHUD.show(withStatus: status)
+        }
+    }
+    
+    func enableUserInteraction() {
+        
+        // Enable contents of view (children)
+        view.isUserInteractionEnabled = true
+        
+        // Disable interaction with the view controller.
+        deleteButton?.isEnabled = true
+        navigationItem.leftBarButtonItem?.isEnabled = true
+        navigationItem.backBarButtonItem?.isEnabled = true
+        navigationItem.rightBarButtonItem?.isEnabled = true
+        
+        // Display status message with activity indicator.
+        SVProgressHUD.dismiss(withDelay: 0.2)
+    }
+    
+    // MARK: Dismiss View Controller
+    
+    private var dismissButton: UIBarButtonItem?
+    
+    private func conditionallyAddDismissButton() {
+        
+        if isRootViewController {
+            
+            // Build dismiss button
+            dismissButton = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(userRequestsDismissViewController(_:)))
+            
+            if !isEditing {
+                // Assign left bar button
+                navigationItem.leftBarButtonItem = dismissButton
+            }
+        }
+    }
+    
+    @objc func userRequestsDismissViewController(_ sender: AnyObject) {
+        
+        self.popDismiss(animated: true)
+    }
+    
+    // MARK: Image Picker Permissions
+    
+    private(set) lazy var imagePickerPermissions: ImagePickerPermissions = { [unowned self] in
+        var imagePickerPermissions = ImagePickerPermissions()
+        imagePickerPermissions.delegate = self
+        return imagePickerPermissions
+    }()
+    
+    var isProcessingNewAttachmentImage: Bool = false
+}

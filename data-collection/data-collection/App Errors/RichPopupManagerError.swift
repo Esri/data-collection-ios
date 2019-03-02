@@ -23,6 +23,9 @@ enum RichPopupManagerError: AppError {
     case cannotRelateFeatures
     case manyToOneRecordEditingErrors([Error])
     case editingNotPermitted
+    case newOneToManyRelatedRecordError
+    case viewRelatedRecordError
+    case oneToManyRecordDeletionErrors([Error])
     
     var errorCode: Int {
         let base = baseCode.rawValue
@@ -37,6 +40,12 @@ enum RichPopupManagerError: AppError {
             return base + 4
         case .editingNotPermitted:
             return base + 5
+        case .newOneToManyRelatedRecordError:
+            return base + 6
+        case .viewRelatedRecordError:
+            return base + 7
+        case .oneToManyRecordDeletionErrors(_):
+            return base + 8
         }
     }
     
@@ -45,15 +54,22 @@ enum RichPopupManagerError: AppError {
         case .missingManyToOneRelationship(let str):
             return [NSLocalizedDescriptionKey: String(format: "Missing value for many to one relationship %@", str)]
         case .invalidPopup(let errors):
-            return [NSLocalizedDescriptionKey: "The record contains \(errors.count) invalid field(s).",
-                    NSUnderlyingErrorKey: errors]
+            return [NSLocalizedDescriptionKey: String(format: "The record contains %d invalid field(s).", errors.count),
+                    MultipleUnderlyingErrorsKey: errors]
         case .cannotRelateFeatures:
             return [NSLocalizedDescriptionKey: "Cannot relate features."]
         case .manyToOneRecordEditingErrors(let errors):
-            return [NSLocalizedDescriptionKey: "Error editing \(errors.count) many to one record(s).",
-                    NSUnderlyingErrorKey: errors]
+            return [NSLocalizedDescriptionKey: String(format: "Error editing %d many to one record(s).", errors.count),
+                    MultipleUnderlyingErrorsKey: errors]
         case .editingNotPermitted:
             return [NSLocalizedDescriptionKey: "Editing isn't permitted for this popup."]
+        case .newOneToManyRelatedRecordError:
+            return [NSLocalizedDescriptionKey: "Cannot add a new one to many related record while editing this record."]
+        case .viewRelatedRecordError:
+            return [NSLocalizedDescriptionKey: "Cannot view this related record while editing this record."]
+        case .oneToManyRecordDeletionErrors(let errors):
+            return [NSLocalizedDescriptionKey: String(format: "Error deleting %d one to many record(s).", errors.count),
+                    MultipleUnderlyingErrorsKey: errors]
         }
     }
     

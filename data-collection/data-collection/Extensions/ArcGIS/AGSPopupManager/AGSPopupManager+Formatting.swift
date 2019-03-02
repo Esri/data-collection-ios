@@ -20,8 +20,8 @@ extension AGSPopupManager {
     /// Assists in providing the next subsequent popup value provided an `inout` index.
     ///
     /// This is helpful in allowing the popup manager to maintain the index for it's next requested value.
-    
-    public func nextDisplayFieldStringValue(fieldIndex: inout Int) -> String? {
+    ///
+    private func nextDisplayFieldStringValue(fieldIndex: inout Int) -> String? {
         
         guard fieldIndex < displayFields.count else {
             return nil
@@ -32,5 +32,26 @@ extension AGSPopupManager {
         
         fieldIndex += 1
         return value
+    }
+    
+    typealias DisplayAttribute = (title: String, value: String?)
+    
+    static func generateDisplayAttributes(forPopup popup: AGSPopup, max n: Int) -> [DisplayAttribute] {
+        
+        let manager = AGSPopupManager(popup: popup)
+        
+        let count = min(n, manager.displayFields.count)
+        
+        var popupIndex = 0
+        
+        var attributes = [DisplayAttribute]()
+        
+        for _ in 0..<count {
+            let title = manager.displayFields[popupIndex].label
+            let value = manager.nextDisplayFieldStringValue(fieldIndex: &popupIndex)
+            attributes.append((title, value))
+        }
+        
+        return attributes
     }
 }

@@ -40,11 +40,6 @@
                                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                         <inset key="titleEdgeInsets" minX="8" minY="0.0" maxX="0.0" maxY="0.0"/>
                                         <state key="normal" title="Log in" image="UserLoginIcon"/>
-                                        <userDefinedRuntimeAttributes>
-                                            <userDefinedRuntimeAttribute type="number" keyPath="numberOfLines">
-                                                <integer key="value" value="0"/>
-                                            </userDefinedRuntimeAttribute>
-                                        </userDefinedRuntimeAttributes>
                                         <connections>
                                             <action selector="userRequestsLoginLogout:" destination="tff-pw-9ak" eventType="touchUpInside" id="9KY-4Z-SsG"/>
                                         </connections>
@@ -82,18 +77,15 @@
                                                         <state key="disabled">
                                                             <color key="titleColor" white="0.66666666669999997" alpha="0.5" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         </state>
-                                                        <state key="selected" image="CloudConnected">
+                                                        <state key="selected" image="OnlineMode">
                                                             <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         </state>
-                                                        <state key="highlighted" image="CloudConnected">
+                                                        <state key="highlighted" image="OnlineMode">
                                                             <color key="titleColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         </state>
                                                         <userDefinedRuntimeAttributes>
                                                             <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
                                                                 <integer key="value" value="4"/>
-                                                            </userDefinedRuntimeAttribute>
-                                                            <userDefinedRuntimeAttribute type="number" keyPath="numberOfLines">
-                                                                <integer key="value" value="0"/>
                                                             </userDefinedRuntimeAttribute>
                                                         </userDefinedRuntimeAttributes>
                                                         <connections>
@@ -119,21 +111,18 @@
                                                         <state key="normal" title="Work Offline" image="OfflineMode">
                                                             <color key="titleColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         </state>
-                                                        <state key="disabled" image="CloudNoConnection">
+                                                        <state key="disabled" image="OfflineMode">
                                                             <color key="titleColor" white="0.66666666669999997" alpha="0.5" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         </state>
-                                                        <state key="selected" image="CloudNoConnection">
+                                                        <state key="selected" image="OfflineMode">
                                                             <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         </state>
-                                                        <state key="highlighted" image="CloudNoConnection">
+                                                        <state key="highlighted" image="OfflineMode">
                                                             <color key="titleColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         </state>
                                                         <userDefinedRuntimeAttributes>
                                                             <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
                                                                 <integer key="value" value="4"/>
-                                                            </userDefinedRuntimeAttribute>
-                                                            <userDefinedRuntimeAttribute type="number" keyPath="numberOfLines">
-                                                                <integer key="value" value="0"/>
                                                             </userDefinedRuntimeAttribute>
                                                         </userDefinedRuntimeAttributes>
                                                         <connections>
@@ -161,11 +150,6 @@
                                                         <state key="highlighted" image="Synchronize">
                                                             <color key="titleColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         </state>
-                                                        <userDefinedRuntimeAttributes>
-                                                            <userDefinedRuntimeAttribute type="number" keyPath="numberOfLines">
-                                                                <integer key="value" value="0"/>
-                                                            </userDefinedRuntimeAttribute>
-                                                        </userDefinedRuntimeAttributes>
                                                         <connections>
                                                             <action selector="userRequestsSynchronizeOfflineMap:" destination="tff-pw-9ak" eventType="touchUpInside" id="gp6-RM-tgc"/>
                                                         </connections>
@@ -191,11 +175,6 @@
                                                         <state key="highlighted" image="GarbageBin">
                                                             <color key="titleColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         </state>
-                                                        <userDefinedRuntimeAttributes>
-                                                            <userDefinedRuntimeAttribute type="number" keyPath="numberOfLines">
-                                                                <integer key="value" value="0"/>
-                                                            </userDefinedRuntimeAttribute>
-                                                        </userDefinedRuntimeAttributes>
                                                         <connections>
                                                             <action selector="userRequestsDeleteOfflineMap:" destination="tff-pw-9ak" eventType="touchUpInside" id="ktf-ns-FPY"/>
                                                         </connections>
@@ -257,8 +236,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="CloudConnected" width="24" height="24"/>
-        <image name="CloudNoConnection" width="24" height="24"/>
         <image name="GarbageBin" width="24" height="24"/>
         <image name="OfflineMode" width="24" height="24"/>
         <image name="OnlineMode" width="24" height="24"/>

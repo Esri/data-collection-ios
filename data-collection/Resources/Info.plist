@@ -35,10 +35,12 @@
 	<string>1</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSCameraUsageDescription</key>
+	<string>Allow $(PRODUCT_NAME) to add photo attachments to features.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>Allow Data Collection to collect data near your location.</string>
+	<string>Allow $(PRODUCT_NAME) to collect data using your location.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>ArcGIS requires access to your device's photo library.</string>
+	<string>Allow $(PRODUCT_NAME) to add image attachments to features.</string>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>

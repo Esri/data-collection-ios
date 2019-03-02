@@ -27,7 +27,7 @@ extension UIColor {
     static let offline = UIColor(named: "offline")!
     
     // Contrasting both primary and offline, bar button items (text and image).
-    static let tint = UIColor(named: "tint")!
+    static let contrasting = UIColor(named: "contrasting")!
     
     // Contrasting both primary and offline, used in the drawer.
     static let accent = UIColor(named: "accent")!
@@ -40,18 +40,31 @@ extension AppDelegate {
     
     static func setAppApperanceWithAppColors() {
         
-        UINavigationBar.appearance().titleTextAttributes = [.foregroundColor : UIColor.tint]
-        UINavigationBar.appearance().tintColor = .tint
+        // Non-app specific navigation controllers bar button items.
+        // This includes: `UIImagePickerViewController`, `QLPreviewController`
+        UIBarButtonItem.appearance(whenContainedInInstancesOf: [UINavigationController.self]).tintColor = .primary
         
-        UIButton.appearance(whenContainedInInstancesOf: [UINavigationBar.self]).tintColor = .tint
-        UIButton.appearance().tintColor = .primary
+        // App specific navigation controllers.
+        // This includes any navigation controller found in app project storyboards.
+        UINavigationBar.appearance(whenContainedInInstancesOf: [AppContextAwareNavigationController.self]).titleTextAttributes = [.foregroundColor : UIColor.contrasting]
+        UIBarButtonItem.appearance(whenContainedInInstancesOf: [UINavigationBar.self, AppContextAwareNavigationController.self]).tintColor = .contrasting
         
+        UIBarButtonItem.appearance(whenContainedInInstancesOf: [UIToolbar.self]).tintColor = .primary
+        
+        UIButton.appearance(whenContainedInInstancesOf: [UITableView.self]).tintColor = .primary
+
         UIView.appearance(whenContainedInInstancesOf: [UIAlertController.self]).tintColor = .primary
         
         UIProgressView.appearance().tintColor = .primary
         UIProgressView.appearance().progressTintColor = .primary
-        UIProgressView.appearance().trackTintColor = .tint
+        UIProgressView.appearance().trackTintColor = .contrasting
+        
+        UIImageView.appearance(whenContainedInInstancesOf: [UITableViewCell.self]).tintColor = .primary
         
         UIActivityIndicatorView.appearance().color = .primary
+        
+        UISegmentedControl.appearance().tintColor = .primary
+        
+        StyledFirstResponderLabel.appearance().tintColor = .primary
     }
 }

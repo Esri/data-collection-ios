@@ -18,13 +18,22 @@ import ArcGIS
 /// Represents and manages a many-to-one related records of a popup.
 class ManyToOneRelationship: Relationship {
     
+    override func editRelatedPopup(_ editedRelatedPopup: AGSPopup) {
+        stagedToRemove = false
+        stagedRelatedPopup = editedRelatedPopup
+    }
+    
+    // The UI does not permit a `ManyToOneRelationship` to remove a related record.
+    // Implement the UI in order to leverage this function.
+    override func removeRelatedPopup(_ removedRelatedPopup: AGSPopup) {
+        stagedToRemove = true
+        stagedRelatedPopup = nil
+    }
+    
     /// The staged related pop-up or the current related pop-up if a change has not been staged.
     var relatedPopup: AGSPopup? {
         get {
-            return stagedRelatedPopup ?? currentRelatedPopup
-        }
-        set {
-            stagedRelatedPopup = newValue
+            return stagedToRemove ? nil : stagedRelatedPopup ?? currentRelatedPopup
         }
     }
     
@@ -33,6 +42,9 @@ class ManyToOneRelationship: Relationship {
     
     /// The popup that could be persisted, if `commitChange()` is called.
     private var stagedRelatedPopup: AGSPopup?
+    
+    /// If `true`, the user is requesting to remove the related popup.
+    private var stagedToRemove: Bool = false
     
     // Overrides the superclass method, stores a references to the record.
     override func processRecords(_ popups: [AGSPopup]) {

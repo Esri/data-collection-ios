@@ -58,4 +58,8 @@ class EphemeralCache {
     static func remove(objectForKey key: String) {
         shared[key] = nil
     }
+    
+    static func has(objectForKey key: String) -> Bool {
+        return shared[key] != nil
+    }
 }
