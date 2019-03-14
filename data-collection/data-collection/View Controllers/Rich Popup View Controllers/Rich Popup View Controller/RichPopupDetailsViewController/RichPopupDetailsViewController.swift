@@ -23,6 +23,11 @@ protocol RichPopupDetailsViewControllerDelegate: AnyObject {
 
 class RichPopupDetailsViewController: UITableViewController {
     
+    enum RelatedRecordsConfiguration: Int {
+        case maxOneToMany = 3
+        case maxManyToOne = 2
+    }
+    
     var popupManager: RichPopupManager!
     
     var shouldLoadRichPopupRelatedRecords: Bool = true

@@ -21,6 +21,10 @@ protocol RichPopupSelectRelatedRecordViewControllerDelegate: AnyObject {
 
 class RichPopupSelectRelatedRecordViewController: UITableViewController {
     
+    enum RecordConfiguration: Int {
+        case maxAttributes = 2
+    }
+    
     var popups = [AGSPopup]()
     
     var currentRelatedPopup: AGSPopup?
@@ -46,7 +50,7 @@ class RichPopupSelectRelatedRecordViewController: UITableViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: "PopupSelectRelatedRecordCell", for: indexPath) as! PopupSelectRelatedRecordCell
         let popup = popups[indexPath.row]
         
-        let attributes = AGSPopupManager.generateDisplayAttributes(forPopup: popup, max: 2)
+        let attributes = AGSPopupManager.generateDisplayAttributes(forPopup: popup, max: RecordConfiguration.maxAttributes.rawValue)
         cell.set(attributes: attributes)
         
         return cell

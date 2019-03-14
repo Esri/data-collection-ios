@@ -157,7 +157,7 @@ extension RichPopupDetailsViewController /* UITableViewDataSource */ {
                 var attributes = [AGSPopupManager.DisplayAttribute]()
                 
                 if let relatedPopup = relationship.relatedPopup {
-                    attributes = AGSPopupManager.generateDisplayAttributes(forPopup: relatedPopup, max: 2)
+                    attributes = AGSPopupManager.generateDisplayAttributes(forPopup: relatedPopup, max: RelatedRecordsConfiguration.maxManyToOne.rawValue)
                     manyToOneCell.setAttributes(attributes)
                 }
                 else {
@@ -183,7 +183,7 @@ extension RichPopupDetailsViewController /* UITableViewDataSource */ {
                 var attributes = [AGSPopupManager.DisplayAttribute]()
                 
                 if let relationship = popupManager.relationship(forIndexPath: indexPath) as? OneToManyRelationship, let relatedPopup = relationship.popup(forIndexPath: indexPath) {
-                    attributes = AGSPopupManager.generateDisplayAttributes(forPopup: relatedPopup, max: 3)
+                    attributes = AGSPopupManager.generateDisplayAttributes(forPopup: relatedPopup, max: RelatedRecordsConfiguration.maxOneToMany.rawValue)
                 }
                 
                 oneToManyCell.setAttributes(attributes)
