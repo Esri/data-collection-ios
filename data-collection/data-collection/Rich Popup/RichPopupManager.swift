@@ -688,7 +688,7 @@ extension RichPopupManager {
     ///
     /// - Parameter indexPath: The index path in question.
     ///
-    /// - Returns: If the index path lies within the one-to-many section's add new row (index 0).
+    /// - Returns: If the index path lies within the one-to-many section's add new row (index `0`).
     ///
     func indexPathIsAddOneToMany(_ indexPath: IndexPath) -> Bool {
         
