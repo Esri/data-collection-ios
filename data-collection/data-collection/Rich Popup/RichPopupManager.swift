@@ -682,6 +682,14 @@ extension RichPopupManager {
         return manager.relatedPopups.count > indexPath.row - rowOffset
     }
     
+    /// Does the index path lies within the one-to-many section's add new row (index `0`)?
+    ///
+    /// This function is designed to be used with a `UITableViewDataSource`.
+    ///
+    /// - Parameter indexPath: The index path in question.
+    ///
+    /// - Returns: If the index path lies within the one-to-many section's add new row (index `0`).
+    ///
     func indexPathIsAddOneToMany(_ indexPath: IndexPath) -> Bool {
         
         guard indexPath.section > 0, richPopup.relationships?.loadStatus == .loaded, let managers = richPopup.relationships?.oneToMany else {
