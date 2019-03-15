@@ -682,7 +682,7 @@ extension RichPopupManager {
         return manager.relatedPopups.count > indexPath.row - rowOffset
     }
     
-    /// Does the index path lies within the one-to-many section's add new row (index 0)?
+    /// Does the index path lies within the one-to-many section's add new row (index `0`)?
     ///
     /// This function is designed to be used with a `UITableViewDataSource`.
     ///
