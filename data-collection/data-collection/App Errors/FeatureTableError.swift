@@ -57,7 +57,7 @@ enum FeatureTableError: Int, AppError {
             return [NSLocalizedFailureReasonErrorKey: "The web map's feature table is not popup enabled.",
                     NSLocalizedDescriptionKey: "Not configured for pop-ups."]
         case .doesNotHaveAttachments:
-            return [NSLocalizedFailureReasonErrorKey: "Feature table does is not configured to have attachments.",
+            return [NSLocalizedFailureReasonErrorKey: "Feature table is not configured to have attachments.",
                     NSLocalizedDescriptionKey: "Not configured for attachments."]
         case .cannotEditFeature:
             return [NSLocalizedFailureReasonErrorKey: "Feature table is not configured for editing (add/update) a feature.",
