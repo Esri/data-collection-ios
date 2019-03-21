@@ -5,7 +5,7 @@
 **RichPopup, Relationships, RichPopupViewController**
 
 - Introduces `RichPopup` which retrieves related records via an `AGSLoadable` implementation.
-- As a result, `RichPopupViewController` has undergone a series of changes, bug fixes and upgrades.
+- As a result, `RichPopupViewController` has undergone a series of changes, bug fixes, and upgrades.
 
 **Attachments**
 
