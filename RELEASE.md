@@ -13,7 +13,7 @@
 
 **AppErrors**
 
-- Consolidates and streamlines app's Errors system.
+- Consolidates and streamlines error handling.
 
 **Accessibility**
 
