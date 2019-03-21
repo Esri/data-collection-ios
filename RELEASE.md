@@ -9,7 +9,7 @@
 
 **Attachments**
 
-- View and edit pop-up photo attachments, add new ones from camera or library.
+- View and edit pop-up photo attachments. Add new attachments from a camera or library.
 
 **AppErrors**
 
