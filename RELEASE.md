@@ -28,7 +28,7 @@
 
 **Initial Release**
 
-An example app used for collecting survey data about city trees in Portland, OR, built generic such that your organization can access its own portal web maps with little to no changes to code.
+An example app used for collecting survey data about city trees in Portland, Oregon. The application can easily be modified to access the web maps in your own organization's portal.
 
 Mobile Data Collection leverages several aspects of the Runtime SDK including:
 
