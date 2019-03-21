@@ -60,7 +60,7 @@ extension MapViewController {
             return
         }
         else {
-            // There is more than one eligible layer, find out onto which layer to add a new record.
+            // Find the layer to which the new record will be added.
             let action = UIAlertController(title: nil, message: "Add to feature layer:", preferredStyle: .actionSheet)
             
             for layer in layers {

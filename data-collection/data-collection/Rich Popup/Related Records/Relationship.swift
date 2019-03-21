@@ -99,7 +99,7 @@ class Relationship: AGSLoadableBase {
         // Cancel query.
         cancelableQuery?.cancel()
         
-        // Pass user did cancel error.
+        // Pass `userCancelled` error.
         loadDidFinishWithError(NSError.userCancelled)
     }
     
