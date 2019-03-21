@@ -49,7 +49,7 @@ class SlideNotificationView: UIView {
     
     private func setupView() {
         
-        // The view is intended to be a non-interactive container for a label that is slid on and off the screen.
+        // The view is intended to be a non-interactive container for a label that slides on and off the screen.
         isUserInteractionEnabled = false
         backgroundColor = .clear
         clipsToBounds = true
