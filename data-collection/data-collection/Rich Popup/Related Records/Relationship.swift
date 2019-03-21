@@ -15,7 +15,7 @@
 import Foundation
 import ArcGIS
 
-/// Represents and manages the related records of a popup and one of it's relationship infos.
+/// Represents and manages the related records of a popup and one of its relationship infos.
 ///
 /// This class is to not to be used directly but instead intended to be subclassed.
 ///
