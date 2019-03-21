@@ -22,7 +22,7 @@
 
 **AppColors**
 
-- This release contains a massive overhaul of `AppColors.swift`. The app globalizes house colors via an Xcode asset catalog named `HouseColors.xcassets`. House colors can be accessed both in storyboards and in code (and conformance to `UIApperance`). Specify your organization's colors in the Xcode asset catalog and see your colors across the app.
+- This release contains a massive overhaul of `AppColors.swift`. House colors are made global via the Xcode asset catalog `HouseColors.xcassets`. House colors can be accessed both in storyboards and in code (conforming to `UIApperance`). Specify your organization's colors in the Xcode asset catalog and see your colors change throughout the app.
 
 # Release 1.0
 
