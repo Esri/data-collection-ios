@@ -18,7 +18,7 @@
 **Accessibility**
 
 - UI elements now leverage Dynamic Type to improve accessibility.
-- Higher contrast colors are chosen to improve accessibility.
+- High contrast colors are added to improve accessibility.
 
 **AppColors**
 
