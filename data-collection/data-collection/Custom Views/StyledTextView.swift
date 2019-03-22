@@ -18,12 +18,13 @@ class StyledTextView: UITextView {
     
     override var isUserInteractionEnabled: Bool {
         didSet {
-            guard isUserInteractionEnabled != oldValue else { return }
-            stylize()
+            if isUserInteractionEnabled != oldValue {
+                styleForIsUserInteractionEnabled()
+            }
         }
     }
     
-    private func stylize() {
+    private func styleForIsUserInteractionEnabled() {
         
         if isUserInteractionEnabled {
             

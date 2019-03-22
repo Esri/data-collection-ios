@@ -18,18 +18,16 @@ import UIKit.UIColor
 // These colors are used throughout the application, when colors are generated at runtime.
 extension UIColor {
     
-    // MARK: General
-    
-    // The general of the app and color symbolizing online work mode.
+    // The app's main color and color that represents online work mode.
     static let primary = UIColor(named: "primary")!
     
-    // Color symbolizing offline work mode.
+    // Color that represents offline work mode.
     static let offline = UIColor(named: "offline")!
     
-    // Contrasting both primary and offline, bar button items (text and image).
+    // Color that contrasts both primary and offline colors, used in toolbars, navigation bars and multi-colored UI elements.
     static let contrasting = UIColor(named: "contrasting")!
     
-    // Contrasting both primary and offline, used in the drawer.
+    // Color that accents both primary and offline colors, used in the drawer to represent current work mode.
     static let accent = UIColor(named: "accent")!
 
     // Color symbolizing destructive and invalid.

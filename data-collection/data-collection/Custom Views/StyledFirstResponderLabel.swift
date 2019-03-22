@@ -36,13 +36,13 @@ class StyledFirstResponderLabel: UILabel {
     
     override func setNeedsLayout() {
         super.setNeedsLayout()
-        stylize()
+        styleForIsUserInteractionEnabled()
     }
     
     override var isUserInteractionEnabled: Bool {
         didSet {
             guard isUserInteractionEnabled != oldValue else { return }
-            stylize()
+            styleForIsUserInteractionEnabled()
         }
     }
     
@@ -96,10 +96,10 @@ class StyledFirstResponderLabel: UILabel {
         let tap = UITapGestureRecognizer(target: self, action: #selector(userDidTapLabel(_:)))
         self.addGestureRecognizer(tap)
         
-        stylize()
+        styleForIsUserInteractionEnabled()
     }
     
-    private func stylize() {
+    private func styleForIsUserInteractionEnabled() {
         
         if isUserInteractionEnabled {
             
@@ -136,14 +136,14 @@ class StyledFirstResponderLabel: UILabel {
     @discardableResult
     override func becomeFirstResponder() -> Bool {
         let result = super.becomeFirstResponder()
-        stylize()
+        styleForIsUserInteractionEnabled()
         return result
     }
     
     @discardableResult
     override func resignFirstResponder() -> Bool {
         let result = super.resignFirstResponder()
-        stylize()
+        styleForIsUserInteractionEnabled()
         return result
     }
     

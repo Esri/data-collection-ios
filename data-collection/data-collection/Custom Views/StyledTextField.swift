@@ -19,11 +19,11 @@ class StyledTextField: UITextField {
     override var isUserInteractionEnabled: Bool {
         didSet {
             guard isUserInteractionEnabled != oldValue else { return }
-            stylize()
+            styleForIsUserInteractionEnabled()
         }
     }
     
-    private func stylize() {
+    private func styleForIsUserInteractionEnabled() {
         
         if isUserInteractionEnabled {
             borderStyle = .roundedRect

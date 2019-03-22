@@ -61,7 +61,7 @@ enum FeatureTableError: Int, AppError {
                     NSLocalizedDescriptionKey: "Not configured for attachments."]
         case .cannotEditFeature:
             return [NSLocalizedFailureReasonErrorKey: "Feature table is not configured for editing (add/update) a feature.",
-                    NSLocalizedDescriptionKey: "Cannot edit (add/update) feature."]
+                    NSLocalizedDescriptionKey: "Cannot edit (add/update/delete) feature."]
         case .featuresAreNotFromTheSameTable:
             return [NSLocalizedFailureReasonErrorKey: "Features are not from the same table.",
                     NSLocalizedDescriptionKey: "Features are not the same type."]

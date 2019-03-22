@@ -160,6 +160,10 @@ extension AGSPopup {
     }
     
     public static func == (lhs: AGSPopup, rhs: AGSPopup) -> Bool {
-        return (lhs.geoElement as? AGSArcGISFeature)?.objectID == (rhs.geoElement as? AGSArcGISFeature)?.objectID
+        if let lhsFeature = lhs.geoElement as? AGSArcGISFeature, let rhsFeature = rhs.geoElement as? AGSArcGISFeature {
+            return lhsFeature.objectID == rhsFeature.objectID
+        } else {
+            return false
+        }
     }
 }
