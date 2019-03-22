@@ -26,7 +26,7 @@ class RichPopup: AGSPopup {
 
     /// A data structure that contains related records of the feature.
     ///
-    /// Because `Relationships` conforms to `AGSLoadable`, there is a choice whether to, or not to, load the feature's related records.
+    /// Because `Relationships` conforms to `AGSLoadable`, there is a choice whether to load the feature's related records.
     ///
     lazy private(set) var relationships: Relationships? = { [unowned self] in
         return Relationships(popup: self)

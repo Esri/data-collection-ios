@@ -76,7 +76,7 @@ class SlideNotificationView: UIView {
         let trailing = label.trailingAnchor.constraint(equalTo: trailingAnchor)
         
         // Maintain a reference to the top anchor constraint with the priority set to `.required` (the default value).
-        // Disabling this constraint will fallback to the bottom constraint (jump down a few lines down).
+        // Disabling this constraint will fallback to the bottom constraint (see a few lines below).
         let top = label.topAnchor.constraint(equalTo: topAnchor)
         top.priority = .required
         topSlideConstraint = top
