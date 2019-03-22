@@ -71,7 +71,7 @@ class SlideNotificationView: UIView {
         setContentHuggingPriority(.defaultLow, for: .vertical)
         label.setContentCompressionResistancePriority(.required, for: .vertical)
         
-        // Attach the label's leading and trailing anchors to the view's.
+        // Attach the label's anchors to the view's anchors.
         let leading = label.leadingAnchor.constraint(equalTo: leadingAnchor)
         let trailing = label.trailingAnchor.constraint(equalTo: trailingAnchor)
         
