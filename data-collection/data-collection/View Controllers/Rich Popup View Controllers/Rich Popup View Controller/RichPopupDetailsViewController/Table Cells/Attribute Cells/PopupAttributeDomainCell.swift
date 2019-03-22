@@ -33,6 +33,8 @@ class PopupAttributeDomainCell: UITableViewCell {
     
     weak var delegate: PopupAttributeCellDelegate?
     
+    var indexPath: IndexPath = IndexPath(row: 0, section: 0)
+    
     override func setEditing(_ editing: Bool, animated: Bool) {
         super.setEditing(editing, animated: animated)
         
@@ -130,7 +132,7 @@ extension PopupAttributeDomainCell: UIPickerViewDelegate, UIPickerViewDataSource
         
         if let domain = domain {
             attributeValueLabel.text = domain.codedValues[row].name
-            delegate?.popupAttributeCell(self, valueDidChange: domain.codedValues[row].code)
+            delegate?.popupAttributeCell(self, valueDidChange: domain.codedValues[row].code, at: indexPath)
         }
     }
 }

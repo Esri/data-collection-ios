@@ -31,6 +31,8 @@ class PopupAttributeTextFieldCell: UITableViewCell {
     
     weak var delegate: PopupAttributeCellDelegate?
     
+    var indexPath: IndexPath = IndexPath(row: 0, section: 0)
+    
     override func setEditing(_ editing: Bool, animated: Bool) {
         super.setEditing(editing, animated: animated)
         
@@ -38,7 +40,7 @@ class PopupAttributeTextFieldCell: UITableViewCell {
     }
     
     @objc func textFieldDidChange(_ textField: UITextField) {
-        delegate?.popupAttributeCell(self, valueDidChange: textField.text)
+        delegate?.popupAttributeCell(self, valueDidChange: textField.text, at: indexPath)
     }
 }
 

@@ -42,13 +42,7 @@ extension RichPopupDetailsViewController: PopupAttributeCellDelegate {
         self.currentFirstResponder = nil
     }
     
-    func popupAttributeCell(_ cell: PopupAttributeCell, valueDidChange value: Any?) -> String {
-        
-        // TODO: handle what happens when cell is offscreen.
-        guard let indexPath = tableView.indexPath(for: cell as! UITableViewCell) else {
-            // something went wrong.
-            return ""
-        }
+    func popupAttributeCell(_ cell: PopupAttributeCell, valueDidChange value: Any?, at indexPath: IndexPath) -> String {
         
         guard let field = popupManager.attributeField(forIndexPath: indexPath) else {
             // something went wrong.

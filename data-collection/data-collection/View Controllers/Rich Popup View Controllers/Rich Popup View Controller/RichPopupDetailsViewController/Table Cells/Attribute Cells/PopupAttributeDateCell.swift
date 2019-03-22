@@ -30,6 +30,8 @@ class PopupAttributeDateCell: UITableViewCell {
     
     weak var delegate: PopupAttributeCellDelegate?
     
+    var indexPath: IndexPath = IndexPath(row: 0, section: 0)
+    
     override func setEditing(_ editing: Bool, animated: Bool) {
         super.setEditing(editing, animated: animated)
         
@@ -98,7 +100,7 @@ extension PopupAttributeDateCell: StyledFirstResponderLabelDelegate {
     
     @objc func datePickerValueChanged(sender: UIDatePicker) {
         
-        if let formatted = delegate?.popupAttributeCell(self, valueDidChange: sender.date) {
+        if let formatted = delegate?.popupAttributeCell(self, valueDidChange: sender.date, at: indexPath) {
             
             self.value = (formatted, sender.date)
             self.attributeValueLabel.text = formatted

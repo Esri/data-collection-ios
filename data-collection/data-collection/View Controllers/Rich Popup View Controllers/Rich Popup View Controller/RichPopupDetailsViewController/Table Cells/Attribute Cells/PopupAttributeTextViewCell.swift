@@ -31,6 +31,8 @@ class PopupAttributeTextViewCell: UITableViewCell {
     
     weak var delegate: PopupAttributeCellDelegate?
     
+    var indexPath: IndexPath = IndexPath(row: 0, section: 0)
+    
     override func setEditing(_ editing: Bool, animated: Bool) {
         super.setEditing(editing, animated: animated)
         attributeValueTextView.isUserInteractionEnabled = editing
@@ -44,7 +46,7 @@ extension PopupAttributeTextViewCell: UITextViewDelegate {
     }
     
     func textViewDidChange(_ textView: UITextView) {
-        delegate?.popupAttributeCell(self, valueDidChange: textView.text)
+        delegate?.popupAttributeCell(self, valueDidChange: textView.text, at: indexPath)
     }
 }
 

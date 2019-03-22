@@ -24,9 +24,11 @@ protocol PopupAttributeCell: AnyObject {
     var firstResponder: UIView? { get }
     
     var delegate: PopupAttributeCellDelegate? { get set }
+    
+    var indexPath: IndexPath { get set }
 }
 
 protocol PopupAttributeCellDelegate: AnyObject {
-    @discardableResult func popupAttributeCell(_ cell: PopupAttributeCell, valueDidChange value: Any?) -> String
+    @discardableResult func popupAttributeCell(_ cell: PopupAttributeCell, valueDidChange value: Any?, at indexPath: IndexPath) -> String
     func popupAttributeCell(_ cell: PopupAttributeCell, didBecomeFirstResponder firstResponder: UIResponder)
 }

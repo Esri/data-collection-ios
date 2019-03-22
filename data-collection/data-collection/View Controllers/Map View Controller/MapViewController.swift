@@ -186,7 +186,7 @@ class MapViewController: UIViewController {
     }
     
     override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
-        // TODO: improve identifiers
+
         if identifier == "modallyPresentRelatedRecordsPopupViewController" {
             return currentPopupManager != nil
         }
@@ -197,7 +197,6 @@ class MapViewController: UIViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
         if let destination = segue.navigationDestination as? RichPopupViewController {
-            // TODO: get rid of EphemeralCacheKeys
             
             if let newPopup = EphemeralCache.get(objectForKey: EphemeralCacheKeys.newSpatialFeature) as? RichPopup {
                 setCurrentPopup(popup: newPopup)

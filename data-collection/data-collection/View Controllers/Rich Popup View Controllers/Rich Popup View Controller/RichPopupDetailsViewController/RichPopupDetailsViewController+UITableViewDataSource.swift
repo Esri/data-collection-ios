@@ -135,6 +135,7 @@ extension RichPopupDetailsViewController /* UITableViewDataSource */ {
             
             cell.setTitle(title, value: (formatted, raw))
             cell.delegate = self
+            cell.indexPath = indexPath
             
             if isEditing {
                 // For editing cells, validate the cell after configuration.
