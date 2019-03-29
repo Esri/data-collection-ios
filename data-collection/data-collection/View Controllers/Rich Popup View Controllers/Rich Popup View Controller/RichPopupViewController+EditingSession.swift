@@ -16,9 +16,9 @@ import ArcGIS
 
 extension RichPopupViewController {
         
-    // MARK: Finish Session
+    // MARK: Save
     
-    func finishEditingSession(_ completion: ((_ error: Error?) -> Void)? = nil) {
+    func finishEditingAndPersistRecord(_ completion: ((_ error: Error?) -> Void)? = nil) {
         
         // 1. Finish editing pop-up.
         finishEditingPopup { [weak self] (error) in
@@ -85,5 +85,36 @@ extension RichPopupViewController {
             // This line can be removed without any consequence.
             self.popupManager.conditionallyPerformCustomBehavior { completion(nil) }
         })
+    }
+    
+    // MARK: Delete
+    
+    func deleteRecord(_ completion: ((_ error: Error?) -> Void)? = nil) {
+        
+        guard
+            let feature = popupManager.popup.geoElement as? AGSArcGISFeature,
+            let featureTable = feature.featureTable as? AGSArcGISFeatureTable,
+            featureTable.canDelete(feature) else {
+                
+                completion?(NSError.invalidOperation)
+                
+                return
+        }
+        
+        self.popupManager.cancelEditing()
+        
+        do {
+            try self.popupManager.deleteRichPopup()
+        }
+        catch {
+            completion?(error)
+            return
+        }
+        
+        // Delete the record from the table.
+        featureTable.performDelete(feature: feature) { (error) in
+            
+            completion?(error)
+        }
     }
 }

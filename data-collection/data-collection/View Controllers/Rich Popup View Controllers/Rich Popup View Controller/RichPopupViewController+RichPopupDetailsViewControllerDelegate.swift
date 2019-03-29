@@ -74,59 +74,30 @@ extension RichPopupViewController: RichPopupDetailsViewControllerDelegate {
     
     func detailsViewController(_ detailsViewController: RichPopupDetailsViewController, selectedAddNewOneToManyRelatedRecordForRelationship relationship: OneToManyRelationship) {
         
-        // Use this local scope function to build a view controller to display and edit a new one-to-many related record.
-        func buildChildViewController() {
-            do {
-                if let newPopupManager = try popupManager.buildRichPopupManagerForNewOneToManyRecord(for: relationship) {
-                    
-                    let richPopupViewController = storyboard?.instantiateViewController(withIdentifier: "RichPopupViewController") as? RichPopupViewController
-                    
-                    assert(richPopupViewController != nil, "A configuration to this view controller's storyboard has changed. Please fix.")
-                    
-                    if let richPopupViewController = richPopupViewController {
-                        
-                        richPopupViewController.popupManager = newPopupManager
-                        richPopupViewController.shouldLoadRichPopupRelatedRecords = false
-                        richPopupViewController.setEditing(true, animated: false)
-                        
-                        show(richPopupViewController, sender: self)
-                    }
-                }
-                else {
-                    self.present(simpleAlertMessage: NSError.unknown.localizedDescription)
-                }
-            }
-            catch {
-                self.present(simpleAlertMessage: error.localizedDescription)
-            }
-        }
+        assert(!popupManager.isEditing, "Cannot add a one-to-many related record during an editing session.")
         
-        if popupManager.isEditing {
-            
-            // Prompt the user to finish editing before adding a new related record.
-            self.present(confirmationAlertMessage: "You must finish editing this record before adding a new one.",
-                         confirmationTitle: "Save",
-                         isDestructive: false,
-                         confirmationAction: { [weak self] (_) in
-                            
-                            guard let self = self else { return }
-                            
-                            self.finishEditingSession { [weak self] (error) in
-                                
-                                guard let self = self else { return }
-                                
-                                if let error = error {
-                                    self.present(simpleAlertMessage: "Could not save the record. \(error.localizedDescription)")
-                                }
-                                else {
-                                    buildChildViewController()
-                                }                                
-                            }
-            })
+        do {
+            if let newPopupManager = try popupManager.buildRichPopupManagerForNewOneToManyRecord(for: relationship) {
+                
+                let richPopupViewController = storyboard?.instantiateViewController(withIdentifier: "RichPopupViewController") as? RichPopupViewController
+                
+                assert(richPopupViewController != nil, "A configuration to this view controller's storyboard has changed. Please fix.")
+                
+                if let richPopupViewController = richPopupViewController {
+                    
+                    richPopupViewController.popupManager = newPopupManager
+                    richPopupViewController.shouldLoadRichPopupRelatedRecords = false
+                    richPopupViewController.setEditing(true, animated: false)
+                    
+                    show(richPopupViewController, sender: self)
+                }
+            }
+            else {
+                self.present(simpleAlertMessage: NSError.unknown.localizedDescription)
+            }
         }
-        else {
-            // If not editing, jump straight to building the view controller.
-            buildChildViewController()
+        catch {
+            self.present(simpleAlertMessage: error.localizedDescription)
         }
     }
 }

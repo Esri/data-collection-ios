@@ -233,17 +233,18 @@ class RichPopupViewController: SegmentedViewController {
             disableUserInteraction(status: "Saving Record")
             
             // User is requesting to finish an editing session.
-            finishEditingSession { [weak self] (error) in
+            finishEditingAndPersistRecord { [weak self] (error) in
                 
                 guard let self = self else { return }
                 
+                self.enableUserInteraction()
+
                 if let error = error {
+                                        
                     self.present(simpleAlertMessage: "Could not save record. \(error.localizedDescription)")
                 }
                 
                 self.updateViewControllerUI(animated: animated)
-                
-                self.enableUserInteraction()
             }
         }
         else {
@@ -324,7 +325,7 @@ class RichPopupViewController: SegmentedViewController {
             guard let self = self else { return }
             
             if let error = error {
-                self.present(simpleAlertMessage: "Something went wrong. Could not delete the record. \(error.localizedDescription)")
+                self.present(simpleAlertMessage: "Could not delete record. \(error.localizedDescription)")
             }
             else {
                 self.popDismiss(animated: true)
@@ -334,47 +335,19 @@ class RichPopupViewController: SegmentedViewController {
     
     private func confirmDeleteRecord(_ completion: ((Error?) -> Void)? = nil) {
         
-        guard
-            let feature = popupManager.popup.geoElement as? AGSArcGISFeature,
-            let featureTable = feature.featureTable as? AGSArcGISFeatureTable,
-            featureTable.canDelete(feature) else {
-    
-            completion?(NSError.invalidOperation)
-                
-            return
-        }
-        
         let deleteAction: ((UIAlertAction) -> Void) = { [weak self] (_) in
             
             guard let self = self else { return }
-            
+
             self.disableUserInteraction(status: "Deleting Record")
-            
-            self.popupManager.cancelEditing()
-            
-            do {
-                try self.popupManager.deleteRichPopup()
-            }
-            catch {
-                completion?(error)
-                return 
-            }
-            
-            // Delete the record from the table.
-            featureTable.performDelete(feature: feature) { [weak self] (error) in
+
+            self.deleteRecord() { [weak self] (error) in
                 
                 guard let self = self else { return }
-                
-                self.popupManager.conditionallyPerformCustomBehavior { completion?(nil) }
 
-                if let error = error {
-                    completion?(error)
-                }
-                else {
-                    completion?(nil)
-                }
-                
                 self.enableUserInteraction()
+                
+                self.popupManager.conditionallyPerformCustomBehavior { completion?(error) }
             }
         }
         

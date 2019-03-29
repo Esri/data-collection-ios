@@ -70,22 +70,22 @@ extension AGSArcGISFeatureTable {
     
     private func performEdit(type: EditType, forFeature feature: AGSArcGISFeature, completion: @escaping (Error?)->Void) {
         
-        let editClosure:(Error?) -> Void = { error in
+        func updateObjectID() {
+            
+            if type != .delete {
+                feature.refresh()
+            }
+            else {
+                feature.objectID = nil
+            }
+        }
+        
+        func editCompletion(_ error: Error?) {
             
             guard error == nil else {
                 print("[Error: Feature Table] could not edit:", error!.localizedDescription)
                 completion(error!)
                 return
-            }
-            
-            let updateObjectID: () -> Void = {
-                
-                if type != .delete {
-                    feature.refresh()
-                }
-                else {
-                    feature.objectID = nil
-                }
             }
             
             // If online, apply edits.
@@ -95,27 +95,17 @@ extension AGSArcGISFeatureTable {
                 return
             }
             
-            serviceFeatureTable.applyEdits(completion: { (results, applyEditsError) in
-                
-                if let error = applyEditsError {
-                    print("[Error: Service Feature Table] could not apply edits:", error)
-                    // If there was an error applying the edits to the service feature table, roll back the local edits.
-                    serviceFeatureTable.undoLocalEdits(completion: { (undoError) in
-                        updateObjectID()
-                        completion(error)
-                    })
-                }
-                else {
-                    updateObjectID()
-                    completion(nil)
-                }
-            })
+            serviceFeatureTable.applyEdits() { (results, error) in
+
+                updateObjectID()
+                completion(error)
+            }
         }
         
         switch type {
-        case .update: update(feature, completion: editClosure)
-        case .delete: delete(feature, completion: editClosure)
-        case .add: add(feature, completion: editClosure)
+        case .update: update(feature, completion: editCompletion)
+        case .delete: delete(feature, completion: editCompletion)
+        case .add: add(feature, completion: editCompletion)
         }
     }
 }
