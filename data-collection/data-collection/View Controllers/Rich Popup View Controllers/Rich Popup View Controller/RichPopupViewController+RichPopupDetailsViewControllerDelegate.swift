@@ -76,28 +76,26 @@ extension RichPopupViewController: RichPopupDetailsViewControllerDelegate {
         
         assert(!popupManager.isEditing, "Cannot add a one-to-many related record during an editing session.")
         
+        let newPopupManager: RichPopupManager
         do {
-            if let newPopupManager = try popupManager.buildRichPopupManagerForNewOneToManyRecord(for: relationship) {
-                
-                let richPopupViewController = storyboard?.instantiateViewController(withIdentifier: "RichPopupViewController") as? RichPopupViewController
-                
-                assert(richPopupViewController != nil, "A configuration to this view controller's storyboard has changed. Please fix.")
-                
-                if let richPopupViewController = richPopupViewController {
-                    
-                    richPopupViewController.popupManager = newPopupManager
-                    richPopupViewController.shouldLoadRichPopupRelatedRecords = false
-                    richPopupViewController.setEditing(true, animated: false)
-                    
-                    show(richPopupViewController, sender: self)
-                }
-            }
-            else {
-                self.present(simpleAlertMessage: NSError.unknown.localizedDescription)
-            }
+            newPopupManager = try popupManager.buildRichPopupManagerForNewOneToManyRecord(for: relationship)
         }
         catch {
             self.present(simpleAlertMessage: error.localizedDescription)
+            return
+        }
+        
+        let richPopupViewController = storyboard?.instantiateViewController(withIdentifier: "RichPopupViewController") as? RichPopupViewController
+        
+        assert(richPopupViewController != nil, "A configuration to this view controller's storyboard has changed. Please fix.")
+        
+        if let richPopupViewController = richPopupViewController {
+            
+            richPopupViewController.popupManager = newPopupManager
+            richPopupViewController.shouldLoadRichPopupRelatedRecords = false
+            richPopupViewController.setEditing(true, animated: false)
+            
+            show(richPopupViewController, sender: self)
         }
     }
 }

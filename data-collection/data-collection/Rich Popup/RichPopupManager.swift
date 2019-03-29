@@ -399,7 +399,7 @@ class RichPopupManager: AGSPopupManager {
     /// - NOTE: Use this function to create a new one-to-many related record pop-up manager so that changes made to the new record
     /// are also reflected by this, the parent pop-up manager.
     ///
-    func buildRichPopupManagerForNewOneToManyRecord(for relationship: Relationship) throws -> RichPopupManager? {
+    func buildRichPopupManagerForNewOneToManyRecord(for relationship: Relationship) throws -> RichPopupManager {
         
         guard self.richPopup.relationships?.loadStatus == .loaded else {
             throw self.richPopup.relationships?.loadError ?? NSError.unknown
@@ -410,7 +410,7 @@ class RichPopupManager: AGSPopupManager {
         }
         
         guard let popup = relationship.createNewRecord() else {
-            return nil
+            throw NSError.invalidOperation
         }
         
         let richPopup = RichPopup(popup: popup)
@@ -426,7 +426,7 @@ class RichPopupManager: AGSPopupManager {
     /// - NOTE: Use this function to create a new one-to-many related record pop-up manager so that changes made to the new record
     /// are also reflected by this, the parent pop-up manager.
     ///
-    public func buildRichPopupManagerForExistingRecord(at indexPath: IndexPath) throws -> RichPopupManager? {
+    public func buildRichPopupManagerForExistingRecord(at indexPath: IndexPath) throws -> RichPopupManager {
         
         guard self.richPopup.relationships?.loadStatus == .loaded else {
             throw self.richPopup.relationships?.loadError ?? NSError.unknown
@@ -436,15 +436,15 @@ class RichPopupManager: AGSPopupManager {
             throw RichPopupManagerError.viewRelatedRecordError
         }
         
-        var manager: RichPopupManager?
-        var relationship: Relationship?
+        let manager: RichPopupManager
+        let relationship: Relationship
         
         if let manyToOneRelationship = self.relationship(forIndexPath: indexPath) as? ManyToOneRelationship {
             
             relationship = manyToOneRelationship
             
             guard let popup = manyToOneRelationship.relatedPopup else {
-                return nil
+                throw NSError.invalidOperation
             }
             
             let richPopup = RichPopup(popup: popup)
@@ -455,17 +455,17 @@ class RichPopupManager: AGSPopupManager {
             relationship = oneToManyRelationship
             
             guard let popup = oneToManyRelationship.popup(forIndexPath: indexPath) else {
-                return nil
+                throw NSError.invalidOperation
             }
             
             let richPopup = RichPopup(popup: popup)
             manager = RichPopupManager(richPopup: richPopup)
 
-            manager!.parentOneToManyManagers.setObject(self, forKey: relationship!)
+            manager.parentOneToManyManagers.setObject(self, forKey: relationship)
         }
         else {
             assertionFailure("Unsupported relationship type.")
-            return nil
+            throw NSError.invalidOperation
         }
         
         return manager
