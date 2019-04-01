@@ -31,7 +31,7 @@ class RichPopupStagedPhotoAttachment: RichPopupStagedAttachment {
         
         guard var jpegName = name?.trimmingCharacters(in: .whitespacesAndNewlines) else { return nil }
         
-        let fileExtension = NSString(string: jpegName).pathExtension
+        let fileExtension = (jpegName as NSString).pathExtension
         
         if jpegName.isEmpty {
             jpegName.append("Image")
