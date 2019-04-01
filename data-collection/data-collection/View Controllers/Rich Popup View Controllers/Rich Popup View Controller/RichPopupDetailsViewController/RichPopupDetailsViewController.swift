@@ -55,7 +55,9 @@ class RichPopupDetailsViewController: UITableViewController {
             if let relationships = popupManager.richPopup.relationships {
                 
                 relationships.load { [weak self] (error) in
+                    
                     guard let self = self else { return }
+                    
                     self.tableView.reloadData()
                 }
             }

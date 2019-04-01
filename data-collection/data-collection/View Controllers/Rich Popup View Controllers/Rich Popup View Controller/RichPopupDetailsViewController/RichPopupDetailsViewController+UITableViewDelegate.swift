@@ -51,21 +51,16 @@ extension RichPopupDetailsViewController /* UITableViewDelegate */ {
                     }
                 }
                 else {
+                    let newPopupManager: RichPopupManager
                     do {
-                        
-                        let newPopupManager = try popupManager.buildRichPopupManagerForExistingRecord(at: indexPath)
-                        assert(newPopupManager != nil, "If no error is thrown and no new popup manager is returned, something is wrong with the builder popup manager.")
-                        
-                        if let popupManager = newPopupManager {
-                            delegate?.detailsViewController(self, selectedViewRelatedPopup: popupManager)
-                        }
-                        else {
-                            present(simpleAlertMessage: "Something went wrong showing the record.")
-                        }
+                        newPopupManager = try popupManager.buildRichPopupManagerForExistingRecord(at: indexPath)
                     }
                     catch {
                         self.present(simpleAlertMessage: error.localizedDescription)
+                        return
                     }
+                    
+                    delegate?.detailsViewController(self, selectedViewRelatedPopup: newPopupManager)
                 }
             }
             else{
@@ -86,20 +81,16 @@ extension RichPopupDetailsViewController /* UITableViewDelegate */ {
                 }
                 else if popupManager.indexPathWithinOneToMany(indexPath) {
                     
+                    let newPopupManager: RichPopupManager
                     do {
-                        let newPopupManager = try popupManager.buildRichPopupManagerForExistingRecord(at: indexPath)
-                        assert(newPopupManager != nil, "If no error is thrown and no new popup manager is returned, something is wrong with the builder popup manager.")
-                        
-                        if let popupManager = newPopupManager {
-                            delegate?.detailsViewController(self, selectedViewRelatedPopup: popupManager)
-                        }
-                        else {
-                            present(simpleAlertMessage: "Something went wrong showing the record.")
-                        }
+                        newPopupManager = try popupManager.buildRichPopupManagerForExistingRecord(at: indexPath)
                     }
                     catch {
                         self.present(simpleAlertMessage: error.localizedDescription)
+                        return
                     }
+                    
+                    delegate?.detailsViewController(self, selectedViewRelatedPopup: newPopupManager)
                 }
                 else {
                     assertionFailure("Provided an index path that is unaccounted for.")
