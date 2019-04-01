@@ -122,7 +122,7 @@ class RichPopupAttachmentsManager: AGSLoadableBase {
             if let photoAttachment = attachment as? RichPopupStagedPhotoAttachment {
                 
                 popupAttachmentsManager.addAttachmentAsJPG(with: photoAttachment.image,
-                                                           name: photoAttachment.name ?? "Image",
+                                                           name: photoAttachment.nameAsJPEG ?? "Image.jpeg",
                                                            preferredSize: photoAttachment.preferredSize)
             }
             else {
