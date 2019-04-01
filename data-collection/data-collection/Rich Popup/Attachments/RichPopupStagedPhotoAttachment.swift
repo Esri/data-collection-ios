@@ -27,13 +27,26 @@ class RichPopupStagedPhotoAttachment: RichPopupStagedAttachment {
     
     let image: UIImage
     
+    var nameAsJPEG: String? {
+        
+        guard var jpegName = name else { return nil }
+        
+        let fileExtension = NSString(string: jpegName).pathExtension
+        
+        if fileExtension != "jpeg" && fileExtension != "jpg" {
+            jpegName.append(".jpeg")
+        }
+        
+        return jpegName
+    }
+    
     init?(image: UIImage) {
         
         self.image = image
         
-        guard let data = image.pngData() else { return nil }
+        guard let data = image.jpegData(compressionQuality: 1.0) else { return nil }
         
-        super.init(data: data, mimeType: "image/png", name: nil)
+        super.init(data: data, mimeType: "image/jpeg", name: nil)
         
         setAttachmentNameIncrementedNext()
     }
