@@ -33,10 +33,10 @@ extension NetworkReachabilityManager {
         
         manager.listener = { status in
             print("[Reachability] Network status changed: \(status)")
-            if firstReachabilityChangeObservedStatusFlag {
+            if firstReachabilityChangeObserved {
                 NotificationCenter.default.post(name: .reachabilityDidChange, object: nil)
             } else {
-                firstReachabilityChangeObservedStatusFlag = true
+                firstReachabilityChangeObserved = true
             }
         }
         
@@ -45,10 +45,10 @@ extension NetworkReachabilityManager {
     
     /// A flag for ignoring the initial reachability change status notification,
     /// only publishing subsequent changes.
-    private static var firstReachabilityChangeObservedStatusFlag = false
+    private static var firstReachabilityChangeObserved = false
     
     func resetAndStartListening() {
-        NetworkReachabilityManager.firstReachabilityChangeObservedStatusFlag = false
+        NetworkReachabilityManager.firstReachabilityChangeObserved = false
         startListening()
     }
 }

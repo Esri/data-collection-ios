@@ -29,7 +29,7 @@ extension UIViewController {
         }
     }
     
-    func popDismiss(animated: Bool, completion: (() -> Void)? = nil) {
+    func popOrDismiss(animated: Bool, completion: (() -> Void)? = nil) {
         
         if let navigationController = navigationController {
             

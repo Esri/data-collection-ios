@@ -35,7 +35,7 @@ class Relationships: AGSLoadableBase {
     
     private(set) var oneToMany = [OneToManyRelationship]()
     
-    private var loadingRelationships: [AGSLoadableBase]?
+    private var loadingRelationships: [AGSLoadable]?
     
     override func doCancelLoading() {
         
@@ -79,7 +79,7 @@ class Relationships: AGSLoadableBase {
             return
         }
         
-        var loadables = [AGSLoadableBase]()
+        var loadables = [AGSLoadable]()
         
         for info in layerInfo.relationshipInfos {
             

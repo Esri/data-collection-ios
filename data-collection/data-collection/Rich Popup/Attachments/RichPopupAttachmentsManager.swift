@@ -39,13 +39,6 @@ class RichPopupAttachmentsManager: AGSLoadableBase {
     
     private var cancelableFetch: AGSCancelable?
     
-    override func doCancelLoading() {
-        
-        cancelableFetch?.cancel()
-        
-        clear()
-    }
-    
     override func doStartLoading(_ retrying: Bool) {
         
         if retrying { clear() }
@@ -73,6 +66,13 @@ class RichPopupAttachmentsManager: AGSLoadableBase {
             
             self.loadDidFinishWithError(nil)
         }
+    }
+    
+    override func doCancelLoading() {
+        
+        cancelableFetch?.cancel()
+        
+        clear()
     }
     
     // MARK: Fetched and Staged Attachments
@@ -112,6 +112,11 @@ class RichPopupAttachmentsManager: AGSLoadableBase {
         return true
     }
     
+    // MARK: Popup Manager Lifecycle
+    //
+    // Used in the `RichPopupManager`.
+    //
+    
     func commitStagedAttachments() {
         
         // Add Staged Attachments
@@ -149,6 +154,14 @@ class RichPopupAttachmentsManager: AGSLoadableBase {
         stagedAttachments.removeAll()
     }
     
+    // MARK: Thumbnail Images Cache
+    
+    // A `CachedImage` is a hashable class that contains an optional `UIImage`.
+    //
+    // Not all attachments will generate a thumbnail.
+    // If we've attempted to generate a thumbnail for an attachment that doesn't have one,
+    // we want the cache to reflect that we've already tried so that we don't try again.
+    //
     private class CachedImage: NSObject {
         
         let image: UIImage?
@@ -174,6 +187,7 @@ class RichPopupAttachmentsManager: AGSLoadableBase {
 
     func generateThumbnail(for attachment: RichPopupPreviewableAttachment, size: Float) throws {
         
+        // We don't want to perform the `generateThumbnail` operation more than once.
         guard thumbnailCache.object(forKey: attachment) == nil else {
             return
         }
@@ -205,18 +219,9 @@ class RichPopupAttachmentsManager: AGSLoadableBase {
             self.delegate?.richPopupAttachmentsManager(self, generatedThumbnailForAttachment: attachment)
         }
     }
-    
-    func loadAttachment(at index: Int) throws {
-        
-        guard let attachment = attachment(at: index) else {
-            throw NSError.invalidOperation
-        }
-        
-        if let attachment = attachment as? AGSLoadable {
-            attachment.load(completion: nil)
-        }
-    }
 }
+
+// MARK: Attachment retrieval, UI elements interface
 
 extension RichPopupAttachmentsManager {
     
@@ -234,6 +239,17 @@ extension RichPopupAttachmentsManager {
         else {
             let stagedIndex = index - fetchedAttachments.count
             return stagedAttachments[stagedIndex]
+        }
+    }
+    
+    func loadAttachment(at index: Int) throws {
+        
+        guard let attachment = attachment(at: index) else {
+            throw NSError.invalidOperation
+        }
+        
+        if let attachment = attachment as? AGSLoadable {
+            attachment.load(completion: nil)
         }
     }
     
