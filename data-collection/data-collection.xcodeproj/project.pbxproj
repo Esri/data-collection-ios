@@ -20,6 +20,8 @@
 		944433EC21AC788800E96A6E /* FeatureTableError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 944433EB21AC788800E96A6E /* FeatureTableError.swift */; };
 		944433F121ACD59E00E96A6E /* RichPopupManagerError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 944433F021ACD59E00E96A6E /* RichPopupManagerError.swift */; };
 		944433F321AF5F2F00E96A6E /* RichPopupManager+CustomBehavior.swift in Sources */ = {isa = PBXBuildFile; fileRef = 944433F221AF5F2F00E96A6E /* RichPopupManager+CustomBehavior.swift */; };
+		944D81D62253E72300972941 /* ArcGIS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 944D81D52253E72300972941 /* ArcGIS.framework */; };
+		944D81D72253E72300972941 /* ArcGIS.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 944D81D52253E72300972941 /* ArcGIS.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		9451EC5220D0705700792FFC /* CustomBehavior_IdentifyNeighborhood.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9451EC5120D0705700792FFC /* CustomBehavior_IdentifyNeighborhood.swift */; };
 		9458E2A5219B542700D18CEE /* HouseColors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9458E2A4219B542700D18CEE /* HouseColors.xcassets */; };
 		945CEE7520DDC2AC00CD3E0D /* SVRadialGradientLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 945CEE6B20DDC2AC00CD3E0D /* SVRadialGradientLayer.m */; };
@@ -153,7 +155,6 @@
 		94B37601207E8E4800691F2A /* DispatchGroup+Enter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94B375EC207E8E4800691F2A /* DispatchGroup+Enter.swift */; };
 		94B37603207E8E4800691F2A /* CGPoint+Modify.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94B375EF207E8E4800691F2A /* CGPoint+Modify.swift */; };
 		94B3760C207EAE4700691F2A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94B3760B207EAE4600691F2A /* AppDelegate.swift */; };
-		94B3760E207EAEA100691F2A /* ArcGIS.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 94B3760D207EAEA100691F2A /* ArcGIS.bundle */; };
 		94BA7D3A20FD140500C78255 /* AppColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94BA7D3920FD140500C78255 /* AppColors.swift */; };
 		94BA7D3C20FD151A00C78255 /* AppFonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94BA7D3B20FD151A00C78255 /* AppFonts.swift */; };
 		94C550EA221207C500DD7E40 /* UIResponder+InputAccessoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94C550E9221207C500DD7E40 /* UIResponder+InputAccessoryView.swift */; };
@@ -210,6 +211,20 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		944D81D22253E4DA00972941 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				944D81D72253E72300972941 /* ArcGIS.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		940DA9712097825700AB4BF6 /* UILabel+EmptyString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+EmptyString.swift"; sourceTree = "<group>"; };
 		940DA97A2098E1C600AB4BF6 /* AGSArcGISFeatureTable+Query.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AGSArcGISFeatureTable+Query.swift"; sourceTree = "<group>"; };
@@ -224,6 +239,7 @@
 		944433EB21AC788800E96A6E /* FeatureTableError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeatureTableError.swift; sourceTree = "<group>"; };
 		944433F021ACD59E00E96A6E /* RichPopupManagerError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RichPopupManagerError.swift; sourceTree = "<group>"; };
 		944433F221AF5F2F00E96A6E /* RichPopupManager+CustomBehavior.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RichPopupManager+CustomBehavior.swift"; sourceTree = "<group>"; };
+		944D81D52253E72300972941 /* ArcGIS.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ArcGIS.framework; path = $HOME/Library/SDKs/ArcGIS/iOS/Frameworks/Dynamic/ArcGIS.framework; sourceTree = "<absolute>"; };
 		9451EC5120D0705700792FFC /* CustomBehavior_IdentifyNeighborhood.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomBehavior_IdentifyNeighborhood.swift; sourceTree = "<group>"; };
 		9458E2A4219B542700D18CEE /* HouseColors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = HouseColors.xcassets; sourceTree = "<group>"; };
 		945CEE6B20DDC2AC00CD3E0D /* SVRadialGradientLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVRadialGradientLayer.m; sourceTree = "<group>"; };
@@ -363,7 +379,6 @@
 		94B375EC207E8E4800691F2A /* DispatchGroup+Enter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "DispatchGroup+Enter.swift"; sourceTree = "<group>"; };
 		94B375EF207E8E4800691F2A /* CGPoint+Modify.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CGPoint+Modify.swift"; sourceTree = "<group>"; };
 		94B3760B207EAE4600691F2A /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		94B3760D207EAEA100691F2A /* ArcGIS.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = ArcGIS.bundle; path = $HOME/Library/SDKs/ArcGIS/iOS/Frameworks/Static/ArcGIS.framework/Versions/Current/Resources/ArcGIS.bundle; sourceTree = "<group>"; };
 		94BA7D3920FD140500C78255 /* AppColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppColors.swift; sourceTree = "<group>"; };
 		94BA7D3B20FD151A00C78255 /* AppFonts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppFonts.swift; sourceTree = "<group>"; };
 		94C550E9221207C500DD7E40 /* UIResponder+InputAccessoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIResponder+InputAccessoryView.swift"; sourceTree = "<group>"; };
@@ -414,6 +429,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				944D81D62253E72300972941 /* ArcGIS.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1105,6 +1121,7 @@
 		94FA8B16207BF2CD00972C75 = {
 			isa = PBXGroup;
 			children = (
+				944D81D52253E72300972941 /* ArcGIS.framework */,
 				94FA8B21207BF2CD00972C75 /* data-collection */,
 				94FA8B52207BF58B00972C75 /* Resources */,
 				94FA8B36207BF2CD00972C75 /* data-collectionTests */,
@@ -1175,7 +1192,6 @@
 				9458E2A4219B542700D18CEE /* HouseColors.xcassets */,
 				94D544C8207FC67B00ED0D04 /* AppIcon.xcassets */,
 				94D544C7207FC67A00ED0D04 /* Assets.xcassets */,
-				94B3760D207EAEA100691F2A /* ArcGIS.bundle */,
 				94FA8B2E207BF2CD00972C75 /* Info.plist */,
 				94FA8B2B207BF2CD00972C75 /* LaunchScreen.storyboard */,
 			);
@@ -1207,6 +1223,7 @@
 				94FA8B1C207BF2CD00972C75 /* Frameworks */,
 				94FA8B1D207BF2CD00972C75 /* Resources */,
 				94AEFD2A217F8F69004339B9 /* ShellScript */,
+				944D81D22253E4DA00972941 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -1310,7 +1327,6 @@
 				94FA8B2D207BF2CD00972C75 /* LaunchScreen.storyboard in Resources */,
 				94B375BD207E8D5600691F2A /* AddressLocator.loc.xml in Resources */,
 				948066332091474F00A398EA /* RichPopup.storyboard in Resources */,
-				94B3760E207EAEA100691F2A /* ArcGIS.bundle in Resources */,
 				94D544C9207FC67B00ED0D04 /* Assets.xcassets in Resources */,
 				94FA8B28207BF2CD00972C75 /* AppContainerViewController.storyboard in Resources */,
 				946D20BE2130965A001BF5CC /* MapViewController.storyboard in Resources */,
@@ -1707,17 +1723,14 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 23PX5GD8E6;
-				FRAMEWORK_SEARCH_PATHS = $HOME/Library/SDKs/ArcGIS/iOS/Frameworks/Static/;
+				FRAMEWORK_SEARCH_PATHS = (
+					$HOME/Library/SDKs/ArcGIS/iOS/Frameworks/Dynamic/,
+					"$(USER_LIBRARY_DIR)/SDKs/ArcGIS/iOS/Frameworks/Dynamic",
+				);
 				INFOPLIST_FILE = "$(SRCROOT)/Resources/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				OTHER_LDFLAGS = (
-					"-ObjC",
-					"-framework",
-					ArcGIS,
-					"-l",
-					"c++",
-				);
+				OTHER_LDFLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.esri.arcgisruntime-example-apps.data-collection";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
@@ -1735,17 +1748,14 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 23PX5GD8E6;
-				FRAMEWORK_SEARCH_PATHS = $HOME/Library/SDKs/ArcGIS/iOS/Frameworks/Static/;
+				FRAMEWORK_SEARCH_PATHS = (
+					$HOME/Library/SDKs/ArcGIS/iOS/Frameworks/Dynamic/,
+					"$(USER_LIBRARY_DIR)/SDKs/ArcGIS/iOS/Frameworks/Dynamic",
+				);
 				INFOPLIST_FILE = "$(SRCROOT)/Resources/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				OTHER_LDFLAGS = (
-					"-ObjC",
-					"-framework",
-					ArcGIS,
-					"-l",
-					"c++",
-				);
+				OTHER_LDFLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.esri.arcgisruntime-example-apps.data-collection";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
