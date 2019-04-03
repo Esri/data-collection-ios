@@ -129,13 +129,7 @@ extension AppContext {
     
     @discardableResult
     func moveDownloadedMapToOfflineMapDirectory() throws -> URL?  {
-
-        do {
-            return try FileManager.default.replaceItemAt(.offlineMapDirectoryURL(forWebMapItemID: AppConfiguration.webMapItemID), withItemAt: .temporaryOfflineMapDirectoryURL(forWebMapItemID: AppConfiguration.webMapItemID))
-        }
-        catch {
-            throw error
-        }
+        return try FileManager.default.replaceItemAt(.offlineMapDirectoryURL(forWebMapItemID: AppConfiguration.webMapItemID), withItemAt: .temporaryOfflineMapDirectoryURL(forWebMapItemID: AppConfiguration.webMapItemID))
     }
     
 
@@ -146,24 +140,13 @@ extension AppContext {
         mobileMapPackage = nil
         hasOfflineMap = false
 
-        do {
-            try appFiles.deleteContentsOfOfflineMapDirectory()
-            try appFiles.prepareOfflineMapDirectory()
-        }
-        catch {
-            throw error
-        }
+        try appFiles.deleteContentsOfOfflineMapDirectory()
+        try appFiles.prepareOfflineMapDirectory()
     }
     
     /// Delete any offline map then attempt to set the current map to the online web map, and the work mode to online.
     func deleteOfflineMapAndAttemptToGoOnline() throws {
-        
-        do {
-            try deleteOfflineMap()
-        }
-        catch {
-            throw error
-        }
+        try deleteOfflineMap()
         
         if appReachability.isReachable {
             setWorkModeOnlineWithMapFromPortal()

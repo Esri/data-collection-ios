@@ -64,41 +64,36 @@ extension AGSPopup {
             throw PopupSortingError.missingFields
         }
         
-        do {
-            let lhsManager = AGSPopupManager(popup: lhs)
-            let rhsManager = AGSPopupManager(popup: rhs)
-            
-            guard lhsManager.fieldType(for: lhsField) == rhsManager.fieldType(for: rhsField) else {
-                throw PopupSortingError.badFields
-            }
-            
-            guard let rhsValue = rhsManager.value(for: rhsField) else {
-                return true
-            }
-            
-            guard let lhsValue = lhsManager.value(for: lhsField) else {
-                return false
-            }
-            
-            switch lhsManager.fieldType(for: lhsField) {
-            case .int16:
-                return (lhsValue as! Int16) < (rhsValue as! Int16)
-            case .int32:
-                return (lhsValue as! Int32) < (rhsValue as! Int32)
-            case .float:
-                return (lhsValue as! Float) < (rhsValue as! Float)
-            case .double:
-                return (lhsValue as! Double) < (rhsValue as! Double)
-            case .text:
-                return (lhsValue as! String) < (rhsValue as! String)
-            case .date:
-                return (lhsValue as! Date) < (rhsValue as! Date)
-            default:
-                throw PopupSortingError.invalidValueType
-            }
+        let lhsManager = AGSPopupManager(popup: lhs)
+        let rhsManager = AGSPopupManager(popup: rhs)
+        
+        guard lhsManager.fieldType(for: lhsField) == rhsManager.fieldType(for: rhsField) else {
+            throw PopupSortingError.badFields
         }
-        catch {
-            throw error
+        
+        guard let rhsValue = rhsManager.value(for: rhsField) else {
+            return true
+        }
+        
+        guard let lhsValue = lhsManager.value(for: lhsField) else {
+            return false
+        }
+        
+        switch lhsManager.fieldType(for: lhsField) {
+        case .int16:
+            return (lhsValue as! Int16) < (rhsValue as! Int16)
+        case .int32:
+            return (lhsValue as! Int32) < (rhsValue as! Int32)
+        case .float:
+            return (lhsValue as! Float) < (rhsValue as! Float)
+        case .double:
+            return (lhsValue as! Double) < (rhsValue as! Double)
+        case .text:
+            return (lhsValue as! String) < (rhsValue as! String)
+        case .date:
+            return (lhsValue as! Date) < (rhsValue as! Date)
+        default:
+            throw PopupSortingError.invalidValueType
         }
     }
     
@@ -121,41 +116,36 @@ extension AGSPopup {
             throw PopupSortingError.missingFields
         }
         
-        do {
-            let lhsManager = AGSPopupManager(popup: lhs)
-            let rhsManager = AGSPopupManager(popup: rhs)
-            
-            guard lhsManager.fieldType(for: lhsField) == rhsManager.fieldType(for: rhsField) else {
-                throw PopupSortingError.badFields
-            }
-            
-            guard let rhsValue = rhsManager.value(for: rhsField) else {
-                return true
-            }
-            
-            guard let lhsValue = lhsManager.value(for: lhsField) else {
-                return false
-            }
-            
-            switch lhsManager.fieldType(for: lhsField) {
-            case .int16:
-                return (lhsValue as! Int16) > (rhsValue as! Int16)
-            case .int32:
-                return (lhsValue as! Int32) > (rhsValue as! Int32)
-            case .float:
-                return (lhsValue as! Float) > (rhsValue as! Float)
-            case .double:
-                return (lhsValue as! Double) > (rhsValue as! Double)
-            case .text:
-                return (lhsValue as! String) > (rhsValue as! String)
-            case .date:
-                return (lhsValue as! Date) > (rhsValue as! Date)
-            default:
-                throw PopupSortingError.invalidValueType
-            }
+        let lhsManager = AGSPopupManager(popup: lhs)
+        let rhsManager = AGSPopupManager(popup: rhs)
+        
+        guard lhsManager.fieldType(for: lhsField) == rhsManager.fieldType(for: rhsField) else {
+            throw PopupSortingError.badFields
         }
-        catch {
-            throw error
+        
+        guard let rhsValue = rhsManager.value(for: rhsField) else {
+            return true
+        }
+        
+        guard let lhsValue = lhsManager.value(for: lhsField) else {
+            return false
+        }
+        
+        switch lhsManager.fieldType(for: lhsField) {
+        case .int16:
+            return (lhsValue as! Int16) > (rhsValue as! Int16)
+        case .int32:
+            return (lhsValue as! Int32) > (rhsValue as! Int32)
+        case .float:
+            return (lhsValue as! Float) > (rhsValue as! Float)
+        case .double:
+            return (lhsValue as! Double) > (rhsValue as! Double)
+        case .text:
+            return (lhsValue as! String) > (rhsValue as! String)
+        case .date:
+            return (lhsValue as! Date) > (rhsValue as! Date)
+        default:
+            throw PopupSortingError.invalidValueType
         }
     }
     
