@@ -133,22 +133,31 @@ class RichPopupManager: AGSPopupManager {
             }
         }
         
-        // Then, commit all staged (add/delete) attachments.
-        richPopupAttachmentManager?.commitStagedAttachments()
+        func finish() {
+            // Finally, the manager finishes editing it's attributes.
+            super.finishEditing { (error) in
+                
+                if let error = error {
+                    relatedRecordsErrors.append(error)
+                }
+                
+                if !relatedRecordsErrors.isEmpty {
+                    completion(RichPopupManagerError.invalidPopup(relatedRecordsErrors))
+                }
+                else {
+                    completion(nil)
+                }
+            }
+        }
         
-        // Finally, the manager finishes editing it's attributes.
-        super.finishEditing { (error) in
-            
-            if let error = error {
-                relatedRecordsErrors.append(error)
+        // Then, commit all staged (add/delete) attachments.
+        if let attachmentsManager = richPopupAttachmentManager {
+            attachmentsManager.commitStagedAttachments {
+                finish()
             }
-
-            if !relatedRecordsErrors.isEmpty {
-                completion(RichPopupManagerError.invalidPopup(relatedRecordsErrors))
-            }
-            else {
-                completion(nil)
-            }
+        }
+        else {
+            finish()
         }
     }
     

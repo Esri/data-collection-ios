@@ -117,18 +117,24 @@ class RichPopupAttachmentsManager: AGSLoadableBase {
     // Used in the `RichPopupManager`.
     //
     
-    func commitStagedAttachments() {
+    func commitStagedAttachments(_ completion: @escaping () -> Void) {
         
         // Add Staged Attachments
         let newAttachments = self.stagedAttachments
         
+        let dispatchGroup = DispatchGroup()
+        
+        dispatchGroup.enter()
+        
         newAttachments.forEach { (attachment) in
 
             if let photoAttachment = attachment as? RichPopupStagedPhotoAttachment {
-                
-                popupAttachmentsManager.addAttachmentAsJPG(with: photoAttachment.image,
-                                                           name: photoAttachment.nameAsJPEG ?? "Image.jpeg",
-                                                           preferredSize: photoAttachment.preferredSize)
+
+                dispatchGroup.enter()
+                popupAttachmentsManager.addAttachment(withUIImagePickerControllerInfoDictionary: photoAttachment.info,
+                                                      name: photoAttachment.name ?? "Image",
+                                                      preferredSize: photoAttachment.preferredSize,
+                                                      completion: { (_) in dispatchGroup.leave() })
             }
             else {
                 
@@ -139,7 +145,16 @@ class RichPopupAttachmentsManager: AGSLoadableBase {
             }
         }
         
-        discardStagedAttachments()
+        dispatchGroup.notify(queue: OperationQueue.current?.underlyingQueue ?? .main) { [weak self] in
+            
+            guard let self = self else { return }
+            
+            self.discardStagedAttachments()
+            
+            completion()
+        }
+        
+        dispatchGroup.leave()        
     }
         
     func discardStagedAttachments() {

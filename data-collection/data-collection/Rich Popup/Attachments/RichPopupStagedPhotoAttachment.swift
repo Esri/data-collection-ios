@@ -13,6 +13,7 @@
 // limitations under the License.
 
 import ArcGIS
+import Photos
 
 class RichPopupStagedPhotoAttachment: RichPopupStagedAttachment {
     
@@ -25,45 +26,23 @@ class RichPopupStagedPhotoAttachment: RichPopupStagedAttachment {
     
     override var type: AGSPopupAttachmentType { return .image }
     
-    let image: UIImage
-    
-    var nameAsJPEG: String? {
-        
-        guard var jpegName = name?.trimmingCharacters(in: .whitespacesAndNewlines) else { return nil }
-        
-        let fileExtension = (jpegName as NSString).pathExtension
-        
-        if jpegName.isEmpty {
-            jpegName.append("Image")
-        }
-        
-        if fileExtension != "jpeg" && fileExtension != "jpg" {
-            jpegName.append(".jpeg")
-        }
-        
-        return jpegName
+    var image: UIImage {
+        return info[.editedImage] as? UIImage ?? info[.originalImage] as! UIImage
     }
     
-    init?(image: UIImage) {
-        
-        self.image = image
-        
-        guard let data = image.jpegData(compressionQuality: 1.0) else { return nil }
-        
-        super.init(data: data, mimeType: "image/jpeg", name: nil)
-        
-        setAttachmentNameIncrementedNext()
-    }
+    let info: [UIImagePickerController.InfoKey : Any]
     
-    convenience init?(imagePickerMediaInfo info: [UIImagePickerController.InfoKey : Any]) {
+     init?(imagePickerMediaInfo info: [UIImagePickerController.InfoKey : Any]) {
         
-        guard let image = info[.editedImage] as? UIImage ?? info[.originalImage] as? UIImage else {
-            return nil
-        }
+        self.info = info
+
+        guard (info[.editedImage] as? UIImage ?? info[.originalImage] as? UIImage) != nil else { return nil }
         
-        self.init(image: image)
+        super.init(data: Data(), mimeType: "<will-be-inferred>", name: nil)
         
         self.previewItemURL = info[.imageURL] as? URL
+        
+        setAttachmentNameIncrementedNext()
     }
     
     override func generateThumbnail(withSize: Float, scaleMode: AGSImageScaleMode, completion: @escaping (UIImage?) -> Void) {
