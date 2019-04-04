@@ -185,4 +185,15 @@ class RichPopupEditStagedAttachmentViewController: UITableViewController, UIText
             return 1
         }
     }
+    
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
+        let cell = super.tableView(tableView, cellForRowAt: indexPath)
+        
+        if indexPath.section == .preferredSizeSection {
+            cell.textLabel?.text = AGSPopupAttachmentSize.tableViewMap[indexPath.row].actualSizeScaledTitle
+        }
+        
+        return cell
+    }
 }
