@@ -188,13 +188,12 @@ class RichPopupEditStagedAttachmentViewController: UITableViewController, UIText
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        if indexPath.section == .nameSection {
-            return super.tableView(tableView, cellForRowAt: indexPath)
-        }
-        else {
-            let cell = super.tableView(tableView, cellForRowAt: indexPath)
+        let cell = super.tableView(tableView, cellForRowAt: indexPath)
+        
+        if indexPath.section == .preferredSizeSection {
             cell.textLabel?.text = AGSPopupAttachmentSize.tableViewMap[indexPath.row].actualSizeScaledTitle
-            return cell
         }
+        
+        return cell
     }
 }
