@@ -72,7 +72,7 @@ extension RichPopupAttachmentsViewController /* UITableViewDataSource */ {
                     cell.editingAccessoryType = .none
                 }
                 else {
-                    cell.sizeLabel.text = attachment.preferredSize.asTitle.lowercased()
+                    cell.sizeLabel.text = attachment.preferredSize.actualSizeScaledTitle.lowercased()
                     cell.editingAccessoryType = .disclosureIndicator
                 }
             }

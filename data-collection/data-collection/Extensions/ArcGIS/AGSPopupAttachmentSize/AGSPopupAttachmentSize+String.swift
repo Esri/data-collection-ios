@@ -31,10 +31,25 @@ extension AGSPopupAttachmentSize {
         }
     }
     
-    var asTitle: String {
+    var actualSizeScaled: CGSize {
         let size = actualSize
+        let scale = UIScreen.main.scale
+        return CGSize(width: size.width * scale, height: size.height * scale)
+    }
+    
+    var actualSizeTitle: String {
+        return titleFor(size: actualSize)
+    }
+    
+    var actualSizeScaledTitle: String {
+        return titleFor(size: actualSizeScaled)
+    }
+    
+    private func titleFor(size: CGSize) -> String {
+        
         let width = Int(size.width)
         let height = Int(size.height)
+        
         switch self {
         case .small:
             return "Small \(width)x\(height)"
