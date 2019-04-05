@@ -124,8 +124,6 @@ class RichPopupAttachmentsManager: AGSLoadableBase {
         
         let dispatchGroup = DispatchGroup()
         
-        dispatchGroup.enter()
-        
         newAttachments.forEach { (attachment) in
 
             if let photoAttachment = attachment as? RichPopupStagedPhotoAttachment {
@@ -153,8 +151,6 @@ class RichPopupAttachmentsManager: AGSLoadableBase {
             
             completion()
         }
-        
-        dispatchGroup.leave()        
     }
         
     func discardStagedAttachments() {

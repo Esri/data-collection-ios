@@ -133,7 +133,7 @@ class RichPopupManager: AGSPopupManager {
             }
         }
         
-        func finish() {
+        let finish: () -> Void = {
             // Finally, the manager finishes editing it's attributes.
             super.finishEditing { (error) in
                 

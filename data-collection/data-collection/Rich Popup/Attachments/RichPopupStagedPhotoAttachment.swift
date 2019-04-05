@@ -13,7 +13,6 @@
 // limitations under the License.
 
 import ArcGIS
-import Photos
 
 class RichPopupStagedPhotoAttachment: RichPopupStagedAttachment {
     
@@ -38,7 +37,7 @@ class RichPopupStagedPhotoAttachment: RichPopupStagedAttachment {
 
         guard (info[.editedImage] as? UIImage ?? info[.originalImage] as? UIImage) != nil else { return nil }
         
-        super.init(data: Data(), mimeType: "<will-be-inferred>", name: nil)
+        super.init(data: Data() /* will be inferred by SDK */, mimeType: "<will-be-inferred-by-SDK>", name: nil)
         
         self.previewItemURL = info[.imageURL] as? URL
         
