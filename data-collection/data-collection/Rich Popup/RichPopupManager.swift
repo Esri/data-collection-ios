@@ -76,36 +76,67 @@ class RichPopupManager: AGSPopupManager {
         var relatedRecordsErrors = [Error]()
         
         // First, all staged many to one record changes are commited and features are related.
-        if let relationships = richPopup.relationships, relationships.loadStatus == .loaded {
+        relatedRecordsErrors += finishEditingManyToOneRelationships()
+        
+        // Then, update any parent one-to-many records.
+        relatedRecordsErrors += finishEditingOneToManyRelationships()
+        
+        // Then, commit all staged (add/delete) attachments.
+        if let attachmentsManager = richPopupAttachmentManager {
             
-            let managers = relationships.manyToOne
+            attachmentsManager.commitStagedAttachments { [weak self] in
+                
+                guard let self = self else { return }
+                
+                self.performSuperDidFinishEditing(accumulatedErrors: relatedRecordsErrors, completion: completion)
+            }
+        }
+        else {
+            performSuperDidFinishEditing(accumulatedErrors: relatedRecordsErrors, completion: completion)
+        }
+    }
+    
+    private func finishEditingManyToOneRelationships() -> [Error] {
+        
+        var relatedRecordsErrors = [Error]()
+        
+        guard let relationships = richPopup.relationships, relationships.loadStatus == .loaded else {
+            return relatedRecordsErrors
+        }
+        
+        let managers = relationships.manyToOne
+        
+        for manager in managers {
             
-            for manager in managers {
+            guard let info = manager.relationshipInfo else {
                 
-                guard let info = manager.relationshipInfo else {
-                    
-                    manager.cancelChange()
-                    continue
+                manager.cancelChange()
+                continue
+            }
+            
+            if let feature = manager.popup?.geoElement as? AGSArcGISFeature,
+                let relatedFeature = manager.relatedPopup?.geoElement as? AGSArcGISFeature {
+                
+                manager.commitChange()
+                feature.relate(to: relatedFeature, relationshipInfo: info)
+            }
+            else {
+                
+                if info.isComposite {
+                    relatedRecordsErrors.append(RichPopupManagerError.missingManyToOneRelationship(manager.name ?? "Unknown"))
                 }
                 
-                if let feature = manager.popup?.geoElement as? AGSArcGISFeature,
-                    let relatedFeature = manager.relatedPopup?.geoElement as? AGSArcGISFeature {
-                    
-                    manager.commitChange()
-                    feature.relate(to: relatedFeature, relationshipInfo: info)
-                }
-                else {
-                    
-                    if info.isComposite {
-                        relatedRecordsErrors.append(RichPopupManagerError.missingManyToOneRelationship(manager.name ?? "Unknown"))
-                    }
-                    
-                    manager.cancelChange()
-                }
+                manager.cancelChange()
             }
         }
         
-        // Then, update any parent one-to-many records.
+        return relatedRecordsErrors
+    }
+    
+    private func finishEditingOneToManyRelationships() -> [Error] {
+        
+        var relatedRecordsErrors = [Error]()
+
         let relationships = parentOneToManyManagers.keyEnumerator().allObjects as! [Relationship]
         
         relationships.forEach { (relationship) in
@@ -133,18 +164,21 @@ class RichPopupManager: AGSPopupManager {
             }
         }
         
-        // Then, commit all staged (add/delete) attachments.
-        richPopupAttachmentManager?.commitStagedAttachments()
+        return relatedRecordsErrors
+    }
+    
+    private func performSuperDidFinishEditing(accumulatedErrors errors: [Error], completion: @escaping (Error?) -> Void) {
         
-        // Finally, the manager finishes editing it's attributes.
+        var accumulatedErrors = errors
+        
         super.finishEditing { (error) in
             
             if let error = error {
-                relatedRecordsErrors.append(error)
+                accumulatedErrors.append(error)
             }
-
-            if !relatedRecordsErrors.isEmpty {
-                completion(RichPopupManagerError.invalidPopup(relatedRecordsErrors))
+            
+            if !accumulatedErrors.isEmpty {
+                completion(RichPopupManagerError.invalidPopup(accumulatedErrors))
             }
             else {
                 completion(nil)
