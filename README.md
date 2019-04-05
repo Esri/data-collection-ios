@@ -91,7 +91,7 @@ For OAuth configuration, create a new Application in your ArcGIS Portal to obtai
 Learn more about Esri Example Apps [here](https://developers.arcgis.com/example-apps).
 
 ## Requirements
-* [Xcode 9](https://itunes.apple.com/us/app/xcode/id497799835?mt=12)
+* [Xcode 10](https://itunes.apple.com/us/app/xcode/id497799835?mt=12)
 * [ArcGIS Runtime SDK for iOS](https://developers.arcgis.com/ios/)
 * To edit records or take a web map offline you will need an ArcGIS Online Organizational account, an ArcGIS Online Developer account or an ArcGIS Online account authenticated using a social login.
 * To consume your own web map you will need an ArcGIS Online Organizational account.
