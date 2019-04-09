@@ -19,16 +19,20 @@ import Foundation
 ///
 class AppContextAwareNavigationController: UINavigationController {
     
-    let changeHandler = AppContextChangeHandler()
+    private let changeHandler = AppContextChangeHandler()
     
     override init(navigationBarClass: AnyClass?, toolbarClass: AnyClass?) {
+        
         super.init(navigationBarClass: navigationBarClass, toolbarClass: toolbarClass)
+        
         subscribeToWorkModeChange()
         adjustNavigationBarTintForWorkMode()
     }
     
     required init?(coder aDecoder: NSCoder) {
+        
         super.init(coder: aDecoder)
+        
         subscribeToWorkModeChange()
         adjustNavigationBarTintForWorkMode()
     }

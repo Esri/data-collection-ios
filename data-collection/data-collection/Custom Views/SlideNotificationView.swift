@@ -49,28 +49,48 @@ class SlideNotificationView: UIView {
     
     private func setupView() {
         
+        // The view is intended to be a non-interactive container for a label that slides on and off the screen.
         isUserInteractionEnabled = false
         backgroundColor = .clear
         clipsToBounds = true
         
+        // Build label that adjusts for content size category.
         label.font = UIFont.preferredFont(forTextStyle: .footnote)
         label.textAlignment = .center
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.backgroundColor = messageBackgroundColor ?? .darkGray
-        label.textColor = messageTextColor ?? .white
+        label.allowsDefaultTighteningForTruncation = true
+        label.adjustsFontForContentSizeCategory = true
+        label.backgroundColor = messageBackgroundColor
+        label.textColor = messageTextColor
         label.numberOfLines = 1
         
+        // Add label.
         addSubview(label)
         
-        let top = label.topAnchor.constraint(equalTo: topAnchor, constant: 0.0)
-        let leading = label.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 0.0)
-        let trailing = label.trailingAnchor.constraint(equalTo: trailingAnchor, constant: 0.0)
+        // This allows the label to dictate the height of the view, when dynamic type is changed.
+        setContentHuggingPriority(.defaultLow, for: .vertical)
+        label.setContentCompressionResistancePriority(.required, for: .vertical)
         
+        // Attach the label's anchors to the view's anchors.
+        let leading = label.leadingAnchor.constraint(equalTo: leadingAnchor)
+        let trailing = label.trailingAnchor.constraint(equalTo: trailingAnchor)
+        
+        // Maintain a reference to the top anchor constraint with the priority set to `.required` (the default value).
+        // Disabling this constraint will fallback to the bottom constraint (see a few lines below).
+        let top = label.topAnchor.constraint(equalTo: topAnchor)
+        top.priority = .required
+        topSlideConstraint = top
+
+        // Add a bottom anchor constraint that is equal to the superview's *top anchor* with a lower priority.
+        // This anchor will become active when `topSlideConstraint` is disabled.
+        let bottom = label.bottomAnchor.constraint(equalTo: topAnchor)
+        bottom.priority = .defaultHigh
+        
+        // Set a height constraint.
         let height = NSLayoutConstraint(item: label, attribute: .height, relatedBy: .equal, toItem: self, attribute: .height, multiplier: 1.0, constant: 0.0)
         
-        topSlideConstraint = top
-        
-        NSLayoutConstraint.activate([top, leading, trailing, height])
+        // Activate.
+        NSLayoutConstraint.activate([top, leading, trailing, bottom, height])
         
         hideNotificationLabel()
     }
@@ -108,12 +128,12 @@ class SlideNotificationView: UIView {
     }
     
     private func showNotificationLabel() {
-        topSlideConstraint.constant = 0
+        topSlideConstraint.isActive = true
         layoutIfNeeded()
     }
     
     private func hideNotificationLabel() {
-        topSlideConstraint.constant = -bounds.height
+        topSlideConstraint.isActive = false
         layoutIfNeeded()
     }
     

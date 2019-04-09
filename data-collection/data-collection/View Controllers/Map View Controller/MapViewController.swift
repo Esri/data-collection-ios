@@ -29,11 +29,6 @@ class MapViewController: UIViewController {
         static let newRelatedRecord = "MapViewController.newRelatedRecord"
     }
     
-    enum LocationSelectionViewType {
-        case newFeature
-        case offlineExtent
-    }
-    
     enum MapViewMode: Equatable {
         case defaultView
         case disabled
@@ -61,7 +56,7 @@ class MapViewController: UIViewController {
     @IBOutlet weak var relatedRecordSubheaderLabel: UILabel!
     @IBOutlet weak var relatedRecordsNLabel: UILabel!
     
-    @IBOutlet weak var selectViewTopConstraint: NSLayoutConstraint!
+    @IBOutlet var selectViewTopConstraint: NSLayoutConstraint!
     @IBOutlet weak var selectViewHeaderLabel: UILabel!
     @IBOutlet weak var selectViewSubheaderLabel: UILabel!
     
@@ -74,34 +69,9 @@ class MapViewController: UIViewController {
 
     var identifyOperation: AGSCancelable?
     
-    var currentPopup: AGSPopup? {
-        set {
-            if let popup = newValue {
-                recordsManager = PopupRelatedRecordsManager(popup: popup)
-            } else {
-                recordsManager = nil
-            }
-        }
-        get {
-            return recordsManager?.popup
-        }
-    }
-    
-    internal private(set) var recordsManager: PopupRelatedRecordsManager? {
-        willSet {
-            recordsManager?.popup.clearSelection()
-        }
-    }
-    
     var mapViewMode: MapViewMode = .defaultView {
         didSet {
             adjustForMapViewMode(from: oldValue, to: mapViewMode)
-        }
-    }
-    
-    var locationSelectionType: LocationSelectionViewType = .newFeature {
-        didSet {
-            adjustForLocationSelectionType()
         }
     }
     
@@ -151,42 +121,93 @@ class MapViewController: UIViewController {
     
     @IBAction func userRequestsAddNewRelatedRecord(_ sender: Any) {
         
-        guard
-            let parentPopup = currentPopup,
-            let featureTable = recordsManager?.oneToMany.first?.relatedTable,
-            let childPopup = featureTable.createPopup()
-            else {
-            present(simpleAlertMessage: "Uh Oh! You are unable to add a new related record.")
+        assert(currentPopupManager != nil, "This function should not be reached if a popup is not currently selected.")
+        
+        guard let manager = currentPopupManager, let relationships = manager.richPopup.relationships, let relationship = relationships.oneToMany.first else {
+            present(simpleAlertMessage: "Unable to add a new related record.")
             return
         }
+
+        let relatedManager: RichPopupManager
         
-        SVProgressHUD.show(withStatus: "Creating new \(childPopup.title ?? "related record").")
-        
-        let parentPopupManager = PopupRelatedRecordsManager(popup: parentPopup)
-        
-        parentPopupManager.loadRelatedRecords { [weak self] in
-            
-            EphemeralCache.set(object: (parentPopupManager, childPopup), forKey: EphemeralCacheKeys.newRelatedRecord)
-            SVProgressHUD.dismiss()
-            self?.performSegue(withIdentifier: "modallyPresentRelatedRecordsPopupViewController", sender: nil)
+        do {
+            relatedManager = try manager.buildRichPopupManagerForNewOneToManyRecord(for: relationship)
         }
+        catch {
+            present(simpleAlertMessage: "Unable to add a new related record. \(error.localizedDescription)")
+            return
+        }
+
+        SVProgressHUD.show(withStatus: String(format: "Creating new %@.", (relatedManager.title ?? "related record")))
+
+        relationships.load { [weak self] (error) in
+
+            SVProgressHUD.dismiss()
+
+            guard let self = self else { return }
+
+            guard error == nil else {
+                self.present(simpleAlertMessage: error!.localizedDescription)
+                return
+            }
+
+            EphemeralCache.set(object: relatedManager, forKey: EphemeralCacheKeys.newRelatedRecord)
+
+            self.performSegue(withIdentifier: "modallyPresentRelatedRecordsPopupViewController", sender: nil)
+        }
+    }
+    
+    // MARK: Current Pop-Up
+    
+    private(set) var currentPopupManager: RichPopupManager?
+
+    func setCurrentPopup(popup: RichPopup) {
+        
+        // Clear existing selection
+        currentPopupManager?.popup.feature?.featureTable?.featureLayer?.clearSelection()
+        
+        // Build new rich popup manager.
+        currentPopupManager = RichPopupManager(richPopup: popup)
+    }
+    
+    func clearCurrentPopup() {
+        
+        // Clear existing selection.
+        currentPopupManager?.popup.feature?.featureTable?.featureLayer?.clearSelection()
+        
+        // Nullify current popup manager.
+        currentPopupManager = nil
+    }
+    
+    override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
+
+        if identifier == "modallyPresentRelatedRecordsPopupViewController" {
+            return currentPopupManager != nil
+        }
+        
+        return true
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
-        if let destination = segue.navigationDestination as? RelatedRecordsPopupsViewController {
-            if let newPopup = EphemeralCache.get(objectForKey: EphemeralCacheKeys.newSpatialFeature) as? AGSPopup {
-                currentPopup = newPopup
-                destination.popup = newPopup
-                destination.editPopup(true)
+        if let destination = segue.navigationDestination as? RichPopupViewController {
+            
+            if let newPopup = EphemeralCache.get(objectForKey: EphemeralCacheKeys.newSpatialFeature) as? RichPopup {
+                setCurrentPopup(popup: newPopup)
+                destination.popupManager = currentPopupManager!
+                destination.setEditing(true, animated: false)
+                mapViewMode = .selectedFeature(featureLoaded: false)
             }
-            else if let (parentPopupManager, childPopup) = EphemeralCache.get(objectForKey: EphemeralCacheKeys.newRelatedRecord) as? (PopupRelatedRecordsManager, AGSPopup) {
-                destination.parentRecordsManager = parentPopupManager
-                destination.popup = childPopup
-                destination.editPopup(true)
+            else if let popupManager = EphemeralCache.get(objectForKey: EphemeralCacheKeys.newRelatedRecord) as? RichPopupManager {
+                destination.popupManager = popupManager
+                destination.setEditing(true, animated: false)
+                destination.shouldLoadRichPopupRelatedRecords = false
+            }
+            else if let currentPopupManager = currentPopupManager {
+                destination.popupManager = currentPopupManager
             }
             else {
-                destination.popup = currentPopup!
+                assertionFailure("A rich popup view controller should not present if any of the above scenarios are not met.")
             }
         }
         else if let destination = segue.destination as? MaskViewController {
@@ -195,20 +216,27 @@ class MapViewController: UIViewController {
     }
     
     private func displayInitialReachabilityMessage() {
-        if !appReachability.isReachable { displayReachabilityMessage(isReachable: false) }
+    
+        if !appReachability.isReachable {
+            displayReachabilityMessage(isReachable: false)
+        }
     }
     
     private func displayReachabilityMessage(isReachable reachable: Bool) {
-        slideNotificationView.showLabel(withNotificationMessage: "Device \(reachable ? "gained" : "lost") connection to the network.", forDuration: 6.0)
+        let connectionMessage = String(format: "Device %@ connection to the network.", (reachable ? "gained" : "lost"))
+        slideNotificationView.showLabel(withNotificationMessage: connectionMessage, forDuration: 6.0)
     }
     
     func subscribeToAppContextChanges() {
         
         let currentMapChange: AppContextChange = .currentMap { [weak self] currentMap in
-            self?.mapViewMode = .defaultView
-            self?.currentPopup = nil
-            self?.mapView.map = currentMap
-            self?.loadMapViewMap()
+            
+            guard let self = self else { return }
+            
+            self.clearCurrentPopup()
+            self.mapViewMode = .defaultView
+            self.mapView.map = currentMap
+            self.loadMapViewMap()
         }
         
         let locationAuthorizationChange: AppContextChange = .locationAuthorization { [weak self] authorized in
@@ -216,9 +244,14 @@ class MapViewController: UIViewController {
         }
 
         let workModeChange: AppContextChange = .workMode { [weak self] workMode in
+            
+            guard let self = self else { return }
+            
             let color: UIColor = (workMode == .online) ? .primary : .offline
-            self?.activityBarView.colors = (color.lighter, color.darker)
-            self?.slideNotificationView.messageBackgroundColor = (workMode == .online) ? UIColor.primary.lighter : UIColor.offline.darker
+            
+            self.activityBarView.colors = (color.lighter, color.darker)
+            self.slideNotificationView.messageBackgroundColor = (workMode == .online) ? UIColor.primary.lighter : UIColor.offline.darker
+            self.slideNotificationView.messageTextColor = .contrasting
         }
         
         let reachabilityChange: AppContextChange = .reachability { [weak self] reachable in

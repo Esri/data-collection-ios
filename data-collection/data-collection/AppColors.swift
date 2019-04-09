@@ -18,30 +18,51 @@ import UIKit.UIColor
 // These colors are used throughout the application, when colors are generated at runtime.
 extension UIColor {
     
-    static let primary: UIColor = #colorLiteral(red:0.66, green:0.81, blue:0.40, alpha:1.00)
+    // The app's main color and color that represents online work mode.
+    static let primary = UIColor(named: "primary")!
     
-    static let offline: UIColor = .darkGray
+    // Color that represents offline work mode.
+    static let offline = UIColor(named: "offline")!
     
-    static let accent: UIColor = #colorLiteral(red:0.97, green:0.74, blue:0.18, alpha:1.00)
+    // Color that contrasts both primary and offline colors, used in toolbars, navigation bars and multi-colored UI elements.
+    static let contrasting = UIColor(named: "contrasting")!
     
-    static let tableCellTitle: UIColor = .gray
-    static let tableCellValue: UIColor = .black
+    // Color that accents both primary and offline colors, used in the drawer to represent current work mode.
+    static let accent = UIColor(named: "accent")!
+
+    // Color symbolizing destructive and invalid.
+    static var destructive = UIColor(named: "destructive")!
+}
+
+extension AppDelegate {
     
-    static let invalid: UIColor = .red
-    static let missing: UIColor = .lightGray
-    
-    static let tint: UIColor = .white
-    
-    static let loginLogoutNormal: UIColor = .white
-    static let loginLogoutHighlighted: UIColor = .lightGray
-    
-    static let workModeNormal: UIColor = .darkGray
-    static let workModeHighlighted: UIColor = .lightGray
-    static let workModeSelected: UIColor = .white
-    static let workModeDisabled: UIColor = UIColor(white: 0.5, alpha: 0.5)
-    
-    static let offlineActivityNormal: UIColor = .darkGray
-    static let offlineActivityHighlighted: UIColor = .lightGray
-    static let offlineActivitySelected: UIColor = .lightGray
-    static let offlineActivityDisabled: UIColor = UIColor(white: 0.5, alpha: 0.5)
+    static func setAppApperanceWithAppColors() {
+        
+        // Non-app specific navigation controllers bar button items.
+        // This includes: `UIImagePickerViewController`, `QLPreviewController`
+        UIBarButtonItem.appearance(whenContainedInInstancesOf: [UINavigationController.self]).tintColor = .primary
+        
+        // App specific navigation controllers.
+        // This includes any navigation controller found in app project storyboards.
+        UINavigationBar.appearance(whenContainedInInstancesOf: [AppContextAwareNavigationController.self]).titleTextAttributes = [.foregroundColor : UIColor.contrasting]
+        UIBarButtonItem.appearance(whenContainedInInstancesOf: [UINavigationBar.self, AppContextAwareNavigationController.self]).tintColor = .contrasting
+        
+        UIBarButtonItem.appearance(whenContainedInInstancesOf: [UIToolbar.self]).tintColor = .primary
+        
+        UIButton.appearance(whenContainedInInstancesOf: [UITableView.self]).tintColor = .primary
+
+        UIView.appearance(whenContainedInInstancesOf: [UIAlertController.self]).tintColor = .primary
+        
+        UIProgressView.appearance().tintColor = .primary
+        UIProgressView.appearance().progressTintColor = .primary
+        UIProgressView.appearance().trackTintColor = .contrasting
+        
+        UIImageView.appearance(whenContainedInInstancesOf: [UITableViewCell.self]).tintColor = .primary
+        
+        UIActivityIndicatorView.appearance().color = .primary
+        
+        UISegmentedControl.appearance().tintColor = .primary
+        
+        StyledFirstResponderLabel.appearance().tintColor = .primary
+    }
 }

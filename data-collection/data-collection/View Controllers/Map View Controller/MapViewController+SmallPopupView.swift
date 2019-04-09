@@ -18,57 +18,94 @@ import ArcGIS
 extension MapViewController {
     
     @objc func didTapSmallPopupView(_ sender: Any) {
-        guard currentPopup != nil else { return }
+        guard currentPopupManager != nil else { return }
         performSegue(withIdentifier: "modallyPresentRelatedRecordsPopupViewController", sender: nil)
     }
     
     func refreshCurrentPopup() {
         
-        guard case MapViewMode.selectedFeature = mapViewMode, let manager = recordsManager else {
+        guard case MapViewMode.selectedFeature = mapViewMode, let popup = currentPopupManager?.richPopup else {
             return
         }
         
-        guard manager.popup.isFeatureAddedToTable else {
-            currentPopup = nil
+        guard popup.isFeatureAddedToTable else {
+            clearCurrentPopup()
             mapViewMode = .defaultView
             return
         }
         
-        manager.popup.select()
+        // Select the underlying feature
+        if let feature = popup.feature {
+            feature.featureTable?.featureLayer?.select(feature)
+        }
         
-        manager.loadRelatedRecords { [weak self] in
+        if let popupRelationships = popup.relationships {
             
-            var fallbackIndex = 0
+            popupRelationships.load { [weak self] (error) in
+                
+                if let error = error {
+                    print("[Error: RichPopup] relationships load error: \(error)")
+                }
+                
+                guard let self = self else { return }
+                
+                self.populateContentIntoSmallPopupView(popup)
+            }
+        }
+        else {
             
-            let fallbackPopupManager = self?.currentPopup?.asManager()
+            populateContentIntoSmallPopupView(popup)
+        }
+    }
+    
+    private func populateContentIntoSmallPopupView(_ popup: RichPopup) {
+        
+        // Build a backup list of attributes from the top display attributes from the identified pop-up.
+        var backupAttributes = AGSPopupManager.generateDisplayAttributes(forPopup: popup, max: 3)
+        
+        // MARK: Left side of the small pop-up view, concerns the first many-to-one relationship.
+        
+        if let firstManyToOne = popup.relationships?.manyToOne.first?.relatedPopup {
             
-            if let manyToOneManager = self?.recordsManager?.manyToOne.first?.relatedPopup?.asManager() {
-                var destinationIndex = 0
-                self?.relatedRecordHeaderLabel.text = manyToOneManager.nextDisplayFieldStringValue(fieldIndex: &destinationIndex) ?? fallbackPopupManager?.nextDisplayFieldStringValue(fieldIndex: &fallbackIndex)
-                self?.relatedRecordSubheaderLabel.text = manyToOneManager.nextDisplayFieldStringValue(fieldIndex: &destinationIndex) ?? fallbackPopupManager?.nextDisplayFieldStringValue(fieldIndex: &fallbackIndex)
-            }
-            else {
-                self?.relatedRecordHeaderLabel.text = fallbackPopupManager?.nextDisplayFieldStringValue(fieldIndex: &fallbackIndex)
-                self?.relatedRecordSubheaderLabel.text = fallbackPopupManager?.nextDisplayFieldStringValue(fieldIndex: &fallbackIndex)
-            }
+            var manyToOneAttributes = AGSPopupManager.generateDisplayAttributes(forPopup: firstManyToOne, max: 2)
             
-            if let oneToMany = self?.recordsManager?.oneToMany.first {
-                let n = oneToMany.relatedPopups.count
-                let name = oneToMany.relatedTable?.tableName ?? "Records"
-                self?.relatedRecordsNLabel.text = "\(n) \(name)"
-            }
-            else {
-                self?.relatedRecordsNLabel.text = fallbackPopupManager?.nextDisplayFieldStringValue(fieldIndex: &fallbackIndex)
-            }
+            relatedRecordHeaderLabel.text = (manyToOneAttributes.popFirst() ?? backupAttributes.popFirst())?.value
+            relatedRecordSubheaderLabel.text = (manyToOneAttributes.popFirst() ?? backupAttributes.popFirst())?.value
+        }
+        else {
             
-            if let canAdd = self?.recordsManager?.oneToMany.first?.relatedTable?.canAddFeature {
-                self?.addPopupRelatedRecordButton.isHidden = !canAdd
-            }
-            else {
-                self?.addPopupRelatedRecordButton.isHidden = true
-            }
+            relatedRecordHeaderLabel.text = backupAttributes.popFirst()?.value
+            relatedRecordSubheaderLabel.text = backupAttributes.popFirst()?.value
+        }
+        
+        // MARK: Right side of the small pop-up view, concerns the first one-to-many relationship.
+        
+        if let firstOneToMany = popup.relationships?.oneToMany.first {
             
-            self?.mapViewMode = .selectedFeature(featureLoaded: true)
+            let n = firstOneToMany.relatedPopups.count
+            let name = firstOneToMany.name ?? "Records"
+            let value = "\(n) \(name)"
+            
+            relatedRecordsNLabel.text = value
+            addPopupRelatedRecordButton.isHidden = !firstOneToMany.canAddRecord
+        }
+        else {
+            
+            relatedRecordsNLabel.text = backupAttributes.popFirst()?.value
+            addPopupRelatedRecordButton.isHidden = true
+        }
+        
+        mapViewMode = .selectedFeature(featureLoaded: true)
+    }
+}
+
+private extension Array {
+    
+    mutating func popFirst() -> Element? {
+        if !isEmpty {
+            return removeFirst()
+        } else {
+            return nil
         }
     }
 }
