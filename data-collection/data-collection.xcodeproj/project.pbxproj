@@ -1371,7 +1371,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "if [ -e $HOME/.runtime-example-apps/xcode-run-scripts/arcgis-build-number-run-script.sh ]; then\n$HOME/.runtime-example-apps/xcode-run-scripts/arcgis-build-number-run-script.sh -p ios -o $PROJECT_DIR/..\nelse\necho \"Cannot update ArcGIS build number.\"\nfi\n";
+			shellScript = "if [ -e $HOME/.runtime-example-apps/xcode-run-scripts/arcgis-build-number-run-script.sh ]; then\n$HOME/.runtime-example-apps/xcode-run-scripts/arcgis-build-number-run-script.sh -p ios -o $PROJECT_DIR/..\nelse\necho \"Cannot update ArcGIS build number.\"\nfi\n\nbash \"${BUILT_PRODUCTS_DIR}/${FRAMEWORKS_FOLDER_PATH}/ArcGIS.framework/strip-frameworks.sh\"\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
