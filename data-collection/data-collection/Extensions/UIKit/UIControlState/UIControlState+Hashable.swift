@@ -12,12 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import Foundation
 import UIKit.UIControl
 
-extension UIControl.State: Hashable {
-    // Conforms `UIControlState` to `Hashable` so that a control state can be used as a Dictionary key.
-    public var hashValue: Int {
-        return Int(rawValue)
-    }
-}
+// Conforms `UIControl.State` to `Hashable` so that a control state can be used
+// as a Dictionary key.
+extension UIControl.State: Hashable {}
