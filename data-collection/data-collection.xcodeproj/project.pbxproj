@@ -1221,6 +1221,7 @@
 				94FA8B1C207BF2CD00972C75 /* Frameworks */,
 				94FA8B1D207BF2CD00972C75 /* Resources */,
 				94AEFD2A217F8F69004339B9 /* ShellScript */,
+				94476EB3226A97F400EED38E /* ShellScript */,
 				944D81D22253E4DA00972941 /* Embed Frameworks */,
 			);
 			buildRules = (
@@ -1356,6 +1357,23 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		94476EB3226A97F400EED38E /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "bash \"${BUILT_PRODUCTS_DIR}/${FRAMEWORKS_FOLDER_PATH}/ArcGIS.framework/strip-frameworks.sh\"\n";
+		};
 		94AEFD2A217F8F69004339B9 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -1371,7 +1389,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "if [ -e $HOME/.runtime-example-apps/xcode-run-scripts/arcgis-build-number-run-script.sh ]; then\n$HOME/.runtime-example-apps/xcode-run-scripts/arcgis-build-number-run-script.sh -p ios -o $PROJECT_DIR/..\nelse\necho \"Cannot update ArcGIS build number.\"\nfi\n\nbash \"${BUILT_PRODUCTS_DIR}/${FRAMEWORKS_FOLDER_PATH}/ArcGIS.framework/strip-frameworks.sh\"\n";
+			shellScript = "if [ -e $HOME/.runtime-example-apps/xcode-run-scripts/arcgis-build-number-run-script.sh ]; then\n$HOME/.runtime-example-apps/xcode-run-scripts/arcgis-build-number-run-script.sh -p ios -o $PROJECT_DIR/..\nelse\necho \"Cannot update ArcGIS build number.\"\nfi\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
