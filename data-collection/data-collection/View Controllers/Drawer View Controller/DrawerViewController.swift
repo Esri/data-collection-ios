@@ -27,8 +27,8 @@ protocol DrawerViewControllerDelegate: AnyObject {
 
 class DrawerViewController: UIViewController {
     
-    @IBOutlet weak var loginButton: UIButton!
-    @IBOutlet weak var loginBannerView: UIView!
+    @IBOutlet weak var signInButton: UIButton!
+    @IBOutlet weak var signInBannerView: UIView!
     @IBOutlet weak var workOnlineButton: UIButton!
     @IBOutlet weak var workOfflineButton: UIButton!
     @IBOutlet weak var synchronizeOfflineMapButton: UIButton!
@@ -39,14 +39,14 @@ class DrawerViewController: UIViewController {
     
     private let changeHandler = AppContextChangeHandler()
     
-    private let loginLogoutButtonControlStateColors: [UIControl.State: UIColor] = [.normal: .white, .highlighted: .gray]
+    private let signInSignOutButtonControlStateColors: [UIControl.State: UIColor] = [.normal: .white, .highlighted: .gray]
     private let workModeControlStateColors: [UIControl.State: UIColor] = [.normal: .darkGray, .highlighted: .gray, .selected: .white, .disabled: UIColor(white: 0.5, alpha: 1)]
     private let offlineActivityControlStateColors: [UIControl.State: UIColor] = [.normal: .darkGray, .highlighted: .gray, .selected: .gray, .disabled: UIColor(white: 0.5, alpha: 1)]
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        loginBannerView.backgroundColor = .gray
+        signInBannerView.backgroundColor = .gray
         
         setAppVersionLabel()
         configureButtonTitleLabels()
@@ -61,7 +61,7 @@ class DrawerViewController: UIViewController {
     }
     
     private func configureButtonTitleLabels() {
-        [loginButton, workOnlineButton, workOfflineButton, synchronizeOfflineMapButton, deleteOfflineMapButton].forEach { (button) in
+        [signInButton, workOnlineButton, workOfflineButton, synchronizeOfflineMapButton, deleteOfflineMapButton].forEach { (button) in
             button!.titleLabel?.numberOfLines = 0
             button!.titleLabel?.adjustsFontForContentSizeCategory = true
             button!.titleLabel?.allowsDefaultTighteningForTruncation = true
@@ -189,13 +189,13 @@ class DrawerViewController: UIViewController {
             let fallbackProfileImage = UIImage(named: "MissingProfile")!.withRenderingMode(.alwaysOriginal).circularThumbnail(ofSize: 36, stroke: (color: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1), weight: 1))
             
             guard let image = currentUser.thumbnail else {
-                loginButton.setImage(fallbackProfileImage, for: .normal)
+                signInButton.setImage(fallbackProfileImage, for: .normal)
                 return
             }
             
             image.load(completion: { [weak self] (error: Error?) in
                 
-                self?.loginButton.setImage(fallbackProfileImage, for: .normal)
+                self?.signInButton.setImage(fallbackProfileImage, for: .normal)
                 
                 guard error == nil else {
                     print("[Error: User Thumbnail Image Load]", error!.localizedDescription)
@@ -207,21 +207,21 @@ class DrawerViewController: UIViewController {
                     return
                 }
                 
-                self?.loginButton.setImage(profImage.withRenderingMode(.alwaysOriginal), for: .normal)
+                self?.signInButton.setImage(profImage.withRenderingMode(.alwaysOriginal), for: .normal)
             })
         }
         else {
-            loginButton.setImage(UIImage(named: "UserLoginIcon"), for: .normal)
+            signInButton.setImage(UIImage(named: "UserLoginIcon"), for: .normal)
         }
     }
     
     private func updateLoginButtonForAuthenticatedUsername(user: AGSPortalUser?) {
         
         if let currentUser = user {
-            loginButton.setAttributed(header: (title: currentUser.username ?? currentUser.email ?? "User", font: .drawerButtonHeader), subheader: (title: "Log out", font: .drawerButtonSubheader), forControlStateColors: loginLogoutButtonControlStateColors)
+            signInButton.setAttributed(header: (title: currentUser.username ?? currentUser.email ?? "User", font: .drawerButtonHeader), subheader: (title: "Log out", font: .drawerButtonSubheader), forControlStateColors: signInSignOutButtonControlStateColors)
         }
         else {
-            loginButton.setAttributed(header: (title: "Log in", font: .drawerButtonHeader), forControlStateColors: loginLogoutButtonControlStateColors)
+            signInButton.setAttributed(header: (title: "Log in", font: .drawerButtonHeader), forControlStateColors: signInSignOutButtonControlStateColors)
         }
     }
     

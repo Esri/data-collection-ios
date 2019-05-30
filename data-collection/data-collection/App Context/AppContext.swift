@@ -28,7 +28,7 @@ import ArcGIS
     
     /// The app's current portal.
     ///
-    /// The portal drives whether the user is logged in or not.
+    /// The portal drives whether the user is signed in or not.
     ///
     /// When set, the portal is configured for OAuth authentication so that if login is required,
     /// the Runtime SDK and iOS can work together to authenticate the current user.
@@ -46,7 +46,7 @@ import ArcGIS
                     return
                 }
 
-                let userDescription = self.portal.user != nil ? "logged in (\(self.portal.user!.username ?? "no username"))" : "logged out"
+                let userDescription = self.portal.user != nil ? "signed in (\(self.portal.user!.username ?? "no username"))" : "signed out"
                 print("[Portal] user is \(userDescription).")
                 
                 if self.workMode == .online {

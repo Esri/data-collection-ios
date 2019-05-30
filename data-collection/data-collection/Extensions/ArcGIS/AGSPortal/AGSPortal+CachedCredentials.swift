@@ -17,27 +17,27 @@ import ArcGIS
 
 extension AGSPortal {
     
-    /// Returns an `AGSPortal` that is logged in if cached credentials allow.
+    /// Returns an `AGSPortal` that is signed in if cached credentials allow.
     ///
-    /// The credential cache will have at most one valid cached credential. It is used to log in to the portal if possible.
+    /// The credential cache will have at most one valid cached credential. It is used to sign-in to the portal if possible.
     ///
-    /// If cached credentials do not automatically log in to the portal, then connect to
-    /// the portal anonymously (i.e. not logged in).
+    /// If cached credentials do not automatically sign-in to the portal, then connect to
+    /// the portal anonymously (i.e. not signed in).
     ///
     /// Use a custom portal URL if provided, otherwise use ArcGIS Online.
     ///
     /// - Parameters:
     ///   - portalURL: A URL to a custom portal. If nil, ArcGIS Online is used.
-    ///   - completion: A block that receives the AGSPortal and a Bool. The Bool is true if the portal could be logged in to using cached credentials, or false otherwise.
+    ///   - completion: A block that receives the AGSPortal and a Bool. The Bool is true if the portal could be signed in to using cached credentials, or false otherwise.
     
     static func bestPortalFromCachedCredentials(portalURL: URL, completion: @escaping ((AGSPortal, Bool) -> Void)) {
         // First try a portal that requires a login. If there are cached credentials that suit,
-        // then in the portal.load() callback below we will find ourselves logged in to the portal.
+        // then in the portal.load() callback below we will find ourselves signed-in to the portal.
         let newPortal = AGSPortal(url: portalURL, loginRequired: true)
         
-        // We'll temporarily disable prompting the user to log in in case the cached credentials are not suitable to log us in.
-        // I.e. if the cached credentials aren't good enough to find ourselves logged in to the portal/ArcGIS Online, then just
-        // accept it and don't prompt us to log in, resulting in a Portal being accessed anonymously.
+        // We'll temporarily disable prompting the user to sign-in in case the cached credentials are not suitable to sign us in.
+        // I.e. if the cached credentials aren't good enough to find ourselves signed in to the portal/ArcGIS Online, then just
+        // accept it and don't prompt us to sign in, resulting in a Portal being accessed anonymously.
         // We revert from that behaviour as soon as the portal loads below.
         let originalPortalRC = newPortal.requestConfiguration
         let sourceRC = originalPortalRC ?? AGSRequestConfiguration.global()
@@ -51,11 +51,11 @@ extension AGSPortal {
             // Before we do anything else, go back to handling auth challenges as before.
             newPortal.requestConfiguration = originalPortalRC
             
-            // If we were able to log in with cached credentials, there will be no error.
+            // If we were able to sign in with cached credentials, there will be no error.
             if error == nil {
                 completion(newPortal, true)
             } else {
-                // Could not log in silently with cached credentials, so let's return a portal that doesn't require login
+                // Could not sign in silently with cached credentials, so let's return a portal that doesn't require login
                 print("[Error: Portal] couldn't load the new portal: \(error!.localizedDescription)")
                 guard let newURL = newPortal.url else {
                     // Fall back to ArcGIS Online

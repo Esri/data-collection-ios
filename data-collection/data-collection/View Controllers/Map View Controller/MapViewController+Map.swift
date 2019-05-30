@@ -37,7 +37,7 @@ extension MapViewController {
                 print("[Error: Map Load]", "code: \(error.code)", error.localizedDescription)
                 
                 if AGSServicesErrorCode(rawValue: error.code) == .tokenRequired, !appContext.isLoggedIn {
-                    self.present(loginAlertMessage: "You must log in to access this resource.")
+                    self.present(signInAlertMessage: "You must sign in to access this resource.")
                 }
                 else {
                     self.present(simpleAlertMessage: error.localizedDescription)
