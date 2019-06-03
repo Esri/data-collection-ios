@@ -28,7 +28,7 @@ extension UIViewController {
         present(alert, animated: animated, completion: completion)
     }
 
-    /// Build and present a simple alert message prompting the user to sign-in.
+    /// Build and present a simple alert message prompting the user to sign in.
     ///
     /// - Parameters:
     ///   - message: The message to display to the end user.

@@ -19,9 +19,9 @@ extension AGSPortal {
     
     /// Returns an `AGSPortal` that is signed in if cached credentials allow.
     ///
-    /// The credential cache will have at most one valid cached credential. It is used to sign-in to the portal if possible.
+    /// The credential cache will have at most one valid cached credential. It is used to sign in to the portal if possible.
     ///
-    /// If cached credentials do not automatically sign-in to the portal, then connect to
+    /// If cached credentials do not automatically sign in to the portal, then connect to
     /// the portal anonymously (i.e. not signed in).
     ///
     /// Use a custom portal URL if provided, otherwise use ArcGIS Online.
@@ -35,7 +35,7 @@ extension AGSPortal {
         // then in the portal.load() callback below we will find ourselves signed-in to the portal.
         let newPortal = AGSPortal(url: portalURL, loginRequired: true)
         
-        // We'll temporarily disable prompting the user to sign-in in case the cached credentials are not suitable to sign us in.
+        // We'll temporarily disable prompting the user to sign in in case the cached credentials are not suitable to sign us in.
         // I.e. if the cached credentials aren't good enough to find ourselves signed in to the portal/ArcGIS Online, then just
         // accept it and don't prompt us to sign in, resulting in a Portal being accessed anonymously.
         // We revert from that behaviour as soon as the portal loads below.
