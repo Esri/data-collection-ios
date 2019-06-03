@@ -32,10 +32,10 @@ extension AppContainerViewController: DrawerViewControllerDelegate {
     func drawerViewController(didRequestLoginLogout drawerViewController: DrawerViewController) {
         
         if appContext.isLoggedIn {
-            appContext.logout()
+            appContext.signOut()
         }
         else {
-            appContext.login()
+            appContext.signIn()
         }
     }
     

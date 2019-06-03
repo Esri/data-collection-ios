@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="tff-pw-9ak">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="tff-pw-9ak">
     <device id="retina5_9" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14283.14"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -39,7 +39,7 @@
                                         <rect key="frame" x="16" y="16" width="268" height="44"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                         <inset key="titleEdgeInsets" minX="8" minY="0.0" maxX="0.0" maxY="0.0"/>
-                                        <state key="normal" title="Log in" image="UserLoginIcon"/>
+                                        <state key="normal" title="Sign in" image="UserLoginIcon"/>
                                         <connections>
                                             <action selector="userRequestsLoginLogout:" destination="tff-pw-9ak" eventType="touchUpInside" id="9KY-4Z-SsG"/>
                                         </connections>
@@ -223,8 +223,8 @@
                     <connections>
                         <outlet property="appVersionLabel" destination="PyC-UU-GZQ" id="y5u-ay-W5T"/>
                         <outlet property="deleteOfflineMapButton" destination="PEO-mf-oZz" id="HPj-bb-p9K"/>
-                        <outlet property="loginBannerView" destination="tTn-MW-Nim" id="uCX-mi-qGt"/>
-                        <outlet property="loginButton" destination="19y-Pi-gQF" id="1KV-Gp-aAR"/>
+                        <outlet property="signInBannerView" destination="tTn-MW-Nim" id="uCX-mi-qGt"/>
+                        <outlet property="signInButton" destination="19y-Pi-gQF" id="1KV-Gp-aAR"/>
                         <outlet property="synchronizeOfflineMapButton" destination="nly-Js-OCy" id="Wfb-rv-LWo"/>
                         <outlet property="workOfflineButton" destination="bBY-Xa-AVq" id="Spy-Jm-cLV"/>
                         <outlet property="workOnlineButton" destination="8f1-WT-qtw" id="2wq-Ly-4oD"/>

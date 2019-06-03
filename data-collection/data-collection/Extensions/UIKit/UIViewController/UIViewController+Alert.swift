@@ -28,16 +28,16 @@ extension UIViewController {
         present(alert, animated: animated, completion: completion)
     }
 
-    /// Build and present a simple alert message prompting the user to log-in.
+    /// Build and present a simple alert message prompting the user to sign in.
     ///
     /// - Parameters:
     ///   - message: The message to display to the end user.
     ///   - animated: Whether the alert animates upon presentation. The default value is true.
     ///   - completion: The call back called by the UIAlertController after presentation has completed. The default value is nil.
     ///
-    func present(loginAlertMessage message: String, animated: Bool = true, completion: (() -> Void)? = nil) {
-        let alert = UIAlertController.multiAlert(message: message, actionTitle: "Log in", action: { (action) in
-            appContext.login()
+    func present(signInAlertMessage message: String, animated: Bool = true, completion: (() -> Void)? = nil) {
+        let alert = UIAlertController.multiAlert(message: message, actionTitle: "Sign in", action: { (action) in
+            appContext.signIn()
         }, isDestructive: false)
         present(alert, animated: animated, completion: completion)
     }

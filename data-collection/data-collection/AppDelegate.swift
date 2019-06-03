@@ -37,8 +37,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Reset first reachability change status flag then start listening to reachability status changes.
         appReachability.resetAndStartListening()
         
-        // Attempt to login from previously stored credentials.
-        appContext.logInCurrentPortalIfPossible()
+        // Attempt to sign in from previously stored credentials.
+        appContext.signInCurrentPortalIfPossible()
         
         return true
     }
@@ -75,7 +75,7 @@ extension AppDelegate {
             // See if we were called back with confirmation that we're authorized.
             if urlComponents.hasParameter(named: "code") {
                 // If we were authenticated, there should now be a shared credential to use. Let's try it.
-                appContext.logInCurrentPortalIfPossible()
+                appContext.signInCurrentPortalIfPossible()
             }
         }
         return true
