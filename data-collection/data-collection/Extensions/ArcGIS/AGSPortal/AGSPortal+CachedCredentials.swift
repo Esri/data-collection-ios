@@ -32,7 +32,7 @@ extension AGSPortal {
     
     static func bestPortalFromCachedCredentials(portalURL: URL, completion: @escaping ((AGSPortal, Bool) -> Void)) {
         // First try a portal that requires a login. If there are cached credentials that suit,
-        // then in the portal.load() callback below we will find ourselves signed-in to the portal.
+        // then in the portal.load() callback below we will find ourselves signed in to the portal.
         let newPortal = AGSPortal(url: portalURL, loginRequired: true)
         
         // We'll temporarily disable prompting the user to sign in in case the cached credentials are not suitable to sign us in.
