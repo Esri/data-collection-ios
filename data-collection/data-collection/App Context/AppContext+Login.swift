@@ -19,10 +19,10 @@ extension AppContext {
     
     /// Try to sign in to the AppContext's current portal, if possible.
     func signInCurrentPortalIfPossible() {
-        // Try to take the current portal and update it to be in a signed in state.
+        // Try to take the current portal and update it to be in a signed-in state.
         portal.load() { error in
             guard error == nil else {
-                print("[Error: AGSPortal] loading the portal during sign in attempt: \(error!.localizedDescription)")
+                print("[Error: AGSPortal] loading the portal during sign-in attempt: \(error!.localizedDescription)")
                 return
             }
             
