@@ -3,109 +3,105 @@
     {
       "size" : "20x20",
       "idiom" : "iphone",
-      "filename" : "iOS_40.png",
+      "filename" : "ArcGIS_Open_Source_Apps_40.png",
       "scale" : "2x"
     },
     {
       "size" : "20x20",
       "idiom" : "iphone",
-      "filename" : "iOS_60.png",
+      "filename" : "ArcGIS_Open_Source_Apps_60.png",
       "scale" : "3x"
     },
     {
       "size" : "29x29",
       "idiom" : "iphone",
-      "filename" : "iOS_58.png",
+      "filename" : "ArcGIS_Open_Source_Apps_58.png",
       "scale" : "2x"
     },
     {
       "size" : "29x29",
       "idiom" : "iphone",
-      "filename" : "iOS-87.png",
+      "filename" : "ArcGIS_Open_Source_Apps_87.png",
       "scale" : "3x"
     },
     {
       "size" : "40x40",
       "idiom" : "iphone",
-      "filename" : "iOS_80.png",
+      "filename" : "ArcGIS_Open_Source_Apps_80.png",
       "scale" : "2x"
     },
     {
       "size" : "40x40",
       "idiom" : "iphone",
-      "filename" : "iOS_120.png",
+      "filename" : "ArcGIS_Open_Source_Apps_120.png",
       "scale" : "3x"
     },
     {
       "size" : "60x60",
       "idiom" : "iphone",
-      "filename" : "iOS_120-1.png",
+      "filename" : "ArcGIS_Open_Source_Apps_120-1.png",
       "scale" : "2x"
     },
     {
       "size" : "60x60",
       "idiom" : "iphone",
-      "filename" : "iOS-180.png",
+      "filename" : "ArcGIS_Open_Source_Apps_180.png",
       "scale" : "3x"
     },
     {
-      "size" : "20x20",
       "idiom" : "ipad",
-      "filename" : "iOS_20.png",
+      "size" : "20x20",
       "scale" : "1x"
     },
     {
       "size" : "20x20",
       "idiom" : "ipad",
-      "filename" : "iOS_40-1.png",
+      "filename" : "ArcGIS_Open_Source_Apps_40-1.png",
       "scale" : "2x"
     },
     {
-      "size" : "29x29",
       "idiom" : "ipad",
-      "filename" : "iOS_29.png",
+      "size" : "29x29",
       "scale" : "1x"
     },
     {
       "size" : "29x29",
       "idiom" : "ipad",
-      "filename" : "iOS_58-1.png",
+      "filename" : "ArcGIS_Open_Source_Apps_58-1.png",
       "scale" : "2x"
     },
     {
+      "idiom" : "ipad",
       "size" : "40x40",
-      "idiom" : "ipad",
-      "filename" : "iOS_40-2.png",
       "scale" : "1x"
     },
     {
       "size" : "40x40",
       "idiom" : "ipad",
-      "filename" : "iOS_80-1.png",
+      "filename" : "ArcGIS_Open_Source_Apps_80-1.png",
       "scale" : "2x"
     },
     {
-      "size" : "76x76",
       "idiom" : "ipad",
-      "filename" : "iOS_76.png",
+      "size" : "76x76",
       "scale" : "1x"
     },
     {
       "size" : "76x76",
       "idiom" : "ipad",
-      "filename" : "iOS_152.png",
+      "filename" : "ArcGIS_Open_Source_Apps_152.png",
       "scale" : "2x"
     },
     {
       "size" : "83.5x83.5",
       "idiom" : "ipad",
-      "filename" : "iOS-167.png",
+      "filename" : "ArcGIS_Open_Source_Apps_167.png",
       "scale" : "2x"
     },
     {
       "size" : "1024x1024",
       "idiom" : "ios-marketing",
-      "filename" : "iOS_1024.png",
+      "filename" : "ArcGIS_Open_Source_Apps_1024.png",
       "scale" : "1x"
     }
   ],
