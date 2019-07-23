@@ -44,9 +44,18 @@ extension MapViewController {
         performSegue(withIdentifier: "modallyPresentRelatedRecordsPopupViewController", sender: nil)
     }
     
+    @objc func appWillResignActive(notification: Notification) {
+        guard case MapViewMode.selectedFeature(featureLoaded: true) = mapViewMode else { return }
+        mapViewMode = .selectedFeature(featureLoaded: true)
+    }
+    
     func setupSmallPopupView() {
         smallPopupView.delegate = self
         smallPopupView.addTarget(self, action: #selector(MapViewController.didTapSmallPopupView(_:)), for: .touchUpInside)
+        appNotificationCenter.addObserver(self,
+                                          selector: #selector(appWillResignActive),
+                                          name: UIApplication.willResignActiveNotification,
+                                          object: nil)
     }
     
     func refreshCurrentPopup() {

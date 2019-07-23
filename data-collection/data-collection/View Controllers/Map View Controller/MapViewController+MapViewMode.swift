@@ -22,7 +22,7 @@ extension MapViewController {
             return {
                 guard let self = self else { return }
                 self.smallPopupView.alpha = CGFloat(visible)
-                self.featureDetailViewBottomConstraint.constant = visible ? 8 : 28
+                self.featureDetailViewBottomConstraint.constant = visible ? 8 : -156
             }
         }
         

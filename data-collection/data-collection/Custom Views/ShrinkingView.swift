@@ -14,7 +14,7 @@
 
 import UIKit
 
-protocol ShrinkingViewDelegate {
+protocol ShrinkingViewDelegate: class {
     func shrinkingViewDidDragWith(yDelta: CGFloat)
     func shrinkingViewDidFinishDrag(thresholdReached: Bool)
 }
@@ -45,10 +45,10 @@ class ShrinkingView: UIControl {
     
     // MARK:- Drag Y Offset
     
-    var delegate: ShrinkingViewDelegate?
+    weak var delegate: ShrinkingViewDelegate?
 
     private struct DragThreshold {
-        static let yOffset: CGFloat = 60
+        static let yOffset: CGFloat = 12
     }
     
     private var touchDownPoint: CGPoint?
@@ -118,8 +118,12 @@ class ShrinkingView: UIControl {
             
             let delta = touchDownPoint.y - currentLocation.y
             
-            if delta >= DragThreshold.yOffset || delta <= -DragThreshold.yOffset {
+            if delta <= -DragThreshold.yOffset {
                 delegate?.shrinkingViewDidFinishDrag(thresholdReached: true)
+                return
+            }
+            if delta >= DragThreshold.yOffset {
+                delegate?.shrinkingViewDidFinishDrag(thresholdReached: false)
                 return
             }
         }
