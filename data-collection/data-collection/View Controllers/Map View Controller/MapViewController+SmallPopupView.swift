@@ -15,11 +15,38 @@
 import UIKit
 import ArcGIS
 
+extension MapViewController: ShrinkingViewDelegate {
+    
+    func shrinkingViewDidDragWith(yDelta: CGFloat) {
+        
+        guard case MapViewMode.selectedFeature(true) = mapViewMode else { return }
+        
+        featureDetailViewBottomConstraint.constant = yDelta + 8
+    }
+    
+    func shrinkingViewDidFinishDrag(thresholdReached: Bool) {
+        
+        if thresholdReached {
+            self.clearCurrentPopup()
+            self.mapViewMode = .defaultView
+        }
+        else {
+            self.mapViewMode = .selectedFeature(featureLoaded: true)
+        }
+    }
+}
+
 extension MapViewController {
+    
     
     @objc func didTapSmallPopupView(_ sender: Any) {
         guard currentPopupManager != nil else { return }
         performSegue(withIdentifier: "modallyPresentRelatedRecordsPopupViewController", sender: nil)
+    }
+    
+    func setupSmallPopupView() {
+        smallPopupView.delegate = self
+        smallPopupView.addTarget(self, action: #selector(MapViewController.didTapSmallPopupView(_:)), for: .touchUpInside)
     }
     
     func refreshCurrentPopup() {

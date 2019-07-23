@@ -14,9 +14,16 @@
 
 import UIKit
 
+protocol ShrinkingViewDelegate {
+    func shrinkingViewDidDragWith(yDelta: CGFloat)
+    func shrinkingViewDidFinishDrag(thresholdReached: Bool)
+}
+
 class ShrinkingView: UIControl {
     
-    enum ShrinkScale: CGFloat {
+    // MARK:- Shrinking
+    
+    private enum ShrinkScale: CGFloat {
         
         case shrink = 0.98
         case full = 1.0
@@ -26,7 +33,7 @@ class ShrinkingView: UIControl {
         }
     }
     
-    var scale: ShrinkScale = .full {
+    private var scale: ShrinkScale = .full {
         didSet {
             UIView.animate(withDuration: 0.06) { [weak self] in
                 if let transformation = self?.scale.transformation {
@@ -35,6 +42,16 @@ class ShrinkingView: UIControl {
             }
         }
     }
+    
+    // MARK:- Drag Y Offset
+    
+    var delegate: ShrinkingViewDelegate?
+
+    private struct DragThreshold {
+        static let yOffset: CGFloat = 60
+    }
+    
+    private var touchDownPoint: CGPoint?
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         super.touchesBegan(touches, with: event)
@@ -46,6 +63,26 @@ class ShrinkingView: UIControl {
         scale = .shrink
         
         sendActions(for: .touchDown)
+        
+        if let touch = touches.first, let superview = self.superview {
+            touchDownPoint = touch.location(in: superview)
+        }
+    }
+    
+    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
+        super.touchesMoved(touches, with: event)
+        // must be accepting user interaction
+        guard isUserInteractionEnabled,
+            let touchDownPoint = touchDownPoint,
+            let touch = touches.first,
+            let superview = self.superview
+            else {
+            return
+        }
+        
+        let currentLocation = touch.location(in: superview)
+        
+        delegate?.shrinkingViewDidDragWith(yDelta: touchDownPoint.y - currentLocation.y)
     }
     
     override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -54,22 +91,46 @@ class ShrinkingView: UIControl {
         scale = .full
         
         sendActions(for: .touchCancel)
+        
+        touchDownPoint = nil
     }
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         super.touchesEnded(touches, with: event)
         // must be accepting user interaction
-        guard isUserInteractionEnabled else {
+        
+        defer {
+            // animate
+            touchDownPoint = nil
+            scale = .full
+        }
+        
+        guard isUserInteractionEnabled,
+            let touch = touches.first,
+            let superview = self.superview
+            else {
             return
         }
-        // animate
-        scale = .full
         
-        if let touch = touches.first, bounds.contains(touch.location(in: self)) {
+        let currentLocation = touch.location(in: superview)
+
+        if let touchDownPoint = touchDownPoint {
+            
+            let delta = touchDownPoint.y - currentLocation.y
+            
+            if delta >= DragThreshold.yOffset || delta <= -DragThreshold.yOffset {
+                delegate?.shrinkingViewDidFinishDrag(thresholdReached: true)
+                return
+            }
+        }
+        
+        if frame.contains(currentLocation) {
             sendActions(for: .touchUpInside)
         }
         else {
             sendActions(for: .touchUpOutside)
         }
+        
+        delegate?.shrinkingViewDidFinishDrag(thresholdReached: false)
     }
 }
