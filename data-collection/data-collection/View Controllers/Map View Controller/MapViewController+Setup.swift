@@ -53,8 +53,4 @@ extension MapViewController {
         featureDetailViewBottomConstraint = mapView.attributionTopAnchor.constraint(equalTo: smallPopupView.bottomAnchor, constant: 8)
         featureDetailViewBottomConstraint.isActive = true
     }
-    
-    func setupSmallPopupView() {
-        smallPopupView.addTarget(self, action: #selector(MapViewController.didTapSmallPopupView(_:)), for: .touchUpInside)
-    }
 }

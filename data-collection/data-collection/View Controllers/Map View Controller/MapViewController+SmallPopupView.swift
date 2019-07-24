@@ -17,9 +17,34 @@ import ArcGIS
 
 extension MapViewController {
     
-    @objc func didTapSmallPopupView(_ sender: Any) {
-        guard currentPopupManager != nil else { return }
+    @objc private func userDidTouchDragSmallPopupView(_ sender: Any) {
+        guard case MapViewMode.selectedFeature(featureLoaded: true) = mapViewMode, let shrinkingView = sender as? ShrinkingView else { return }
+        featureDetailViewBottomConstraint.constant = shrinkingView.yDelta + 8
+    }
+    
+    @objc private func userDidTapSmallPopupView(_ sender: Any) {
+        guard case MapViewMode.selectedFeature(featureLoaded: true) = mapViewMode, currentPopupManager != nil else { return }
+        mapViewMode = .selectedFeature(featureLoaded: true)
         performSegue(withIdentifier: "modallyPresentRelatedRecordsPopupViewController", sender: nil)
+    }
+    
+    @objc private func userDidDismissSmallPopupView(_ sender: Any) {
+        guard case MapViewMode.selectedFeature(true) = mapViewMode else { return }
+        self.clearCurrentPopup()
+        self.mapViewMode = .defaultView
+    }
+    
+    @objc private func resetSmallPopupViewAfterTouchEvent(_ sender: Any) {
+        guard case MapViewMode.selectedFeature(featureLoaded: true) = mapViewMode else { return }
+        mapViewMode = .selectedFeature(featureLoaded: true)
+    }
+    
+    func setupSmallPopupView() {
+        smallPopupView.addTarget(self, action: #selector(MapViewController.userDidTapSmallPopupView), for: .touchUpInside)
+        smallPopupView.addTarget(self, action: #selector(MapViewController.resetSmallPopupViewAfterTouchEvent), for: .touchUpOutside)
+        smallPopupView.addTarget(self, action: #selector(MapViewController.resetSmallPopupViewAfterTouchEvent), for: .touchCancel)
+        smallPopupView.addTarget(self, action: #selector(MapViewController.userDidTouchDragSmallPopupView), for: .touchDragInside)
+        smallPopupView.addTarget(self, action: #selector(MapViewController.userDidDismissSmallPopupView), for: .touchDragExit)
     }
     
     func refreshCurrentPopup() {
