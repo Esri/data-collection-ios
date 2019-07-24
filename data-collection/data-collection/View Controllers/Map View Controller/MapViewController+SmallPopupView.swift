@@ -15,47 +15,36 @@
 import UIKit
 import ArcGIS
 
-extension MapViewController: ShrinkingViewDelegate {
-    
-    func shrinkingViewDidDragWith(yDelta: CGFloat) {
-        
-        guard case MapViewMode.selectedFeature(true) = mapViewMode else { return }
-        
-        featureDetailViewBottomConstraint.constant = yDelta + 8
-    }
-    
-    func shrinkingViewDidFinishDrag(thresholdReached: Bool) {
-        
-        if thresholdReached {
-            self.clearCurrentPopup()
-            self.mapViewMode = .defaultView
-        }
-        else {
-            self.mapViewMode = .selectedFeature(featureLoaded: true)
-        }
-    }
-}
-
 extension MapViewController {
     
+    @objc private func userDidTouchDragSmallPopupView(_ sender: Any) {
+        guard case MapViewMode.selectedFeature(featureLoaded: true) = mapViewMode, let shrinkingView = sender as? ShrinkingView else { return }
+        featureDetailViewBottomConstraint.constant = shrinkingView.yDelta + 8
+    }
     
-    @objc func didTapSmallPopupView(_ sender: Any) {
-        guard currentPopupManager != nil else { return }
+    @objc private func userDidTapSmallPopupView(_ sender: Any) {
+        guard case MapViewMode.selectedFeature(featureLoaded: true) = mapViewMode, currentPopupManager != nil else { return }
+        mapViewMode = .selectedFeature(featureLoaded: true)
         performSegue(withIdentifier: "modallyPresentRelatedRecordsPopupViewController", sender: nil)
     }
     
-    @objc func appWillResignActive(notification: Notification) {
+    @objc private func userDidDismissSmallPopupView(_ sender: Any) {
+        guard case MapViewMode.selectedFeature(true) = mapViewMode else { return }
+        self.clearCurrentPopup()
+        self.mapViewMode = .defaultView
+    }
+    
+    @objc private func resetSmallPopupViewAfterTouchEvent(_ sender: Any) {
         guard case MapViewMode.selectedFeature(featureLoaded: true) = mapViewMode else { return }
         mapViewMode = .selectedFeature(featureLoaded: true)
     }
     
     func setupSmallPopupView() {
-        smallPopupView.delegate = self
-        smallPopupView.addTarget(self, action: #selector(MapViewController.didTapSmallPopupView(_:)), for: .touchUpInside)
-        appNotificationCenter.addObserver(self,
-                                          selector: #selector(appWillResignActive),
-                                          name: UIApplication.willResignActiveNotification,
-                                          object: nil)
+        smallPopupView.addTarget(self, action: #selector(MapViewController.userDidTapSmallPopupView), for: .touchUpInside)
+        smallPopupView.addTarget(self, action: #selector(MapViewController.resetSmallPopupViewAfterTouchEvent), for: .touchUpOutside)
+        smallPopupView.addTarget(self, action: #selector(MapViewController.resetSmallPopupViewAfterTouchEvent), for: .touchCancel)
+        smallPopupView.addTarget(self, action: #selector(MapViewController.userDidTouchDragSmallPopupView), for: .touchDragInside)
+        smallPopupView.addTarget(self, action: #selector(MapViewController.userDidDismissSmallPopupView), for: .touchDragExit)
     }
     
     func refreshCurrentPopup() {
