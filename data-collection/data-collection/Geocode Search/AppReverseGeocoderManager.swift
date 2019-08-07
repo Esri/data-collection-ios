@@ -97,53 +97,46 @@ class AppReverseGeocoderManager: AGSLoadableBase {
     ///
     /// - Parameters:
     ///   - point: The point used in the reverse geocode operation.
-    ///   - completion: A closure containing either an address or an error (but not both).
-    ///
-    internal func reverseGeocode(forPoint point: AGSPoint, completion: @escaping (String?, Error?)->Void) {
-        
+    ///   - completion: A closure called upon completion of the reverse geocode.
+    ///   - result: The result of the reverse geocode operation, with either the
+    ///   address or an error.
+    func reverseGeocode(for point: AGSPoint, completion: @escaping (_ result: Result<String, Error>) -> Void) {
         load { [weak self] error in
-
             guard let self = self else { return }
-
-            guard error == nil else {
-                completion(nil, error)
-                return
-            }
             
-            let locatorTask: AGSLocatorTask
-            
-            // We want to use the online locator if the work mode is online and the app has reachability.
-            if appContext.workMode == .online && appReachability.isReachable {
-                locatorTask = self.onlineLocatorTask
-            }
-            // Otherwise, we'll use the offline locator.
-            else {
-                locatorTask = self.offlineLocatorTask
-            }
-            
-            // We need to set the geocode parameters for storage true because the results of this reverse geocode is persisted to a table.
-            // Please familiarize yourself with the implications of this credits-consuming operation:
-            // https://developers.arcgis.com/rest/geocode/api-reference/geocoding-free-vs-paid.htm
-            let params = AGSReverseGeocodeParameters()
-            params.forStorage = true
-            
-            // Perform the reverse geocode task.
-            locatorTask.reverseGeocode(withLocation: point, parameters: params) { (geoCodeResults: [AGSGeocodeResult]?, error: Error?) in
+            if let error = error {
+                completion(.failure(error))
+            } else {
+                let locatorTask: AGSLocatorTask
                 
-                guard error == nil else {
-                    completion(nil, error)
-                    return
+                // We want to use the online locator if the work mode is online and the app has reachability.
+                if appContext.workMode == .online && appReachability.isReachable {
+                    locatorTask = self.onlineLocatorTask
+                }
+                // Otherwise, we'll use the offline locator.
+                else {
+                    locatorTask = self.offlineLocatorTask
                 }
                 
-                guard let results = geoCodeResults,
-                    let first = results.first,
-                    let attributesDict = first.attributes,
-                    let address = attributesDict[Keys.address] as? String ?? attributesDict[Keys.matchAddress] as? String
-                    else {
-                        completion(nil, ReverseGeocoderManagerError.missingAddressAttribute)
-                        return
+                // We need to set the geocode parameters for storage true because the results of this reverse geocode is persisted to a table.
+                // Please familiarize yourself with the implications of this credits-consuming operation:
+                // https://developers.arcgis.com/rest/geocode/api-reference/geocoding-free-vs-paid.htm
+                let params = AGSReverseGeocodeParameters()
+                params.forStorage = true
+                
+                // Perform the reverse geocode task.
+                locatorTask.reverseGeocode(withLocation: point, parameters: params) { (geoCodeResults: [AGSGeocodeResult]?, error: Error?) in
+                    if let error = error {
+                        completion(.failure(error))
+                    } else if let results = geoCodeResults,
+                        let first = results.first,
+                        let attributesDict = first.attributes,
+                        let address = attributesDict[Keys.address] as? String ?? attributesDict[Keys.matchAddress] as? String {
+                        completion(.success(address))
+                    } else {
+                        completion(.failure(ReverseGeocoderManagerError.missingAddressAttribute))
+                    }
                 }
-                completion(address, nil)
             }
         }
     }
