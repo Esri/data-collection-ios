@@ -16,7 +16,9 @@ import UIKit
 
 class ShrinkingView: UIControl {
     
-    enum ShrinkScale: CGFloat {
+    // MARK:- Shrinking
+    
+    private enum ShrinkScale: CGFloat {
         
         case shrink = 0.98
         case full = 1.0
@@ -26,7 +28,7 @@ class ShrinkingView: UIControl {
         }
     }
     
-    var scale: ShrinkScale = .full {
+    private var scale: ShrinkScale = .full {
         didSet {
             UIView.animate(withDuration: 0.06) { [weak self] in
                 if let transformation = self?.scale.transformation {
@@ -36,40 +38,92 @@ class ShrinkingView: UIControl {
         }
     }
     
+    // MARK:- Drag Y Offset
+        
+    private var touchDownPoint: CGPoint?
+    
+    private var currentTouchPoint: CGPoint?
+    
+    var yDelta: CGFloat {
+        if let down = touchDownPoint, let current = currentTouchPoint {
+            return down.y - current.y
+        }
+        else {
+            return 0
+        }
+    }
+    
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         super.touchesBegan(touches, with: event)
-        // must be accepting user interaction
-        guard isUserInteractionEnabled else {
+
+        touchDownPoint = nil
+        currentTouchPoint = nil
+        
+        guard isUserInteractionEnabled else { return }
+                
+        if let touch = touches.first, let superview = self.superview {
+            touchDownPoint = touch.location(in: superview)
+            currentTouchPoint = touchDownPoint
+        }
+        
+        scale = .shrink
+
+        sendActions(for: .touchDown)
+    }
+    
+    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
+        super.touchesMoved(touches, with: event)
+
+        guard isUserInteractionEnabled, let touch = touches.first, let superview = self.superview else {
             return
         }
-        // animate
-        scale = .shrink
         
-        sendActions(for: .touchDown)
+        currentTouchPoint = touch.location(in: superview)
+        
+        sendActions(for: .touchDragInside)
     }
     
     override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
         super.touchesCancelled(touches, with: event)
-        // animate
+
         scale = .full
+        
+        touchDownPoint = nil
+        currentTouchPoint = nil
         
         sendActions(for: .touchCancel)
     }
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         super.touchesEnded(touches, with: event)
-        // must be accepting user interaction
-        guard isUserInteractionEnabled else {
-            return
-        }
-        // animate
-        scale = .full
         
-        if let touch = touches.first, bounds.contains(touch.location(in: self)) {
+        defer {
+            touchDownPoint = nil
+            currentTouchPoint = nil
+            scale = .full
+        }
+        
+        guard isUserInteractionEnabled, let touch = touches.first, let superview = self.superview else { return }
+        
+        let current = touch.location(in: superview)
+        
+        currentTouchPoint = current
+        
+        if yDelta <= -.dragThresholdYDelta {
+            sendActions(for: .touchDragExit)
+        }
+        else if yDelta >= .dragThresholdYDelta {
+            sendActions(for: .touchCancel)
+        }
+        else if frame.contains(current) {
             sendActions(for: .touchUpInside)
         }
         else {
             sendActions(for: .touchUpOutside)
         }
     }
+}
+
+private extension CGFloat {
+    static let dragThresholdYDelta: CGFloat = 12
 }
