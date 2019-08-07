@@ -33,6 +33,8 @@ extension AGSJobStatus: CustomStringConvertible {
             return "Succeeded"
         case .failed:
             return "Failed"
+        @unknown default:
+            fatalError("Unsupported case \(self).")
         }
     }
 }

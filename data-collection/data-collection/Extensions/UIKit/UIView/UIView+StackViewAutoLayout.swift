@@ -47,6 +47,9 @@ extension UIView {
             case .vertical:
                 top.priority = UILayoutPriority(999)
                 bottom.priority = UILayoutPriority(999)
+                
+            @unknown default:
+                fatalError("Unsupported case \(self).")
             }
         }
 
