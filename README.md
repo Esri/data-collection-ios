@@ -26,7 +26,7 @@ The project also demonstrates some patterns for building real-world apps around 
 * Swift KVO & NotificationCenter state handling
 
 ## Get Started
-You will need [Xcode 10.2](https://itunes.apple.com/us/app/xcode/id497799835?mt=12) and the [ArcGIS Runtime SDK](https://developers.arcgis.com/ios/latest/swift/guide/install.htm#ESRI_SECTION1_D57435A2BEBC4D29AFA3A4CAA722506A) (v100.5 or later) installed locally.
+You will need [Xcode 11](https://itunes.apple.com/us/app/xcode/id497799835?mt=12) and the [ArcGIS Runtime SDK](https://developers.arcgis.com/ios/latest/swift/guide/install.htm#ESRI_SECTION1_D57435A2BEBC4D29AFA3A4CAA722506A) (v100.5 or later) installed locally.
 
 ### Fork the repo
 **Fork** the [Data Collection](https://github.com/Esri/data-collection-ios/fork) repo
@@ -91,7 +91,7 @@ For OAuth configuration, create a new Application in your ArcGIS Portal to obtai
 Learn more about Esri Example Apps [here](https://developers.arcgis.com/example-apps).
 
 ## Requirements
-* [Xcode 10.2 and Swift 5](https://itunes.apple.com/us/app/xcode/id497799835?mt=12)
+* [Xcode 11 and Swift 5](https://itunes.apple.com/us/app/xcode/id497799835?mt=12)
 * [ArcGIS Runtime SDK for iOS](https://developers.arcgis.com/ios/)
 * To edit records or take a web map offline you will need an ArcGIS Online Organizational account, an ArcGIS Online Developer account or an ArcGIS Online account authenticated using a social login.
 * To consume your own web map you will need an ArcGIS Online Organizational account.
