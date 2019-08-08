@@ -179,7 +179,7 @@ class RichPopupViewController: SegmentedViewController {
         
         if self.popupManager.isEditing {
             // Add Cancel button. Will hide back bar button, if there is one.
-            navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(userRequestsCancelEditingPopup(_:)))
+            navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(userRequestsCancelEditingPopup(_:)))
         }
         else {
             // Removes Cancel button, if there is one. Will replace back bar button with dismiss bar button, if there is one.
