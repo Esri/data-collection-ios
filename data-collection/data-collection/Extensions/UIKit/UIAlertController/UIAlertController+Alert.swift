@@ -51,6 +51,7 @@ extension UIAlertController {
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         let action = UIAlertAction(title: actionTitle, style: isDestructive ? .destructive : .default, handler: action)
         alert.addAction(action)
+        alert.preferredAction = action
         alert.addAction(.cancel(handler: cancelHandler))
         return alert
     }
