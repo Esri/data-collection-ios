@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4CA46A8522FB973B001A9CB9 /* UIAlertAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CA46A8422FB973B001A9CB9 /* UIAlertAction.swift */; };
 		940DA9722097825700AB4BF6 /* UILabel+EmptyString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 940DA9712097825700AB4BF6 /* UILabel+EmptyString.swift */; };
 		940DA97B2098E1C600AB4BF6 /* AGSArcGISFeatureTable+Query.swift in Sources */ = {isa = PBXBuildFile; fileRef = 940DA97A2098E1C600AB4BF6 /* AGSArcGISFeatureTable+Query.swift */; };
 		9416A19320BF3334001377ED /* Relationship.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9416A19220BF3334001377ED /* Relationship.swift */; };
@@ -225,6 +226,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		4CA46A8422FB973B001A9CB9 /* UIAlertAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIAlertAction.swift; sourceTree = "<group>"; };
 		940DA9712097825700AB4BF6 /* UILabel+EmptyString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+EmptyString.swift"; sourceTree = "<group>"; };
 		940DA97A2098E1C600AB4BF6 /* AGSArcGISFeatureTable+Query.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AGSArcGISFeatureTable+Query.swift"; sourceTree = "<group>"; };
 		9416A19220BF3334001377ED /* Relationship.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Relationship.swift; sourceTree = "<group>"; };
@@ -853,6 +855,7 @@
 			isa = PBXGroup;
 			children = (
 				94B375EA207E8E4800691F2A /* UIAlertController+Alert.swift */,
+				4CA46A8422FB973B001A9CB9 /* UIAlertAction.swift */,
 			);
 			path = UIAlertController;
 			sourceTree = "<group>";
@@ -1488,6 +1491,7 @@
 				948D851E2151BFD900E2048F /* AGSArcGISFeatureTable+Popup.swift in Sources */,
 				948D84CB213F578800E2048F /* AGSMap+GeodatabaseFeatureTable.swift in Sources */,
 				948D852E2151C4F900E2048F /* UIButton+ImageTint.swift in Sources */,
+				4CA46A8522FB973B001A9CB9 /* UIAlertAction.swift in Sources */,
 				9487944222022777007BC15E /* RichPopupDetailsViewController+UITableViewDataSource.swift in Sources */,
 				94ADD3C821F266AC000A5DB9 /* AGSPopupManager+AttachmentAccess.swift in Sources */,
 				94BA7D3C20FD151A00C78255 /* AppFonts.swift in Sources */,
