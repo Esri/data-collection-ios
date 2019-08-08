@@ -145,9 +145,9 @@ public struct ImagePickerPermissions {
                         alert.addAction(settingsAction)
                     }
                     
-                    let okAction = UIAlertAction.okay()
-                    alert.addAction(okAction)
-                    alert.preferredAction = okAction
+                    let okayAction = UIAlertAction.okay()
+                    alert.addAction(okayAction)
+                    alert.preferredAction = okayAction
                     
                     viewController.present(alert, animated: true)
                     
