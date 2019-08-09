@@ -70,9 +70,7 @@ extension AppContainerViewController: DrawerViewControllerDelegate {
                                                         print("[Error] couldn't delete offline map", error.localizedDescription)
                                                     }
         },
-                                                 isDestructive: true,
-                                                 cancelTitle: "Cancel",
-                                                 cancel: nil)
+                                                 isDestructive: true)
         
         present(alert, animated: true, completion: nil)
     }

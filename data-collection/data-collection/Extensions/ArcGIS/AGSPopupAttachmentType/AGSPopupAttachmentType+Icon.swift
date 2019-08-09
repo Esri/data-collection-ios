@@ -26,6 +26,8 @@ extension AGSPopupAttachmentType {
             return #imageLiteral(resourceName: "AttachmentDocument")
         case .other:
             return #imageLiteral(resourceName: "AttachmentOther")
+        @unknown default:
+            fatalError("Unsupported case \(self).")
         }
     }
 }

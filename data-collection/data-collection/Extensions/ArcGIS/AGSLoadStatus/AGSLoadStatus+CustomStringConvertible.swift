@@ -33,6 +33,8 @@ extension AGSLoadStatus: CustomStringConvertible {
             return "Not Loaded"
         case .unknown:
             return "Unknown"
+        @unknown default:
+            fatalError("Unsupported case \(self).")
         }
     }
 }
