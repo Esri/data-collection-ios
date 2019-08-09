@@ -136,9 +136,6 @@ public struct ImagePickerPermissions {
                     
                     let alert = UIAlertController(title: "Not Authorized", message: "Go to Settings and authorize the use of the \(permission.title).", preferredStyle: .alert)
                     
-                    let okAction = UIAlertAction(title: "OK", style: .cancel)
-                    alert.addAction(okAction)
-                    
                     if let settingsUrl = URL(string: UIApplication.openSettingsURLString), UIApplication.shared.canOpenURL(settingsUrl) {
                         
                         let settingsAction = UIAlertAction(title: "Settings", style: .default, handler: { _ in
@@ -147,6 +144,10 @@ public struct ImagePickerPermissions {
                         
                         alert.addAction(settingsAction)
                     }
+                    
+                    let okayAction = UIAlertAction.okay()
+                    alert.addAction(okayAction)
+                    alert.preferredAction = okayAction
                     
                     viewController.present(alert, animated: true)
                     
@@ -184,8 +185,7 @@ public struct ImagePickerPermissions {
             alertController.addAction(alertAction)
         }
         
-        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
-        alertController.addAction(cancelAction)
+        alertController.addAction(.cancel())
         
         viewController.present(alertController, animated: true)
     }
