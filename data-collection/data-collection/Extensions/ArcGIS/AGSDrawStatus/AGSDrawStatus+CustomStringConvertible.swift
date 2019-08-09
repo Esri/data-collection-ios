@@ -27,6 +27,8 @@ extension AGSDrawStatus: CustomStringConvertible {
             return "Completed"
         case .inProgress:
             return "In Progress"
+        @unknown default:
+            fatalError("Unsupported case \(self).")
         }
     }
 }

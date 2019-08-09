@@ -66,6 +66,8 @@ extension CLAuthorizationStatus: CustomStringConvertible {
             return "Not Determined"
         case .restricted:
             return "Restricted"
+        @unknown default:
+            fatalError("Unsupported case \(self).")
         }
     }
 }

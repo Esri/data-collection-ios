@@ -36,6 +36,8 @@ extension Array where Element == AGSPopup {
                     return try left > right
                 }
             }
+        @unknown default:
+            fatalError("Unsupported case \(self).")
         }
     }
 }

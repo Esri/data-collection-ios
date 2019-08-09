@@ -28,6 +28,8 @@ extension AGSPopupAttachmentSize {
             return CGSize(width: 960, height: 1280)
         case .extraLarge:
             return CGSize(width: 1126, height: 1500)
+        @unknown default:
+            fatalError("Unsupported case \(self).")
         }
     }
     
@@ -60,6 +62,8 @@ extension AGSPopupAttachmentSize {
             return "Extra Large \(width)x\(height)"
         case .actual:
             return "Actual Size (full resolution)"
+        @unknown default:
+            fatalError("Unsupported case \(self).")
         }
     }
 }
