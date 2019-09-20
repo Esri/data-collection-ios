@@ -43,7 +43,7 @@ extension MapViewController {
     
     // MARK : New Feature
     
-    func userRequestsAddNewFeature() {
+    func userRequestsAddNewFeature(_ barButtonItem: UIBarButtonItem?) {
         
         guard mapViewMode != .disabled else {
             return
@@ -78,6 +78,7 @@ extension MapViewController {
             
             action.addAction(.cancel())
             
+            action.popoverPresentationController?.barButtonItem = barButtonItem
             present(action, animated: true, completion: nil)
         }
     }

@@ -124,7 +124,7 @@ class AppContainerViewController: UIViewController {
     }
     
     @IBAction func userTapsRightButton(_ sender: Any) {
-        mapViewController?.userRequestsAddNewFeature()
+        mapViewController?.userRequestsAddNewFeature(sender as? UIBarButtonItem)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
