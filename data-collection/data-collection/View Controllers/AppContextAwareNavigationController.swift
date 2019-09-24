@@ -38,7 +38,20 @@ class AppContextAwareNavigationController: UINavigationController {
     }
     
     private func adjustNavigationBarTintForWorkMode() {
-        navigationBar.barTintColor = appContext.workMode == .online ? .primary : .offline
+        
+        if #available(iOS 13.0, *) {
+            let navBarAppearance = UINavigationBarAppearance()
+            navBarAppearance.configureWithOpaqueBackground()
+            navBarAppearance.titleTextAttributes = [.foregroundColor: UIColor.contrasting]
+            navBarAppearance.largeTitleTextAttributes = [.foregroundColor: UIColor.contrasting]
+            navBarAppearance.backgroundColor = appContext.workMode == .online ? .primary : .offline
+            navigationBar.standardAppearance = navBarAppearance
+            navigationBar.scrollEdgeAppearance = navBarAppearance
+            navigationBar.compactAppearance = navBarAppearance
+        }
+        else {
+            navigationBar.barTintColor = appContext.workMode == .online ? .primary : .offline
+        }
     }
     
     private func subscribeToWorkModeChange() {
