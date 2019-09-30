@@ -88,7 +88,7 @@ For OAuth configuration, create a new Application in your ArcGIS Portal to obtai
 ![Configure Xcode Project Info](./docs/images/Configure-Project-Info.png)
 
 ## Learn More
-Learn more about Esri Example Apps [here](https://developers.arcgis.com/example-apps).
+Learn more about Esri open source apps [here](https://developers.arcgis.com/example-apps).
 
 ## Requirements
 * [Xcode 11 and Swift 5](https://itunes.apple.com/us/app/xcode/id497799835?mt=12)
