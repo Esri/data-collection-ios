@@ -1,3 +1,7 @@
+# Release 1.1.1
+
+- Support for iOS 13
+
 # Release 1.1
 
 ## Major Features and Improvements
