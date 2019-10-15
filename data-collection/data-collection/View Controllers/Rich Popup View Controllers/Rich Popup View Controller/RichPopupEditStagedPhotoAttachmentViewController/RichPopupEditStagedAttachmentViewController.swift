@@ -107,15 +107,7 @@ class RichPopupEditStagedAttachmentViewController: UITableViewController, UIText
     }
     
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        var numMatches: Int = 0
-        // Create a regular expression used to find invalid characters in replacement string.
-        // Disallow: ^\:/*?"<>|
-        if let regex = try? NSRegularExpression(pattern: "^[\\^\\\\:\\/*?\"<>|]+$", options: .caseInsensitive) {
-            numMatches = regex.numberOfMatches(in: string, options: [], range: NSRange(location: 0, length: string.count))
-        }
-
-        // Allow change if we don't have excluded characters
-        return numMatches == 0
+        return string.rangeOfCharacter(from: CharacterSet(charactersIn: #"^\:/*?"<>|"#)) == nil
     }
     
     // MARK: Table View Mapping
