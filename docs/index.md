@@ -1,26 +1,3 @@
----
-title: Data Collection for iOS
-description: Collect and update data in the field through pop-ups, online or offline, with this app built with the ArcGIS Runtime SDK for iOS and Swift.
-featuredImage: /example-apps/data-collection-ios/img/featured-img.png
-githubUrl: https://github.com/Esri/data-collection-ios
-order: 1
-publishDate: 2019-03-28
-product: "api-ios-swift"
-version: "1.1"
-subject: "DEVELOPER,MOBILE,ARCGIS RUNTIME"
-subCategory: "Runtime SDK for iOS"
-keywords:
-  - web map
-  - web GIS
-  - collector
-  - collection
-  - open source
-  - offline
-  - popup
-  - field
-  - data
----
-
 ## Description
 
 Collect data in an app consuming your organization's web maps driven by the ArcGIS Web GIS information model. We provide an example *Trees of Portland* web map and dataset to get you started.
