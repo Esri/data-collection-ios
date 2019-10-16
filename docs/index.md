@@ -156,7 +156,7 @@ Existing attachments can be deleted from the pop-up.
 
 ## Using web maps
 
-You can author your own web maps in [Portal/ArcGIS Online](http://enterprise.arcgis.com/en/portal/latest/use/what-is-web-map.htm) or [ArcGIS Desktop](http://desktop.arcgis.com/en/maps/) and share them in your app via your Portal; this is the central power of the Web GIS model built into ArcGIS. Building an app which uses a web map allows the cartography and map configuration to be completed in Portal rather than in code. This then allows the map to change over time, without any code changes or app updates. Learn more about the benefits of developing with web maps [here](https://developers.arcgis.com/web-map-specification/). Also, learn about authoring web maps in [Portal/ArcGIS Online](http://doc.arcgis.com/en/arcgis-online/create-maps/make-your-first-map.htm) and [ArcGIS Pro](http://pro.arcgis.com/en/pro-app/help/mapping/map-authoring/author-a-basemap.htm).
+You can author your own web maps in [Portal/ArcGIS Online](https://enterprise.arcgis.com/en/portal/latest/use/what-is-web-map.htm) or [ArcGIS Desktop](https://desktop.arcgis.com/en/maps/) and share them in your app via your Portal; this is the central power of the Web GIS model built into ArcGIS. Building an app which uses a web map allows the cartography and map configuration to be completed in Portal rather than in code. This then allows the map to change over time, without any code changes or app updates. Learn more about the benefits of developing with web maps [here](https://developers.arcgis.com/web-map-specification/). Also, learn about authoring web maps in [Portal/ArcGIS Online](https://doc.arcgis.com/en/arcgis-online/create-maps/make-your-first-map.htm) and [ArcGIS Pro](https://pro.arcgis.com/en/pro-app/help/mapping/map-authoring/author-a-basemap.htm).
 
 Loading web maps in code is easy; the app loads a web map from a Portal (which may require the user to login, see the [_identity model_](#identity-model) section) with the following code:
 
@@ -180,15 +180,15 @@ The web map's title becomes the title of the map in the map view's navigation ba
 
 #### Organizing feature layers
 
-The [order](http://doc.arcgis.com/en/arcgis-online/create-maps/organize-layers.htm) of your web map's [feature layers](http://doc.arcgis.com/en/arcgis-online/reference/feature-layers.htm) matter. Layer precedence is assigned to the top-most layer (index 0) first with the next precedence assigned to the next layer beneath, and so on. This is important because only one feature can be identified at a time. When the app performs an identify operation, the layer whose index is nearest 0 and which returns results is the one whose features will be selected.
+The [order](https://doc.arcgis.com/en/arcgis-online/create-maps/organize-layers.htm) of your web map's [feature layers](https://doc.arcgis.com/en/arcgis-online/reference/feature-layers.htm) matter. Layer precedence is assigned to the top-most layer (index 0) first with the next precedence assigned to the next layer beneath, and so on. This is important because only one feature can be identified at a time. When the app performs an identify operation, the layer whose index is nearest 0 and which returns results is the one whose features will be selected.
 
 #### Feature layer visibility range
 
-It is generally recommended to consider the [visibility range](http://doc.arcgis.com/en/arcgis-online/create-maps/set-visibility.htm) of your feature layers. Beyond this general consideration, only visible layers are returned when an identify operation is performed. You'll want to consider which layers to make visible at what scale.
+It is generally recommended to consider the [visibility range](https://doc.arcgis.com/en/arcgis-online/create-maps/set-visibility.htm) of your feature layers. Beyond this general consideration, only visible layers are returned when an identify operation is performed. You'll want to consider which layers to make visible at what scale.
 
 #### Enable editing on feature layers and tables
 
-You'll want to consider whether to enable or disable [editing](http://doc.arcgis.com/en/arcgis-online/manage-data/edit-features.htm) of your feature layers and tables. Specifically, a user is only able to edit features or records on layers whose backing table has editing enabled. This includes related records for features. For instance, if a feature whose backing table does permit editing has a related record backed by a table that does not have editing enabled, that related record layer cannot be edited by the app.
+You'll want to consider whether to enable or disable [editing](https://doc.arcgis.com/en/arcgis-online/manage-data/edit-features.htm) of your feature layers and tables. Specifically, a user is only able to edit features or records on layers whose backing table has editing enabled. This includes related records for features. For instance, if a feature whose backing table does permit editing has a related record backed by a table that does not have editing enabled, that related record layer cannot be edited by the app.
 
 #### Enable pop-up on feature layers and tables
 
@@ -275,7 +275,7 @@ A user does not need to authenticate in order to make edits to the *Trees of Por
 - Taking the web map offline, the base map is premium content.
 - Reverse geocoding using the world geocoder service.
 
-The app allows a user to authenticate against a portal as well as use social credentials. If a user chooses to authenticate with social credentials and an account is not associated to those credentials, [ArcGIS online](http://doc.arcgis.com/en/arcgis-online/reference/sign-in.htm) creates an account for you. Note that a map cannot be taken offline unless the user is authenticated with Portal credentials.
+The app allows a user to authenticate against a portal as well as use social credentials. If a user chooses to authenticate with social credentials and an account is not associated to those credentials, [ArcGIS online](https://doc.arcgis.com/en/arcgis-online/reference/sign-in.htm) creates an account for you. Note that a map cannot be taken offline unless the user is authenticated with Portal credentials.
 
 > There may be additional considerations to make if your portal's web map is configured differently.
 
