@@ -74,7 +74,7 @@ A user may need to collect data in a location where they are disconnected from t
 
 ![Download Map Offline Extent](/docs/images/anatomy-offline-extent.png)
 
-When taking the web map offline, the app asks the user to specify the area of the web map they want to take offline for storage in the device's documents directory following the offline map creation [on-demand workflow](/ios/latest/swift/guide/create-an-offline-map.htm#ESRI_SECTION1_3A0564ED13764295BB72D4A258A9924B). After the [generate](/ios/latest/swift/guide/create-an-offline-map.htm#ESRI_SECTION2_A0A70A5DCBEA4A6294B3ACA3965393D4) offline map job finishes, the app enters offline work mode and loads the offline mobile map package.
+When taking the web map offline, the app asks the user to specify the area of the web map they want to take offline for storage in the device's documents directory following the offline map creation [on-demand workflow](https://developers.arcgis.com/ios/latest/swift/guide/create-an-offline-map.htm#ESRI_SECTION1_3A0564ED13764295BB72D4A258A9924B). After the [generate](https://developers.arcgis.com/ios/latest/swift/guide/create-an-offline-map.htm#ESRI_SECTION2_A0A70A5DCBEA4A6294B3ACA3965393D4) offline map job finishes, the app enters offline work mode and loads the offline mobile map package.
 
 > If you perform this behavior using *Trees of Portland* you should expect the download job to take 10 minutes or so to complete.
 
@@ -156,7 +156,7 @@ Existing attachments can be deleted from the pop-up.
 
 ## Using web maps
 
-You can author your own web maps in [Portal/ArcGIS Online](http://enterprise.arcgis.com/en/portal/latest/use/what-is-web-map.htm) or [ArcGIS Desktop](http://desktop.arcgis.com/en/maps/) and share them in your app via your Portal; this is the central power of the Web GIS model built into ArcGIS. Building an app which uses a web map allows the cartography and map configuration to be completed in Portal rather than in code. This then allows the map to change over time, without any code changes or app updates. Learn more about the benefits of developing with web maps [here](/web-map-specification/). Also, learn about authoring web maps in [Portal/ArcGIS Online](http://doc.arcgis.com/en/arcgis-online/create-maps/make-your-first-map.htm) and [ArcGIS Pro](http://pro.arcgis.com/en/pro-app/help/mapping/map-authoring/author-a-basemap.htm).
+You can author your own web maps in [Portal/ArcGIS Online](http://enterprise.arcgis.com/en/portal/latest/use/what-is-web-map.htm) or [ArcGIS Desktop](http://desktop.arcgis.com/en/maps/) and share them in your app via your Portal; this is the central power of the Web GIS model built into ArcGIS. Building an app which uses a web map allows the cartography and map configuration to be completed in Portal rather than in code. This then allows the map to change over time, without any code changes or app updates. Learn more about the benefits of developing with web maps [here](https://developers.arcgis.com/web-map-specification/). Also, learn about authoring web maps in [Portal/ArcGIS Online](http://doc.arcgis.com/en/arcgis-online/create-maps/make-your-first-map.htm) and [ArcGIS Pro](http://pro.arcgis.com/en/pro-app/help/mapping/map-authoring/author-a-basemap.htm).
 
 Loading web maps in code is easy; the app loads a web map from a Portal (which may require the user to login, see the [_identity model_](#identity-model) section) with the following code:
 
@@ -224,7 +224,7 @@ You'll want to consider which feature layers should enable [attachments](https:/
 
 ## Identity model
 
-The app leverages the ArcGIS [identity](/authentication/) model to provide access to resources via the [named user](/documentation/core-concepts/security-and-authentication/#named-user-login) login pattern. When accessing services that require a named user, the app prompts you for your organization’s portal credentials used to obtain a token. The ArcGIS Runtime SDKs provide a simple-to-use API for dealing with ArcGIS logins.
+The app leverages the ArcGIS [identity](https://developers.arcgis.com/authentication/) model to provide access to resources via the [named user](https://developers.arcgis.com/documentation/core-concepts/security-and-authentication/#named-user-login) login pattern. When accessing services that require a named user, the app prompts you for your organization’s portal credentials used to obtain a token. The ArcGIS Runtime SDKs provide a simple-to-use API for dealing with ArcGIS logins.
 
 The process of accessing token secured services with a challenge handler is illustrated in the following diagram.
 
@@ -237,7 +237,7 @@ The process of accessing token secured services with a challenge handler is illu
 5. If the user is successfully authenticated, a credential (token) is included in requests to the secured service.
 6. The identity manager stores the credential for this portal and all requests for secured content includes the token in the request.
 
-The `AGSOAuthConfiguration` class takes care of steps 1-6 in the diagram above. For an application to use this pattern, follow these [guides](/authentication/signing-in-arcgis-online-users/) to register your app.
+The `AGSOAuthConfiguration` class takes care of steps 1-6 in the diagram above. For an application to use this pattern, follow these [guides](https://developers.arcgis.com/authentication/signing-in-arcgis-online-users/) to register your app.
 
 ``` Swift
 let oauthConfig = AGSOAuthConfiguration(portalURL: portal.url, clientID: clientId, redirectURL: oAuthRedirectURL)
@@ -264,7 +264,7 @@ To tell iOS to call back like this, the app configures a `URL Type` in the `Info
 
 ![OAuth URL Type](/docs/images/configure-url-type.png)
 
-Note the value for URL Schemes. Combined with the text `auth` to make `data-collection://auth`, this is the [redirect URI](/authentication/browser-based-user-logins/#configuring-a-redirect-uri) that you configured when you registered your app on your [developer dashboard](/applications). For more details on the user authorization flow, see the [Authorize REST API](/rest/users-groups-and-items/authorize.htm).
+Note the value for URL Schemes. Combined with the text `auth` to make `data-collection://auth`, this is the [redirect URI](https://developers.arcgis.com/authentication/browser-based-user-logins/#configuring-a-redirect-uri) that you configured when you registered your app on your [developer dashboard](https://developers.arcgis.com/applications). For more details on the user authorization flow, see the [Authorize REST API](https://developers.arcgis.com/rest/users-groups-and-items/authorize.htm).
 
 For more details on configuring the app for OAuth, see [the main README.md](https://github.com/esri/data-collection-ios).
 
@@ -379,7 +379,7 @@ A user can tap the related record cell (indicated by an accessory view). Doing s
 
 **Attachments**
 
-A segmented control permits viewing pop-up attachments, only if the feature layer has enabled attachments. The attachments are presented in a [filtered and sorted](/ios/latest/api-reference/interface_a_g_s_popup_attachment_manager.html#a688184f79b8819584de1d13bfb57d392) list. Tapping an attachment modally presents a view controller that offers the ability to inspect the attachment with closer detail and to share the attachment. Most attachment types are [supported](/rest/services-reference/query-attachments-feature-service-layer-.htm).
+A segmented control permits viewing pop-up attachments, only if the feature layer has enabled attachments. The attachments are presented in a [filtered and sorted](https://developers.arcgis.com/ios/latest/api-reference/interface_a_g_s_popup_attachment_manager.html#a688184f79b8819584de1d13bfb57d392) list. Tapping an attachment modally presents a view controller that offers the ability to inspect the attachment with closer detail and to share the attachment. Most attachment types are [supported](https://developers.arcgis.com/rest/services-reference/query-attachments-feature-service-layer-.htm).
 
 > You can check if a feature layer has enabled attachments either from its item page, or by confirming its service has configured the property `"hasAttachments": true`.
 
@@ -531,7 +531,7 @@ Upon a successful download, the app finishes by moving the offline map from the 
 
 Synchronizing a map is even more straightforward than downloading a map. The app builds an `AGSOfflineMapSyncJob` by constructing an offline map sync task using the offline map and specifying the offline sync parameters sync direction `.bidirectional`.
 
-> A [bi-directional sync](/ios/latest/swift/guide/sync-offline-edits.htm#GUID-364B63B9-BAE7-4BE7-A154-5CF3D1AB2996) synchronizes local changes with the web map and changes made to the web map are synchronized with the offline map. Synchronization conflicts are resolved following the rule "last-in wins".
+> A [bi-directional sync](https://developers.arcgis.com/ios/latest/swift/guide/sync-offline-edits.htm#GUID-364B63B9-BAE7-4BE7-A154-5CF3D1AB2996) synchronizes local changes with the web map and changes made to the web map are synchronized with the offline map. Synchronization conflicts are resolved following the rule "last-in wins".
 
 ```swift
 /**  
@@ -699,7 +699,7 @@ neighborhoodFeatureTable.queryFeatures(with: query) { (result, error) in
 
 The app's base data model object, `AGSPopup`, can be broken down generally into two parts. The first is the pop-up's `geoElement` which in our case is always an instance of an `AGSArcGISFeature`. The second is the web map's configuration of that feature as an `AGSPopup`, defined by an `AGSPopupDefinition`.
 
-Editing of an `AGSPopup` is facilitated by the [`AGSPopupManager`](/ios/latest/api-reference/interface_a_g_s_popup_manager.html). The app works heavily with the related records API as well as the pop-up attachments manager and thus the app ships with a concrete subclass of `AGSPopupManager` named `RichPopupManager`.
+Editing of an `AGSPopup` is facilitated by the [`AGSPopupManager`](https://developers.arcgis.com/ios/latest/api-reference/interface_a_g_s_popup_manager.html). The app works heavily with the related records API as well as the pop-up attachments manager and thus the app ships with a concrete subclass of `AGSPopupManager` named `RichPopupManager`.
 
 #### Creating features
 
@@ -1045,7 +1045,7 @@ class AppReverseGeocoderManager: AGSLoadableBase {
 }
 ```
 
-Because the *Trees of Portland* web map stores the results of a geocode operation, the reverse geocode parameters must have set `forStorage = true`. For more on the world geocoding service visit the [developers website](/rest/geocode/api-reference/overview-world-geocoding-service.htm).
+Because the *Trees of Portland* web map stores the results of a geocode operation, the reverse geocode parameters must have set `forStorage = true`. For more on the world geocoding service visit the [developers website](https://developers.arcgis.com/rest/geocode/api-reference/overview-world-geocoding-service.htm).
 
 > The side-loaded geocoder was generated statically whereas the world geocoder service remains current. You might notice a difference in the results between geocoders.
 
