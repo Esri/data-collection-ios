@@ -14,7 +14,7 @@ Users can identify existing or create new street trees of a certain species on a
 
 The *Trees of Portland* dataset schema is simple.
 
-![](/example-apps/data-collection-ios/img/general-ui.png)
+![](/docs/images/general-ui.png)
 
 A street tree can be one of many species and a street tree can contain zero to many inspection records. A neighborhood is a spatial feature symbolized on the map that does not relate to other tables.
 
@@ -34,21 +34,21 @@ While these custom behaviors may not work with your web map, they illustrate bes
 
 The app launches to a navigation based application containing a map view.
 
-![Main Map View](/example-apps/data-collection-ios/img/anatomy-map-view.png)
+![Main Map View](/docs/images/anatomy-map-view.png)
 
 The navigation bar's title reflects the name of the web map and the navigation bar button items are as follows:
 
 | Icon | Description |
 | ---- | ----------- |
-| ![Hamburger Drawer View](/example-apps/data-collection-ios/img/hamburger.png) | Hamburger button to reveal or hide the app context drawer view. |
-| ![Zoom To Location](/example-apps/data-collection-ios/img/zoom-to-location.png) | Zoom to user's location. |
-| ![Add Feature](/example-apps/data-collection-ios/img/add-feature.png) | Add a new spatial feature to map. |
+| ![Hamburger Drawer View](/docs/images/hamburger.png) | Hamburger button to reveal or hide the app context drawer view. |
+| ![Zoom To Location](/docs/images/zoom-to-location.png) | Zoom to user's location. |
+| ![Add Feature](/docs/images/add-feature.png) | Add a new spatial feature to map. |
 
 ### Manage the app's context
 
 Tapping the navigation bar's hamburger button reveals the app context drawer view.
 
-![App Context Drawer View](/example-apps/data-collection-ios/img/anatomy-app-context-drawer.png)
+![App Context Drawer View](/docs/images/anatomy-app-context-drawer.png)
 
 #### Sign in and out of Portal
 
@@ -72,7 +72,7 @@ A user may need to collect data in a location where they are disconnected from t
 
 > Because *Trees of Portland* uses a premium content basemap, a user must be authenticated to fully take the web map offline.
 
-![Download Map Offline Extent](/example-apps/data-collection-ios/img/anatomy-offline-extent.png)
+![Download Map Offline Extent](/docs/images/anatomy-offline-extent.png)
 
 When taking the web map offline, the app asks the user to specify the area of the web map they want to take offline for storage in the device's documents directory following the offline map creation [on-demand workflow](/ios/latest/swift/guide/create-an-offline-map.htm#ESRI_SECTION1_3A0564ED13764295BB72D4A258A9924B). After the [generate](/ios/latest/swift/guide/create-an-offline-map.htm#ESRI_SECTION2_A0A70A5DCBEA4A6294B3ACA3965393D4) offline map job finishes, the app enters offline work mode and loads the offline mobile map package.
 
@@ -88,7 +88,7 @@ If a user elects to delete the offline map, the app deletes the offline mobile m
 
 Tapping the map performs an identify function on the map. One best result is chosen, a small pop-up view is revealed and the feature is selected on the map. If no results are found, the user is notified.
 
-![Identified Map Feature](/example-apps/data-collection-ios/img/anatomy-identified-feature.png)
+![Identified Map Feature](/docs/images/anatomy-identified-feature.png)
 
 Tapping the small pop-up view presents modally a full pop-up view for deeper interrogation of the data.
 
@@ -100,7 +100,7 @@ If the map contains a spatial feature layer that adheres to the rules specified 
 
 If there is more than one eligible feature layer, a modal action sheet is presented, prompting the user to select onto which layer they would like to add a new feature. If there is only one eligible feature layer, the app selects this layer.
 
-![Add New Feature](/example-apps/data-collection-ios/img/anatomy-new-feature.png)
+![Add New Feature](/docs/images/anatomy-new-feature.png)
 
 An action banner appears and a pin drops to the center of the map view. The action banner contains a select and a cancel button. The pin remains fixed to the center of the map view as the map is panned and zoomed beneath it. If the user taps the select button, a new feature is created using the fixed map view's center point translated to a spatial coordinate.
 
@@ -116,7 +116,7 @@ After identifying a pop-up, tapping the small pop-up view modally presents that 
 
 A full screen table-based view controller allows the user to interrogate the map view's selected pop-up in greater detail. The table-based view is broken down into a number of sub-components.
 
-![View A Pop-up](/example-apps/data-collection-ios/img/anatomy-popup-view.png)
+![View A Pop-up](/docs/images/anatomy-popup-view.png)
 
 The first section displays each attribute configured for display. Following the display attributes are each many-to-one related records. In the *Trees of Portland* web map the trees table has one many-to-one relationship, the species table.
 
@@ -138,7 +138,7 @@ Starting an edit session enables the user to edit the pop-up's attributes, relat
 
 The pop-up's attributes configured as editable can be edited and validated inline within the same pop-up view.
 
-![Edit A Pop-up](/example-apps/data-collection-ios/img/anatomy-popup-edit.png)
+![Edit A Pop-up](/docs/images/anatomy-popup-edit.png)
 
 As values for fields are updated, the app informs the user of invalid changes and why it's invalid. The pop-up won't save if there are invalid fields.
 
@@ -228,7 +228,7 @@ The app leverages the ArcGIS [identity](/authentication/) model to provide acces
 
 The process of accessing token secured services with a challenge handler is illustrated in the following diagram.
 
-![ArcGIS Identity Model](/example-apps/data-collection-ios/img/identity.png)
+![ArcGIS Identity Model](/docs/images/identity.png)
 
 1. A request is made to a secured resource.
 2. The portal responds with an unauthorized access error.
@@ -262,7 +262,7 @@ func application(_ app: UIApplication, open url: URL, options: [UIApplicationOpe
 
 To tell iOS to call back like this, the app configures a `URL Type` in the `Info.plist` file.
 
-![OAuth URL Type](/example-apps/data-collection-ios/img/configure-url-type.png)
+![OAuth URL Type](/docs/images/configure-url-type.png)
 
 Note the value for URL Schemes. Combined with the text `auth` to make `data-collection://auth`, this is the [redirect URI](/authentication/browser-based-user-logins/#configuring-a-redirect-uri) that you configured when you registered your app on your [developer dashboard](/applications). For more details on the user authorization flow, see the [Authorize REST API](/rest/users-groups-and-items/authorize.htm).
 
@@ -310,7 +310,7 @@ After the identify function returns a single successful result, the app selects 
 
 The small pop-up view prioritizes related record content over content derived from its own attributes.
 
-![Small Pop-up View](/example-apps/data-collection-ios/img/anatomy-small-popup-view.png)
+![Small Pop-up View](/docs/images/anatomy-small-popup-view.png)
 
 To understand how the small pop-up view populates it's content, divide the view in half leaving a left and right side, each with two UI elements.
 
@@ -355,7 +355,7 @@ A `RichPopupViewController` was designed to view and edit a pop-up, its one-to-m
 
 The title of the view controller reflects the title of the pop-up as configured in portal. The view controller is segmented in two. The first segment shows attribute and related record content and the second segment shows attachments.
 
-![Pop-up View Anatomy Relationships](/example-apps/data-collection-ios/img/anatomy-popup-view-relationships.png)
+![Pop-up View Anatomy Relationships](/docs/images/anatomy-popup-view-relationships.png)
 
 **Pop-up Attributes**
 
