@@ -174,7 +174,7 @@ public struct ImagePickerPermissions {
         
         let viewController = delegate.imagePickerPermissionsRequestsPresentingViewController()
         
-        let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .alert)
         
         for permission in permissions {
             
@@ -186,7 +186,7 @@ public struct ImagePickerPermissions {
         }
         
         alertController.addAction(.cancel())
-        
+
         viewController.present(alertController, animated: true)
     }
 }
