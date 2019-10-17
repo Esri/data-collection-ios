@@ -2,6 +2,7 @@
 
 - Fix for [iPad crash](https://github.com/Esri/data-collection-ios/issues/209).
 - Fix for [illegal attachment name characters](https://github.com/Esri/data-collection-ios/issues/188).
+- Adds [app documentation](/docs/index.md)
 
 # Release 1.1.1
 
