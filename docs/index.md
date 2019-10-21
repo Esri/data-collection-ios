@@ -4,7 +4,7 @@ Collect data in an app consuming your organization's web maps driven by the ArcG
 
 ### Generic application
 
-The app was designed to work in a generic context and thus your organization can configure the app to consume your own web map, out of the box. To accomplish this, first the web map is configured by a set of rules and then the app adheres to that same set of rules, driving the app's behavior. These rules are defined by the map's definition and by the map's layers' pop-up configurations. To learn more about what drives the app's behavior, read the section entitled [_Using Map Definition & Pop-up Configurations to Drive App Behavior_](#using-map-definition-pop-up-configurations-to-drive-app-behavior).
+The app was designed to work in a generic context and thus your organization can configure the app to consume your own web map, out of the box. To accomplish this, first the web map is configured by a set of rules and then the app adheres to that same set of rules, driving the app's behavior. These rules are defined by the map's definition and by the map's layers' pop-up configurations. To learn more about what drives the app's behavior, read the section entitled [_Using Map Definition & Pop-up Configurations to Drive App Behavior_](#using-map-definition--pop-up-configurations-to-drive-app-behavior).
 
 ### Trees of Portland
 
@@ -14,7 +14,7 @@ Users can identify existing or create new street trees of a certain species on a
 
 The *Trees of Portland* dataset schema is simple.
 
-![](/docs/images/general-ui.png)
+![Trees of Portland dataset schema](/docs/images/dataset-schema.png)
 
 A street tree can be one of many species and a street tree can contain zero to many inspection records. A neighborhood is a spatial feature symbolized on the map that does not relate to other tables.
 
@@ -74,7 +74,7 @@ A user may need to collect data in a location where they are disconnected from t
 
 ![Download Map Offline Extent](/docs/images/anatomy-offline-extent.png)
 
-When taking the web map offline, the app asks the user to specify the area of the web map they want to take offline for storage in the device's documents directory following the offline map creation [on-demand workflow](https://developers.arcgis.com/ios/latest/swift/guide/create-an-offline-map.htm#ESRI_SECTION1_3A0564ED13764295BB72D4A258A9924B). After the [generate](https://developers.arcgis.com/ios/latest/swift/guide/create-an-offline-map.htm#ESRI_SECTION2_A0A70A5DCBEA4A6294B3ACA3965393D4) offline map job finishes, the app enters offline work mode and loads the offline mobile map package.
+When taking the web map offline, the app asks the user to specify the area of the web map they want to take offline for storage in the device's documents directory following the offline map creation [on-demand workflow](https://developers.arcgis.com/ios/latest/swift/guide/take-map-offline-on-demand.htm). After the generate offline map job finishes, the app enters offline work mode and loads the offline mobile map package.
 
 > If you perform this behavior using *Trees of Portland* you should expect the download job to take 10 minutes or so to complete.
 
@@ -266,7 +266,7 @@ To tell iOS to call back like this, the app configures a `URL Type` in the `Info
 
 Note the value for URL Schemes. Combined with the text `auth` to make `data-collection://auth`, this is the [redirect URI](https://developers.arcgis.com/authentication/browser-based-user-logins/#configuring-a-redirect-uri) that you configured when you registered your app on your [developer dashboard](https://developers.arcgis.com/applications). For more details on the user authorization flow, see the [Authorize REST API](https://developers.arcgis.com/rest/users-groups-and-items/authorize.htm).
 
-For more details on configuring the app for OAuth, see [the main README.md](https://github.com/esri/data-collection-ios).
+For more details on configuring the app for OAuth, see [the main README.md](/README.md).
 
 ### Public map, social login
 
@@ -281,7 +281,7 @@ The app allows a user to authenticate against a portal as well as use social cre
 
 ## Using map definition & pop-up configurations to drive app behavior
 
-The app operates on a set of rules driven by map definitions and pop-up configurations. To learn how to configure your web map, see the section entitled [_Configure Web Map & Feature Services for Data Collection_](#configure-web-map-feature-services-for-data-collection).
+The app operates on a set of rules driven by map definitions and pop-up configurations. To learn how to configure your web map, see the section entitled [_Configure Web Map & Feature Services for Data Collection_](#configure-web-map--feature-services-for-data-collection).
 
 ### Map identify rules
 
@@ -948,7 +948,7 @@ internal func discardStagedAttachments()
 
 ### Reverse geocoding
 
-The *Trees of Portland* story contains a custom behavior that reverse geocodes a point into an address which is populated into a tree's attributes. In order to support both an online and an offline work flow, the app ships with a custom class named `AppReverseGeocoderManager` that loads two `AGSLocatorTask` objects, one side-loaded from the app's bundle and the other connected to the [world geocoder web service](https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer).
+The *Trees of Portland* story contains a custom behavior that reverse geocodes a point into an address which is populated into a tree's attributes. In order to support both an online and an offline work flow, the app ships with a custom class named `AppReverseGeocoderManager` that loads two `AGSLocatorTask` objects, one side-loaded from the app's bundle and the other connected to the [world geocoder web service](https://developers.arcgis.com/features/geocoding/).
 
 ```swift
 class AppReverseGeocoderManager: AGSLoadableBase {
