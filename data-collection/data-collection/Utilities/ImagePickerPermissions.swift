@@ -174,7 +174,7 @@ public struct ImagePickerPermissions {
         
         let viewController = delegate.imagePickerPermissionsRequestsPresentingViewController()
         
-        var style: UIAlertController.Style
+        let style: UIAlertController.Style
         if #available(iOS 13.0, *) {
             // In iOS 12.x, this used to crash without using `.alert` or setting either
             // a UIBarButtonItem or sourceView and rect.  Fixed in iOS 13.
