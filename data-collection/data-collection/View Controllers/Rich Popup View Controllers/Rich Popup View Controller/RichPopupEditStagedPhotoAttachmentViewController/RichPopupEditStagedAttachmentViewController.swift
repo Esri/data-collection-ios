@@ -106,6 +106,10 @@ class RichPopupEditStagedAttachmentViewController: UITableViewController, UIText
         return true
     }
     
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        return string.rangeOfCharacter(from: CharacterSet(charactersIn: #"^\:/*?"<>|"#)) == nil
+    }
+    
     // MARK: Table View Mapping
     
     private func cellForMappedAttachmentSize(_ desiredSize: AGSPopupAttachmentSize) -> UITableViewCell? {
