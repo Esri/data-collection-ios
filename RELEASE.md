@@ -1,3 +1,7 @@
+# Release 1.1.3
+
+- Certification for the 100.7.0 release of the ArcGIS Runtime SDK for iOS.
+
 # Release 1.1.2
 
 - Fix for [iPad crash](https://github.com/Esri/data-collection-ios/issues/209).
