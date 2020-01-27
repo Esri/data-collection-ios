@@ -31,7 +31,7 @@ extension AGSPopup {
             return .popup
         }
         
-        return featureTable.featureLayer != nil ? .feature : .record
+        return featureTable.layer as? AGSFeatureLayer != nil ? .feature : .record
     }
 }
 

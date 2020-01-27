@@ -61,7 +61,7 @@ extension MapViewController {
         
         // Select the underlying feature
         if let feature = popup.feature {
-            feature.featureTable?.featureLayer?.select(feature)
+            (feature.featureTable?.layer as? AGSFeatureLayer)?.select(feature)
         }
         
         if let popupRelationships = popup.relationships {
