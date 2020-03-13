@@ -164,7 +164,7 @@ class MapViewController: UIViewController {
     func setCurrentPopup(popup: RichPopup) {
         
         // Clear existing selection
-        currentPopupManager?.popup.feature?.featureTable?.featureLayer?.clearSelection()
+        (currentPopupManager?.popup.feature?.featureTable?.layer as? AGSFeatureLayer)?.clearSelection()
         
         // Build new rich popup manager.
         currentPopupManager = RichPopupManager(richPopup: popup)
@@ -173,7 +173,7 @@ class MapViewController: UIViewController {
     func clearCurrentPopup() {
         
         // Clear existing selection.
-        currentPopupManager?.popup.feature?.featureTable?.featureLayer?.clearSelection()
+        (currentPopupManager?.popup.feature?.featureTable?.layer as? AGSFeatureLayer)?.clearSelection()
         
         // Nullify current popup manager.
         currentPopupManager = nil
