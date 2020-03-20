@@ -127,6 +127,10 @@ class AppContainerViewController: UIViewController {
         mapViewController?.userRequestsAddNewFeature(sender as? UIBarButtonItem)
     }
     
+    @IBAction func userTapsExtrasButton(_ sender: Any) {
+        mapViewController?.userRequestsExtras(sender as? UIBarButtonItem)
+    }
+
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
 
         if let destination = segue.destination as? MapViewController {

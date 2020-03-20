@@ -69,6 +69,9 @@ class MapViewController: UIViewController {
 
     var identifyOperation: AGSCancelable?
     
+    var layerContentsViewController: LayerContentsViewController?
+//    var bookmarksViewController: BookmarksViewController?
+
     var mapViewMode: MapViewMode = .defaultView {
         didSet {
             adjustForMapViewMode(from: oldValue, to: mapViewMode)
