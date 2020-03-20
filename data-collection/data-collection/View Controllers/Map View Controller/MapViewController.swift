@@ -14,6 +14,7 @@
 
 import UIKit
 import ArcGIS
+import ArcGISToolkit
 
 protocol MapViewControllerDelegate: AnyObject {
     func mapViewController(_ mapViewController: MapViewController, didSelect extent: AGSGeometry)
@@ -70,7 +71,7 @@ class MapViewController: UIViewController {
     var identifyOperation: AGSCancelable?
     
     var layerContentsViewController: LayerContentsViewController?
-//    var bookmarksViewController: BookmarksViewController?
+    var bookmarksViewController: BookmarksViewController?
 
     var mapViewMode: MapViewMode = .defaultView {
         didSet {

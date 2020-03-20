@@ -14,6 +14,7 @@
 
 import Foundation
 import ArcGIS
+import ArcGISToolkit
 
 extension MapViewController {
     func userRequestsExtras(_ barButtonItem: UIBarButtonItem?) {
@@ -32,7 +33,7 @@ extension MapViewController {
                 case 0:
                     self?.showLayerContents(barButtonItem)
                 case 1:
-                    print("show Bookmarks")
+                    self?.showBookmarks(barButtonItem)
                 default:
                     break
                 }
@@ -45,7 +46,7 @@ extension MapViewController {
         action.popoverPresentationController?.barButtonItem = barButtonItem
         present(action, animated: true, completion: nil)
     }
-
+    
     func showLayerContents(_ barButtonItem: UIBarButtonItem?) {
         // Create the LayerContentsViewController if it doesn't exist.
         if layerContentsViewController == nil {
@@ -68,6 +69,28 @@ extension MapViewController {
         }
     }
     
+    func showBookmarks(_ barButtonItem: UIBarButtonItem?) {
+        // Create the BookmarksViewController if it doesn't exist.
+        if bookmarksViewController == nil {
+            bookmarksViewController = BookmarksViewController(geoView: mapView)
+            
+            // Add a done button.
+            let doneButton = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(done))
+            bookmarksViewController?.navigationItem.leftBarButtonItem = doneButton
+            bookmarksViewController?.delegate = self
+        }
+        
+        if let bookmarksVC = bookmarksViewController {
+            // Display the bookmarksVC as a popover controller.
+            bookmarksVC.modalPresentationStyle = .popover
+            if let popoverPresentationController = bookmarksVC.popoverPresentationController {
+                popoverPresentationController.delegate = self
+                popoverPresentationController.barButtonItem = barButtonItem
+            }
+            present(bookmarksVC, animated: true)
+        }
+    }
+
     @objc
     func done() {
         dismiss(animated: true)
@@ -77,5 +100,14 @@ extension MapViewController {
 extension MapViewController: UIPopoverPresentationControllerDelegate {
     func presentationController(_ controller: UIPresentationController, viewControllerForAdaptivePresentationStyle style: UIModalPresentationStyle) -> UIViewController? {
         return UINavigationController(rootViewController: controller.presentedViewController)
+    }
+}
+
+extension MapViewController: BookmarksViewControllerDelegate {
+    func bookmarksViewController(_ controller: BookmarksViewController, didSelect bookmark: AGSBookmark) {
+        if let viewpoint = bookmark.viewpoint {
+            mapView.setViewpoint(viewpoint, duration: 2.0)
+            dismiss(animated: true)
+        }
     }
 }
