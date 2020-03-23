@@ -16,23 +16,24 @@ import Foundation
 import ArcGIS
 import ArcGISToolkit
 
+private let layersExtra = "Layers"
+private let bookmarksExtra = "Bookmarks"
+
 extension MapViewController {
     func userRequestsExtras(_ barButtonItem: UIBarButtonItem?) {
         guard mapViewMode != .disabled else {
             return
         }
-        
-        // Present the list of extras.
-        let extras = ["Layers", "Bookmarks"]
 
         let action = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-        
-        for extra in extras {
-            let extraAction = UIAlertAction(title: extra, style: .`default`, handler: { [weak self] (action) in
-                switch extras.firstIndex(of: extra) {
-                case 0:
+                
+        // Present the list of extras.
+        for extra in [layersExtra, bookmarksExtra] {
+            let extraAction = UIAlertAction(title: extra, style: .default, handler: { [weak self] (action) in
+                switch extra {
+                case layersExtra:
                     self?.showLayerContents(barButtonItem)
-                case 1:
+                case bookmarksExtra:
                     self?.showBookmarks(barButtonItem)
                 default:
                     break
@@ -44,7 +45,7 @@ extension MapViewController {
         
         action.addAction(.cancel())
         action.popoverPresentationController?.barButtonItem = barButtonItem
-        present(action, animated: true, completion: nil)
+        present(action, animated: true)
     }
     
     func showLayerContents(_ barButtonItem: UIBarButtonItem?) {
@@ -61,10 +62,7 @@ extension MapViewController {
         if let layerContentsVC = layerContentsViewController {
             // Display the layerContentsVC as a popover controller.
             layerContentsVC.modalPresentationStyle = .popover
-            if let popoverPresentationController = layerContentsVC.popoverPresentationController {
-                popoverPresentationController.delegate = self
-                popoverPresentationController.barButtonItem = barButtonItem
-            }
+            layerContentsVC.popoverPresentationController?.barButtonItem = barButtonItem
             present(layerContentsVC, animated: true)
         }
     }
@@ -83,10 +81,7 @@ extension MapViewController {
         if let bookmarksVC = bookmarksViewController {
             // Display the bookmarksVC as a popover controller.
             bookmarksVC.modalPresentationStyle = .popover
-            if let popoverPresentationController = bookmarksVC.popoverPresentationController {
-                popoverPresentationController.delegate = self
-                popoverPresentationController.barButtonItem = barButtonItem
-            }
+            bookmarksVC.popoverPresentationController?.barButtonItem = barButtonItem
             present(bookmarksVC, animated: true)
         }
     }
@@ -94,12 +89,6 @@ extension MapViewController {
     @objc
     func done() {
         dismiss(animated: true)
-    }
-}
-
-extension MapViewController: UIPopoverPresentationControllerDelegate {
-    func presentationController(_ controller: UIPresentationController, viewControllerForAdaptivePresentationStyle style: UIModalPresentationStyle) -> UIViewController? {
-        return UINavigationController(rootViewController: controller.presentedViewController)
     }
 }
 
