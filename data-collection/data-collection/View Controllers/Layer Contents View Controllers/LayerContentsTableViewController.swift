@@ -17,10 +17,17 @@ import ArcGIS
 
 let initialIndentation: CGFloat = 16.0
 
+/// LegendInfoCell - cell representing a LegendInfo.
 class LegendInfoCell: UITableViewCell {
-    var legendInfo: AGSLegendInfo? {
+    var content: Content? {
         didSet {
             nameLabel.text = legendInfo?.name
+        }
+    }
+    
+    var legendInfo: AGSLegendInfo? {
+        get {
+            return content?.content as? AGSLegendInfo
         }
     }
     
@@ -43,11 +50,14 @@ class LegendInfoCell: UITableViewCell {
     @IBOutlet var indentationConstraint: NSLayoutConstraint!
 }
 
+/// LayerCell - cell representing either a Layer or LayerContent (i.e., a sublayer).
+/// The difference is in which table view cell prototype is used for the cell.
 class LayerCell: UITableViewCell {
     var content: Content? {
         didSet {
             nameLabel.text = content?.name
-            nameLabel.textColor = (content?.isVisibilityToggleOn ?? false) ? UIColor.black : UIColor.lightGray
+            let enabled = (content?.isVisibilityToggleOn ?? false) && (content?.isVisibleAtScale ?? false)
+            nameLabel.textColor = enabled ? UIColor.black : UIColor.lightGray
             accordianButton.isHidden = (content?.accordian == AccordianDisplay.none)
             accordianButtonWidthConstraint.constant = !accordianButton.isHidden ? accordianButton.frame.height : 0.0
 
@@ -90,12 +100,10 @@ class LayerContentsTableViewController: UITableViewController {
     var layerCellReuseIdentifier = "LayerTitle"
     var sublayerCellReuseIdentifier = "SublayerTitle"
     
-    var geoView: AGSGeoView?
-    
-    // This is the array of data to display.  It can contain either:
-    // layers of type AGSLayers,
-    // sublayers which implement AGSLayerContent but are not AGSLayers,
-    // legend infos of type AGSLegendInfo
+    // This is the array of data to display.  'Content' contains either:
+    // - layers of type AGSLayers,
+    // - sublayers which implement AGSLayerContent but are not AGSLayers,
+    // - legend infos of type AGSLegendInfo.
     var contents = [Content]() {
         didSet {
             tableView.reloadData()
@@ -110,17 +118,11 @@ class LayerContentsTableViewController: UITableViewController {
         }
     }
     
-    // dictionary of symbol swatches (images); keys are the symbol used to create the swatch
+    // Dictionary of symbol swatches (images); keys are the symbol used to create the swatch.
     private var symbolSwatches = [AGSSymbol: UIImage]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-        
-//        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-//        self.parent?.navigationItem.rightBarButtonItem = self.editButtonItem
     }
     
     // MARK: - Table view data source
@@ -139,45 +141,42 @@ class LayerContentsTableViewController: UITableViewController {
         let rowItem: Content = contents[indexPath.row]
         switch rowItem.contentType {
         case .layer:
-            // rowItem is a layer
+            // rowItem is a layer.
             let layerCell = tableView.dequeueReusableCell(withIdentifier: layerCellReuseIdentifier) as! LayerCell
             cell = layerCell
             layerCell.content = rowItem
             layerCell.showRowSeparator = (indexPath.row > 0) && config.showRowSeparator
         case .sublayer:
-            // rowItem is not a layer, but still implements AGSLayerContent, so it's a sublayer
+            // rowItem is not a layer, but still implements AGSLayerContent, so it's a sublayer.
             let layerCell = tableView.dequeueReusableCell(withIdentifier: sublayerCellReuseIdentifier) as! LayerCell
             cell = layerCell
             layerCell.content = rowItem
             layerCell.showRowSeparator = (indexPath.row > 0) && config.showRowSeparator
         case .legendInfo:
-            // rowItem is a legendInfo
-            let layerInfoCell = tableView.dequeueReusableCell(withIdentifier: legendInfoCellReuseIdentifier) as! LegendInfoCell
-            cell = layerInfoCell
-            layerInfoCell.legendInfo = rowItem.content as? AGSLegendInfo
-            layerInfoCell.layerIndentationLevel = 0
+            // rowItem is a legendInfo.
+            let legendInfoCell = tableView.dequeueReusableCell(withIdentifier: legendInfoCellReuseIdentifier) as! LegendInfoCell
+            cell = legendInfoCell
+            legendInfoCell.content = rowItem
             
-            //            let imageview = cell.viewWithTag(LegendViewController.imageViewTag) as? UIImageView
-            if let symbol = layerInfoCell.legendInfo?.symbol {
-                //                let activityIndicator = cell.viewWithTag(LegendViewController.activityIndicatorTag) as! UIActivityIndicatorView
+            if let symbol = legendInfoCell.legendInfo?.symbol {
                 if let swatch = self.symbolSwatches[symbol] {
-                    // We have a swatch, so set it into the imageView and stop the activity indicator
-                    layerInfoCell.symbolImage = swatch
-                    //                    activityIndicator.stopAnimating()
+                    // We have a swatch, so set it into the imageView.
+                    legendInfoCell.symbolImage = swatch
                 } else {
-                    // Tag the cell so we know what index path it's being used for
+                    // Tag the cell so we know what index path it's being used
+                    // for once we create the swatch.
                     cell.tag = indexPath.hashValue
-                    layerInfoCell.symbolImage = nil
+                    legendInfoCell.symbolImage = nil
                     
-                    // We don't have a swatch for the given symbol, so create the swatch
+                    // We don't have a swatch for the given symbol, so create the swatch.
                     symbol.createSwatch(completion: { [weak self] (image, _) -> Void in
                         // Make sure this is the cell we still care about and that it
-                        // wasn't already recycled by the time we get the swatch
+                        // wasn't already recycled by the time we get the swatch.
                         if cell.tag != indexPath.hashValue {
                             return
                         }
                         
-                        // set the swatch into our dictionary and reload the row
+                        // Set the swatch into our dictionary and reload the row
                         self?.symbolSwatches[symbol] = image
                         tableView.reloadRows(at: [indexPath], with: .automatic)
                     })

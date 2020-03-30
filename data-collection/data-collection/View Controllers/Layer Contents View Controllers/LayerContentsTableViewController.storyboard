@@ -10,13 +10,13 @@
         <!--Layer Contents Table View Controller-->
         <scene sceneID="hAC-Gr-h5f">
             <objects>
-                <tableViewController id="WR1-5V-ocl" customClass="LayerContentsTableViewController" customModule="ArcGISToolkit" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController id="WR1-5V-ocl" customClass="LayerContentsTableViewController" customModule="data_collection" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="MeJ-Cg-jOt">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="LegendInfo" id="T7O-LW-tWV" customClass="LegendInfoCell" customModule="ArcGISToolkit" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="LegendInfo" id="T7O-LW-tWV" customClass="LegendInfoCell" customModule="data_collection" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="28" width="414" height="37.5"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="T7O-LW-tWV" id="Qf1-w4-64A">
@@ -59,7 +59,7 @@
                                     <outlet property="nameLabel" destination="UYu-Ab-2C2" id="HAb-5O-QVm"/>
                                 </connections>
                             </tableViewCell>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="LayerTitle" id="gj6-Kb-3zF" customClass="LayerCell" customModule="ArcGISToolkit" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="LayerTitle" id="gj6-Kb-3zF" customClass="LayerCell" customModule="data_collection" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="65.5" width="414" height="43.5"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="gj6-Kb-3zF" id="eiZ-cd-Upr">
@@ -118,7 +118,7 @@
                                     <outlet property="visibilitySwitch" destination="Qjr-f6-CC9" id="49i-PM-IbO"/>
                                 </connections>
                             </tableViewCell>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="SublayerTitle" id="bWm-du-xG7" customClass="LayerCell" customModule="ArcGISToolkit" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="SublayerTitle" id="bWm-du-xG7" customClass="LayerCell" customModule="data_collection" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="109" width="414" height="43.5"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="bWm-du-xG7" id="Bn6-3x-jb4">
