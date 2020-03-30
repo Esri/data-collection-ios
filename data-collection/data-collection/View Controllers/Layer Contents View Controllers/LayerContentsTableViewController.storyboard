@@ -78,12 +78,12 @@
                                                 <action selector="visibilityChanged:" destination="gj6-Kb-3zF" eventType="valueChanged" id="ipb-U9-RGI"/>
                                             </connections>
                                         </switch>
-                                        <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ihQ-ML-iVw">
-                                            <rect key="frame" x="8" y="7" width="30" height="30"/>
+                                        <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ihQ-ML-iVw">
+                                            <rect key="frame" x="8" y="10" width="30" height="24"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="30" id="pxE-W6-fcs"/>
                                             </constraints>
-                                            <state key="normal" title="&gt;"/>
+                                            <state key="normal" image="caret-right"/>
                                             <connections>
                                                 <action selector="accordianAction:" destination="gj6-Kb-3zF" eventType="touchUpInside" id="oQu-eA-hO1"/>
                                             </connections>
@@ -125,12 +125,12 @@
                                     <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ALc-1U-HGJ">
-                                            <rect key="frame" x="8" y="7" width="30" height="30"/>
+                                        <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ALc-1U-HGJ">
+                                            <rect key="frame" x="8" y="10" width="30" height="24"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="30" id="84R-fp-uC3"/>
                                             </constraints>
-                                            <state key="normal" title="&gt;"/>
+                                            <state key="normal" image="caret-right"/>
                                             <connections>
                                                 <action selector="accordianAction:" destination="bWm-du-xG7" eventType="touchUpInside" id="QNW-bA-Gmy"/>
                                             </connections>
@@ -189,4 +189,7 @@
             <point key="canvasLocation" x="132" y="139"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="caret-right" width="24" height="24"/>
+    </resources>
 </document>
