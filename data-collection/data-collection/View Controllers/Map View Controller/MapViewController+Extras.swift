@@ -40,6 +40,17 @@ extension MapViewController {
                 }
             })
             
+            var image: UIImage?
+            switch extra {
+            case layersExtra:
+                image = #imageLiteral(resourceName: "legend")
+            case bookmarksExtra:
+                image = #imageLiteral(resourceName: "bookmark")
+            default:
+                break
+            }
+            
+            extraAction.setValue(image, forKey: "image")
             action.addAction(extraAction)
         }
         
