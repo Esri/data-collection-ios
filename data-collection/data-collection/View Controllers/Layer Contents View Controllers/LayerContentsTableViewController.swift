@@ -15,13 +15,20 @@
 import UIKit
 import ArcGIS
 
-let initialIndentation: CGFloat = 16.0
+let indentationConstant: CGFloat = 10.0
+
+/// The protocol you implement to respond to user content accordion changes.
+internal protocol ContentAccordionDelegate: AnyObject {
+    /// Tells the delegate that the user has change the accordion state for `content`.
+    func accordionChanged()
+}
 
 /// LegendInfoCell - cell representing a LegendInfo.
 class LegendInfoCell: UITableViewCell {
     var content: Content? {
         didSet {
             nameLabel.text = legendInfo?.name
+            layerIndentationLevel = content?.indentationLevel ?? 0
         }
     }
     
@@ -34,13 +41,13 @@ class LegendInfoCell: UITableViewCell {
     var symbolImage: UIImage? {
         didSet {
             legendImageView.image = symbolImage
-            activityIndicatorView.isHidden = (symbolImage != nil)
+            symbolImage != nil ? activityIndicatorView.stopAnimating() : activityIndicatorView.startAnimating()
         }
     }
     
     var layerIndentationLevel: Int = 0 {
         didSet {
-            indentationConstraint.constant = CGFloat(layerIndentationLevel) * 8.0 + initialIndentation
+            indentationConstraint.constant = CGFloat(layerIndentationLevel) * indentationConstant
         }
     }
     
@@ -58,17 +65,19 @@ class LayerCell: UITableViewCell {
             nameLabel.text = content?.name
             let enabled = (content?.isVisibilityToggleOn ?? false) && (content?.isVisibleAtScale ?? false)
             nameLabel.textColor = enabled ? UIColor.black : UIColor.lightGray
-            accordianButton.isHidden = (content?.accordian == AccordianDisplay.none)
-            accordianButtonWidthConstraint.constant = !accordianButton.isHidden ? accordianButton.frame.height : 0.0
-
+            accordionButton.isHidden = (content?.accordion == AccordionDisplay.none)
+            accordionButtonWidthConstraint.constant = !accordionButton.isHidden ? accordionButton.frame.height : 0.0
+            accordionButton.setImage(LayerContentsTableViewController.accordianImage(content?.accordion ?? .none), for: .normal)
             visibilitySwitch.isHidden = !(content?.allowToggleVisibility ?? false)
             visibilitySwitch.isOn = content?.isVisibilityToggleOn ?? false
+            
+            layerIndentationLevel = content?.indentationLevel ?? 0
         }
     }
     
     var layerIndentationLevel: Int = 0 {
         didSet {
-            indentationConstraint.constant = CGFloat(layerIndentationLevel) * 8.0 + initialIndentation
+            indentationConstraint.constant = CGFloat(layerIndentationLevel) * indentationConstant
         }
     }
     
@@ -77,15 +86,25 @@ class LayerCell: UITableViewCell {
             separatorView.isHidden = !showRowSeparator
         }
     }
+    
+    var accordionDelegate: ContentAccordionDelegate?
 
     @IBOutlet var nameLabel: UILabel!
-    @IBOutlet var accordianButton: UIButton!
+    @IBOutlet var accordionButton: UIButton!
     @IBOutlet var visibilitySwitch: UISwitch!
     @IBOutlet var indentationConstraint: NSLayoutConstraint!
-    @IBOutlet var accordianButtonWidthConstraint: NSLayoutConstraint!
+    @IBOutlet var accordionButtonWidthConstraint: NSLayoutConstraint!
     @IBOutlet var separatorView: UIView!
     
-    @IBAction func accordianAction(_ sender: Any) {
+    @IBAction func accordionAction(_ sender: Any) {
+        guard let button = sender as? UIButton,
+            let accordian = self.content?.accordion,
+            accordian != AccordionDisplay.none  else { return }
+
+        let newAccordian: AccordionDisplay = (content?.accordion == .expanded) ? .collapsed : .expanded
+        content?.accordion = newAccordian
+        button.setImage(LayerContentsTableViewController.accordianImage(newAccordian), for: .normal)
+        accordionDelegate?.accordionChanged()
     }
     
     @IBAction func visibilityChanged(_ sender: Any) {
@@ -95,7 +114,7 @@ class LayerCell: UITableViewCell {
     }
 }
 
-class LayerContentsTableViewController: UITableViewController {
+class LayerContentsTableViewController: UITableViewController, ContentAccordionDelegate {
     var legendInfoCellReuseIdentifier = "LegendInfo"
     var layerCellReuseIdentifier = "LayerTitle"
     var sublayerCellReuseIdentifier = "SublayerTitle"
@@ -106,6 +125,7 @@ class LayerContentsTableViewController: UITableViewController {
     // - legend infos of type AGSLegendInfo.
     var contents = [Content]() {
         didSet {
+            updateVisibleContents()
             tableView.reloadData()
         }
     }
@@ -120,9 +140,17 @@ class LayerContentsTableViewController: UITableViewController {
     
     // Dictionary of symbol swatches (images); keys are the symbol used to create the swatch.
     private var symbolSwatches = [AGSSymbol: UIImage]()
+    var visibleContents = [Content]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+    }
+    
+    private func updateVisibleContents() {
+        visibleContents = contents.filter({ (content) -> Bool in
+            // If any of content's parent's accordionDisplay is `.collapsed`, don't show it.
+            return content.parents.filter { $0.accordion == .collapsed }.isEmpty
+        })
     }
     
     // MARK: - Table view data source
@@ -132,26 +160,30 @@ class LayerContentsTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return contents.count
+        return visibleContents.count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         // Create and configure the cell...
         var cell: UITableViewCell!
-        let rowItem: Content = contents[indexPath.row]
+        let rowItem: Content = visibleContents[indexPath.row]
         switch rowItem.contentType {
         case .layer:
             // rowItem is a layer.
             let layerCell = tableView.dequeueReusableCell(withIdentifier: layerCellReuseIdentifier) as! LayerCell
             cell = layerCell
+            layerCell.accordionDelegate = self
             layerCell.content = rowItem
             layerCell.showRowSeparator = (indexPath.row > 0) && config.showRowSeparator
+            layerCell.accordionButton.setImage(LayerContentsTableViewController.accordianImage(rowItem.accordion), for: .normal)
         case .sublayer:
             // rowItem is not a layer, but still implements AGSLayerContent, so it's a sublayer.
             let layerCell = tableView.dequeueReusableCell(withIdentifier: sublayerCellReuseIdentifier) as! LayerCell
             cell = layerCell
+            layerCell.accordionDelegate = self
             layerCell.content = rowItem
             layerCell.showRowSeparator = (indexPath.row > 0) && config.showRowSeparator
+            layerCell.accordionButton.setImage(LayerContentsTableViewController.accordianImage(rowItem.accordion), for: .normal)
         case .legendInfo:
             // rowItem is a legendInfo.
             let legendInfoCell = tableView.dequeueReusableCell(withIdentifier: legendInfoCellReuseIdentifier) as! LegendInfoCell
@@ -178,11 +210,22 @@ class LayerContentsTableViewController: UITableViewController {
                         
                         // Set the swatch into our dictionary and reload the row
                         self?.symbolSwatches[symbol] = image
-                        tableView.reloadRows(at: [indexPath], with: .automatic)
+                        tableView.reloadData()
                     })
                 }
             }
         }
         return cell
+    }
+    
+    static internal func accordianImage(_ accordion: AccordionDisplay) -> UIImage? {
+        return (accordion == .expanded) ? UIImage.init(named: "caret-down") : UIImage.init(named: "caret-right")
+    }
+}
+
+extension LayerContentsTableViewController {
+    func accordionChanged() {
+        updateVisibleContents()
+        tableView.reloadData()
     }
 }

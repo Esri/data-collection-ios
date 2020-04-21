@@ -10,30 +10,34 @@
         <!--Layer Contents Table View Controller-->
         <scene sceneID="hAC-Gr-h5f">
             <objects>
-                <tableViewController id="WR1-5V-ocl" customClass="LayerContentsTableViewController" customModule="data_collection" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController id="WR1-5V-ocl" customClass="LayerContentsTableViewController" customModule="LayerContentsForiPad" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="MeJ-Cg-jOt">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="LegendInfo" id="T7O-LW-tWV" customClass="LegendInfoCell" customModule="data_collection" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="28" width="414" height="37.5"/>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="LegendInfo" id="T7O-LW-tWV" customClass="LegendInfoCell" customModule="LayerContentsForiPad" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="28" width="414" height="38"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="T7O-LW-tWV" id="Qf1-w4-64A">
-                                    <rect key="frame" x="0.0" y="0.0" width="414" height="37.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="38"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <activityIndicatorView opaque="NO" tag="3" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="large" translatesAutoresizingMaskIntoConstraints="NO" id="bD6-Rq-9Ez">
-                                            <rect key="frame" x="8" y="0.0" width="37.5" height="37.5"/>
+                                        <activityIndicatorView opaque="NO" tag="3" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="bD6-Rq-9Ez">
+                                            <rect key="frame" x="8" y="0.0" width="37.5" height="38"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="37.5" id="64M-Z1-iZg"/>
+                                                <constraint firstAttribute="width" constant="37.5" id="AHx-Zl-AII"/>
+                                            </constraints>
                                         </activityIndicatorView>
                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" tag="2" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ENx-U2-2wK">
-                                            <rect key="frame" x="8" y="0.0" width="37.5" height="37.5"/>
+                                            <rect key="frame" x="8" y="0.0" width="37.5" height="38"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" secondItem="ENx-U2-2wK" secondAttribute="height" multiplier="1:1" id="cnz-WL-Gmt"/>
                                             </constraints>
                                         </imageView>
                                         <label opaque="NO" userInteractionEnabled="NO" tag="1" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UYu-Ab-2C2">
-                                            <rect key="frame" x="53.5" y="8.5" width="352.5" height="20.5"/>
+                                            <rect key="frame" x="53.5" y="9" width="352.5" height="20.5"/>
                                             <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
@@ -59,15 +63,15 @@
                                     <outlet property="nameLabel" destination="UYu-Ab-2C2" id="HAb-5O-QVm"/>
                                 </connections>
                             </tableViewCell>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="LayerTitle" id="gj6-Kb-3zF" customClass="LayerCell" customModule="data_collection" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="65.5" width="414" height="43.5"/>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="LayerTitle" id="gj6-Kb-3zF" customClass="LayerCell" customModule="LayerContentsForiPad" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="66" width="414" height="43.5"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="gj6-Kb-3zF" id="eiZ-cd-Upr">
                                     <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" tag="1" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="250" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qCc-Am-7U7">
-                                            <rect key="frame" x="46" y="11.5" width="303" height="20.5"/>
+                                            <rect key="frame" x="34" y="11.5" width="319" height="20.5"/>
                                             <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
@@ -78,14 +82,14 @@
                                                 <action selector="visibilityChanged:" destination="gj6-Kb-3zF" eventType="valueChanged" id="ipb-U9-RGI"/>
                                             </connections>
                                         </switch>
-                                        <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ihQ-ML-iVw">
-                                            <rect key="frame" x="8" y="10" width="30" height="24"/>
+                                        <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ihQ-ML-iVw" userLabel="Accordion Button">
+                                            <rect key="frame" x="0.0" y="11" width="30" height="22"/>
                                             <constraints>
-                                                <constraint firstAttribute="width" constant="30" id="pxE-W6-fcs"/>
+                                                <constraint firstAttribute="width" constant="30" id="pxE-W6-fcs" userLabel="Accordion Button Width Constraint"/>
                                             </constraints>
-                                            <state key="normal" image="caret-right"/>
+                                            <state key="normal" image="caret-down"/>
                                             <connections>
-                                                <action selector="accordianAction:" destination="gj6-Kb-3zF" eventType="touchUpInside" id="oQu-eA-hO1"/>
+                                                <action selector="accordionAction:" destination="gj6-Kb-3zF" eventType="touchUpInside" id="sg0-Th-zpA"/>
                                             </connections>
                                         </button>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QXC-nS-UuU" userLabel="SeparatorView">
@@ -97,46 +101,46 @@
                                         </view>
                                     </subviews>
                                     <constraints>
-                                        <constraint firstItem="ihQ-ML-iVw" firstAttribute="leading" secondItem="eiZ-cd-Upr" secondAttribute="leading" constant="8" id="5D5-eq-j5c"/>
+                                        <constraint firstItem="ihQ-ML-iVw" firstAttribute="leading" secondItem="eiZ-cd-Upr" secondAttribute="leading" id="5D5-eq-j5c"/>
                                         <constraint firstAttribute="trailing" secondItem="QXC-nS-UuU" secondAttribute="trailing" id="MTS-rr-8kc"/>
                                         <constraint firstAttribute="top" secondItem="QXC-nS-UuU" secondAttribute="top" constant="-2" id="MpL-P8-Ujo"/>
-                                        <constraint firstItem="qCc-Am-7U7" firstAttribute="leading" secondItem="ihQ-ML-iVw" secondAttribute="trailing" constant="8" id="RzK-Jw-2rS"/>
+                                        <constraint firstItem="qCc-Am-7U7" firstAttribute="leading" secondItem="ihQ-ML-iVw" secondAttribute="trailing" constant="4" id="RzK-Jw-2rS"/>
                                         <constraint firstItem="QXC-nS-UuU" firstAttribute="leading" secondItem="eiZ-cd-Upr" secondAttribute="leading" constant="8" id="S96-aq-1hf"/>
                                         <constraint firstItem="qCc-Am-7U7" firstAttribute="centerY" secondItem="eiZ-cd-Upr" secondAttribute="centerY" id="YZb-uz-qkU"/>
                                         <constraint firstItem="ihQ-ML-iVw" firstAttribute="centerY" secondItem="eiZ-cd-Upr" secondAttribute="centerY" id="aay-C2-NVX"/>
                                         <constraint firstAttribute="trailing" secondItem="Qjr-f6-CC9" secondAttribute="trailing" constant="8" id="ePK-7G-znI"/>
                                         <constraint firstItem="Qjr-f6-CC9" firstAttribute="centerY" secondItem="eiZ-cd-Upr" secondAttribute="centerY" id="i6D-6Q-xUg"/>
-                                        <constraint firstItem="qCc-Am-7U7" firstAttribute="trailing" secondItem="Qjr-f6-CC9" secondAttribute="leading" constant="-8" id="maE-nR-b5O"/>
+                                        <constraint firstItem="qCc-Am-7U7" firstAttribute="trailing" secondItem="Qjr-f6-CC9" secondAttribute="leading" constant="-4" id="maE-nR-b5O"/>
                                     </constraints>
                                 </tableViewCellContentView>
                                 <connections>
-                                    <outlet property="accordianButton" destination="ihQ-ML-iVw" id="vrQ-yl-bCV"/>
-                                    <outlet property="accordianButtonWidthConstraint" destination="pxE-W6-fcs" id="gpX-W2-wXc"/>
+                                    <outlet property="accordionButton" destination="ihQ-ML-iVw" id="eqn-6q-YN5"/>
+                                    <outlet property="accordionButtonWidthConstraint" destination="pxE-W6-fcs" id="RG2-My-PUE"/>
                                     <outlet property="indentationConstraint" destination="5D5-eq-j5c" id="F4o-tb-d5u"/>
                                     <outlet property="nameLabel" destination="qCc-Am-7U7" id="Rg1-24-oaQ"/>
                                     <outlet property="separatorView" destination="QXC-nS-UuU" id="uUX-p9-BrB"/>
                                     <outlet property="visibilitySwitch" destination="Qjr-f6-CC9" id="49i-PM-IbO"/>
                                 </connections>
                             </tableViewCell>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="SublayerTitle" id="bWm-du-xG7" customClass="LayerCell" customModule="data_collection" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="109" width="414" height="43.5"/>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="SublayerTitle" id="bWm-du-xG7" customClass="LayerCell" customModule="LayerContentsForiPad" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="109.5" width="414" height="43.5"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="bWm-du-xG7" id="Bn6-3x-jb4">
                                     <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ALc-1U-HGJ">
-                                            <rect key="frame" x="8" y="10" width="30" height="24"/>
+                                        <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ALc-1U-HGJ" userLabel="Accordion Button">
+                                            <rect key="frame" x="0.0" y="11" width="30" height="22"/>
                                             <constraints>
-                                                <constraint firstAttribute="width" constant="30" id="84R-fp-uC3"/>
+                                                <constraint firstAttribute="width" constant="30" id="84R-fp-uC3" userLabel="Accordion Button Width Constraint"/>
                                             </constraints>
-                                            <state key="normal" image="caret-right"/>
+                                            <state key="normal" image="caret-down"/>
                                             <connections>
-                                                <action selector="accordianAction:" destination="bWm-du-xG7" eventType="touchUpInside" id="QNW-bA-Gmy"/>
+                                                <action selector="accordionAction:" destination="bWm-du-xG7" eventType="touchUpInside" id="h57-CZ-nt5"/>
                                             </connections>
                                         </button>
                                         <label opaque="NO" userInteractionEnabled="NO" tag="1" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="250" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AOt-cv-VvJ">
-                                            <rect key="frame" x="46" y="11.5" width="303" height="20.5"/>
+                                            <rect key="frame" x="34" y="11.5" width="319" height="20.5"/>
                                             <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
@@ -148,7 +152,7 @@
                                             </connections>
                                         </switch>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XHM-ef-iJu" userLabel="SeparatorView">
-                                            <rect key="frame" x="46" y="-1" width="303" height="1"/>
+                                            <rect key="frame" x="38" y="-1" width="311" height="1"/>
                                             <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="1" id="Usu-9a-twz"/>
@@ -156,21 +160,21 @@
                                         </view>
                                     </subviews>
                                     <constraints>
-                                        <constraint firstItem="ALc-1U-HGJ" firstAttribute="leading" secondItem="Bn6-3x-jb4" secondAttribute="leading" constant="8" id="02m-8h-ns5"/>
+                                        <constraint firstItem="ALc-1U-HGJ" firstAttribute="leading" secondItem="Bn6-3x-jb4" secondAttribute="leading" id="02m-8h-ns5"/>
                                         <constraint firstItem="L0l-6H-Q5f" firstAttribute="centerY" secondItem="Bn6-3x-jb4" secondAttribute="centerY" id="10c-2A-NOT"/>
-                                        <constraint firstItem="AOt-cv-VvJ" firstAttribute="trailing" secondItem="L0l-6H-Q5f" secondAttribute="leading" constant="-8" id="1SD-Gq-Deq"/>
+                                        <constraint firstItem="AOt-cv-VvJ" firstAttribute="trailing" secondItem="L0l-6H-Q5f" secondAttribute="leading" constant="-4" id="1SD-Gq-Deq"/>
                                         <constraint firstItem="XHM-ef-iJu" firstAttribute="top" secondItem="Bn6-3x-jb4" secondAttribute="top" constant="-1" id="Ayg-En-uq5"/>
                                         <constraint firstItem="AOt-cv-VvJ" firstAttribute="centerY" secondItem="Bn6-3x-jb4" secondAttribute="centerY" id="D5o-eP-ME1"/>
                                         <constraint firstItem="XHM-ef-iJu" firstAttribute="leading" secondItem="ALc-1U-HGJ" secondAttribute="trailing" constant="8" id="DQ9-Fh-7VV"/>
                                         <constraint firstAttribute="trailing" secondItem="L0l-6H-Q5f" secondAttribute="trailing" constant="8" id="EGU-Hk-Uqk"/>
                                         <constraint firstItem="L0l-6H-Q5f" firstAttribute="leading" secondItem="XHM-ef-iJu" secondAttribute="trailing" constant="8" symbolic="YES" id="EwE-mL-Uac"/>
-                                        <constraint firstItem="AOt-cv-VvJ" firstAttribute="leading" secondItem="ALc-1U-HGJ" secondAttribute="trailing" constant="8" id="WPf-Eu-D6j"/>
+                                        <constraint firstItem="AOt-cv-VvJ" firstAttribute="leading" secondItem="ALc-1U-HGJ" secondAttribute="trailing" constant="4" id="WPf-Eu-D6j"/>
                                         <constraint firstItem="ALc-1U-HGJ" firstAttribute="centerY" secondItem="Bn6-3x-jb4" secondAttribute="centerY" id="hH6-4c-ZAI"/>
                                     </constraints>
                                 </tableViewCellContentView>
                                 <connections>
-                                    <outlet property="accordianButton" destination="ALc-1U-HGJ" id="IOV-kr-Qsu"/>
-                                    <outlet property="accordianButtonWidthConstraint" destination="84R-fp-uC3" id="ILg-wO-F7g"/>
+                                    <outlet property="accordionButton" destination="ALc-1U-HGJ" id="28S-Sd-vru"/>
+                                    <outlet property="accordionButtonWidthConstraint" destination="84R-fp-uC3" id="YFj-Kt-4jG"/>
                                     <outlet property="indentationConstraint" destination="02m-8h-ns5" id="iHB-2A-9bx"/>
                                     <outlet property="nameLabel" destination="AOt-cv-VvJ" id="lhA-Ie-YCt"/>
                                     <outlet property="separatorView" destination="XHM-ef-iJu" id="VsJ-ir-EfC"/>
@@ -190,6 +194,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="caret-right" width="24" height="24"/>
+        <image name="caret-down" width="24" height="24"/>
     </resources>
 </document>
