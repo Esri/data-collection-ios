@@ -19,7 +19,7 @@ let indentationConstant: CGFloat = 10.0
 
 /// The protocol you implement to respond to user content accordion changes.
 internal protocol ContentAccordionDelegate: AnyObject {
-    /// Tells the delegate that the user has change the accordion state for `content`.
+    /// Tells the delegate that the user has changed the accordion state for `content`.
     func accordionChanged()
 }
 
