@@ -130,7 +130,7 @@ class LayerContentsTableViewController: UITableViewController, LayerCellDelegate
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         // Create and configure the cell...
-        var cell: UITableViewCell!
+        let cell: UITableViewCell
         let rowItem: Content = visibleContents[indexPath.row]
         switch rowItem.contentType {
         case .layer, .sublayer:
