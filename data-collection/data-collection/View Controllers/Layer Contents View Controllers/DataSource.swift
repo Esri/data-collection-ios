@@ -97,10 +97,8 @@ public class DataSource: NSObject {
         }
         
         // Set the layerViewStateChangedHandler on the GeoView.
-        if let geoView = geoView {
-            geoView.layerViewStateChangedHandler = { [weak self] (layer: AGSLayer, layerViewState: AGSLayerViewState) in
-                self?.geoViewDidChange()
-            }
+        geoView?.layerViewStateChangedHandler = { [weak self] (_, _) in
+            self?.geoViewDidChange()
         }
     }
     
