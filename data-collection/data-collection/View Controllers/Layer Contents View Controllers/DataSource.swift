@@ -64,13 +64,12 @@ public class DataSource: NSObject {
     private func geoViewDidChange() {
         if let mapView = geoView as? AGSMapView {
             mapView.map?.load { [weak self] (error) in
-                guard let self = self,
-                    let mapView = self.geoView as? AGSMapView else { return }
+                guard let self = self else { return }
                 if let error = error {
                     print("Error loading map: \(error)")
-                } else {
-                    self.layerContents = mapView.map?.operationalLayers as? [AGSLayerContent] ?? []
-                    self.appendBasemap(mapView.map?.basemap)
+                } else if let map = mapView.map {
+                    self.layerContents = map.operationalLayers as? [AGSLayerContent] ?? []
+                    self.appendBasemap(map.basemap)
                 }
             }
 
@@ -80,13 +79,13 @@ public class DataSource: NSObject {
             }
         } else if let sceneView = geoView as? AGSSceneView {
             sceneView.scene?.load { [weak self] (error) in
-                guard let self = self,
-                    let sceneView = self.geoView as? AGSSceneView else { return }
+                guard let self = self else { return }
                 if let error = error {
                     print("Error loading scene: \(error)")
-                } else {
-                    self.layerContents = sceneView.scene?.operationalLayers as? [AGSLayerContent] ?? []
-                    self.appendBasemap(sceneView.scene?.basemap)
+                } else if let scene = sceneView.scene,
+                    let basemap = scene.basemap {
+                    self.layerContents = scene.operationalLayers as? [AGSLayerContent] ?? []
+                    self.appendBasemap(basemap)
                 }
             }
             
@@ -104,21 +103,20 @@ public class DataSource: NSObject {
         }
     }
     
-    private func appendBasemap(_ basemap: AGSBasemap?) {
-        guard let basemap = basemap else { return }
-        
+    private func appendBasemap(_ basemap: AGSBasemap) {
         basemap.load { [weak self] (error) in
+            guard let self = self else { return }
             if let error = error {
                 print("Error loading base map: \(error)")
             } else {
                 // Append any reference layers to the `layerContents` array.
                 if let referenceLayers = basemap.referenceLayers as? [AGSLayerContent] {
-                    self?.layerContents.append(contentsOf: referenceLayers)
+                    self.layerContents.append(contentsOf: referenceLayers)
                 }
                 
                 // Insert any base layers at the beginning of the `layerContents` array.
                 if let baseLayers = basemap.baseLayers as? [AGSLayerContent] {
-                    self?.layerContents.insert(contentsOf: baseLayers, at: 0)
+                    self.layerContents.insert(contentsOf: baseLayers, at: 0)
                 }
             }
         }

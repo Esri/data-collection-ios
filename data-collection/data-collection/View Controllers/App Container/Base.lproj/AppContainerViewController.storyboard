@@ -77,23 +77,23 @@
                         <viewLayoutGuide key="safeArea" id="y4d-m7-pvI"/>
                     </view>
                     <navigationItem key="navigationItem" title="Data Collection" id="Sig-Uc-vuA">
-                        <barButtonItem key="leftBarButtonItem" title="Show Drawer" image="Hamburger" width="44" id="Edn-bQ-dxc">
+                        <barButtonItem key="leftBarButtonItem" title="Show Drawer" image="Hamburger" width="44" style="plain" id="Edn-bQ-dxc">
                             <connections>
                                 <action selector="userRequestsToggleDrawer:" destination="gv8-gM-I2q" id="sfq-m3-IDr"/>
                             </connections>
                         </barButtonItem>
                         <rightBarButtonItems>
-                            <barButtonItem title="Item" image="ellipsis" catalog="system" id="4IE-fC-WYU" userLabel="Extras Item">
+                            <barButtonItem title="Item" image="ellipsis" style="plain" id="4IE-fC-WYU" userLabel="Extras Item">
                                 <connections>
                                     <action selector="userTapsExtrasButton:" destination="gv8-gM-I2q" id="5Vt-Xz-EsX"/>
                                 </connections>
                             </barButtonItem>
-                            <barButtonItem enabled="NO" title="Add Feature" image="AddFeature" width="44" id="kzH-BP-lEk">
+                            <barButtonItem enabled="NO" title="Add Feature" image="AddFeature" width="44" style="plain" id="kzH-BP-lEk">
                                 <connections>
                                     <action selector="userTapsRightButton:" destination="gv8-gM-I2q" id="aDP-Qy-iNH"/>
                                 </connections>
                             </barButtonItem>
-                            <barButtonItem title="Zoom To Location" image="ZoomLocation" width="44" id="4mE-vI-ORJ">
+                            <barButtonItem title="Zoom To Location" image="ZoomLocation" width="44" style="plain" id="4mE-vI-ORJ">
                                 <connections>
                                     <action selector="userTapsSecondRightButton:" destination="gv8-gM-I2q" id="QRZ-lR-FZp"/>
                                 </connections>
@@ -162,6 +162,6 @@
         <image name="AddFeature" width="24" height="24"/>
         <image name="Hamburger" width="25" height="25"/>
         <image name="ZoomLocation" width="24" height="24"/>
-        <image name="ellipsis" catalog="system" width="64" height="18"/>
+        <image name="ellipsis" width="24" height="24"/>
     </resources>
 </document>
