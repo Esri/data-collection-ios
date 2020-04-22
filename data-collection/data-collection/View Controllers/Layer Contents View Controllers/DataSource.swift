@@ -21,7 +21,7 @@ import ArcGIS
 /// base map layers (`AGSLayerContent`) are extracted.
 /// - Since: 100.8.0
 public class DataSource: NSObject {
-    /// Returns a `DataSource` initialized with the given `AGSLayerContent` array..
+    /// Creates a `DataSource` initialized with the given `AGSLayerContent` array.
     /// - Parameter layers: The array of `AGSLayerContent`.
     /// - Since: 100.8.0
     public init(layers: [AGSLayerContent]) {
