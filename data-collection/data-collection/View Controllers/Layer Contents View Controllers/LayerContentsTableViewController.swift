@@ -163,22 +163,26 @@ class LayerContentsTableViewController: UITableViewController, LayerCellDelegate
                     // We have a swatch, so set it into the imageView.
                     legendInfoCell.symbolImage = swatch
                 } else {
-                    // Tag the cell so we know what index path it's being used
-                    // for once we create the swatch.
-                    cell.tag = indexPath.hashValue
+                    // Tag the cell so we know what symbol is being used
+                    // to create the swatch.  This will ensure we
+                    // put the legend image in the correct cell.
+                    cell.tag = symbol.hashValue
                     legendInfoCell.symbolImage = nil
                     
                     // We don't have a swatch for the given symbol, so create the swatch.
                     symbol.createSwatch(completion: { [weak self] (image, _) -> Void in
                         // Make sure this is the cell we still care about and that it
                         // wasn't already recycled by the time we get the swatch.
-                        if cell.tag != indexPath.hashValue {
+                        if cell.tag != symbol.hashValue {
                             return
                         }
                         
                         // Set the swatch into our dictionary and reload the row
                         self?.symbolSwatches[symbol] = image
-                        self?.tableView.reloadData()
+                        
+                        if let reloadIndexPath = self?.tableView.indexPath(for: cell) {
+                            self?.tableView.reloadRows(at: [reloadIndexPath], with: .automatic)
+                        }
                     })
                 }
             }
