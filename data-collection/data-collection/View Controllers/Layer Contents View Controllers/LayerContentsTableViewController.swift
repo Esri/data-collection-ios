@@ -107,10 +107,6 @@ class LayerContentsTableViewController: UITableViewController, LayerCellDelegate
     private var symbolSwatches = [AGSSymbol: UIImage]()
     var visibleContents = [Content]()
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-    }
-    
     private func updateVisibleContents() {
         visibleContents = contents.filter({ (content) -> Bool in
             // If any of content's parent's accordionDisplay is `.collapsed`, don't show it.

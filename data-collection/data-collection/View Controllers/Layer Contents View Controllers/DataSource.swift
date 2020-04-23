@@ -21,10 +21,10 @@ import ArcGIS
 /// base map layers (`AGSLayerContent`) are extracted.
 /// - Since: 100.8.0
 public class DataSource: NSObject {
-    /// Creates a `DataSource` initialized with the given `AGSLayerContent` array.
-    /// - Parameter layers: The array of `AGSLayerContent`.
+    /// Creates a `DataSource` initialized with a sequence of `AGSLayerContent` objects.
+    /// - Parameter layers: The layers with which to initialize the data source.
     /// - Since: 100.8.0
-    public init(layers: [AGSLayerContent]) {
+    public init<S: Sequence>(layers: S) where S.Element == AGSLayerContent {
         super.init()
         layerContents.append(contentsOf: layers)
     }

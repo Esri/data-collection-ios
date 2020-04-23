@@ -225,7 +225,7 @@ public class LayerContentsViewController: UIViewController {
         super.init(nibName: nil, bundle: nil)
     }
     
-    public convenience init(_ dataSource: DataSource) {
+    public convenience init(dataSource: DataSource) {
         self.init()
         self.dataSource = dataSource
     }
@@ -280,20 +280,26 @@ public class LayerContentsViewController: UIViewController {
         contents.removeAll()
         displayedLayers.removeAll()
         
-        guard let layerContents = dataSource?.layerContents else { layerContentsTableViewController?.contents = [Content](); return }
-        
-        // Reverse layerContents array if needed.
-        displayedLayers = config.respectInitialLayerOrder ? layerContents : layerContents.reversed()
-        
-        // Filter out layers based on visibility and `showInLegend` flag (if `respectShowInLegend` is true).
-        if config.layersStyle == .visibleLayersAtScale {
-            displayedLayers = displayedLayers.filter { $0.isVisible &&
-                (config.respectShowInLegend ? $0.showInLegend : true)
+        if let layerContents = dataSource?.layerContents,
+            !layerContents.isEmpty {
+            // Reverse layerContents array if needed.
+            displayedLayers = config.respectInitialLayerOrder ? layerContents : layerContents.reversed()
+            
+            // Filter out layers based on visibility and `showInLegend` flag (if `respectShowInLegend` is true).
+            if config.layersStyle == .visibleLayersAtScale {
+                displayedLayers = displayedLayers.filter { $0.isVisible &&
+                    (config.respectShowInLegend ? $0.showInLegend : true)
+                }
             }
+            
+            // Load all displayed layers if we have any.
+            displayedLayers.forEach { loadIndividualLayer($0) }
         }
         
-        // Load all displayed layers if we have any.
-        displayedLayers.isEmpty ? updateContents() : displayedLayers.forEach { loadIndividualLayer($0) }
+        if displayedLayers.isEmpty {
+            // No layers in dataSource, set empty array on tableViewController.
+            layerContentsTableViewController?.contents = [Content]()
+        }
     }
     
     /// Load an individual layer as AGSLayerContent.

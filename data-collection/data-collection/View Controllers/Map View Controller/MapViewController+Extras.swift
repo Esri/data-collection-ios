@@ -19,6 +19,25 @@ import ArcGISToolkit
 private let layersExtra = "Layers"
 private let bookmarksExtra = "Bookmarks"
 
+/// Defines the Extras.
+public enum Extras : CaseIterable {
+    // Displays layer content.
+    case layers
+    // Displays bookmarks.
+    case bookmarks
+}
+
+extension Extras : CustomStringConvertible {
+    public var description: String {
+        switch self {
+        case .layers:
+            return "Layers"
+        case .bookmarks:
+            return "Bookmarks"
+        }
+    }
+}
+
 extension MapViewController {
     func userRequestsExtras(_ barButtonItem: UIBarButtonItem?) {
         guard mapViewMode != .disabled else {
@@ -28,29 +47,19 @@ extension MapViewController {
         let action = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
                 
         // Present the list of extras.
-        for extra in [layersExtra, bookmarksExtra] {
-            let extraAction = UIAlertAction(title: extra, style: .default, handler: { [weak self] (action) in
-                switch extra {
-                case layersExtra:
-                    self?.showLayerContents(barButtonItem)
-                case bookmarksExtra:
-                    self?.showBookmarks(barButtonItem)
-                default:
-                    break
-                }
-            })
-            
-            var image: UIImage?
+        for extra in Extras.allCases {
+            var extraAction: UIAlertAction
             switch extra {
-            case layersExtra:
-                image = #imageLiteral(resourceName: "legend")
-            case bookmarksExtra:
-                image = #imageLiteral(resourceName: "bookmark")
-            default:
-                break
+            case .layers:
+                extraAction = UIAlertAction(title: extra.description, style: .default, handler: { [weak self] (action) in
+                    self?.showLayerContents(barButtonItem)
+                })
+            case .bookmarks:
+                extraAction = UIAlertAction(title: extra.description, style: .default, handler: { [weak self] (action) in
+                    self?.showBookmarks(barButtonItem)
+                })
             }
             
-            extraAction.setValue(image, forKey: "image")
             action.addAction(extraAction)
         }
         
@@ -60,41 +69,45 @@ extension MapViewController {
     }
     
     func showLayerContents(_ barButtonItem: UIBarButtonItem?) {
-        // Create the LayerContentsViewController if it doesn't exist.
-        if layerContentsViewController == nil {
+        var layerContentsVC: LayerContentsViewController
+        if let existingViewController = layerContentsViewController {
+            layerContentsVC = existingViewController
+        } else {
+            // Create and configure the view controller.
             let dataSource = DataSource(geoView: mapView)
-            layerContentsViewController = TableOfContents(dataSource)
+            layerContentsVC = TableOfContents(dataSource: dataSource)
             
             // Add a done button.
             let doneButton = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(done))
-            layerContentsViewController?.navigationItem.leftBarButtonItem = doneButton
+            layerContentsVC.navigationItem.leftBarButtonItem = doneButton
+            layerContentsViewController = layerContentsVC
         }
         
-        if let layerContentsVC = layerContentsViewController {
-            // Display the layerContentsVC as a popover controller.
-            layerContentsVC.modalPresentationStyle = .popover
-            layerContentsVC.popoverPresentationController?.barButtonItem = barButtonItem
-            present(layerContentsVC, animated: true)
-        }
+        // Display the layerContentsVC as a popover controller.
+        layerContentsVC.modalPresentationStyle = .popover
+        layerContentsVC.popoverPresentationController?.barButtonItem = barButtonItem
+        present(layerContentsVC, animated: true)
     }
     
     func showBookmarks(_ barButtonItem: UIBarButtonItem?) {
-        // Create the BookmarksViewController if it doesn't exist.
-        if bookmarksViewController == nil {
-            bookmarksViewController = BookmarksViewController(geoView: mapView)
-            
+        var bookmarksVC: BookmarksViewController
+        if let existingViewController = bookmarksViewController {
+            bookmarksVC = existingViewController
+        } else {
+            // Create and configure the view controller.
+            bookmarksVC = BookmarksViewController(geoView: mapView)
+
             // Add a done button.
             let doneButton = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(done))
-            bookmarksViewController?.navigationItem.leftBarButtonItem = doneButton
-            bookmarksViewController?.delegate = self
+            bookmarksVC.navigationItem.leftBarButtonItem = doneButton
+            bookmarksVC.delegate = self
+            bookmarksViewController = bookmarksVC
         }
         
-        if let bookmarksVC = bookmarksViewController {
-            // Display the bookmarksVC as a popover controller.
-            bookmarksVC.modalPresentationStyle = .popover
-            bookmarksVC.popoverPresentationController?.barButtonItem = barButtonItem
-            present(bookmarksVC, animated: true)
-        }
+        // Display the layerContentsVC as a popover controller.
+        bookmarksVC.modalPresentationStyle = .popover
+        bookmarksVC.popoverPresentationController?.barButtonItem = barButtonItem
+        present(bookmarksVC, animated: true)
     }
 
     @objc
