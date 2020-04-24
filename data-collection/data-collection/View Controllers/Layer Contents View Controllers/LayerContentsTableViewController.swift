@@ -199,7 +199,7 @@ extension LayerContentsTableViewController {
     func accordionChanged(_ layerCell: LayerCell) {
         guard let indexPath = tableView.indexPath(for: layerCell) else { return }
         let content = visibleContents[indexPath.row]
-        guard content.accordion != AccordionDisplay.none  else { return }
+        guard content.accordion != .none else { return }
 
         let newAccordian: AccordionDisplay = (content.accordion == .expanded) ? .collapsed : .expanded
         content.accordion = newAccordian
