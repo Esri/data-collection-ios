@@ -26,13 +26,23 @@ The project also demonstrates some patterns for building real-world apps around 
 * Swift KVO & NotificationCenter state handling
 
 ## Get Started
-You will need [Xcode 11](https://itunes.apple.com/us/app/xcode/id497799835?mt=12) and the [ArcGIS Runtime SDK](https://developers.arcgis.com/ios/latest/swift/guide/install.htm#ESRI_SECTION1_D57435A2BEBC4D29AFA3A4CAA722506A) (v100.5 or later) installed locally.
+You will need [Xcode 11](https://itunes.apple.com/us/app/xcode/id497799835?mt=12) and the [ArcGIS Runtime SDK for iOS](https://developers.arcgis.com/ios/latest/swift/guide/install.htm#ESRI_SECTION1_D57435A2BEBC4D29AFA3A4CAA722506A) (v100.8 or later) installed locally.
+
+The *Data Collection app* now incorporates the [ArcGIS Runtime Toolkit for iOS](https://github.com/Esri/arcgis-runtime-toolkit-ios) (v100.8 or later) for additional functionality.
 
 ### Fork the repo
 **Fork** the [Data Collection](https://github.com/Esri/data-collection-ios/fork) repo
 
 ### Clone the repo
 Once you have forked the repo, you can make a clone and open `data-collection.xcodeproj` in Xcode.
+
+  > Make sure to use the "recursive" option to ensure you get the **ArcGIS Runtime Toolkit** submodule
+  >
+  >`git clone --recursive [URL to forked Git repo]`
+  >
+  > If you've already cloned the repo without the submodule, you can load the submodule using 
+  >
+  >`git submodule update --init`
 
 #### Command line Git
 1. [Clone Data Collection](https://help.github.com/articles/fork-a-repo/#step-2-create-a-local-clone-of-your-fork)
