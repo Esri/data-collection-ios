@@ -91,7 +91,6 @@ class LayerContentsTableViewController: UITableViewController, LayerCellDelegate
     var contents = [Content]() {
         didSet {
             updateVisibleContents()
-            tableView.reloadData()
         }
     }
     
@@ -112,6 +111,10 @@ class LayerContentsTableViewController: UITableViewController, LayerCellDelegate
             // If any of content's parent's accordionDisplay is `.collapsed`, don't show it.
             return content.parents.filter { $0.accordion == .collapsed }.isEmpty
         })
+
+        if isViewLoaded {
+            tableView.reloadData()
+        }
     }
     
     // MARK: - Table view data source
@@ -140,13 +143,12 @@ class LayerContentsTableViewController: UITableViewController, LayerCellDelegate
             cell = layerCell
             layerCell.delegate = self
             layerCell.showRowSeparator = (indexPath.row > 0) && config.showRowSeparator
-            layerCell.accordionButton.setImage(LayerContentsTableViewController.accordianImage(rowItem.accordion), for: .normal)
             layerCell.nameLabel.text = rowItem.name
             let enabled = rowItem.isVisibilityToggleOn && (rowItem.isVisibleAtScale)
             layerCell.nameLabel.textColor = enabled ? UIColor.black : UIColor.lightGray
-            layerCell.accordionButton.isHidden = (rowItem.accordion == AccordionDisplay.none)
+            layerCell.accordionButton.isHidden = (rowItem.accordion == Content.AccordionDisplay.none)
             layerCell.accordionButtonWidthConstraint.constant = !layerCell.accordionButton.isHidden ? layerCell.accordionButton.frame.height : 0.0
-            layerCell.accordionButton.setImage(LayerContentsTableViewController.accordianImage(rowItem.accordion), for: .normal)
+            layerCell.accordionButton.setImage(rowItem.accordion.image, for: .normal)
             layerCell.visibilitySwitch.isHidden = !rowItem.allowToggleVisibility
             layerCell.visibilitySwitch.isOn = rowItem.isVisibilityToggleOn
             layerCell.layerIndentationLevel = rowItem.indentationLevel
@@ -163,25 +165,18 @@ class LayerContentsTableViewController: UITableViewController, LayerCellDelegate
                     // We have a swatch, so set it into the imageView.
                     legendInfoCell.symbolImage = swatch
                 } else {
-                    // Tag the cell so we know what symbol is being used
-                    // to create the swatch.  This will ensure we
-                    // put the legend image in the correct cell.
-                    cell.tag = symbol.hashValue
                     legendInfoCell.symbolImage = nil
                     
                     // We don't have a swatch for the given symbol, so create the swatch.
-                    symbol.createSwatch(completion: { [weak self] (image, _) -> Void in
-                        // Make sure this is the cell we still care about and that it
-                        // wasn't already recycled by the time we get the swatch.
-                        if cell.tag != symbol.hashValue {
-                            return
-                        }
+                    symbol.createSwatch(completion: { [weak self] (swatch, _) -> Void in
+                        guard let self = self else { return }
                         
                         // Set the swatch into our dictionary and reload the row
-                        self?.symbolSwatches[symbol] = image
-                        
-                        if let reloadIndexPath = self?.tableView.indexPath(for: cell) {
-                            self?.tableView.reloadRows(at: [reloadIndexPath], with: .automatic)
+                        self.symbolSwatches[symbol] = swatch
+
+                        // Make sure our cell is still displayed and update the symbolImage.
+                        if let _ = self.indexPath(for: rowItem) {
+                            legendInfoCell.symbolImage = swatch
                         }
                     })
                 }
@@ -190,8 +185,17 @@ class LayerContentsTableViewController: UITableViewController, LayerCellDelegate
         return cell
     }
     
-    static internal func accordianImage(_ accordion: AccordionDisplay) -> UIImage? {
-        return (accordion == .expanded) ? UIImage.init(named: "caret-down") : UIImage.init(named: "caret-right")
+    private func indexPath(for content: Content) -> IndexPath? {
+        visibleContents
+            .firstIndex(where: { $0.content === content.content })
+            .map { IndexPath(row: $0, section: 0) }
+    }
+}
+
+extension Content.AccordionDisplay {
+    var image: UIImage? {
+        let name = self == .expanded ? "caret-down" : "caret-right"
+        return UIImage(named: name)
     }
 }
 
@@ -199,14 +203,13 @@ extension LayerContentsTableViewController {
     func accordionChanged(_ layerCell: LayerCell) {
         guard let indexPath = tableView.indexPath(for: layerCell) else { return }
         let content = visibleContents[indexPath.row]
-        guard content.accordion != AccordionDisplay.none  else { return }
+        guard content.accordion != Content.AccordionDisplay.none  else { return }
 
-        let newAccordian: AccordionDisplay = (content.accordion == .expanded) ? .collapsed : .expanded
+        let newAccordian: Content.AccordionDisplay = (content.accordion == .expanded) ? .collapsed : .expanded
         content.accordion = newAccordian
-        layerCell.accordionButton.setImage(LayerContentsTableViewController.accordianImage(newAccordian), for: .normal)
+        layerCell.accordionButton.setImage(newAccordian.image, for: .normal)
 
         updateVisibleContents()
-        tableView.reloadData()
     }
 
     func visibilityChanged(_ layerCell: LayerCell) {

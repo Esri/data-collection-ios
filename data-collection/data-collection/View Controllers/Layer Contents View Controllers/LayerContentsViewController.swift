@@ -90,29 +90,29 @@ public class TableOfContents: LayerContentsViewController {
     }
 }
 
-/// Defines how to display layers in the table.
-/// - Since: 100.8.0
-internal enum ContentType {
-    // An `AGSLayer`.
-    case layer
-    // A sublayer which implements `AGSLayerContent` but does not inherit from`AGSLayer`.
-    case sublayer
-    // An `AGSLegendInfo`.
-    case legendInfo
-}
-
-/// Defines how to display the accordion control for the layer.
-/// - Since: 100.8.0
-internal enum AccordionDisplay {
-    // The layer is expanded.
-    case expanded
-    // The layer is collapsed.
-    case collapsed
-    // No accordion control.
-    case none
-}
-
 internal class Content {
+    /// Defines how to display layers in the table.
+    /// - Since: 100.8.0
+    internal enum ContentType {
+        // An `AGSLayer`.
+        case layer
+        // A sublayer which implements `AGSLayerContent` but does not inherit from`AGSLayer`.
+        case sublayer
+        // An `AGSLegendInfo`.
+        case legendInfo
+    }
+
+    /// Defines how to display the accordion control for the layer.
+    /// - Since: 100.8.0
+    internal enum AccordionDisplay {
+        // The layer is expanded.
+        case expanded
+        // The layer is collapsed.
+        case collapsed
+        // No accordion control.
+        case none
+    }
+
     var contentType: ContentType = .layer
     var content: AnyObject?
     var name: String = ""
