@@ -330,7 +330,7 @@ public class LayerContentsViewController: UIViewController {
         if !layerContent.subLayerContents.isEmpty {
             layerContent.subLayerContents.forEach {
                 let sublayerId = $0.objectId()
-                let parentsParents = parents[layerContent.objectId()] ?? [AGSLayerContent]()
+                let parentsParents = parents[layerContent.objectId()] ?? []
                 parents[sublayerId] = parentsParents + [layerContent]
                 loadIndividualLayer($0)
             }
