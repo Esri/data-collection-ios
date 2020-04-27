@@ -373,7 +373,7 @@ public class LayerContentsViewController: UIViewController {
                     // only show Feature Collection layer if the sublayer count is > 1
                     // but always show the sublayers (the call to `updateLayerLegend`)
                     if featureCollectionLayer.layers.count > 1 {
-                        let internalLegendInfos: [AGSLegendInfo] = legendInfos[layerContent.objectId()] ?? [AGSLegendInfo]()
+                        let internalLegendInfos = legendInfos[layerContent.objectId()] ?? []
                         let content = Content(layerContent, config: config, legendInfos: internalLegendInfos)
                         content.isVisibleAtScale = showAtScale
                         contents.append(content)
