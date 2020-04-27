@@ -175,8 +175,9 @@ class LayerContentsTableViewController: UITableViewController, LayerCellDelegate
                         self.symbolSwatches[symbol] = swatch
 
                         // Make sure our cell is still displayed and update the symbolImage.
-                        if let _ = self.indexPath(for: rowItem) {
-                            legendInfoCell.symbolImage = swatch
+                        if let indexPath = self.indexPath(for: rowItem),
+                            let cell = self.tableView.cellForRow(at: indexPath) as? LegendInfoCell {
+                            cell.symbolImage = swatch
                         }
                     })
                 }
