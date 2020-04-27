@@ -69,7 +69,7 @@ extension MapViewController {
     }
     
     func showLayerContents(_ barButtonItem: UIBarButtonItem?) {
-        var layerContentsVC: LayerContentsViewController
+        let layerContentsVC: LayerContentsViewController
         if let existingViewController = layerContentsViewController {
             layerContentsVC = existingViewController
         } else {
