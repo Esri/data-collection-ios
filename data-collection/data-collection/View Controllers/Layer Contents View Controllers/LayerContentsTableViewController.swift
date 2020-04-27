@@ -16,9 +16,6 @@ import UIKit
 import ArcGIS
 
 let indentationConstant: CGFloat = 10.0
-let legendInfoCellReuseIdentifier = "LegendInfo"
-let layerCellReuseIdentifier = "LayerTitle"
-let sublayerCellReuseIdentifier = "SublayerTitle"
 
 /// The protocol you implement to respond to user content accordion and visibility changes.
 internal protocol LayerCellDelegate: AnyObject {
@@ -84,6 +81,10 @@ class LayerCell: UITableViewCell {
 }
 
 class LayerContentsTableViewController: UITableViewController, LayerCellDelegate {
+    static let legendInfoCellReuseIdentifier = "LegendInfo"
+    static let layerCellReuseIdentifier = "LayerTitle"
+    static let sublayerCellReuseIdentifier = "SublayerTitle"
+
     // This is the array of data to display.  'Content' contains either:
     // - layers of type AGSLayers,
     // - sublayers which implement AGSLayerContent but are not AGSLayers,
@@ -102,8 +103,9 @@ class LayerContentsTableViewController: UITableViewController, LayerCellDelegate
         }
     }
     
-    // Dictionary of symbol swatches (images); keys are the symbol used to create the swatch.
-    private var symbolSwatches = [AGSSymbol: UIImage]()
+    // NSCache of symbol swatches (images); keys are the symbol used to create the swatch.
+    private var symbolSwatchesCache = NSCache<AGSSymbol, UIImage>()
+
     var visibleContents = [Content]()
     
     private func updateVisibleContents() {
@@ -131,14 +133,14 @@ class LayerContentsTableViewController: UITableViewController, LayerCellDelegate
         // Create and configure the cell...
         let cell: UITableViewCell
         let rowItem: Content = visibleContents[indexPath.row]
-        switch rowItem.contentType {
+        switch rowItem.kind {
         case .layer, .sublayer:
             // rowItem is a layer or a sublayer which implements AGSLayerContent
             let layerCell: LayerCell!
-            if rowItem.contentType == .layer {
-                layerCell = (tableView.dequeueReusableCell(withIdentifier: layerCellReuseIdentifier) as! LayerCell)
+            if rowItem.kind == .layer {
+                layerCell = (tableView.dequeueReusableCell(withIdentifier: LayerContentsTableViewController.layerCellReuseIdentifier) as! LayerCell)
             } else {
-                layerCell = (tableView.dequeueReusableCell(withIdentifier: sublayerCellReuseIdentifier) as! LayerCell)
+                layerCell = (tableView.dequeueReusableCell(withIdentifier: LayerContentsTableViewController.sublayerCellReuseIdentifier) as! LayerCell)
             }
             cell = layerCell
             layerCell.delegate = self
@@ -154,14 +156,14 @@ class LayerContentsTableViewController: UITableViewController, LayerCellDelegate
             layerCell.layerIndentationLevel = rowItem.indentationLevel
         case .legendInfo:
             // rowItem is a legendInfo.
-            let legendInfoCell = tableView.dequeueReusableCell(withIdentifier: legendInfoCellReuseIdentifier) as! LegendInfoCell
+            let legendInfoCell = tableView.dequeueReusableCell(withIdentifier: LayerContentsTableViewController.legendInfoCellReuseIdentifier) as! LegendInfoCell
             cell = legendInfoCell
             legendInfoCell.nameLabel.text = rowItem.name
             legendInfoCell.layerIndentationLevel = rowItem.indentationLevel
 
             if let legendInfo = rowItem.content as? AGSLegendInfo,
                 let symbol = legendInfo.symbol {
-                if let swatch = self.symbolSwatches[symbol] {
+                if let swatch = symbolSwatchesCache.object(forKey: symbol) {
                     // We have a swatch, so set it into the imageView.
                     legendInfoCell.symbolImage = swatch
                 } else {
@@ -169,10 +171,11 @@ class LayerContentsTableViewController: UITableViewController, LayerCellDelegate
                     
                     // We don't have a swatch for the given symbol, so create the swatch.
                     symbol.createSwatch(completion: { [weak self] (swatch, _) -> Void in
-                        guard let self = self else { return }
+                        guard let self = self,
+                            let swatch = swatch else { return }
                         
                         // Set the swatch into our dictionary and reload the row
-                        self.symbolSwatches[symbol] = swatch
+                        self.symbolSwatchesCache.setObject(swatch, forKey: symbol)
 
                         // Make sure our cell is still displayed and update the symbolImage.
                         if let _ = self.indexPath(for: rowItem) {

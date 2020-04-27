@@ -62,6 +62,7 @@ public class DataSource: NSObject {
     private var mapOrSceneObservation: NSKeyValueObservation?
 
     private func geoViewDidChange() {
+        mapOrSceneObservation?.invalidate()
         if let mapView = geoView as? AGSMapView {
             mapView.map?.load { [weak self] (error) in
                 guard let self = self else { return }

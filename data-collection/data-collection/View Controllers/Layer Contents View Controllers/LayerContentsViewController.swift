@@ -66,7 +66,7 @@ public protocol LayerContentsConfiguration {
 
 /// Describes a `LayerContents` view configured to display a legend.
 /// - Since: 100.8.0
-public class Legend: LayerContentsViewController {
+public class LegendViewController: LayerContentsViewController {
     override public init() {
         super.init()
         config = LayerContentsViewController.Legend()
@@ -79,7 +79,7 @@ public class Legend: LayerContentsViewController {
 
 /// Describes a `LayerContents` view configured to display a table of contents.
 /// - Since: 100.8.0
-public class TableOfContents: LayerContentsViewController {
+public class TableOfContentsViewController: LayerContentsViewController {
     override public init() {
         super.init()
         config = LayerContentsViewController.TableOfContents()
@@ -90,10 +90,12 @@ public class TableOfContents: LayerContentsViewController {
     }
 }
 
+/// Defines how to display layers in the table.
+/// - Since: 100.8.0
 internal class Content {
-    /// Defines how to display layers in the table.
+    /// The kind of data represented by Content
     /// - Since: 100.8.0
-    internal enum ContentType {
+    internal enum Kind {
         // An `AGSLayer`.
         case layer
         // A sublayer which implements `AGSLayerContent` but does not inherit from`AGSLayer`.
@@ -113,7 +115,7 @@ internal class Content {
         case none
     }
 
-    var contentType: ContentType = .layer
+    var kind: Kind = .layer
     var content: AnyObject?
     var name: String = ""
     var indentationLevel: Int = 0
@@ -129,21 +131,21 @@ internal class Content {
         
         switch content {
         case let layer as AGSLayer:
-            contentType = .layer
+            kind = .layer
             name = layer.name
             accordion = config.allowLayersAccordion &&
                 (layer.subLayerContents.count > 1 || legendInfos.count > 0) ? .expanded : .none
             allowToggleVisibility = config.allowToggleVisibility && layer.canChangeVisibility
             isVisibilityToggleOn = layer.isVisible
         case let layerContent as AGSLayerContent:
-            contentType = .sublayer
+            kind = .sublayer
             name = layerContent.name
             accordion = config.allowLayersAccordion &&
                 (layerContent.subLayerContents.count > 1 || legendInfos.count > 0) ? .expanded : .none
             allowToggleVisibility = config.allowToggleVisibility && layerContent.canChangeVisibility
             isVisibilityToggleOn = layerContent.isVisible
         case let legendInfo as AGSLegendInfo:
-            contentType = .legendInfo
+            kind = .legendInfo
             name = legendInfo.name
         default:
             break
@@ -337,18 +339,20 @@ public class LayerContentsViewController: UIViewController {
         } else if config.showSymbology {
             // Fetch the legend infos.
             layerContent.fetchLegendInfos { [weak self] (legendInfos, _) in
+                guard let self = self else { return }
+
                 // Store legendInfos and then update contents.
                 guard let legendInfos = legendInfos else { return }
-                self?.legendInfos[layerContent.objectId()] = legendInfos
+                self.legendInfos[layerContent.objectId()] = legendInfos
                 
                 // Add legendInfo parent info to parents array
                 legendInfos.forEach { legendInfo in
                     let legendInfoId = legendInfo.objectId()
-                    let parentsParents = self?.parents[layerContent.objectId()] ?? [AGSLayerContent]()
-                    self?.parents[legendInfoId] = parentsParents + [layerContent]
+                    let parentsParents = self.parents[layerContent.objectId()] ?? [AGSLayerContent]()
+                    self.parents[legendInfoId] = parentsParents + [layerContent]
                 }
                 
-                self?.updateContents()
+                self.updateContents()
             }
         } else {
             updateContents()

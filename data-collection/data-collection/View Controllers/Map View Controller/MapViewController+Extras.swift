@@ -16,9 +16,6 @@ import Foundation
 import ArcGIS
 import ArcGISToolkit
 
-private let layersExtra = "Layers"
-private let bookmarksExtra = "Bookmarks"
-
 /// Defines the Extras.
 public enum Extras : CaseIterable {
     // Displays layer content.
@@ -75,7 +72,7 @@ extension MapViewController {
         } else {
             // Create and configure the view controller.
             let dataSource = DataSource(geoView: mapView)
-            layerContentsVC = TableOfContents(dataSource: dataSource)
+            layerContentsVC = TableOfContentsViewController(dataSource: dataSource)
             
             // Add a done button.
             let doneButton = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(done))
