@@ -48,7 +48,7 @@ extension MapViewController {
                 
         // Present the list of extras.
         for extra in Extras.allCases {
-            var extraAction: UIAlertAction
+            let extraAction: UIAlertAction
             switch extra {
             case .layers:
                 extraAction = UIAlertAction(title: extra.description, style: .default, handler: { [weak self] (action) in
