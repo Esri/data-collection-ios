@@ -438,7 +438,7 @@ public class LayerContentsViewController: UIViewController {
             if let internalLegendInfos = legendInfos[layerContent.objectId()] {
                 let showAtScale = parentShowAtScale && shouldShowAtScale(layerContent)
                 let contentArray = internalLegendInfos.map { legendInfo -> Content in
-                    let content = Content(legendInfo, config: config, legendInfos: [AGSLegendInfo]())
+                    let content = Content(legendInfo, config: config, legendInfos: [])
                     content.isVisibleAtScale = showAtScale
                     return content
                 }
