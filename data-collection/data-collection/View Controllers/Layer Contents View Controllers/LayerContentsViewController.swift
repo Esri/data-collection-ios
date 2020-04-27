@@ -298,7 +298,7 @@ public class LayerContentsViewController: UIViewController {
         
         if displayedLayers.isEmpty {
             // No layers in dataSource, set empty array on tableViewController.
-            layerContentsTableViewController?.contents = [Content]()
+            layerContentsTableViewController?.contents = []
         }
     }
     
