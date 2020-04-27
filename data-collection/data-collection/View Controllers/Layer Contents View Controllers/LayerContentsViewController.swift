@@ -300,7 +300,7 @@ public class LayerContentsViewController: UIViewController {
         
         if displayedLayers.isEmpty {
             // No layers in dataSource, set empty array on tableViewController.
-            layerContentsTableViewController?.contents = [Content]()
+            layerContentsTableViewController?.contents = []
         }
     }
     
@@ -332,7 +332,7 @@ public class LayerContentsViewController: UIViewController {
         if !layerContent.subLayerContents.isEmpty {
             layerContent.subLayerContents.forEach {
                 let sublayerId = $0.objectId()
-                let parentsParents = parents[layerContent.objectId()] ?? [AGSLayerContent]()
+                let parentsParents = parents[layerContent.objectId()] ?? []
                 parents[sublayerId] = parentsParents + [layerContent]
                 loadIndividualLayer($0)
             }
@@ -348,7 +348,7 @@ public class LayerContentsViewController: UIViewController {
                 // Add legendInfo parent info to parents array
                 legendInfos.forEach { legendInfo in
                     let legendInfoId = legendInfo.objectId()
-                    let parentsParents = self.parents[layerContent.objectId()] ?? [AGSLayerContent]()
+                    let parentsParents = self.parents[layerContent.objectId()] ?? []
                     self.parents[legendInfoId] = parentsParents + [layerContent]
                 }
                 
@@ -377,13 +377,13 @@ public class LayerContentsViewController: UIViewController {
                     // only show Feature Collection layer if the sublayer count is > 1
                     // but always show the sublayers (the call to `updateLayerLegend`)
                     if featureCollectionLayer.layers.count > 1 {
-                        let internalLegendInfos: [AGSLegendInfo] = legendInfos[layerContent.objectId()] ?? [AGSLegendInfo]()
+                        let internalLegendInfos = legendInfos[layerContent.objectId()] ?? []
                         let content = Content(layerContent, config: config, legendInfos: internalLegendInfos)
                         content.isVisibleAtScale = showAtScale
                         contents.append(content)
                     }
                 } else {
-                    let internalLegendInfos: [AGSLegendInfo] = legendInfos[layerContent.objectId()] ?? [AGSLegendInfo]()
+                    let internalLegendInfos = legendInfos[layerContent.objectId()] ?? []
                     let content = Content(layerContent, config: config, legendInfos: internalLegendInfos)
                     content.isVisibleAtScale = showAtScale
                     contents.append(content)
@@ -431,7 +431,7 @@ public class LayerContentsViewController: UIViewController {
                 let showAtScale = parentShowAtScale && shouldShowAtScale(subLayerContent)
                 
                 if (config.layersStyle == .visibleLayersAtScale && showAtScale) || config.layersStyle == .allLayers {
-                    let internalLegendInfos: [AGSLegendInfo] = legendInfos[subLayerContent.objectId()] ?? [AGSLegendInfo]()
+                    let internalLegendInfos = legendInfos[layerContent.objectId()] ?? []
                     let content = Content(subLayerContent, config: config, legendInfos: internalLegendInfos)
                     content.isVisibleAtScale = showAtScale
                     contents.append(content)
@@ -439,10 +439,10 @@ public class LayerContentsViewController: UIViewController {
                 }
             }
         } else {
-            if let internalLegendInfos: [AGSLegendInfo] = legendInfos[layerContent.objectId()] {
+            if let internalLegendInfos = legendInfos[layerContent.objectId()] {
                 let showAtScale = parentShowAtScale && shouldShowAtScale(layerContent)
                 let contentArray = internalLegendInfos.map { legendInfo -> Content in
-                    let content = Content(legendInfo, config: config, legendInfos: [AGSLegendInfo]())
+                    let content = Content(legendInfo, config: config, legendInfos: [])
                     content.isVisibleAtScale = showAtScale
                     return content
                 }

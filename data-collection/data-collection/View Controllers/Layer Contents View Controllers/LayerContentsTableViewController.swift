@@ -122,7 +122,7 @@ class LayerContentsTableViewController: UITableViewController, LayerCellDelegate
     // MARK: - Table view data source
     
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
+        1
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -178,8 +178,9 @@ class LayerContentsTableViewController: UITableViewController, LayerCellDelegate
                         self.symbolSwatchesCache.setObject(swatch, forKey: symbol)
 
                         // Make sure our cell is still displayed and update the symbolImage.
-                        if let _ = self.indexPath(for: rowItem) {
-                            legendInfoCell.symbolImage = swatch
+                        if let indexPath = self.indexPath(for: rowItem),
+                            let cell = self.tableView.cellForRow(at: indexPath) as? LegendInfoCell {
+                            cell.symbolImage = swatch
                         }
                     })
                 }

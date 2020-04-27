@@ -45,7 +45,7 @@ extension MapViewController {
                 
         // Present the list of extras.
         for extra in Extras.allCases {
-            var extraAction: UIAlertAction
+            let extraAction: UIAlertAction
             switch extra {
             case .layers:
                 extraAction = UIAlertAction(title: extra.description, style: .default, handler: { [weak self] (action) in
@@ -66,7 +66,7 @@ extension MapViewController {
     }
     
     func showLayerContents(_ barButtonItem: UIBarButtonItem?) {
-        var layerContentsVC: LayerContentsViewController
+        let layerContentsVC: LayerContentsViewController
         if let existingViewController = layerContentsViewController {
             layerContentsVC = existingViewController
         } else {
@@ -87,7 +87,7 @@ extension MapViewController {
     }
     
     func showBookmarks(_ barButtonItem: UIBarButtonItem?) {
-        var bookmarksVC: BookmarksViewController
+        let bookmarksVC: BookmarksViewController
         if let existingViewController = bookmarksViewController {
             bookmarksVC = existingViewController
         } else {
