@@ -344,7 +344,7 @@ public class LayerContentsViewController: UIViewController {
                 // Add legendInfo parent info to parents array
                 legendInfos.forEach { legendInfo in
                     let legendInfoId = legendInfo.objectId()
-                    let parentsParents = self?.parents[layerContent.objectId()] ?? [AGSLayerContent]()
+                    let parentsParents = self?.parents[layerContent.objectId()] ?? []
                     self?.parents[legendInfoId] = parentsParents + [layerContent]
                 }
                 
