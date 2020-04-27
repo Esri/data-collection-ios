@@ -427,7 +427,7 @@ public class LayerContentsViewController: UIViewController {
                 let showAtScale = parentShowAtScale && shouldShowAtScale(subLayerContent)
                 
                 if (config.layersStyle == .visibleLayersAtScale && showAtScale) || config.layersStyle == .allLayers {
-                    let internalLegendInfos: [AGSLegendInfo] = legendInfos[subLayerContent.objectId()] ?? [AGSLegendInfo]()
+                    let internalLegendInfos = legendInfos[layerContent.objectId()] ?? []
                     let content = Content(subLayerContent, config: config, legendInfos: internalLegendInfos)
                     content.isVisibleAtScale = showAtScale
                     contents.append(content)
