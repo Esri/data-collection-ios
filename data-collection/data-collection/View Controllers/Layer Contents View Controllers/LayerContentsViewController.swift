@@ -379,7 +379,7 @@ public class LayerContentsViewController: UIViewController {
                         contents.append(content)
                     }
                 } else {
-                    let internalLegendInfos: [AGSLegendInfo] = legendInfos[layerContent.objectId()] ?? [AGSLegendInfo]()
+                    let internalLegendInfos = legendInfos[layerContent.objectId()] ?? []
                     let content = Content(layerContent, config: config, legendInfos: internalLegendInfos)
                     content.isVisibleAtScale = showAtScale
                     contents.append(content)
