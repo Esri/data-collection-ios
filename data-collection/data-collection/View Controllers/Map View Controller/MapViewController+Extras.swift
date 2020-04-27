@@ -90,7 +90,7 @@ extension MapViewController {
     }
     
     func showBookmarks(_ barButtonItem: UIBarButtonItem?) {
-        var bookmarksVC: BookmarksViewController
+        let bookmarksVC: BookmarksViewController
         if let existingViewController = bookmarksViewController {
             bookmarksVC = existingViewController
         } else {
