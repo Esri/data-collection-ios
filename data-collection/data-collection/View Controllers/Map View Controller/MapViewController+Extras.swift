@@ -68,19 +68,23 @@ extension MapViewController {
     func showLayerContents(_ barButtonItem: UIBarButtonItem?) {
         let layerContentsVC: LayerContentsViewController
         let extrasVC: UINavigationController
+        
+        // Create the LayerContentsViewController if it's not already created.
         if let existingViewController = layerContentsViewController {
             layerContentsVC = existingViewController
         } else {
             // Create and configure the view controller.
             let dataSource = LayerContentsDataSource(geoView: mapView)
             layerContentsVC = TableOfContentsViewController(dataSource: dataSource)
-            
+            layerContentsVC.title = Extras.layers.description
+
             // Add a done button.
             let doneButton = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(done))
             layerContentsVC.navigationItem.leftBarButtonItem = doneButton
             layerContentsViewController = layerContentsVC
         }
-        
+
+        // Create the navigation controller if it's not already created.
         if let existingNavigationVC = extrasNavigationController {
             extrasVC = existingNavigationVC
             extrasVC.setViewControllers([layerContentsVC], animated: false)
@@ -89,23 +93,23 @@ extension MapViewController {
             extrasNavigationController = extrasVC
         }
         
-        // Display the layerContentsVC as a popover controller.
-        extrasVC.modalPresentationStyle = .pageSheet
+        // Display the extrasVC as a popover controller.
+        extrasVC.modalPresentationStyle = .popover
         extrasVC.popoverPresentationController?.barButtonItem = barButtonItem
         present(extrasVC, animated: true)
-//        layerContentsVC.modalPresentationStyle = .pageSheet
-//        layerContentsVC.popoverPresentationController?.barButtonItem = barButtonItem
-//        present(layerContentsVC, animated: true)
     }
     
     func showBookmarks(_ barButtonItem: UIBarButtonItem?) {
         let bookmarksVC: BookmarksViewController
         let extrasVC: UINavigationController
+
+        // Create the BookmarksViewController if it's not already created.
         if let existingViewController = bookmarksViewController {
             bookmarksVC = existingViewController
         } else {
             // Create and configure the view controller.
             bookmarksVC = BookmarksViewController(geoView: mapView)
+            bookmarksVC.title = Extras.bookmarks.description
 
             // Add a done button.
             let doneButton = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(done))
@@ -113,7 +117,8 @@ extension MapViewController {
             bookmarksVC.delegate = self
             bookmarksViewController = bookmarksVC
         }
-        
+     
+        // Create the navigation controller if it's not already created.
         if let existingNavigationVC = extrasNavigationController {
             extrasVC = existingNavigationVC
             extrasVC.setViewControllers([bookmarksVC], animated: false)
@@ -122,13 +127,10 @@ extension MapViewController {
             extrasNavigationController = extrasVC
         }
 
-        // Display the layerContentsVC as a popover controller.
-        extrasVC.modalPresentationStyle = .pageSheet
+        // Display the extrasVC as a popover controller.
+        extrasVC.modalPresentationStyle = .popover
         extrasVC.popoverPresentationController?.barButtonItem = barButtonItem
         present(extrasVC, animated: true)
-//        bookmarksVC.modalPresentationStyle = .popover
-//        bookmarksVC.popoverPresentationController?.barButtonItem = barButtonItem
-//        present(bookmarksVC, animated: true)
     }
 
     @objc

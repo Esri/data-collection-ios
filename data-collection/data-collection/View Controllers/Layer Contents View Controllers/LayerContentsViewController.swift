@@ -238,7 +238,12 @@ public class LayerContentsViewController: UIViewController {
     
     override public func viewDidLoad() {
         super.viewDidLoad()
-        
+
+        if title?.isEmpty ?? false {
+            // Set the title to our config.title if it hasn't been set already.
+            title = config.title
+        }
+
         // Get the bundle and then the storyboard for the LayerContentsTableViewController.
         let bundle = Bundle(for: LayerContentsTableViewController.self)
         let storyboard = UIStoryboard(name: "LayerContentsTableViewController", bundle: bundle)
@@ -266,9 +271,6 @@ public class LayerContentsViewController: UIViewController {
         
         // Generate and set the layerContent list.
         generateLayerList()
-        
-        // Set the title to our config.title.
-        title = config.title
         
         // Set the config on our newly-created tableViewController.
         layerContentsTableViewController?.config = config
