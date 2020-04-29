@@ -183,9 +183,9 @@ public class LayerContentsViewController: UIViewController {
     
     private var dataSourceObservation: NSKeyValueObservation?
     
-    /// The `DataSource` specifying the list of `AGSLayerContent` to display.
+    /// The `LayerContentsDataSource` specifying the list of `AGSLayerContent` to display.
     /// - Since: 100.8.0
-    public var dataSource: DataSource? = nil {
+    public var dataSource: LayerContentsDataSource? = nil {
         didSet {
             // Add an observer to handle changes to the dataSource.layerContents.
             dataSourceObservation = dataSource?.observe(\.layerContents) { [weak self] (_, _) in
@@ -227,7 +227,7 @@ public class LayerContentsViewController: UIViewController {
         super.init(nibName: nil, bundle: nil)
     }
     
-    public convenience init(dataSource: DataSource) {
+    public convenience init(dataSource: LayerContentsDataSource) {
         self.init()
         self.dataSource = dataSource
     }
@@ -274,7 +274,7 @@ public class LayerContentsViewController: UIViewController {
         layerContentsTableViewController?.config = config
     }
     
-    /// Using the DataSource's `layercontents` as a starting point, generate the list of `AGSLayerContent` to include in the table view.
+    /// Using the LayerContentsDataSource's `layercontents` as a starting point, generate the list of `AGSLayerContent` to include in the table view.
     private func generateLayerList() {
         // Remove all saved data.
         legendInfos.removeAll()
