@@ -70,6 +70,7 @@ class MapViewController: UIViewController {
 
     var identifyOperation: AGSCancelable?
     
+    var extrasNavigationController: UINavigationController?
     var layerContentsViewController: LayerContentsViewController?
     var bookmarksViewController: BookmarksViewController?
 

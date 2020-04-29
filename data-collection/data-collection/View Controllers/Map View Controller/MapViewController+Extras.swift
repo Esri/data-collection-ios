@@ -67,11 +67,12 @@ extension MapViewController {
     
     func showLayerContents(_ barButtonItem: UIBarButtonItem?) {
         let layerContentsVC: LayerContentsViewController
+        let extrasVC: UINavigationController
         if let existingViewController = layerContentsViewController {
             layerContentsVC = existingViewController
         } else {
             // Create and configure the view controller.
-            let dataSource = DataSource(geoView: mapView)
+            let dataSource = LayerContentsDataSource(geoView: mapView)
             layerContentsVC = TableOfContentsViewController(dataSource: dataSource)
             
             // Add a done button.
@@ -80,14 +81,26 @@ extension MapViewController {
             layerContentsViewController = layerContentsVC
         }
         
+        if let existingNavigationVC = extrasNavigationController {
+            extrasVC = existingNavigationVC
+            extrasVC.setViewControllers([layerContentsVC], animated: false)
+        } else {
+            extrasVC = UINavigationController(rootViewController: layerContentsVC)
+            extrasNavigationController = extrasVC
+        }
+        
         // Display the layerContentsVC as a popover controller.
-        layerContentsVC.modalPresentationStyle = .popover
-        layerContentsVC.popoverPresentationController?.barButtonItem = barButtonItem
-        present(layerContentsVC, animated: true)
+        extrasVC.modalPresentationStyle = .pageSheet
+        extrasVC.popoverPresentationController?.barButtonItem = barButtonItem
+        present(extrasVC, animated: true)
+//        layerContentsVC.modalPresentationStyle = .pageSheet
+//        layerContentsVC.popoverPresentationController?.barButtonItem = barButtonItem
+//        present(layerContentsVC, animated: true)
     }
     
     func showBookmarks(_ barButtonItem: UIBarButtonItem?) {
         let bookmarksVC: BookmarksViewController
+        let extrasVC: UINavigationController
         if let existingViewController = bookmarksViewController {
             bookmarksVC = existingViewController
         } else {
@@ -101,10 +114,21 @@ extension MapViewController {
             bookmarksViewController = bookmarksVC
         }
         
+        if let existingNavigationVC = extrasNavigationController {
+            extrasVC = existingNavigationVC
+            extrasVC.setViewControllers([bookmarksVC], animated: false)
+        } else {
+            extrasVC = UINavigationController(rootViewController: bookmarksVC)
+            extrasNavigationController = extrasVC
+        }
+
         // Display the layerContentsVC as a popover controller.
-        bookmarksVC.modalPresentationStyle = .popover
-        bookmarksVC.popoverPresentationController?.barButtonItem = barButtonItem
-        present(bookmarksVC, animated: true)
+        extrasVC.modalPresentationStyle = .pageSheet
+        extrasVC.popoverPresentationController?.barButtonItem = barButtonItem
+        present(extrasVC, animated: true)
+//        bookmarksVC.modalPresentationStyle = .popover
+//        bookmarksVC.popoverPresentationController?.barButtonItem = barButtonItem
+//        present(bookmarksVC, animated: true)
     }
 
     @objc
