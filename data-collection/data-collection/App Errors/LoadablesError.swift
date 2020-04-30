@@ -23,7 +23,7 @@ enum LoadableError: AppError {
     var errorCode: Int {
         let base = baseCode.rawValue
         switch self {
-        case .multiLoadableFailure(_):
+        case .multiLoadableFailure(_, _):
             return base + 1
         }
     }
