@@ -50,4 +50,8 @@ extension AppContainerViewController: MapViewControllerDelegate {
     func mapViewController(_ mapViewController: MapViewController, didUpdateTitle title: String) {
         self.title = title
     }
+    
+    func mapViewController(_ mapViewController: MapViewController, didUpdateMapViewMode mapViewMode: MapViewController.MapViewMode) {
+        adjustExtrasButton(mapViewMode)
+    }
 }
