@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="WR1-5V-ocl">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="WR1-5V-ocl">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -87,7 +87,7 @@
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="30" id="pxE-W6-fcs" userLabel="Accordion Button Width Constraint"/>
                                             </constraints>
-                                            <state key="normal" image="caret-down"/>
+                                            <state key="normal" image="chevron-down"/>
                                             <connections>
                                                 <action selector="accordionAction:" destination="gj6-Kb-3zF" eventType="touchUpInside" id="sg0-Th-zpA"/>
                                             </connections>
@@ -134,7 +134,7 @@
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="30" id="84R-fp-uC3" userLabel="Accordion Button Width Constraint"/>
                                             </constraints>
-                                            <state key="normal" image="caret-down"/>
+                                            <state key="normal" image="chevron-down"/>
                                             <connections>
                                                 <action selector="accordionAction:" destination="bWm-du-xG7" eventType="touchUpInside" id="h57-CZ-nt5"/>
                                             </connections>
@@ -194,6 +194,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="caret-down" width="24" height="24"/>
+        <image name="chevron-down" width="24" height="24"/>
     </resources>
 </document>

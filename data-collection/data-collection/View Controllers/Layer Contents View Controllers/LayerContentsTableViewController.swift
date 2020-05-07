@@ -198,7 +198,7 @@ class LayerContentsTableViewController: UITableViewController, LayerCellDelegate
 
 extension Content.AccordionDisplay {
     var image: UIImage? {
-        let name = self == .expanded ? "caret-down" : "caret-right"
+        let name = self == .expanded ? "chevron-down" : "chevron-right"
         return UIImage(named: name)
     }
 }
