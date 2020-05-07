@@ -95,10 +95,10 @@ class LayerContentsTableViewController: UITableViewController, LayerCellDelegate
         }
     }
     
-    var config: LayerContentsConfiguration = LayerContentsViewController.TableOfContents() {
+    var configuration: LayerContentsConfiguration = LayerContentsViewController.TableOfContents() {
         didSet {
             tableView.separatorStyle = .none
-            title = config.title
+            title = configuration.title
             tableView.reloadData()
         }
     }
@@ -144,7 +144,7 @@ class LayerContentsTableViewController: UITableViewController, LayerCellDelegate
             }
             cell = layerCell
             layerCell.delegate = self
-            layerCell.showRowSeparator = (indexPath.row > 0) && config.showRowSeparator
+            layerCell.showRowSeparator = (indexPath.row > 0) && configuration.showRowSeparator
             layerCell.nameLabel.text = rowItem.name
             let enabled = rowItem.isVisibilityToggleOn && (rowItem.isVisibleAtScale)
             layerCell.nameLabel.textColor = enabled ? UIColor.black : UIColor.lightGray

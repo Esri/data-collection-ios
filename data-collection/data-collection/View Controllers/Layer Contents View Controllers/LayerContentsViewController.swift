@@ -199,7 +199,7 @@ public class LayerContentsViewController: UIViewController {
     /// - Since: 100.8.0
     public var config: LayerContentsConfiguration = TableOfContents() {
         didSet {
-            layerContentsTableViewController?.config = config
+            layerContentsTableViewController?.configuration = config
             title = config.title
             generateLayerList()
         }
@@ -273,7 +273,7 @@ public class LayerContentsViewController: UIViewController {
         generateLayerList()
         
         // Set the config on our newly-created tableViewController.
-        layerContentsTableViewController?.config = config
+        layerContentsTableViewController?.configuration = config
     }
     
     /// Using the LayerContentsDataSource's `layercontents` as a starting point, generate the list of `AGSLayerContent` to include in the table view.
@@ -456,7 +456,7 @@ public class LayerContentsViewController: UIViewController {
     
     // MARK: - Utility
     
-    /// Returns a unique UINT for each object. Used because AGSLayerContent is not hashable
+    /// Returns a unique UInt for each object. Used because AGSLayerContent is not hashable
     /// and we need to use it as the key in our dictionary of legendInfo arrays.
     private static func objectIdentifierFor(_ obj: AnyObject) -> UInt {
         return UInt(bitPattern: ObjectIdentifier(obj))

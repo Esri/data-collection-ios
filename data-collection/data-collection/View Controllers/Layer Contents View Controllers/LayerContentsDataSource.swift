@@ -64,30 +64,24 @@ public class LayerContentsDataSource: NSObject {
     private func geoViewDidChange() {
         mapOrSceneObservation?.invalidate()
         if let mapView = geoView as? AGSMapView {
-            mapView.map?.load { [weak self] (error) in
-                guard let self = self else { return }
-                if let error = error {
-                    print("Error loading map: \(error)")
-                } else if let map = mapView.map {
-                    self.layerContents = map.operationalLayers as? [AGSLayerContent] ?? []
-                    self.appendBasemap(map.basemap)
-                }
+            mapView.map?.load { [weak self] (_) in
+                guard let self = self,
+                    let map = mapView.map else { return }
+                self.layerContents = map.operationalLayers as? [AGSLayerContent] ?? []
+                self.appendBasemap(map.basemap)
             }
-
+            
             // Add an observer to handle changes to the mapView.map.
             mapOrSceneObservation = mapView.observe(\.map) { [weak self] (_, _) in
                 self?.geoViewDidChange()
             }
         } else if let sceneView = geoView as? AGSSceneView {
-            sceneView.scene?.load { [weak self] (error) in
-                guard let self = self else { return }
-                if let error = error {
-                    print("Error loading scene: \(error)")
-                } else if let scene = sceneView.scene,
-                    let basemap = scene.basemap {
-                    self.layerContents = scene.operationalLayers as? [AGSLayerContent] ?? []
-                    self.appendBasemap(basemap)
-                }
+            sceneView.scene?.load { [weak self] (_) in
+                guard let self = self,
+                    let scene = sceneView.scene,
+                    let basemap = scene.basemap else { return }
+                self.layerContents = scene.operationalLayers as? [AGSLayerContent] ?? []
+                self.appendBasemap(basemap)
             }
             
             // Add an observer to handle changes to the sceneView.scene.
@@ -103,20 +97,16 @@ public class LayerContentsDataSource: NSObject {
     }
     
     private func appendBasemap(_ basemap: AGSBasemap) {
-        basemap.load { [weak self] (error) in
+        basemap.load { [weak self] (_) in
             guard let self = self else { return }
-            if let error = error {
-                print("Error loading base map: \(error)")
-            } else {
-                // Append any reference layers to the `layerContents` array.
-                if let referenceLayers = basemap.referenceLayers as? [AGSLayerContent] {
-                    self.layerContents.append(contentsOf: referenceLayers)
-                }
-                
-                // Insert any base layers at the beginning of the `layerContents` array.
-                if let baseLayers = basemap.baseLayers as? [AGSLayerContent] {
-                    self.layerContents.insert(contentsOf: baseLayers, at: 0)
-                }
+            // Append any reference layers to the `layerContents` array.
+            if let referenceLayers = basemap.referenceLayers as? [AGSLayerContent] {
+                self.layerContents.append(contentsOf: referenceLayers)
+            }
+            
+            // Insert any base layers at the beginning of the `layerContents` array.
+            if let baseLayers = basemap.baseLayers as? [AGSLayerContent] {
+                self.layerContents.insert(contentsOf: baseLayers, at: 0)
             }
         }
     }
