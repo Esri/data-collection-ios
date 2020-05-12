@@ -15,6 +15,10 @@
 import UIKit
 import ArcGIS
 
+public protocol LayerContentsDataSourceDelegate {
+    func layerContentsDidChange(_ layerContents: [AGSLayerContent])
+}
+
 /// The data source is used to represent an array of `AGSLayerContent` for use in a variety of
 /// implementations. It is initialized with either an array of `AGSLayerContent`
 /// or an `AGSGeoView` from whose `AGSMap` or `AGSScene` the  operational and
@@ -56,10 +60,11 @@ public class LayerContentsDataSource: NSObject {
     /// in a map or scene:  bottom up (the first layer in the array is at the bottom and drawn first; the last
     /// layer is at the top and drawn last).
     /// - Since: 100.8.0
-    @objc
-    public dynamic private(set) var layerContents = [AGSLayerContent]()
+    public private(set) var layerContents = [AGSLayerContent]()
     
     private var mapOrSceneObservation: NSKeyValueObservation?
+    
+    public var delegate: LayerContentsDataSourceDelegate?
 
     private func geoViewDidChange() {
         mapOrSceneObservation?.invalidate()
@@ -69,6 +74,7 @@ public class LayerContentsDataSource: NSObject {
                     let map = mapView.map else { return }
                 self.layerContents = map.operationalLayers as? [AGSLayerContent] ?? []
                 self.appendBasemap(map.basemap)
+                self.delegate?.layerContentsDidChange(self.layerContents)
             }
             
             // Add an observer to handle changes to the mapView.map.
@@ -82,6 +88,7 @@ public class LayerContentsDataSource: NSObject {
                     let basemap = scene.basemap else { return }
                 self.layerContents = scene.operationalLayers as? [AGSLayerContent] ?? []
                 self.appendBasemap(basemap)
+                self.delegate?.layerContentsDidChange(self.layerContents)
             }
             
             // Add an observer to handle changes to the sceneView.scene.
@@ -102,11 +109,13 @@ public class LayerContentsDataSource: NSObject {
             // Append any reference layers to the `layerContents` array.
             if let referenceLayers = basemap.referenceLayers as? [AGSLayerContent] {
                 self.layerContents.append(contentsOf: referenceLayers)
+                self.delegate?.layerContentsDidChange(self.layerContents)
             }
             
             // Insert any base layers at the beginning of the `layerContents` array.
             if let baseLayers = basemap.baseLayers as? [AGSLayerContent] {
                 self.layerContents.insert(contentsOf: baseLayers, at: 0)
+                self.delegate?.layerContentsDidChange(self.layerContents)
             }
         }
     }

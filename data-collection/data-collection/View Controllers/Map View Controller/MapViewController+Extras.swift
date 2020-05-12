@@ -17,14 +17,14 @@ import ArcGIS
 import ArcGISToolkit
 
 /// Defines the Extras.
-public enum Extras : CaseIterable {
+public enum MapViewControllerExtras : CaseIterable {
     // Displays layer content.
     case layers
     // Displays bookmarks.
     case bookmarks
 }
 
-extension Extras : CustomStringConvertible {
+extension MapViewControllerExtras : CustomStringConvertible {
     public var description: String {
         switch self {
         case .layers:
@@ -44,7 +44,7 @@ extension MapViewController {
         let action = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
                 
         // Present the list of extras.
-        for extra in Extras.allCases {
+        for extra in MapViewControllerExtras.allCases {
             let extraAction: UIAlertAction
             switch extra {
             case .layers:
@@ -76,7 +76,7 @@ extension MapViewController {
             // Create and configure the view controller.
             let dataSource = LayerContentsDataSource(geoView: mapView)
             layerContentsVC = TableOfContentsViewController(dataSource: dataSource)
-            layerContentsVC.title = Extras.layers.description
+            layerContentsVC.title = MapViewControllerExtras.layers.description
 
             // Add a done button.
             let doneButton = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(done))
@@ -109,7 +109,7 @@ extension MapViewController {
         } else {
             // Create and configure the view controller.
             bookmarksVC = BookmarksViewController(geoView: mapView)
-            bookmarksVC.title = Extras.bookmarks.description
+            bookmarksVC.title = MapViewControllerExtras.bookmarks.description
 
             // Add a done button.
             let doneButton = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(done))

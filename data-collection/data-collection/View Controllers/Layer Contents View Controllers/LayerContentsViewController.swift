@@ -18,7 +18,7 @@ import ArcGIS
 
 /// Defines how to display layers in the table.
 /// - Since: 100.8.0
-public enum ConfigurationStyle {
+public enum LayerContentsConfigurationStyle {
     // Displays all layers.
     case allLayers
     // Only displays layers that are in scale and visible.
@@ -28,9 +28,9 @@ public enum ConfigurationStyle {
 /// Configuration is an protocol (interface) that drives how to format the layer contents table.
 /// - Since: 100.8.0
 public protocol LayerContentsConfiguration {
-    /// Specifies the `ConfigurationStyle` applied to the table.
+    /// Specifies the `LayerContentsConfigurationStyle` applied to the table.
     /// - Since: 100.8.0
-    var layersStyle: ConfigurationStyle { get }
+    var layersStyle: LayerContentsConfigurationStyle { get }
     
     /// Specifies whether layer/sublayer cells will include a switch used to toggle visibility of the layer.
     /// - Since: 100.8.0
@@ -69,7 +69,7 @@ public protocol LayerContentsConfiguration {
 public class LegendViewController: LayerContentsViewController {
     override public init() {
         super.init()
-        config = LayerContentsViewController.Legend()
+        configuration = LayerContentsViewController.Legend()
     }
     
     required init?(coder: NSCoder) {
@@ -82,7 +82,7 @@ public class LegendViewController: LayerContentsViewController {
 public class TableOfContentsViewController: LayerContentsViewController {
     override public init() {
         super.init()
-        config = LayerContentsViewController.TableOfContents()
+        configuration = LayerContentsViewController.TableOfContents()
     }
     
     required init?(coder: NSCoder) {
@@ -90,18 +90,18 @@ public class TableOfContentsViewController: LayerContentsViewController {
     }
 }
 
-/// Defines how to display layers in the table.
+/// Defines how to display layer contents in rows in a table view.
 /// - Since: 100.8.0
-internal class Content {
-    /// The kind of data represented by Content
+internal class LayerContentsRowConfiguration {
+    /// The kind of data represented by LayerContentsRowConfiguration
     /// - Since: 100.8.0
     internal enum Kind {
         // An `AGSLayer`.
-        case layer
+        case layer(AGSLayer)
         // A sublayer which implements `AGSLayerContent` but does not inherit from`AGSLayer`.
-        case sublayer
+        case sublayer(AGSLayerContent)
         // An `AGSLegendInfo`.
-        case legendInfo
+        case legendInfo(AGSLegendInfo)
     }
 
     /// Defines how to display the accordion control for the layer.
@@ -115,37 +115,37 @@ internal class Content {
         case none
     }
 
-    var kind: Kind = .layer
-    var content: AnyObject?
+    var kind: Kind?
+    var object: AnyObject?
     var name: String = ""
     var indentationLevel: Int = 0
     var accordion: AccordionDisplay = .expanded
     var allowToggleVisibility: Bool = false
     var isVisibilityToggleOn: Bool = false
     var isVisibleAtScale: Bool = true
-    var parents = [Content]()
+    var parents = [LayerContentsRowConfiguration]()
     
-    convenience init(_ content: AnyObject, config: LayerContentsConfiguration, legendInfos: [AGSLegendInfo]) {
+    convenience init(_ object: AnyObject, configuration: LayerContentsConfiguration, legendInfos: [AGSLegendInfo]) {
         self.init()
-        self.content = content
+        self.object = object
         
-        switch content {
+        switch object {
         case let layer as AGSLayer:
-            kind = .layer
+            kind = .layer(layer)
             name = layer.name
-            accordion = config.allowLayersAccordion &&
+            accordion = configuration.allowLayersAccordion &&
                 (layer.subLayerContents.count > 1 || legendInfos.count > 0) ? .expanded : .none
-            allowToggleVisibility = config.allowToggleVisibility && layer.canChangeVisibility
+            allowToggleVisibility = configuration.allowToggleVisibility && layer.canChangeVisibility
             isVisibilityToggleOn = layer.isVisible
         case let layerContent as AGSLayerContent:
-            kind = .sublayer
+            kind = .sublayer(layerContent)
             name = layerContent.name
-            accordion = config.allowLayersAccordion &&
+            accordion = configuration.allowLayersAccordion &&
                 (layerContent.subLayerContents.count > 1 || legendInfos.count > 0) ? .expanded : .none
-            allowToggleVisibility = config.allowToggleVisibility && layerContent.canChangeVisibility
+            allowToggleVisibility = configuration.allowToggleVisibility && layerContent.canChangeVisibility
             isVisibilityToggleOn = layerContent.isVisible
         case let legendInfo as AGSLegendInfo:
-            kind = .legendInfo
+            kind = .legendInfo(legendInfo)
             name = legendInfo.name
         default:
             break
@@ -159,7 +159,7 @@ internal class Content {
 public class LayerContentsViewController: UIViewController {
     /// Provide an out of the box TOC configuration.
     internal struct TableOfContents: LayerContentsConfiguration {
-        var layersStyle: ConfigurationStyle = .allLayers
+        var layersStyle: LayerContentsConfigurationStyle = .allLayers
         var allowToggleVisibility: Bool = true
         var allowLayersAccordion: Bool = true
         var showSymbology: Bool = true
@@ -171,7 +171,7 @@ public class LayerContentsViewController: UIViewController {
     
     /// Provide an out of the box Legend configuration.
     internal struct Legend: LayerContentsConfiguration {
-        var layersStyle: ConfigurationStyle = .visibleLayersAtScale
+        var layersStyle: LayerContentsConfigurationStyle = .visibleLayersAtScale
         var allowToggleVisibility: Bool = false
         var allowLayersAccordion: Bool = false
         var showSymbology: Bool = true
@@ -187,20 +187,18 @@ public class LayerContentsViewController: UIViewController {
     /// - Since: 100.8.0
     public var dataSource: LayerContentsDataSource? = nil {
         didSet {
-            // Add an observer to handle changes to the dataSource.layerContents.
-            dataSourceObservation = dataSource?.observe(\.layerContents) { [weak self] (_, _) in
-                self?.generateLayerList()
-            }
+            // Add ourselves as delegate to catch changes to the dataSource.layerContents.
+            dataSource?.delegate = self
             generateLayerList()
         }
     }
     
     /// The default configuration is a TOC. Setting a new configuration redraws the view.
     /// - Since: 100.8.0
-    public var config: LayerContentsConfiguration = TableOfContents() {
+    public var configuration: LayerContentsConfiguration = TableOfContents() {
         didSet {
-            layerContentsTableViewController?.configuration = config
-            title = config.title
+            layerContentsTableViewController?.configuration = configuration
+            title = configuration.title
             generateLayerList()
         }
     }
@@ -217,8 +215,8 @@ public class LayerContentsViewController: UIViewController {
     // The array of all layer contents to display in the table view.
     private var displayedLayers = [AGSLayerContent]()
     
-    // The array of all contents (`AGSLayer`, `AGSLayerContent`, `AGSLegendInfo`) to display in the table view.
-    private var contents = [Content]()
+    // The array of all row configurations (`AGSLayer`, `AGSLayerContent`, `AGSLegendInfo`) to display in the table view.
+    private var rowConfigurations = [LayerContentsRowConfiguration]()
     
     // Array of child:parent used when determining accordion status.
     private var parents = [UInt : [AGSLayerContent]]()
@@ -241,7 +239,7 @@ public class LayerContentsViewController: UIViewController {
 
         if title?.isEmpty ?? false {
             // Set the title to our config.title if it hasn't been set already.
-            title = config.title
+            title = configuration.title
         }
 
         // Get the bundle and then the storyboard for the LayerContentsTableViewController.
@@ -273,7 +271,7 @@ public class LayerContentsViewController: UIViewController {
         generateLayerList()
         
         // Set the config on our newly-created tableViewController.
-        layerContentsTableViewController?.configuration = config
+        layerContentsTableViewController?.configuration = configuration
     }
     
     /// Using the LayerContentsDataSource's `layercontents` as a starting point, generate the list of `AGSLayerContent` to include in the table view.
@@ -281,18 +279,18 @@ public class LayerContentsViewController: UIViewController {
         // Remove all saved data.
         legendInfos.removeAll()
         symbolSwatches.removeAll()
-        contents.removeAll()
+        rowConfigurations.removeAll()
         displayedLayers.removeAll()
         
         if let layerContents = dataSource?.layerContents,
             !layerContents.isEmpty {
             // Reverse layerContents array if needed.
-            displayedLayers = config.respectInitialLayerOrder ? layerContents : layerContents.reversed()
+            displayedLayers = configuration.respectInitialLayerOrder ? layerContents : layerContents.reversed()
             
             // Filter out layers based on visibility and `showInLegend` flag (if `respectShowInLegend` is true).
-            if config.layersStyle == .visibleLayersAtScale {
+            if configuration.layersStyle == .visibleLayersAtScale {
                 displayedLayers = displayedLayers.filter { $0.isVisible &&
-                    (config.respectShowInLegend ? $0.showInLegend : true)
+                    (configuration.respectShowInLegend ? $0.showInLegend : true)
                 }
             }
             
@@ -302,7 +300,7 @@ public class LayerContentsViewController: UIViewController {
         
         if displayedLayers.isEmpty {
             // No layers in dataSource, set empty array on tableViewController.
-            layerContentsTableViewController?.contents = []
+            layerContentsTableViewController?.rowConfigurations = []
         }
     }
     
@@ -326,38 +324,38 @@ public class LayerContentsViewController: UIViewController {
         // set the contents changed handler.
         layerContent.subLayerContentsChangedHandler = { [weak self] () in
             DispatchQueue.main.async {
-                self?.updateContents()
+                self?.updateRowConfigurations()
             }
         }
         
         // If we have sublayer contents, load those as well.
         if !layerContent.subLayerContents.isEmpty {
             layerContent.subLayerContents.forEach {
-                let sublayerId = $0.objectId()
-                let parentsParents = parents[layerContent.objectId()] ?? []
+                let sublayerId = $0.objectIdentifier()
+                let parentsParents = parents[layerContent.objectIdentifier()] ?? []
                 parents[sublayerId] = parentsParents + [layerContent]
                 loadIndividualLayer($0)
             }
-        } else if config.showSymbology {
+        } else if configuration.showSymbology {
             // Fetch the legend infos.
             layerContent.fetchLegendInfos { [weak self] (legendInfos, _) in
                 guard let self = self else { return }
 
                 // Store legendInfos and then update contents.
                 guard let legendInfos = legendInfos else { return }
-                self.legendInfos[layerContent.objectId()] = legendInfos
+                self.legendInfos[layerContent.objectIdentifier()] = legendInfos
                 
                 // Add legendInfo parent info to parents array
                 legendInfos.forEach { legendInfo in
-                    let legendInfoId = legendInfo.objectId()
-                    let parentsParents = self.parents[layerContent.objectId()] ?? []
+                    let legendInfoId = legendInfo.objectIdentifier()
+                    let parentsParents = self.parents[layerContent.objectIdentifier()] ?? []
                     self.parents[legendInfoId] = parentsParents + [layerContent]
                 }
                 
-                self.updateContents()
+                self.updateRowConfigurations()
             }
         } else {
-            updateContents()
+            updateRowConfigurations()
         }
     }
     
@@ -365,8 +363,8 @@ public class LayerContentsViewController: UIViewController {
     /// our legend data in dictionaries, we need to update the array of legend
     /// items once layers load.  Updating everything here will make
     /// implementing the table view data source methods much easier.
-    private func updateContents() {
-        contents.removeAll()
+    private func updateRowConfigurations() {
+        rowConfigurations.removeAll()
 
         displayedLayers.forEach { layerContent in
             // If we're displaying only visible layers at scale,
@@ -374,21 +372,21 @@ public class LayerContentsViewController: UIViewController {
             let showAtScale = layerContent.isVisible && shouldShowAtScale(layerContent)
             
             // If we're showing the layerContent, add it to our legend array.
-            if (config.layersStyle == .visibleLayersAtScale && showAtScale) || config.layersStyle == .allLayers {
+            if (configuration.layersStyle == .visibleLayersAtScale && showAtScale) || configuration.layersStyle == .allLayers {
                 if let featureCollectionLayer = layerContent as? AGSFeatureCollectionLayer {
                     // only show Feature Collection layer if the sublayer count is > 1
                     // but always show the sublayers (the call to `updateLayerLegend`)
                     if featureCollectionLayer.layers.count > 1 {
-                        let internalLegendInfos = legendInfos[layerContent.objectId()] ?? []
-                        let content = Content(layerContent, config: config, legendInfos: internalLegendInfos)
-                        content.isVisibleAtScale = showAtScale
-                        contents.append(content)
+                        let internalLegendInfos = legendInfos[layerContent.objectIdentifier()] ?? []
+                        let rowConfiguration = LayerContentsRowConfiguration(layerContent, configuration: configuration, legendInfos: internalLegendInfos)
+                        rowConfiguration.isVisibleAtScale = showAtScale
+                        rowConfigurations.append(rowConfiguration)
                     }
                 } else {
-                    let internalLegendInfos = legendInfos[layerContent.objectId()] ?? []
-                    let content = Content(layerContent, config: config, legendInfos: internalLegendInfos)
-                    content.isVisibleAtScale = showAtScale
-                    contents.append(content)
+                    let internalLegendInfos = legendInfos[layerContent.objectIdentifier()] ?? []
+                    let rowConfiguration = LayerContentsRowConfiguration(layerContent, configuration: configuration, legendInfos: internalLegendInfos)
+                    rowConfiguration.isVisibleAtScale = showAtScale
+                    rowConfigurations.append(rowConfiguration)
                 }
                 updateLayerLegend(layerContent, parentShowAtScale: showAtScale)
             }
@@ -397,8 +395,8 @@ public class LayerContentsViewController: UIViewController {
         // Our dictionary of child:parents was set up in `loadSublayersOrLegendInfos`.
         // Now we need to populate the `Content.parents` array for each content.
         // Start by looping through all `content` items.
-        contents.forEach { content in
-            guard let contentObject = content.content else { return }
+        rowConfigurations.forEach { content in
+            guard let contentObject = content.object else { return }
             let contentID = LayerContentsViewController.objectIdentifierFor(contentObject)
             
             // Get the array of parents for `content`.
@@ -407,10 +405,10 @@ public class LayerContentsViewController: UIViewController {
             
             // For each parent object, find the matching Content.
             parentArray.forEach { parent in
-                let parentID = parent.objectId()
-                contents.forEach { potentialParentContent in
+                let parentID = parent.objectIdentifier()
+                rowConfigurations.forEach { potentialParentContent in
                     // Search all contents to see if it's a match.
-                    guard let potentialParentObject = potentialParentContent.content else { return }
+                    guard let potentialParentObject = potentialParentContent.object else { return }
                     let potentialParentID = LayerContentsViewController.objectIdentifierFor(potentialParentObject)
                     if parentID == potentialParentID {
                         content.parents.append(potentialParentContent)
@@ -420,36 +418,36 @@ public class LayerContentsViewController: UIViewController {
         }
 
         // Set the contents on the table view controller.
-        layerContentsTableViewController?.contents = contents
+        layerContentsTableViewController?.rowConfigurations = rowConfigurations
     }
     
     private func updateLayerLegend(_ layerContent: AGSLayerContent, parentShowAtScale: Bool) {
         if !layerContent.subLayerContents.isEmpty {
             // Filter any sublayers which are not visible or not showInLegend.
             let sublayerContents = layerContent.subLayerContents.filter { ($0.isVisible &&
-                (config.respectShowInLegend ? $0.showInLegend : true)) || config.layersStyle == .allLayers}
+                (configuration.respectShowInLegend ? $0.showInLegend : true)) || configuration.layersStyle == .allLayers}
             
             sublayerContents.forEach { subLayerContent in
                 let showAtScale = parentShowAtScale && shouldShowAtScale(subLayerContent)
                 
-                if (config.layersStyle == .visibleLayersAtScale && showAtScale) || config.layersStyle == .allLayers {
-                    let internalLegendInfos = legendInfos[layerContent.objectId()] ?? []
-                    let content = Content(subLayerContent, config: config, legendInfos: internalLegendInfos)
-                    content.isVisibleAtScale = showAtScale
-                    contents.append(content)
+                if (configuration.layersStyle == .visibleLayersAtScale && showAtScale) || configuration.layersStyle == .allLayers {
+                    let internalLegendInfos = legendInfos[layerContent.objectIdentifier()] ?? []
+                    let rowConfiguration = LayerContentsRowConfiguration(subLayerContent, configuration: configuration, legendInfos: internalLegendInfos)
+                    rowConfiguration.isVisibleAtScale = showAtScale
+                    rowConfigurations.append(rowConfiguration)
                     updateLayerLegend(subLayerContent, parentShowAtScale: parentShowAtScale)
                 }
             }
         } else {
-            if let internalLegendInfos = legendInfos[layerContent.objectId()] {
+            if let internalLegendInfos = legendInfos[layerContent.objectIdentifier()] {
                 let showAtScale = parentShowAtScale && shouldShowAtScale(layerContent)
-                let contentArray = internalLegendInfos.map { legendInfo -> Content in
-                    let content = Content(legendInfo, config: config, legendInfos: [])
-                    content.isVisibleAtScale = showAtScale
-                    return content
+                let contentArray = internalLegendInfos.map { legendInfo -> LayerContentsRowConfiguration in
+                    let rowConfiguration = LayerContentsRowConfiguration(legendInfo, configuration: configuration, legendInfos: [])
+                    rowConfiguration.isVisibleAtScale = showAtScale
+                    return rowConfiguration
                 }
                 
-                contents += contentArray
+                rowConfigurations += contentArray
             }
         }
     }
@@ -474,13 +472,19 @@ public class LayerContentsViewController: UIViewController {
 }
 
 private extension AGSLayerContent {
-    func objectId() -> UInt {
+    func objectIdentifier() -> UInt {
         return UInt(bitPattern: ObjectIdentifier(self))
     }
 }
 
 private extension AGSLegendInfo {
-    func objectId() -> UInt {
+    func objectIdentifier() -> UInt {
         return UInt(bitPattern: ObjectIdentifier(self))
+    }
+}
+
+extension LayerContentsViewController: LayerContentsDataSourceDelegate {
+    public func layerContentsDidChange(_ layerContents: [AGSLayerContent]) {
+        generateLayerList()
     }
 }

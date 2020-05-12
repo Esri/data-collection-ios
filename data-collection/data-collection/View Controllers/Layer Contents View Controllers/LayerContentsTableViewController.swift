@@ -17,9 +17,9 @@ import ArcGIS
 
 let indentationConstant: CGFloat = 10.0
 
-/// The protocol you implement to respond to user content accordion and visibility changes.
+/// The protocol you implement to respond to user accordion and visibility changes.
 internal protocol LayerCellDelegate: AnyObject {
-    /// Tells the delegate that the user has change the accordion state for `content`.
+    /// Tells the delegate that the user has changed the accordion state.
     func accordionChanged(_ layerCell: LayerCell)
     func visibilityChanged(_ layerCell: LayerCell)
 }
@@ -85,13 +85,13 @@ class LayerContentsTableViewController: UITableViewController, LayerCellDelegate
     static let layerCellReuseIdentifier = "LayerTitle"
     static let sublayerCellReuseIdentifier = "SublayerTitle"
 
-    // This is the array of data to display.  'Content' contains either:
+    // This is the array of data to display.  'rowConfigurations' contains either:
     // - layers of type AGSLayers,
     // - sublayers which implement AGSLayerContent but are not AGSLayers,
     // - legend infos of type AGSLegendInfo.
-    var contents = [Content]() {
+    var rowConfigurations = [LayerContentsRowConfiguration]() {
         didSet {
-            updateVisibleContents()
+            updateVisibleConfigurations()
         }
     }
     
@@ -106,12 +106,12 @@ class LayerContentsTableViewController: UITableViewController, LayerCellDelegate
     // NSCache of symbol swatches (images); keys are the symbol used to create the swatch.
     private var symbolSwatchesCache = NSCache<AGSSymbol, UIImage>()
 
-    var visibleContents = [Content]()
+    var visibleConfigurations = [LayerContentsRowConfiguration]()
     
-    private func updateVisibleContents() {
-        visibleContents = contents.filter({ (content) -> Bool in
+    private func updateVisibleConfigurations() {
+        visibleConfigurations = rowConfigurations.filter({ (configuration) -> Bool in
             // If any of content's parent's accordionDisplay is `.collapsed`, don't show it.
-            return content.parents.filter { $0.accordion == .collapsed }.isEmpty
+            return configuration.parents.filter { $0.accordion == .collapsed }.isEmpty
         })
 
         if isViewLoaded {
@@ -126,43 +126,32 @@ class LayerContentsTableViewController: UITableViewController, LayerCellDelegate
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return visibleContents.count
+        return visibleConfigurations.count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         // Create and configure the cell...
         let cell: UITableViewCell
-        let rowItem: Content = visibleContents[indexPath.row]
+        let rowItem: LayerContentsRowConfiguration = visibleConfigurations[indexPath.row]
         switch rowItem.kind {
-        case .layer, .sublayer:
+        case .layer:
             // rowItem is a layer or a sublayer which implements AGSLayerContent
-            let layerCell: LayerCell!
-            if rowItem.kind == .layer {
-                layerCell = (tableView.dequeueReusableCell(withIdentifier: LayerContentsTableViewController.layerCellReuseIdentifier) as! LayerCell)
-            } else {
-                layerCell = (tableView.dequeueReusableCell(withIdentifier: LayerContentsTableViewController.sublayerCellReuseIdentifier) as! LayerCell)
-            }
+            let layerCell = (tableView.dequeueReusableCell(withIdentifier: LayerContentsTableViewController.layerCellReuseIdentifier) as! LayerCell)
             cell = layerCell
-            layerCell.delegate = self
-            layerCell.showRowSeparator = (indexPath.row > 0) && configuration.showRowSeparator
-            layerCell.nameLabel.text = rowItem.name
-            let enabled = rowItem.isVisibilityToggleOn && (rowItem.isVisibleAtScale)
-            layerCell.nameLabel.textColor = enabled ? UIColor.black : UIColor.lightGray
-            layerCell.accordionButton.isHidden = (rowItem.accordion == Content.AccordionDisplay.none)
-            layerCell.accordionButtonWidthConstraint.constant = !layerCell.accordionButton.isHidden ? layerCell.accordionButton.frame.height : 0.0
-            layerCell.accordionButton.setImage(rowItem.accordion.image, for: .normal)
-            layerCell.visibilitySwitch.isHidden = !rowItem.allowToggleVisibility
-            layerCell.visibilitySwitch.isOn = rowItem.isVisibilityToggleOn
-            layerCell.layerIndentationLevel = rowItem.indentationLevel
-        case .legendInfo:
+            setupLayerCell(layerCell, indexPath, rowItem)
+        case .sublayer:
+            // rowItem is a layer or a sublayer which implements AGSLayerContent
+            let layerCell = (tableView.dequeueReusableCell(withIdentifier: LayerContentsTableViewController.sublayerCellReuseIdentifier) as! LayerCell)
+            cell = layerCell
+            setupLayerCell(layerCell, indexPath, rowItem)
+        case .legendInfo(let legendInfo):
             // rowItem is a legendInfo.
             let legendInfoCell = tableView.dequeueReusableCell(withIdentifier: LayerContentsTableViewController.legendInfoCellReuseIdentifier) as! LegendInfoCell
             cell = legendInfoCell
             legendInfoCell.nameLabel.text = rowItem.name
             legendInfoCell.layerIndentationLevel = rowItem.indentationLevel
-
-            if let legendInfo = rowItem.content as? AGSLegendInfo,
-                let symbol = legendInfo.symbol {
+            
+            if let symbol = legendInfo.symbol {
                 if let swatch = symbolSwatchesCache.object(forKey: symbol) {
                     // We have a swatch, so set it into the imageView.
                     legendInfoCell.symbolImage = swatch
@@ -176,7 +165,7 @@ class LayerContentsTableViewController: UITableViewController, LayerCellDelegate
                         
                         // Set the swatch into our dictionary and reload the row
                         self.symbolSwatchesCache.setObject(swatch, forKey: symbol)
-
+                        
                         // Make sure our cell is still displayed and update the symbolImage.
                         if let indexPath = self.indexPath(for: rowItem),
                             let cell = self.tableView.cellForRow(at: indexPath) as? LegendInfoCell {
@@ -185,18 +174,34 @@ class LayerContentsTableViewController: UITableViewController, LayerCellDelegate
                     })
                 }
             }
+        case .none:
+            cell = (tableView.dequeueReusableCell(withIdentifier: LayerContentsTableViewController.layerCellReuseIdentifier) as! LayerCell)
         }
         return cell
     }
     
-    private func indexPath(for content: Content) -> IndexPath? {
-        visibleContents
-            .firstIndex(where: { $0.content === content.content })
+    private func indexPath(for configuration: LayerContentsRowConfiguration) -> IndexPath? {
+        visibleConfigurations
+            .firstIndex(where: { $0.object === configuration.object })
             .map { IndexPath(row: $0, section: 0) }
+    }
+    
+    fileprivate func setupLayerCell(_ layerCell: (LayerCell), _ indexPath: IndexPath, _ rowItem: LayerContentsRowConfiguration) {
+        layerCell.delegate = self
+        layerCell.showRowSeparator = (indexPath.row > 0) && configuration.showRowSeparator
+        layerCell.nameLabel.text = rowItem.name
+        let enabled = rowItem.isVisibilityToggleOn && (rowItem.isVisibleAtScale)
+        layerCell.nameLabel.textColor = enabled ? UIColor.black : UIColor.lightGray
+        layerCell.accordionButton.isHidden = (rowItem.accordion == LayerContentsRowConfiguration.AccordionDisplay.none)
+        layerCell.accordionButtonWidthConstraint.constant = !layerCell.accordionButton.isHidden ? layerCell.accordionButton.frame.height : 0.0
+        layerCell.accordionButton.setImage(rowItem.accordion.image, for: .normal)
+        layerCell.visibilitySwitch.isHidden = !rowItem.allowToggleVisibility
+        layerCell.visibilitySwitch.isOn = rowItem.isVisibilityToggleOn
+        layerCell.layerIndentationLevel = rowItem.indentationLevel
     }
 }
 
-extension Content.AccordionDisplay {
+extension LayerContentsRowConfiguration.AccordionDisplay {
     var image: UIImage? {
         let name = self == .expanded ? "chevron-down" : "chevron-right"
         return UIImage(named: name)
@@ -206,22 +211,21 @@ extension Content.AccordionDisplay {
 extension LayerContentsTableViewController {
     func accordionChanged(_ layerCell: LayerCell) {
         guard let indexPath = tableView.indexPath(for: layerCell) else { return }
-        let content = visibleContents[indexPath.row]
-        guard content.accordion != .none  else { return }
+        let configuration = visibleConfigurations[indexPath.row]
+        guard configuration.accordion != .none  else { return }
 
-        let newAccordian: Content.AccordionDisplay = (content.accordion == .expanded) ? .collapsed : .expanded
-        content.accordion = newAccordian
+        let newAccordian: LayerContentsRowConfiguration.AccordionDisplay = (configuration.accordion == .expanded) ? .collapsed : .expanded
+        configuration.accordion = newAccordian
         layerCell.accordionButton.setImage(newAccordian.image, for: .normal)
 
-        updateVisibleContents()
+        updateVisibleConfigurations()
     }
 
     func visibilityChanged(_ layerCell: LayerCell) {
         guard let indexPath = tableView.indexPath(for: layerCell) else { return }
-        let content = visibleContents[indexPath.row]
-
-        (content.content as? AGSLayerContent)?.isVisible = layerCell.visibilitySwitch.isOn
-        content.isVisibilityToggleOn = layerCell.visibilitySwitch.isOn
-        layerCell.nameLabel.textColor = content.isVisibilityToggleOn ? UIColor.black : UIColor.lightGray
+        let configuration = visibleConfigurations[indexPath.row]
+        (configuration.object as? AGSLayerContent)?.isVisible = layerCell.visibilitySwitch.isOn
+        configuration.isVisibilityToggleOn = layerCell.visibilitySwitch.isOn
+        layerCell.nameLabel.textColor = configuration.isVisibilityToggleOn ? UIColor.black : UIColor.lightGray
     }
 }
