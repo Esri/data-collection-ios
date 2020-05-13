@@ -62,7 +62,7 @@ class LayerCell: UITableViewCell {
         }
     }
     
-    var delegate: LayerCellDelegate?
+    weak var delegate: LayerCellDelegate?
 
     @IBOutlet var nameLabel: UILabel!
     @IBOutlet var accordionButton: UIButton!
