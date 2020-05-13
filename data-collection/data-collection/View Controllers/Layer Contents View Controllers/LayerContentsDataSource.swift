@@ -71,7 +71,7 @@ public class LayerContentsDataSource: NSObject {
     
     private var mapOrSceneObservation: NSKeyValueObservation?
     
-    public var delegate: LayerContentsDataSourceDelegate?
+    public weak var delegate: LayerContentsDataSourceDelegate?
 
     private func geoViewDidChange() {
         mapOrSceneObservation?.invalidate()

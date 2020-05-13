@@ -15,7 +15,7 @@
 import UIKit
 import ArcGIS
 
-let indentationConstant: CGFloat = 10.0
+private let indentationConstant: CGFloat = 10.0
 
 /// The protocol you implement to respond to user accordion and visibility changes.
 internal protocol LayerCellDelegate: AnyObject {
@@ -62,7 +62,7 @@ class LayerCell: UITableViewCell {
         }
     }
     
-    var delegate: LayerCellDelegate?
+    weak var delegate: LayerCellDelegate?
 
     @IBOutlet var nameLabel: UILabel!
     @IBOutlet var accordionButton: UIButton!
@@ -111,7 +111,7 @@ class LayerContentsTableViewController: UITableViewController, LayerCellDelegate
     private func updateVisibleConfigurations() {
         visibleConfigurations = rowConfigurations.filter({ (configuration) -> Bool in
             // If any of content's parent's accordionDisplay is `.collapsed`, don't show it.
-            return configuration.parents.filter { $0.accordion == .collapsed }.isEmpty
+            !configuration.parents.contains { $0.accordion == .collapsed }
         })
 
         if isViewLoaded {
