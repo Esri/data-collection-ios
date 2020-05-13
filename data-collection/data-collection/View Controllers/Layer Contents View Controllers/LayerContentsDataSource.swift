@@ -15,8 +15,11 @@
 import UIKit
 import ArcGIS
 
-public protocol LayerContentsDataSourceDelegate {
-    func layerContentsDidChange(_ layerContents: [AGSLayerContent])
+/// A protocol for allowing clients to determine when the contents of the `layerContents` property changed.
+public protocol LayerContentsDataSourceDelegate: AnyObject {
+    /// Method called when the `layerContents` array changes.
+    /// - Parameter dataSource: The data source triggering the change.
+    func layerContentsDidChange(_ dataSource: LayerContentsDataSource)
 }
 
 /// The data source is used to represent an array of `AGSLayerContent` for use in a variety of
@@ -60,7 +63,11 @@ public class LayerContentsDataSource: NSObject {
     /// in a map or scene:  bottom up (the first layer in the array is at the bottom and drawn first; the last
     /// layer is at the top and drawn last).
     /// - Since: 100.8.0
-    public private(set) var layerContents = [AGSLayerContent]()
+    public private(set) var layerContents = [AGSLayerContent]() {
+        didSet {
+            self.delegate?.layerContentsDidChange(self)
+        }
+    }
     
     private var mapOrSceneObservation: NSKeyValueObservation?
     
@@ -72,9 +79,10 @@ public class LayerContentsDataSource: NSObject {
             mapView.map?.load { [weak self] (_) in
                 guard let self = self,
                     let map = mapView.map else { return }
-                self.layerContents = map.operationalLayers as? [AGSLayerContent] ?? []
-                self.appendBasemap(map.basemap)
-                self.delegate?.layerContentsDidChange(self.layerContents)
+                let layerContents = map.operationalLayers as? [AGSLayerContent] ?? []
+                self.appendBasemap(map.basemap, layerContents) { [weak self] (newLayerContents) in
+                    self?.layerContents = newLayerContents
+                }
             }
             
             // Add an observer to handle changes to the mapView.map.
@@ -86,9 +94,10 @@ public class LayerContentsDataSource: NSObject {
                 guard let self = self,
                     let scene = sceneView.scene,
                     let basemap = scene.basemap else { return }
-                self.layerContents = scene.operationalLayers as? [AGSLayerContent] ?? []
-                self.appendBasemap(basemap)
-                self.delegate?.layerContentsDidChange(self.layerContents)
+                let layerContents = scene.operationalLayers as? [AGSLayerContent] ?? []
+                self.appendBasemap(basemap, layerContents) { [weak self] (newLayerContents) in
+                    self?.layerContents = newLayerContents
+                }
             }
             
             // Add an observer to handle changes to the sceneView.scene.
@@ -102,21 +111,21 @@ public class LayerContentsDataSource: NSObject {
             self?.geoViewDidChange()
         }
     }
-    
-    private func appendBasemap(_ basemap: AGSBasemap) {
-        basemap.load { [weak self] (_) in
-            guard let self = self else { return }
-            // Append any reference layers to the `layerContents` array.
+
+    private func appendBasemap(_ basemap: AGSBasemap, _ layerContents: [AGSLayerContent], _ completion:  @escaping ([AGSLayerContent]) -> Void) {
+        basemap.load { (_) in
+            var newLayerContents = layerContents
+            // Append any reference layers to the `newLayerContents` array.
             if let referenceLayers = basemap.referenceLayers as? [AGSLayerContent] {
-                self.layerContents.append(contentsOf: referenceLayers)
-                self.delegate?.layerContentsDidChange(self.layerContents)
+                newLayerContents.append(contentsOf: referenceLayers)
             }
             
-            // Insert any base layers at the beginning of the `layerContents` array.
+            // Insert any base layers at the beginning of the `newLayerContents` array.
             if let baseLayers = basemap.baseLayers as? [AGSLayerContent] {
-                self.layerContents.insert(contentsOf: baseLayers, at: 0)
-                self.delegate?.layerContentsDidChange(self.layerContents)
+                newLayerContents.insert(contentsOf: baseLayers, at: 0)
             }
+            
+            completion(newLayerContents)
         }
     }
 }

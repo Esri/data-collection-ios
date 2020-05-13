@@ -174,15 +174,13 @@ class LayerContentsTableViewController: UITableViewController, LayerCellDelegate
                     })
                 }
             }
-        case .none:
-            cell = (tableView.dequeueReusableCell(withIdentifier: LayerContentsTableViewController.layerCellReuseIdentifier) as! LayerCell)
         }
         return cell
     }
     
     private func indexPath(for configuration: LayerContentsRowConfiguration) -> IndexPath? {
         visibleConfigurations
-            .firstIndex(where: { $0.object === configuration.object })
+            .firstIndex(where: { $0.kind == configuration.kind })
             .map { IndexPath(row: $0, section: 0) }
     }
     
@@ -224,7 +222,16 @@ extension LayerContentsTableViewController {
     func visibilityChanged(_ layerCell: LayerCell) {
         guard let indexPath = tableView.indexPath(for: layerCell) else { return }
         let configuration = visibleConfigurations[indexPath.row]
-        (configuration.object as? AGSLayerContent)?.isVisible = layerCell.visibilitySwitch.isOn
+        
+        switch configuration.kind {
+        case .layer(let layer):
+            layer.isVisible = layerCell.visibilitySwitch.isOn
+        case .sublayer(let sublayer):
+            sublayer.isVisible = layerCell.visibilitySwitch.isOn
+        case .legendInfo(_):
+            break
+        }
+
         configuration.isVisibilityToggleOn = layerCell.visibilitySwitch.isOn
         layerCell.nameLabel.textColor = configuration.isVisibilityToggleOn ? UIColor.black : UIColor.lightGray
     }

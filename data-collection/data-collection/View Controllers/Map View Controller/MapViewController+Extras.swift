@@ -22,10 +22,8 @@ public enum MapViewControllerExtras : CaseIterable {
     case layers
     // Displays bookmarks.
     case bookmarks
-}
 
-extension MapViewControllerExtras : CustomStringConvertible {
-    public var description: String {
+    public var title: String {
         switch self {
         case .layers:
             return "Layers"
@@ -48,11 +46,11 @@ extension MapViewController {
             let extraAction: UIAlertAction
             switch extra {
             case .layers:
-                extraAction = UIAlertAction(title: extra.description, style: .default, handler: { [weak self] (action) in
+                extraAction = UIAlertAction(title: extra.title, style: .default, handler: { [weak self] (action) in
                     self?.showLayerContents(barButtonItem)
                 })
             case .bookmarks:
-                extraAction = UIAlertAction(title: extra.description, style: .default, handler: { [weak self] (action) in
+                extraAction = UIAlertAction(title: extra.title, style: .default, handler: { [weak self] (action) in
                     self?.showBookmarks(barButtonItem)
                 })
             }
@@ -76,7 +74,7 @@ extension MapViewController {
             // Create and configure the view controller.
             let dataSource = LayerContentsDataSource(geoView: mapView)
             layerContentsVC = TableOfContentsViewController(dataSource: dataSource)
-            layerContentsVC.title = MapViewControllerExtras.layers.description
+            layerContentsVC.title = MapViewControllerExtras.layers.title
 
             // Add a done button.
             let doneButton = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(done))
@@ -109,7 +107,7 @@ extension MapViewController {
         } else {
             // Create and configure the view controller.
             bookmarksVC = BookmarksViewController(geoView: mapView)
-            bookmarksVC.title = MapViewControllerExtras.bookmarks.description
+            bookmarksVC.title = MapViewControllerExtras.bookmarks.title
 
             // Add a done button.
             let doneButton = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(done))
