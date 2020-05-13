@@ -15,7 +15,7 @@
 import UIKit
 import ArcGIS
 
-let indentationConstant: CGFloat = 10.0
+private let indentationConstant: CGFloat = 10.0
 
 /// The protocol you implement to respond to user accordion and visibility changes.
 internal protocol LayerCellDelegate: AnyObject {
