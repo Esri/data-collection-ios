@@ -111,7 +111,7 @@ class LayerContentsTableViewController: UITableViewController, LayerCellDelegate
     private func updateVisibleConfigurations() {
         visibleConfigurations = rowConfigurations.filter({ (configuration) -> Bool in
             // If any of content's parent's accordionDisplay is `.collapsed`, don't show it.
-            return configuration.parents.filter { $0.accordion == .collapsed }.isEmpty
+            !configuration.parents.contains { $0.accordion == .collapsed }
         })
 
         if isViewLoaded {
