@@ -233,6 +233,6 @@ extension LayerContentsTableViewController {
         }
 
         configuration.isVisibilityToggleOn = layerCell.visibilitySwitch.isOn
-        layerCell.nameLabel.textColor = configuration.isVisibilityToggleOn ? UIColor.black : UIColor.lightGray
+        layerCell.nameLabel.textColor = configuration.isVisibilityToggleOn ? .black : .lightGray
     }
 }
