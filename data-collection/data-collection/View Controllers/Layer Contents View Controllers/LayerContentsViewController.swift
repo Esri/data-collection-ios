@@ -410,7 +410,7 @@ public class LayerContentsViewController: UIViewController {
             parentArray.forEach { parent in
                 rowConfigurations.forEach { potentialParentContent in
                     // Search all contents to see if it's a match.
-                    if potentialParentContent.kind.matches(object: parent) {
+                    if potentialParentContent.kind == .sublayer(parent) {
                         configuration.parents.append(potentialParentContent)
                     }
                 }
