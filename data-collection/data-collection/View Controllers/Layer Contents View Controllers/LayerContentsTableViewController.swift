@@ -190,7 +190,7 @@ class LayerContentsTableViewController: UITableViewController, LayerCellDelegate
         layerCell.nameLabel.text = rowItem.name
         let enabled = rowItem.isVisibilityToggleOn && (rowItem.isVisibleAtScale)
         layerCell.nameLabel.textColor = enabled ? UIColor.black : UIColor.lightGray
-        layerCell.accordionButton.isHidden = (rowItem.accordion == LayerContentsRowConfiguration.AccordionDisplay.none)
+        layerCell.accordionButton.isHidden = rowItem.accordion == .none
         layerCell.accordionButtonWidthConstraint.constant = !layerCell.accordionButton.isHidden ? layerCell.accordionButton.frame.height : 0.0
         layerCell.accordionButton.setImage(rowItem.accordion.image, for: .normal)
         layerCell.visibilitySwitch.isHidden = !rowItem.allowToggleVisibility
