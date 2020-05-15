@@ -64,7 +64,7 @@ public protocol LayerContentsConfiguration {
     var title: String { get }
 }
 
-/// Describes a `LayerContents` view configured to display a legend.
+/// Describes a `LayerContentsViewController` configured to display a legend.
 /// - Since: 100.8.0
 public class LegendViewController: LayerContentsViewController {
     override public init() {
@@ -77,7 +77,7 @@ public class LegendViewController: LayerContentsViewController {
     }
 }
 
-/// Describes a `LayerContents` view configured to display a table of contents.
+/// Describes a `LayerContentsViewController` configured to display a table of contents.
 /// - Since: 100.8.0
 public class TableOfContentsViewController: LayerContentsViewController {
     override public init() {
@@ -124,7 +124,7 @@ internal class LayerContentsRowConfiguration {
     var isVisibleAtScale: Bool = true
     var parents = [LayerContentsRowConfiguration]()
     
-    init(_ kind: Kind, configuration: LayerContentsConfiguration, legendInfos: [AGSLegendInfo]) {
+    init(kind: Kind, configuration: LayerContentsConfiguration, legendInfos: [AGSLegendInfo]) {
         self.kind = kind
         switch kind {
         case let .layer(layer):
@@ -199,7 +199,7 @@ public class LayerContentsViewController: UIViewController {
     private var layerContentsTableViewController: LayerContentsTableViewController?
     
     // Dictionary of legend infos; keys are AGSLayerContent objectIdentifier values.
-    private var legendInfos = [UInt: [AGSLegendInfo]]()
+    private var legendInfos = [ObjectIdentifier: [AGSLegendInfo]]()
     
     // Dictionary of symbol swatches (images); keys are the symbol used to create the swatch.
     private var symbolSwatches = [AGSSymbol: UIImage]()
@@ -338,7 +338,7 @@ public class LayerContentsViewController: UIViewController {
 
                 // Store legendInfos and then update contents.
                 guard let legendInfos = legendInfos else { return }
-                self.legendInfos[layerContent.objectIdentifier()] = legendInfos
+                self.legendInfos[ObjectIdentifier(layerContent)] = legendInfos
                 
                 // Add legendInfo parent info to parents array
                 legendInfos.forEach { legendInfo in
@@ -372,24 +372,25 @@ public class LayerContentsViewController: UIViewController {
                     // only show Feature Collection layer if the sublayer count is > 1
                     // but always show the sublayers (the call to `updateLayerLegend`)
                     if featureCollectionLayer.layers.count > 1 {
-                        let internalLegendInfos = legendInfos[layerContent.objectIdentifier()] ?? []
-                        let rowConfiguration = LayerContentsRowConfiguration(LayerContentsRowConfiguration.Kind.layer(featureCollectionLayer), configuration: configuration, legendInfos: internalLegendInfos)
+                        let internalLegendInfos = legendInfos[ObjectIdentifier(layerContent)] ?? []
+                        let rowConfiguration = LayerContentsRowConfiguration(kind: .layer(featureCollectionLayer),
+                                                                             configuration: configuration,
+                                                                             legendInfos: internalLegendInfos)
                         rowConfiguration.isVisibleAtScale = showAtScale
                         rowConfigurations.append(rowConfiguration)
                     }
                 } else {
-                    let internalLegendInfos = legendInfos[layerContent.objectIdentifier()] ?? []
-                    var rowConfiguration: LayerContentsRowConfiguration
-                    var kind: LayerContentsRowConfiguration.Kind
+                    let internalLegendInfos = legendInfos[ObjectIdentifier(layerContent)] ?? []
+                    let kind: LayerContentsRowConfiguration.Kind
                     if let layer = layerContent as? AGSLayer {
-                        kind = LayerContentsRowConfiguration.Kind.layer(layer)
+                        kind = .layer(layer)
                     }
                     else {
-                        kind = LayerContentsRowConfiguration.Kind.sublayer(layerContent)
+                        kind = .sublayer(layerContent)
                     }
-                    rowConfiguration = LayerContentsRowConfiguration(kind,
-                                                                     configuration: configuration,
-                                                                     legendInfos: internalLegendInfos)
+                    let rowConfiguration = LayerContentsRowConfiguration(kind: kind,
+                                                                         configuration: configuration,
+                                                                         legendInfos: internalLegendInfos)
 
                     rowConfiguration.isVisibleAtScale = showAtScale
                     rowConfigurations.append(rowConfiguration)
@@ -431,8 +432,8 @@ public class LayerContentsViewController: UIViewController {
                 let showAtScale = parentShowAtScale && shouldShowAtScale(subLayerContent)
                 
                 if (configuration.layersStyle == .visibleLayersAtScale && showAtScale) || configuration.layersStyle == .allLayers {
-                    let internalLegendInfos = legendInfos[layerContent.objectIdentifier()] ?? []
-                    let rowConfiguration = LayerContentsRowConfiguration(LayerContentsRowConfiguration.Kind.sublayer(subLayerContent),
+                    let internalLegendInfos = legendInfos[ObjectIdentifier(layerContent)] ?? []
+                    let rowConfiguration = LayerContentsRowConfiguration(kind: .sublayer(subLayerContent),
                                                                          configuration: configuration,
                                                                          legendInfos: internalLegendInfos)
                     rowConfiguration.isVisibleAtScale = showAtScale
@@ -441,10 +442,10 @@ public class LayerContentsViewController: UIViewController {
                 }
             }
         } else {
-            if let internalLegendInfos = legendInfos[layerContent.objectIdentifier()] {
+            if let internalLegendInfos = legendInfos[ObjectIdentifier(layerContent)] {
                 let showAtScale = parentShowAtScale && shouldShowAtScale(layerContent)
                 let contentArray = internalLegendInfos.map { legendInfo -> LayerContentsRowConfiguration in
-                    let rowConfiguration = LayerContentsRowConfiguration(LayerContentsRowConfiguration.Kind.legendInfo(legendInfo),
+                    let rowConfiguration = LayerContentsRowConfiguration(kind: .legendInfo(legendInfo),
                                                                          configuration: configuration,
                                                                          legendInfos: [])
                     rowConfiguration.isVisibleAtScale = showAtScale
@@ -457,12 +458,6 @@ public class LayerContentsViewController: UIViewController {
     }
     
     // MARK: - Utility
-    
-    /// Returns a unique UInt for each object. Used because AGSLayerContent is not hashable
-    /// and we need to use it as the key in our dictionary of legendInfo arrays.
-    private static func objectIdentifierFor(_ obj: AnyObject) -> UInt {
-        return UInt(bitPattern: ObjectIdentifier(obj))
-    }
     
     // Determine if the layerContent is visible at the current GeoView scale.
     fileprivate func shouldShowAtScale(_ layerContent: AGSLayerContent) -> Bool {
@@ -478,12 +473,6 @@ public class LayerContentsViewController: UIViewController {
 extension LayerContentsViewController: LayerContentsDataSourceDelegate {
     public func layerContentsDidChange(_ dataSource: LayerContentsDataSource) {
         generateLayerList()
-    }
-}
-
-private extension AGSLayerContent {
-    func objectIdentifier() -> UInt {
-        return UInt(bitPattern: ObjectIdentifier(self))
     }
 }
 
@@ -514,11 +503,11 @@ extension LayerContentsRowConfiguration.Kind: Hashable {
         var kind: LayerContentsRowConfiguration.Kind?
         switch object {
         case let layer as AGSLayer:
-            kind = LayerContentsRowConfiguration.Kind.layer(layer)
+            kind = .layer(layer)
         case let layerContent as AGSLayerContent:
-            kind = LayerContentsRowConfiguration.Kind.sublayer(layerContent)
+            kind = .sublayer(layerContent)
         case let legendInfo as AGSLegendInfo:
-            kind = LayerContentsRowConfiguration.Kind.legendInfo(legendInfo)
+            kind = .legendInfo(legendInfo)
         default:
             kind = nil
         }

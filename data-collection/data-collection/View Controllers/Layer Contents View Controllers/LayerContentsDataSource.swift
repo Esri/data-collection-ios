@@ -27,12 +27,11 @@ public protocol LayerContentsDataSourceDelegate: AnyObject {
 /// or an `AGSGeoView` from whose `AGSMap` or `AGSScene` the  operational and
 /// base map layers (`AGSLayerContent`) are extracted.
 /// - Since: 100.8.0
-public class LayerContentsDataSource: NSObject {
+public class LayerContentsDataSource {
     /// Creates a `DataSource` initialized with a sequence of `AGSLayerContent` objects.
     /// - Parameter layers: The layers with which to initialize the data source.
     /// - Since: 100.8.0
     public init<S: Sequence>(layers: S) where S.Element == AGSLayerContent {
-        super.init()
         layerContents.append(contentsOf: layers)
     }
     
@@ -42,14 +41,13 @@ public class LayerContentsDataSource: NSObject {
     /// operational and base map layers.
     /// - Since: 100.8.0
     public init(geoView: AGSGeoView) {
-        super.init()
         self.geoView = geoView
         geoViewDidChange()
     }
     
     /// The `AGSGeoView` containing either an `AGSMap` or `AGSScene` with the operational and
     /// base map layers to use as data.
-    /// If the `DataSource` was initialized with an array of `AGSLayerContent`, `geoView` will be nil.
+    /// If the `DataSource` was initialized with an array of `AGSLayerContent`, `geoView` will be `nil`.
     /// - Since: 100.8.0
     public private(set) var geoView: AGSGeoView? {
         didSet {
