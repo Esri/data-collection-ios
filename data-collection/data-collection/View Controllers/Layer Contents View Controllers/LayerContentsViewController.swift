@@ -25,7 +25,7 @@ public enum LayerContentsConfigurationStyle {
     case visibleLayersAtScale
 }
 
-/// Configuration is an protocol (interface) that drives how to format the layer contents table.
+/// Configuration is a protocol (interface) that drives how to format the layer contents table.
 /// - Since: 100.8.0
 public protocol LayerContentsConfiguration {
     /// Specifies the `LayerContentsConfigurationStyle` applied to the table.
