@@ -51,7 +51,7 @@ public protocol LayerContentsConfiguration {
     /// - Since: 100.8.0
     var respectInitialLayerOrder: Bool { get }
     
-    /// Specifies whether to respect `LayerConents.showInLegend` when deciding whether to include the layer.
+    /// Specifies whether to respect `AGSLayerContent.showInLegend` when deciding whether to include the layer.
     /// - Since: 100.8.0
     var respectShowInLegend: Bool { get }
     
