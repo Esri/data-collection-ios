@@ -45,7 +45,7 @@ public protocol LayerContentsConfiguration {
     var showSymbology: Bool { get }
     
     /// Specifies whether to respect the layer order or to reverse the layer order supplied.
-    /// If provided a geoView, the layer will include the basemap.
+    /// If provided an instance of `AGSGeoView`, the layer will include the basemap.
     /// - If `false`, the top layer's information appears at the top of the legend and the base map's layer information appears at the bottom of the legend.
     /// - If `true`, this order is reversed.
     /// - Since: 100.8.0
