@@ -190,7 +190,7 @@ class LayerContentsTableViewController: UITableViewController, LayerCellDelegate
         layerCell.nameLabel.text = rowItem.name
         let enabled = rowItem.isVisibilityToggleOn && (rowItem.isVisibleAtScale)
         layerCell.nameLabel.textColor = enabled ? .black : .lightGray
-        layerCell.accordionButton.isHidden = (rowItem.accordion == LayerContentsRowConfiguration.AccordionDisplay.none)
+        layerCell.accordionButton.isHidden = rowItem.accordion == .none
         layerCell.accordionButtonWidthConstraint.constant = !layerCell.accordionButton.isHidden ? layerCell.accordionButton.frame.height : 0.0
         layerCell.accordionButton.setImage(rowItem.accordion.image, for: .normal)
         layerCell.visibilitySwitch.isHidden = !rowItem.allowToggleVisibility
@@ -210,7 +210,7 @@ extension LayerContentsTableViewController {
     func accordionChanged(_ layerCell: LayerCell) {
         guard let indexPath = tableView.indexPath(for: layerCell) else { return }
         let configuration = visibleConfigurations[indexPath.row]
-        guard configuration.accordion != .none  else { return }
+        guard configuration.accordion != .none else { return }
 
         let newAccordian: LayerContentsRowConfiguration.AccordionDisplay = (configuration.accordion == .expanded) ? .collapsed : .expanded
         configuration.accordion = newAccordian
@@ -233,6 +233,6 @@ extension LayerContentsTableViewController {
         }
 
         configuration.isVisibilityToggleOn = layerCell.visibilitySwitch.isOn
-        layerCell.nameLabel.textColor = configuration.isVisibilityToggleOn ? UIColor.black : UIColor.lightGray
+        layerCell.nameLabel.textColor = configuration.isVisibilityToggleOn ? .black : .lightGray
     }
 }

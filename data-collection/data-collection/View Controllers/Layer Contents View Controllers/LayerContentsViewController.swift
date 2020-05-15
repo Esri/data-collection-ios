@@ -25,7 +25,7 @@ public enum LayerContentsConfigurationStyle {
     case visibleLayersAtScale
 }
 
-/// Configuration is an protocol (interface) that drives how to format the layer contents table.
+/// Configuration is a protocol (interface) that drives how to format the layer contents table.
 /// - Since: 100.8.0
 public protocol LayerContentsConfiguration {
     /// Specifies the `LayerContentsConfigurationStyle` applied to the table.
@@ -45,13 +45,13 @@ public protocol LayerContentsConfiguration {
     var showSymbology: Bool { get }
     
     /// Specifies whether to respect the layer order or to reverse the layer order supplied.
-    /// If provided a geoView, the layer will include the basemap.
+    /// If provided an instance of `AGSGeoView`, the layer will include the basemap.
     /// - If `false`, the top layer's information appears at the top of the legend and the base map's layer information appears at the bottom of the legend.
     /// - If `true`, this order is reversed.
     /// - Since: 100.8.0
     var respectInitialLayerOrder: Bool { get }
     
-    /// Specifies whether to respect `LayerConents.showInLegend` when deciding whether to include the layer.
+    /// Specifies whether to respect `AGSLayerContent.showInLegend` when deciding whether to include the layer.
     /// - Since: 100.8.0
     var respectShowInLegend: Bool { get }
     
@@ -411,7 +411,7 @@ public class LayerContentsViewController: UIViewController {
             parentArray.forEach { parent in
                 rowConfigurations.forEach { potentialParentContent in
                     // Search all contents to see if it's a match.
-                    if potentialParentContent.kind.matches(object: parent) {
+                    if potentialParentContent.kind == .sublayer(parent) {
                         configuration.parents.append(potentialParentContent)
                     }
                 }
