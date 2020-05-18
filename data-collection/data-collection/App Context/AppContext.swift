@@ -40,7 +40,8 @@ import ArcGIS
 
                 guard error == nil else {
                     print("[Error: Portal Load Status]", error!.localizedDescription)
-                    if self.workMode == .online {
+                    let isUserCanceledError = (error as NSError?)?.code == NSUserCancelledError
+                    if self.workMode == .online && !isUserCanceledError {
                         self.currentMap = nil
                     }
                     return
@@ -102,4 +103,3 @@ import ArcGIS
         }
     }
 }
-
