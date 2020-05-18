@@ -495,23 +495,4 @@ extension LayerContentsRowConfiguration.Kind: Hashable {
     func hash(into hasher: inout Hasher) {
         hasher.combine(ObjectIdentifier(wrappedObject))
     }
-    
-    /// Compares the private `Kind.wrappedObject` to a given `object`.
-    /// - Parameter object: The object to compare to `Kind.wrappedObject`
-    /// - Returns: `true` if it matches, `false` otherwise.
-    func matches(object: AnyObject) -> Bool {
-        var kind: LayerContentsRowConfiguration.Kind?
-        switch object {
-        case let layer as AGSLayer:
-            kind = .layer(layer)
-        case let layerContent as AGSLayerContent:
-            kind = .sublayer(layerContent)
-        case let legendInfo as AGSLegendInfo:
-            kind = .legendInfo(legendInfo)
-        default:
-            kind = nil
-        }
-
-        return self == kind
-    }
 }
