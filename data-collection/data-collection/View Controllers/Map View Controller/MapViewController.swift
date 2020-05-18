@@ -14,11 +14,13 @@
 
 import UIKit
 import ArcGIS
+import ArcGISToolkit
 
 protocol MapViewControllerDelegate: AnyObject {
     func mapViewController(_ mapViewController: MapViewController, didSelect extent: AGSGeometry)
     func mapViewController(_ mapViewController: MapViewController, shouldAllowNewFeature: Bool)
     func mapViewController(_ mapViewController: MapViewController, didUpdateTitle title: String)
+    func mapViewController(_ mapViewController: MapViewController, didUpdateMapViewMode mapViewMode: MapViewController.MapViewMode)
 }
 
 class MapViewController: UIViewController {
@@ -69,6 +71,10 @@ class MapViewController: UIViewController {
 
     var identifyOperation: AGSCancelable?
     
+    var extrasNavigationController: UINavigationController?
+    var layerContentsViewController: LayerContentsViewController?
+    var bookmarksViewController: BookmarksViewController?
+
     var mapViewMode: MapViewMode = .defaultView {
         didSet {
             adjustForMapViewMode(from: oldValue, to: mapViewMode)

@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="czy-FD-PCO">
-    <device id="retina5_9" orientation="portrait">
-        <adaptation id="fullscreen"/>
-    </device>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="czy-FD-PCO">
+    <device id="retina5_9" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14283.14"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -85,6 +83,11 @@
                             </connections>
                         </barButtonItem>
                         <rightBarButtonItems>
+                            <barButtonItem title="Item" image="ellipsis" id="4IE-fC-WYU" userLabel="Extras Item">
+                                <connections>
+                                    <action selector="userTapsExtrasButton:" destination="gv8-gM-I2q" id="5Vt-Xz-EsX"/>
+                                </connections>
+                            </barButtonItem>
                             <barButtonItem enabled="NO" title="Add Feature" image="AddFeature" width="44" id="kzH-BP-lEk">
                                 <connections>
                                     <action selector="userTapsRightButton:" destination="gv8-gM-I2q" id="aDP-Qy-iNH"/>
@@ -103,6 +106,7 @@
                         <outlet property="drawerDesiredWidthLayoutConstraint" destination="YOn-ym-Bbf" id="Nov-Le-YiS"/>
                         <outlet property="drawerLeadingLayoutConstraint" destination="0Oj-ee-pbx" id="Ang-ob-QUz"/>
                         <outlet property="drawerTrailingLayoutConstraint" destination="WlT-mD-h8Z" id="kkJ-FI-0wB"/>
+                        <outlet property="extrasBarButton" destination="4IE-fC-WYU" id="FB7-FZ-U6I"/>
                         <outlet property="leftBarButton" destination="Edn-bQ-dxc" id="hJZ-HM-EJ9"/>
                         <outlet property="mainMapView" destination="SqM-fs-kSs" id="C39-Kd-vlX"/>
                         <outlet property="outsideDrawerTapGestureRecognizer" destination="6zv-l3-HBD" id="5eh-Fq-Lxe"/>
@@ -159,5 +163,6 @@
         <image name="AddFeature" width="24" height="24"/>
         <image name="Hamburger" width="25" height="25"/>
         <image name="ZoomLocation" width="24" height="24"/>
+        <image name="ellipsis" width="24" height="24"/>
     </resources>
 </document>
