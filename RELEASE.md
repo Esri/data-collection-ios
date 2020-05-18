@@ -1,3 +1,15 @@
+# Release 1.2.0
+
+- Adds an "Extras" button containing "Bookmarks" and "Layers" options:
+    - Bookmarks:  users can select from a list of web map-defined bookmarks to easily navigate their map.
+    - Layers: users can view the layers and symbology in their map and turn the display of layers on and off.
+- Incorporate the [ArcGIS Runtime Toolkit for iOS](https://github.com/Esri/arcgis-runtime-toolkit-ios) as a git submodule to provide the BookmarksViewController component.
+- Fix build-time warning when building with XCode 11.4 (in LoadableErrors.swift).
+- Certification for the 100.8.0 release of the ArcGIS Runtime SDK for iOS.
+
+Note:
+Starting from the 100.8 release, the ArcGIS Runtime SDK for iOS uses Apple's Metal framework to display maps and scenes. However, Xcode does not support Metal based rendering in iOS 12 simulators on macOS Catalina, or in any version of iOS simulator on macOS Mojave. If you are developing map or scene based apps in these environments, you will need test and debug them on a physical device instead of the simulator.
+
 # Release 1.1.4
 
 - Fixes featureLayer deprecation.
