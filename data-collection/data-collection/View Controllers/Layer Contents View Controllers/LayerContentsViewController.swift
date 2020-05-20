@@ -69,7 +69,7 @@ public protocol LayerContentsConfiguration {
 public class LegendViewController: LayerContentsViewController {
     override public init() {
         super.init()
-        configuration = LayerContentsViewController.Legend()
+        configuration = Legend()
     }
     
     required init?(coder: NSCoder) {
@@ -82,7 +82,7 @@ public class LegendViewController: LayerContentsViewController {
 public class TableOfContentsViewController: LayerContentsViewController {
     override public init() {
         super.init()
-        configuration = LayerContentsViewController.TableOfContents()
+        configuration = TableOfContents()
     }
     
     required init?(coder: NSCoder) {
