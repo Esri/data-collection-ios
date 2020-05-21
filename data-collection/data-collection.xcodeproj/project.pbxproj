@@ -63,6 +63,8 @@
 		9465691A2088028E00599E55 /* AGSRelationshipInfo+Role.swift in Sources */ = {isa = PBXBuildFile; fileRef = 946569192088028E00599E55 /* AGSRelationshipInfo+Role.swift */; };
 		9465691E208802CE00599E55 /* AGSFeatureTable+PopupEnabled.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9465691D208802CE00599E55 /* AGSFeatureTable+PopupEnabled.swift */; };
 		946569292089066800599E55 /* MapViewController+Map.swift in Sources */ = {isa = PBXBuildFile; fileRef = 946569282089066800599E55 /* MapViewController+Map.swift */; };
+		94682ADC246F002E005B733E /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94682ADB246F002E005B733E /* ProfileViewController.swift */; };
+		94682ADE246F0088005B733E /* Profile.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 94682ADD246F0088005B733E /* Profile.storyboard */; };
 		946D20A721250F46001BF5CC /* AppReachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 946D20A621250F46001BF5CC /* AppReachability.swift */; };
 		946D20AB2126541C001BF5CC /* AppDateFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 946D20AA2126541C001BF5CC /* AppDateFormatter.swift */; };
 		946D20AF212F50EB001BF5CC /* AppContextAwareNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 946D20AE212F50EB001BF5CC /* AppContextAwareNavigationController.swift */; };
@@ -306,6 +308,8 @@
 		946569192088028E00599E55 /* AGSRelationshipInfo+Role.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AGSRelationshipInfo+Role.swift"; sourceTree = "<group>"; };
 		9465691D208802CE00599E55 /* AGSFeatureTable+PopupEnabled.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AGSFeatureTable+PopupEnabled.swift"; sourceTree = "<group>"; };
 		946569282089066800599E55 /* MapViewController+Map.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MapViewController+Map.swift"; sourceTree = "<group>"; };
+		94682ADB246F002E005B733E /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
+		94682ADD246F0088005B733E /* Profile.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Profile.storyboard; sourceTree = "<group>"; };
 		946D20A621250F46001BF5CC /* AppReachability.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppReachability.swift; sourceTree = "<group>"; };
 		946D20AA2126541C001BF5CC /* AppDateFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDateFormatter.swift; sourceTree = "<group>"; };
 		946D20AE212F50EB001BF5CC /* AppContextAwareNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppContextAwareNavigationController.swift; sourceTree = "<group>"; };
@@ -615,6 +619,15 @@
 				945F456621F0ED9300F2DCBC /* RichPopupEditStagedAttachmentViewController.swift */,
 			);
 			path = RichPopupEditStagedPhotoAttachmentViewController;
+			sourceTree = "<group>";
+		};
+		94682ADA246EFFEC005B733E /* Profile View Controller */ = {
+			isa = PBXGroup;
+			children = (
+				94682ADB246F002E005B733E /* ProfileViewController.swift */,
+				94682ADD246F0088005B733E /* Profile.storyboard */,
+			);
+			path = "Profile View Controller";
 			sourceTree = "<group>";
 		};
 		946D20B621309088001BF5CC /* Drawer View Controller */ = {
@@ -1212,6 +1225,7 @@
 			isa = PBXGroup;
 			children = (
 				E480B99F2421303600982756 /* Layer Contents View Controllers */,
+				94682ADA246EFFEC005B733E /* Profile View Controller */,
 				945F450D21E681DE00F2DCBC /* SegmentedViewController.swift */,
 				946D20AE212F50EB001BF5CC /* AppContextAwareNavigationController.swift */,
 				946D20C02130AC24001BF5CC /* Job Status View Controller */,
@@ -1405,6 +1419,7 @@
 				94B375BC207E8D5600691F2A /* AddressLocator.locb in Resources */,
 				9458E2A5219B542700D18CEE /* HouseColors.xcassets in Resources */,
 				94B375BE207E8D5600691F2A /* AddressLocator.lox in Resources */,
+				94682ADE246F0088005B733E /* Profile.storyboard in Resources */,
 				946D20BC2130951B001BF5CC /* DrawerViewController.storyboard in Resources */,
 				94D544CA207FC67B00ED0D04 /* AppIcon.xcassets in Resources */,
 			);
@@ -1529,6 +1544,7 @@
 				945F450E21E681DE00F2DCBC /* SegmentedViewController.swift in Sources */,
 				945F451421E6878A00F2DCBC /* RichPopupDetailsViewController.swift in Sources */,
 				945F451721E68A3F00F2DCBC /* RichPopupAttachmentsViewController.swift in Sources */,
+				94682ADC246F002E005B733E /* ProfileViewController.swift in Sources */,
 				94D2714520D0578C00304E27 /* ManyToOneRelationship.swift in Sources */,
 				94879446220262A6007BC15E /* RichPopupAttachmentsViewController+RichPopupAttachmentsManagerDelegate.swift in Sources */,
 				94B375FD207E8E4800691F2A /* UIColor+Modify.swift in Sources */,
