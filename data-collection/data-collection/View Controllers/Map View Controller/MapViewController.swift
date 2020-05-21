@@ -219,6 +219,9 @@ class MapViewController: UIViewController {
         else if let destination = segue.destination as? MaskViewController {
             maskViewController = destination
         }
+        else if let destination = segue.navigationDestination as? ProfileViewController {
+            destination.delegate = appContext
+        }
     }
     
     private func displayInitialReachabilityMessage() {
