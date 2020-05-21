@@ -28,9 +28,7 @@ class ProfileViewController: UITableViewController {
     var portal: AGSPortal?
     
     weak var delegate: ProfileViewControllerDelegate?
-    
-    var portal: AGSPortal?
-    
+        
     @IBOutlet weak var portalUserCell: PortalUserCell!
     @IBOutlet weak var workOnlineCell: WorkOnlineCell!
     @IBOutlet weak var workOfflineCell: WorkOfflineCell!
