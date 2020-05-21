@@ -41,24 +41,66 @@ class ProfileViewController: UITableViewController {
         metaDataCell.appNameVersionLabel.text = Bundle.AppNameVersionString
         metaDataCell.sdkVersionLabel.text = Bundle.ArcGISSDKVersionString
         
-        NotificationCenter.default.addObserver(
-            self,
-            selector: #selector(appWorkModeDidChange(notification:)),
-            name: .workModeDidChange,
-            object: nil
-        )
+        subscribeToAppContextChanges()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         adjustForAppWorkMode()
+        adjustFor(portal: appContext.portal)
+        adjustForAppReachability()
+    }
+    
+    // MARK:- App Context Changes
+    
+    let changeHandler = AppContextChangeHandler()
+    
+    private func subscribeToAppContextChanges() {
+        
+        let currentPortalChange: AppContextChange = .currentPortal { [weak self] portal in
+            self?.adjustFor(portal: portal)
+        }
+        
+        let workModeChange: AppContextChange = .workMode { [weak self] _ in
+            self?.adjustForAppWorkMode()
+        }
+        
+        let reachabilityChange: AppContextChange = .reachability { [weak self] _ in
+            self?.adjustForAppReachability()
+        }
+        
+        let lastSyncChange: AppContextChange = .lastSync { [weak self] date in
+//            self?.updateSynchronizeButtonForLastSync(date: date)
+        }
+        
+        let hasOfflineMapChange: AppContextChange = .hasOfflineMap { [weak self] _ in
+//            self?.adjustContextDrawerUI()
+        }
+        
+        changeHandler.subscribe(toChanges:
+            [
+                currentPortalChange,
+                workModeChange,
+                reachabilityChange,
+                lastSyncChange,
+                hasOfflineMapChange
+            ]
+        )
+    }
+    
+    // MARK:- Reachability
+    
+    private func adjustForAppReachability() {
+        if appReachability.isReachable {
+            workOnlineCell.subtitleLabel.isHidden = true
+        }
+        else {
+            workOnlineCell.subtitleLabel.text = "no network connectivity"
+            workOnlineCell.subtitleLabel.isHidden = false
+        }
     }
     
     // MARK:- Work Mode
-    
-    @objc private func appWorkModeDidChange(notification: Notification) {
-        adjustForAppWorkMode()
-    }
     
     private func adjustForAppWorkMode() {
         switch appContext.workMode {
@@ -67,6 +109,64 @@ class ProfileViewController: UITableViewController {
         case .offline:
             select(indexPath: .workOffline)
         }
+    }
+    
+    // MARK:- Portal
+    
+    private func adjustFor(portal: AGSPortal) {
+        if let user = portal.user {
+            set(user: user)
+        }
+        else {
+            setNoUser()
+        }
+    }
+        
+    private func set(user: AGSPortalUser) {
+         user.load { [weak self] (error) in
+            guard let self = self else { return }
+            if let error = error {
+                print(error)
+                #warning("Present error alert to customer.")
+                self.setNoUser()
+            }
+            else {
+                self.portalUserCell.thumbnailImageView.isHidden = false
+                self.portalUserCell.userEmailLabel.isHidden = false
+                self.portalUserCell.userEmailLabel.text = user.email
+                self.portalUserCell.userFullNameLabel.text = user.fullName
+                self.portalUserCell.authButton.setTitle("Sign Out", for: .normal)
+                self.portalUserCell.authButton.addTarget(self, action: #selector(Self.userRequestsSignOut), for: .touchUpInside)
+                
+                if let thumbnail = user.thumbnail {
+                    thumbnail.load { (error) in
+                        if let error = error {
+                            print(error)
+                            #warning("Set fallback image.")
+                        }
+                        else {
+                            self.portalUserCell.thumbnailImageView.image = thumbnail.image
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
+    private func setNoUser() {
+        portalUserCell.thumbnailImageView.isHidden = true
+        portalUserCell.userEmailLabel.isHidden = true
+        portalUserCell.userFullNameLabel.text = "Portal"
+        portalUserCell.authButton.setTitle("Sign In", for: .normal)
+        portalUserCell.authButton.addTarget(self, action: #selector(userRequestsSignIn), for: .touchUpInside)
+    }
+    
+    @objc private func userRequestsSignIn() {
+        appContext.signIn()
+    }
+    
+    @objc private func userRequestsSignOut() {
+        appContext.signOut()
     }
     
     // MARK:- Programmatic cell selection / deselection to reflect state
