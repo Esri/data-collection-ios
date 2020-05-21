@@ -15,20 +15,14 @@
 import UIKit
 import ArcGIS
 
-protocol ProfileViewControllerDelegate: class {
-    func profileViewControllerDidRequestLogin(profileViewController: ProfileViewController)
-    func profileViewControllerDidRequestLogout(profileViewController: ProfileViewController)
-    func profileViewControllerDidRequestWorkOnline(profileViewController: ProfileViewController)
-    func profileViewControllerDidRequestWorkOffline(profileViewController: ProfileViewController)
-    func profileViewControllerDidRequestSynchronizeMap(profileViewController: ProfileViewController)
-    func profileViewControllerDidRequestDeleteOfflineMap(profileViewController: ProfileViewController)
+protocol ProfileViewControllerOfflineDelegate: class {
+    func profileViewControllerRequestsDownloadMapOfflineOnDemand(profileViewController: ProfileViewController)
 }
 
 class ProfileViewController: UITableViewController {
-    var portal: AGSPortal?
     
-    weak var delegate: ProfileViewControllerDelegate?
-        
+    weak var delegate: ProfileViewControllerOfflineDelegate!
+    
     @IBOutlet weak var portalUserCell: PortalUserCell!
     @IBOutlet weak var workOnlineCell: WorkOnlineCell!
     @IBOutlet weak var workOfflineCell: WorkOfflineCell!
@@ -105,10 +99,12 @@ class ProfileViewController: UITableViewController {
             deselect(indexPath: indexPath)
         }
         else if indexPath == .workOnline {
-            delegate?.profileViewControllerDidRequestWorkOnline(profileViewController: self)
+            appContext.setWorkModeOnlineWithMapFromPortal()
         }
         else if indexPath == .workOffline  {
-            delegate?.profileViewControllerDidRequestWorkOffline(profileViewController: self)
+            if !appContext.setMapFromOfflineMobileMapPackage() {
+                delegate?.profileViewControllerRequestsDownloadMapOfflineOnDemand(profileViewController: self)
+            }
         }
     }
     

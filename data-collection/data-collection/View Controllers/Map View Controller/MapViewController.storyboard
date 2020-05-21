@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="nEg-xi-PLM">
-    <device id="retina5_9" orientation="portrait">
-        <adaptation id="fullscreen"/>
-    </device>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="5JK-vH-82G">
+    <device id="retina5_9" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -18,6 +16,14 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ZBx-ek-WMI" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2123" y="995"/>
+        </scene>
+        <!--Profile-->
+        <scene sceneID="djA-uF-O0d">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Profile" id="fkr-yY-tFG" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="TFP-SW-6Cx" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3267" y="-69"/>
         </scene>
         <!--Map-->
         <scene sceneID="HIC-ov-n6Q">
@@ -47,17 +53,17 @@
                                 </subviews>
                             </stackView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Iie-Za-UAs" customClass="AGSMapView">
-                                <rect key="frame" x="0.0" y="44" width="375" height="768"/>
+                                <rect key="frame" x="0.0" y="88" width="375" height="724"/>
                                 <color key="backgroundColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </view>
                             <containerView hidden="YES" opaque="NO" userInteractionEnabled="NO" tag="1002" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="673-08-WQO">
-                                <rect key="frame" x="0.0" y="44" width="375" height="768"/>
+                                <rect key="frame" x="0.0" y="88" width="375" height="724"/>
                                 <connections>
                                     <segue destination="ZtZ-f6-rZp" kind="embed" id="VcP-nO-K0c"/>
                                 </connections>
                             </containerView>
-                            <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="nd8-Es-e3p" customClass="SlideNotificationView" customModule="data_collection" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="44" width="375" height="32"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nd8-Es-e3p" customClass="SlideNotificationView" customModule="data_collection" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="88" width="375" height="32"/>
                                 <constraints>
                                     <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="32" id="TUB-b0-OlH"/>
                                 </constraints>
@@ -150,14 +156,14 @@
                                 </constraints>
                             </view>
                             <view opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JPL-Oj-pCs" customClass="PinDropView" customModule="data_collection" customModuleProvider="target">
-                                <rect key="frame" x="166.66666666666666" y="407" width="42" height="42"/>
+                                <rect key="frame" x="166.66666666666666" y="429" width="42" height="42"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="42" id="Vz9-Uy-yXm"/>
                                     <constraint firstAttribute="height" constant="42" id="aQQ-2p-xV5"/>
                                 </constraints>
                             </view>
                             <view tag="1001" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pcE-3a-4ld">
-                                <rect key="frame" x="0.0" y="44" width="375" height="56"/>
+                                <rect key="frame" x="0.0" y="88" width="375" height="56"/>
                                 <color key="backgroundColor" white="0.33000000000000002" alpha="0.90000000000000002" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="height" relation="lessThanOrEqual" constant="160" id="6V2-8k-6EU"/>
@@ -165,7 +171,7 @@
                                 </constraints>
                             </view>
                             <stackView opaque="NO" contentMode="scaleToFill" verticalCompressionResistancePriority="1000" distribution="fillProportionally" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="Axc-7B-KP8">
-                                <rect key="frame" x="8" y="52" width="359" height="40"/>
+                                <rect key="frame" x="8" y="96" width="359" height="40"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleAspectFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" reversesTitleShadowWhenHighlighted="YES" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zgp-WW-HM7">
                                         <rect key="frame" x="0.0" y="0.0" width="32" height="40"/>
@@ -213,7 +219,7 @@
                                 </subviews>
                             </stackView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bCz-JE-wcZ" customClass="CompassView" customModule="data_collection" customModuleProvider="target">
-                                <rect key="frame" x="323" y="116" width="36" height="36"/>
+                                <rect key="frame" x="323" y="160" width="36" height="36"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="36" id="Fu2-gL-MWL"/>
                                     <constraint firstAttribute="height" constant="36" id="KNh-km-TIM"/>
@@ -264,10 +270,35 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="5HZ-r9-azH"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Map" id="kuP-yj-hzx"/>
+                    <navigationItem key="navigationItem" title="Map" id="kuP-yj-hzx">
+                        <barButtonItem key="leftBarButtonItem" title="Show Drawer" image="Hamburger" width="44" id="qq2-IG-EgW">
+                            <connections>
+                                <segue destination="fkr-yY-tFG" kind="presentation" identifier="showProfile" id="BJ2-gb-66U"/>
+                            </connections>
+                        </barButtonItem>
+                        <rightBarButtonItems>
+                            <barButtonItem title="Item" image="ellipsis" id="ATD-QQ-gcs" userLabel="Extras Item">
+                                <connections>
+                                    <action selector="userRequestsExtras:" destination="nEg-xi-PLM" id="TsB-34-bb0"/>
+                                </connections>
+                            </barButtonItem>
+                            <barButtonItem enabled="NO" title="Add Feature" image="AddFeature" width="44" id="VQ4-oV-4QR">
+                                <connections>
+                                    <action selector="userRequestsAddFeature:" destination="nEg-xi-PLM" id="2k9-TF-gJw"/>
+                                </connections>
+                            </barButtonItem>
+                            <barButtonItem title="Zoom To Location" image="ZoomLocation" width="44" id="aGZ-L7-ycY">
+                                <connections>
+                                    <action selector="userRequestsZoomLocationDisplay:" destination="nEg-xi-PLM" id="OVr-20-Xlq"/>
+                                </connections>
+                            </barButtonItem>
+                        </rightBarButtonItems>
+                    </navigationItem>
                     <connections>
+                        <outlet property="addFeatureButton" destination="VQ4-oV-4QR" id="2uy-3L-nvB"/>
                         <outlet property="addPopupRelatedRecordButton" destination="hFk-4Y-xfb" id="MKS-iz-r3Q"/>
                         <outlet property="compassView" destination="bCz-JE-wcZ" id="ru4-XR-LHp"/>
+                        <outlet property="extrasButton" destination="ATD-QQ-gcs" id="gj5-vH-L6Z"/>
                         <outlet property="mapView" destination="Iie-Za-UAs" id="qSz-xf-Ger"/>
                         <outlet property="maskViewContainer" destination="673-08-WQO" id="sOa-1Y-1cv"/>
                         <outlet property="pinDropView" destination="JPL-Oj-pCs" id="3vt-tC-fGM"/>
@@ -282,23 +313,24 @@
                         <outlet property="selectViewTopConstraint" destination="VKC-6t-gAW" id="dsO-Nf-Dg2"/>
                         <outlet property="slideNotificationView" destination="nd8-Es-e3p" id="djf-cX-Vrh"/>
                         <outlet property="smallPopupView" destination="wWn-Jn-iZF" id="h9y-5A-MHf"/>
+                        <outlet property="zoomButton" destination="aGZ-L7-ycY" id="43z-OO-ozw"/>
                         <segue destination="ked-vh-5W6" kind="presentation" identifier="modallyPresentRelatedRecordsPopupViewController" id="dgV-J0-b7h"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1sk-gM-Zbv" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1792.8" y="430.78817733990149"/>
+            <point key="canvasLocation" x="2735.1999999999998" y="430.78817733990149"/>
         </scene>
         <!--Mask View Controller-->
         <scene sceneID="O77-SY-2rt">
             <objects>
                 <viewController id="ZtZ-f6-rZp" customClass="MaskViewController" customModule="data_collection" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" userInteractionEnabled="NO" tag="1001" contentMode="scaleToFill" id="Q8n-bJ-QYu">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="768"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="724"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view userInteractionEnabled="NO" tag="1003" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DZZ-rh-s55">
-                                <rect key="frame" x="16" y="106" width="343" height="582"/>
+                                <rect key="frame" x="16" y="106" width="343" height="572"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </view>
                         </subviews>
@@ -317,7 +349,25 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6Mg-dH-T3W" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2604" y="431"/>
+            <point key="canvasLocation" x="3546.4000000000001" y="430.78817733990149"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="uGl-he-R2O">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="5JK-vH-82G" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="n1T-JR-Wjg">
+                        <rect key="frame" x="0.0" y="44" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="nEg-xi-PLM" kind="relationship" relationship="rootViewController" id="CF3-Ee-b0D"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="p22-sO-vFo" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1792.8" y="430.78817733990149"/>
         </scene>
     </scenes>
     <resources>
@@ -325,6 +375,9 @@
         <image name="Cancel" width="32" height="32"/>
         <image name="Checkmark" width="32" height="32"/>
         <image name="Compass" width="28" height="28"/>
+        <image name="Hamburger" width="25" height="25"/>
+        <image name="ZoomLocation" width="24" height="24"/>
+        <image name="ellipsis" width="24" height="24"/>
         <namedColor name="primary">
             <color red="0.37999999523162842" green="0.60000002384185791" blue="0.23999999463558197" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>

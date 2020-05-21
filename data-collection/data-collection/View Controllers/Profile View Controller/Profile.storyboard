@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="FQx-DX-SHE">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
@@ -18,7 +18,7 @@
                         <sections>
                             <tableViewSection id="f9C-Ij-UgR">
                                 <cells>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="76" id="Rm3-Pa-PXh">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="76" id="Rm3-Pa-PXh" customClass="PortalUserCell" customModule="data_collection" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="18" width="414" height="76"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Rm3-Pa-PXh" id="dNB-gf-gZn">
@@ -66,12 +66,18 @@
                                                 <constraint firstItem="zmq-UE-BlC" firstAttribute="bottom" secondItem="dNB-gf-gZn" secondAttribute="bottomMargin" id="nQb-jA-kJx"/>
                                             </constraints>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="authButton" destination="nUI-jX-Ssq" id="4bi-p8-Bq3"/>
+                                            <outlet property="thumbnailImageView" destination="yPD-Bp-0Xw" id="CxP-ad-7pY"/>
+                                            <outlet property="userEmailLabel" destination="elg-qx-Zz7" id="x2b-kV-9GJ"/>
+                                            <outlet property="userFullNameLabel" destination="Cc0-WR-cCx" id="aGc-Bq-9lG"/>
+                                        </connections>
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
                             <tableViewSection headerTitle="Online" id="KdJ-Po-c4Z">
                                 <cells>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="60" id="ucY-Jl-Lrc">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="60" id="ucY-Jl-Lrc" customClass="WorkOnlineCell" customModule="data_collection" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="150" width="414" height="60"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="ucY-Jl-Lrc" id="SEa-ef-Uqk">
@@ -115,12 +121,16 @@
                                                 <constraint firstItem="Gzh-dB-3Eu" firstAttribute="top" secondItem="SEa-ef-Uqk" secondAttribute="topMargin" id="x5Q-2a-NlI"/>
                                             </constraints>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="subtitleLabel" destination="trc-tg-ljE" id="f8J-6I-HdB"/>
+                                            <outlet property="titleLabel" destination="vn4-xF-RSf" id="1ma-Vo-SgH"/>
+                                        </connections>
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
                             <tableViewSection headerTitle="Offline" id="8rk-Qp-twi">
                                 <cells>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="60" id="8Cz-CT-cLp">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="60" id="8Cz-CT-cLp" customClass="WorkOfflineCell" customModule="data_collection" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="266" width="414" height="60"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="8Cz-CT-cLp" id="wpo-Z4-eIe">
@@ -164,8 +174,12 @@
                                                 <constraint firstItem="oRj-1V-UHw" firstAttribute="bottom" secondItem="wpo-Z4-eIe" secondAttribute="bottomMargin" id="y8T-DP-vqc"/>
                                             </constraints>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="subtitleLabel" destination="B6G-yG-KgZ" id="2Xn-sd-9sw"/>
+                                            <outlet property="titleLabel" destination="9df-my-Idd" id="Yj0-jv-sKt"/>
+                                        </connections>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="60" id="P73-mC-zlg">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="60" id="P73-mC-zlg" customClass="SynchronizeMapCell" customModule="data_collection" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="326" width="414" height="60"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="P73-mC-zlg" id="fuT-YN-8tX">
@@ -209,8 +223,12 @@
                                                 <constraint firstItem="nZW-WO-PbT" firstAttribute="bottom" secondItem="fuT-YN-8tX" secondAttribute="bottomMargin" id="w5h-A3-SSH"/>
                                             </constraints>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="subtitleLabel" destination="0l9-Cd-Pxc" id="B1j-1D-g3J"/>
+                                            <outlet property="titleLabel" destination="auG-Jb-fMD" id="aXf-2Y-p2N"/>
+                                        </connections>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="60" id="uO5-zo-l0D">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="60" id="uO5-zo-l0D" customClass="DeleteMapCell" customModule="data_collection" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="386" width="414" height="60"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="uO5-zo-l0D" id="NaB-n8-gcx">
@@ -248,12 +266,15 @@
                                                 <constraint firstItem="efm-8r-S3m" firstAttribute="top" secondItem="NaB-n8-gcx" secondAttribute="topMargin" id="xIV-hw-AIH"/>
                                             </constraints>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="titleLabel" destination="1V8-sU-0L8" id="101-u5-s7c"/>
+                                        </connections>
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
                             <tableViewSection id="c3g-UD-RcS">
                                 <cells>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="76" id="ghO-cF-FVS">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="76" id="ghO-cF-FVS" customClass="MetaDataCell" customModule="data_collection" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="482" width="414" height="76"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="ghO-cF-FVS" id="5kl-gv-jfo">
@@ -285,6 +306,10 @@
                                                 <constraint firstAttribute="trailing" secondItem="tGn-xk-6xG" secondAttribute="trailing" constant="20" symbolic="YES" id="zhg-HX-cUI"/>
                                             </constraints>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="appNameVersionLabel" destination="Qm3-eF-Rzm" id="CtE-pB-w3R"/>
+                                            <outlet property="sdkVersionLabel" destination="kUz-Ty-pu3" id="Rc9-o4-02y"/>
+                                        </connections>
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
@@ -295,7 +320,11 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Profile" id="209-Js-DIU">
-                        <barButtonItem key="rightBarButtonItem" title="Done" style="done" id="I65-zH-FIU"/>
+                        <barButtonItem key="leftBarButtonItem" title="Done" style="done" id="I65-zH-FIU">
+                            <connections>
+                                <action selector="userRequestsDismiss:" destination="PYb-xt-qgk" id="4yo-nM-oLy"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="deleteMapCell" destination="uO5-zo-l0D" id="sAR-MD-CKI"/>

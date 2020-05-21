@@ -120,10 +120,38 @@ class MapViewController: UIViewController {
         
         refreshCurrentPopup()
     }
+        
+    // MARK:- Extras
+    
+    @IBOutlet weak var extrasButton: UIBarButtonItem!
+    
+    @IBAction func userRequestsExtras(_ sender: Any) {
+        userRequestsExtras(sender as? UIBarButtonItem)
+    }
+    
+    // MARK:- Location Display
+    
+    @IBOutlet weak var zoomButton: UIBarButtonItem!
+    
+    @IBAction func userRequestsZoomLocationDisplay(_ sender: Any) {
+        userRequestsZoomOnUserLocation()
+    }
+    
+    // MARK:- Add Feature
+    
+    @IBOutlet weak var addFeatureButton: UIBarButtonItem!
+    
+    @IBAction func userRequestsAddFeature(_ sender: Any) {
+        userRequestsAddNewFeature(sender as? UIBarButtonItem)
+    }
+    
+    // MARK:- Reload
     
     @IBAction func userRequestsReloadMap(_ sender: Any) {
         loadMapViewMap()
     }
+    
+    // MARK:- Related Record
     
     @IBAction func userRequestsAddNewRelatedRecord(_ sender: Any) {
         
@@ -218,9 +246,6 @@ class MapViewController: UIViewController {
         }
         else if let destination = segue.destination as? MaskViewController {
             maskViewController = destination
-        }
-        else if let destination = segue.navigationDestination as? ProfileViewController {
-            destination.delegate = appContext
         }
     }
     
