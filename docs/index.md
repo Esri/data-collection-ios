@@ -89,9 +89,7 @@ If a user elects to delete the offline map, the app deletes the offline mobile m
 
 Clicking the map Extras button displays allows you to choose either "Layer" or "Bookmarks".
 
-| iPad | iPhone |
-|------|--------|
-| ![Screenshot showing map extras on iPad](/docs/images/extras-ipad.png) | ![Screenshot showing map extras on iPhone](/docs/images/extras-iphone.png) |
+![Screenshot showing map extras on iPhone](/docs/images/extras-iphone.png)
 
 ### View map bookmarks
 
@@ -99,17 +97,13 @@ Web maps can include a list of bookmarks. Each bookmark consists of a map extent
 
 You can click the Bookmark item in Extras to see a list of bookmarks in the map. Selecting a bookmark will show that bookmark's extent.
 
-| iPad | iPhone |
-|------|--------|
-| ![Screenshot showing bookmarks on iPad](/docs/images/component-bookmarks-ipad.png) | ![Screenshot showing bookmarks on iPhone](/docs/images/component-bookmarks-iphone.png) |
+![Screenshot showing bookmarks on iPhone](/docs/images/component-bookmarks-iphone.png)
 
 ### View the map's layers
 
 You can click the Layers item in Extras to view the symbology for each layer.  You can "flip" the switch control to hide or show each layer.  Clicking the "chevron" button to the left of the layer name will hide or show the symbology, if any, for each layer.
 
-| UWP | WPF |
-|-----|-----|
-| ![Screenshot showing layers on iPad](/docs/images/component-layers-ipad) | ![Screenshot showing layers on iPhone](/docs/images/component-layers-iphone.png) |
+![Screenshot showing layers on iPhone](/docs/images/component-layers-iphone.png)
 
 ### Identify map features
 
