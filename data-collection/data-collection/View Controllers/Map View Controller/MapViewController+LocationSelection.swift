@@ -198,13 +198,26 @@ extension MapViewController {
     
     private func prepareForOfflineMapDownloadJob() {
         
+        guard let map = mapView.map else { return }
+        
+        let geometry: AGSGeometry
+        
         do {
-            let geometry = try mapView.convertExtent(fromRect: maskViewController.maskRect)
-            delegate?.mapViewController(self, didSelect: geometry)
+            geometry = try mapView.convertExtent(fromRect: maskViewController.maskRect)
+            try appFiles.prepareTemporaryOfflineMapDirectory()
+            try appFiles.prepareOfflineMapDirectory()
         }
         catch {
-            print("[Error: AGSMapView]", error.localizedDescription)
-            present(simpleAlertMessage: "Could not determine extent for offline map.")
+            present(simpleAlertMessage: error.localizedDescription)
+            return
         }
+        
+        let scale = map.minScale
+        let directory: URL = .temporaryOfflineMapDirectoryURL(forWebMapItemID: AppConfiguration.webMapItemID)
+        let offlineJob = OfflineMapJobConstruct.downloadMapOffline(map, directory, geometry, scale)
+        
+        EphemeralCache.set(object: offlineJob, forKey: OfflineMapJobConstruct.EphemeralCacheKeys.offlineMapJob)
+        
+        performSegue(withIdentifier: "presentJobStatusViewController", sender: nil)
     }
 }

@@ -62,7 +62,7 @@
                                     <segue destination="ZtZ-f6-rZp" kind="embed" id="VcP-nO-K0c"/>
                                 </connections>
                             </containerView>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nd8-Es-e3p" customClass="SlideNotificationView" customModule="data_collection" customModuleProvider="target">
+                            <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="nd8-Es-e3p" customClass="SlideNotificationView" customModule="data_collection" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="88" width="375" height="32"/>
                                 <constraints>
                                     <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="32" id="TUB-b0-OlH"/>
@@ -315,6 +315,7 @@
                         <outlet property="smallPopupView" destination="wWn-Jn-iZF" id="h9y-5A-MHf"/>
                         <outlet property="zoomButton" destination="aGZ-L7-ycY" id="43z-OO-ozw"/>
                         <segue destination="ked-vh-5W6" kind="presentation" identifier="modallyPresentRelatedRecordsPopupViewController" id="dgV-J0-b7h"/>
+                        <segue destination="s1y-be-Dp1" kind="presentation" identifier="presentJobStatusViewController" modalPresentationStyle="currentContext" modalTransitionStyle="crossDissolve" id="OGR-lT-ZVT"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1sk-gM-Zbv" sceneMemberID="firstResponder"/>
@@ -351,10 +352,18 @@
             </objects>
             <point key="canvasLocation" x="3546.4000000000001" y="430.78817733990149"/>
         </scene>
-        <!--Navigation Controller-->
+        <!--JobStatusViewController-->
+        <scene sceneID="gVU-SX-nWd">
+            <objects>
+                <viewControllerPlaceholder storyboardName="JobStatusViewController" id="s1y-be-Dp1" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="tMf-9E-k5j" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3266" y="913"/>
+        </scene>
+        <!--App Context Aware Navigation Controller-->
         <scene sceneID="uGl-he-R2O">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="5JK-vH-82G" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="5JK-vH-82G" customClass="AppContextAwareNavigationController" customModule="data_collection" customModuleProvider="target" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="n1T-JR-Wjg">
                         <rect key="frame" x="0.0" y="44" width="375" height="44"/>

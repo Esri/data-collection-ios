@@ -43,14 +43,12 @@ class ProfileViewController: UITableViewController {
         metaDataCell.sdkVersionLabel.text = Bundle.ArcGISSDKVersionString
         
         subscribeToAppContextChanges()
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
+        
         adjustFor(workMode: appContext.workMode)
         adjustFor(portal: appContext.portal)
         adjustFor(reachable: appReachability.isReachable)
         adjustFor(lastSync: appContext.mobileMapPackage?.lastSyncDate)
+        adjustFor(hasOfflineMap: appContext.hasOfflineMap)
     }
     
     // MARK:- App Context Changes
@@ -75,8 +73,8 @@ class ProfileViewController: UITableViewController {
             self?.adjustFor(lastSync: date)
         }
         
-        let hasOfflineMapChange: AppContextChange = .hasOfflineMap { [weak self] _ in
-//            self?.adjustContextDrawerUI()
+        let hasOfflineMapChange: AppContextChange = .hasOfflineMap { [weak self] hasOfflineMap in
+            self?.adjustFor(hasOfflineMap: hasOfflineMap)
         }
         
         changeHandler.subscribe(toChanges:
@@ -138,6 +136,10 @@ class ProfileViewController: UITableViewController {
         if !appContext.setMapFromOfflineMobileMapPackage() {
             delegate?.profileViewControllerRequestsDownloadMapOfflineOnDemand(profileViewController: self)
         }
+    }
+    
+    private func adjustFor(hasOfflineMap: Bool) {
+        workOfflineCell.subtitleLabel.isHidden = hasOfflineMap
     }
     
     // MARK:- Portal
@@ -285,15 +287,11 @@ class ProfileViewController: UITableViewController {
     // MARK:- Programmatic cell selection / deselection to reflect state
     
     private func select(indexPath: IndexPath) {
-        if let indexPath = tableView.delegate?.tableView?(tableView, willSelectRowAt: indexPath) {
-            tableView.selectRow(at: indexPath, animated: true, scrollPosition: .bottom)
-        }
+        tableView.selectRow(at: indexPath, animated: true, scrollPosition: .bottom)
     }
     
     private func deselect(indexPath: IndexPath) {
-        if let indexPath = tableView.delegate?.tableView?(tableView, willDeselectRowAt: indexPath) {
-            tableView.deselectRow(at: indexPath, animated: true)
-        }
+        tableView.deselectRow(at: indexPath, animated: true)
     }
     
     // MARK:- UITableViewDelegate
@@ -301,6 +299,23 @@ class ProfileViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
         if indexPath == .portal {
             return nil
+        }
+        else if indexPath == .workOnline {
+            guard appContext.workMode == .offline else {
+                return nil
+            }
+            if appReachability.isReachable {
+                return indexPath
+            }
+            else {
+                return nil
+            }
+        }
+        else if indexPath == .workOffline {
+            guard appContext.workMode == .online else {
+                return nil
+            }
+            return indexPath
         }
         else if indexPath == .synchronize {
             if appContext.hasOfflineMap {
@@ -322,7 +337,7 @@ class ProfileViewController: UITableViewController {
             return nil
         }
         else {
-            return indexPath
+            return nil
         }
     }
     
@@ -390,12 +405,12 @@ class WorkModeCell: UITableViewCell {
                 backgroundColor = .secondarySystemGroupedBackground
                 titleLabel.textColor = .label
                 subtitleLabel.textColor = .secondaryLabel
-                icon.tintColor = .label
+                icon.tintColor = .primary
             } else {
                 backgroundColor = .white
                 titleLabel.textColor = .black
                 subtitleLabel.textColor = .darkGray
-                icon.tintColor = .black
+                icon.tintColor = .primary
             }
         }
     }

@@ -247,6 +247,13 @@ class MapViewController: UIViewController {
         else if let destination = segue.destination as? MaskViewController {
             maskViewController = destination
         }
+        else if let destination = segue.navigationDestination as? ProfileViewController {
+            destination.delegate = self
+        }
+        else if let destination = segue.destination as? JobStatusViewController {
+            destination.jobConstruct = EphemeralCache.get(objectForKey: OfflineMapJobConstruct.EphemeralCacheKeys.offlineMapJob) as? OfflineMapJobConstruct
+            destination.delegate = self
+        }
     }
     
     private func displayInitialReachabilityMessage() {
