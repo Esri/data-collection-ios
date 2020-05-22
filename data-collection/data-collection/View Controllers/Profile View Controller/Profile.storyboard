@@ -11,7 +11,7 @@
         <scene sceneID="UOw-o9-JFV">
             <objects>
                 <tableViewController id="PYb-xt-qgk" customClass="ProfileViewController" customModule="data_collection" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="XZZ-aq-7MF">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" allowsMultipleSelection="YES" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="XZZ-aq-7MF">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
@@ -34,6 +34,11 @@
                                                                 <constraint firstAttribute="height" constant="54" id="MIY-qR-6eW"/>
                                                                 <constraint firstAttribute="width" constant="54" id="c2K-GK-fht"/>
                                                             </constraints>
+                                                            <userDefinedRuntimeAttributes>
+                                                                <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                                    <integer key="value" value="27"/>
+                                                                </userDefinedRuntimeAttribute>
+                                                            </userDefinedRuntimeAttributes>
                                                         </imageView>
                                                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="wGb-GZ-UYF">
                                                             <rect key="frame" x="66" y="9" width="100" height="36.5"/>
@@ -122,6 +127,7 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
+                                            <outlet property="icon" destination="ELc-IP-WZ3" id="fkC-gi-zbZ"/>
                                             <outlet property="subtitleLabel" destination="trc-tg-ljE" id="f8J-6I-HdB"/>
                                             <outlet property="titleLabel" destination="vn4-xF-RSf" id="1ma-Vo-SgH"/>
                                         </connections>
@@ -175,6 +181,7 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
+                                            <outlet property="icon" destination="s4l-mJ-uMb" id="O5D-HX-bEh"/>
                                             <outlet property="subtitleLabel" destination="B6G-yG-KgZ" id="2Xn-sd-9sw"/>
                                             <outlet property="titleLabel" destination="9df-my-Idd" id="Yj0-jv-sKt"/>
                                         </connections>

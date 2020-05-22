@@ -46,9 +46,9 @@ class ProfileViewController: UITableViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        adjustForAppWorkMode()
+        adjustFor(workMode: appContext.workMode)
         adjustFor(portal: appContext.portal)
-        adjustForAppReachability()
+        adjustFor(reachable: appReachability.isReachable)
     }
     
     // MARK:- App Context Changes
@@ -61,12 +61,12 @@ class ProfileViewController: UITableViewController {
             self?.adjustFor(portal: portal)
         }
         
-        let workModeChange: AppContextChange = .workMode { [weak self] _ in
-            self?.adjustForAppWorkMode()
+        let workModeChange: AppContextChange = .workMode { [weak self] workMode in
+            self?.adjustFor(workMode: workMode)
         }
         
-        let reachabilityChange: AppContextChange = .reachability { [weak self] _ in
-            self?.adjustForAppReachability()
+        let reachabilityChange: AppContextChange = .reachability { [weak self] reachable in
+            self?.adjustFor(reachable: reachable)
         }
         
         let lastSyncChange: AppContextChange = .lastSync { [weak self] date in
@@ -90,8 +90,8 @@ class ProfileViewController: UITableViewController {
     
     // MARK:- Reachability
     
-    private func adjustForAppReachability() {
-        if appReachability.isReachable {
+    private func adjustFor(reachable: Bool) {
+        if reachable {
             workOnlineCell.subtitleLabel.isHidden = true
         }
         else {
@@ -102,12 +102,37 @@ class ProfileViewController: UITableViewController {
     
     // MARK:- Work Mode
     
-    private func adjustForAppWorkMode() {
-        switch appContext.workMode {
+    private func adjustFor(workMode: WorkMode) {
+        switch workMode {
         case .online:
             select(indexPath: .workOnline)
         case .offline:
             select(indexPath: .workOffline)
+        }
+    }
+    
+    private func workOnline() {
+        
+        guard appContext.workMode == .offline else { return }
+        
+        guard appReachability.isReachable else {
+            present(
+                simpleAlertMessage: "Your device must be connected to a network to work online.",
+                animated: true,
+                completion: nil
+            )
+            return
+        }
+        
+        appContext.setWorkModeOnlineWithMapFromPortal()
+    }
+    
+    private func workOffline() {
+        
+        guard appContext.workMode == .online else { return }
+        
+        if !appContext.setMapFromOfflineMobileMapPackage() {
+            delegate?.profileViewControllerRequestsDownloadMapOfflineOnDemand(profileViewController: self)
         }
     }
     
@@ -169,6 +194,28 @@ class ProfileViewController: UITableViewController {
         appContext.signOut()
     }
     
+    // MARK:- Sync
+    
+    private func synchronizeMap() {
+        guard appReachability.isReachable else {
+            present(
+                simpleAlertMessage: "Your device must be connected to a network to synchronize the offline map.",
+                animated: true,
+                completion: nil
+            )
+            return
+        }
+        
+        guard appContext.hasOfflineMap else {
+            present(
+                simpleAlertMessage: "Unknown Error: your device doesn't have an offline map.",
+                animated: true,
+                completion: nil
+            )
+            return
+        }
+    }
+    
     // MARK:- Programmatic cell selection / deselection to reflect state
     
     private func select(indexPath: IndexPath) {
@@ -186,7 +233,18 @@ class ProfileViewController: UITableViewController {
     // MARK:- UITableViewDelegate
     
     override func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
-        if indexPath == .portal || indexPath == .metadata {
+        if indexPath == .portal {
+            return nil
+        }
+        else if indexPath == .synchronize {
+            if appContext.hasOfflineMap {
+                return indexPath
+            }
+            else {
+                return nil
+            }
+        }
+        else if indexPath == .metadata {
             return nil
         }
         else {
@@ -195,16 +253,18 @@ class ProfileViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if indexPath == .synchronize || indexPath == .delete {
+        if indexPath == .workOnline {
+            workOnline()
+        }
+        else if indexPath == .workOffline {
+            workOffline()
+        }
+        else if indexPath == .synchronize {
             deselect(indexPath: indexPath)
+            synchronizeMap()
         }
-        else if indexPath == .workOnline {
-            appContext.setWorkModeOnlineWithMapFromPortal()
-        }
-        else if indexPath == .workOffline  {
-            if !appContext.setMapFromOfflineMobileMapPackage() {
-                delegate?.profileViewControllerRequestsDownloadMapOfflineOnDemand(profileViewController: self)
-            }
+        else if indexPath == .delete {
+            deselect(indexPath: indexPath)
         }
     }
     
@@ -239,26 +299,56 @@ class PortalUserCell: UITableViewCell {
 
 class WorkModeCell: UITableViewCell {
     
+    @IBOutlet weak var icon: UIImageView!
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var subtitleLabel: UILabel!
     
     override func setSelected(_ selected: Bool, animated: Bool) {        
         if selected {
             backgroundColor = .accent
+            titleLabel.textColor = .contrasting
+            subtitleLabel.textColor = .contrasting
+            icon.tintColor = .contrasting
         }
         else {
             if #available(iOS 13.0, *) {
                 backgroundColor = .secondarySystemGroupedBackground
+                titleLabel.textColor = .label
+                subtitleLabel.textColor = .secondaryLabel
+                icon.tintColor = .label
             } else {
                 backgroundColor = .white
+                titleLabel.textColor = .black
+                subtitleLabel.textColor = .darkGray
+                icon.tintColor = .black
             }
         }
     }
 }
 
-class WorkOnlineCell: WorkModeCell { }
+class WorkOnlineCell: WorkModeCell {
+    override func setSelected(_ selected: Bool, animated: Bool) {
+        super.setSelected(selected, animated: animated)
+        if selected {
+            titleLabel.text = "Working Online"
+        }
+        else {
+            titleLabel.text = "Work Online"
+        }
+    }
+}
 
-class WorkOfflineCell: WorkModeCell { }
+class WorkOfflineCell: WorkModeCell {
+    override func setSelected(_ selected: Bool, animated: Bool) {
+        super.setSelected(selected, animated: animated)
+        if selected {
+            titleLabel.text = "Working Offline"
+        }
+        else {
+            titleLabel.text = "Work Offline"
+        }
+    }
+}
 
 class SynchronizeMapCell: UITableViewCell {
     @IBOutlet weak var titleLabel: UILabel!
