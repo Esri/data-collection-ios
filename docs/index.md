@@ -43,7 +43,7 @@ The navigation bar's title reflects the name of the web map and the navigation b
 | ![Hamburger Drawer View](/docs/images/hamburger.png) | Hamburger button to reveal or hide the app context drawer view. |
 | ![Zoom To Location](/docs/images/zoom-to-location.png) | Zoom to user's location. |
 | ![Add Feature](/docs/images/add-feature.png) | Add a new spatial feature to map. |
-| ![Extras](/docs/images/ellipsis.png) | Access Layers and Bookmarks. |
+| ![Extras](/docs/images/ellipsis.png) | Extras button to access Layers and Bookmarks. |
 
 ### Manage the app's context
 
