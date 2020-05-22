@@ -17,6 +17,7 @@ import ArcGIS
 
 protocol ProfileViewControllerOfflineDelegate: class {
     func profileViewControllerRequestsDownloadMapOfflineOnDemand(profileViewController: ProfileViewController)
+    func profileViewControllerRequestsSynchronizeMap(profileViewController: ProfileViewController)
 }
 
 class ProfileViewController: UITableViewController {
@@ -49,6 +50,7 @@ class ProfileViewController: UITableViewController {
         adjustFor(workMode: appContext.workMode)
         adjustFor(portal: appContext.portal)
         adjustFor(reachable: appReachability.isReachable)
+        adjustFor(lastSync: appContext.mobileMapPackage?.lastSyncDate)
     }
     
     // MARK:- App Context Changes
@@ -70,7 +72,7 @@ class ProfileViewController: UITableViewController {
         }
         
         let lastSyncChange: AppContextChange = .lastSync { [weak self] date in
-//            self?.updateSynchronizeButtonForLastSync(date: date)
+            self?.adjustFor(lastSync: date)
         }
         
         let hasOfflineMapChange: AppContextChange = .hasOfflineMap { [weak self] _ in
@@ -106,8 +108,10 @@ class ProfileViewController: UITableViewController {
         switch workMode {
         case .online:
             select(indexPath: .workOnline)
+            deselect(indexPath: .workOffline)
         case .offline:
             select(indexPath: .workOffline)
+            deselect(indexPath: .workOnline)
         }
     }
     
@@ -197,6 +201,7 @@ class ProfileViewController: UITableViewController {
     // MARK:- Sync
     
     private func synchronizeMap() {
+        
         guard appReachability.isReachable else {
             present(
                 simpleAlertMessage: "Your device must be connected to a network to synchronize the offline map.",
@@ -206,13 +211,74 @@ class ProfileViewController: UITableViewController {
             return
         }
         
-        guard appContext.hasOfflineMap else {
-            present(
-                simpleAlertMessage: "Unknown Error: your device doesn't have an offline map.",
-                animated: true,
-                completion: nil
+        precondition(appContext.hasOfflineMap, "There is no map to synchronize.")
+        
+        delegate?.profileViewControllerRequestsSynchronizeMap(profileViewController: self)
+    }
+    
+    private static let dateFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateStyle = .short
+        formatter.timeStyle = .short
+        return formatter
+    }()
+    
+    private func adjustFor(lastSync date: Date?) {
+        if let date = date {
+            synchronizeMapCell.subtitleLabel.isHidden = false
+            synchronizeMapCell.subtitleLabel.text = String(
+                format: "last sync %@",
+                Self.dateFormatter.string(from: date)
             )
-            return
+        }
+        else {
+            synchronizeMapCell.subtitleLabel.isHidden = true
+        }
+    }
+    
+    // MARK:- Delete Offline Map
+    
+    private func promptDeleteOfflineMap() {
+        
+        precondition(appContext.hasOfflineMap, "There is no map to delete.")
+        
+        var message = "Are you sure you want to delete your offline map?"
+
+        if let mobileMapPackage = appContext.mobileMapPackage, mobileMapPackage.hasLocalEdits {
+            message += "\n\nThe offline map contains un-synchronized changes."
+        }
+        
+        let alert = UIAlertController(
+            title: nil,
+            message: message,
+            preferredStyle: .alert
+        )
+        
+        let delete = UIAlertAction(
+            title: "Delete",
+            style: .destructive
+        ) { [weak self] (_) in
+            self?.deleteOfflineMap()
+        }
+        
+        alert.addAction(delete)
+        alert.addAction(.cancel())
+        
+        present(alert, animated: true, completion: nil)
+    }
+    
+    private func deleteOfflineMap() {
+        do {
+            try appContext.deleteOfflineMapAndAttemptToGoOnline()
+        }
+        catch {
+            let alert = UIAlertController(
+                title: nil,
+                message: error.localizedDescription,
+                preferredStyle: .alert
+            )
+            alert.addAction(.okay())
+            present(alert, animated: true, completion: nil)
         }
     }
     
@@ -244,6 +310,14 @@ class ProfileViewController: UITableViewController {
                 return nil
             }
         }
+        else if indexPath == .delete {
+            if appContext.hasOfflineMap {
+                return indexPath
+            }
+            else {
+                return nil
+            }
+        }
         else if indexPath == .metadata {
             return nil
         }
@@ -265,6 +339,7 @@ class ProfileViewController: UITableViewController {
         }
         else if indexPath == .delete {
             deselect(indexPath: indexPath)
+            promptDeleteOfflineMap()
         }
     }
     
