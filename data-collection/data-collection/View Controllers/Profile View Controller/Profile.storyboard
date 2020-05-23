@@ -89,7 +89,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="60"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="Gzh-dB-3Eu">
+                                                <stackView opaque="NO" contentMode="scaleToFill" verticalCompressionResistancePriority="1000" alignment="center" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="Gzh-dB-3Eu">
                                                     <rect key="frame" x="20" y="11" width="374" height="38"/>
                                                     <subviews>
                                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="OnlineMode" translatesAutoresizingMaskIntoConstraints="NO" id="ELc-IP-WZ3">
@@ -143,7 +143,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="60"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="oRj-1V-UHw">
+                                                <stackView opaque="NO" contentMode="scaleToFill" verticalCompressionResistancePriority="1000" alignment="center" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="oRj-1V-UHw">
                                                     <rect key="frame" x="20" y="11" width="374" height="38"/>
                                                     <subviews>
                                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="OfflineMode" translatesAutoresizingMaskIntoConstraints="NO" id="s4l-mJ-uMb">
@@ -193,7 +193,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="60"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="nZW-WO-PbT">
+                                                <stackView opaque="NO" contentMode="scaleToFill" verticalCompressionResistancePriority="1000" alignment="center" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="nZW-WO-PbT">
                                                     <rect key="frame" x="20" y="11" width="374" height="38"/>
                                                     <subviews>
                                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Synchronize" translatesAutoresizingMaskIntoConstraints="NO" id="3XV-Fp-Mn9">
@@ -242,7 +242,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="60"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="efm-8r-S3m">
+                                                <stackView opaque="NO" contentMode="scaleToFill" verticalCompressionResistancePriority="1000" alignment="center" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="efm-8r-S3m">
                                                     <rect key="frame" x="20" y="11" width="374" height="38"/>
                                                     <subviews>
                                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="GarbageBin" translatesAutoresizingMaskIntoConstraints="NO" id="eNf-o7-T1Y">
@@ -288,7 +288,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="76"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="tGn-xk-6xG">
+                                                <stackView opaque="NO" contentMode="scaleToFill" verticalCompressionResistancePriority="1000" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="tGn-xk-6xG">
                                                     <rect key="frame" x="20" y="20" width="374" height="36"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="1000" text="App Name, Version" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Qm3-eF-Rzm">
