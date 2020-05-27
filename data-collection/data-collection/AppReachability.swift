@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import Foundation
+import Alamofire
 
 extension Notification.Name {    
     static let reachabilityDidChange = Notification.Name("reachabilityDidChange")
@@ -26,20 +26,9 @@ extension NetworkReachabilityManager {
     ///
     /// - SeeAlso: AppContextChangeHandler.swift
     static let shared: NetworkReachabilityManager = {
-        
         guard let manager = NetworkReachabilityManager(host: AppConfiguration.basePortalDomain) else {
             fatalError("Network Reachability Manager must be constructed a valid service url.")
         }
-        
-        manager.listener = { status in
-            print("[Reachability] Network status changed: \(status)")
-            if firstReachabilityChangeObserved {
-                NotificationCenter.default.post(name: .reachabilityDidChange, object: nil)
-            } else {
-                firstReachabilityChangeObserved = true
-            }
-        }
-        
         return manager
     }()
     
@@ -49,6 +38,23 @@ extension NetworkReachabilityManager {
     
     func resetAndStartListening() {
         NetworkReachabilityManager.firstReachabilityChangeObserved = false
-        startListening()
+        startListening { (status) in
+            // Print
+            if !self.isReachable {
+                print("[Reachability] Network is not reachable.")
+            }
+            else if self.isReachableOnCellular {
+                print("[Reachability] Network is reachable on cellular network.")
+            }
+            else if self.isReachableOnEthernetOrWiFi {
+                print("[Reachability] Network is reachable on cellular network or WiFi.")
+            }
+            // Notify
+            if NetworkReachabilityManager.firstReachabilityChangeObserved {
+                NotificationCenter.default.post(name: .reachabilityDidChange, object: nil)
+            } else {
+                NetworkReachabilityManager.firstReachabilityChangeObserved = true
+            }
+        }
     }
 }

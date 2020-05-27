@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 48;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -24,6 +24,7 @@
 		944D81D72253E72300972941 /* ArcGIS.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 944D81D52253E72300972941 /* ArcGIS.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		9451EC5220D0705700792FFC /* CustomBehavior_IdentifyNeighborhood.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9451EC5120D0705700792FFC /* CustomBehavior_IdentifyNeighborhood.swift */; };
 		9458E2A5219B542700D18CEE /* HouseColors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9458E2A4219B542700D18CEE /* HouseColors.xcassets */; };
+		945B8AE5247F111D0078D69A /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 945B8AE4247F111D0078D69A /* Alamofire */; };
 		945CEE7520DDC2AC00CD3E0D /* SVRadialGradientLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 945CEE6B20DDC2AC00CD3E0D /* SVRadialGradientLayer.m */; };
 		945CEE7620DDC2AC00CD3E0D /* SVProgressAnimatedView.m in Sources */ = {isa = PBXBuildFile; fileRef = 945CEE6E20DDC2AC00CD3E0D /* SVProgressAnimatedView.m */; };
 		945CEE7720DDC2AC00CD3E0D /* SVProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 945CEE7120DDC2AC00CD3E0D /* SVProgressHUD.m */; };
@@ -135,7 +136,6 @@
 		94B375C8207E8D5600691F2A /* AppContext+WorkMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94B375A7207E8D5600691F2A /* AppContext+WorkMode.swift */; };
 		94B375C9207E8D5600691F2A /* AppContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94B375A8207E8D5600691F2A /* AppContext.swift */; };
 		94B375CA207E8D5600691F2A /* AppGlobals.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94B375A9207E8D5600691F2A /* AppGlobals.swift */; };
-		94B375CB207E8D5600691F2A /* NetworkReachabilityManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94B375AC207E8D5600691F2A /* NetworkReachabilityManager.swift */; };
 		94B375D2207E8D5600691F2A /* EphemeralCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94B375BB207E8D5600691F2A /* EphemeralCache.swift */; };
 		94B375D6207E8DD600691F2A /* AppReverseGeocoderManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94B375D4207E8DD600691F2A /* AppReverseGeocoderManager.swift */; };
 		94B375D7207E8DD600691F2A /* EditType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94B375D5207E8DD600691F2A /* EditType.swift */; };
@@ -183,7 +183,6 @@
 		94D544D820852A5100ED0D04 /* ShrinkingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94D544D320852A5100ED0D04 /* ShrinkingView.swift */; };
 		94D544D920852A5100ED0D04 /* PinDropView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94D544D420852A5100ED0D04 /* PinDropView.swift */; };
 		94D544DA20852A5100ED0D04 /* ActivityBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94D544D520852A5100ED0D04 /* ActivityBarView.swift */; };
-		94DDEA782153022D00DA533C /* NetworkReachabilityManager+CustomStringConvertible.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94DDEA772153022D00DA533C /* NetworkReachabilityManager+CustomStringConvertible.swift */; };
 		94DDEA7A2154130000DA533C /* AppContext+NotificationNames.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94DDEA792154130000DA533C /* AppContext+NotificationNames.swift */; };
 		94DDEA7C215426D300DA533C /* AppRules.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94DDEA7B215426D300DA533C /* AppRules.swift */; };
 		94DDEA7E215463AC00DA533C /* CGAffineTransform+Rotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94DDEA7D215463AC00DA533C /* CGAffineTransform+Rotation.swift */; };
@@ -381,7 +380,6 @@
 		94B375A7207E8D5600691F2A /* AppContext+WorkMode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AppContext+WorkMode.swift"; sourceTree = "<group>"; };
 		94B375A8207E8D5600691F2A /* AppContext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppContext.swift; sourceTree = "<group>"; };
 		94B375A9207E8D5600691F2A /* AppGlobals.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppGlobals.swift; sourceTree = "<group>"; };
-		94B375AC207E8D5600691F2A /* NetworkReachabilityManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkReachabilityManager.swift; sourceTree = "<group>"; };
 		94B375B4207E8D5600691F2A /* data-collection-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "data-collection-Bridging-Header.h"; sourceTree = "<group>"; };
 		94B375BB207E8D5600691F2A /* EphemeralCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EphemeralCache.swift; sourceTree = "<group>"; };
 		94B375D4207E8DD600691F2A /* AppReverseGeocoderManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppReverseGeocoderManager.swift; sourceTree = "<group>"; };
@@ -430,7 +428,6 @@
 		94D544D320852A5100ED0D04 /* ShrinkingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShrinkingView.swift; sourceTree = "<group>"; };
 		94D544D420852A5100ED0D04 /* PinDropView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PinDropView.swift; sourceTree = "<group>"; };
 		94D544D520852A5100ED0D04 /* ActivityBarView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivityBarView.swift; sourceTree = "<group>"; };
-		94DDEA772153022D00DA533C /* NetworkReachabilityManager+CustomStringConvertible.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NetworkReachabilityManager+CustomStringConvertible.swift"; sourceTree = "<group>"; };
 		94DDEA792154130000DA533C /* AppContext+NotificationNames.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppContext+NotificationNames.swift"; sourceTree = "<group>"; };
 		94DDEA7B215426D300DA533C /* AppRules.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppRules.swift; sourceTree = "<group>"; };
 		94DDEA7D215463AC00DA533C /* CGAffineTransform+Rotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGAffineTransform+Rotation.swift"; sourceTree = "<group>"; };
@@ -459,6 +456,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E41B131424254D9000FC2888 /* ArcGISToolkit.framework in Frameworks */,
+				945B8AE5247F111D0078D69A /* Alamofire in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -938,17 +936,8 @@
 			isa = PBXGroup;
 			children = (
 				945CEE6A20DDC2AC00CD3E0D /* SVProgressHUD */,
-				94B375AB207E8D5600691F2A /* Alamofire */,
 			);
 			path = "3rd Party";
-			sourceTree = "<group>";
-		};
-		94B375AB207E8D5600691F2A /* Alamofire */ = {
-			isa = PBXGroup;
-			children = (
-				94B375AC207E8D5600691F2A /* NetworkReachabilityManager.swift */,
-			);
-			path = Alamofire;
 			sourceTree = "<group>";
 		};
 		94B375D3207E8DD600691F2A /* Geocode Search */ = {
@@ -968,7 +957,6 @@
 				948D84DD2142E6ED00E2048F /* Dispatch */,
 				94B375EE207E8E4800691F2A /* Core Graphics */,
 				94B375E3207E8E4800691F2A /* UIKit */,
-				94DDEA762153020D00DA533C /* 3rd Party */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1141,14 +1129,6 @@
 			path = "Custom Views";
 			sourceTree = "<group>";
 		};
-		94DDEA762153020D00DA533C /* 3rd Party */ = {
-			isa = PBXGroup;
-			children = (
-				94DDEA772153022D00DA533C /* NetworkReachabilityManager+CustomStringConvertible.swift */,
-			);
-			path = "3rd Party";
-			sourceTree = "<group>";
-		};
 		94FA8B16207BF2CD00972C75 = {
 			isa = PBXGroup;
 			children = (
@@ -1292,6 +1272,9 @@
 			dependencies = (
 			);
 			name = "data-collection";
+			packageProductDependencies = (
+				945B8AE4247F111D0078D69A /* Alamofire */,
+			);
 			productName = "data-collection";
 			productReference = 94FA8B1F207BF2CD00972C75 /* data-collection.app */;
 			productType = "com.apple.product-type.application";
@@ -1370,6 +1353,9 @@
 				Base,
 			);
 			mainGroup = 94FA8B16207BF2CD00972C75;
+			packageReferences = (
+				945B8AE3247F111D0078D69A /* XCRemoteSwiftPackageReference "Alamofire" */,
+			);
 			productRefGroup = 94FA8B20207BF2CD00972C75 /* Products */;
 			projectDirPath = "";
 			projectReferences = (
@@ -1490,7 +1476,6 @@
 				945F455421E96DC000F2DCBC /* AGSPopupAttachmentType+Icon.swift in Sources */,
 				948066382091595200A398EA /* RichPopupManager.swift in Sources */,
 				945F456221F00AD200F2DCBC /* AGSPopupAttachment+AppAttachment.swift in Sources */,
-				94B375CB207E8D5600691F2A /* NetworkReachabilityManager.swift in Sources */,
 				946D20B521307FE1001BF5CC /* MapViewController+AppContainerFocusDelegate.swift in Sources */,
 				948D85142151BB5E00E2048F /* AGSPopup+RecordType.swift in Sources */,
 				945F455121E94FD900F2DCBC /* AGSPopupAttachment+QLPreviewItem.swift in Sources */,
@@ -1551,7 +1536,6 @@
 				94D2714520D0578C00304E27 /* ManyToOneRelationship.swift in Sources */,
 				94879446220262A6007BC15E /* RichPopupAttachmentsViewController+RichPopupAttachmentsManagerDelegate.swift in Sources */,
 				94B375FD207E8E4800691F2A /* UIColor+Modify.swift in Sources */,
-				94DDEA782153022D00DA533C /* NetworkReachabilityManager+CustomStringConvertible.swift in Sources */,
 				94D544C3207FC15D00ED0D04 /* MaskViewController.swift in Sources */,
 				94C550F022120A3500DD7E40 /* UITextField+InputAccessoryView.swift in Sources */,
 				9487943A2200CF0F007BC15E /* RichPopupViewController+UINavigationControllerDelegate.swift in Sources */,
@@ -1818,7 +1802,8 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
-				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				SWIFT_VERSION = 4.0;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -1833,7 +1818,10 @@
 				DEVELOPMENT_TEAM = "";
 				FRAMEWORK_SEARCH_PATHS = $HOME/Library/SDKs/ArcGIS/iOS/Frameworks/Dynamic/;
 				INFOPLIST_FILE = "$(SRCROOT)/Resources/Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				MARKETING_VERSION = 1.2.0;
 				OTHER_LDFLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.esri.arcgisruntime.opensourceapps.data-collection";
@@ -1855,7 +1843,10 @@
 				DEVELOPMENT_TEAM = 23PX5GD8E6;
 				FRAMEWORK_SEARCH_PATHS = $HOME/Library/SDKs/ArcGIS/iOS/Frameworks/Dynamic/;
 				INFOPLIST_FILE = "$(SRCROOT)/Resources/Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				MARKETING_VERSION = 1.2.0;
 				OTHER_LDFLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.esri.arcgisruntime.opensourceapps.data-collection";
@@ -1874,7 +1865,11 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				INFOPLIST_FILE = "data-collectionTests/Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.esri.arcgisruntime.exampleapps.data-collectionTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -1890,7 +1885,11 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				INFOPLIST_FILE = "data-collectionTests/Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.esri.arcgisruntime.exampleapps.data-collectionTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -1905,7 +1904,11 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				INFOPLIST_FILE = "data-collectionUITests/Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.esri.arcgisruntime.exampleapps.data-collectionUITests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -1920,7 +1923,11 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				INFOPLIST_FILE = "data-collectionUITests/Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.esri.arcgisruntime.exampleapps.data-collectionUITests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -1969,6 +1976,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		945B8AE3247F111D0078D69A /* XCRemoteSwiftPackageReference "Alamofire" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Alamofire/Alamofire";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.2.1;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		945B8AE4247F111D0078D69A /* Alamofire */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 945B8AE3247F111D0078D69A /* XCRemoteSwiftPackageReference "Alamofire" */;
+			productName = Alamofire;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 94FA8B17207BF2CD00972C75 /* Project object */;
 }

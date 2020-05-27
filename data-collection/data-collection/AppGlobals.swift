@@ -13,6 +13,7 @@
 // limitations under the License.
 
 import UIKit
+import Alamofire
 
 var appReachability: NetworkReachabilityManager {
     return NetworkReachabilityManager.shared
