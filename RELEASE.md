@@ -5,6 +5,7 @@
     - Layers: users can view the layers and symbology in their map and turn the display of layers on and off.
 - Incorporate the [ArcGIS Runtime Toolkit for iOS](https://github.com/Esri/arcgis-runtime-toolkit-ios) as a git submodule to provide the BookmarksViewController component.
 - Fix build-time warning when building with XCode 11.4 (in LoadableErrors.swift).
+- Adds Alamofire dependency as a Swift Package. Updates using the latest `NetworkReachabilityManager` API.
 - Certification for the 100.8.0 release of the ArcGIS Runtime SDK for iOS.
 
 # Release 1.1.4
