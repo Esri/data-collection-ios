@@ -58,6 +58,24 @@ extension AGSArcGISFeatureTable {
         }
     }
     
+    /// A private enum for communicating edit operation type.
+    
+    private enum EditType: String {
+        
+        case add, update, delete
+        
+        var asAction: String {
+            switch self {
+            case .add:
+                return "adding"
+            case .update:
+                return "updating"
+            case .delete:
+                return "deleting"
+            }
+        }
+    }
+    
     /// Perform edits of a feature.
     ///
     /// If the feature table is a service feature table (online), the function will also apply the edits remotely,
