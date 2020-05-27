@@ -4,6 +4,7 @@
     - Bookmarks:  users can select from a list of web map-defined bookmarks to easily navigate their map.
     - Layers: users can view the layers and symbology in their map and turn the display of layers on and off.
 - Incorporate the [ArcGIS Runtime Toolkit for iOS](https://github.com/Esri/arcgis-runtime-toolkit-ios) as a git submodule to provide the BookmarksViewController component.
+- Improves some organization of the code.
 - Fix build-time warning when building with XCode 11.4 (in LoadableErrors.swift).
 - Certification for the 100.8.0 release of the ArcGIS Runtime SDK for iOS.
 
