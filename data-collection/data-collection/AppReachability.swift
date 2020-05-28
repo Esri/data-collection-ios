@@ -26,7 +26,7 @@ extension NetworkReachabilityManager {
     ///
     /// - SeeAlso: AppContextChangeHandler.swift
     static let shared: NetworkReachabilityManager = {
-        guard let manager = NetworkReachabilityManager(host: AppConfiguration.basePortalDomain) else {
+        guard let manager = NetworkReachabilityManager(host: .basePortalDomain) else {
             fatalError("Network Reachability Manager must be constructed using a valid service url.")
         }
         return manager

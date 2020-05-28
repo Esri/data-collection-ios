@@ -32,7 +32,7 @@ import ArcGIS
     ///
     /// When set, the portal is configured for OAuth authentication so that if login is required,
     /// the Runtime SDK and iOS can work together to authenticate the current user.
-    var portal:AGSPortal = AppConfiguration.buildConfiguredPortal(loginRequired: false) {
+    var portal:AGSPortal = AGSPortal.configuredPortal(loginRequired: false) {
         didSet {
             portal.load { [weak self] (error: Error?) in
                 

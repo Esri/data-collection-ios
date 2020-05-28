@@ -23,7 +23,7 @@ enum WorkMode: Int {
     case online = 1
     case offline
     
-    private static let userDefaultsKey = "WorkMode.\(AppConfiguration.webMapItemID)"
+    private static let userDefaultsKey = "WorkMode.\(String.webMapItemID)"
     
     func storeDefaultWorkMode() {
         UserDefaults.standard.set(self.rawValue, forKey: WorkMode.userDefaultsKey)
@@ -75,8 +75,10 @@ extension AppContext {
     /// Load the downloaded `AGSMobileMapPackage` if possible, setting the kv-observable `hasOfflineMap` boolean property and returning an AGSMap.
     private func loadOfflineMobileMapPackage(_ completion: @escaping (AGSMap?) -> Void) {
         
-        self.mobileMapPackage = LastSyncMobileMapPackage(fileURL: .offlineMapDirectoryURL(forWebMapItemID: AppConfiguration.webMapItemID),
-                                                         userDefaultsKey: "LastSyncMobileMapPackage.\(AppConfiguration.webMapItemID)")
+        self.mobileMapPackage = LastSyncMobileMapPackage(
+            fileURL: .offlineMapDirectoryURL(forWebMapItemID: .webMapItemID),
+            userDefaultsKey: String(format: "LastSyncMobileMapPackage.%@", String.webMapItemID)
+        )
         
         guard let mmpk = self.mobileMapPackage else {
             hasOfflineMap = false
@@ -129,7 +131,10 @@ extension AppContext {
     
     @discardableResult
     func moveDownloadedMapToOfflineMapDirectory() throws -> URL?  {
-        return try FileManager.default.replaceItemAt(.offlineMapDirectoryURL(forWebMapItemID: AppConfiguration.webMapItemID), withItemAt: .temporaryOfflineMapDirectoryURL(forWebMapItemID: AppConfiguration.webMapItemID))
+        return try FileManager.default.replaceItemAt(
+            .offlineMapDirectoryURL(forWebMapItemID: .webMapItemID),
+            withItemAt: .temporaryOfflineMapDirectoryURL(forWebMapItemID: .webMapItemID)
+        )
     }
     
 
@@ -162,8 +167,10 @@ extension AppContext {
     
     /// Open a web map stored in the portal. Set it to the current map and the work mode to online.
     func setWorkModeOnlineWithMapFromPortal() {
-        
-        let portalItem = AGSPortalItem(portal: portal, itemID: AppConfiguration.webMapItemID)
+        let portalItem = AGSPortalItem(
+            portal: portal,
+            itemID: .webMapItemID
+        )
         let map = AGSMap(item: portalItem)
         set(onlineMap: map)
     }

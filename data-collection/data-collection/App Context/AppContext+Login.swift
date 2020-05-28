@@ -45,7 +45,7 @@ extension AppContext {
     /// - Note: The ArcGIS Runtime SDK will present a modal sign-in web view if it cannot find any suitable cached credentials.
     func signIn() { 
         // Setting `loginRequired` to `true` will force a sign-in prompt to present.
-        portal = AppConfiguration.buildConfiguredPortal(loginRequired: true)
+        portal = AGSPortal.configuredPortal(loginRequired: true)
     }
     
     /// Log out in the app and from the portal.
@@ -57,6 +57,6 @@ extension AppContext {
         // We want to remove cached credentials from geo-coder services, in case they are cached.
         appReverseGeocoder.removeCredentialsFromServices()
         // Setting `loginRequired` to `false` will allow unauthenticated users to consume the map (but not edit!)
-        portal = AppConfiguration.buildConfiguredPortal(loginRequired: false)
+        portal = AGSPortal.configuredPortal(loginRequired: false)
     }
 }

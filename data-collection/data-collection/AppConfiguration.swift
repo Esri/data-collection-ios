@@ -15,20 +15,11 @@
 import UIKit
 import ArcGIS
 
-class AppConfiguration {
-    
-    /// The ID of your portal's [web map](https://runtime.maps.arcgis.com/home/item.html?id=16f1b8ba37b44dc3884afc8d5f454dd2).
-    static let webMapItemID = "16f1b8ba37b44dc3884afc8d5f454dd2"
-    
-    /// The base portal's domain.
-    /// This is used to both build a `URL` to your portal as well as the base URL string used to check reachability.
-    /// - Note: exclude `http` or `https`, this is configured in `basePortalURL`.
-    static let basePortalDomain = "www.arcgis.com"
-    
+extension URL {
     /// The URL to the base portal.
     /// - Note: A `fatalError` is thrown if a URL can't be built from the configuration.
     static let basePortalURL: URL = {
-        guard let url = URL(string: "https://\(basePortalDomain)") else {
+        guard let url = URL(string: "https://\(String.basePortalDomain)") else {
             fatalError("App Configuration must contain a valid portal service url.")
         }
         return url
@@ -43,6 +34,16 @@ class AppConfiguration {
         }
         return url
     }()
+}
+
+extension String {
+    /// The ID of your portal's [web map](https://runtime.maps.arcgis.com/home/item.html?id=16f1b8ba37b44dc3884afc8d5f454dd2).
+    static let webMapItemID = "16f1b8ba37b44dc3884afc8d5f454dd2"
+    
+    /// The base portal's domain.
+    /// This is used to both build a `URL` to your portal as well as the base URL string used to check reachability.
+    /// - Note: exclude `http` or `https`, this is configured in `basePortalURL`.
+    static let basePortalDomain = "www.arcgis.com"
     
     /// The App's URL scheme.
     /// - The URL scheme must match the scheme in the **Current Redirect URIs** section of the **Authentication** tab within the [Dashboard of the ArcGIS for Developers site](https://developers.arcgis.com/applications).
@@ -74,12 +75,12 @@ class AppConfiguration {
 
 // MARK: Portal From Configuration
 
-extension AppConfiguration {
+extension AGSPortal {
     
     /// Build an `AGSPortal` based on the app's configuration.
     /// - Parameter loginRequired: `false` if you intend to access the portal anonymously. `true` if you want to use a credential (the ArcGIS Runtime SDK will present a modal login web view if needed).
     /// - Returns: A new configured `AGSPortal`.
-    static func buildConfiguredPortal(loginRequired: Bool) -> AGSPortal {
-        return AGSPortal(url: basePortalURL, loginRequired: loginRequired)
+    static func configuredPortal(loginRequired: Bool) -> AGSPortal {
+        return AGSPortal(url: .basePortalURL, loginRequired: loginRequired)
     }
 }
