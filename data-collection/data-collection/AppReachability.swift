@@ -37,17 +37,22 @@ extension NetworkReachabilityManager {
     private static var firstReachabilityChangeObserved = false
     
     func resetAndStartListening() {
+        stopListening()
         NetworkReachabilityManager.firstReachabilityChangeObserved = false
         startListening { (status) in
             // Print
-            if !self.isReachable {
+            switch status {
+            case .unknown:
+                print("[Reachability] Network reachability is unknown.")
+            case .notReachable:
                 print("[Reachability] Network is not reachable.")
-            }
-            else if self.isReachableOnCellular {
-                print("[Reachability] Network is reachable on cellular network.")
-            }
-            else if self.isReachableOnEthernetOrWiFi {
-                print("[Reachability] Network is reachable on cellular network or WiFi.")
+            case .reachable(let type):
+                switch type {
+                case .ethernetOrWiFi:
+                    print("[Reachability] Network is reachable on Ethernet/WiFi.")
+                case .cellular:
+                    print("[Reachability] Network is reachable on cellular network.")
+                }
             }
             // Notify
             if NetworkReachabilityManager.firstReachabilityChangeObserved {
