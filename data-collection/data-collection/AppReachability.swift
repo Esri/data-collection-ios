@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import Foundation
+import Alamofire
 
 extension Notification.Name {    
     static let reachabilityDidChange = Notification.Name("reachabilityDidChange")
@@ -26,20 +26,9 @@ extension NetworkReachabilityManager {
     ///
     /// - SeeAlso: AppContextChangeHandler.swift
     static let shared: NetworkReachabilityManager = {
-        
         guard let manager = NetworkReachabilityManager(host: AppConfiguration.basePortalDomain) else {
-            fatalError("Network Reachability Manager must be constructed a valid service url.")
+            fatalError("Network Reachability Manager must be constructed using a valid service url.")
         }
-        
-        manager.listener = { status in
-            print("[Reachability] Network status changed: \(status)")
-            if firstReachabilityChangeObserved {
-                NotificationCenter.default.post(name: .reachabilityDidChange, object: nil)
-            } else {
-                firstReachabilityChangeObserved = true
-            }
-        }
-        
         return manager
     }()
     
@@ -48,7 +37,29 @@ extension NetworkReachabilityManager {
     private static var firstReachabilityChangeObserved = false
     
     func resetAndStartListening() {
+        stopListening()
         NetworkReachabilityManager.firstReachabilityChangeObserved = false
-        startListening()
+        startListening { (status) in
+            // Print
+            switch status {
+            case .unknown:
+                print("[Reachability] Network reachability is unknown.")
+            case .notReachable:
+                print("[Reachability] Network is not reachable.")
+            case .reachable(let type):
+                switch type {
+                case .ethernetOrWiFi:
+                    print("[Reachability] Network is reachable on Ethernet/WiFi.")
+                case .cellular:
+                    print("[Reachability] Network is reachable on cellular network.")
+                }
+            }
+            // Notify
+            if NetworkReachabilityManager.firstReachabilityChangeObserved {
+                NotificationCenter.default.post(name: .reachabilityDidChange, object: nil)
+            } else {
+                NetworkReachabilityManager.firstReachabilityChangeObserved = true
+            }
+        }
     }
 }
