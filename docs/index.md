@@ -95,7 +95,7 @@ Clicking the map Extras button displays allows you to choose either "Layer" or "
 
 Web maps can include a list of bookmarks. Each bookmark consists of a map extent (visible area) and a name. Bookmarks can be authored in ArcGIS Pro and the ArcGIS Web Map Viewer.
 
-You can click the Bookmark item in Extras to see a list of bookmarks in the map. Selecting a bookmark will show that bookmark's extent.
+You can select the Bookmark item in Extras to see a list of bookmarks in the map. Selecting a bookmark will show that bookmark's extent.
 
 ![Screenshot showing bookmarks on iPhone](/docs/images/component-bookmarks-iphone.png)
 
