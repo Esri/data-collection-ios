@@ -87,7 +87,7 @@ If a user elects to delete the offline map, the app deletes the offline mobile m
 
 ### View map extras
 
-Clicking the map Extras button displays allows you to choose either "Layer" or "Bookmarks".
+Selecting the map Extras button displays allows you to choose either "Layer" or "Bookmarks".
 
 ![Screenshot showing map extras on iPhone](/docs/images/extras-iphone.png)
 
