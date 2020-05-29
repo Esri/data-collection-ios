@@ -95,13 +95,13 @@ Clicking the map Extras button displays allows you to choose either "Layer" or "
 
 Web maps can include a list of bookmarks. Each bookmark consists of a map extent (visible area) and a name. Bookmarks can be authored in ArcGIS Pro and the ArcGIS Web Map Viewer.
 
-You can click the Bookmark item in Extras to see a list of bookmarks in the map. Selecting a bookmark will show that bookmark's extent.
+You can select the Bookmark item in Extras to see a list of bookmarks in the map. Selecting a bookmark will show that bookmark's extent.
 
 ![Screenshot showing bookmarks on iPhone](/docs/images/component-bookmarks-iphone.png)
 
 ### View the map's layers
 
-You can click the Layers item in Extras to view the symbology for each layer.  You can "flip" the switch control to hide or show each layer.  Clicking the "chevron" button to the left of the layer name will hide or show the symbology, if any, for each layer.
+You can select the Layers item in Extras to view the symbology for each layer. You can "flip" the switch control to hide or show each layer. Tapping the "chevron" button to the left of the layer name will hide or show the symbology, if any, for each layer.
 
 ![Screenshot showing layers on iPhone](/docs/images/component-layers-iphone.png)
 
