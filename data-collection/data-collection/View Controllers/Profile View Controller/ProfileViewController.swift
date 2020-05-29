@@ -93,10 +93,12 @@ class ProfileViewController: UITableViewController {
     private func adjustFor(reachable: Bool) {
         if reachable {
             workOnlineCell.subtitleLabel.isHidden = true
+            workOnlineCell.brighten()
         }
         else {
             workOnlineCell.subtitleLabel.text = "no network connectivity"
             workOnlineCell.subtitleLabel.isHidden = false
+            workOnlineCell.dim()
         }
     }
     
@@ -140,6 +142,14 @@ class ProfileViewController: UITableViewController {
     
     private func adjustFor(hasOfflineMap: Bool) {
         workOfflineCell.subtitleLabel.isHidden = hasOfflineMap
+        if hasOfflineMap {
+            synchronizeMapCell.brighten()
+            deleteMapCell.brighten()
+        }
+        else {
+            synchronizeMapCell.dim()
+            deleteMapCell.dim()
+        }
     }
     
     // MARK:- Portal
@@ -187,7 +197,7 @@ class ProfileViewController: UITableViewController {
     private func setNoUser() {
         portalUserCell.thumbnailImageView.isHidden = true
         portalUserCell.userEmailLabel.isHidden = true
-        portalUserCell.userFullNameLabel.text = "Portal"
+        portalUserCell.userFullNameLabel.text = "Connect to Portal"
         portalUserCell.authButton.setTitle("Sign In", for: .normal)
         portalUserCell.authButton.addTarget(self, action: #selector(userRequestsSignIn), for: .touchUpInside)
     }
@@ -387,11 +397,38 @@ class PortalUserCell: UITableViewCell {
     @IBOutlet weak var authButton: UIButton!
 }
 
-class WorkModeCell: UITableViewCell {
+protocol Dimmable {
+    var dimmableLabel: UILabel { get }
+}
+
+extension Dimmable {
+    
+    func dim() {
+        if #available(iOS 13.0, *) {
+            dimmableLabel.textColor = .secondaryLabel
+        }
+        else {
+            dimmableLabel.textColor = .gray
+        }
+    }
+    
+    func brighten() {
+        if #available(iOS 13.0, *) {
+            dimmableLabel.textColor = .label
+        }
+        else {
+            dimmableLabel.textColor = .black
+        }
+    }
+}
+
+class WorkModeCell: UITableViewCell, Dimmable {
     
     @IBOutlet weak var icon: UIImageView!
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var subtitleLabel: UILabel!
+    
+    var dimmableLabel: UILabel { titleLabel }
     
     override func setSelected(_ selected: Bool, animated: Bool) {        
         if selected {
@@ -440,13 +477,15 @@ class WorkOfflineCell: WorkModeCell {
     }
 }
 
-class SynchronizeMapCell: UITableViewCell {
+class SynchronizeMapCell: UITableViewCell, Dimmable {
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var subtitleLabel: UILabel!
+    var dimmableLabel: UILabel { titleLabel }
 }
 
-class DeleteMapCell: UITableViewCell {
+class DeleteMapCell: UITableViewCell, Dimmable {
     @IBOutlet weak var titleLabel: UILabel!
+    var dimmableLabel: UILabel { titleLabel }
 }
 
 class MetaDataCell: UITableViewCell {
