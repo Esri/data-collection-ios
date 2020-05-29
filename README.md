@@ -3,6 +3,7 @@
 [Data Collection for iOS](https://developers.arcgis.com/example-apps/data-collection-ios/) shows how a robust application can be built around the ArcGIS Platform using the ArcGIS Runtime SDK for iOS and Swift. It demonstrates best practices around some simple but key functionality of the ArcGIS Runtime. Using your organization's web maps, you can use Data Collection as is, or extend it to meet your specific needs.
 
 ![General UI](./docs/images/General-UI.png)
+![General UI 2](./docs/images/General-UI-2.png)
 
 ## Features
 * Taking your web map and data offline
@@ -26,13 +27,23 @@ The project also demonstrates some patterns for building real-world apps around 
 * Swift KVO & NotificationCenter state handling
 
 ## Get Started
-You will need [Xcode 11](https://itunes.apple.com/us/app/xcode/id497799835?mt=12) and the [ArcGIS Runtime SDK](https://developers.arcgis.com/ios/latest/swift/guide/install.htm#ESRI_SECTION1_D57435A2BEBC4D29AFA3A4CAA722506A) (v100.5 or later) installed locally.
+You will need [Xcode 11](https://itunes.apple.com/us/app/xcode/id497799835?mt=12) and the [ArcGIS Runtime SDK for iOS](https://developers.arcgis.com/ios/latest/swift/guide/install.htm#ESRI_SECTION1_D57435A2BEBC4D29AFA3A4CAA722506A) (v100.8 or later) installed locally.
+
+The *Data Collection app* now incorporates the [ArcGIS Runtime Toolkit for iOS](https://github.com/Esri/arcgis-runtime-toolkit-ios) (v100.8 or later) for additional functionality.
 
 ### Fork the repo
 **Fork** the [Data Collection](https://github.com/Esri/data-collection-ios/fork) repo
 
 ### Clone the repo
 Once you have forked the repo, you can make a clone and open `data-collection.xcodeproj` in Xcode.
+
+  > Make sure to use the "recursive" option to ensure you get the **ArcGIS Runtime Toolkit** submodule
+  >
+  >`git clone --recursive [URL to forked Git repo]`
+  >
+  > If you've already cloned the repo without the submodule, you can load the submodule using 
+  >
+  >`git submodule update --init`
 
 #### Command line Git
 1. [Clone Data Collection](https://help.github.com/articles/fork-a-repo/#step-2-create-a-local-clone-of-your-fork)
@@ -95,6 +106,8 @@ Learn more about Esri open source apps [here](https://developers.arcgis.com/exam
 * [ArcGIS Runtime SDK for iOS](https://developers.arcgis.com/ios/)
 * To edit records or take a web map offline you will need an ArcGIS Online Organizational account, an ArcGIS Online Developer account or an ArcGIS Online account authenticated using a social login.
 * To consume your own web map you will need an ArcGIS Online Organizational account.
+
+**Note:**  Starting from the 100.8 release, the ArcGIS Runtime SDK for iOS uses Apple's Metal framework to display maps and scenes. However, Xcode does not support Metal based rendering in iOS 12 simulators on macOS Catalina, or in any version of iOS simulator on macOS Mojave. If you are developing map or scene based apps in these environments, you will need test and debug them on a physical device instead of the simulator.
 
 ## Contributing
 Anyone and everyone is welcome to [contribute](CONTRIBUTING.md). We do accept pull requests.

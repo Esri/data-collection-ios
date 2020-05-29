@@ -25,7 +25,8 @@ class AppContainerViewController: UIViewController {
     @IBOutlet weak var leftBarButton: UIBarButtonItem!
     @IBOutlet weak var rightBarButton: UIBarButtonItem!
     @IBOutlet weak var secondRightBarButton: UIBarButtonItem!
-    
+    @IBOutlet weak var extrasBarButton: UIBarButtonItem!
+
     @IBOutlet weak var contextView: UIView!
     @IBOutlet weak var mainMapView: UIView!
     
@@ -127,6 +128,10 @@ class AppContainerViewController: UIViewController {
         mapViewController?.userRequestsAddNewFeature(sender as? UIBarButtonItem)
     }
     
+    @IBAction func userTapsExtrasButton(_ sender: Any) {
+        mapViewController?.userRequestsExtras(sender as? UIBarButtonItem)
+    }
+
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
 
         if let destination = segue.destination as? MapViewController {
@@ -165,7 +170,7 @@ class AppContainerViewController: UIViewController {
             self?.adjustVisualEffectViewBlurEffect()
         })
     }
-    
+
     private func adjustVisualEffectViewBlurEffect() {
         self.visualEffectView.effect = self.drawerShowing ? UIBlurEffect(style: .light) : nil
     }
@@ -173,11 +178,22 @@ class AppContainerViewController: UIViewController {
     private func adjustVisualEffectViewIsUserInteractionEnabled() {
         self.visualEffectView.isUserInteractionEnabled = self.drawerShowing
     }
-    
+
     func adjustNavigationBarButtons() {
-        
         rightBarButton?.isEnabled = !drawerShowing && showAddFeatureBarButton
         secondRightBarButton?.isEnabled = !drawerShowing && showZoomToLocationBarButton
         leftBarButton?.isEnabled = showProfileBarButton
+        
+        if let mapViewMode = mapViewController?.mapViewMode {
+            adjustExtrasButton(mapViewMode)
+        }
+    }
+    
+    func adjustExtrasButton(_ mapViewMode: MapViewController.MapViewMode) {
+        extrasBarButton?.isEnabled = !drawerShowing &&
+            (mapViewMode == .selectingFeature ||
+                mapViewMode == .selectedFeature(featureLoaded: false) ||
+                mapViewMode == .selectedFeature(featureLoaded: true) ||
+                mapViewMode == .defaultView)
     }
 }

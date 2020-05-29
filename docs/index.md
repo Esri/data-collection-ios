@@ -43,6 +43,7 @@ The navigation bar's title reflects the name of the web map and the navigation b
 | ![Hamburger Drawer View](/docs/images/hamburger.png) | Hamburger button to reveal or hide the app context drawer view. |
 | ![Zoom To Location](/docs/images/zoom-to-location.png) | Zoom to user's location. |
 | ![Add Feature](/docs/images/add-feature.png) | Add a new spatial feature to map. |
+| ![Extras](/docs/images/ellipsis.png) | Extras button to access Layers and Bookmarks. |
 
 ### Manage the app's context
 
@@ -83,6 +84,26 @@ Edits made to the offline mobile map's geodatabase remain offline until the user
 If a user elects to delete the offline map, the app deletes the offline mobile map package from the device's documents directory and switches to online work mode. 
 
 > A user can resume work online without deleting the offline map.
+
+### View map extras
+
+Selecting the map Extras button displays allows you to choose either "Layer" or "Bookmarks".
+
+![Screenshot showing map extras on iPhone](/docs/images/extras-iphone.png)
+
+### View map bookmarks
+
+Web maps can include a list of bookmarks. Each bookmark consists of a map extent (visible area) and a name. Bookmarks can be authored in ArcGIS Pro and the ArcGIS Web Map Viewer.
+
+You can select the Bookmark item in Extras to see a list of bookmarks in the map. Selecting a bookmark will show that bookmark's extent.
+
+![Screenshot showing bookmarks on iPhone](/docs/images/component-bookmarks-iphone.png)
+
+### View the map's layers
+
+You can select the Layers item in Extras to view the symbology for each layer. You can "flip" the switch control to hide or show each layer. Selecting the "chevron" button to the left of the layer name will hide or show the symbology, if any, for each layer.
+
+![Screenshot showing layers on iPhone](/docs/images/component-layers-iphone.png)
 
 ### Identify map features
 

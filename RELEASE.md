@@ -1,3 +1,15 @@
+# Release 1.2.0
+
+- Adds an "Extras" button containing "Bookmarks" and "Layers" options:
+    - Bookmarks:  users can select from a list of web map-defined bookmarks to easily navigate their map.
+    - Layers: users can view the layers and symbology in their map and turn the display of layers on and off.
+- Incorporate the [ArcGIS Runtime Toolkit for iOS](https://github.com/Esri/arcgis-runtime-toolkit-ios) as a git submodule to provide the BookmarksViewController component.
+- Improves some organization of the code.
+- Fix build-time warning when building with XCode 11.4 (in LoadableErrors.swift).
+- Adds Alamofire dependency as a Swift Package. Updates using the latest `NetworkReachabilityManager` API.
+- Improves how the app maintains static configurations.
+- Certification for the 100.8.0 release of the ArcGIS Runtime SDK for iOS.
+
 # Release 1.1.4
 
 - Fixes featureLayer deprecation.

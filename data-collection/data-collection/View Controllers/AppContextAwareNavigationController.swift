@@ -52,6 +52,11 @@ class AppContextAwareNavigationController: UINavigationController {
         else {
             navigationBar.barTintColor = appContext.workMode == .online ? .primary : .offline
         }
+        
+        // Hiding then un-hiding the navigation bar appears to force a redraw.
+        // This fixes an issue with iOS 13 where the background color doesn't update.
+        isNavigationBarHidden = true
+        isNavigationBarHidden = false
     }
     
     private func subscribeToWorkModeChange() {

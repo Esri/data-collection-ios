@@ -20,32 +20,23 @@ class AppFiles {
     
     private var fm: FileManager { return FileManager.default }
     
-    struct OfflineDirectoryComponents {
-        
-        static let dataCollection = "data_collection"
-        static let offlineMap = "offlineMap"
-    }
-    
     /// Build a temporary directory, if needed, to store a map as it downloads.
     ///
     /// - Throws: FileManager errors thrown as a result of building the temporary offline map directory.
     func prepareTemporaryOfflineMapDirectory() throws {
-        
-        let url: URL = .temporaryOfflineMapDirectoryURL(forWebMapItemID: AppConfiguration.webMapItemID)
+        let url: URL = .temporaryOfflineMapDirectoryURL(forWebMapItemID: .webMapItemID)
         try fm.createDirectory(at: url, withIntermediateDirectories: true)
         try fm.removeItem(at: url)
     }
     
     // MARK: Offline Directory    
     func prepareOfflineMapDirectory() throws {
-        
-        let url: URL = .offlineMapDirectoryURL(forWebMapItemID: AppConfiguration.webMapItemID)
+        let url: URL = .offlineMapDirectoryURL(forWebMapItemID: .webMapItemID)
         try fm.createDirectory(at: url, withIntermediateDirectories: true, attributes: nil)
     }
     
     func deleteContentsOfOfflineMapDirectory() throws {
-        
-        let url: URL = .offlineMapDirectoryURL(forWebMapItemID: AppConfiguration.webMapItemID)
+        let url: URL = .offlineMapDirectoryURL(forWebMapItemID: .webMapItemID)
         try fm.removeItem(at: url)
     }
 }
@@ -60,8 +51,8 @@ extension URL {
     
     static func temporaryOfflineMapDirectoryURL(forWebMapItemID itemID: String) -> URL {
         return URL(fileURLWithPath: NSTemporaryDirectory())
-            .appendingPathComponent(AppFiles.OfflineDirectoryComponents.dataCollection)
-            .appendingPathComponent(AppFiles.OfflineDirectoryComponents.offlineMap)
+            .appendingPathComponent(.dataCollection)
+            .appendingPathComponent(.offlineMap)
             .appendingPathComponent(itemID)
     }
     
@@ -73,8 +64,13 @@ extension URL {
     
     static func offlineMapDirectoryURL(forWebMapItemID itemID: String) -> URL {
         return FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
-            .appendingPathComponent(AppFiles.OfflineDirectoryComponents.dataCollection)
-            .appendingPathComponent(AppFiles.OfflineDirectoryComponents.offlineMap)
+            .appendingPathComponent(.dataCollection)
+            .appendingPathComponent(.offlineMap)
             .appendingPathComponent(itemID)
     }
+}
+
+private extension String {
+    static let dataCollection = "data_collection"
+    static let offlineMap = "offlineMap"
 }
