@@ -46,7 +46,7 @@ class AppReverseGeocoderManager: AGSLoadableBase {
     }
     
     // Online locator using the world geocoder service.
-    private let onlineLocatorTask = AGSLocatorTask(url: .geocodeServiceURL)
+    private let onlineLocatorTask = AGSLocatorTask(url: .geocodeService)
     
     // Offline locator using the side loaded 'AddressLocator'.
     private let offlineLocatorTask = AGSLocatorTask(name: "AddressLocator")
