@@ -67,13 +67,15 @@ extension AppDelegate {
         //
         // See also AppSettings and AppContext.setupAndLoadPortal() to see how the AGSPortal is configured
         // to handle OAuth and call back to this application.
-        if let urlComponents = URLComponents(url: url, resolvingAgainstBaseURL: false), urlComponents.scheme == AppConfiguration.urlScheme, urlComponents.host == AppConfiguration.urlAuthPath {
+        if let redirect = URLComponents(url: url, resolvingAgainstBaseURL: false),
+            redirect.scheme == OAuth.components.scheme,
+            redirect.host == OAuth.components.host {
             
             // Pass the OAuth callback through to the ArcGIS Runtime SDK's helper function.
             AGSApplicationDelegate.shared().application(app, open: url, options: options)
             
             // See if we were called back with confirmation that we're authorized.
-            if urlComponents.hasParameter(named: "code") {
+            if redirect.hasParameter(named: "code") {
                 // If we were authenticated, there should now be a shared credential to use. Let's try it.
                 appContext.signInCurrentPortalIfPossible()
             }
@@ -82,15 +84,19 @@ extension AppDelegate {
     }
     
     static func configCredentialCacheAutoSyncToKeychain() {
-        AGSAuthenticationManager.shared().credentialCache.enableAutoSyncToKeychain(withIdentifier: AppConfiguration.keychainIdentifier, accessGroup: nil, acrossDevices: false)
+        AGSAuthenticationManager.shared().credentialCache.enableAutoSyncToKeychain(
+            withIdentifier: .keychainIdentifier,
+            accessGroup: nil,
+            acrossDevices: false
+        )
     }
     
     static func configOAuthRedirectURL() {
-        
-        let oauthConfig = AGSOAuthConfiguration(portalURL: AppConfiguration.basePortalURL,
-                                                clientID: AppConfiguration.clientID,
-                                                redirectURL: AppConfiguration.oAuthRedirectURLString)
-        
+        let oauthConfig = AGSOAuthConfiguration(
+            portalURL: .basePortal,
+            clientID: .clientID,
+            redirectURL: OAuth.redirectUrl
+        )
         AGSAuthenticationManager.shared().oAuthConfigurations.add(oauthConfig)
     }
 }
@@ -103,7 +109,7 @@ extension AppDelegate {
     ///   falling back to Developer Mode (which will display a watermark on the map view).
     static func licenseApplication() {
         do {
-            try AGSArcGISRuntimeEnvironment.setLicenseKey(AppConfiguration.licenseKey)
+            try AGSArcGISRuntimeEnvironment.setLicenseKey(.licenseKey)
         } catch {
             print("[Error: AGSArcGISRuntimeEnvironment] Error licensing app: \(error.localizedDescription)")
         }
