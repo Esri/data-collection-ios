@@ -60,7 +60,7 @@ extension String {
     static let clientID: String = "h3em0ifYNGfz3uHX"
 }
 
-struct OAuth {
+enum OAuth {
     /// The App's oAuth redirect URL.
     /// - The URL must match the path created in the **Current Redirect URIs** section of the **Authentication** tab within the [Dashboard of the ArcGIS for Developers site](https://developers.arcgis.com/applications).
     static let redirectUrl: String = "data-collection://auth"
