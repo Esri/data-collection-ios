@@ -101,7 +101,7 @@ You can select the Bookmark item in Extras to see a list of bookmarks in the map
 
 ### View the map's layers
 
-You can click the Layers item in Extras to view the symbology for each layer.  You can "flip" the switch control to hide or show each layer.  Clicking the "chevron" button to the left of the layer name will hide or show the symbology, if any, for each layer.
+You can select the Layers item in Extras to view the symbology for each layer. You can "flip" the switch control to hide or show each layer. Selecting the "chevron" button to the left of the layer name will hide or show the symbology, if any, for each layer.
 
 ![Screenshot showing layers on iPhone](/docs/images/component-layers-iphone.png)
 
