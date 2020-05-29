@@ -87,7 +87,7 @@ If a user elects to delete the offline map, the app deletes the offline mobile m
 
 ### View map extras
 
-Clicking the map Extras button displays allows you to choose either "Layer" or "Bookmarks".
+Selecting the map Extras button displays allows you to choose either "Layer" or "Bookmarks".
 
 ![Screenshot showing map extras on iPhone](/docs/images/extras-iphone.png)
 
@@ -101,7 +101,7 @@ You can select the Bookmark item in Extras to see a list of bookmarks in the map
 
 ### View the map's layers
 
-You can select the Layers item in Extras to view the symbology for each layer. You can "flip" the switch control to hide or show each layer. Tapping the "chevron" button to the left of the layer name will hide or show the symbology, if any, for each layer.
+You can select the Layers item in Extras to view the symbology for each layer. You can "flip" the switch control to hide or show each layer. Selecting the "chevron" button to the left of the layer name will hide or show the symbology, if any, for each layer.
 
 ![Screenshot showing layers on iPhone](/docs/images/component-layers-iphone.png)
 
