@@ -47,7 +47,7 @@ extension RichPopupViewController: RichPopupAttachmentsViewControllerDelegate {
         // Cache staged attachment to be edited.
         EphemeralCache.shared.setObject(
             attachment,
-            for: "RichPopupEditStagedPhotoAttachment.EphemeralCacheKey"
+            forKey: "RichPopupEditStagedPhotoAttachment.EphemeralCacheKey"
         )
         
         // Perform segue to view controller that will allow editing of the staged attachment.

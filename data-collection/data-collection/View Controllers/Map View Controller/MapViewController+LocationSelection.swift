@@ -32,7 +32,7 @@ extension MapViewController {
     @IBAction func userDidCancelSelectLocation(_ sender: Any) {
         
         if mapViewMode == .selectingFeature {
-            EphemeralCache.shared.removeObject(for: .newNonSpatialFeature)
+            EphemeralCache.shared.removeObject(forKey: .newNonSpatialFeature)
         }
         else if mapViewMode == .offlineMask {
             hideMapMaskViewForOfflineDownloadArea()
@@ -114,7 +114,7 @@ extension MapViewController {
                 else {
                     EphemeralCache.shared.setObject(
                         newRichPopup,
-                        for: .newNonSpatialFeature
+                        forKey: .newNonSpatialFeature
                     )
                     
                     self.mapViewMode = .selectingFeature
@@ -125,7 +125,7 @@ extension MapViewController {
             
             EphemeralCache.shared.setObject(
                 newRichPopup,
-                for: .newNonSpatialFeature
+                forKey: .newNonSpatialFeature
             )
             
             self.mapViewMode = .selectingFeature
@@ -134,7 +134,7 @@ extension MapViewController {
     
     private func prepareNewFeatureForEdit() {
         
-        guard let newPopup = EphemeralCache.shared.getObject(for: .newNonSpatialFeature) as? RichPopup else {
+        guard let newPopup = EphemeralCache.shared.object(forKey: .newNonSpatialFeature) as? RichPopup else {
             present(simpleAlertMessage: "Unable to add a new record.")
             return
         }
@@ -151,7 +151,7 @@ extension MapViewController {
             newPopup.geoElement.geometry = centerPoint
             EphemeralCache.shared.setObject(
                 newPopup,
-                for: .newSpatialFeature
+                forKey: .newSpatialFeature
             )
             
             SVProgressHUD.dismiss()
@@ -227,7 +227,7 @@ extension MapViewController {
         
         EphemeralCache.shared.setObject(
             offlineJob,
-            for: .offlineMapJob
+            forKey: .offlineMapJob
         )
         
         performSegue(withIdentifier: "presentJobStatusViewController", sender: nil)

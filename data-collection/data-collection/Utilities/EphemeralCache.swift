@@ -45,21 +45,21 @@ class EphemeralCache {
         }
     }
     
-    func setObject(_ object: Any, for key: String) {
+    func setObject(_ object: Any, forKey key: String) {
         self[key] = object as AnyObject
     }
     
-    func getObject(for key: String) -> Any? {
+    func object(forKey key: String) -> Any? {
         let object: AnyObject? = self[key]
         self[key] = nil
         return object
     }
     
-    func removeObject(for key: String) {
+    func removeObject(forKey key: String) {
         self[key] = nil
     }
     
-    func containsObject(for key: String) -> Bool {
+    func containsObject(forKey key: String) -> Bool {
         return self[key] != nil
     }
 }

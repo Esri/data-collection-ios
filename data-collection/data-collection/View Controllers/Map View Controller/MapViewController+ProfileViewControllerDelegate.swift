@@ -31,7 +31,7 @@ extension MapViewController: ProfileViewControllerOfflineDelegate {
                 
         EphemeralCache.shared.setObject(
             OfflineMapJobConstruct.syncOfflineMap(map),
-            for: .offlineMapJob
+            forKey: .offlineMapJob
         )
         
         profileViewController.dismiss(animated: true) {
