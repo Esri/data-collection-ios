@@ -25,12 +25,6 @@ protocol MapViewControllerDelegate: AnyObject {
 
 class MapViewController: UIViewController {
     
-    struct EphemeralCacheKeys {
-        static let newSpatialFeature = "MapViewController.newFeature.spatial"
-        static let newNonSpatialFeature = "MapViewController.newFeature.nonspatial"
-        static let newRelatedRecord = "MapViewController.newRelatedRecord"
-    }
-    
     enum MapViewMode: Equatable {
         case defaultView
         case disabled
@@ -38,8 +32,6 @@ class MapViewController: UIViewController {
         case selectingFeature
         case offlineMask
     }
-
-//    weak var delegate: MapViewControllerDelegate?
     
     let changeHandler = AppContextChangeHandler()
 
@@ -185,7 +177,10 @@ class MapViewController: UIViewController {
                 return
             }
 
-            EphemeralCache.set(object: relatedManager, forKey: EphemeralCacheKeys.newRelatedRecord)
+            EphemeralCache.shared.set(
+                object: relatedManager,
+                forKey: .newRelatedRecord
+            )
 
             self.performSegue(withIdentifier: "modallyPresentRelatedRecordsPopupViewController", sender: nil)
         }
@@ -226,13 +221,13 @@ class MapViewController: UIViewController {
         
         if let destination = segue.navigationDestination as? RichPopupViewController {
             
-            if let newPopup = EphemeralCache.get(objectForKey: EphemeralCacheKeys.newSpatialFeature) as? RichPopup {
+            if let newPopup = EphemeralCache.shared.get(objectForKey: .newSpatialFeature) as? RichPopup {
                 setCurrentPopup(popup: newPopup)
                 destination.popupManager = currentPopupManager!
                 destination.setEditing(true, animated: false)
                 mapViewMode = .selectedFeature(featureLoaded: false)
             }
-            else if let popupManager = EphemeralCache.get(objectForKey: EphemeralCacheKeys.newRelatedRecord) as? RichPopupManager {
+            else if let popupManager = EphemeralCache.shared.get(objectForKey: .newRelatedRecord) as? RichPopupManager {
                 destination.popupManager = popupManager
                 destination.setEditing(true, animated: false)
                 destination.shouldLoadRichPopupRelatedRecords = false
@@ -251,7 +246,7 @@ class MapViewController: UIViewController {
             destination.delegate = self
         }
         else if let destination = segue.destination as? JobStatusViewController {
-            destination.jobConstruct = EphemeralCache.get(objectForKey: OfflineMapJobConstruct.EphemeralCacheKeys.offlineMapJob) as? OfflineMapJobConstruct
+            destination.jobConstruct = EphemeralCache.shared.get(objectForKey: .offlineMapJob) as? OfflineMapJobConstruct
             destination.delegate = self
         }
     }
@@ -301,4 +296,10 @@ class MapViewController: UIViewController {
 
         changeHandler.subscribe(toChanges: [currentMapChange, locationAuthorizationChange, workModeChange, reachabilityChange])
     }
+}
+
+extension String {
+    static let newSpatialFeature = "MapViewController.newFeature.spatial"
+    static let newNonSpatialFeature = "MapViewController.newFeature.nonspatial"
+    static let newRelatedRecord = "MapViewController.newRelatedRecord"
 }

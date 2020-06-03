@@ -45,7 +45,7 @@ extension RichPopupViewController: RichPopupAttachmentsViewControllerDelegate {
     func attachmentsViewController(_ attachmentsViewController: RichPopupAttachmentsViewController, selectedEditStagedAttachment attachment: RichPopupStagedAttachment) {
         
         // Cache staged attachment to be edited.
-        EphemeralCache.set(object: attachment, forKey: "RichPopupEditStagedPhotoAttachment.EphemeralCacheKey")
+        EphemeralCache.shared.set(object: attachment, forKey: "RichPopupEditStagedPhotoAttachment.EphemeralCacheKey")
         
         // Perform segue to view controller that will allow editing of the staged attachment.
         self.performSegue(withIdentifier: "RichPopupEditStagedPhotoAttachment", sender: self)

@@ -114,7 +114,7 @@ class RichPopupViewController: SegmentedViewController {
         
         if identifier == "RichPopupEditStagedPhotoAttachment" {
             
-            guard EphemeralCache.has(objectForKey: "RichPopupEditStagedPhotoAttachment.EphemeralCacheKey") else {
+            guard EphemeralCache.shared.has(objectForKey: "RichPopupEditStagedPhotoAttachment.EphemeralCacheKey") else {
                 
                 present(simpleAlertMessage: "Something went wrong, you are unable to edit this attachment.")
                 return false
@@ -124,7 +124,7 @@ class RichPopupViewController: SegmentedViewController {
         }
         else if identifier == "RichPopupSelectRelatedRecord" {
             
-            guard EphemeralCache.has(objectForKey: "RichPopupSelectRelatedRecord.EphemeralCacheKey") else {
+            guard EphemeralCache.shared.has(objectForKey: "RichPopupSelectRelatedRecord.EphemeralCacheKey") else {
                 
                 present(simpleAlertMessage: "Something went wrong, you are unable to edit this related record.")
                 return false
@@ -159,13 +159,13 @@ class RichPopupViewController: SegmentedViewController {
         }
         else if let edit = segue.destination as? RichPopupEditStagedAttachmentViewController {
             
-            if let attachment = EphemeralCache.get(objectForKey: "RichPopupEditStagedPhotoAttachment.EphemeralCacheKey") as? RichPopupStagedAttachment {
+            if let attachment = EphemeralCache.shared.get(objectForKey: "RichPopupEditStagedPhotoAttachment.EphemeralCacheKey") as? RichPopupStagedAttachment {
                 edit.stagedAttachment = attachment as RichPopupStagedAttachment
             }
         }
         else if let related = segue.destination as? RichPopupSelectRelatedRecordViewController {
             
-            if let (popups, current) = EphemeralCache.get(objectForKey: "RichPopupSelectRelatedRecord.EphemeralCacheKey") as? ([AGSPopup], AGSPopup?) {
+            if let (popups, current) = EphemeralCache.shared.get(objectForKey: "RichPopupSelectRelatedRecord.EphemeralCacheKey") as? ([AGSPopup], AGSPopup?) {
                 related.popups = popups
                 related.currentRelatedPopup = current
                 related.delegate = self
