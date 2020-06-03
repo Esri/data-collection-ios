@@ -28,8 +28,7 @@ extension MapViewController {
         
         func handleMapLoadCallback(error: Error?) -> Void {
             // If there's an error loading the map we want to inform the user and disable the map.
-            if let error = error {
-                let error = error as NSError
+            if let error = error as NSError? {
                 print("[Error: Map Load]", "code: \(error.code)", error.localizedDescription)
                 
                 if AGSServicesErrorCode(rawValue: error.code) == .tokenRequired, !appContext.isLoggedIn {
