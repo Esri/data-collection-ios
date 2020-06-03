@@ -70,7 +70,7 @@ extension MapViewController {
             
             self.mapViewMode = .defaultView
             self.title = map.item?.title ?? "Map"
-            let layers: [AGSFeatureLayer] = map.operationalLayers.compactMap { $0 as? AGSFeatureLayer }
+            let layers = map.operationalLayers.compactMap { $0 as? AGSFeatureLayer }
             
             AGSLoadObjects(layers) { [weak self] (_) in
                 guard let self = self else { return }
