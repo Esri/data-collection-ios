@@ -177,7 +177,7 @@ class ProfileViewController: UITableViewController {
     }
     
     private func setNoUser() {
-        portalUserCell.thumbnailImageView.isHidden = true
+        portalUserCell.thumbnailImageView.image = UIImage(named: "UserLoginIcon-Large")
         portalUserCell.userEmailLabel.isHidden = true
         portalUserCell.userFullNameLabel.text = "Connect to Portal"
         portalUserCell.authButton.setTitle("Sign In", for: .normal)
@@ -185,7 +185,6 @@ class ProfileViewController: UITableViewController {
     }
     
     private func set(user: AGSPortalUser) {
-        portalUserCell.thumbnailImageView.isHidden = false
         portalUserCell.thumbnailImageView.image = UIImage(named: "UserLoginIcon-Large")
         portalUserCell.userEmailLabel.isHidden = false
         portalUserCell.userEmailLabel.text = user.email

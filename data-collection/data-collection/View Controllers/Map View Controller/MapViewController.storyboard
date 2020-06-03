@@ -271,7 +271,7 @@
                         <viewLayoutGuide key="safeArea" id="5HZ-r9-azH"/>
                     </view>
                     <navigationItem key="navigationItem" title="Data Collection" id="kuP-yj-hzx">
-                        <barButtonItem key="leftBarButtonItem" title="Show Drawer" image="Hamburger" width="44" id="qq2-IG-EgW">
+                        <barButtonItem key="leftBarButtonItem" title="Show Drawer" image="UserLoginIcon-Small" width="44" id="qq2-IG-EgW">
                             <connections>
                                 <segue destination="fkr-yY-tFG" kind="presentation" identifier="showProfile" id="BJ2-gb-66U"/>
                             </connections>
@@ -384,7 +384,7 @@
         <image name="Cancel" width="32" height="32"/>
         <image name="Checkmark" width="32" height="32"/>
         <image name="Compass" width="28" height="28"/>
-        <image name="Hamburger" width="25" height="25"/>
+        <image name="UserLoginIcon-Small" width="24" height="24"/>
         <image name="ZoomLocation" width="24" height="24"/>
         <image name="ellipsis" width="24" height="24"/>
         <namedColor name="primary">
