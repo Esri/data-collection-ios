@@ -49,17 +49,17 @@ class EphemeralCache {
         self[key] = object as AnyObject
     }
     
-    func get(objectForKey key: String) -> Any? {
+    func getObject(for key: String) -> Any? {
         let object: AnyObject? = self[key]
         self[key] = nil
         return object
     }
     
-    func remove(objectForKey key: String) {
+    func removeObject(for key: String) {
         self[key] = nil
     }
     
-    func has(objectForKey key: String) -> Bool {
+    func containsObject(for key: String) -> Bool {
         return self[key] != nil
     }
 }

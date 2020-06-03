@@ -221,13 +221,13 @@ class MapViewController: UIViewController {
         
         if let destination = segue.navigationDestination as? RichPopupViewController {
             
-            if let newPopup = EphemeralCache.shared.get(objectForKey: .newSpatialFeature) as? RichPopup {
+            if let newPopup = EphemeralCache.shared.getObject(for: .newSpatialFeature) as? RichPopup {
                 setCurrentPopup(popup: newPopup)
                 destination.popupManager = currentPopupManager!
                 destination.setEditing(true, animated: false)
                 mapViewMode = .selectedFeature(featureLoaded: false)
             }
-            else if let popupManager = EphemeralCache.shared.get(objectForKey: .newRelatedRecord) as? RichPopupManager {
+            else if let popupManager = EphemeralCache.shared.getObject(for: .newRelatedRecord) as? RichPopupManager {
                 destination.popupManager = popupManager
                 destination.setEditing(true, animated: false)
                 destination.shouldLoadRichPopupRelatedRecords = false
@@ -246,7 +246,7 @@ class MapViewController: UIViewController {
             destination.delegate = self
         }
         else if let destination = segue.destination as? JobStatusViewController {
-            destination.jobConstruct = EphemeralCache.shared.get(objectForKey: .offlineMapJob) as? OfflineMapJobConstruct
+            destination.jobConstruct = EphemeralCache.shared.getObject(for: .offlineMapJob) as? OfflineMapJobConstruct
             destination.delegate = self
         }
     }

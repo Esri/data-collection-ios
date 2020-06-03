@@ -32,7 +32,7 @@ extension MapViewController {
     @IBAction func userDidCancelSelectLocation(_ sender: Any) {
         
         if mapViewMode == .selectingFeature {
-            EphemeralCache.shared.remove(objectForKey: .newNonSpatialFeature)
+            EphemeralCache.shared.removeObject(for: .newNonSpatialFeature)
         }
         else if mapViewMode == .offlineMask {
             hideMapMaskViewForOfflineDownloadArea()
@@ -134,7 +134,7 @@ extension MapViewController {
     
     private func prepareNewFeatureForEdit() {
         
-        guard let newPopup = EphemeralCache.shared.get(objectForKey: .newNonSpatialFeature) as? RichPopup else {
+        guard let newPopup = EphemeralCache.shared.getObject(for: .newNonSpatialFeature) as? RichPopup else {
             present(simpleAlertMessage: "Unable to add a new record.")
             return
         }
