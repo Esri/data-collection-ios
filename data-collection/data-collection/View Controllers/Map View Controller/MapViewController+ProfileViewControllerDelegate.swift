@@ -29,9 +29,9 @@ extension MapViewController: ProfileViewControllerOfflineDelegate {
             preconditionFailure("There is no map to synchronize.")
         }
                 
-        EphemeralCache.shared.set(
-            object: OfflineMapJobConstruct.syncOfflineMap(map),
-            forKey: .offlineMapJob
+        EphemeralCache.shared.setObject(
+            OfflineMapJobConstruct.syncOfflineMap(map),
+            for: .offlineMapJob
         )
         
         profileViewController.dismiss(animated: true) {

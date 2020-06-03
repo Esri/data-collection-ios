@@ -38,9 +38,9 @@ extension RichPopupViewController: RichPopupDetailsViewControllerDelegate {
             }
             
             // Cache the results.
-            EphemeralCache.shared.set(
-                object: (popups, relationship.relatedPopup),
-                forKey: "RichPopupSelectRelatedRecord.EphemeralCacheKey"
+            EphemeralCache.shared.setObject(
+                (popups, relationship.relatedPopup),
+                for: "RichPopupSelectRelatedRecord.EphemeralCacheKey"
             )
             
             // Segue to view controller that allows for a new related record to be selected.

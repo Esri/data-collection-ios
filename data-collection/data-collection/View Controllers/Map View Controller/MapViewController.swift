@@ -177,9 +177,9 @@ class MapViewController: UIViewController {
                 return
             }
 
-            EphemeralCache.shared.set(
-                object: relatedManager,
-                forKey: .newRelatedRecord
+            EphemeralCache.shared.setObject(
+                relatedManager,
+                for: .newRelatedRecord
             )
 
             self.performSegue(withIdentifier: "modallyPresentRelatedRecordsPopupViewController", sender: nil)

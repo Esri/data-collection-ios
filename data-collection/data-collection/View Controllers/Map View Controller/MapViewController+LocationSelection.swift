@@ -112,9 +112,9 @@ extension MapViewController {
                     self.present(simpleAlertMessage: error.localizedDescription)
                 }
                 else {
-                    EphemeralCache.shared.set(
-                        object: newRichPopup,
-                        forKey: .newNonSpatialFeature
+                    EphemeralCache.shared.setObject(
+                        newRichPopup,
+                        for: .newNonSpatialFeature
                     )
                     
                     self.mapViewMode = .selectingFeature
@@ -123,9 +123,9 @@ extension MapViewController {
         }
         else {
             
-            EphemeralCache.shared.set(
-                object: newRichPopup,
-                forKey: .newNonSpatialFeature
+            EphemeralCache.shared.setObject(
+                newRichPopup,
+                for: .newNonSpatialFeature
             )
             
             self.mapViewMode = .selectingFeature
@@ -149,9 +149,9 @@ extension MapViewController {
         func proceedAfterCustomBehavior() {
             
             newPopup.geoElement.geometry = centerPoint
-            EphemeralCache.shared.set(
-                object: newPopup,
-                forKey: .newSpatialFeature
+            EphemeralCache.shared.setObject(
+                newPopup,
+                for: .newSpatialFeature
             )
             
             SVProgressHUD.dismiss()
@@ -225,9 +225,9 @@ extension MapViewController {
         let directory: URL = .temporaryOfflineMapDirectoryURL(forWebMapItemID: .webMapItemID)
         let offlineJob = OfflineMapJobConstruct.downloadMapOffline(map, directory, geometry, scale)
         
-        EphemeralCache.shared.set(
-            object: offlineJob,
-            forKey: .offlineMapJob
+        EphemeralCache.shared.setObject(
+            offlineJob,
+            for: .offlineMapJob
         )
         
         performSegue(withIdentifier: "presentJobStatusViewController", sender: nil)

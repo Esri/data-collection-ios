@@ -45,8 +45,8 @@ class EphemeralCache {
         }
     }
     
-    func set(object: Any, forKey: String) {
-        self[forKey] = object as AnyObject
+    func setObject(_ object: Any, for key: String) {
+        self[key] = object as AnyObject
     }
     
     func get(objectForKey key: String) -> Any? {
