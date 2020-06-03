@@ -95,7 +95,7 @@
                                                 <stackView opaque="NO" contentMode="scaleToFill" verticalCompressionResistancePriority="1000" alignment="center" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="Gzh-dB-3Eu">
                                                     <rect key="frame" x="20" y="11" width="374" height="38"/>
                                                     <subviews>
-                                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="OnlineMode" translatesAutoresizingMaskIntoConstraints="NO" id="ELc-IP-WZ3">
+                                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="arcgis-online" translatesAutoresizingMaskIntoConstraints="NO" id="ELc-IP-WZ3">
                                                             <rect key="frame" x="0.0" y="7" width="24" height="24"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="24" id="mKY-lT-WNi"/>
@@ -152,7 +152,7 @@
                                                 <stackView opaque="NO" contentMode="scaleToFill" verticalCompressionResistancePriority="1000" alignment="center" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="oRj-1V-UHw">
                                                     <rect key="frame" x="20" y="11" width="374" height="38"/>
                                                     <subviews>
-                                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="OfflineMode" translatesAutoresizingMaskIntoConstraints="NO" id="s4l-mJ-uMb">
+                                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="download" translatesAutoresizingMaskIntoConstraints="NO" id="s4l-mJ-uMb">
                                                             <rect key="frame" x="0.0" y="7" width="24" height="24"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="24" id="S8Q-G8-oao"/>
@@ -205,7 +205,7 @@
                                                 <stackView opaque="NO" contentMode="scaleToFill" verticalCompressionResistancePriority="1000" alignment="center" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="nZW-WO-PbT">
                                                     <rect key="frame" x="20" y="11" width="374" height="38"/>
                                                     <subviews>
-                                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Synchronize" translatesAutoresizingMaskIntoConstraints="NO" id="3XV-Fp-Mn9">
+                                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="refresh" translatesAutoresizingMaskIntoConstraints="NO" id="3XV-Fp-Mn9">
                                                             <rect key="frame" x="0.0" y="7" width="24" height="24"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="24" id="QcL-01-gJK"/>
@@ -384,10 +384,10 @@
         </scene>
     </scenes>
     <resources>
-        <image name="OfflineMode" width="24" height="24"/>
-        <image name="OnlineMode" width="24" height="24"/>
-        <image name="Synchronize" width="24" height="24"/>
         <image name="UserLoginIcon-Large" width="36" height="36"/>
+        <image name="arcgis-online" width="24" height="24"/>
+        <image name="download" width="24" height="24"/>
+        <image name="refresh" width="24" height="24"/>
         <image name="trash" width="24" height="24"/>
     </resources>
 </document>
