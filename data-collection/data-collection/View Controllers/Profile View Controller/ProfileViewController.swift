@@ -156,40 +156,22 @@ class ProfileViewController: UITableViewController {
     
     private func adjustFor(portal: AGSPortal) {
         if let user = portal.user {
-            set(user: user)
+            load(user: user)
         }
         else {
             setNoUser()
         }
     }
         
-    private func set(user: AGSPortalUser) {
+    private func load(user: AGSPortalUser) {
          user.load { [weak self] (error) in
             guard let self = self else { return }
             if let error = error {
-                print(error)
-                #warning("Present error alert to customer.")
+                self.present(simpleAlertMessage: error.localizedDescription)
                 self.setNoUser()
             }
             else {
-                self.portalUserCell.thumbnailImageView.isHidden = false
-                self.portalUserCell.userEmailLabel.isHidden = false
-                self.portalUserCell.userEmailLabel.text = user.email
-                self.portalUserCell.userFullNameLabel.text = user.fullName
-                self.portalUserCell.authButton.setTitle("Sign Out", for: .normal)
-                self.portalUserCell.authButton.addTarget(self, action: #selector(Self.userRequestsSignOut), for: .touchUpInside)
-                
-                if let thumbnail = user.thumbnail {
-                    thumbnail.load { (error) in
-                        if let error = error {
-                            print(error)
-                            #warning("Set fallback image.")
-                        }
-                        else {
-                            self.portalUserCell.thumbnailImageView.image = thumbnail.image
-                        }
-                    }
-                }
+                self.set(user: user)
             }
         }
     }
@@ -200,6 +182,27 @@ class ProfileViewController: UITableViewController {
         portalUserCell.userFullNameLabel.text = "Connect to Portal"
         portalUserCell.authButton.setTitle("Sign In", for: .normal)
         portalUserCell.authButton.addTarget(self, action: #selector(userRequestsSignIn), for: .touchUpInside)
+    }
+    
+    private func set(user: AGSPortalUser) {
+        portalUserCell.thumbnailImageView.isHidden = false
+        portalUserCell.thumbnailImageView.image = UIImage(named: "UserLoginIcon-Large")
+        portalUserCell.userEmailLabel.isHidden = false
+        portalUserCell.userEmailLabel.text = user.email
+        portalUserCell.userFullNameLabel.text = user.fullName
+        portalUserCell.authButton.setTitle("Sign Out", for: .normal)
+        portalUserCell.authButton.addTarget(self, action: #selector(Self.userRequestsSignOut), for: .touchUpInside)
+        
+        if let thumbnail = user.thumbnail {
+            thumbnail.load { (error) in
+                if let error = error {
+                    print(error)
+                }
+                else {
+                    self.portalUserCell.thumbnailImageView.image = thumbnail.image
+                }
+            }
+        }
     }
     
     @objc private func userRequestsSignIn() {

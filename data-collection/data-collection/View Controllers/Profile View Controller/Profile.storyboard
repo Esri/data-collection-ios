@@ -28,7 +28,7 @@
                                                 <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="zmq-UE-BlC">
                                                     <rect key="frame" x="20" y="11" width="374" height="54"/>
                                                     <subviews>
-                                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="yPD-Bp-0Xw">
+                                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" image="UserLoginIcon-Large" translatesAutoresizingMaskIntoConstraints="NO" id="yPD-Bp-0Xw">
                                                             <rect key="frame" x="0.0" y="9" width="36" height="36"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="36" id="MIY-qR-6eW"/>
@@ -388,5 +388,6 @@
         <image name="OfflineMode" width="24" height="24"/>
         <image name="OnlineMode" width="24" height="24"/>
         <image name="Synchronize" width="24" height="24"/>
+        <image name="UserLoginIcon-Large" width="36" height="36"/>
     </resources>
 </document>
