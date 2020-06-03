@@ -1,3 +1,7 @@
+# Release 1.2.1
+
+- 
+
 # Release 1.2.0
 
 - Adds an "Extras" button containing "Bookmarks" and "Layers" options:
