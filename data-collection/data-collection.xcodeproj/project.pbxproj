@@ -71,10 +71,7 @@
 		946D20AB2126541C001BF5CC /* AppDateFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 946D20AA2126541C001BF5CC /* AppDateFormatter.swift */; };
 		946D20AF212F50EB001BF5CC /* AppContextAwareNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 946D20AE212F50EB001BF5CC /* AppContextAwareNavigationController.swift */; };
 		946D20B3212F5348001BF5CC /* AppContextChange.swift in Sources */ = {isa = PBXBuildFile; fileRef = 946D20B2212F5348001BF5CC /* AppContextChange.swift */; };
-		946D20B521307FE1001BF5CC /* MapViewController+AppContainerFocusDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 946D20B421307FE1001BF5CC /* MapViewController+AppContainerFocusDelegate.swift */; };
-		946D20B8213090AE001BF5CC /* DrawerViewController+AppContainerFocusDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 946D20B7213090AE001BF5CC /* DrawerViewController+AppContainerFocusDelegate.swift */; };
 		946D20BA213093DE001BF5CC /* JobStatusViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 946D20B9213093DE001BF5CC /* JobStatusViewController.storyboard */; };
-		946D20BC2130951B001BF5CC /* DrawerViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 946D20BB2130951B001BF5CC /* DrawerViewController.storyboard */; };
 		946D20BE2130965A001BF5CC /* MapViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 946D20BD2130965A001BF5CC /* MapViewController.storyboard */; };
 		946D20C22130C236001BF5CC /* LastSyncMobileMapPackage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 946D20C12130C236001BF5CC /* LastSyncMobileMapPackage.swift */; };
 		946E6A9521F2A96000B315B6 /* RichPopupViewController+EditingSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 946E6A9421F2A96000B315B6 /* RichPopupViewController+EditingSession.swift */; };
@@ -171,11 +168,6 @@
 		94D2714020D0315900304E27 /* CustomBehavior_Map.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94D2713F20D0315900304E27 /* CustomBehavior_Map.swift */; };
 		94D2714320D0578000304E27 /* OneToManyRelationship.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94D2714220D0578000304E27 /* OneToManyRelationship.swift */; };
 		94D2714520D0578C00304E27 /* ManyToOneRelationship.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94D2714420D0578C00304E27 /* ManyToOneRelationship.swift */; };
-		94D544BD207FC15D00ED0D04 /* DrawerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94D544B4207FC15C00ED0D04 /* DrawerViewController.swift */; };
-		94D544BE207FC15D00ED0D04 /* AppContainerViewController+DrawerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94D544B6207FC15D00ED0D04 /* AppContainerViewController+DrawerDelegate.swift */; };
-		94D544BF207FC15D00ED0D04 /* AppContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94D544B7207FC15D00ED0D04 /* AppContainerViewController.swift */; };
-		94D544C0207FC15D00ED0D04 /* AppContainerViewController+MapDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94D544B8207FC15D00ED0D04 /* AppContainerViewController+MapDelegate.swift */; };
-		94D544C1207FC15D00ED0D04 /* AppContainerViewController+JobStatusDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94D544B9207FC15D00ED0D04 /* AppContainerViewController+JobStatusDelegate.swift */; };
 		94D544C2207FC15D00ED0D04 /* AppContextChangeHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94D544BA207FC15D00ED0D04 /* AppContextChangeHandler.swift */; };
 		94D544C3207FC15D00ED0D04 /* MaskViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94D544BB207FC15D00ED0D04 /* MaskViewController.swift */; };
 		94D544C4207FC15D00ED0D04 /* JobStatusViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94D544BC207FC15D00ED0D04 /* JobStatusViewController.swift */; };
@@ -190,7 +182,6 @@
 		94DDEA7C215426D300DA533C /* AppRules.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94DDEA7B215426D300DA533C /* AppRules.swift */; };
 		94DDEA7E215463AC00DA533C /* CGAffineTransform+Rotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94DDEA7D215463AC00DA533C /* CGAffineTransform+Rotation.swift */; };
 		94FA8B25207BF2CD00972C75 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94FA8B24207BF2CD00972C75 /* MapViewController.swift */; };
-		94FA8B28207BF2CD00972C75 /* AppContainerViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 94FA8B26207BF2CD00972C75 /* AppContainerViewController.storyboard */; };
 		94FA8B2D207BF2CD00972C75 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 94FA8B2B207BF2CD00972C75 /* LaunchScreen.storyboard */; };
 		94FA8B38207BF2CD00972C75 /* data_collectionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94FA8B37207BF2CD00972C75 /* data_collectionTests.swift */; };
 		94FA8B43207BF2CD00972C75 /* data_collectionUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94FA8B42207BF2CD00972C75 /* data_collectionUITests.swift */; };
@@ -318,10 +309,7 @@
 		946D20AA2126541C001BF5CC /* AppDateFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDateFormatter.swift; sourceTree = "<group>"; };
 		946D20AE212F50EB001BF5CC /* AppContextAwareNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppContextAwareNavigationController.swift; sourceTree = "<group>"; };
 		946D20B2212F5348001BF5CC /* AppContextChange.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppContextChange.swift; sourceTree = "<group>"; };
-		946D20B421307FE1001BF5CC /* MapViewController+AppContainerFocusDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MapViewController+AppContainerFocusDelegate.swift"; sourceTree = "<group>"; };
-		946D20B7213090AE001BF5CC /* DrawerViewController+AppContainerFocusDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DrawerViewController+AppContainerFocusDelegate.swift"; sourceTree = "<group>"; };
 		946D20B9213093DE001BF5CC /* JobStatusViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = JobStatusViewController.storyboard; sourceTree = "<group>"; };
-		946D20BB2130951B001BF5CC /* DrawerViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = DrawerViewController.storyboard; sourceTree = "<group>"; };
 		946D20BD2130965A001BF5CC /* MapViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = MapViewController.storyboard; sourceTree = "<group>"; };
 		946D20C12130C236001BF5CC /* LastSyncMobileMapPackage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LastSyncMobileMapPackage.swift; sourceTree = "<group>"; };
 		946E6A9421F2A96000B315B6 /* RichPopupViewController+EditingSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RichPopupViewController+EditingSession.swift"; sourceTree = "<group>"; };
@@ -419,11 +407,6 @@
 		94D2713F20D0315900304E27 /* CustomBehavior_Map.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomBehavior_Map.swift; sourceTree = "<group>"; };
 		94D2714220D0578000304E27 /* OneToManyRelationship.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OneToManyRelationship.swift; sourceTree = "<group>"; };
 		94D2714420D0578C00304E27 /* ManyToOneRelationship.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManyToOneRelationship.swift; sourceTree = "<group>"; };
-		94D544B4207FC15C00ED0D04 /* DrawerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DrawerViewController.swift; sourceTree = "<group>"; };
-		94D544B6207FC15D00ED0D04 /* AppContainerViewController+DrawerDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AppContainerViewController+DrawerDelegate.swift"; sourceTree = "<group>"; };
-		94D544B7207FC15D00ED0D04 /* AppContainerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppContainerViewController.swift; sourceTree = "<group>"; };
-		94D544B8207FC15D00ED0D04 /* AppContainerViewController+MapDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AppContainerViewController+MapDelegate.swift"; sourceTree = "<group>"; };
-		94D544B9207FC15D00ED0D04 /* AppContainerViewController+JobStatusDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AppContainerViewController+JobStatusDelegate.swift"; sourceTree = "<group>"; };
 		94D544BA207FC15D00ED0D04 /* AppContextChangeHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppContextChangeHandler.swift; sourceTree = "<group>"; };
 		94D544BB207FC15D00ED0D04 /* MaskViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MaskViewController.swift; sourceTree = "<group>"; };
 		94D544BC207FC15D00ED0D04 /* JobStatusViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JobStatusViewController.swift; sourceTree = "<group>"; };
@@ -439,7 +422,6 @@
 		94DDEA7D215463AC00DA533C /* CGAffineTransform+Rotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGAffineTransform+Rotation.swift"; sourceTree = "<group>"; };
 		94FA8B1F207BF2CD00972C75 /* data-collection.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "data-collection.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		94FA8B24207BF2CD00972C75 /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
-		94FA8B27207BF2CD00972C75 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/AppContainerViewController.storyboard; sourceTree = "<group>"; };
 		94FA8B2C207BF2CD00972C75 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		94FA8B2E207BF2CD00972C75 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		94FA8B33207BF2CD00972C75 /* data-collectionTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "data-collectionTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -632,16 +614,6 @@
 				94682ADD246F0088005B733E /* Profile.storyboard */,
 			);
 			path = "Profile View Controller";
-			sourceTree = "<group>";
-		};
-		946D20B621309088001BF5CC /* Drawer View Controller */ = {
-			isa = PBXGroup;
-			children = (
-				946D20BB2130951B001BF5CC /* DrawerViewController.storyboard */,
-				94D544B4207FC15C00ED0D04 /* DrawerViewController.swift */,
-				946D20B7213090AE001BF5CC /* DrawerViewController+AppContainerFocusDelegate.swift */,
-			);
-			path = "Drawer View Controller";
 			sourceTree = "<group>";
 		};
 		946D20BF2130AC02001BF5CC /* Rich Popup View Controllers */ = {
@@ -1097,18 +1069,6 @@
 			path = "Related Records";
 			sourceTree = "<group>";
 		};
-		94D544B5207FC15D00ED0D04 /* App Container */ = {
-			isa = PBXGroup;
-			children = (
-				94FA8B26207BF2CD00972C75 /* AppContainerViewController.storyboard */,
-				94D544B7207FC15D00ED0D04 /* AppContainerViewController.swift */,
-				94D544B6207FC15D00ED0D04 /* AppContainerViewController+DrawerDelegate.swift */,
-				94D544B8207FC15D00ED0D04 /* AppContainerViewController+MapDelegate.swift */,
-				94D544B9207FC15D00ED0D04 /* AppContainerViewController+JobStatusDelegate.swift */,
-			);
-			path = "App Container";
-			sourceTree = "<group>";
-		};
 		94D544CF208511FB00ED0D04 /* Map View Controller */ = {
 			isa = PBXGroup;
 			children = (
@@ -1121,7 +1081,6 @@
 				9465690B2087FCCE00599E55 /* MapViewController+Setup.swift */,
 				946569282089066800599E55 /* MapViewController+Map.swift */,
 				945CEE7C20E2FAFE00CD3E0D /* MapViewController+SmallPopupView.swift */,
-				946D20B421307FE1001BF5CC /* MapViewController+AppContainerFocusDelegate.swift */,
 				94D544BB207FC15D00ED0D04 /* MaskViewController.swift */,
 				E41B13022421339A00FC2888 /* MapViewController+Extras.swift */,
 				945B8ACC247874F90078D69A /* MapViewController+ProfileViewControllerDelegate.swift */,
@@ -1236,9 +1195,7 @@
 				946D20AE212F50EB001BF5CC /* AppContextAwareNavigationController.swift */,
 				946D20C02130AC24001BF5CC /* Job Status View Controller */,
 				946D20BF2130AC02001BF5CC /* Rich Popup View Controllers */,
-				946D20B621309088001BF5CC /* Drawer View Controller */,
 				94D544CF208511FB00ED0D04 /* Map View Controller */,
-				94D544B5207FC15D00ED0D04 /* App Container */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -1416,7 +1373,6 @@
 				94B375BD207E8D5600691F2A /* AddressLocator.loc.xml in Resources */,
 				948066332091474F00A398EA /* RichPopup.storyboard in Resources */,
 				94D544C9207FC67B00ED0D04 /* Assets.xcassets in Resources */,
-				94FA8B28207BF2CD00972C75 /* AppContainerViewController.storyboard in Resources */,
 				946D20BE2130965A001BF5CC /* MapViewController.storyboard in Resources */,
 				94B375BF207E8D5600691F2A /* AddressLocator.loc in Resources */,
 				E480B9A32421303600982756 /* LayerContentsTableViewController.storyboard in Resources */,
@@ -1426,7 +1382,6 @@
 				9458E2A5219B542700D18CEE /* HouseColors.xcassets in Resources */,
 				94B375BE207E8D5600691F2A /* AddressLocator.lox in Resources */,
 				94682ADE246F0088005B733E /* Profile.storyboard in Resources */,
-				946D20BC2130951B001BF5CC /* DrawerViewController.storyboard in Resources */,
 				94D544CA207FC67B00ED0D04 /* AppIcon.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1509,8 +1464,6 @@
 				944433E821AC76DC00E96A6E /* InvalidOperationError.swift in Sources */,
 				948D84F3215015A300E2048F /* UserDefaults+AGSJSONSerializable.swift in Sources */,
 				94BA7D3A20FD140500C78255 /* AppColors.swift in Sources */,
-				94D544C1207FC15D00ED0D04 /* AppContainerViewController+JobStatusDelegate.swift in Sources */,
-				94D544C0207FC15D00ED0D04 /* AppContainerViewController+MapDelegate.swift in Sources */,
 				948D852B2151C27500E2048F /* UIControlState+Hashable.swift in Sources */,
 				945CEE7520DDC2AC00CD3E0D /* SVRadialGradientLayer.m in Sources */,
 				946D20AF212F50EB001BF5CC /* AppContextAwareNavigationController.swift in Sources */,
@@ -1531,7 +1484,6 @@
 				945F451121E683C000F2DCBC /* RichPopupViewController.swift in Sources */,
 				94B375C0207E8D5600691F2A /* AppFiles.swift in Sources */,
 				948D85262151C1F700E2048F /* UIViewController+Dismiss.swift in Sources */,
-				94D544BF207FC15D00ED0D04 /* AppContainerViewController.swift in Sources */,
 				94D544D720852A5100ED0D04 /* CompassView.swift in Sources */,
 				94B375FB207E8E4800691F2A /* UIButton+AttributedTitle.swift in Sources */,
 				94B375F6207E8E4800691F2A /* AGSPortal+CachedCredentials.swift in Sources */,
@@ -1590,7 +1542,6 @@
 				946569062087FBF700599E55 /* MapViewController+UserLocation.swift in Sources */,
 				948D85282151C22A00E2048F /* UIViewController+Root.swift in Sources */,
 				948794382200CEE0007BC15E /* RichPopupViewController+UIImagePickerControllerDelegate.swift in Sources */,
-				946D20B8213090AE001BF5CC /* DrawerViewController+AppContainerFocusDelegate.swift in Sources */,
 				945CEE7620DDC2AC00CD3E0D /* SVProgressAnimatedView.m in Sources */,
 				94B375CA207E8D5600691F2A /* AppGlobals.swift in Sources */,
 				946569142088023600599E55 /* AGSPopupManager+Formatting.swift in Sources */,
@@ -1641,7 +1592,6 @@
 				9487942321F7CD47007BC15E /* StyledFirstResponderLabel.swift in Sources */,
 				944433F121ACD59E00E96A6E /* RichPopupManagerError.swift in Sources */,
 				948794552204F198007BC15E /* PopupAttributeReadonlyCell.swift in Sources */,
-				94D544BD207FC15D00ED0D04 /* DrawerViewController.swift in Sources */,
 				94D544DA20852A5100ED0D04 /* ActivityBarView.swift in Sources */,
 				948D85082151B9C200E2048F /* AGSPopup+Collection.swift in Sources */,
 				94B375D6207E8DD600691F2A /* AppReverseGeocoderManager.swift in Sources */,
@@ -1696,14 +1646,6 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		94FA8B26207BF2CD00972C75 /* AppContainerViewController.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				94FA8B27207BF2CD00972C75 /* Base */,
-			);
-			name = AppContainerViewController.storyboard;
-			sourceTree = "<group>";
-		};
 		94FA8B2B207BF2CD00972C75 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
