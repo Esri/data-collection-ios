@@ -191,7 +191,7 @@ class ProfileViewController: UITableViewController {
         portalUserCell.userEmailLabel.text = user.email
         portalUserCell.userFullNameLabel.text = user.fullName
         portalUserCell.authButton.setTitle("Sign Out", for: .normal)
-        portalUserCell.authButton.addTarget(self, action: #selector(Self.userRequestsSignOut), for: .touchUpInside)
+        portalUserCell.authButton.addTarget(self, action: #selector(userRequestsSignOut), for: .touchUpInside)
         
         if let thumbnail = user.thumbnail {
             thumbnail.load { (error) in
