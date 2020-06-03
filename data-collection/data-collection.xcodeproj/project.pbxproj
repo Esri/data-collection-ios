@@ -619,6 +619,7 @@
 		946D20BF2130AC02001BF5CC /* Rich Popup View Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				945F450D21E681DE00F2DCBC /* SegmentedViewController.swift */,
 				945F450F21E6837D00F2DCBC /* Rich Popup View Controller */,
 				948066322091474F00A398EA /* RichPopup.storyboard */,
 			);
@@ -914,6 +915,7 @@
 				94DDEA792154130000DA533C /* AppContext+NotificationNames.swift */,
 				946D20B2212F5348001BF5CC /* AppContextChange.swift */,
 				94D544BA207FC15D00ED0D04 /* AppContextChangeHandler.swift */,
+				946D20AE212F50EB001BF5CC /* AppContextAwareNavigationController.swift */,
 			);
 			path = "App Context";
 			sourceTree = "<group>";
@@ -1191,8 +1193,6 @@
 			children = (
 				E480B99F2421303600982756 /* Layer Contents View Controllers */,
 				94682ADA246EFFEC005B733E /* Profile View Controller */,
-				945F450D21E681DE00F2DCBC /* SegmentedViewController.swift */,
-				946D20AE212F50EB001BF5CC /* AppContextAwareNavigationController.swift */,
 				946D20C02130AC24001BF5CC /* Job Status View Controller */,
 				946D20BF2130AC02001BF5CC /* Rich Popup View Controllers */,
 				94D544CF208511FB00ED0D04 /* Map View Controller */,
