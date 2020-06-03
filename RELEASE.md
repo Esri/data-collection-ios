@@ -1,6 +1,9 @@
 # Release 1.2.1
 
-- 
+- Swaps _App Container_ & _Drawer_ for _Profile_.
+    - Introducing a user experience familiar to iOS users and more in line with the HIG.
+    - Introduces calcite iconography.
+    - Simplifies app architecture.
 
 # Release 1.2.0
 
