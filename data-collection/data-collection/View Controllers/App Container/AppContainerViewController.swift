@@ -135,7 +135,6 @@ class AppContainerViewController: UIViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
 
         if let destination = segue.destination as? MapViewController {
-            destination.delegate = self
             mapViewController = destination
         }
         else if let destination = segue.destination as? DrawerViewController {

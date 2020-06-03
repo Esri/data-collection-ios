@@ -39,7 +39,7 @@ class MapViewController: UIViewController {
         case offlineMask
     }
 
-    weak var delegate: MapViewControllerDelegate?
+//    weak var delegate: MapViewControllerDelegate?
     
     let changeHandler = AppContextChangeHandler()
 
