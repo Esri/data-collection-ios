@@ -24,9 +24,9 @@
 		944D81D72253E72300972941 /* ArcGIS.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 944D81D52253E72300972941 /* ArcGIS.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		9451EC5220D0705700792FFC /* CustomBehavior_IdentifyNeighborhood.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9451EC5120D0705700792FFC /* CustomBehavior_IdentifyNeighborhood.swift */; };
 		9458E2A5219B542700D18CEE /* HouseColors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9458E2A4219B542700D18CEE /* HouseColors.xcassets */; };
-		945B8AE5247F111D0078D69A /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 945B8AE4247F111D0078D69A /* Alamofire */; };
 		945B8ACD247874F90078D69A /* MapViewController+ProfileViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 945B8ACC247874F90078D69A /* MapViewController+ProfileViewControllerDelegate.swift */; };
 		945B8AD12478843F0078D69A /* MapViewController+JobStatusDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 945B8AD02478843F0078D69A /* MapViewController+JobStatusDelegate.swift */; };
+		945B8AE5247F111D0078D69A /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 945B8AE4247F111D0078D69A /* Alamofire */; };
 		945CEE7520DDC2AC00CD3E0D /* SVRadialGradientLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 945CEE6B20DDC2AC00CD3E0D /* SVRadialGradientLayer.m */; };
 		945CEE7620DDC2AC00CD3E0D /* SVProgressAnimatedView.m in Sources */ = {isa = PBXBuildFile; fileRef = 945CEE6E20DDC2AC00CD3E0D /* SVProgressAnimatedView.m */; };
 		945CEE7720DDC2AC00CD3E0D /* SVProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 945CEE7120DDC2AC00CD3E0D /* SVProgressHUD.m */; };
@@ -68,7 +68,6 @@
 		94682ADC246F002E005B733E /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94682ADB246F002E005B733E /* ProfileViewController.swift */; };
 		94682ADE246F0088005B733E /* Profile.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 94682ADD246F0088005B733E /* Profile.storyboard */; };
 		946D20A721250F46001BF5CC /* AppReachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 946D20A621250F46001BF5CC /* AppReachability.swift */; };
-		946D20AB2126541C001BF5CC /* AppDateFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 946D20AA2126541C001BF5CC /* AppDateFormatter.swift */; };
 		946D20AF212F50EB001BF5CC /* AppContextAwareNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 946D20AE212F50EB001BF5CC /* AppContextAwareNavigationController.swift */; };
 		946D20B3212F5348001BF5CC /* AppContextChange.swift in Sources */ = {isa = PBXBuildFile; fileRef = 946D20B2212F5348001BF5CC /* AppContextChange.swift */; };
 		946D20BA213093DE001BF5CC /* JobStatusViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 946D20B9213093DE001BF5CC /* JobStatusViewController.storyboard */; };
@@ -306,7 +305,6 @@
 		94682ADB246F002E005B733E /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		94682ADD246F0088005B733E /* Profile.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Profile.storyboard; sourceTree = "<group>"; };
 		946D20A621250F46001BF5CC /* AppReachability.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppReachability.swift; sourceTree = "<group>"; };
-		946D20AA2126541C001BF5CC /* AppDateFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDateFormatter.swift; sourceTree = "<group>"; };
 		946D20AE212F50EB001BF5CC /* AppContextAwareNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppContextAwareNavigationController.swift; sourceTree = "<group>"; };
 		946D20B2212F5348001BF5CC /* AppContextChange.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppContextChange.swift; sourceTree = "<group>"; };
 		946D20B9213093DE001BF5CC /* JobStatusViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = JobStatusViewController.storyboard; sourceTree = "<group>"; };
@@ -1140,7 +1138,6 @@
 				94B375A4207E8D5600691F2A /* AppLocation.swift */,
 				94DDEA7B215426D300DA533C /* AppRules.swift */,
 				94B3759E207E8D5600691F2A /* AppFiles.swift */,
-				946D20AA2126541C001BF5CC /* AppDateFormatter.swift */,
 				94BA7D3B20FD151A00C78255 /* AppFonts.swift */,
 				94BA7D3920FD140500C78255 /* AppColors.swift */,
 				944433E421AC766000E96A6E /* App Errors */,
@@ -1444,11 +1441,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				94D544BE207FC15D00ED0D04 /* AppContainerViewController+DrawerDelegate.swift in Sources */,
 				945F455421E96DC000F2DCBC /* AGSPopupAttachmentType+Icon.swift in Sources */,
 				948066382091595200A398EA /* RichPopupManager.swift in Sources */,
 				945F456221F00AD200F2DCBC /* AGSPopupAttachment+AppAttachment.swift in Sources */,
-				946D20B521307FE1001BF5CC /* MapViewController+AppContainerFocusDelegate.swift in Sources */,
 				948D85142151BB5E00E2048F /* AGSPopup+RecordType.swift in Sources */,
 				945F455121E94FD900F2DCBC /* AGSPopupAttachment+QLPreviewItem.swift in Sources */,
 				94B3760C207EAE4700691F2A /* AppDelegate.swift in Sources */,
@@ -1487,7 +1482,6 @@
 				94D544D720852A5100ED0D04 /* CompassView.swift in Sources */,
 				94B375FB207E8E4800691F2A /* UIButton+AttributedTitle.swift in Sources */,
 				94B375F6207E8E4800691F2A /* AGSPortal+CachedCredentials.swift in Sources */,
-				946D20AB2126541C001BF5CC /* AppDateFormatter.swift in Sources */,
 				948794342200CE7B007BC15E /* RichPopupViewController+RichPopupSelectRelatedRecordViewControllerDelegate.swift in Sources */,
 				94D544D620852A5100ED0D04 /* SlideNotificationView.swift in Sources */,
 				948D84FA2151B48400E2048F /* AGSMapView+Rotation.swift in Sources */,
