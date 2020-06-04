@@ -1,6 +1,6 @@
 # Release 1.2.1
 
-- 
+- Renames, updates, and fixes `AddressLocator` (formally `AppReverseGeocoderManager`).
 
 # Release 1.2.0
 
