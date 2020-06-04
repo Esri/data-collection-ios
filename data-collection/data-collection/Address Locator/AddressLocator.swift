@@ -1,4 +1,4 @@
-//// Copyright 2017 Esri
+// Copyright 2017 Esri
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -62,7 +62,7 @@ class AddressLocator {
                 }
                 else if
                     let attributes = results?.first?.attributes,
-                    let address = attributes[.address] as? String ?? attributes[.matchAddress] as? String {
+                    let address = (attributes[.address] ?? attributes[.matchAddress]) as? String {
                     completion(.success(address))
                 }
                 else {
