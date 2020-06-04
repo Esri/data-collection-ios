@@ -24,6 +24,16 @@ class AddressLocator {
     // Offline locator using the side loaded 'AddressLocator'.
     private lazy var offlineLocator = AGSLocatorTask(name: .offlineLocator)
     
+    var appContextAwareLocator: AGSLocatorTask {
+        // We want to use the online locator if the work mode is online and the app has reachability.
+        if appContext.workMode == .online && appReachability.isReachable {
+            return onlineLocator
+        }
+        // Otherwise, we'll use the offline locator.
+        else {
+            return offlineLocator
+        }
+    }
     /// Reverse geocode an address from a map point.
     ///
     /// - Parameters:
@@ -32,17 +42,15 @@ class AddressLocator {
     ///   - result: The result of the reverse geocode operation, with either the
     ///   address or an error.
     func reverseGeocodeAddress(for point: AGSPoint, completion: @escaping (_ result: Result<String, Error>) -> Void) {
-        let locator: AGSLocatorTask
-        // We want to use the online locator if the work mode is online and the app has reachability.
-        if appContext.workMode == .online && appReachability.isReachable {
-            locator = onlineLocator
-        }
-        // Otherwise, we'll use the offline locator.
-        else {
-            locator = offlineLocator
-        }
-        // Load the chosen locator.
-        locator.load { (error) in
+        let locator = appContextAwareLocator
+        locator.load { [weak self] (error) in
+            // Ensure the loaded locator matches the app context aware locator.
+            // The app context might have changed since the locator started loading.
+            guard let self = self, locator == self.appContextAwareLocator else {
+                completion(.failure(NSError.unknown))
+                return
+            }
+            // If the locator load failed, end early.
             if let error = error {
                 completion(.failure(error))
                 return
