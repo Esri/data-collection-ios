@@ -46,7 +46,7 @@ class AddressLocator {
         locator.load { [weak self] (error) in
             // Ensure the loaded locator matches the app context aware locator.
             // The app context might have changed since the locator started loading.
-            guard let self = self, locator == self.appContextAwareLocator else {
+            guard locator == self?.appContextAwareLocator else {
                 completion(.failure(NSError.unknown))
                 return
             }
