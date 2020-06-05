@@ -24,7 +24,7 @@ class AddressLocator {
     // Offline locator using the side loaded 'AddressLocator'.
     private lazy var offlineLocator = AGSLocatorTask(name: .offlineLocator)
     
-    var appContextAwareLocator: AGSLocatorTask {
+    private var appContextAwareLocator: AGSLocatorTask {
         // We want to use the online locator if the work mode is online and the app has reachability.
         if appContext.workMode == .online && appReachability.isReachable {
             return onlineLocator
