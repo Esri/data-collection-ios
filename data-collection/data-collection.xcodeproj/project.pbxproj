@@ -137,7 +137,7 @@
 		94B375C9207E8D5600691F2A /* AppContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94B375A8207E8D5600691F2A /* AppContext.swift */; };
 		94B375CA207E8D5600691F2A /* AppGlobals.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94B375A9207E8D5600691F2A /* AppGlobals.swift */; };
 		94B375D2207E8D5600691F2A /* EphemeralCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94B375BB207E8D5600691F2A /* EphemeralCache.swift */; };
-		94B375D6207E8DD600691F2A /* AppReverseGeocoderManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94B375D4207E8DD600691F2A /* AppReverseGeocoderManager.swift */; };
+		94B375D6207E8DD600691F2A /* AddressLocator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94B375D4207E8DD600691F2A /* AddressLocator.swift */; };
 		94B375F2207E8E4800691F2A /* AGSLoadStatus+CustomStringConvertible.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94B375DB207E8E4800691F2A /* AGSLoadStatus+CustomStringConvertible.swift */; };
 		94B375F4207E8E4800691F2A /* AGSJobStatus+CustomStringConvertible.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94B375DD207E8E4800691F2A /* AGSJobStatus+CustomStringConvertible.swift */; };
 		94B375F5207E8E4800691F2A /* AGSMapView+ExtentForCGRect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94B375DE207E8E4800691F2A /* AGSMapView+ExtentForCGRect.swift */; };
@@ -375,7 +375,7 @@
 		94B375A9207E8D5600691F2A /* AppGlobals.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppGlobals.swift; sourceTree = "<group>"; };
 		94B375B4207E8D5600691F2A /* data-collection-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "data-collection-Bridging-Header.h"; sourceTree = "<group>"; };
 		94B375BB207E8D5600691F2A /* EphemeralCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EphemeralCache.swift; sourceTree = "<group>"; };
-		94B375D4207E8DD600691F2A /* AppReverseGeocoderManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppReverseGeocoderManager.swift; sourceTree = "<group>"; };
+		94B375D4207E8DD600691F2A /* AddressLocator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddressLocator.swift; sourceTree = "<group>"; };
 		94B375DB207E8E4800691F2A /* AGSLoadStatus+CustomStringConvertible.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AGSLoadStatus+CustomStringConvertible.swift"; sourceTree = "<group>"; };
 		94B375DD207E8E4800691F2A /* AGSJobStatus+CustomStringConvertible.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AGSJobStatus+CustomStringConvertible.swift"; sourceTree = "<group>"; };
 		94B375DE207E8E4800691F2A /* AGSMapView+ExtentForCGRect.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AGSMapView+ExtentForCGRect.swift"; sourceTree = "<group>"; };
@@ -881,7 +881,7 @@
 			path = UILabel;
 			sourceTree = "<group>";
 		};
-		94B37597207E8D5600691F2A /* Locator */ = {
+		94B37597207E8D5600691F2A /* Offline Locator */ = {
 			isa = PBXGroup;
 			children = (
 				94B37598207E8D5600691F2A /* AddressLocator.locb */,
@@ -889,7 +889,7 @@
 				94B3759A207E8D5600691F2A /* AddressLocator.lox */,
 				94B3759B207E8D5600691F2A /* AddressLocator.loc */,
 			);
-			path = Locator;
+			path = "Offline Locator";
 			sourceTree = "<group>";
 		};
 		94B3759D207E8D5600691F2A /* Utilities */ = {
@@ -926,13 +926,13 @@
 			path = "3rd Party";
 			sourceTree = "<group>";
 		};
-		94B375D3207E8DD600691F2A /* Geocode Search */ = {
+		94B375D3207E8DD600691F2A /* Address Locator */ = {
 			isa = PBXGroup;
 			children = (
-				94B37597207E8D5600691F2A /* Locator */,
-				94B375D4207E8DD600691F2A /* AppReverseGeocoderManager.swift */,
+				94B37597207E8D5600691F2A /* Offline Locator */,
+				94B375D4207E8DD600691F2A /* AddressLocator.swift */,
 			);
-			path = "Geocode Search";
+			path = "Address Locator";
 			sourceTree = "<group>";
 		};
 		94B375D8207E8E4800691F2A /* Extensions */ = {
@@ -1143,7 +1143,7 @@
 				944433E421AC766000E96A6E /* App Errors */,
 				94B375A5207E8D5600691F2A /* App Context */,
 				94B375D8207E8E4800691F2A /* Extensions */,
-				94B375D3207E8DD600691F2A /* Geocode Search */,
+				94B375D3207E8DD600691F2A /* Address Locator */,
 				94D2713C20D02C0800304E27 /* Custom Behavior */,
 				94B3759D207E8D5600691F2A /* Utilities */,
 				9416A19120BF3283001377ED /* Rich Popup */,
@@ -1588,7 +1588,7 @@
 				948794552204F198007BC15E /* PopupAttributeReadonlyCell.swift in Sources */,
 				94D544DA20852A5100ED0D04 /* ActivityBarView.swift in Sources */,
 				948D85082151B9C200E2048F /* AGSPopup+Collection.swift in Sources */,
-				94B375D6207E8DD600691F2A /* AppReverseGeocoderManager.swift in Sources */,
+				94B375D6207E8DD600691F2A /* AddressLocator.swift in Sources */,
 				94B375F9207E8E4800691F2A /* AGSArcGISFeature+FeatureTable.swift in Sources */,
 				948794302200CDFF007BC15E /* RichPopupViewController+RichPopupDetailsViewControllerDelegate.swift in Sources */,
 				94C550EA221207C500DD7E40 /* UIResponder+InputAccessoryView.swift in Sources */,

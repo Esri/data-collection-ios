@@ -30,7 +30,7 @@ func enrich(popup: AGSPopup, withReverseGeocodedDataForPoint point: AGSPoint, co
     // Use the geocoder to reverse geocode an address from a point.
     // If the app is working online, the world geocoder service is used.
     // If the app is working offline, the side loaded geocoder is used.
-    appReverseGeocoder.reverseGeocode(for: point) { result  in
+    appAddressLocator.reverseGeocodeAddress(for: point) { result  in
         switch result {
         case .success(let address):
             if popup.geoElement.attributes[addressKey] != nil {
