@@ -25,12 +25,6 @@ protocol MapViewControllerDelegate: AnyObject {
 
 class MapViewController: UIViewController {
     
-    struct EphemeralCacheKeys {
-        static let newSpatialFeature = "MapViewController.newFeature.spatial"
-        static let newNonSpatialFeature = "MapViewController.newFeature.nonspatial"
-        static let newRelatedRecord = "MapViewController.newRelatedRecord"
-    }
-    
     enum MapViewMode: Equatable {
         case defaultView
         case disabled
@@ -38,8 +32,6 @@ class MapViewController: UIViewController {
         case selectingFeature
         case offlineMask
     }
-
-    weak var delegate: MapViewControllerDelegate?
     
     let changeHandler = AppContextChangeHandler()
 
@@ -120,10 +112,38 @@ class MapViewController: UIViewController {
         
         refreshCurrentPopup()
     }
+        
+    // MARK:- Extras
+    
+    @IBOutlet weak var extrasButton: UIBarButtonItem!
+    
+    @IBAction func userRequestsExtras(_ sender: Any) {
+        userRequestsExtras(sender as? UIBarButtonItem)
+    }
+    
+    // MARK:- Location Display
+    
+    @IBOutlet weak var zoomButton: UIBarButtonItem!
+    
+    @IBAction func userRequestsZoomLocationDisplay(_ sender: Any) {
+        userRequestsZoomOnUserLocation()
+    }
+    
+    // MARK:- Add Feature
+    
+    @IBOutlet weak var addFeatureButton: UIBarButtonItem!
+    
+    @IBAction func userRequestsAddFeature(_ sender: Any) {
+        userRequestsAddNewFeature(sender as? UIBarButtonItem)
+    }
+    
+    // MARK:- Reload
     
     @IBAction func userRequestsReloadMap(_ sender: Any) {
         loadMapViewMap()
     }
+    
+    // MARK:- Related Record
     
     @IBAction func userRequestsAddNewRelatedRecord(_ sender: Any) {
         
@@ -157,7 +177,10 @@ class MapViewController: UIViewController {
                 return
             }
 
-            EphemeralCache.set(object: relatedManager, forKey: EphemeralCacheKeys.newRelatedRecord)
+            EphemeralCache.shared.setObject(
+                relatedManager,
+                forKey: .newRelatedRecord
+            )
 
             self.performSegue(withIdentifier: "modallyPresentRelatedRecordsPopupViewController", sender: nil)
         }
@@ -198,13 +221,13 @@ class MapViewController: UIViewController {
         
         if let destination = segue.navigationDestination as? RichPopupViewController {
             
-            if let newPopup = EphemeralCache.get(objectForKey: EphemeralCacheKeys.newSpatialFeature) as? RichPopup {
+            if let newPopup = EphemeralCache.shared.object(forKey: .newSpatialFeature) as? RichPopup {
                 setCurrentPopup(popup: newPopup)
                 destination.popupManager = currentPopupManager!
                 destination.setEditing(true, animated: false)
                 mapViewMode = .selectedFeature(featureLoaded: false)
             }
-            else if let popupManager = EphemeralCache.get(objectForKey: EphemeralCacheKeys.newRelatedRecord) as? RichPopupManager {
+            else if let popupManager = EphemeralCache.shared.object(forKey: .newRelatedRecord) as? RichPopupManager {
                 destination.popupManager = popupManager
                 destination.setEditing(true, animated: false)
                 destination.shouldLoadRichPopupRelatedRecords = false
@@ -218,6 +241,13 @@ class MapViewController: UIViewController {
         }
         else if let destination = segue.destination as? MaskViewController {
             maskViewController = destination
+        }
+        else if let destination = segue.navigationDestination as? ProfileViewController {
+            destination.delegate = self
+        }
+        else if let destination = segue.destination as? JobStatusViewController {
+            destination.jobConstruct = EphemeralCache.shared.object(forKey: .offlineMapJob) as? OfflineMapJobConstruct
+            destination.delegate = self
         }
     }
     
@@ -266,4 +296,10 @@ class MapViewController: UIViewController {
 
         changeHandler.subscribe(toChanges: [currentMapChange, locationAuthorizationChange, workModeChange, reachabilityChange])
     }
+}
+
+extension String {
+    static let newSpatialFeature = "MapViewController.newFeature.spatial"
+    static let newNonSpatialFeature = "MapViewController.newFeature.nonspatial"
+    static let newRelatedRecord = "MapViewController.newRelatedRecord"
 }

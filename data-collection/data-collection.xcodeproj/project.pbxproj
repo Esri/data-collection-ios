@@ -24,6 +24,8 @@
 		944D81D72253E72300972941 /* ArcGIS.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 944D81D52253E72300972941 /* ArcGIS.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		9451EC5220D0705700792FFC /* CustomBehavior_IdentifyNeighborhood.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9451EC5120D0705700792FFC /* CustomBehavior_IdentifyNeighborhood.swift */; };
 		9458E2A5219B542700D18CEE /* HouseColors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9458E2A4219B542700D18CEE /* HouseColors.xcassets */; };
+		945B8ACD247874F90078D69A /* MapViewController+ProfileViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 945B8ACC247874F90078D69A /* MapViewController+ProfileViewControllerDelegate.swift */; };
+		945B8AD12478843F0078D69A /* MapViewController+JobStatusDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 945B8AD02478843F0078D69A /* MapViewController+JobStatusDelegate.swift */; };
 		945B8AE5247F111D0078D69A /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 945B8AE4247F111D0078D69A /* Alamofire */; };
 		945CEE7520DDC2AC00CD3E0D /* SVRadialGradientLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 945CEE6B20DDC2AC00CD3E0D /* SVRadialGradientLayer.m */; };
 		945CEE7620DDC2AC00CD3E0D /* SVProgressAnimatedView.m in Sources */ = {isa = PBXBuildFile; fileRef = 945CEE6E20DDC2AC00CD3E0D /* SVProgressAnimatedView.m */; };
@@ -63,14 +65,12 @@
 		9465691A2088028E00599E55 /* AGSRelationshipInfo+Role.swift in Sources */ = {isa = PBXBuildFile; fileRef = 946569192088028E00599E55 /* AGSRelationshipInfo+Role.swift */; };
 		9465691E208802CE00599E55 /* AGSFeatureTable+PopupEnabled.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9465691D208802CE00599E55 /* AGSFeatureTable+PopupEnabled.swift */; };
 		946569292089066800599E55 /* MapViewController+Map.swift in Sources */ = {isa = PBXBuildFile; fileRef = 946569282089066800599E55 /* MapViewController+Map.swift */; };
+		94682ADC246F002E005B733E /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94682ADB246F002E005B733E /* ProfileViewController.swift */; };
+		94682ADE246F0088005B733E /* Profile.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 94682ADD246F0088005B733E /* Profile.storyboard */; };
 		946D20A721250F46001BF5CC /* AppReachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 946D20A621250F46001BF5CC /* AppReachability.swift */; };
-		946D20AB2126541C001BF5CC /* AppDateFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 946D20AA2126541C001BF5CC /* AppDateFormatter.swift */; };
 		946D20AF212F50EB001BF5CC /* AppContextAwareNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 946D20AE212F50EB001BF5CC /* AppContextAwareNavigationController.swift */; };
 		946D20B3212F5348001BF5CC /* AppContextChange.swift in Sources */ = {isa = PBXBuildFile; fileRef = 946D20B2212F5348001BF5CC /* AppContextChange.swift */; };
-		946D20B521307FE1001BF5CC /* MapViewController+AppContainerFocusDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 946D20B421307FE1001BF5CC /* MapViewController+AppContainerFocusDelegate.swift */; };
-		946D20B8213090AE001BF5CC /* DrawerViewController+AppContainerFocusDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 946D20B7213090AE001BF5CC /* DrawerViewController+AppContainerFocusDelegate.swift */; };
 		946D20BA213093DE001BF5CC /* JobStatusViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 946D20B9213093DE001BF5CC /* JobStatusViewController.storyboard */; };
-		946D20BC2130951B001BF5CC /* DrawerViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 946D20BB2130951B001BF5CC /* DrawerViewController.storyboard */; };
 		946D20BE2130965A001BF5CC /* MapViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 946D20BD2130965A001BF5CC /* MapViewController.storyboard */; };
 		946D20C22130C236001BF5CC /* LastSyncMobileMapPackage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 946D20C12130C236001BF5CC /* LastSyncMobileMapPackage.swift */; };
 		946E6A9521F2A96000B315B6 /* RichPopupViewController+EditingSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 946E6A9421F2A96000B315B6 /* RichPopupViewController+EditingSession.swift */; };
@@ -167,11 +167,6 @@
 		94D2714020D0315900304E27 /* CustomBehavior_Map.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94D2713F20D0315900304E27 /* CustomBehavior_Map.swift */; };
 		94D2714320D0578000304E27 /* OneToManyRelationship.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94D2714220D0578000304E27 /* OneToManyRelationship.swift */; };
 		94D2714520D0578C00304E27 /* ManyToOneRelationship.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94D2714420D0578C00304E27 /* ManyToOneRelationship.swift */; };
-		94D544BD207FC15D00ED0D04 /* DrawerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94D544B4207FC15C00ED0D04 /* DrawerViewController.swift */; };
-		94D544BE207FC15D00ED0D04 /* AppContainerViewController+DrawerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94D544B6207FC15D00ED0D04 /* AppContainerViewController+DrawerDelegate.swift */; };
-		94D544BF207FC15D00ED0D04 /* AppContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94D544B7207FC15D00ED0D04 /* AppContainerViewController.swift */; };
-		94D544C0207FC15D00ED0D04 /* AppContainerViewController+MapDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94D544B8207FC15D00ED0D04 /* AppContainerViewController+MapDelegate.swift */; };
-		94D544C1207FC15D00ED0D04 /* AppContainerViewController+JobStatusDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94D544B9207FC15D00ED0D04 /* AppContainerViewController+JobStatusDelegate.swift */; };
 		94D544C2207FC15D00ED0D04 /* AppContextChangeHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94D544BA207FC15D00ED0D04 /* AppContextChangeHandler.swift */; };
 		94D544C3207FC15D00ED0D04 /* MaskViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94D544BB207FC15D00ED0D04 /* MaskViewController.swift */; };
 		94D544C4207FC15D00ED0D04 /* JobStatusViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94D544BC207FC15D00ED0D04 /* JobStatusViewController.swift */; };
@@ -186,7 +181,6 @@
 		94DDEA7C215426D300DA533C /* AppRules.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94DDEA7B215426D300DA533C /* AppRules.swift */; };
 		94DDEA7E215463AC00DA533C /* CGAffineTransform+Rotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94DDEA7D215463AC00DA533C /* CGAffineTransform+Rotation.swift */; };
 		94FA8B25207BF2CD00972C75 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94FA8B24207BF2CD00972C75 /* MapViewController.swift */; };
-		94FA8B28207BF2CD00972C75 /* AppContainerViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 94FA8B26207BF2CD00972C75 /* AppContainerViewController.storyboard */; };
 		94FA8B2D207BF2CD00972C75 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 94FA8B2B207BF2CD00972C75 /* LaunchScreen.storyboard */; };
 		94FA8B38207BF2CD00972C75 /* data_collectionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94FA8B37207BF2CD00972C75 /* data_collectionTests.swift */; };
 		94FA8B43207BF2CD00972C75 /* data_collectionUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94FA8B42207BF2CD00972C75 /* data_collectionUITests.swift */; };
@@ -263,6 +257,8 @@
 		944D81D52253E72300972941 /* ArcGIS.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ArcGIS.framework; path = $HOME/Library/SDKs/ArcGIS/iOS/Frameworks/Dynamic/ArcGIS.framework; sourceTree = "<absolute>"; };
 		9451EC5120D0705700792FFC /* CustomBehavior_IdentifyNeighborhood.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomBehavior_IdentifyNeighborhood.swift; sourceTree = "<group>"; };
 		9458E2A4219B542700D18CEE /* HouseColors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = HouseColors.xcassets; sourceTree = "<group>"; };
+		945B8ACC247874F90078D69A /* MapViewController+ProfileViewControllerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MapViewController+ProfileViewControllerDelegate.swift"; sourceTree = "<group>"; };
+		945B8AD02478843F0078D69A /* MapViewController+JobStatusDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MapViewController+JobStatusDelegate.swift"; sourceTree = "<group>"; };
 		945CEE6B20DDC2AC00CD3E0D /* SVRadialGradientLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVRadialGradientLayer.m; sourceTree = "<group>"; };
 		945CEE6C20DDC2AC00CD3E0D /* SVIndefiniteAnimatedView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVIndefiniteAnimatedView.h; sourceTree = "<group>"; };
 		945CEE6D20DDC2AC00CD3E0D /* SVProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVProgressHUD.h; sourceTree = "<group>"; };
@@ -306,14 +302,12 @@
 		946569192088028E00599E55 /* AGSRelationshipInfo+Role.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AGSRelationshipInfo+Role.swift"; sourceTree = "<group>"; };
 		9465691D208802CE00599E55 /* AGSFeatureTable+PopupEnabled.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AGSFeatureTable+PopupEnabled.swift"; sourceTree = "<group>"; };
 		946569282089066800599E55 /* MapViewController+Map.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MapViewController+Map.swift"; sourceTree = "<group>"; };
+		94682ADB246F002E005B733E /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
+		94682ADD246F0088005B733E /* Profile.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Profile.storyboard; sourceTree = "<group>"; };
 		946D20A621250F46001BF5CC /* AppReachability.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppReachability.swift; sourceTree = "<group>"; };
-		946D20AA2126541C001BF5CC /* AppDateFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDateFormatter.swift; sourceTree = "<group>"; };
 		946D20AE212F50EB001BF5CC /* AppContextAwareNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppContextAwareNavigationController.swift; sourceTree = "<group>"; };
 		946D20B2212F5348001BF5CC /* AppContextChange.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppContextChange.swift; sourceTree = "<group>"; };
-		946D20B421307FE1001BF5CC /* MapViewController+AppContainerFocusDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MapViewController+AppContainerFocusDelegate.swift"; sourceTree = "<group>"; };
-		946D20B7213090AE001BF5CC /* DrawerViewController+AppContainerFocusDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DrawerViewController+AppContainerFocusDelegate.swift"; sourceTree = "<group>"; };
 		946D20B9213093DE001BF5CC /* JobStatusViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = JobStatusViewController.storyboard; sourceTree = "<group>"; };
-		946D20BB2130951B001BF5CC /* DrawerViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = DrawerViewController.storyboard; sourceTree = "<group>"; };
 		946D20BD2130965A001BF5CC /* MapViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = MapViewController.storyboard; sourceTree = "<group>"; };
 		946D20C12130C236001BF5CC /* LastSyncMobileMapPackage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LastSyncMobileMapPackage.swift; sourceTree = "<group>"; };
 		946E6A9421F2A96000B315B6 /* RichPopupViewController+EditingSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RichPopupViewController+EditingSession.swift"; sourceTree = "<group>"; };
@@ -411,11 +405,6 @@
 		94D2713F20D0315900304E27 /* CustomBehavior_Map.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomBehavior_Map.swift; sourceTree = "<group>"; };
 		94D2714220D0578000304E27 /* OneToManyRelationship.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OneToManyRelationship.swift; sourceTree = "<group>"; };
 		94D2714420D0578C00304E27 /* ManyToOneRelationship.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManyToOneRelationship.swift; sourceTree = "<group>"; };
-		94D544B4207FC15C00ED0D04 /* DrawerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DrawerViewController.swift; sourceTree = "<group>"; };
-		94D544B6207FC15D00ED0D04 /* AppContainerViewController+DrawerDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AppContainerViewController+DrawerDelegate.swift"; sourceTree = "<group>"; };
-		94D544B7207FC15D00ED0D04 /* AppContainerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppContainerViewController.swift; sourceTree = "<group>"; };
-		94D544B8207FC15D00ED0D04 /* AppContainerViewController+MapDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AppContainerViewController+MapDelegate.swift"; sourceTree = "<group>"; };
-		94D544B9207FC15D00ED0D04 /* AppContainerViewController+JobStatusDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AppContainerViewController+JobStatusDelegate.swift"; sourceTree = "<group>"; };
 		94D544BA207FC15D00ED0D04 /* AppContextChangeHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppContextChangeHandler.swift; sourceTree = "<group>"; };
 		94D544BB207FC15D00ED0D04 /* MaskViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MaskViewController.swift; sourceTree = "<group>"; };
 		94D544BC207FC15D00ED0D04 /* JobStatusViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JobStatusViewController.swift; sourceTree = "<group>"; };
@@ -431,7 +420,6 @@
 		94DDEA7D215463AC00DA533C /* CGAffineTransform+Rotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGAffineTransform+Rotation.swift"; sourceTree = "<group>"; };
 		94FA8B1F207BF2CD00972C75 /* data-collection.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "data-collection.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		94FA8B24207BF2CD00972C75 /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
-		94FA8B27207BF2CD00972C75 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/AppContainerViewController.storyboard; sourceTree = "<group>"; };
 		94FA8B2C207BF2CD00972C75 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		94FA8B2E207BF2CD00972C75 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		94FA8B33207BF2CD00972C75 /* data-collectionTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "data-collectionTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -617,19 +605,19 @@
 			path = RichPopupEditStagedPhotoAttachmentViewController;
 			sourceTree = "<group>";
 		};
-		946D20B621309088001BF5CC /* Drawer View Controller */ = {
+		94682ADA246EFFEC005B733E /* Profile View Controller */ = {
 			isa = PBXGroup;
 			children = (
-				946D20BB2130951B001BF5CC /* DrawerViewController.storyboard */,
-				94D544B4207FC15C00ED0D04 /* DrawerViewController.swift */,
-				946D20B7213090AE001BF5CC /* DrawerViewController+AppContainerFocusDelegate.swift */,
+				94682ADB246F002E005B733E /* ProfileViewController.swift */,
+				94682ADD246F0088005B733E /* Profile.storyboard */,
 			);
-			path = "Drawer View Controller";
+			path = "Profile View Controller";
 			sourceTree = "<group>";
 		};
 		946D20BF2130AC02001BF5CC /* Rich Popup View Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				945F450D21E681DE00F2DCBC /* SegmentedViewController.swift */,
 				945F450F21E6837D00F2DCBC /* Rich Popup View Controller */,
 				948066322091474F00A398EA /* RichPopup.storyboard */,
 			);
@@ -925,6 +913,7 @@
 				94DDEA792154130000DA533C /* AppContext+NotificationNames.swift */,
 				946D20B2212F5348001BF5CC /* AppContextChange.swift */,
 				94D544BA207FC15D00ED0D04 /* AppContextChangeHandler.swift */,
+				946D20AE212F50EB001BF5CC /* AppContextAwareNavigationController.swift */,
 			);
 			path = "App Context";
 			sourceTree = "<group>";
@@ -1080,18 +1069,6 @@
 			path = "Related Records";
 			sourceTree = "<group>";
 		};
-		94D544B5207FC15D00ED0D04 /* App Container */ = {
-			isa = PBXGroup;
-			children = (
-				94FA8B26207BF2CD00972C75 /* AppContainerViewController.storyboard */,
-				94D544B7207FC15D00ED0D04 /* AppContainerViewController.swift */,
-				94D544B6207FC15D00ED0D04 /* AppContainerViewController+DrawerDelegate.swift */,
-				94D544B8207FC15D00ED0D04 /* AppContainerViewController+MapDelegate.swift */,
-				94D544B9207FC15D00ED0D04 /* AppContainerViewController+JobStatusDelegate.swift */,
-			);
-			path = "App Container";
-			sourceTree = "<group>";
-		};
 		94D544CF208511FB00ED0D04 /* Map View Controller */ = {
 			isa = PBXGroup;
 			children = (
@@ -1104,9 +1081,10 @@
 				9465690B2087FCCE00599E55 /* MapViewController+Setup.swift */,
 				946569282089066800599E55 /* MapViewController+Map.swift */,
 				945CEE7C20E2FAFE00CD3E0D /* MapViewController+SmallPopupView.swift */,
-				946D20B421307FE1001BF5CC /* MapViewController+AppContainerFocusDelegate.swift */,
 				94D544BB207FC15D00ED0D04 /* MaskViewController.swift */,
 				E41B13022421339A00FC2888 /* MapViewController+Extras.swift */,
+				945B8ACC247874F90078D69A /* MapViewController+ProfileViewControllerDelegate.swift */,
+				945B8AD02478843F0078D69A /* MapViewController+JobStatusDelegate.swift */,
 			);
 			path = "Map View Controller";
 			sourceTree = "<group>";
@@ -1160,7 +1138,6 @@
 				94B375A4207E8D5600691F2A /* AppLocation.swift */,
 				94DDEA7B215426D300DA533C /* AppRules.swift */,
 				94B3759E207E8D5600691F2A /* AppFiles.swift */,
-				946D20AA2126541C001BF5CC /* AppDateFormatter.swift */,
 				94BA7D3B20FD151A00C78255 /* AppFonts.swift */,
 				94BA7D3920FD140500C78255 /* AppColors.swift */,
 				944433E421AC766000E96A6E /* App Errors */,
@@ -1212,13 +1189,10 @@
 			isa = PBXGroup;
 			children = (
 				E480B99F2421303600982756 /* Layer Contents View Controllers */,
-				945F450D21E681DE00F2DCBC /* SegmentedViewController.swift */,
-				946D20AE212F50EB001BF5CC /* AppContextAwareNavigationController.swift */,
+				94682ADA246EFFEC005B733E /* Profile View Controller */,
 				946D20C02130AC24001BF5CC /* Job Status View Controller */,
 				946D20BF2130AC02001BF5CC /* Rich Popup View Controllers */,
-				946D20B621309088001BF5CC /* Drawer View Controller */,
 				94D544CF208511FB00ED0D04 /* Map View Controller */,
-				94D544B5207FC15D00ED0D04 /* App Container */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -1396,7 +1370,6 @@
 				94B375BD207E8D5600691F2A /* AddressLocator.loc.xml in Resources */,
 				948066332091474F00A398EA /* RichPopup.storyboard in Resources */,
 				94D544C9207FC67B00ED0D04 /* Assets.xcassets in Resources */,
-				94FA8B28207BF2CD00972C75 /* AppContainerViewController.storyboard in Resources */,
 				946D20BE2130965A001BF5CC /* MapViewController.storyboard in Resources */,
 				94B375BF207E8D5600691F2A /* AddressLocator.loc in Resources */,
 				E480B9A32421303600982756 /* LayerContentsTableViewController.storyboard in Resources */,
@@ -1405,7 +1378,7 @@
 				94B375BC207E8D5600691F2A /* AddressLocator.locb in Resources */,
 				9458E2A5219B542700D18CEE /* HouseColors.xcassets in Resources */,
 				94B375BE207E8D5600691F2A /* AddressLocator.lox in Resources */,
-				946D20BC2130951B001BF5CC /* DrawerViewController.storyboard in Resources */,
+				94682ADE246F0088005B733E /* Profile.storyboard in Resources */,
 				94D544CA207FC67B00ED0D04 /* AppIcon.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1468,11 +1441,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				94D544BE207FC15D00ED0D04 /* AppContainerViewController+DrawerDelegate.swift in Sources */,
 				945F455421E96DC000F2DCBC /* AGSPopupAttachmentType+Icon.swift in Sources */,
 				948066382091595200A398EA /* RichPopupManager.swift in Sources */,
 				945F456221F00AD200F2DCBC /* AGSPopupAttachment+AppAttachment.swift in Sources */,
-				946D20B521307FE1001BF5CC /* MapViewController+AppContainerFocusDelegate.swift in Sources */,
 				948D85142151BB5E00E2048F /* AGSPopup+RecordType.swift in Sources */,
 				945F455121E94FD900F2DCBC /* AGSPopupAttachment+QLPreviewItem.swift in Sources */,
 				94B3760C207EAE4700691F2A /* AppDelegate.swift in Sources */,
@@ -1488,8 +1459,6 @@
 				944433E821AC76DC00E96A6E /* InvalidOperationError.swift in Sources */,
 				948D84F3215015A300E2048F /* UserDefaults+AGSJSONSerializable.swift in Sources */,
 				94BA7D3A20FD140500C78255 /* AppColors.swift in Sources */,
-				94D544C1207FC15D00ED0D04 /* AppContainerViewController+JobStatusDelegate.swift in Sources */,
-				94D544C0207FC15D00ED0D04 /* AppContainerViewController+MapDelegate.swift in Sources */,
 				948D852B2151C27500E2048F /* UIControlState+Hashable.swift in Sources */,
 				945CEE7520DDC2AC00CD3E0D /* SVRadialGradientLayer.m in Sources */,
 				946D20AF212F50EB001BF5CC /* AppContextAwareNavigationController.swift in Sources */,
@@ -1497,6 +1466,7 @@
 				942B48F121A714FC0061C47A /* Relationships.swift in Sources */,
 				94D544C4207FC15D00ED0D04 /* JobStatusViewController.swift in Sources */,
 				945F455821EECA9F00F2DCBC /* ImagePickerPermissions.swift in Sources */,
+				945B8AD12478843F0078D69A /* MapViewController+JobStatusDelegate.swift in Sources */,
 				945F456721F0ED9300F2DCBC /* RichPopupEditStagedAttachmentViewController.swift in Sources */,
 				94D544D920852A5100ED0D04 /* PinDropView.swift in Sources */,
 				946D20B3212F5348001BF5CC /* AppContextChange.swift in Sources */,
@@ -1509,11 +1479,9 @@
 				945F451121E683C000F2DCBC /* RichPopupViewController.swift in Sources */,
 				94B375C0207E8D5600691F2A /* AppFiles.swift in Sources */,
 				948D85262151C1F700E2048F /* UIViewController+Dismiss.swift in Sources */,
-				94D544BF207FC15D00ED0D04 /* AppContainerViewController.swift in Sources */,
 				94D544D720852A5100ED0D04 /* CompassView.swift in Sources */,
 				94B375FB207E8E4800691F2A /* UIButton+AttributedTitle.swift in Sources */,
 				94B375F6207E8E4800691F2A /* AGSPortal+CachedCredentials.swift in Sources */,
-				946D20AB2126541C001BF5CC /* AppDateFormatter.swift in Sources */,
 				948794342200CE7B007BC15E /* RichPopupViewController+RichPopupSelectRelatedRecordViewControllerDelegate.swift in Sources */,
 				94D544D620852A5100ED0D04 /* SlideNotificationView.swift in Sources */,
 				948D84FA2151B48400E2048F /* AGSMapView+Rotation.swift in Sources */,
@@ -1529,6 +1497,7 @@
 				945F450E21E681DE00F2DCBC /* SegmentedViewController.swift in Sources */,
 				945F451421E6878A00F2DCBC /* RichPopupDetailsViewController.swift in Sources */,
 				945F451721E68A3F00F2DCBC /* RichPopupAttachmentsViewController.swift in Sources */,
+				94682ADC246F002E005B733E /* ProfileViewController.swift in Sources */,
 				94D2714520D0578C00304E27 /* ManyToOneRelationship.swift in Sources */,
 				94879446220262A6007BC15E /* RichPopupAttachmentsViewController+RichPopupAttachmentsManagerDelegate.swift in Sources */,
 				94B375FD207E8E4800691F2A /* UIColor+Modify.swift in Sources */,
@@ -1537,6 +1506,7 @@
 				9487943A2200CF0F007BC15E /* RichPopupViewController+UINavigationControllerDelegate.swift in Sources */,
 				94B375F2207E8E4800691F2A /* AGSLoadStatus+CustomStringConvertible.swift in Sources */,
 				94B375FE207E8E4800691F2A /* UIImage+Render.swift in Sources */,
+				945B8ACD247874F90078D69A /* MapViewController+ProfileViewControllerDelegate.swift in Sources */,
 				948D85202151C01500E2048F /* AGSArcGISFeatureTable+Edit.swift in Sources */,
 				948D84F82151B46000E2048F /* AGSMapView+Centerpoint.swift in Sources */,
 				94B37600207E8E4800691F2A /* UIAlertController+Alert.swift in Sources */,
@@ -1566,7 +1536,6 @@
 				946569062087FBF700599E55 /* MapViewController+UserLocation.swift in Sources */,
 				948D85282151C22A00E2048F /* UIViewController+Root.swift in Sources */,
 				948794382200CEE0007BC15E /* RichPopupViewController+UIImagePickerControllerDelegate.swift in Sources */,
-				946D20B8213090AE001BF5CC /* DrawerViewController+AppContainerFocusDelegate.swift in Sources */,
 				945CEE7620DDC2AC00CD3E0D /* SVProgressAnimatedView.m in Sources */,
 				94B375CA207E8D5600691F2A /* AppGlobals.swift in Sources */,
 				946569142088023600599E55 /* AGSPopupManager+Formatting.swift in Sources */,
@@ -1617,7 +1586,6 @@
 				9487942321F7CD47007BC15E /* StyledFirstResponderLabel.swift in Sources */,
 				944433F121ACD59E00E96A6E /* RichPopupManagerError.swift in Sources */,
 				948794552204F198007BC15E /* PopupAttributeReadonlyCell.swift in Sources */,
-				94D544BD207FC15D00ED0D04 /* DrawerViewController.swift in Sources */,
 				94D544DA20852A5100ED0D04 /* ActivityBarView.swift in Sources */,
 				948D85082151B9C200E2048F /* AGSPopup+Collection.swift in Sources */,
 				94B375D6207E8DD600691F2A /* AddressLocator.swift in Sources */,
@@ -1672,14 +1640,6 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		94FA8B26207BF2CD00972C75 /* AppContainerViewController.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				94FA8B27207BF2CD00972C75 /* Base */,
-			);
-			name = AppContainerViewController.storyboard;
-			sourceTree = "<group>";
-		};
 		94FA8B2B207BF2CD00972C75 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (

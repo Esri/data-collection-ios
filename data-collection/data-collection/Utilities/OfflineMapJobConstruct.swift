@@ -19,10 +19,6 @@ import ArcGIS
 ///
 enum OfflineMapJobConstruct {
     
-    struct EphemeralCacheKeys {
-        static let offlineMapJob = "EphemeralCache.AppOfflineMapJob.Key"
-    }
-    
     case downloadMapOffline(AGSMap, URL, AGSGeometry, Double)
     case syncOfflineMap(AGSMap)
     
@@ -72,4 +68,8 @@ enum OfflineMapJobConstruct {
             return offlineMapSyncJob
         }
     }
+}
+
+extension String {
+    static let offlineMapJob = "EphemeralCache.AppOfflineMapJob.Key"
 }
