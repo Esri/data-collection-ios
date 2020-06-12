@@ -192,12 +192,12 @@ class ProfileViewController: UITableViewController {
         portalUserCell.authButton.addTarget(self, action: #selector(userRequestsSignOut), for: .touchUpInside)
         
         if let thumbnail = user.thumbnail {
-            thumbnail.load { (error) in
+            thumbnail.load { [weak self] (error) in
                 if let error = error {
                     print(error)
                 }
                 else {
-                    self.portalUserCell.thumbnailImageView.image = thumbnail.image
+                    self?.portalUserCell.thumbnailImageView.image = thumbnail.image
                 }
             }
         }
