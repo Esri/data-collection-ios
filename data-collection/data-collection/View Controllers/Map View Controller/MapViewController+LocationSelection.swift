@@ -32,7 +32,7 @@ extension MapViewController {
     @IBAction func userDidCancelSelectLocation(_ sender: Any) {
         
         if mapViewMode == .selectingFeature {
-            EphemeralCache.remove(objectForKey: EphemeralCacheKeys.newNonSpatialFeature)
+            EphemeralCache.shared.removeObject(forKey: .newNonSpatialFeature)
         }
         else if mapViewMode == .offlineMask {
             hideMapMaskViewForOfflineDownloadArea()
@@ -112,7 +112,10 @@ extension MapViewController {
                     self.present(simpleAlertMessage: error.localizedDescription)
                 }
                 else {
-                    EphemeralCache.set(object: newRichPopup, forKey: EphemeralCacheKeys.newNonSpatialFeature)
+                    EphemeralCache.shared.setObject(
+                        newRichPopup,
+                        forKey: .newNonSpatialFeature
+                    )
                     
                     self.mapViewMode = .selectingFeature
                 }
@@ -120,7 +123,10 @@ extension MapViewController {
         }
         else {
             
-            EphemeralCache.set(object: newRichPopup, forKey: EphemeralCacheKeys.newNonSpatialFeature)
+            EphemeralCache.shared.setObject(
+                newRichPopup,
+                forKey: .newNonSpatialFeature
+            )
             
             self.mapViewMode = .selectingFeature
         }
@@ -128,7 +134,7 @@ extension MapViewController {
     
     private func prepareNewFeatureForEdit() {
         
-        guard let newPopup = EphemeralCache.get(objectForKey: EphemeralCacheKeys.newNonSpatialFeature) as? RichPopup else {
+        guard let newPopup = EphemeralCache.shared.object(forKey: .newNonSpatialFeature) as? RichPopup else {
             present(simpleAlertMessage: "Unable to add a new record.")
             return
         }
@@ -143,7 +149,10 @@ extension MapViewController {
         func proceedAfterCustomBehavior() {
             
             newPopup.geoElement.geometry = centerPoint
-            EphemeralCache.set(object: newPopup, forKey: EphemeralCacheKeys.newSpatialFeature)
+            EphemeralCache.shared.setObject(
+                newPopup,
+                forKey: .newSpatialFeature
+            )
             
             SVProgressHUD.dismiss()
             SVProgressHUD.setContainerView(nil)
@@ -198,13 +207,29 @@ extension MapViewController {
     
     private func prepareForOfflineMapDownloadJob() {
         
+        guard let map = mapView.map else { return }
+        
+        let geometry: AGSGeometry
+        
         do {
-            let geometry = try mapView.convertExtent(fromRect: maskViewController.maskRect)
-            delegate?.mapViewController(self, didSelect: geometry)
+            geometry = try mapView.convertExtent(fromRect: maskViewController.maskRect)
+            try appFiles.prepareTemporaryOfflineMapDirectory()
+            try appFiles.prepareOfflineMapDirectory()
         }
         catch {
-            print("[Error: AGSMapView]", error.localizedDescription)
-            present(simpleAlertMessage: "Could not determine extent for offline map.")
+            present(simpleAlertMessage: error.localizedDescription)
+            return
         }
+        
+        let scale = map.minScale
+        let directory: URL = .temporaryOfflineMapDirectoryURL(forWebMapItemID: .webMapItemID)
+        let offlineJob = OfflineMapJobConstruct.downloadMapOffline(map, directory, geometry, scale)
+        
+        EphemeralCache.shared.setObject(
+            offlineJob,
+            forKey: .offlineMapJob
+        )
+        
+        performSegue(withIdentifier: "presentJobStatusViewController", sender: nil)
     }
 }
