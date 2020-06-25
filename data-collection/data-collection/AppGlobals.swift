@@ -27,10 +27,6 @@ var appBundleID: String {
     return Bundle.main.bundleIdentifier!
 }
 
-var appNotificationCenter: NotificationCenter {
-    return NotificationCenter.default
-}
-
 let appAddressLocator = AddressLocator()
 
 let appFiles = AppFiles()

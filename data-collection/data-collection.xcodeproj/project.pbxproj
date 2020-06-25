@@ -69,7 +69,6 @@
 		94682ADE246F0088005B733E /* Profile.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 94682ADD246F0088005B733E /* Profile.storyboard */; };
 		946D20A721250F46001BF5CC /* AppReachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 946D20A621250F46001BF5CC /* AppReachability.swift */; };
 		946D20AF212F50EB001BF5CC /* AppContextAwareNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 946D20AE212F50EB001BF5CC /* AppContextAwareNavigationController.swift */; };
-		946D20B3212F5348001BF5CC /* AppContextChange.swift in Sources */ = {isa = PBXBuildFile; fileRef = 946D20B2212F5348001BF5CC /* AppContextChange.swift */; };
 		946D20BA213093DE001BF5CC /* JobStatusViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 946D20B9213093DE001BF5CC /* JobStatusViewController.storyboard */; };
 		946D20BE2130965A001BF5CC /* MapViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 946D20BD2130965A001BF5CC /* MapViewController.storyboard */; };
 		946D20C22130C236001BF5CC /* LastSyncMobileMapPackage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 946D20C12130C236001BF5CC /* LastSyncMobileMapPackage.swift */; };
@@ -167,7 +166,6 @@
 		94D2714020D0315900304E27 /* CustomBehavior_Map.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94D2713F20D0315900304E27 /* CustomBehavior_Map.swift */; };
 		94D2714320D0578000304E27 /* OneToManyRelationship.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94D2714220D0578000304E27 /* OneToManyRelationship.swift */; };
 		94D2714520D0578C00304E27 /* ManyToOneRelationship.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94D2714420D0578C00304E27 /* ManyToOneRelationship.swift */; };
-		94D544C2207FC15D00ED0D04 /* AppContextChangeHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94D544BA207FC15D00ED0D04 /* AppContextChangeHandler.swift */; };
 		94D544C3207FC15D00ED0D04 /* MaskViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94D544BB207FC15D00ED0D04 /* MaskViewController.swift */; };
 		94D544C4207FC15D00ED0D04 /* JobStatusViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94D544BC207FC15D00ED0D04 /* JobStatusViewController.swift */; };
 		94D544C9207FC67B00ED0D04 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 94D544C7207FC67A00ED0D04 /* Assets.xcassets */; };
@@ -177,7 +175,6 @@
 		94D544D820852A5100ED0D04 /* ShrinkingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94D544D320852A5100ED0D04 /* ShrinkingView.swift */; };
 		94D544D920852A5100ED0D04 /* PinDropView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94D544D420852A5100ED0D04 /* PinDropView.swift */; };
 		94D544DA20852A5100ED0D04 /* ActivityBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94D544D520852A5100ED0D04 /* ActivityBarView.swift */; };
-		94DDEA7A2154130000DA533C /* AppContext+NotificationNames.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94DDEA792154130000DA533C /* AppContext+NotificationNames.swift */; };
 		94DDEA7C215426D300DA533C /* AppRules.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94DDEA7B215426D300DA533C /* AppRules.swift */; };
 		94DDEA7E215463AC00DA533C /* CGAffineTransform+Rotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94DDEA7D215463AC00DA533C /* CGAffineTransform+Rotation.swift */; };
 		94FA8B25207BF2CD00972C75 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94FA8B24207BF2CD00972C75 /* MapViewController.swift */; };
@@ -306,7 +303,6 @@
 		94682ADD246F0088005B733E /* Profile.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Profile.storyboard; sourceTree = "<group>"; };
 		946D20A621250F46001BF5CC /* AppReachability.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppReachability.swift; sourceTree = "<group>"; };
 		946D20AE212F50EB001BF5CC /* AppContextAwareNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppContextAwareNavigationController.swift; sourceTree = "<group>"; };
-		946D20B2212F5348001BF5CC /* AppContextChange.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppContextChange.swift; sourceTree = "<group>"; };
 		946D20B9213093DE001BF5CC /* JobStatusViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = JobStatusViewController.storyboard; sourceTree = "<group>"; };
 		946D20BD2130965A001BF5CC /* MapViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = MapViewController.storyboard; sourceTree = "<group>"; };
 		946D20C12130C236001BF5CC /* LastSyncMobileMapPackage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LastSyncMobileMapPackage.swift; sourceTree = "<group>"; };
@@ -405,7 +401,6 @@
 		94D2713F20D0315900304E27 /* CustomBehavior_Map.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomBehavior_Map.swift; sourceTree = "<group>"; };
 		94D2714220D0578000304E27 /* OneToManyRelationship.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OneToManyRelationship.swift; sourceTree = "<group>"; };
 		94D2714420D0578C00304E27 /* ManyToOneRelationship.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManyToOneRelationship.swift; sourceTree = "<group>"; };
-		94D544BA207FC15D00ED0D04 /* AppContextChangeHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppContextChangeHandler.swift; sourceTree = "<group>"; };
 		94D544BB207FC15D00ED0D04 /* MaskViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MaskViewController.swift; sourceTree = "<group>"; };
 		94D544BC207FC15D00ED0D04 /* JobStatusViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JobStatusViewController.swift; sourceTree = "<group>"; };
 		94D544C7207FC67A00ED0D04 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Assets.xcassets; path = "data-collection/Assets.xcassets"; sourceTree = SOURCE_ROOT; };
@@ -415,7 +410,6 @@
 		94D544D320852A5100ED0D04 /* ShrinkingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShrinkingView.swift; sourceTree = "<group>"; };
 		94D544D420852A5100ED0D04 /* PinDropView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PinDropView.swift; sourceTree = "<group>"; };
 		94D544D520852A5100ED0D04 /* ActivityBarView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivityBarView.swift; sourceTree = "<group>"; };
-		94DDEA792154130000DA533C /* AppContext+NotificationNames.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppContext+NotificationNames.swift"; sourceTree = "<group>"; };
 		94DDEA7B215426D300DA533C /* AppRules.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppRules.swift; sourceTree = "<group>"; };
 		94DDEA7D215463AC00DA533C /* CGAffineTransform+Rotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGAffineTransform+Rotation.swift"; sourceTree = "<group>"; };
 		94FA8B1F207BF2CD00972C75 /* data-collection.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "data-collection.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -910,9 +904,6 @@
 				94B375A6207E8D5600691F2A /* AppContext+Login.swift */,
 				94B375A7207E8D5600691F2A /* AppContext+WorkMode.swift */,
 				948D84F0214C899600E2048F /* AppContext+VisibleArea.swift */,
-				94DDEA792154130000DA533C /* AppContext+NotificationNames.swift */,
-				946D20B2212F5348001BF5CC /* AppContextChange.swift */,
-				94D544BA207FC15D00ED0D04 /* AppContextChangeHandler.swift */,
 				946D20AE212F50EB001BF5CC /* AppContextAwareNavigationController.swift */,
 			);
 			path = "App Context";
@@ -1469,7 +1460,6 @@
 				945B8AD12478843F0078D69A /* MapViewController+JobStatusDelegate.swift in Sources */,
 				945F456721F0ED9300F2DCBC /* RichPopupEditStagedAttachmentViewController.swift in Sources */,
 				94D544D920852A5100ED0D04 /* PinDropView.swift in Sources */,
-				946D20B3212F5348001BF5CC /* AppContextChange.swift in Sources */,
 				94B375C9207E8D5600691F2A /* AppContext.swift in Sources */,
 				94B375D2207E8D5600691F2A /* EphemeralCache.swift in Sources */,
 				E41B13032421339A00FC2888 /* MapViewController+Extras.swift in Sources */,
@@ -1539,14 +1529,12 @@
 				945CEE7620DDC2AC00CD3E0D /* SVProgressAnimatedView.m in Sources */,
 				94B375CA207E8D5600691F2A /* AppGlobals.swift in Sources */,
 				946569142088023600599E55 /* AGSPopupManager+Formatting.swift in Sources */,
-				94DDEA7A2154130000DA533C /* AppContext+NotificationNames.swift in Sources */,
 				948D84F1214C899600E2048F /* AppContext+VisibleArea.swift in Sources */,
 				9451EC5220D0705700792FFC /* CustomBehavior_IdentifyNeighborhood.swift in Sources */,
 				948794322200CE4B007BC15E /* RichPopupViewController+RichPopupAttachmentsViewControllerDelegate.swift in Sources */,
 				94C550ED22120A0700DD7E40 /* UITextView+InputAccessoryView.swift in Sources */,
 				9465690C2087FCCE00599E55 /* MapViewController+Setup.swift in Sources */,
 				94B375FC207E8E4800691F2A /* UIView+StackViewAutoLayout.swift in Sources */,
-				94D544C2207FC15D00ED0D04 /* AppContextChangeHandler.swift in Sources */,
 				945F456421F00B1A00F2DCBC /* RichPopupStagedPhotoAttachment.swift in Sources */,
 				945F454A21E8003F00F2DCBC /* PopupAttachmentCell.swift in Sources */,
 				946569292089066800599E55 /* MapViewController+Map.swift in Sources */,

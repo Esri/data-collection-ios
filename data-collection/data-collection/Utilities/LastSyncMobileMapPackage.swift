@@ -19,6 +19,16 @@ extension Notification.Name {
     static let lastSyncDidChange = Notification.Name("lastSyncDidChange")
 }
 
+extension LastSyncMobileMapPackage {
+    var lastSyncNotification: Notification {
+        Notification(
+            name: .lastSyncDidChange,
+            object: self,
+            userInfo: nil
+        )
+    }
+}
+
 /// This concrete `AGSMobileMapPackage` subclass maintains the date a mobile map package was taken offline and
 /// reports whether the offline map has been edited since the last synchronization.
 ///
@@ -29,7 +39,7 @@ class LastSyncMobileMapPackage: AGSMobileMapPackage {
     internal private(set) var lastSyncDate: Date? {
         didSet {
             UserDefaults.standard.set(lastSyncDate, forKey: userDefaultsKey)
-            appNotificationCenter.post(name: .lastSyncDidChange, object: nil)
+            NotificationCenter.default.post(lastSyncNotification)
         }
     }
     
