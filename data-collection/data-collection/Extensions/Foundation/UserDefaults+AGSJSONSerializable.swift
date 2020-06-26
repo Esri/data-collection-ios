@@ -54,7 +54,7 @@ extension UserDefaults {
         }
         catch {
             print("[Error: AGSJSONSerializable] could not serialize object from JSON.", error.localizedDescription)
+            return nil
         }
-        return nil
     }
 }
