@@ -99,7 +99,6 @@
 		948D84CF2142227900E2048F /* CGFloat+Conversions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 948D84CE2142227900E2048F /* CGFloat+Conversions.swift */; };
 		948D84DA2142E29C00E2048F /* CGRect+Modify.swift in Sources */ = {isa = PBXBuildFile; fileRef = 948D84D92142E29C00E2048F /* CGRect+Modify.swift */; };
 		948D84E121484C7500E2048F /* URLComponents+Parameter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 948D84E021484C7500E2048F /* URLComponents+Parameter.swift */; };
-		948D84EF214C84BD00E2048F /* AGSJSONSerializable+UserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 948D84EE214C84BD00E2048F /* AGSJSONSerializable+UserDefaults.swift */; };
 		948D84F1214C899600E2048F /* AppContext+VisibleArea.swift in Sources */ = {isa = PBXBuildFile; fileRef = 948D84F0214C899600E2048F /* AppContext+VisibleArea.swift */; };
 		948D84F3215015A300E2048F /* UserDefaults+AGSJSONSerializable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 948D84F2215015A300E2048F /* UserDefaults+AGSJSONSerializable.swift */; };
 		948D84F82151B46000E2048F /* AGSMapView+Centerpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 948D84F72151B46000E2048F /* AGSMapView+Centerpoint.swift */; };
@@ -336,7 +335,6 @@
 		948D84CE2142227900E2048F /* CGFloat+Conversions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGFloat+Conversions.swift"; sourceTree = "<group>"; };
 		948D84D92142E29C00E2048F /* CGRect+Modify.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGRect+Modify.swift"; sourceTree = "<group>"; };
 		948D84E021484C7500E2048F /* URLComponents+Parameter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URLComponents+Parameter.swift"; sourceTree = "<group>"; };
-		948D84EE214C84BD00E2048F /* AGSJSONSerializable+UserDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AGSJSONSerializable+UserDefaults.swift"; sourceTree = "<group>"; };
 		948D84F0214C899600E2048F /* AppContext+VisibleArea.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppContext+VisibleArea.swift"; sourceTree = "<group>"; };
 		948D84F2215015A300E2048F /* UserDefaults+AGSJSONSerializable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserDefaults+AGSJSONSerializable.swift"; sourceTree = "<group>"; };
 		948D84F72151B46000E2048F /* AGSMapView+Centerpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AGSMapView+Centerpoint.swift"; sourceTree = "<group>"; };
@@ -777,14 +775,6 @@
 			path = AGSMap;
 			sourceTree = "<group>";
 		};
-		948D851B2151BF7F00E2048F /* AGSJSONSerializable */ = {
-			isa = PBXGroup;
-			children = (
-				948D84EE214C84BD00E2048F /* AGSJSONSerializable+UserDefaults.swift */,
-			);
-			path = AGSJSONSerializable;
-			sourceTree = "<group>";
-		};
 		948D851C2151BFA500E2048F /* AGSArcGISFeatureTable */ = {
 			isa = PBXGroup;
 			children = (
@@ -955,7 +945,6 @@
 				945F454F21E94FA400F2DCBC /* AGSPopupAttachment */,
 				948D85212151C0B500E2048F /* AGSPopupManager */,
 				948D851C2151BFA500E2048F /* AGSArcGISFeatureTable */,
-				948D851B2151BF7F00E2048F /* AGSJSONSerializable */,
 				948D851A2151BF5500E2048F /* AGSMap */,
 				948D85192151BF0D00E2048F /* AGSLicense */,
 				948D85182151BEDF00E2048F /* AGSQueryParameters */,
@@ -1564,7 +1553,6 @@
 				9465691E208802CE00599E55 /* AGSFeatureTable+PopupEnabled.swift in Sources */,
 				944433F321AF5F2F00E96A6E /* RichPopupManager+CustomBehavior.swift in Sources */,
 				946D20A721250F46001BF5CC /* AppReachability.swift in Sources */,
-				948D84EF214C84BD00E2048F /* AGSJSONSerializable+UserDefaults.swift in Sources */,
 				944433EA21AC772300E96A6E /* UserCancelledError.swift in Sources */,
 				945F455621EE7CBE00F2DCBC /* RichPopupAttachmentsManager.swift in Sources */,
 				945F455B21EFA75600F2DCBC /* AGSPopupAttachmentSize+String.swift in Sources */,
