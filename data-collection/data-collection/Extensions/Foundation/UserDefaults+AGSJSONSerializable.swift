@@ -24,9 +24,7 @@ extension UserDefaults {
     /// - Parameters:
     ///     - forKey: `UserDefaults` key.
     ///
-    /// - SeeAlso: `AGSJSONSerializable+UserDefaults.swift` `static func retrieveFromUserDefaults(forKey key: String) -> Self?`
-    
-    func set(_ jsonSerializable: AGSJSONSerializable?, forKey key: String) {
+    func setSerializable(_ jsonSerializable: AGSJSONSerializable?, forKey key: String) {
         
         guard let jsonValue = jsonSerializable else {
             self.set((nil as Any?), forKey: key)
@@ -40,5 +38,23 @@ extension UserDefaults {
         catch {
             print("[Error: AGSJSONSerializable] could not serialize object to JSON.", error.localizedDescription)
         }
-    }    
+    }
+    
+    /// Retrieve a JSON object from `UserDefaults` and build generic `AGSJSONSerializable` object if possible.
+    ///
+    /// A `AGSJSONSerializable` object can be reconstructed using JSON stored in `UserDefaults`.
+    ///
+    /// - Parameters:
+    ///     - withKey: `UserDefaults` key.
+    ///
+    func getSerializable<Serializable: AGSJSONSerializable>(forKey key: String) -> Serializable? {
+        do {
+            guard let json = UserDefaults.standard.value(forKey: key) else { return nil }
+            return try Serializable.fromJSON(json) as? Serializable
+        }
+        catch {
+            print("[Error: AGSJSONSerializable] could not serialize object from JSON.", error.localizedDescription)
+        }
+        return nil
+    }
 }
