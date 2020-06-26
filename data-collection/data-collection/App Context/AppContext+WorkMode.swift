@@ -145,8 +145,8 @@ extension AppContext {
         mobileMapPackage = nil
         hasOfflineMap = false
 
-        try appFiles.deleteContentsOfOfflineMapDirectory()
-        try appFiles.prepareOfflineMapDirectory()
+        try FileManager.default.deleteContentsOfOfflineMapDirectory()
+        try FileManager.default.prepareOfflineMapDirectory()
     }
     
     /// Delete any offline map then attempt to set the current map to the online web map, and the work mode to online.

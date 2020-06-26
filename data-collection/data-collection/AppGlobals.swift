@@ -32,5 +32,3 @@ var appNotificationCenter: NotificationCenter {
 }
 
 let appAddressLocator = AddressLocator()
-
-let appFiles = AppFiles()
