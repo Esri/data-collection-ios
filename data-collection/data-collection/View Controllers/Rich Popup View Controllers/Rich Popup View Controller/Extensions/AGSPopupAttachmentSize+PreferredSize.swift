@@ -14,8 +14,8 @@
 
 import ArcGIS
 
-extension String {
-    fileprivate static let defaultAttachmentSize = "AGSPopupAttachmentSize.PreferredAttachmentSize.UserDefaultKey"
+private extension String {
+    static let defaultAttachmentSize = "AGSPopupAttachmentSize.PreferredAttachmentSize.UserDefaultKey"
 }
 
 extension UserDefaults {
