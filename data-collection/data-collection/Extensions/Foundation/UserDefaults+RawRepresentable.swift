@@ -35,11 +35,6 @@ extension UserDefaults {
     ///     - forKey: `UserDefaults` key.
     ///
     func rawRepresentable<RR: RawRepresentable>(forKey key: String) -> RR? {
-        if let value = value(forKey: key) as? RR.RawValue {
-            return RR(rawValue: value)
-        }
-        else {
-            return nil
-        }
+        (value(forKey: key) as? RR.RawValue).flatMap { RR(rawValue: $0) }
     }
 }
