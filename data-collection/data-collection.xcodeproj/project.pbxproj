@@ -49,7 +49,7 @@
 		945F455621EE7CBE00F2DCBC /* RichPopupAttachmentsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 945F455521EE7CBE00F2DCBC /* RichPopupAttachmentsManager.swift */; };
 		945F455821EECA9F00F2DCBC /* ImagePickerPermissions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 945F455721EECA9F00F2DCBC /* ImagePickerPermissions.swift */; };
 		945F455B21EFA75600F2DCBC /* AGSPopupAttachmentSize+String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 945F455A21EFA75600F2DCBC /* AGSPopupAttachmentSize+String.swift */; };
-		945F455D21EFA90C00F2DCBC /* AGSPopupAttachmentSize+UserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 945F455C21EFA90C00F2DCBC /* AGSPopupAttachmentSize+UserDefaults.swift */; };
+		945F455D21EFA90C00F2DCBC /* UserDefaults+RawRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 945F455C21EFA90C00F2DCBC /* UserDefaults+RawRepresentable.swift */; };
 		945F456021EFACB500F2DCBC /* RichPopupPreviewableAttachment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 945F455F21EFACB500F2DCBC /* RichPopupPreviewableAttachment.swift */; };
 		945F456221F00AD200F2DCBC /* AGSPopupAttachment+AppAttachment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 945F456121F00AD200F2DCBC /* AGSPopupAttachment+AppAttachment.swift */; };
 		945F456421F00B1A00F2DCBC /* RichPopupStagedPhotoAttachment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 945F456321F00B1A00F2DCBC /* RichPopupStagedPhotoAttachment.swift */; };
@@ -285,7 +285,7 @@
 		945F455521EE7CBE00F2DCBC /* RichPopupAttachmentsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RichPopupAttachmentsManager.swift; sourceTree = "<group>"; };
 		945F455721EECA9F00F2DCBC /* ImagePickerPermissions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePickerPermissions.swift; sourceTree = "<group>"; };
 		945F455A21EFA75600F2DCBC /* AGSPopupAttachmentSize+String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AGSPopupAttachmentSize+String.swift"; sourceTree = "<group>"; };
-		945F455C21EFA90C00F2DCBC /* AGSPopupAttachmentSize+UserDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AGSPopupAttachmentSize+UserDefaults.swift"; sourceTree = "<group>"; };
+		945F455C21EFA90C00F2DCBC /* UserDefaults+RawRepresentable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserDefaults+RawRepresentable.swift"; sourceTree = "<group>"; };
 		945F455F21EFACB500F2DCBC /* RichPopupPreviewableAttachment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RichPopupPreviewableAttachment.swift; sourceTree = "<group>"; };
 		945F456121F00AD200F2DCBC /* AGSPopupAttachment+AppAttachment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AGSPopupAttachment+AppAttachment.swift"; sourceTree = "<group>"; };
 		945F456321F00B1A00F2DCBC /* RichPopupStagedPhotoAttachment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RichPopupStagedPhotoAttachment.swift; sourceTree = "<group>"; };
@@ -985,7 +985,7 @@
 			children = (
 				948D84E021484C7500E2048F /* URLComponents+Parameter.swift */,
 				948D84C82139B27D00E2048F /* Bundle+Version.swift */,
-				945F455C21EFA90C00F2DCBC /* AGSPopupAttachmentSize+UserDefaults.swift */,
+				945F455C21EFA90C00F2DCBC /* UserDefaults+RawRepresentable.swift */,
 				948D84F2215015A300E2048F /* UserDefaults+AGSJSONSerializable.swift */,
 			);
 			path = Foundation;
@@ -1564,7 +1564,7 @@
 				94D2714020D0315900304E27 /* CustomBehavior_Map.swift in Sources */,
 				946D20C22130C236001BF5CC /* LastSyncMobileMapPackage.swift in Sources */,
 				945CEE7720DDC2AC00CD3E0D /* SVProgressHUD.m in Sources */,
-				945F455D21EFA90C00F2DCBC /* AGSPopupAttachmentSize+UserDefaults.swift in Sources */,
+				945F455D21EFA90C00F2DCBC /* UserDefaults+RawRepresentable.swift in Sources */,
 				9487944022022724007BC15E /* RichPopupDetailsViewController+PopupAttributeCellDelegate.swift in Sources */,
 				94C5511F2224BD4E00DD7E40 /* UINavigationController+PopCompletion.swift in Sources */,
 				948794362200CEB4007BC15E /* RichPopupViewController+ImagePickerPermissionsDelegate.swift in Sources */,
