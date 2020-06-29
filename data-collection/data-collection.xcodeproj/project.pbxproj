@@ -49,7 +49,7 @@
 		945F455621EE7CBE00F2DCBC /* RichPopupAttachmentsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 945F455521EE7CBE00F2DCBC /* RichPopupAttachmentsManager.swift */; };
 		945F455821EECA9F00F2DCBC /* ImagePickerPermissions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 945F455721EECA9F00F2DCBC /* ImagePickerPermissions.swift */; };
 		945F455B21EFA75600F2DCBC /* AGSPopupAttachmentSize+String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 945F455A21EFA75600F2DCBC /* AGSPopupAttachmentSize+String.swift */; };
-		945F455D21EFA90C00F2DCBC /* AGSPopupAttachmentSize+UserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 945F455C21EFA90C00F2DCBC /* AGSPopupAttachmentSize+UserDefaults.swift */; };
+		945F455D21EFA90C00F2DCBC /* UserDefaults+RawRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 945F455C21EFA90C00F2DCBC /* UserDefaults+RawRepresentable.swift */; };
 		945F456021EFACB500F2DCBC /* RichPopupPreviewableAttachment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 945F455F21EFACB500F2DCBC /* RichPopupPreviewableAttachment.swift */; };
 		945F456221F00AD200F2DCBC /* AGSPopupAttachment+AppAttachment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 945F456121F00AD200F2DCBC /* AGSPopupAttachment+AppAttachment.swift */; };
 		945F456421F00B1A00F2DCBC /* RichPopupStagedPhotoAttachment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 945F456321F00B1A00F2DCBC /* RichPopupStagedPhotoAttachment.swift */; };
@@ -116,6 +116,7 @@
 		948D85262151C1F700E2048F /* UIViewController+Dismiss.swift in Sources */ = {isa = PBXBuildFile; fileRef = 948D85252151C1F700E2048F /* UIViewController+Dismiss.swift */; };
 		948D85282151C22A00E2048F /* UIViewController+Root.swift in Sources */ = {isa = PBXBuildFile; fileRef = 948D85272151C22A00E2048F /* UIViewController+Root.swift */; };
 		948D85312151C80400E2048F /* UIView+Animation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 948D85302151C80400E2048F /* UIView+Animation.swift */; };
+		9499821924AA4ED5001967A9 /* AGSPopupAttachmentSize+PreferredSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9499821824AA4ED5001967A9 /* AGSPopupAttachmentSize+PreferredSize.swift */; };
 		94A8103B20B635A000D4BC68 /* AGSQueryParameters+All.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94A8103A20B635A000D4BC68 /* AGSQueryParameters+All.swift */; };
 		94AB811C211E0AD300B9C920 /* AGSLicense+Description.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94AB811B211E0AD300B9C920 /* AGSLicense+Description.swift */; };
 		94ACAD272193B46200C2C824 /* RichPopup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94ACAD262193B46200C2C824 /* RichPopup.swift */; };
@@ -281,7 +282,7 @@
 		945F455521EE7CBE00F2DCBC /* RichPopupAttachmentsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RichPopupAttachmentsManager.swift; sourceTree = "<group>"; };
 		945F455721EECA9F00F2DCBC /* ImagePickerPermissions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePickerPermissions.swift; sourceTree = "<group>"; };
 		945F455A21EFA75600F2DCBC /* AGSPopupAttachmentSize+String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AGSPopupAttachmentSize+String.swift"; sourceTree = "<group>"; };
-		945F455C21EFA90C00F2DCBC /* AGSPopupAttachmentSize+UserDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AGSPopupAttachmentSize+UserDefaults.swift"; sourceTree = "<group>"; };
+		945F455C21EFA90C00F2DCBC /* UserDefaults+RawRepresentable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserDefaults+RawRepresentable.swift"; sourceTree = "<group>"; };
 		945F455F21EFACB500F2DCBC /* RichPopupPreviewableAttachment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RichPopupPreviewableAttachment.swift; sourceTree = "<group>"; };
 		945F456121F00AD200F2DCBC /* AGSPopupAttachment+AppAttachment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AGSPopupAttachment+AppAttachment.swift"; sourceTree = "<group>"; };
 		945F456321F00B1A00F2DCBC /* RichPopupStagedPhotoAttachment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RichPopupStagedPhotoAttachment.swift; sourceTree = "<group>"; };
@@ -348,6 +349,7 @@
 		948D85252151C1F700E2048F /* UIViewController+Dismiss.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Dismiss.swift"; sourceTree = "<group>"; };
 		948D85272151C22A00E2048F /* UIViewController+Root.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Root.swift"; sourceTree = "<group>"; };
 		948D85302151C80400E2048F /* UIView+Animation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Animation.swift"; sourceTree = "<group>"; };
+		9499821824AA4ED5001967A9 /* AGSPopupAttachmentSize+PreferredSize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AGSPopupAttachmentSize+PreferredSize.swift"; sourceTree = "<group>"; };
 		94A8103A20B635A000D4BC68 /* AGSQueryParameters+All.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AGSQueryParameters+All.swift"; sourceTree = "<group>"; };
 		94AB811B211E0AD300B9C920 /* AGSLicense+Description.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AGSLicense+Description.swift"; sourceTree = "<group>"; };
 		94ACAD262193B46200C2C824 /* RichPopup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RichPopup.swift; sourceTree = "<group>"; };
@@ -511,6 +513,7 @@
 				9487942A21FBE04F007BC15E /* RichPopupSelectRelatedRecordViewController */,
 				945F451521E68A1700F2DCBC /* RichPopupAttachmentsViewController */,
 				945F456521F0ED3D00F2DCBC /* RichPopupEditStagedPhotoAttachmentViewController */,
+				9499821A24AA4EDC001967A9 /* Extensions */,
 			);
 			path = "Rich Popup View Controller";
 			sourceTree = "<group>";
@@ -570,7 +573,6 @@
 			isa = PBXGroup;
 			children = (
 				945F455A21EFA75600F2DCBC /* AGSPopupAttachmentSize+String.swift */,
-				945F455C21EFA90C00F2DCBC /* AGSPopupAttachmentSize+UserDefaults.swift */,
 			);
 			path = AGSPopupAttachmentSize;
 			sourceTree = "<group>";
@@ -838,6 +840,14 @@
 			path = UILabel;
 			sourceTree = "<group>";
 		};
+		9499821A24AA4EDC001967A9 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				9499821824AA4ED5001967A9 /* AGSPopupAttachmentSize+PreferredSize.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
 		94B37597207E8D5600691F2A /* Offline Locator */ = {
 			isa = PBXGroup;
 			children = (
@@ -950,6 +960,7 @@
 			children = (
 				948D84E021484C7500E2048F /* URLComponents+Parameter.swift */,
 				948D84C82139B27D00E2048F /* Bundle+Version.swift */,
+				945F455C21EFA90C00F2DCBC /* UserDefaults+RawRepresentable.swift */,
 				948D84F2215015A300E2048F /* UserDefaults+AGSJSONSerializable.swift */,
 			);
 			path = Foundation;
@@ -1460,6 +1471,7 @@
 				948D85202151C01500E2048F /* AGSArcGISFeatureTable+Edit.swift in Sources */,
 				948D84F82151B46000E2048F /* AGSMapView+Centerpoint.swift in Sources */,
 				94B37600207E8E4800691F2A /* UIAlertController+Alert.swift in Sources */,
+				9499821924AA4ED5001967A9 /* AGSPopupAttachmentSize+PreferredSize.swift in Sources */,
 				948D84CF2142227900E2048F /* CGFloat+Conversions.swift in Sources */,
 				946569042087FB5000599E55 /* MapViewController+LocationSelection.swift in Sources */,
 				945F456B21F146A000F2DCBC /* RichPopupStagedAttachment.swift in Sources */,
@@ -1524,7 +1536,7 @@
 				94D2714020D0315900304E27 /* CustomBehavior_Map.swift in Sources */,
 				946D20C22130C236001BF5CC /* LastSyncMobileMapPackage.swift in Sources */,
 				945CEE7720DDC2AC00CD3E0D /* SVProgressHUD.m in Sources */,
-				945F455D21EFA90C00F2DCBC /* AGSPopupAttachmentSize+UserDefaults.swift in Sources */,
+				945F455D21EFA90C00F2DCBC /* UserDefaults+RawRepresentable.swift in Sources */,
 				9487944022022724007BC15E /* RichPopupDetailsViewController+PopupAttributeCellDelegate.swift in Sources */,
 				94C5511F2224BD4E00DD7E40 /* UINavigationController+PopCompletion.swift in Sources */,
 				948794362200CEB4007BC15E /* RichPopupViewController+ImagePickerPermissionsDelegate.swift in Sources */,

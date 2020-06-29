@@ -1,4 +1,4 @@
-//// Copyright 2019 Esri
+//// Copyright 2020 Esri
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -14,17 +14,17 @@
 
 import ArcGIS
 
-extension AGSPopupAttachmentSize {
-    
-    private static let userDefaultsKey = "AGSPopupAttachmentSize.StaticUserDefaultKey"
-    
-    func storeDefaultPopupAttachmentSize() {
-        UserDefaults.standard.set(self.rawValue, forKey: AGSPopupAttachmentSize.userDefaultsKey)
-    }
-    
-    static func retrieveDefaultPopupAttachmentSize() -> AGSPopupAttachmentSize {
-        
-        let storedRaw = UserDefaults.standard.integer(forKey: AGSPopupAttachmentSize.userDefaultsKey)
-        return AGSPopupAttachmentSize(rawValue: storedRaw) ?? .actual
+private extension String {
+    static let defaultAttachmentSize = "AGSPopupAttachmentSize.PreferredAttachmentSize.UserDefaultKey"
+}
+
+extension UserDefaults {
+    var preferredAttachmentSize: AGSPopupAttachmentSize? {
+        get {
+            UserDefaults.standard.rawRepresentable(forKey: .defaultAttachmentSize)
+        }
+        set {
+            UserDefaults.standard.setRawRepresentable(newValue, forKey: .defaultAttachmentSize)
+        }
     }
 }
