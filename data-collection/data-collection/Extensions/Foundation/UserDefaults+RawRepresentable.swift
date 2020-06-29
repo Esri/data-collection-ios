@@ -32,7 +32,7 @@ extension UserDefaults {
     /// Build a `RawRepresentable` object from its `RawValue` stored in `UserDefaults`.
     ///
     /// - Parameters:
-    ///     - key: `UserDefaults` key.
+    ///     - forKey: `UserDefaults` key.
     ///
     func rawRepresentable<RR: RawRepresentable>(forKey key: String) -> RR? {
         if let value = value(forKey: key) as? RR.RawValue {
