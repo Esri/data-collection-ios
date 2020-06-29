@@ -23,8 +23,8 @@ extension UserDefaults {
     /// - Parameters:
     ///     - forKey: `UserDefaults` key.
     ///
-    func set<RR: RawRepresentable>(_ value: RR, forKey key: String) {
-        set(value.rawValue, forKey: key)
+    func setRawRepresentable<RR: RawRepresentable>(_ value: RR?, forKey key: String) {
+        set(value?.rawValue, forKey: key)
     }
     
     /// Read a `RawRepresentable` object from `UserDefaults`.

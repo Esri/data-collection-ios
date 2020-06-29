@@ -24,7 +24,7 @@ extension UserDefaults {
             UserDefaults.standard.rawRepresentable(forKey: .defaultAttachmentSize)
         }
         set {
-            UserDefaults.standard.set(newValue, forKey: .defaultAttachmentSize)
+            UserDefaults.standard.setRawRepresentable(newValue, forKey: .defaultAttachmentSize)
         }
     }
 }
