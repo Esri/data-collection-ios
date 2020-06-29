@@ -12,19 +12,24 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import ArcGIS
+import Foundation
 
-extension AGSPopupAttachmentSize {
+extension String {
+    static let defaultAttachmentSize = "AGSPopupAttachmentSize.PreferredAttachmentSize.UserDefaultKey"
+}
+
+extension UserDefaults {
     
-    private static let userDefaultsKey = "AGSPopupAttachmentSize.StaticUserDefaultKey"
-    
-    func storeDefaultPopupAttachmentSize() {
-        UserDefaults.standard.set(self.rawValue, forKey: AGSPopupAttachmentSize.userDefaultsKey)
+    func setRawRepresentable<RR: RawRepresentable>(_ value: RR, for key: String) {
+        set(value.rawValue, forKey: key)
     }
     
-    static func retrieveDefaultPopupAttachmentSize() -> AGSPopupAttachmentSize {
-        
-        let storedRaw = UserDefaults.standard.integer(forKey: AGSPopupAttachmentSize.userDefaultsKey)
-        return AGSPopupAttachmentSize(rawValue: storedRaw) ?? .actual
+    func getRawRepresentable<RR: RawRepresentable>(forKey key: String) -> RR? {
+        if let value = value(forKey: key) as? RR.RawValue {
+            return RR(rawValue: value)
+        }
+        else {
+            return nil
+        }
     }
 }

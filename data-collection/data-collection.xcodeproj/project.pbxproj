@@ -578,7 +578,6 @@
 			isa = PBXGroup;
 			children = (
 				945F455A21EFA75600F2DCBC /* AGSPopupAttachmentSize+String.swift */,
-				945F455C21EFA90C00F2DCBC /* AGSPopupAttachmentSize+UserDefaults.swift */,
 			);
 			path = AGSPopupAttachmentSize;
 			sourceTree = "<group>";
@@ -986,6 +985,7 @@
 			children = (
 				948D84E021484C7500E2048F /* URLComponents+Parameter.swift */,
 				948D84C82139B27D00E2048F /* Bundle+Version.swift */,
+				945F455C21EFA90C00F2DCBC /* AGSPopupAttachmentSize+UserDefaults.swift */,
 				948D84F2215015A300E2048F /* UserDefaults+AGSJSONSerializable.swift */,
 			);
 			path = Foundation;

@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import Foundation
+import ArcGIS
 
 extension RichPopupViewController: UIImagePickerControllerDelegate {
     
@@ -25,7 +25,9 @@ extension RichPopupViewController: UIImagePickerControllerDelegate {
         if let newAttachment = RichPopupStagedPhotoAttachment(imagePickerMediaInfo: info) {
             
             // After selecting a size, that size is stored in `UserDefaults`. Default the new attachment with the last selected size.
-            newAttachment.preferredSize = .retrieveDefaultPopupAttachmentSize()
+            if let preferredSize: AGSPopupAttachmentSize = UserDefaults.standard.getRawRepresentable(forKey: .defaultAttachmentSize) {
+                newAttachment.preferredSize = preferredSize
+            }
             
             // Insert newly staged attachment.
             attachmentsViewController.addAttachment(newAttachment)
