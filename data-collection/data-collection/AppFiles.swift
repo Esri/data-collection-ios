@@ -15,7 +15,7 @@
 import Foundation
 import ArcGIS
 
-/// This class extension is used to creating and removing directories and items needed for the app in the device's file documents directory.
+// This class extension is used to creating and removing directories and items needed for the app in the device's file documents directory.
 extension FileManager {
     /// Build a temporary directory, if needed, to store a map as it downloads.
     ///
