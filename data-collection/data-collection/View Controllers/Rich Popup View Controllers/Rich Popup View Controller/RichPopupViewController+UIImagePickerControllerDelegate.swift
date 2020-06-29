@@ -25,7 +25,7 @@ extension RichPopupViewController: UIImagePickerControllerDelegate {
         if let newAttachment = RichPopupStagedPhotoAttachment(imagePickerMediaInfo: info) {
             
             // After selecting a size, that size is stored in `UserDefaults`. Default the new attachment with the last selected size.
-            if let preferredSize: AGSPopupAttachmentSize = UserDefaults.standard.rawRepresentable(forKey: .defaultAttachmentSize) {
+            if let preferredSize = UserDefaults.standard.preferredAttachmentSize {
                 newAttachment.preferredSize = preferredSize
             }
             

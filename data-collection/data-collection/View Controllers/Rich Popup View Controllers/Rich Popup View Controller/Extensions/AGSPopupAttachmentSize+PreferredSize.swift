@@ -12,8 +12,19 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import Foundation
+import ArcGIS
 
 extension String {
-    static let defaultAttachmentSize = "AGSPopupAttachmentSize.PreferredAttachmentSize.UserDefaultKey"
+    fileprivate static let defaultAttachmentSize = "AGSPopupAttachmentSize.PreferredAttachmentSize.UserDefaultKey"
+}
+
+extension UserDefaults {
+    var preferredAttachmentSize: AGSPopupAttachmentSize? {
+        get {
+            UserDefaults.standard.rawRepresentable(forKey: .defaultAttachmentSize)
+        }
+        set {
+            UserDefaults.standard.set(newValue, forKey: .defaultAttachmentSize)
+        }
+    }
 }
