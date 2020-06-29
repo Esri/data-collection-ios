@@ -137,9 +137,9 @@ class RichPopupEditStagedAttachmentViewController: UITableViewController, UIText
                 stagedAttachment.preferredSize = AGSPopupAttachmentSize.tableViewMap[indexPath.row]
                 
                 // Store the selected value in `UserDefaults`.
-                UserDefaults.standard.setRawRepresentable(
+                UserDefaults.standard.set(
                     stagedAttachment.preferredSize,
-                    for: .defaultAttachmentSize
+                    forKey: .defaultAttachmentSize
                 )
                 
                 // Indicate to the user the selection has been made.

@@ -14,17 +14,27 @@
 
 import Foundation
 
-extension String {
-    static let defaultAttachmentSize = "AGSPopupAttachmentSize.PreferredAttachmentSize.UserDefaultKey"
-}
-
 extension UserDefaults {
     
-    func setRawRepresentable<RR: RawRepresentable>(_ value: RR, for key: String) {
+    /// Write a `RawRepresentable` object to `UserDefaults`.
+    ///
+    /// Extract the object's `RawValue` and store it in `UserDefaults`.
+    ///
+    /// - Parameters:
+    ///     - forKey: `UserDefaults` key.
+    ///
+    func set<RR: RawRepresentable>(_ value: RR, forKey key: String) {
         set(value.rawValue, forKey: key)
     }
     
-    func getRawRepresentable<RR: RawRepresentable>(forKey key: String) -> RR? {
+    /// Read a `RawRepresentable` object from `UserDefaults`.
+    ///
+    /// Build a `RawRepresentable` object from its `RawValue` stored in `UserDefaults`.
+    ///
+    /// - Parameters:
+    ///     - key: `UserDefaults` key.
+    ///
+    func rawRepresentable<RR: RawRepresentable>(forKey key: String) -> RR? {
         if let value = value(forKey: key) as? RR.RawValue {
             return RR(rawValue: value)
         }

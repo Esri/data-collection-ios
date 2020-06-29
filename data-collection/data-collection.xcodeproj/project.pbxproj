@@ -118,6 +118,7 @@
 		948D852B2151C27500E2048F /* UIControlState+Hashable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 948D852A2151C27500E2048F /* UIControlState+Hashable.swift */; };
 		948D852E2151C4F900E2048F /* UIButton+ImageTint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 948D852D2151C4F900E2048F /* UIButton+ImageTint.swift */; };
 		948D85312151C80400E2048F /* UIView+Animation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 948D85302151C80400E2048F /* UIView+Animation.swift */; };
+		9499821924AA4ED5001967A9 /* AGSPopupAttachmentSize+PreferredSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9499821824AA4ED5001967A9 /* AGSPopupAttachmentSize+PreferredSize.swift */; };
 		94A8103B20B635A000D4BC68 /* AGSQueryParameters+All.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94A8103A20B635A000D4BC68 /* AGSQueryParameters+All.swift */; };
 		94AB811C211E0AD300B9C920 /* AGSLicense+Description.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94AB811B211E0AD300B9C920 /* AGSLicense+Description.swift */; };
 		94ACAD272193B46200C2C824 /* RichPopup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94ACAD262193B46200C2C824 /* RichPopup.swift */; };
@@ -354,6 +355,7 @@
 		948D852A2151C27500E2048F /* UIControlState+Hashable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIControlState+Hashable.swift"; sourceTree = "<group>"; };
 		948D852D2151C4F900E2048F /* UIButton+ImageTint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+ImageTint.swift"; sourceTree = "<group>"; };
 		948D85302151C80400E2048F /* UIView+Animation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Animation.swift"; sourceTree = "<group>"; };
+		9499821824AA4ED5001967A9 /* AGSPopupAttachmentSize+PreferredSize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AGSPopupAttachmentSize+PreferredSize.swift"; sourceTree = "<group>"; };
 		94A8103A20B635A000D4BC68 /* AGSQueryParameters+All.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AGSQueryParameters+All.swift"; sourceTree = "<group>"; };
 		94AB811B211E0AD300B9C920 /* AGSLicense+Description.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AGSLicense+Description.swift"; sourceTree = "<group>"; };
 		94ACAD262193B46200C2C824 /* RichPopup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RichPopup.swift; sourceTree = "<group>"; };
@@ -519,6 +521,7 @@
 				9487942A21FBE04F007BC15E /* RichPopupSelectRelatedRecordViewController */,
 				945F451521E68A1700F2DCBC /* RichPopupAttachmentsViewController */,
 				945F456521F0ED3D00F2DCBC /* RichPopupEditStagedPhotoAttachmentViewController */,
+				9499821A24AA4EDC001967A9 /* Extensions */,
 			);
 			path = "Rich Popup View Controller";
 			sourceTree = "<group>";
@@ -868,6 +871,14 @@
 				940DA9712097825700AB4BF6 /* UILabel+EmptyString.swift */,
 			);
 			path = UILabel;
+			sourceTree = "<group>";
+		};
+		9499821A24AA4EDC001967A9 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				9499821824AA4ED5001967A9 /* AGSPopupAttachmentSize+PreferredSize.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 		94B37597207E8D5600691F2A /* Offline Locator */ = {
@@ -1499,6 +1510,7 @@
 				948D85202151C01500E2048F /* AGSArcGISFeatureTable+Edit.swift in Sources */,
 				948D84F82151B46000E2048F /* AGSMapView+Centerpoint.swift in Sources */,
 				94B37600207E8E4800691F2A /* UIAlertController+Alert.swift in Sources */,
+				9499821924AA4ED5001967A9 /* AGSPopupAttachmentSize+PreferredSize.swift in Sources */,
 				948D84CF2142227900E2048F /* CGFloat+Conversions.swift in Sources */,
 				946569042087FB5000599E55 /* MapViewController+LocationSelection.swift in Sources */,
 				945F456B21F146A000F2DCBC /* RichPopupStagedAttachment.swift in Sources */,
