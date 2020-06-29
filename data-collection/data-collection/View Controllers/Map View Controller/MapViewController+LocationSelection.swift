@@ -213,8 +213,8 @@ extension MapViewController {
         
         do {
             geometry = try mapView.convertExtent(fromRect: maskViewController.maskRect)
-            try appFiles.prepareTemporaryOfflineMapDirectory()
-            try appFiles.prepareOfflineMapDirectory()
+            try FileManager.default.prepareTemporaryOfflineMapDirectory()
+            try FileManager.default.prepareOfflineMapDirectory()
         }
         catch {
             present(simpleAlertMessage: error.localizedDescription)
