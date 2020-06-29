@@ -115,8 +115,6 @@
 		948D85232151C11F00E2048F /* AGSPopupManager+FeatureTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 948D85222151C11F00E2048F /* AGSPopupManager+FeatureTable.swift */; };
 		948D85262151C1F700E2048F /* UIViewController+Dismiss.swift in Sources */ = {isa = PBXBuildFile; fileRef = 948D85252151C1F700E2048F /* UIViewController+Dismiss.swift */; };
 		948D85282151C22A00E2048F /* UIViewController+Root.swift in Sources */ = {isa = PBXBuildFile; fileRef = 948D85272151C22A00E2048F /* UIViewController+Root.swift */; };
-		948D852B2151C27500E2048F /* UIControlState+Hashable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 948D852A2151C27500E2048F /* UIControlState+Hashable.swift */; };
-		948D852E2151C4F900E2048F /* UIButton+ImageTint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 948D852D2151C4F900E2048F /* UIButton+ImageTint.swift */; };
 		948D85312151C80400E2048F /* UIView+Animation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 948D85302151C80400E2048F /* UIView+Animation.swift */; };
 		94A8103B20B635A000D4BC68 /* AGSQueryParameters+All.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94A8103A20B635A000D4BC68 /* AGSQueryParameters+All.swift */; };
 		94AB811C211E0AD300B9C920 /* AGSLicense+Description.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94AB811B211E0AD300B9C920 /* AGSLicense+Description.swift */; };
@@ -144,10 +142,8 @@
 		94B375F8207E8E4800691F2A /* AGSDrawStatus+CustomStringConvertible.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94B375E1207E8E4800691F2A /* AGSDrawStatus+CustomStringConvertible.swift */; };
 		94B375F9207E8E4800691F2A /* AGSArcGISFeature+FeatureTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94B375E2207E8E4800691F2A /* AGSArcGISFeature+FeatureTable.swift */; };
 		94B375FA207E8E4800691F2A /* UIViewController+Alert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94B375E4207E8E4800691F2A /* UIViewController+Alert.swift */; };
-		94B375FB207E8E4800691F2A /* UIButton+AttributedTitle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94B375E5207E8E4800691F2A /* UIButton+AttributedTitle.swift */; };
 		94B375FC207E8E4800691F2A /* UIView+StackViewAutoLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94B375E6207E8E4800691F2A /* UIView+StackViewAutoLayout.swift */; };
 		94B375FD207E8E4800691F2A /* UIColor+Modify.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94B375E7207E8E4800691F2A /* UIColor+Modify.swift */; };
-		94B375FE207E8E4800691F2A /* UIImage+Render.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94B375E8207E8E4800691F2A /* UIImage+Render.swift */; };
 		94B375FF207E8E4800691F2A /* UIStoryboardSegue+NavigationDestination.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94B375E9207E8E4800691F2A /* UIStoryboardSegue+NavigationDestination.swift */; };
 		94B37600207E8E4800691F2A /* UIAlertController+Alert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94B375EA207E8E4800691F2A /* UIAlertController+Alert.swift */; };
 		94B37601207E8E4800691F2A /* DispatchGroup+Enter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94B375EC207E8E4800691F2A /* DispatchGroup+Enter.swift */; };
@@ -351,8 +347,6 @@
 		948D85222151C11F00E2048F /* AGSPopupManager+FeatureTable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AGSPopupManager+FeatureTable.swift"; sourceTree = "<group>"; };
 		948D85252151C1F700E2048F /* UIViewController+Dismiss.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Dismiss.swift"; sourceTree = "<group>"; };
 		948D85272151C22A00E2048F /* UIViewController+Root.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Root.swift"; sourceTree = "<group>"; };
-		948D852A2151C27500E2048F /* UIControlState+Hashable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIControlState+Hashable.swift"; sourceTree = "<group>"; };
-		948D852D2151C4F900E2048F /* UIButton+ImageTint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+ImageTint.swift"; sourceTree = "<group>"; };
 		948D85302151C80400E2048F /* UIView+Animation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Animation.swift"; sourceTree = "<group>"; };
 		94A8103A20B635A000D4BC68 /* AGSQueryParameters+All.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AGSQueryParameters+All.swift"; sourceTree = "<group>"; };
 		94AB811B211E0AD300B9C920 /* AGSLicense+Description.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AGSLicense+Description.swift"; sourceTree = "<group>"; };
@@ -381,10 +375,8 @@
 		94B375E1207E8E4800691F2A /* AGSDrawStatus+CustomStringConvertible.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AGSDrawStatus+CustomStringConvertible.swift"; sourceTree = "<group>"; };
 		94B375E2207E8E4800691F2A /* AGSArcGISFeature+FeatureTable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AGSArcGISFeature+FeatureTable.swift"; sourceTree = "<group>"; };
 		94B375E4207E8E4800691F2A /* UIViewController+Alert.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController+Alert.swift"; sourceTree = "<group>"; };
-		94B375E5207E8E4800691F2A /* UIButton+AttributedTitle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIButton+AttributedTitle.swift"; sourceTree = "<group>"; };
 		94B375E6207E8E4800691F2A /* UIView+StackViewAutoLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+StackViewAutoLayout.swift"; sourceTree = "<group>"; };
 		94B375E7207E8E4800691F2A /* UIColor+Modify.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+Modify.swift"; sourceTree = "<group>"; };
-		94B375E8207E8E4800691F2A /* UIImage+Render.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+Render.swift"; sourceTree = "<group>"; };
 		94B375E9207E8E4800691F2A /* UIStoryboardSegue+NavigationDestination.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIStoryboardSegue+NavigationDestination.swift"; sourceTree = "<group>"; };
 		94B375EA207E8E4800691F2A /* UIAlertController+Alert.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIAlertController+Alert.swift"; sourceTree = "<group>"; };
 		94B375EC207E8E4800691F2A /* DispatchGroup+Enter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "DispatchGroup+Enter.swift"; sourceTree = "<group>"; };
@@ -804,23 +796,6 @@
 			path = UIViewController;
 			sourceTree = "<group>";
 		};
-		948D85292151C25F00E2048F /* UIControlState */ = {
-			isa = PBXGroup;
-			children = (
-				948D852A2151C27500E2048F /* UIControlState+Hashable.swift */,
-			);
-			path = UIControlState;
-			sourceTree = "<group>";
-		};
-		948D852C2151C46900E2048F /* UIButton */ = {
-			isa = PBXGroup;
-			children = (
-				94B375E5207E8E4800691F2A /* UIButton+AttributedTitle.swift */,
-				948D852D2151C4F900E2048F /* UIButton+ImageTint.swift */,
-			);
-			path = UIButton;
-			sourceTree = "<group>";
-		};
 		948D852F2151C7E900E2048F /* UIView */ = {
 			isa = PBXGroup;
 			children = (
@@ -836,14 +811,6 @@
 				94B375E7207E8E4800691F2A /* UIColor+Modify.swift */,
 			);
 			path = UIColor;
-			sourceTree = "<group>";
-		};
-		948D85382151C9B400E2048F /* UIImage */ = {
-			isa = PBXGroup;
-			children = (
-				94B375E8207E8E4800691F2A /* UIImage+Render.swift */,
-			);
-			path = UIImage;
 			sourceTree = "<group>";
 		};
 		948D85392151CAE400E2048F /* UIStoryboardSegue */ = {
@@ -971,11 +938,8 @@
 				948D853B2151CB9500E2048F /* UILabel */,
 				948D853A2151CB0600E2048F /* UIAlertController */,
 				948D85392151CAE400E2048F /* UIStoryboardSegue */,
-				948D85382151C9B400E2048F /* UIImage */,
 				948D85362151C8A400E2048F /* UIColor */,
 				948D852F2151C7E900E2048F /* UIView */,
-				948D852C2151C46900E2048F /* UIButton */,
-				948D85292151C25F00E2048F /* UIControlState */,
 				948D85242151C1DB00E2048F /* UIViewController */,
 			);
 			path = UIKit;
@@ -1448,7 +1412,6 @@
 				944433E821AC76DC00E96A6E /* InvalidOperationError.swift in Sources */,
 				948D84F3215015A300E2048F /* UserDefaults+AGSJSONSerializable.swift in Sources */,
 				94BA7D3A20FD140500C78255 /* AppColors.swift in Sources */,
-				948D852B2151C27500E2048F /* UIControlState+Hashable.swift in Sources */,
 				945CEE7520DDC2AC00CD3E0D /* SVRadialGradientLayer.m in Sources */,
 				946D20AF212F50EB001BF5CC /* AppContextAwareNavigationController.swift in Sources */,
 				94D2713E20D030D900304E27 /* CustomBehavior_ReverseGeocode.swift in Sources */,
@@ -1469,7 +1432,6 @@
 				94B375C0207E8D5600691F2A /* AppFiles.swift in Sources */,
 				948D85262151C1F700E2048F /* UIViewController+Dismiss.swift in Sources */,
 				94D544D720852A5100ED0D04 /* CompassView.swift in Sources */,
-				94B375FB207E8E4800691F2A /* UIButton+AttributedTitle.swift in Sources */,
 				94B375F6207E8E4800691F2A /* AGSPortal+CachedCredentials.swift in Sources */,
 				948794342200CE7B007BC15E /* RichPopupViewController+RichPopupSelectRelatedRecordViewControllerDelegate.swift in Sources */,
 				94D544D620852A5100ED0D04 /* SlideNotificationView.swift in Sources */,
@@ -1494,7 +1456,6 @@
 				94C550F022120A3500DD7E40 /* UITextField+InputAccessoryView.swift in Sources */,
 				9487943A2200CF0F007BC15E /* RichPopupViewController+UINavigationControllerDelegate.swift in Sources */,
 				94B375F2207E8E4800691F2A /* AGSLoadStatus+CustomStringConvertible.swift in Sources */,
-				94B375FE207E8E4800691F2A /* UIImage+Render.swift in Sources */,
 				945B8ACD247874F90078D69A /* MapViewController+ProfileViewControllerDelegate.swift in Sources */,
 				948D85202151C01500E2048F /* AGSArcGISFeatureTable+Edit.swift in Sources */,
 				948D84F82151B46000E2048F /* AGSMapView+Centerpoint.swift in Sources */,
@@ -1514,7 +1475,6 @@
 				940DA9722097825700AB4BF6 /* UILabel+EmptyString.swift in Sources */,
 				948D851E2151BFD900E2048F /* AGSArcGISFeatureTable+Popup.swift in Sources */,
 				948D84CB213F578800E2048F /* AGSMap+GeodatabaseFeatureTable.swift in Sources */,
-				948D852E2151C4F900E2048F /* UIButton+ImageTint.swift in Sources */,
 				4CA46A8522FB973B001A9CB9 /* UIAlertAction.swift in Sources */,
 				9487944222022777007BC15E /* RichPopupDetailsViewController+UITableViewDataSource.swift in Sources */,
 				94ADD3C821F266AC000A5DB9 /* AGSPopupManager+AttachmentAccess.swift in Sources */,
