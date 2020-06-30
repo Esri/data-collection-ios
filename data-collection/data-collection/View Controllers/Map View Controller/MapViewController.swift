@@ -16,13 +16,6 @@ import UIKit
 import ArcGIS
 import ArcGISToolkit
 
-protocol MapViewControllerDelegate: AnyObject {
-    func mapViewController(_ mapViewController: MapViewController, didSelect extent: AGSGeometry)
-    func mapViewController(_ mapViewController: MapViewController, shouldAllowNewFeature: Bool)
-    func mapViewController(_ mapViewController: MapViewController, didUpdateTitle title: String)
-    func mapViewController(_ mapViewController: MapViewController, didUpdateMapViewMode mapViewMode: MapViewController.MapViewMode)
-}
-
 class MapViewController: UIViewController {
     
     enum MapViewMode: Equatable {
