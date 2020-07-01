@@ -2,6 +2,7 @@
 
 - Adds doc table of contents to root README.md and docs/index.md
 - Renames docs/index.md to [docs/README.md](/docs/README.md)
+- Moves sensitive keys out of source code and into Xcode environment variables.
 
 # Release 1.2.0
 
