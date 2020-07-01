@@ -119,6 +119,7 @@
 		948D852B2151C27500E2048F /* UIControlState+Hashable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 948D852A2151C27500E2048F /* UIControlState+Hashable.swift */; };
 		948D852E2151C4F900E2048F /* UIButton+ImageTint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 948D852D2151C4F900E2048F /* UIButton+ImageTint.swift */; };
 		948D85312151C80400E2048F /* UIView+Animation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 948D85302151C80400E2048F /* UIView+Animation.swift */; };
+		94A3D28624AD08F800B3A49D /* AppSecret.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94A3D28524AD08F800B3A49D /* AppSecret.swift */; };
 		94A8103B20B635A000D4BC68 /* AGSQueryParameters+All.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94A8103A20B635A000D4BC68 /* AGSQueryParameters+All.swift */; };
 		94AB811C211E0AD300B9C920 /* AGSLicense+Description.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94AB811B211E0AD300B9C920 /* AGSLicense+Description.swift */; };
 		94ACAD272193B46200C2C824 /* RichPopup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94ACAD262193B46200C2C824 /* RichPopup.swift */; };
@@ -362,6 +363,7 @@
 		948D852A2151C27500E2048F /* UIControlState+Hashable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIControlState+Hashable.swift"; sourceTree = "<group>"; };
 		948D852D2151C4F900E2048F /* UIButton+ImageTint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+ImageTint.swift"; sourceTree = "<group>"; };
 		948D85302151C80400E2048F /* UIView+Animation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Animation.swift"; sourceTree = "<group>"; };
+		94A3D28524AD08F800B3A49D /* AppSecret.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSecret.swift; sourceTree = "<group>"; };
 		94A8103A20B635A000D4BC68 /* AGSQueryParameters+All.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AGSQueryParameters+All.swift"; sourceTree = "<group>"; };
 		94AB811B211E0AD300B9C920 /* AGSLicense+Description.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AGSLicense+Description.swift"; sourceTree = "<group>"; };
 		94ACAD262193B46200C2C824 /* RichPopup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RichPopup.swift; sourceTree = "<group>"; };
@@ -1156,6 +1158,7 @@
 				94B3760B207EAE4600691F2A /* AppDelegate.swift */,
 				94B375A9207E8D5600691F2A /* AppGlobals.swift */,
 				94B3759F207E8D5600691F2A /* AppConfiguration.swift */,
+				94A3D28524AD08F800B3A49D /* AppSecret.swift */,
 				946D20A621250F46001BF5CC /* AppReachability.swift */,
 				94B375A4207E8D5600691F2A /* AppLocation.swift */,
 				94DDEA7B215426D300DA533C /* AppRules.swift */,
@@ -1581,6 +1584,7 @@
 				945F456421F00B1A00F2DCBC /* RichPopupStagedPhotoAttachment.swift in Sources */,
 				945F454A21E8003F00F2DCBC /* PopupAttachmentCell.swift in Sources */,
 				946569292089066800599E55 /* MapViewController+Map.swift in Sources */,
+				94A3D28624AD08F800B3A49D /* AppSecret.swift in Sources */,
 				9487942C21FBE0A0007BC15E /* RichPopupSelectRelatedRecordViewController.swift in Sources */,
 				94B375C6207E8D5600691F2A /* AppLocation.swift in Sources */,
 				9487942921F9354E007BC15E /* PopupAttributeCell.swift in Sources */,

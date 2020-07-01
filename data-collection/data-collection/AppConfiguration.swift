@@ -44,52 +44,6 @@ extension String {
     /// This is used to both build a `URL` to your portal as well as the base URL string used to check reachability.
     /// - Note: exclude `http` or `https`, this is configured in `basePortalURL`.
     static let basePortalDomain = "www.arcgis.com"
-    
-    /// Your organization's ArcGIS Runtime [license](https://developers.arcgis.com/arcgis-runtime/licensing/) key.
-    ///
-    /// - Add your license key:
-    ///   - click **Product** -> **Scheme** -> **Edit Scheme**
-    ///   - select **Run** -> **Arguments**
-    ///   - add **Environment Variable**:
-    ///       - name: `"ARCGIS_LICENSE_KEY"`
-    ///       - value: `"your-license-key"`
-    ///
-    /// _Note, this step is optional during development but required for deployment._
-    /// Licensing the app will remove the "Licensed for Developer Use Only" watermark on the map view.
-    ///
-    static let licenseKey: String = {
-        let licenseKeyEnvironmentKey = "ARCGIS_LICENSE_KEY"
-        guard let licenseKey = ProcessInfo.processInfo.environment[licenseKeyEnvironmentKey] else {
-            #if DEBUG
-            return "fake_inconsequential_license_key"
-            #else
-            fatalError("Scheme must include \"\(licenseKeyEnvironmentKey)\" environment variable.")
-            #endif
-        }
-        return licenseKey
-    }()
-    
-    /// The App's public client ID.
-    ///
-    /// The client ID is used by oAuth to authenticate a user.
-    ///
-    /// - Add your client ID:
-    ///   - click **Product** -> **Scheme** -> **Edit Scheme**
-    ///   - select **Run** -> **Arguments**
-    ///   - add **Environment Variable**:
-    ///       - name: `"ARCGIS_CLIENT_ID"`
-    ///       - value: `"your-client-id"`
-    ///
-    /// _Note, change this to reflect your organization's client ID._
-    /// The client ID can be found in the **Credentials** section of the **Authentication** tab within the [Dashboard of the ArcGIS for Developers site](https://developers.arcgis.com/applications).
-    ///
-    static let clientID: String = {
-        let clientIDEnvironmentKey = "ARCGIS_CLIENT_ID"
-        guard let clientID = ProcessInfo.processInfo.environment[clientIDEnvironmentKey] else {
-            fatalError("Scheme must include \"\(clientIDEnvironmentKey)\" environment variable.")
-        }
-        return clientID
-    }()
 }
 
 enum OAuth {
