@@ -106,22 +106,39 @@ For OAuth configuration, create a new Application in your ArcGIS Portal to obtai
 
 #### 2. Configuring the project
 
-**Configure Redirect URL**
+##### Configure Redirect URL
 
 ![Configure Xcode Project](./docs/images/Configure-Project.png)
 
 1. Open the project in Xcode and browse to the file named `AppConfiguration.swift` located in the `data-collection` directory.
-2. _(Optionally)_ configure your organization's base portal domain and web map item id.
-3. Configure the OAuth Redirect URL.
-   * Set the `urlScheme` property to match the **Redirect URL** scheme (the part *before* the `://`, e.g. `data-collection`).
-   * Set the `urlAuthPath` property to match the **OAuth Redirect Path** (the part *after* the `://`, e.g. `auth`).
-   * (Note how the `urlScheme` and `urlAuthPath` combine to construct the **OAuth Redirect URL**.)
-4. Configure the license key and client ID.
-	* Set `licenseKey` property with your organization's [license](https://developers.arcgis.com/arcgis-runtime/licensing/). This step is optional during development but required for deployment. Licensing the app will remove the _"Licensed for Developer Use Only"_ watermark on the map view.
-	* Set the `clientID` property with the client ID generated when you registered your application (see section above).
-5. Navigate to the **project** -> the **target** named `data-collection` -> **Info** pane, and configure the URL Schemes to the same scheme configured in step 3 (e.g. `data-collection`).
+1. _(Optionally)_ configure your organization's basePortalDomain and web map item id.
+1. Configure the OAuth Redirect URL (`redirectUrl`).
+
+##### Configure URL Scheme
 
 ![Configure Xcode Project Info](./docs/images/Configure-Project-Info.png)
+
+1. Navigate to the **project** -> the **target** named `data-collection` -> **Info** pane, and configure the URL Schemes to the same scheme configured in step 3 (e.g. `data-collection`). <br/>_Note, the URL scheme is the component before the "://" in the redirect url, for example "**data-collection**://auth"._
+
+##### Configure the license key and client ID
+
+The app uses Xcode environment variables to configure the app with sensitive keys at build time. Add environment variables to the the product "Run" scheme.
+
+![Configure Scheme](./docs/images/Configure-Scheme.png)
+
+1. Click **Product** -> **Scheme** -> **Edit Scheme**
+1. Select **Run** -> **Arguments** -> **Environment Variables**
+
+###### License Key
+
+- Name: `ARCGIS_LICENSE_KEY`
+- Value: set your organization's [license](https://developers.arcgis.com/arcgis-runtime/licensing/). This step is optional during development but required for deployment. Licensing the app will remove the _"Licensed for Developer Use Only"_ watermark on the map view.
+
+###### Client ID
+
+- Name: `ARCGIS_CLIENT_ID`
+- Value: set the `clientID` property with the client ID generated when you registered your application (see section above).
+
 
 ## Learn More
 Learn more about Esri open source apps [here](https://developers.arcgis.com/example-apps).
