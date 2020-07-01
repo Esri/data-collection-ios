@@ -15,26 +15,7 @@
 import UIKit
 import ArcGIS
 
-extension URL {
-    /// The URL to the base portal.
-    /// - Note: A `fatalError` is thrown if a URL can't be built from the configuration.
-    static let basePortal: URL = {
-        guard let url = URL(string: "https://\(String.basePortalDomain)") else {
-            fatalError("App Configuration must contain a valid portal service url.")
-        }
-        return url
-    }()
-    
-    /// The URL to the world geocode service.
-    /// Swap out for another geocoder server if you prefer.
-    /// - Note: A `fatalError` is thrown if a URL can't be built from the configuration.
-    static let geocodeService: URL = {
-        guard let url = URL(string: "https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer") else {
-            fatalError("App Configuration must contain a valid geocode service url.")
-        }
-        return url
-    }()
-}
+// MARK:- Configurable properties
 
 extension String {
     /// The ID of your portal's [web map](https://runtime.maps.arcgis.com/home/item.html?id=16f1b8ba37b44dc3884afc8d5f454dd2).
@@ -60,10 +41,32 @@ enum OAuth {
     }()
 }
 
-// MARK: Portal From Configuration
+// MARK:- Derived configurations (do not edit)
 
-extension AGSPortal {
+// MARK:  Derived URLs from configuration
+extension URL {
+    /// The URL to the base portal.
+    /// - Note: A `fatalError` is thrown if a URL can't be built from the configuration.
+    static let basePortal: URL = {
+        guard let url = URL(string: "https://\(String.basePortalDomain)") else {
+            fatalError("App Configuration must contain a valid portal service url.")
+        }
+        return url
+    }()
     
+    /// The URL to the world geocode service.
+    /// Swap out for another geocoder server if you prefer.
+    /// - Note: A `fatalError` is thrown if a URL can't be built from the configuration.
+    static let geocodeService: URL = {
+        guard let url = URL(string: "https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer") else {
+            fatalError("App Configuration must contain a valid geocode service url.")
+        }
+        return url
+    }()
+}
+
+// MARK:- Derived Portal from configuration
+extension AGSPortal {
     /// Build an `AGSPortal` based on the app's configuration.
     /// - Parameter loginRequired: `false` if you intend to access the portal anonymously. `true` if you want to use a credential (the ArcGIS Runtime SDK will present a modal login web view if needed).
     /// - Returns: A new configured `AGSPortal`.
