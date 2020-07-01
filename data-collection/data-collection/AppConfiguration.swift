@@ -49,15 +49,50 @@ extension String {
     static let keychainIdentifier: String = "\(appBundleID).keychain"
     
     /// Your organization's ArcGIS Runtime [license](https://developers.arcgis.com/arcgis-runtime/licensing/) key.
-    /// - This step is optional during development but required for deployment.
-    /// - Licensing the app will remove the "Licensed for Developer Use Only" watermark on the map view.
-    static let licenseKey: String = "your_license_key"
+    ///
+    /// - Add your license key:
+    ///   - click **Product** -> **Scheme** -> **Edit Scheme**
+    ///   - select **Run** -> **Arguments**
+    ///   - add **Environment Variable**:
+    ///       - name: `"ARCGIS_LICENSE_KEY"`
+    ///       - value: `"your-license-key"`
+    ///
+    /// _Note, this step is optional during development but required for deployment._
+    /// Licensing the app will remove the "Licensed for Developer Use Only" watermark on the map view.
+    ///
+    static let licenseKey: String = {
+        let licenseKeyEnvironmentKey = "ARCGIS_LICENSE_KEY"
+        guard let licenseKey = ProcessInfo.processInfo.environment[licenseKeyEnvironmentKey] else {
+            #if DEBUG
+            return "fake_inconsequential_license_key"
+            #else
+            fatalError("Scheme must include \"\(licenseKeyEnvironmentKey)\" environment variable.")
+            #endif
+        }
+        return licenseKey
+    }()
     
     /// The App's public client ID.
-    /// - The client ID is used by oAuth to authenticate a user.
-    /// - The client ID can be found in the **Credentials** section of the **Authentication** tab within the [Dashboard of the ArcGIS for Developers site](https://developers.arcgis.com/applications).
-    /// - Note: Change this to reflect your organization's client ID.
-    static let clientID: String = "h3em0ifYNGfz3uHX"
+    ///
+    /// The client ID is used by oAuth to authenticate a user.
+    ///
+    /// - Add your client ID:
+    ///   - click **Product** -> **Scheme** -> **Edit Scheme**
+    ///   - select **Run** -> **Arguments**
+    ///   - add **Environment Variable**:
+    ///       - name: `"ARCGIS_CLIENT_ID"`
+    ///       - value: `"your-client-id"`
+    ///
+    /// _Note, change this to reflect your organization's client ID._
+    /// The client ID can be found in the **Credentials** section of the **Authentication** tab within the [Dashboard of the ArcGIS for Developers site](https://developers.arcgis.com/applications).
+    ///
+    static let clientID: String = {
+        let clientIDEnvironmentKey = "ARCGIS_CLIENT_ID"
+        guard let clientID = ProcessInfo.processInfo.environment[clientIDEnvironmentKey] else {
+            fatalError("Scheme must include \"\(clientIDEnvironmentKey)\" environment variable.")
+        }
+        return clientID
+    }()
 }
 
 enum OAuth {
