@@ -85,7 +85,7 @@ extension AppDelegate {
     
     static func configCredentialCacheAutoSyncToKeychain() {
         AGSAuthenticationManager.shared().credentialCache.enableAutoSyncToKeychain(
-            withIdentifier: .keychainIdentifier,
+            withIdentifier: "\(appBundleID).keychain",
             accessGroup: nil,
             acrossDevices: false
         )

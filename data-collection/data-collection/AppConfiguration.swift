@@ -45,9 +45,6 @@ extension String {
     /// - Note: exclude `http` or `https`, this is configured in `basePortalURL`.
     static let basePortalDomain = "www.arcgis.com"
     
-    /// Used by the shared `AGSAuthenticationManager` to auto synchronize cached credentials to the device's keychain.
-    static let keychainIdentifier: String = "\(appBundleID).keychain"
-    
     /// Your organization's ArcGIS Runtime [license](https://developers.arcgis.com/arcgis-runtime/licensing/) key.
     ///
     /// - Add your license key:
