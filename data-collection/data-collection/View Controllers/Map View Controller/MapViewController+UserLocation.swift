@@ -35,6 +35,7 @@ extension MapViewController {
         }
     }
     
+    @objc
     func adjustForLocationAuthorizationStatus() {
         
         mapView.locationDisplay.showLocation = appLocation.locationAuthorized

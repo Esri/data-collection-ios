@@ -17,6 +17,14 @@ import ArcGIS
 
 extension MapViewController {
     
+    @objc
+    func adjustForCurrentMap() {
+        clearCurrentPopup()
+        mapViewMode = .defaultView
+        mapView.map = appContext.currentMap
+        loadMapViewMap()
+    }
+    
     func loadMapViewMap() {
         
         addFeatureButton.isEnabled = false

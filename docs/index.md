@@ -1061,26 +1061,41 @@ Changes made to the `AppContext` are broadcast to the rest of the app so it can 
 
 #### App context change handler
 
-Various components of the app needs to be aware of changes to the `AppContext`. These components leverage the `AppContextChangeHandler` to subscribe to these changes. Subscribing to a change follows a simple format with a completion closure containing instructions to execute upon a change to the app context. All app context change closures are performed on the main thread.
+Various components of the app needs to be aware of changes to the `AppContext`. These components leverage the `NotificationCenter` APIs to subscribe to these changes.
 
-An `AppContextChangeHandler` is first instantiated.
+For types that support publishing notifications the first step is to build a notification.
 
 ```swift
-let changeHandler = AppContextChangeHandler()
+extension Notification.Name {
+    static let portalDidChange = Notification.Name("portalDidChange")
+}
+
+extension AppContext {
+    var portalNotification: Notification {
+        Notification(
+            name: .portalDidChange,
+            object: self,
+            userInfo: nil
+        )
+    }
+}
 ```
 
-Then the app builds `AppContextChange`s.
+The next step is to post the notification.
 
 ```swift
-let workModeChange: AppContextChange = .workMode { [weak self] workMode in
-    // ...
-}
+NotificationCenter.default.post(self.portalNotification)
+```
 
-let reachabilityChange: AppContextChange = .reachability { [weak self] reachable in
-    // ...    
-}
+Objects that wish to observe a notification must add an observer. When a notification is posted, objects that are observing the notification will perform the method specified by the selector.
 
-changeHandler.subscribe(toChanges: [workModeChange, reachabilityChange])
+```swift
+NotificationCenter.default.addObserver(
+    self,
+    selector: #selector(adjustForPortal),
+    name: .portalDidChange,
+    object: nil
+)
 ```
 
 ### Model: Pop-up configuration driven

@@ -42,55 +42,67 @@ class ProfileViewController: UITableViewController {
         metaDataCell.appNameVersionLabel.text = Bundle.AppNameVersionString
         metaDataCell.sdkVersionLabel.text = Bundle.ArcGISSDKVersionString
         
-        subscribeToAppContextChanges()
+        // MARK: Work Mode
         
-        adjustFor(workMode: appContext.workMode)
-        adjustFor(portal: appContext.portal)
-        adjustFor(reachable: appReachability.isReachable)
-        adjustFor(lastSync: appContext.mobileMapPackage?.lastSyncDate)
-        adjustFor(hasOfflineMap: appContext.hasOfflineMap)
-    }
-    
-    // MARK:- App Context Changes
-    
-    let changeHandler = AppContextChangeHandler()
-    
-    private func subscribeToAppContextChanges() {
-        
-        let currentPortalChange: AppContextChange = .currentPortal { [weak self] portal in
-            self?.adjustFor(portal: portal)
-        }
-        
-        let workModeChange: AppContextChange = .workMode { [weak self] workMode in
-            self?.adjustFor(workMode: workMode)
-        }
-        
-        let reachabilityChange: AppContextChange = .reachability { [weak self] reachable in
-            self?.adjustFor(reachable: reachable)
-        }
-        
-        let lastSyncChange: AppContextChange = .lastSync { [weak self] date in
-            self?.adjustFor(lastSync: date)
-        }
-        
-        let hasOfflineMapChange: AppContextChange = .hasOfflineMap { [weak self] hasOfflineMap in
-            self?.adjustFor(hasOfflineMap: hasOfflineMap)
-        }
-        
-        changeHandler.subscribe(toChanges:
-            [
-                currentPortalChange,
-                workModeChange,
-                reachabilityChange,
-                lastSyncChange,
-                hasOfflineMapChange
-            ]
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(adjustForWorkMode),
+            name: .workModeDidChange,
+            object: nil
         )
+        
+        adjustForWorkMode()
+        
+        // MARK: Portal
+        
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(adjustForPortal),
+            name: .portalDidChange,
+            object: nil
+        )
+        
+        adjustForPortal()
+        
+        // MARK: Reachability
+        
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(adjustForReachability),
+            name: .reachabilityDidChange,
+            object: nil
+        )
+        
+        adjustForReachability()
+        
+        // MARK: Last Sync Date
+        
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(adjustForLastSyncDate),
+            name: .lastSyncDidChange,
+            object: nil
+        )
+        
+        adjustForLastSyncDate()
+        
+        // MARK: Offline Map
+        
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(adjustForHasOfflineMap),
+            name: .hasOfflineMapDidChange,
+            object: nil
+        )
+        
+        adjustForHasOfflineMap()
     }
     
     // MARK:- Reachability
     
-    private func adjustFor(reachable: Bool) {
+    @objc
+    func adjustForReachability() {
+        let reachable = appReachability.isReachable
         if reachable {
             workOnlineCell.subtitleLabel.isHidden = true
             workOnlineCell.brighten()
@@ -104,8 +116,9 @@ class ProfileViewController: UITableViewController {
     
     // MARK:- Work Mode
     
-    private func adjustFor(workMode: WorkMode) {
-        switch workMode {
+    @objc
+    func adjustForWorkMode() {
+        switch appContext.workMode {
         case .online:
             select(indexPath: .workOnline)
             deselect(indexPath: .workOffline)
@@ -140,7 +153,9 @@ class ProfileViewController: UITableViewController {
         }
     }
     
-    private func adjustFor(hasOfflineMap: Bool) {
+    @objc
+    func adjustForHasOfflineMap() {
+        let hasOfflineMap = appContext.hasOfflineMap
         workOfflineCell.subtitleLabel.isHidden = hasOfflineMap
         if hasOfflineMap {
             synchronizeMapCell.brighten()
@@ -154,8 +169,9 @@ class ProfileViewController: UITableViewController {
     
     // MARK:- Portal
     
-    private func adjustFor(portal: AGSPortal) {
-        if let user = portal.user {
+    @objc
+    func adjustForPortal() {
+        if let user = appContext.portal.user {
             load(user: user)
         }
         else {
@@ -236,8 +252,9 @@ class ProfileViewController: UITableViewController {
         return formatter
     }()
     
-    private func adjustFor(lastSync date: Date?) {
-        if let date = date {
+    @objc
+    func adjustForLastSyncDate() {
+        if let date = appContext.mobileMapPackage?.lastSyncDate {
             synchronizeMapCell.subtitleLabel.isHidden = false
             synchronizeMapCell.subtitleLabel.text = String(
                 format: "last sync %@",

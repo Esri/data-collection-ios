@@ -18,26 +18,30 @@ import Foundation
 /// and adjusts the bar's tint color accordingly.
 ///
 class AppContextAwareNavigationController: UINavigationController {
-    
-    private let changeHandler = AppContextChangeHandler()
-    
+        
     override init(navigationBarClass: AnyClass?, toolbarClass: AnyClass?) {
-        
         super.init(navigationBarClass: navigationBarClass, toolbarClass: toolbarClass)
-        
-        subscribeToWorkModeChange()
-        adjustNavigationBarTintForWorkMode()
+        sharedInit()
     }
     
     required init?(coder aDecoder: NSCoder) {
-        
         super.init(coder: aDecoder)
+        sharedInit()
+    }
+    
+    func sharedInit() {
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(adjustNavigationBarTintForWorkMode),
+            name: .workModeDidChange,
+            object: nil
+        )
         
-        subscribeToWorkModeChange()
         adjustNavigationBarTintForWorkMode()
     }
     
-    private func adjustNavigationBarTintForWorkMode() {
+    @objc
+    func adjustNavigationBarTintForWorkMode() {
         
         if #available(iOS 13.0, *) {
             let navBarAppearance = UINavigationBarAppearance()
@@ -57,14 +61,5 @@ class AppContextAwareNavigationController: UINavigationController {
         // This fixes an issue with iOS 13 where the background color doesn't update.
         isNavigationBarHidden = true
         isNavigationBarHidden = false
-    }
-    
-    private func subscribeToWorkModeChange() {
-        
-        let workModeChange: AppContextChange = .workMode { [weak self] (_) in
-            self?.adjustNavigationBarTintForWorkMode()
-        }
-        
-        changeHandler.subscribe(toChange: workModeChange)
     }
 }

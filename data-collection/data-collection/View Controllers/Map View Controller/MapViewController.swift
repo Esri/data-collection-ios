@@ -26,8 +26,6 @@ class MapViewController: UIViewController {
         case offlineMask
     }
     
-    let changeHandler = AppContextChangeHandler()
-
     @IBOutlet weak var mapView: AGSMapView!
     @IBOutlet weak var smallPopupView: ShrinkingView!
     @IBOutlet weak var popupsContainerView: UIView!
@@ -87,8 +85,33 @@ class MapViewController: UIViewController {
         // Associate the compass view to the map view.
         compassView.mapView = mapView
         
-        // Begin listening to changes to the app context.
-        subscribeToAppContextChanges()
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(adjustForCurrentMap),
+            name: .currentMapDidChange,
+            object: nil
+        )
+        
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(adjustForLocationAuthorizationStatus),
+            name: .locationAuthorizationDidChange,
+            object: nil
+        )
+        
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(adjustForWorkMode),
+            name: .workModeDidChange,
+            object: nil
+        )
+        
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(adjustForReachability),
+            name: .reachabilityDidChange,
+            object: nil
+        )
         
         // Load map from the app context.
         appContext.loadOfflineMobileMapPackageAndSetMapForCurrentWorkMode()
@@ -244,50 +267,39 @@ class MapViewController: UIViewController {
         }
     }
     
-    private func displayInitialReachabilityMessage() {
+    // MARK:- Reachability
     
+    private func displayInitialReachabilityMessage() {
         if !appReachability.isReachable {
             displayReachabilityMessage(isReachable: false)
         }
     }
     
-    private func displayReachabilityMessage(isReachable reachable: Bool) {
-        let connectionMessage = String(format: "Device %@ connection to the network.", (reachable ? "gained" : "lost"))
+    private func displayReachabilityMessage(isReachable reachable: Bool = appReachability.isReachable) {
+        let connectionMessage = String(
+            format: "Device %@ connection to the network.", (reachable ? "gained" : "lost")
+        )
         slideNotificationView.showLabel(withNotificationMessage: connectionMessage, forDuration: 6.0)
     }
     
-    func subscribeToAppContextChanges() {
-        
-        let currentMapChange: AppContextChange = .currentMap { [weak self] currentMap in
-            
-            guard let self = self else { return }
-            
-            self.clearCurrentPopup()
-            self.mapViewMode = .defaultView
-            self.mapView.map = currentMap
-            self.loadMapViewMap()
+    @objc
+    func adjustForReachability() {
+        displayReachabilityMessage()
+    }
+    
+    // MARK:- Work Mode
+    
+    @objc func adjustForWorkMode() {
+        let color: UIColor
+        if case WorkMode.online = appContext.workMode {
+            color = .primary
+            slideNotificationView.messageBackgroundColor = color.lighter
         }
-        
-        let locationAuthorizationChange: AppContextChange = .locationAuthorization { [weak self] authorized in
-            self?.adjustForLocationAuthorizationStatus()
+        else { // WorkMode.offline = appContext.workMode
+            color = .offline
+            slideNotificationView.messageBackgroundColor = color.darker
         }
-
-        let workModeChange: AppContextChange = .workMode { [weak self] workMode in
-            
-            guard let self = self else { return }
-            
-            let color: UIColor = (workMode == .online) ? .primary : .offline
-            
-            self.activityBarView.colors = (color.lighter, color.darker)
-            self.slideNotificationView.messageBackgroundColor = (workMode == .online) ? UIColor.primary.lighter : UIColor.offline.darker
-            self.slideNotificationView.messageTextColor = .contrasting
-        }
-        
-        let reachabilityChange: AppContextChange = .reachability { [weak self] reachable in
-            self?.displayReachabilityMessage(isReachable: reachable)
-        }
-
-        changeHandler.subscribe(toChanges: [currentMapChange, locationAuthorizationChange, workModeChange, reachabilityChange])
+        activityBarView.colors = (color.lighter, color.darker)
     }
 }
 

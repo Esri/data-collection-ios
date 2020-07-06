@@ -22,7 +22,7 @@ import ArcGIS
 /// * Loading AGSMaps from an AGSPortal or an offline AGSMobileMapPackage.
 /// * Managing online and offline work modes.
 
-@objcMembers class AppContext: NSObject {
+class AppContext: NSObject {
     
     // MARK: Portal
     
@@ -37,24 +37,27 @@ import ArcGIS
             portal.load { [weak self] (error: Error?) in
                 
                 guard let self = self else { return }
-
-                guard error == nil else {
-                    print("[Error: Portal Load Status]", error!.localizedDescription)
-                    let isUserCanceledError = (error as NSError?)?.code == NSUserCancelledError
-                    if self.workMode == .online && !isUserCanceledError {
-                        self.currentMap = nil
-                    }
+                
+                defer {
+                    NotificationCenter.default.post(self.portalNotification)
+                }
+                
+                if let error = (error as NSError?),
+                    self.workMode == .online && error.code != NSUserCancelledError {
+                    self.currentMap = nil
                     return
                 }
 
-                let userDescription = self.portal.user != nil ? "signed in (\(self.portal.user!.username ?? "no username"))" : "signed out"
-                print("[Portal] user is \(userDescription).")
+                if self.isLoggedIn {
+                    print("[Portal] user is signed in")
+                }
+                else {
+                    print("[Portal] user is signed out")
+                }
                 
                 if self.workMode == .online {
                     self.setWorkModeOnlineWithMapFromPortal()
                 }
-                
-                appNotificationCenter.post(name: .currentPortalDidChange, object: nil)
             }
         }
     }
@@ -70,7 +73,11 @@ import ArcGIS
     /// The current map is derived from a portal web map, the same web map can be taken offline or can be nil.
     ///
     /// - Note: `MapViewController` updates its AGSMapView's AGSMap upon observed changes.
-    dynamic var currentMap: AGSMap?
+    var currentMap: AGSMap? {
+        didSet {
+            NotificationCenter.default.post(currentMapNotification)
+        }
+    }
     
     var isCurrentMapLoaded: Bool {
         return currentMap?.loadStatus == .loaded
@@ -89,7 +96,11 @@ import ArcGIS
     }
     
     /// A kv-observable boolean value that signifies if the app has a downloaded offline `mobileMapPackage`.
-    dynamic var hasOfflineMap: Bool = false
+    var hasOfflineMap: Bool = false {
+        didSet {
+            NotificationCenter.default.post(hasOfflineMapNotification)
+        }
+    }
     
     /// The app's current work mode.
     ///
@@ -99,7 +110,51 @@ import ArcGIS
     var workMode: WorkMode = WorkMode.retrieveDefaultWorkMode() {
         didSet {
             workMode.storeDefaultWorkMode()
-            appNotificationCenter.post(name: .workModeDidChange, object: nil)
+            NotificationCenter.default.post(workModeNotification)
         }
+    }
+}
+
+// MARK:- Notification Center
+
+extension Notification.Name {
+    static let portalDidChange = Notification.Name("portalDidChange")
+    static let workModeDidChange = Notification.Name("workModeDidChange")
+    static let hasOfflineMapDidChange = Notification.Name("hasOfflineMapDidChange")
+    static let currentMapDidChange = Notification.Name("currentMapDidChange")
+}
+
+extension AppContext {
+    
+    var portalNotification: Notification {
+        Notification(
+            name: .portalDidChange,
+            object: self,
+            userInfo: nil
+        )
+    }
+    
+    var workModeNotification: Notification {
+        Notification(
+            name: .workModeDidChange,
+            object: self,
+            userInfo: nil
+        )
+    }
+    
+    var hasOfflineMapNotification: Notification {
+        Notification(
+            name: .hasOfflineMapDidChange,
+            object: self,
+            userInfo: nil
+        )
+    }
+    
+    var currentMapNotification: Notification {
+        Notification(
+            name: .currentMapDidChange,
+            object: self,
+            userInfo: nil
+        )
     }
 }
