@@ -22,6 +22,8 @@ public enum MapViewControllerExtras : CaseIterable {
     case layers
     // Displays bookmarks.
     case bookmarks
+    // Floating Panel preview.
+    case floatingPanel
 
     public var title: String {
         switch self {
@@ -29,6 +31,8 @@ public enum MapViewControllerExtras : CaseIterable {
             return "Layers"
         case .bookmarks:
             return "Bookmarks"
+        case .floatingPanel:
+            return "Floating Panel"
         }
     }
 }
@@ -52,6 +56,10 @@ extension MapViewController {
             case .bookmarks:
                 extraAction = UIAlertAction(title: extra.title, style: .default, handler: { [weak self] (action) in
                     self?.showBookmarks(barButtonItem)
+                })
+            case .floatingPanel:
+                extraAction = UIAlertAction(title: extra.title, style: .default, handler: { [weak self] (action) in
+                    self?.showFloatingPanel(barButtonItem)
                 })
             }
             
@@ -129,6 +137,51 @@ extension MapViewController {
         extrasVC.modalPresentationStyle = .popover
         extrasVC.popoverPresentationController?.barButtonItem = barButtonItem
         present(extrasVC, animated: true)
+    }
+    
+    func showFloatingPanel(_ barButtonItem: UIBarButtonItem?) {
+        let floatingPanelVC: FloatingPanelViewController?
+//        let extrasVC: UINavigationController
+
+        // Create the FloatingPanelViewController.
+        // Create and configure the view controller.
+        
+        // Get the bundle and then the storyboard for the LayerContentsTableViewController.
+        let bundle = Bundle(for: LayerContentsTableViewController.self)
+        let storyboard = UIStoryboard(name: "FloatingPanelViewController", bundle: bundle)
+        // Create the layerContentsTableViewController from the storyboard.
+        floatingPanelVC = storyboard.instantiateInitialViewController() as? FloatingPanelViewController
+
+        guard let floatingPanelViewController = floatingPanelVC else { return }
+        floatingPanelViewController.title = MapViewControllerExtras.floatingPanel.title
+        
+        // Add a done button.
+        let doneButton = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(done))
+        floatingPanelViewController.navigationItem.leftBarButtonItem = doneButton
+//
+//        let extrasVC = UINavigationController(rootViewController: floatingPanelViewController)
+//
+//        // Display the extrasVC as a popover controller.
+//        extrasVC.modalPresentationStyle = .popover
+//        extrasVC.popoverPresentationController?.barButtonItem = barButtonItem
+//        present(extrasVC, animated: true)
+        
+//        Add vc.view as subview, moveToParent, set constraints, etc.
+        addChild(floatingPanelViewController)
+        self.view.addSubview(floatingPanelViewController.view)
+        
+        floatingPanelViewController.view.translatesAutoresizingMaskIntoConstraints = false
+        let topConstraint = floatingPanelViewController.view.topAnchor.constraint(equalTo: (view.safeAreaLayoutGuide.topAnchor), constant: -floatingPanelViewController.edgeInsets.top)
+        let trailingConstraint = floatingPanelViewController.view.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: floatingPanelViewController.edgeInsets.right - 200)
+        
+        NSLayoutConstraint.activate([
+            floatingPanelViewController.view.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: floatingPanelViewController.edgeInsets.left),
+            trailingConstraint,
+            topConstraint,
+            floatingPanelViewController.view.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -floatingPanelViewController.edgeInsets.bottom)
+        ])
+
+        floatingPanelViewController.didMove(toParent: self)
     }
 
     @objc
