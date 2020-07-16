@@ -5,6 +5,8 @@
     - Introducing a user experience familiar to iOS users and more in line with the HIG.
     - Introduces calcite iconography.
     - Simplifies app architecture.
+- Adds table of contents to root README.md and docs/index.md
+- Renames docs/index.md to [docs/README.md](/docs/README.md)
 
 # Release 1.2.0
 
@@ -33,7 +35,7 @@
 
 - Fix for [iPad crash](https://github.com/Esri/data-collection-ios/issues/209).
 - Fix for [illegal attachment name characters](https://github.com/Esri/data-collection-ios/issues/188).
-- Adds [app documentation](/docs/index.md) from the ArcGIS for Developers site.
+- Adds [app documentation](/docs/README.md) from the ArcGIS for Developers site.
 
 # Release 1.1.1
 
