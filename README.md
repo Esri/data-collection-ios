@@ -16,6 +16,7 @@
 - [Learn More](#learn-more)   
 - [Requirements](#requirements)   
 - [Contributing](#contributing)   
+- [MDTOC](#mdtoc)   
 - [Licensing](#licensing)   
    - [3rd Party Component Licensing](#3rd-party-component-licensing)   
 
@@ -140,6 +141,9 @@ Anyone and everyone is welcome to [contribute](CONTRIBUTING.md). We do accept pu
 2. Report issues
 3. Contribute code
 4. Improve documentation
+
+## MDTOC
+Generation of this and other document's table of contents in this repository was performed using the [MDTOC package for Atom](https://atom.io/packages/atom-mdtoc).
 
 ## Licensing
 Copyright 2018 Esri
