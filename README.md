@@ -20,7 +20,7 @@
    - [3rd Party Component Licensing](#3rd-party-component-licensing)   
 
 <!-- /MDTOC -->
-
+---
 [Data Collection for iOS](https://developers.arcgis.com/example-apps/data-collection-ios/) shows how a robust application can be built around the ArcGIS Platform using the ArcGIS Runtime SDK for iOS and Swift. It demonstrates best practices around some simple but key functionality of the ArcGIS Runtime. Using your organization's web maps, you can use Data Collection as is, or extend it to meet your specific needs.
 
 ![General UI](./docs/images/General-UI.png)
@@ -48,7 +48,7 @@ The project also demonstrates some patterns for building real-world apps around 
 * Swift KVO & NotificationCenter state handling
 
 ## Detailed Documentation
-See the docs [README.md](./docs/README.md) for a detailed explanation of the application, including its architecture and how it leverages the ArcGIS platform, as well as how you can begin using the app right away.
+Read the [docs](./docs/README.md) for a detailed explanation of the application, including its architecture and how it leverages the ArcGIS platform, as well as how you can begin using the app right away.
 
 ## Get Started
 You will need [Xcode 11](https://itunes.apple.com/us/app/xcode/id497799835?mt=12) and the [ArcGIS Runtime SDK for iOS](https://developers.arcgis.com/ios/latest/swift/guide/install.htm#ESRI_SECTION1_D57435A2BEBC4D29AFA3A4CAA722506A) (v100.8 or later) installed locally.
