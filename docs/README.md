@@ -74,7 +74,7 @@
    - [Privacy strings](#privacy-strings)   
 
 <!-- /MDTOC -->
-
+---
 ## Description
 
 Collect data in an app consuming your organization's web maps driven by the ArcGIS Web GIS information model. We provide an example *Trees of Portland* web map and dataset to get you started.
