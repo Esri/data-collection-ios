@@ -5,7 +5,7 @@
     - Introducing a user experience familiar to iOS users and more in line with the HIG.
     - Introduces calcite iconography.
     - Simplifies app architecture.
-- Adds table of contents to root README.md and docs/index.md
+- Adds doc table of contents to root README.md and docs/README.md
 - Renames docs/index.md to [docs/README.md](/docs/README.md)
 
 # Release 1.2.0
