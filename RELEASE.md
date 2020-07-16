@@ -1,6 +1,6 @@
 # Release 1.2.1
 
-- Adds table of contents to root README.md and docs/index.md
+- Adds doc table of contents to root README.md and docs/index.md
 - Renames docs/index.md to [docs/README.md](/docs/README.md)
 
 # Release 1.2.0
