@@ -1,5 +1,27 @@
 # Data Collection iOS
 
+<!-- MDTOC maxdepth:6 firsth1:0 numbering:0 flatten:0 bullets:1 updateOnSave:1 -->
+
+- [Features](#features)   
+- [Best Practices](#best-practices)   
+- [Detailed Documentation](#detailed-documentation)   
+- [Get Started](#get-started)   
+   - [Fork the repo](#fork-the-repo)   
+   - [Clone the repo](#clone-the-repo)   
+      - [Command line Git](#command-line-git)   
+   - [Configuring a Remote for a Fork](#configuring-a-remote-for-a-fork)   
+   - [Configure the app](#configure-the-app)   
+      - [1. Register an Application](#1-register-an-application)   
+      - [2. Configuring the project](#2-configuring-the-project)   
+- [Learn More](#learn-more)   
+- [Requirements](#requirements)   
+- [Contributing](#contributing)   
+- [MDTOC](#mdtoc)   
+- [Licensing](#licensing)   
+   - [3rd Party Component Licensing](#3rd-party-component-licensing)   
+
+<!-- /MDTOC -->
+---
 [Data Collection for iOS](https://developers.arcgis.com/example-apps/data-collection-ios/) shows how a robust application can be built around the ArcGIS Platform using the ArcGIS Runtime SDK for iOS and Swift. It demonstrates best practices around some simple but key functionality of the ArcGIS Runtime. Using your organization's web maps, you can use Data Collection as is, or extend it to meet your specific needs.
 
 ![General UI](./docs/images/General-UI.png)
@@ -26,6 +48,9 @@ The project also demonstrates some patterns for building real-world apps around 
 * Swift class extensions
 * Swift KVO & NotificationCenter state handling
 
+## Detailed Documentation
+Read the [docs](./docs/README.md) for a detailed explanation of the application, including its architecture and how it leverages the ArcGIS platform, as well as how you can begin using the app right away.
+
 ## Get Started
 You will need [Xcode 11](https://itunes.apple.com/us/app/xcode/id497799835?mt=12) and the [ArcGIS Runtime SDK for iOS](https://developers.arcgis.com/ios/latest/swift/guide/install.htm#ESRI_SECTION1_D57435A2BEBC4D29AFA3A4CAA722506A) (v100.8 or later) installed locally.
 
@@ -41,7 +66,7 @@ Once you have forked the repo, you can make a clone and open `data-collection.xc
   >
   >`git clone --recursive [URL to forked Git repo]`
   >
-  > If you've already cloned the repo without the submodule, you can load the submodule using 
+  > If you've already cloned the repo without the submodule, you can load the submodule using
   >
   >`git submodule update --init`
 
@@ -88,8 +113,8 @@ For OAuth configuration, create a new Application in your ArcGIS Portal to obtai
 1. Open the project in Xcode and browse to the file named `AppConfiguration.swift` located in the `data-collection` directory.
 2. _(Optionally)_ configure your organization's base portal domain and web map item id.
 3. Configure the OAuth Redirect URL.
-   * Set the `urlScheme` property to match the **Redirect URL** scheme (the part *before* the `://`, e.g. `data-collection`). 
-   * Set the `urlAuthPath` property to match the **OAuth Redirect Path** (the part *after* the `://`, e.g. `auth`). 
+   * Set the `urlScheme` property to match the **Redirect URL** scheme (the part *before* the `://`, e.g. `data-collection`).
+   * Set the `urlAuthPath` property to match the **OAuth Redirect Path** (the part *after* the `://`, e.g. `auth`).
    * (Note how the `urlScheme` and `urlAuthPath` combine to construct the **OAuth Redirect URL**.)
 4. Configure the license key and client ID.
 	* Set `licenseKey` property with your organization's [license](https://developers.arcgis.com/arcgis-runtime/licensing/). This step is optional during development but required for deployment. Licensing the app will remove the _"Licensed for Developer Use Only"_ watermark on the map view.
@@ -116,6 +141,9 @@ Anyone and everyone is welcome to [contribute](CONTRIBUTING.md). We do accept pu
 2. Report issues
 3. Contribute code
 4. Improve documentation
+
+## MDTOC
+Generation of this and other document's table of contents in this repository was performed using the [MDTOC package for Atom](https://atom.io/packages/atom-mdtoc).
 
 ## Licensing
 Copyright 2018 Esri

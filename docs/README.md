@@ -1,3 +1,80 @@
+# Contents
+
+<!-- MDTOC maxdepth:6 firsth1:0 numbering:0 flatten:0 bullets:1 updateOnSave:1 -->
+
+- [Description](#description)   
+   - [Generic application](#generic-application)   
+   - [Trees of Portland](#trees-of-portland)   
+   - [Custom behavior](#custom-behavior)   
+- [Using the app](#using-the-app)   
+   - [Manage the app's context](#manage-the-apps-context)   
+      - [Sign in and out of Portal](#sign-in-and-out-of-portal)   
+      - [App work mode](#app-work-mode)   
+   - [View map extras](#view-map-extras)   
+   - [View map bookmarks](#view-map-bookmarks)   
+   - [View the map's layers](#view-the-maps-layers)   
+   - [Identify map features](#identify-map-features)   
+   - [Add map feature](#add-map-feature)   
+   - [Rich pop-ups](#rich-pop-ups)   
+   - [View and edit data with pop-ups](#view-and-edit-data-with-pop-ups)   
+      - [View a pop-up](#view-a-pop-up)   
+      - [Edit a feature](#edit-a-feature)   
+- [Using web maps](#using-web-maps)   
+   - [Configure web map & feature services for data collection](#configure-web-map-feature-services-for-data-collection)   
+      - [Map title](#map-title)   
+      - [Organizing feature layers](#organizing-feature-layers)   
+      - [Feature layer visibility range](#feature-layer-visibility-range)   
+      - [Enable editing on feature layers and tables](#enable-editing-on-feature-layers-and-tables)   
+      - [Enable pop-up on feature layers and tables](#enable-pop-up-on-feature-layers-and-tables)   
+      - [Configure pop-up on feature layers and tables](#configure-pop-up-on-feature-layers-and-tables)   
+      - [Enable attachments on feature layers](#enable-attachments-on-feature-layers)   
+- [Identity model](#identity-model)   
+   - [Public map, social login](#public-map-social-login)   
+- [Using map definition & pop-up configurations to drive app behavior](#using-map-definition-pop-up-configurations-to-drive-app-behavior)   
+   - [Map identify rules](#map-identify-rules)   
+   - [Small pop-up view rules](#small-pop-up-view-rules)   
+   - [Add feature rules](#add-feature-rules)   
+   - [Pop-up view rules](#pop-up-view-rules)   
+      - [View mode](#view-mode)   
+      - [Edit mode](#edit-mode)   
+- [Consuming ArcGIS](#consuming-arcgis)   
+   - [Identifying map features](#identifying-map-features)   
+   - [Offline map jobs](#offline-map-jobs)   
+      - [Download map offline](#download-map-offline)   
+      - [Synchronize offline map](#synchronize-offline-map)   
+      - [Job status view controller](#job-status-view-controller)   
+      - [Deleting offline map](#deleting-offline-map)   
+   - [Querying feature tables](#querying-feature-tables)   
+      - [Query for all features](#query-for-all-features)   
+      - [Query for related features](#query-for-related-features)   
+      - [Spatial query](#spatial-query)   
+   - [Editing features](#editing-features)   
+      - [Creating features](#creating-features)   
+      - [Rich pop-up](#rich-pop-up)   
+      - [Editing features lifecycle](#editing-features-lifecycle)   
+      - [Editing related records](#editing-related-records)   
+      - [Editing attachments](#editing-attachments)   
+   - [Reverse geocoding](#reverse-geocoding)   
+- [Architecture](#architecture)   
+   - [App configuration](#app-configuration)   
+   - [App context](#app-context)   
+      - [App context change handler](#app-context-change-handler)   
+   - [Model: Pop-up configuration driven](#model-pop-up-configuration-driven)   
+   - [View: storyboards](#view-storyboards)   
+      - [Custom views](#custom-views)   
+   - [Controller: app context aware](#controller-app-context-aware)   
+   - [App location](#app-location)   
+   - [Network reachability manager](#network-reachability-manager)   
+   - [Ephemeral cache](#ephemeral-cache)   
+   - [File manager](#file-manager)   
+   - [App defaults](#app-defaults)   
+   - [App colors & fonts](#app-colors-fonts)   
+   - [App errors](#app-errors)   
+- [Xcode project configuration](#xcode-project-configuration)   
+   - [Privacy strings](#privacy-strings)   
+
+<!-- /MDTOC -->
+---
 ## Description
 
 Collect data in an app consuming your organization's web maps driven by the ArcGIS Web GIS information model. We provide an example *Trees of Portland* web map and dataset to get you started.
@@ -63,13 +140,13 @@ The app supports a workflow for users in the field with the requirement to work 
 
 **Online Work Mode**
 
-At initial launch the app loads the configured portal's public web map. The map can identify features and make edits. Edits can be made to the web map including adding new, updating existing and deleting records. 
+At initial launch the app loads the configured portal's public web map. The map can identify features and make edits. Edits can be made to the web map including adding new, updating existing and deleting records.
 
 > Because *Trees of Portland* is a public web map with public layers it does not require authentication for access.
 
 **Offline Work Mode**
 
-A user may need to collect data in a location where they are disconnected from the network. The app allows the user to take a web map offline. 
+A user may need to collect data in a location where they are disconnected from the network. The app allows the user to take a web map offline.
 
 > Because *Trees of Portland* uses a premium content basemap, a user must be authenticated to fully take the web map offline.
 
@@ -81,7 +158,7 @@ When taking the web map offline, the app asks the user to specify the area of th
 
 Edits made to the offline mobile map's geodatabase remain offline until the user returns to a network connected environment where then they can bi-directionally synchronize changes made to the offline geodatabase with those made to the online web map.
 
-If a user elects to delete the offline map, the app deletes the offline mobile map package from the device's documents directory and switches to online work mode. 
+If a user elects to delete the offline map, the app deletes the offline mobile map package from the device's documents directory and switches to online work mode.
 
 > A user can resume work online without deleting the offline map.
 
@@ -195,7 +272,7 @@ The app's behavior is configuration driven and the following configuration princ
 
 #### Map title
 
-The web map's title becomes the title of the map in the map view's navigation bar. 
+The web map's title becomes the title of the map in the map view's navigation bar.
 
 > A succinct, descriptive title is recommended because some screen sizes are quite small.
 
@@ -272,7 +349,7 @@ iOS routes the redirect URL through the `UIApplicationDelegate` which the app pa
 ``` Swift
 // UIApplicationDelegate function called when "data-collection://auth" is opened.
 func application(_ app: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any] = [:]) -> Bool {
-    
+
     // Pass the OAuth callback through to the ArcGIS Runtime helper function
     AGSApplicationDelegate.shared().application(app, open: url, options: options)
 
@@ -446,7 +523,7 @@ The app demonstrates best practices for consuming the ArcGIS Runtime iOS SDK.
 
 ### Identifying map features
 
-The app's `MapViewController` specifies itself as the maps view's `AGSGeoViewTouchDelegate` and thus the `MapViewController` can recieve touch delegate messages including the message sent when the user taps the `AGSMapView`. The app uses this opportunity to identify features contained in layers of the `geoView`. 
+The app's `MapViewController` specifies itself as the maps view's `AGSGeoViewTouchDelegate` and thus the `MapViewController` can recieve touch delegate messages including the message sent when the user taps the `AGSMapView`. The app uses this opportunity to identify features contained in layers of the `geoView`.
 
 ```swift
 func geoView(_ geoView: AGSGeoView, didTapAtScreenPoint screenPoint: CGPoint, mapPoint: AGSPoint) {
@@ -467,7 +544,7 @@ The SDK facilitates taking a web map offline and synchronizing changes. The app 
 
 ```swift
 enum OfflineMapJobConstruct {
-    
+
     case downloadMapOffline(AGSMap, URL, AGSEnvelope, Double)
     case syncOfflineMap(AGSMap)
     // ...
@@ -479,7 +556,7 @@ Each case knows how to generate a job based on the parameters supplied to it.
 ```swift
 enum OfflineMapJobConstruct {
     // ...
-    func generateJob() -> AGSJob 
+    func generateJob() -> AGSJob
 }
 ```
 
@@ -501,13 +578,13 @@ Before generating an offline map job, the app asks the user to establish the are
 
 ```swift
 extension AGSMapView {
-    
+
     func convertExtent(fromRect rect: CGRect) throws -> AGSGeometry {
-        
+
         guard bounds.contains(rect) else {
             throw MapViewError.rectOutsideOfBounds
         }
-        
+
         let nw = rect.origin
         let ne = CGPoint(x: rect.maxX, y: rect.minY)
         let se = CGPoint(x: rect.maxX, y: rect.maxY)
@@ -534,7 +611,7 @@ The app gets the current `AGSMap`'s scale (`Double`) and retrieves a temporary f
 
   Returns: AGSGenerateOfflineMapJob
  */
- 
+
 func generateJob() -> AGSJob {
   // ...
   case .downloadMapOffline(let map, let directory, let extent, let scale):
@@ -560,7 +637,7 @@ Synchronizing a map is even more straightforward than downloading a map. The app
 
   Returns: AGSOfflineMapSyncJob
  */
- 
+
 func generateJob() -> AGSJob {
   // ...
   case .syncOfflineMap(let map):
@@ -597,7 +674,7 @@ mapJob.start(statusHandler: nil) { (result, error) in
 
 #### Deleting offline map
 
-Deleting an offline map is not handled by the ArcGIS SDK but rather by the `FileManager`. Simply deleting the contents on disk is enough to delete the offline map. 
+Deleting an offline map is not handled by the ArcGIS SDK but rather by the `FileManager`. Simply deleting the contents on disk is enough to delete the offline map.
 
 > Remember to remove references to the map in memory as well.
 
@@ -617,11 +694,11 @@ The app queries for all records in a table under the circumstance where a user w
 extension AGSArcGISFeatureTable {
 
     func queryAllFeatures(sorted: AGSOrderBy? = nil, completion: @escaping (AGSFeatureQueryResult?, Error?) -> Void) {
-        
+
         // setting the SQL-like where clause to "1 = 1" fetches all results
         let queryParams = AGSQueryParameters()
         queryParams.whereClause = "1 = 1"
-        
+
         if let sort = sorted {
             queryParams.orderByFields.append(sort)
         }
@@ -650,11 +727,11 @@ There are a number of cases where the app queries a feature for its related reco
 
 ```swift
 extension AGSArcGISFeatureTable {
-    
+
     func queryRelatedFeatures(forFeature feature: AGSArcGISFeature, relationship: AGSRelationshipInfo, completion: @escaping ([AGSRelatedFeatureQueryResult]?, Error?)->()) {
-        
+
         let parameters = AGSRelatedQueryParameters(relationshipInfo: relationship)
-        
+
         if let serviceFeatureTable = self as? AGSServiceFeatureTable {
             let fields = AGSQueryFeatureFields.loadAll
             serviceFeatureTable.queryRelatedFeatures(for: feature, parameters: parameters, queryFeatureFields: fields, completion: completion)
@@ -674,26 +751,26 @@ An additional layer of abstraction has been built that converts the results from
 
 ```swift
 extension AGSArcGISFeatureTable {
-    
+
     func queryRelatedFeaturesAsPopups(forFeature feature: AGSArcGISFeature, relationship: AGSRelationshipInfo, completion: @escaping ([AGSPopup]?, Error?)->()) {
-        
+
         queryRelatedFeatures(forFeature: feature, relationship: relationship) { (results, error) in
-            
+
             guard error == nil else {
                 completion(nil, error!)
                 return
             }
-            
+
             guard let result = results?.first, let features = result.featureEnumerator().allObjects as? [AGSArcGISFeature] else {
                 completion(nil, FeatureTableError.queryResultsMissingFeatures)
                 return
             }
-            
+
             guard let popups = features.asPopups else {
                 completion(nil, FeatureTableError.isNotPopupEnabled)
                 return
             }
-            
+
             completion(popups, nil)
         }
     }
@@ -730,11 +807,11 @@ When we create a new feature, we must also take the next step and build a pop-up
 extension AGSArcGISFeatureTable {
 
     func createPopup() -> AGSPopup? {
-        
+
         guard canAddFeature, let popupDefinition = popupDefinition, let feature = createFeature() as? AGSArcGISFeature else {
             return nil
         }
-        
+
         return AGSPopup(geoElement: feature, popupDefinition: popupDefinition)
     }
 }
@@ -746,13 +823,13 @@ After creating a new pop-up from the table, the app builds a `RichPopup`.
 
 ```swift
 class RichPopup: AGSPopup {
-    
+
     // MARK: Initializer
-    
+
     init(popup: AGSPopup) {
         super.init(geoElement: popup.geoElement, popupDefinition: popup.popupDefinition)
     }
-    
+
     // MARK: Relationships
 
     /// A data structure that contains related records of the feature.
@@ -769,30 +846,30 @@ A `RichPopup` augments `AGSPopup` by maintaining a instance of `Relationships`, 
 
 ```swift
 class Relationships: AGSLoadableBase {
-    
+
     weak private(set) var popup: AGSPopup?
-    
+
     init?(popup: AGSPopup) {
-        
+
         guard
             let feature = popup.geoElement as? AGSArcGISFeature,
             let featureTable = feature.featureTable as? AGSArcGISFeatureTable,
             featureTable.layerInfo != nil else {
             return nil
         }
-        
+
         self.popup = popup
     }
-    
+
     private(set) var manyToOne = [ManyToOneRelationship]()
-    
+
     private(set) var oneToMany = [OneToManyRelationship]()
-    
+
     // ...
 }
 ```
 
-`Relationships` is responsible for maintaining lists of relationships of different types (one-to-many and many-to-one). 
+`Relationships` is responsible for maintaining lists of relationships of different types (one-to-many and many-to-one).
 
 #### Editing features lifecycle
 
@@ -808,27 +885,27 @@ Updates are performed by passing a new value for a field of the pop-up. If the u
 
 ```swift
 try? recordsManager.updateValue(value, field: field)
-``` 
+```
 
 If the user decides to discard the changes to the feature, the `RichPopupManager` first cancels changes to each many-to-one record before cancelling the editing session (also deleting the copied attributes) and finally discarding any staged attachments.
 
 ```swift
 override func cancelEditing() {
-    
+
     if let relationships = richPopup.relationships, relationships.loadStatus == .loaded {
-        
+
         // First, all staged many-to-one record changes are canceled.
         // Only many-to-one related records can be edited during an editing session.
         let manyToOne = relationships.manyToOne
-        
+
         manyToOne.forEach { (manager) in
             manager.cancelChange()
         }
     }
-    
+
     // Call corresponding super class method.
     super.cancelEditing()
-    
+
     // Then, discard any staged attachments (resetting the attachments to the condition before the editing session started).
     richPopupAttachmentManager?.discardStagedAttachments()
 }
@@ -838,51 +915,51 @@ And if the user decides to persist changes to the feature, the `RichPopupManager
 
 ```swift
 override func finishEditing(completion: @escaping (Error?) -> Void) {
-    
+
     var relatedRecordsErrors = [Error]()
-    
+
     // First, all staged many-to-one record changes are committed and features are related.
     if let relationships = richPopup.relationships, relationships.loadStatus == .loaded {
-        
+
         let managers = relationships.manyToOne
-        
+
         for manager in managers {
-            
+
             guard let info = manager.relationshipInfo else {
-                
+
                 manager.cancelChange()
                 continue
             }
-            
+
             if let feature = manager.popup?.geoElement as? AGSArcGISFeature,
                 let relatedFeature = manager.relatedPopup?.geoElement as? AGSArcGISFeature {
-                
+
                 manager.commitChange()
                 feature.relate(to: relatedFeature, relationshipInfo: info)
             }
             else {
-                
+
                 if info.isComposite {
                     relatedRecordsErrors.append(RichPopupManagerError.missingManyToOneRelationship(manager.name ?? "Unknown"))
                 }
-                
+
                 manager.cancelChange()
             }
         }
     }
-    
+
     // Then, update any parent one-to-many records.
     let relationships = parentOneToManyManagers.keyEnumerator().allObjects as! [Relationship]
-    
+
     relationships.forEach { (relationship) in
-        
+
         if let parentManager = parentOneToManyManagers.object(forKey: relationship) {
             do {
-                
+
                 guard let feature = popup.geoElement as? AGSArcGISFeature, let featureTable = feature.featureTable as? AGSArcGISFeatureTable else {
                     throw NSError.invalidOperation
                 }
-                
+
                 if featureTable.canUpdate(feature) {
                     try parentManager.update(oneToMany: self.richPopup)
                 }
@@ -898,13 +975,13 @@ override func finishEditing(completion: @escaping (Error?) -> Void) {
             }
         }
     }
-    
+
     // Then, commit all staged (add/delete) attachments.
     richPopupAttachmentManager?.commitStagedAttachments()
-    
+
     // Finally, the manager finishes editing its attributes.
     super.finishEditing { (error) in
-        
+
         if let error = error {
             relatedRecordsErrors.append(error)
         }
@@ -974,18 +1051,18 @@ The *Trees of Portland* story contains a custom behavior that reverse geocodes a
 ```swift
 class AppReverseGeocoderManager: AGSLoadableBase {
     // ...
-    
+
     private var onlineLocatorTask = AGSLocatorTask(url: AppConfiguration.geocodeServiceURL)
-    
+
     private var offlineLocatorTask = AGSLocatorTask(name: "AddressLocator")
-    
+
     override func doStartLoading(_ retrying: Bool) {
-        
+
         let dispatchGroup = DispatchGroup()
         var loadError: Error? = nil
-        
+
         dispatchGroup.enter(n: 2)
-        
+
         onlineLocatorTask.load { (error) in
             if error != nil {
                 print("[Error] Online Locator Task error", error!.localizedDescription)
@@ -993,7 +1070,7 @@ class AppReverseGeocoderManager: AGSLoadableBase {
             }
             dispatchGroup.leave()
         }
-        
+
         offlineLocatorTask.load { (error) in
             if error != nil {
                 print("[Error] Offline Locator Task error", error!.localizedDescription)
@@ -1001,7 +1078,7 @@ class AppReverseGeocoderManager: AGSLoadableBase {
             }
             dispatchGroup.leave()
         }
-        
+
         dispatchGroup.notify(queue: OperationQueue.current?.underlyingQueue ?? .main) { [weak self] in
             self?.loadDidFinishWithError(loadError)
         }
@@ -1016,7 +1093,7 @@ When running a reverse geocode operation, the app selects which `AGSLocatorTask`
 class AppReverseGeocoderManager: AGSLoadableBase {    
     // ...
     internal func reverseGeocode(forPoint point: AGSPoint, completion: @escaping (String?, Error?)->Void) {
-        
+
         load { [weak self] error in
 
             guard let strongSelf = self else { return }
@@ -1025,9 +1102,9 @@ class AppReverseGeocoderManager: AGSLoadableBase {
                 completion(nil, error)
                 return
             }
-            
+
             let locatorTask: AGSLocatorTask
-            
+
             // We want to use the online locator if the work mode is online and the app has reachability.
             if appContext.workMode == .online && appReachability.isReachable {
                 locatorTask = strongSelf.onlineLocatorTask
@@ -1036,21 +1113,21 @@ class AppReverseGeocoderManager: AGSLoadableBase {
             else {
                 locatorTask = strongSelf.offlineLocatorTask
             }
-            
+
             // We need to set the geocode parameters for storage true because the results of this reverse geocode is persisted to a table.
             // Please familiarize yourself with the implications of this credits-consuming operation:
             // https://developers.arcgis.com/rest/geocode/api-reference/geocoding-free-vs-paid.htm
             let params = AGSReverseGeocodeParameters()
             params.forStorage = true
-            
+
             // Perform the reverse geocode task.
             locatorTask.reverseGeocode(withLocation: point, parameters: params) { (geoCodeResults: [AGSGeocodeResult]?, error: Error?) in
-                
+
                 guard error == nil else {
                     completion(nil, error)
                     return
                 }
-                
+
                 guard let results = geoCodeResults,
                     let first = results.first,
                     let attributesDict = first.attributes,
@@ -1141,7 +1218,7 @@ All views are built using Interface Builder and storyboards. The root view contr
 
 #### Custom views
 
-The app ships with a number of custom views with UI that extend beyond what is provided by UIKit. 
+The app ships with a number of custom views with UI that extend beyond what is provided by UIKit.
 
 **Slide Notification View**
 
@@ -1171,7 +1248,7 @@ Some view controllers are made aware of changes to the app context so they may u
 
 ### App location
 
-If the user has granted the app permission, the app shows the user their location on an `AGSMap` and to allow a user to zoom to their location. The `AGSMapView` comes with support for asking the user for permission to access the device's location and displaying the user's location on a map, out of the box. 
+If the user has granted the app permission, the app shows the user their location on an `AGSMap` and to allow a user to zoom to their location. The `AGSMapView` comes with support for asking the user for permission to access the device's location and displaying the user's location on a map, out of the box.
 
 The app monitors for changes to the location authorization status manually. Using a `CLLocationManager`, the app broadcasts these changes to all app context aware view controllers. This status is monitored by a custom class named `AppLocation`.
 
@@ -1181,21 +1258,21 @@ Working with a web map and accessing an `AGSPortal` require a network connection
 
 ### Ephemeral cache
 
-The utility `EphemeralCache` solves a simple problem that emerges when using storyboards with segues. 
+The utility `EphemeralCache` solves a simple problem that emerges when using storyboards with segues.
 
-To perform a segue, a view controller calls `performSegue(withIdentifier, sender)` where we can expect the scope in which it is called, to end. Later, the overridden view controller life cycle function `prepare(for segue, sender)` is called and is the first access to the destination view controller made available to us. 
+To perform a segue, a view controller calls `performSegue(withIdentifier, sender)` where we can expect the scope in which it is called, to end. Later, the overridden view controller life cycle function `prepare(for segue, sender)` is called and is the first access to the destination view controller made available to us.
 
-A problem arises when the view controller needs to send non-member object reference from itself to the destination view controller. Enter `EphemeralCache`. 
+A problem arises when the view controller needs to send non-member object reference from itself to the destination view controller. Enter `EphemeralCache`.
 
 The `EphemeralCache` is a singleton, thread-safe caching system that allows you to set `AnyObject` that is retrieved and removed from the cache upon the first get of that object. Under the hood it accomplishes this using `NSCache` and a concurrent `DispatchQueue` (with a barrier flag). `EphemeralCache` is used with the following pattern:
 
 ```swift
 // within a view controller responding to an event
 	... {
-	
+
 	// Cache an object (for example, a new popup object)
 	EphemeralCache.set(object: newPopup, forKey: "keys.newPopupKey")
-	
+
 	// trigger segue (for example, to a popup edit view controller)
 	self.performSegue(withIdentifier: "mapViewToPopupEditView", sender: nil)
 }
@@ -1206,7 +1283,7 @@ override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
 	// unwrap segue's destination view controller (for example, a related records popups view controller)
 	// unwrap the object from the cache (for example, the new popup object)
 	if let destination = segue.destination as? RelatedRecordsPopupsViewController, let newPopup = EphmeralCache.get(objectForKey: "keys.newPopupKey") as? AGSPopup {
-	
+
 		// after getting an object from the EphemeralCache, that object no longer exist within the EphmeralCache
 		// set the object to the destination view controller
 		destination.popup = newPop
