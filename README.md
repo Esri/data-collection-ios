@@ -13,6 +13,8 @@
    - [Configure the app](#configure-the-app)   
       - [1. Register an Application](#1-register-an-application)   
       - [2. Configuring the project](#2-configuring-the-project)   
+         - [Configure Redirect URL](#configure-redirect-url)   
+         - [Configure the license key and client ID](#configure-the-license-key-and-client-id)   
 - [Learn More](#learn-more)   
 - [Requirements](#requirements)   
 - [Contributing](#contributing)   
@@ -106,22 +108,33 @@ For OAuth configuration, create a new Application in your ArcGIS Portal to obtai
 
 #### 2. Configuring the project
 
-**Configure Redirect URL**
-
-![Configure Xcode Project](./docs/images/Configure-Project.png)
+##### Configure Redirect URL
 
 1. Open the project in Xcode and browse to the file named `AppConfiguration.swift` located in the `data-collection` directory.
-2. _(Optionally)_ configure your organization's base portal domain and web map item id.
-3. Configure the OAuth Redirect URL.
-   * Set the `urlScheme` property to match the **Redirect URL** scheme (the part *before* the `://`, e.g. `data-collection`).
-   * Set the `urlAuthPath` property to match the **OAuth Redirect Path** (the part *after* the `://`, e.g. `auth`).
-   * (Note how the `urlScheme` and `urlAuthPath` combine to construct the **OAuth Redirect URL**.)
-4. Configure the license key and client ID.
-	* Set `licenseKey` property with your organization's [license](https://developers.arcgis.com/arcgis-runtime/licensing/). This step is optional during development but required for deployment. Licensing the app will remove the _"Licensed for Developer Use Only"_ watermark on the map view.
-	* Set the `clientID` property with the client ID generated when you registered your application (see section above).
-5. Navigate to the **project** -> the **target** named `data-collection` -> **Info** pane, and configure the URL Schemes to the same scheme configured in step 3 (e.g. `data-collection`).
+1. _(Optionally)_ configure your organization's `basePortalDomain` and `webMapItemID`.
+1. Configure the OAuth `redirectUrl`.
 
-![Configure Xcode Project Info](./docs/images/Configure-Project-Info.png)
+##### Configure the license key and client ID
+
+The app uses swift gyb to generate swift source code at build time provided variables stored in a secrets file.
+
+Create a file name `.secrets` in the project's root directory.
+
+```sh
+$ touch data-collection/.secrets
+```
+
+Add your **Client ID** to `.secrets`.
+
+```sh
+echo ARCGIS_CLIENT_ID='your-client-id' >> data-collection/.secrets
+```
+
+Add your organization's [license](https://developers.arcgis.com/arcgis-runtime/licensing/). This step is optional during development but required for deployment. Licensing the app will remove the _"Licensed for Developer Use Only"_ watermark on the map view.
+
+```sh
+echo ARCGIS_LICENSE_KEY='your-license-key' >> data-collection/.secrets
+```
 
 ## Learn More
 Learn more about Esri open source apps [here](https://developers.arcgis.com/example-apps).
