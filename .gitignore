@@ -8,7 +8,7 @@
 .secrets
 
 ## Swift gyb
-scripts/gyb.pyc
+**/gyb.pyc
 
 ## Build generated
 build/
