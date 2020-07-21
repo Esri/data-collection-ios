@@ -116,7 +116,7 @@ For OAuth configuration, create a new Application in your ArcGIS Portal to obtai
 
 ##### Configure the license key and client ID
 
-The app uses swift gyb to generate swift source code at build time provided variables stored in a secrets file.
+The app uses apple's [swift gyb](https://github.com/apple/swift/blob/master/utils/gyb) to generate swift source code at build time provided variables stored in a secrets file.
 
 Create a file name `.secrets` in the project's root directory.
 
