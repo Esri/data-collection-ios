@@ -2,7 +2,7 @@
 
 - Adds doc table of contents to root README.md and docs/index.md
 - Renames docs/index.md to [docs/README.md](/docs/README.md)
-- Uses [swift gyb](https://github.com/apple/swift/blob/master/utils/gyb) for generating app secrets swift source code using environment variables
+- Uses [swift gyb](https://github.com/apple/swift/blob/master/utils/gyb) to generate app secrets swift source code at build time with keys stored in a secrets file
 
 # Release 1.2.0
 
