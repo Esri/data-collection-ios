@@ -11,6 +11,7 @@
 		940DA9722097825700AB4BF6 /* UILabel+EmptyString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 940DA9712097825700AB4BF6 /* UILabel+EmptyString.swift */; };
 		940DA97B2098E1C600AB4BF6 /* AGSArcGISFeatureTable+Query.swift in Sources */ = {isa = PBXBuildFile; fileRef = 940DA97A2098E1C600AB4BF6 /* AGSArcGISFeatureTable+Query.swift */; };
 		9416A19320BF3334001377ED /* Relationship.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9416A19220BF3334001377ED /* Relationship.swift */; };
+		941EE46424C7334300E5529A /* AppSecrets.swift.gyb in Sources */ = {isa = PBXBuildFile; fileRef = 941EE46224C7331D00E5529A /* AppSecrets.swift.gyb */; };
 		942B48F121A714FC0061C47A /* Relationships.swift in Sources */ = {isa = PBXBuildFile; fileRef = 942B48F021A714FC0061C47A /* Relationships.swift */; };
 		9440D35120D4662E005ED582 /* CustomBehavior_NewTreeCondition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9440D35020D4662E005ED582 /* CustomBehavior_NewTreeCondition.swift */; };
 		9440D35C20DC2809005ED582 /* CustomBehavior_TreeSymbology.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9440D35B20DC2809005ED582 /* CustomBehavior_TreeSymbology.swift */; };
@@ -199,6 +200,25 @@
 		E480B9A72421309E00982756 /* LayerContentsDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = E480B9A62421309E00982756 /* LayerContentsDataSource.swift */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXBuildRule section */
+		941EE46124C732B900E5529A /* PBXBuildRule */ = {
+			isa = PBXBuildRule;
+			compilerSpec = com.apple.compilers.proxy.script;
+			filePatterns = "*AppSecrets.swift.gyb";
+			fileType = pattern.proxy;
+			inputFiles = (
+				"",
+			);
+			isEditable = 1;
+			name = "Generates AppSecrets.swift using swift gyb";
+			outputFiles = (
+				"$(DERIVED_FILE_DIR)/$(INPUT_FILE_BASE)",
+			);
+			runOncePerArchitecture = 0;
+			script = "source \"${PROJECT_DIR}/.secrets\"\nARCGIS_CLIENT_ID=$ARCGIS_CLIENT_ID \\\nARCGIS_LICENSE_KEY=$ARCGIS_LICENSE_KEY \\\n\"${PROJECT_DIR}/scripts/gyb\" --line-directive '' -o \"${DERIVED_FILE_DIR}/${INPUT_FILE_BASE}\" \"${INPUT_FILE_PATH}\"\n";
+		};
+/* End PBXBuildRule section */
+
 /* Begin PBXContainerItemProxy section */
 		94FA8B34207BF2CD00972C75 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -250,6 +270,7 @@
 		940DA9712097825700AB4BF6 /* UILabel+EmptyString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+EmptyString.swift"; sourceTree = "<group>"; };
 		940DA97A2098E1C600AB4BF6 /* AGSArcGISFeatureTable+Query.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AGSArcGISFeatureTable+Query.swift"; sourceTree = "<group>"; };
 		9416A19220BF3334001377ED /* Relationship.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Relationship.swift; sourceTree = "<group>"; };
+		941EE46224C7331D00E5529A /* AppSecrets.swift.gyb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = AppSecrets.swift.gyb; sourceTree = "<group>"; };
 		942B48F021A714FC0061C47A /* Relationships.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Relationships.swift; sourceTree = "<group>"; };
 		9440D35020D4662E005ED582 /* CustomBehavior_NewTreeCondition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomBehavior_NewTreeCondition.swift; sourceTree = "<group>"; };
 		9440D35B20DC2809005ED582 /* CustomBehavior_TreeSymbology.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomBehavior_TreeSymbology.swift; sourceTree = "<group>"; };
@@ -1156,6 +1177,7 @@
 				94B3760B207EAE4600691F2A /* AppDelegate.swift */,
 				94B375A9207E8D5600691F2A /* AppGlobals.swift */,
 				94B3759F207E8D5600691F2A /* AppConfiguration.swift */,
+				941EE46224C7331D00E5529A /* AppSecrets.swift.gyb */,
 				946D20A621250F46001BF5CC /* AppReachability.swift */,
 				94B375A4207E8D5600691F2A /* AppLocation.swift */,
 				94DDEA7B215426D300DA533C /* AppRules.swift */,
@@ -1265,6 +1287,7 @@
 				94476EB3226A97F400EED38E /* ShellScript */,
 			);
 			buildRules = (
+				941EE46124C732B900E5529A /* PBXBuildRule */,
 			);
 			dependencies = (
 			);
@@ -1468,6 +1491,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				941EE46424C7334300E5529A /* AppSecrets.swift.gyb in Sources */,
 				94D544BE207FC15D00ED0D04 /* AppContainerViewController+DrawerDelegate.swift in Sources */,
 				945F455421E96DC000F2DCBC /* AGSPopupAttachmentType+Icon.swift in Sources */,
 				948066382091595200A398EA /* RichPopupManager.swift in Sources */,

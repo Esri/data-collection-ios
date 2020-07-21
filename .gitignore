@@ -4,6 +4,12 @@
 
 .DS_Store
 
+## App Secrets
+.secrets
+
+## Swift gyb
+scripts/gyb.pyc
+
 ## Build generated
 build/
 DerivedData/

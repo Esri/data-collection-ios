@@ -15,26 +15,7 @@
 import UIKit
 import ArcGIS
 
-extension URL {
-    /// The URL to the base portal.
-    /// - Note: A `fatalError` is thrown if a URL can't be built from the configuration.
-    static let basePortal: URL = {
-        guard let url = URL(string: "https://\(String.basePortalDomain)") else {
-            fatalError("App Configuration must contain a valid portal service url.")
-        }
-        return url
-    }()
-    
-    /// The URL to the world geocode service.
-    /// Swap out for another geocoder server if you prefer.
-    /// - Note: A `fatalError` is thrown if a URL can't be built from the configuration.
-    static let geocodeService: URL = {
-        guard let url = URL(string: "https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer") else {
-            fatalError("App Configuration must contain a valid geocode service url.")
-        }
-        return url
-    }()
-}
+// MARK:- Configurable properties
 
 extension String {
     /// The ID of your portal's [web map](https://runtime.maps.arcgis.com/home/item.html?id=16f1b8ba37b44dc3884afc8d5f454dd2).
@@ -44,20 +25,6 @@ extension String {
     /// This is used to both build a `URL` to your portal as well as the base URL string used to check reachability.
     /// - Note: exclude `http` or `https`, this is configured in `basePortalURL`.
     static let basePortalDomain = "www.arcgis.com"
-    
-    /// Used by the shared `AGSAuthenticationManager` to auto synchronize cached credentials to the device's keychain.
-    static let keychainIdentifier: String = "\(appBundleID).keychain"
-    
-    /// Your organization's ArcGIS Runtime [license](https://developers.arcgis.com/arcgis-runtime/licensing/) key.
-    /// - This step is optional during development but required for deployment.
-    /// - Licensing the app will remove the "Licensed for Developer Use Only" watermark on the map view.
-    static let licenseKey: String = "your_license_key"
-    
-    /// The App's public client ID.
-    /// - The client ID is used by oAuth to authenticate a user.
-    /// - The client ID can be found in the **Credentials** section of the **Authentication** tab within the [Dashboard of the ArcGIS for Developers site](https://developers.arcgis.com/applications).
-    /// - Note: Change this to reflect your organization's client ID.
-    static let clientID: String = "h3em0ifYNGfz3uHX"
 }
 
 enum OAuth {
@@ -74,7 +41,30 @@ enum OAuth {
     }()
 }
 
-// MARK: Portal From Configuration
+extension URL {
+    /// The URL to the world geocode service.
+    /// Swap out for another geocoder server if you prefer.
+    /// - Note: A `fatalError` is thrown if a URL can't be built from the configuration.
+    static let geocodeService: URL = {
+        guard let url = URL(string: "https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer") else {
+            fatalError("App Configuration must contain a valid geocode service url.")
+        }
+        return url
+    }()
+}
+
+// MARK:- Derived configurations (do not edit)
+
+extension URL {
+    /// The URL to the base portal.
+    /// - Note: A `fatalError` is thrown if a URL can't be built from the configuration.
+    static let basePortal: URL = {
+        guard let url = URL(string: "https://\(String.basePortalDomain)") else {
+            fatalError("App Configuration must contain a valid portal service url.")
+        }
+        return url
+    }()
+}
 
 extension AGSPortal {
     

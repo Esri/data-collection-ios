@@ -85,7 +85,7 @@ extension AppDelegate {
     
     static func configCredentialCacheAutoSyncToKeychain() {
         AGSAuthenticationManager.shared().credentialCache.enableAutoSyncToKeychain(
-            withIdentifier: .keychainIdentifier,
+            withIdentifier: "\(appBundleID).keychain",
             accessGroup: nil,
             acrossDevices: false
         )
@@ -111,7 +111,16 @@ extension AppDelegate {
         do {
             try AGSArcGISRuntimeEnvironment.setLicenseKey(.licenseKey)
         } catch {
+            #if DEBUG
             print("[Error: AGSArcGISRuntimeEnvironment] Error licensing app: \(error.localizedDescription)")
+            #else
+            fatalError(
+                """
+                Before you deploy your ArcGIS Runtime app into production, you are required to license it.
+                Visit https://developers.arcgis.com/pricing/licensing/ to learn more about ArcGIS Runtime licensing.
+                """
+            )
+            #endif
         }
         print("[ArcGIS Runtime License] \(AGSArcGISRuntimeEnvironment.license())")
     }
