@@ -106,30 +106,30 @@ extension MapViewController {
     }
     
     func showBookmarks(_ barButtonItem: UIBarButtonItem?) {
-        let bookmarksVC: BookmarksViewController
+//        let bookmarksVC: BookmarksViewController
         let extrasVC: UINavigationController
 
         // Create the BookmarksViewController if it's not already created.
-        if let existingViewController = bookmarksViewController {
-            bookmarksVC = existingViewController
-        } else {
-            // Create and configure the view controller.
-            bookmarksVC = BookmarksViewController(geoView: mapView)
-            bookmarksVC.title = MapViewControllerExtras.bookmarks.title
-
-            // Add a done button.
-            let doneButton = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(done))
-            bookmarksVC.navigationItem.leftBarButtonItem = doneButton
-            bookmarksVC.delegate = self
-            bookmarksViewController = bookmarksVC
-        }
+//        if let existingViewController = bookmarksViewController {
+//            bookmarksVC = existingViewController
+//        } else {
+//            // Create and configure the view controller.
+//            bookmarksVC = BookmarksViewController(geoView: mapView)
+//            bookmarksVC.title = MapViewControllerExtras.bookmarks.title
+//
+//            // Add a done button.
+//            let doneButton = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(done))
+//            bookmarksVC.navigationItem.leftBarButtonItem = doneButton
+//            bookmarksVC.delegate = self
+//            bookmarksViewController = bookmarksVC
+//        }
      
         // Create the navigation controller if it's not already created.
         if let existingNavigationVC = extrasNavigationController {
             extrasVC = existingNavigationVC
-            extrasVC.setViewControllers([bookmarksVC], animated: false)
+            extrasVC.setViewControllers([bookmarksViewController], animated: false)
         } else {
-            extrasVC = UINavigationController(rootViewController: bookmarksVC)
+            extrasVC = UINavigationController(rootViewController: bookmarksViewController)
             extrasNavigationController = extrasVC
         }
 
@@ -147,17 +147,23 @@ extension MapViewController {
         // Create and configure the view controller.
         
         // Get the bundle and then the storyboard for the LayerContentsTableViewController.
-        let bundle = Bundle(for: LayerContentsTableViewController.self)
+        let bundle = Bundle(for: FloatingPanelViewController.self)
         let storyboard = UIStoryboard(name: "FloatingPanelViewController", bundle: bundle)
         // Create the layerContentsTableViewController from the storyboard.
         floatingPanelVC = storyboard.instantiateInitialViewController() as? FloatingPanelViewController
 
         guard let floatingPanelViewController = floatingPanelVC else { return }
-        floatingPanelViewController.title = MapViewControllerExtras.floatingPanel.title
+        floatingPanelViewController.floatingPanelTitle = MapViewControllerExtras.floatingPanel.title
+        floatingPanelViewController.floatingPanelSubtitle = "Select a bookmark"
+        floatingPanelViewController.image = UIImage(named: "bookmark")
         
-        // Add a done button.
-        let doneButton = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(done))
-        floatingPanelViewController.navigationItem.leftBarButtonItem = doneButton
+        floatingPanelViewController.initialViewController = bookmarksViewController
+        floatingPanelViewController.delegate = self
+        
+//
+//        // Add a done button.
+//        let doneButton = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(done))
+//        floatingPanelViewController.navigationItem.rightBarButtonItem = doneButton
 //
 //        let extrasVC = UINavigationController(rootViewController: floatingPanelViewController)
 //
@@ -171,15 +177,24 @@ extension MapViewController {
         self.view.addSubview(floatingPanelViewController.view)
         
         floatingPanelViewController.view.translatesAutoresizingMaskIntoConstraints = false
-        let topConstraint = floatingPanelViewController.view.topAnchor.constraint(equalTo: (view.safeAreaLayoutGuide.topAnchor), constant: -floatingPanelViewController.edgeInsets.top)
-        let trailingConstraint = floatingPanelViewController.view.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: floatingPanelViewController.edgeInsets.right - 200)
         
-        NSLayoutConstraint.activate([
-            floatingPanelViewController.view.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: floatingPanelViewController.edgeInsets.left),
-            trailingConstraint,
-            topConstraint,
-            floatingPanelViewController.view.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -floatingPanelViewController.edgeInsets.bottom)
-        ])
+//        let topConstraint = floatingPanelViewController.view.topAnchor.constraint(equalTo: (view.safeAreaLayoutGuide.topAnchor), constant: floatingPanelViewController.edgeInsets.top)
+//        floatingPanelViewController.resizeableLayoutConstraint = topConstraint
+//        
+//        var trailingConstraint: NSLayoutConstraint
+//        if traitCollection.horizontalSizeClass == .compact {
+//            trailingConstraint = floatingPanelViewController.view.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -floatingPanelViewController.edgeInsets.right)
+//        }
+//        else {
+//            trailingConstraint = floatingPanelViewController.view.trailingAnchor.constraint(equalTo: view.leadingAnchor, constant: 320)
+//        }
+//        
+//        NSLayoutConstraint.activate([
+//            floatingPanelViewController.view.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: floatingPanelViewController.edgeInsets.left),
+//            trailingConstraint,
+//            topConstraint,
+//            floatingPanelViewController.view.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -floatingPanelViewController.edgeInsets.bottom)
+//        ])
 
         floatingPanelViewController.didMove(toParent: self)
     }
@@ -197,4 +212,37 @@ extension MapViewController: BookmarksViewControllerDelegate {
             dismiss(animated: true)
         }
     }
+}
+extension MapViewController: FloatingPanelViewControllerDelegate {
+    func userDidRequestDismissFloatingPanel(_ floatingPanelViewController: FloatingPanelViewController) {
+        // Animate the alpha of the panel to 0.0 then remove from parent
+        UIView.animate(withDuration: 0.5, animations: {
+            floatingPanelViewController.view.alpha = 0.0
+        }) { (_) in
+            floatingPanelViewController.removeFromParent()
+            floatingPanelViewController.view.removeFromSuperview()
+        }
+    }
+    
+//    func hideFloatingPanelViewController(_ floatingPanelViewController: FloatingPanelViewController) {
+//        //remove current constraint
+////        floatingPanelViewController.view.removeConstraint(floatingPanelViewController.resizeableLayoutConstraint)
+//
+////        let hideConstraint = NSLayoutConstraint(item: floatingPanelViewController.view as Any,
+////            attribute: .top,
+////            relatedBy: .equal,
+////            toItem: floatingPanelViewController.view,
+////            attribute: .bottom,
+////            multiplier: 1,
+////            constant: -200)
+////        self.view.addConstraint(hideConstraint)
+//        //animate changes
+////        floatingPanelViewController.view.alpha = 0.0
+//        UIView.animate(withDuration: 0.5, animations: {
+//            floatingPanelViewController.view.alpha = 0.0
+//        }) { (_) in
+//            floatingPanelViewController.removeFromParent()
+//            floatingPanelViewController.view.removeFromSuperview()
+//        }
+//    }
 }
