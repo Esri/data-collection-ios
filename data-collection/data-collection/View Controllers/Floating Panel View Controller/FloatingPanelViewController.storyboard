@@ -16,13 +16,13 @@
                     <visualEffectView key="view" opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KOR-7r-Hou">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
-                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="dMz-ow-6o7">
+                        <view key="contentView" opaque="NO" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="dMz-ow-6o7">
                             <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" heightSizable="YES" flexibleMaxY="YES"/>
                             <subviews>
                                 <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oFx-8g-ePE">
                                     <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
-                                    <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LOa-Fl-a4f">
+                                    <view key="contentView" opaque="NO" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LOa-Fl-a4f">
                                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     </view>
@@ -142,11 +142,11 @@
                                                 <constraint firstAttribute="height" constant="8" id="Mdu-04-Vak"/>
                                             </constraints>
                                         </view>
-                                        <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YoM-sw-2k6">
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YoM-sw-2k6">
                                             <rect key="frame" x="0.0" y="68" width="414" height="828"/>
                                         </view>
                                         <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8Nn-6x-IaX" userLabel="BottomHandleBarView">
-                                            <rect key="frame" x="0.0" y="896" width="414" height="16"/>
+                                            <rect key="frame" x="0.0" y="896" width="414" height="24"/>
                                             <subviews>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tzW-Dr-Wby">
                                                     <rect key="frame" x="0.0" y="0.0" width="414" height="1"/>
@@ -156,7 +156,7 @@
                                                     </constraints>
                                                 </view>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GtC-fc-dUJ" userLabel="HandleBar">
-                                                    <rect key="frame" x="185" y="5" width="44" height="6"/>
+                                                    <rect key="frame" x="185" y="9" width="44" height="6"/>
                                                     <color key="backgroundColor" systemColor="systemGray2Color" red="0.68235294120000001" green="0.68235294120000001" blue="0.69803921570000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="44" id="Z2U-nN-4lf"/>
@@ -171,7 +171,7 @@
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="tzW-Dr-Wby" firstAttribute="top" secondItem="8Nn-6x-IaX" secondAttribute="top" id="4D6-uC-sfF"/>
-                                                <constraint firstAttribute="height" constant="16" id="5h8-Tl-Nfj"/>
+                                                <constraint firstAttribute="height" constant="24" id="5h8-Tl-Nfj"/>
                                                 <constraint firstItem="GtC-fc-dUJ" firstAttribute="centerX" secondItem="8Nn-6x-IaX" secondAttribute="centerX" id="Klk-NN-5L6"/>
                                                 <constraint firstItem="tzW-Dr-Wby" firstAttribute="leading" secondItem="8Nn-6x-IaX" secondAttribute="leading" id="cjv-IE-11Y"/>
                                                 <constraint firstItem="GtC-fc-dUJ" firstAttribute="centerY" secondItem="8Nn-6x-IaX" secondAttribute="centerY" id="ehZ-r7-moa"/>

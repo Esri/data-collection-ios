@@ -52,7 +52,6 @@ public class FloatingPanelViewController: UIViewController {
     var delegate: FloatingPanelViewControllerDelegate?
     
     let floatingPanelWidth: CGFloat = 320
-    
     var defaultPartialHeight: CGFloat {
         return maximumHeight * 0.40
     }
@@ -174,11 +173,10 @@ public class FloatingPanelViewController: UIViewController {
     
     
     /// The insets from the edge of the screen. The client can override the insets for various layout options.
+    private var regularWidthInsets = UIEdgeInsets(top: 8.0, left: 8.0, bottom: 8.0, right: 8.0)
+    private var compactWidthInsets = UIEdgeInsets(top: 8.0, left: 0.0, bottom: 0.0, right: 0.0)
     var edgeInsets: UIEdgeInsets {
-        // Add trait collection stuff here
-        // if compact width, then no left/right/bottom insets.
-        let offsetForTrait: CGFloat = isCompactWidth ? 0.0 : 8.0
-        return UIEdgeInsets(top: 8.0, left: offsetForTrait, bottom: offsetForTrait, right: offsetForTrait)
+        return isCompactWidth ? compactWidthInsets : regularWidthInsets
     }
     
     internal var isCompactWidth: Bool = false {
@@ -186,6 +184,11 @@ public class FloatingPanelViewController: UIViewController {
             handlebarView.isHidden = !isCompactWidth
             bottomHandlebarView.isHidden = isCompactWidth
             updateInterfaceForCurrentTraits()
+            
+            // Set corner masks
+            view.layer.maskedCorners = isCompactWidth ?
+                [.layerMinXMinYCorner, .layerMaxXMinYCorner] :
+                [.layerMinXMinYCorner, .layerMaxXMinYCorner, .layerMaxXMaxYCorner, .layerMinXMaxYCorner]
         }
     }
     
@@ -225,10 +228,10 @@ public class FloatingPanelViewController: UIViewController {
         resizeableLayoutConstraint.priority = .defaultLow
         //                view.setContentCompressionResistancePriority(.defaultLow  , for: .vertical)
         regularWidthConstraints = [
-            view.leadingAnchor.constraint(equalTo: superview.safeAreaLayoutGuide.leadingAnchor, constant: edgeInsets.left),
+            view.leadingAnchor.constraint(equalTo: superview.safeAreaLayoutGuide.leadingAnchor, constant: regularWidthInsets.left),
             view.widthAnchor.constraint(equalToConstant: floatingPanelWidth),
-            view.topAnchor.constraint(equalTo: superview.safeAreaLayoutGuide.topAnchor, constant: edgeInsets.top),
-            view.bottomAnchor.constraint(lessThanOrEqualTo: superview.safeAreaLayoutGuide.bottomAnchor, constant: -edgeInsets.bottom),
+            view.topAnchor.constraint(equalTo: superview.safeAreaLayoutGuide.topAnchor, constant: regularWidthInsets.top),
+            view.bottomAnchor.constraint(lessThanOrEqualTo: superview.safeAreaLayoutGuide.bottomAnchor, constant: -regularWidthInsets.bottom),
 
 
 //            view.bottomAnchor.constraint(greaterThanOrEqualTo: headerStackView.bottomAnchor),
@@ -273,13 +276,13 @@ public class FloatingPanelViewController: UIViewController {
         //
         
         compactWidthConstraints = [
-            view.leadingAnchor.constraint(equalTo: superview.safeAreaLayoutGuide.leadingAnchor, constant: edgeInsets.left),
-            view.trailingAnchor.constraint(equalTo: superview.safeAreaLayoutGuide.trailingAnchor, constant: edgeInsets.right),
-            view.bottomAnchor.constraint(equalTo: superview.bottomAnchor, constant: edgeInsets.bottom),
+            view.leadingAnchor.constraint(equalTo: superview.safeAreaLayoutGuide.leadingAnchor, constant: compactWidthInsets.left),
+            view.trailingAnchor.constraint(equalTo: superview.safeAreaLayoutGuide.trailingAnchor, constant: compactWidthInsets.right),
+            view.bottomAnchor.constraint(equalTo: superview.bottomAnchor, constant: compactWidthInsets.bottom),
             
-            view.topAnchor.constraint(greaterThanOrEqualTo: superview.safeAreaLayoutGuide.topAnchor, constant: edgeInsets.top),
+            view.topAnchor.constraint(greaterThanOrEqualTo: superview.safeAreaLayoutGuide.topAnchor, constant: compactWidthInsets.top),
             
-            headerSpacerView.bottomAnchor.constraint(lessThanOrEqualTo: superview.safeAreaLayoutGuide.bottomAnchor, constant: edgeInsets.bottom),
+            headerSpacerView.bottomAnchor.constraint(lessThanOrEqualTo: superview.safeAreaLayoutGuide.bottomAnchor/*, constant: compactWidthInsets.bottom*/),
             
             resizeableLayoutConstraint
             //            DisplayedContentView.BottomAnchor.ConstraintEqualTo(View.BottomAnchor)
