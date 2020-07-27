@@ -212,6 +212,7 @@
                         <outlet property="headerSpacerView" destination="D3m-Ct-uVk" id="NEU-vo-dOI"/>
                         <outlet property="headerStackView" destination="koA-Ij-Sid" id="uO1-6r-blG"/>
                         <outlet property="imageView" destination="GTY-EJ-r1v" id="3N3-PO-TDA"/>
+                        <outlet property="panGestureRecognizer" destination="iwP-Tc-tP7" id="z77-22-GP0"/>
                         <outlet property="subTitleLabel" destination="5r0-sY-dTY" id="H7E-MQ-a6g"/>
                         <outlet property="titleLabel" destination="3b9-kp-okn" id="F6F-Wi-e4k"/>
                         <outlet property="visualEffectsView" destination="KOR-7r-Hou" id="RjP-IF-MGc"/>
