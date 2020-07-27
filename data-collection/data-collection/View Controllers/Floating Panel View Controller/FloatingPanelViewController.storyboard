@@ -56,7 +56,7 @@
                                                 <constraint firstAttribute="height" constant="16" id="uvX-dm-aSJ"/>
                                             </constraints>
                                         </view>
-                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="C1C-K3-hA3">
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="C1C-K3-hA3" userLabel="Handlebar Spacer View">
                                             <rect key="frame" x="0.0" y="16" width="414" height="8"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="8" id="QLg-TZ-36k"/>
@@ -142,59 +142,55 @@
                                                 <constraint firstAttribute="height" constant="8" id="Mdu-04-Vak"/>
                                             </constraints>
                                         </view>
-                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2gQ-7L-HOO" userLabel="ContentView">
+                                        <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YoM-sw-2k6">
                                             <rect key="frame" x="0.0" y="68" width="414" height="828"/>
+                                        </view>
+                                        <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8Nn-6x-IaX" userLabel="BottomHandleBarView">
+                                            <rect key="frame" x="0.0" y="896" width="414" height="16"/>
+                                            <subviews>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tzW-Dr-Wby">
+                                                    <rect key="frame" x="0.0" y="0.0" width="414" height="1"/>
+                                                    <color key="backgroundColor" systemColor="opaqueSeparatorColor" red="0.77647058820000003" green="0.77647058820000003" blue="0.7843137255" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="1" id="AqY-wG-uJ7"/>
+                                                    </constraints>
+                                                </view>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GtC-fc-dUJ" userLabel="HandleBar">
+                                                    <rect key="frame" x="185" y="5" width="44" height="6"/>
+                                                    <color key="backgroundColor" systemColor="systemGray2Color" red="0.68235294120000001" green="0.68235294120000001" blue="0.69803921570000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="44" id="Z2U-nN-4lf"/>
+                                                        <constraint firstAttribute="height" constant="6" id="dnS-PX-s28"/>
+                                                    </constraints>
+                                                    <userDefinedRuntimeAttributes>
+                                                        <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                            <integer key="value" value="3"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                    </userDefinedRuntimeAttributes>
+                                                </view>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="tzW-Dr-Wby" firstAttribute="top" secondItem="8Nn-6x-IaX" secondAttribute="top" id="4D6-uC-sfF"/>
+                                                <constraint firstAttribute="height" constant="16" id="5h8-Tl-Nfj"/>
+                                                <constraint firstItem="GtC-fc-dUJ" firstAttribute="centerX" secondItem="8Nn-6x-IaX" secondAttribute="centerX" id="Klk-NN-5L6"/>
+                                                <constraint firstItem="tzW-Dr-Wby" firstAttribute="leading" secondItem="8Nn-6x-IaX" secondAttribute="leading" id="cjv-IE-11Y"/>
+                                                <constraint firstItem="GtC-fc-dUJ" firstAttribute="centerY" secondItem="8Nn-6x-IaX" secondAttribute="centerY" id="ehZ-r7-moa"/>
+                                                <constraint firstAttribute="trailing" secondItem="tzW-Dr-Wby" secondAttribute="trailing" id="xcc-dV-7jw"/>
+                                            </constraints>
                                         </view>
                                     </subviews>
                                 </stackView>
-                                <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8Nn-6x-IaX" userLabel="BottomHandleBarView">
-                                    <rect key="frame" x="0.0" y="880" width="414" height="16"/>
-                                    <subviews>
-                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tzW-Dr-Wby">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="1"/>
-                                            <color key="backgroundColor" systemColor="opaqueSeparatorColor" red="0.77647058820000003" green="0.77647058820000003" blue="0.7843137255" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                            <constraints>
-                                                <constraint firstAttribute="height" constant="1" id="AqY-wG-uJ7"/>
-                                            </constraints>
-                                        </view>
-                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GtC-fc-dUJ" userLabel="HandleBar">
-                                            <rect key="frame" x="185" y="5" width="44" height="6"/>
-                                            <color key="backgroundColor" systemColor="systemGray2Color" red="0.68235294120000001" green="0.68235294120000001" blue="0.69803921570000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                            <constraints>
-                                                <constraint firstAttribute="width" constant="44" id="Z2U-nN-4lf"/>
-                                                <constraint firstAttribute="height" constant="6" id="dnS-PX-s28"/>
-                                            </constraints>
-                                            <userDefinedRuntimeAttributes>
-                                                <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                                    <integer key="value" value="3"/>
-                                                </userDefinedRuntimeAttribute>
-                                            </userDefinedRuntimeAttributes>
-                                        </view>
-                                    </subviews>
-                                    <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                                    <constraints>
-                                        <constraint firstItem="tzW-Dr-Wby" firstAttribute="top" secondItem="8Nn-6x-IaX" secondAttribute="top" id="4D6-uC-sfF"/>
-                                        <constraint firstAttribute="height" constant="16" id="5h8-Tl-Nfj"/>
-                                        <constraint firstItem="GtC-fc-dUJ" firstAttribute="centerX" secondItem="8Nn-6x-IaX" secondAttribute="centerX" id="Klk-NN-5L6"/>
-                                        <constraint firstItem="tzW-Dr-Wby" firstAttribute="leading" secondItem="8Nn-6x-IaX" secondAttribute="leading" id="cjv-IE-11Y"/>
-                                        <constraint firstItem="GtC-fc-dUJ" firstAttribute="centerY" secondItem="8Nn-6x-IaX" secondAttribute="centerY" id="ehZ-r7-moa"/>
-                                        <constraint firstAttribute="trailing" secondItem="tzW-Dr-Wby" secondAttribute="trailing" id="xcc-dV-7jw"/>
-                                    </constraints>
-                                </view>
                             </subviews>
                             <gestureRecognizers/>
                             <constraints>
-                                <constraint firstItem="8Nn-6x-IaX" firstAttribute="leading" secondItem="dMz-ow-6o7" secondAttribute="leading" id="0oA-A2-LA3"/>
-                                <constraint firstAttribute="bottom" secondItem="4K3-iw-X7O" secondAttribute="bottom" id="1Y8-N1-4uy"/>
-                                <constraint firstAttribute="trailing" secondItem="oFx-8g-ePE" secondAttribute="trailing" id="Fb5-CY-Ldb"/>
-                                <constraint firstItem="oFx-8g-ePE" firstAttribute="leading" secondItem="dMz-ow-6o7" secondAttribute="leading" id="U4n-fj-AbF"/>
-                                <constraint firstItem="4K3-iw-X7O" firstAttribute="leading" secondItem="dMz-ow-6o7" secondAttribute="leading" id="Zwu-SJ-riW"/>
-                                <constraint firstAttribute="bottom" secondItem="oFx-8g-ePE" secondAttribute="bottom" id="bEh-oY-6si"/>
-                                <constraint firstItem="4K3-iw-X7O" firstAttribute="top" secondItem="dMz-ow-6o7" secondAttribute="top" id="cIK-9o-gge"/>
-                                <constraint firstItem="oFx-8g-ePE" firstAttribute="top" secondItem="dMz-ow-6o7" secondAttribute="top" id="fuL-DL-1qR"/>
-                                <constraint firstAttribute="trailing" secondItem="4K3-iw-X7O" secondAttribute="trailing" id="q6C-nX-sA7"/>
-                                <constraint firstAttribute="trailing" secondItem="8Nn-6x-IaX" secondAttribute="trailing" id="t5i-dk-04D"/>
-                                <constraint firstAttribute="bottom" secondItem="8Nn-6x-IaX" secondAttribute="bottom" id="yd3-xQ-4ru"/>
+                                <constraint firstAttribute="bottom" secondItem="oFx-8g-ePE" secondAttribute="bottom" id="5fX-Zi-Ysk"/>
+                                <constraint firstItem="4K3-iw-X7O" firstAttribute="leading" secondItem="dMz-ow-6o7" secondAttribute="leading" id="8j6-nB-H7o"/>
+                                <constraint firstItem="4K3-iw-X7O" firstAttribute="top" secondItem="dMz-ow-6o7" secondAttribute="top" id="EdF-wy-oVp"/>
+                                <constraint firstItem="oFx-8g-ePE" firstAttribute="leading" secondItem="dMz-ow-6o7" secondAttribute="leading" id="JVm-Sr-KdG"/>
+                                <constraint firstAttribute="trailing" secondItem="oFx-8g-ePE" secondAttribute="trailing" id="NaZ-Fs-lZb"/>
+                                <constraint firstItem="oFx-8g-ePE" firstAttribute="top" secondItem="dMz-ow-6o7" secondAttribute="top" id="WKP-i7-kue"/>
+                                <constraint firstAttribute="bottom" secondItem="4K3-iw-X7O" secondAttribute="bottom" id="w9n-gW-bIG"/>
+                                <constraint firstAttribute="trailing" secondItem="4K3-iw-X7O" secondAttribute="trailing" id="xka-OY-9CY"/>
                             </constraints>
                         </view>
                         <gestureRecognizers/>
@@ -211,7 +207,7 @@
                     <connections>
                         <outlet property="bottomHandlebarView" destination="8Nn-6x-IaX" id="3Ey-ff-kdP"/>
                         <outlet property="closeButton" destination="AEG-zW-R6p" id="1Df-3U-uVj"/>
-                        <outlet property="contentView" destination="2gQ-7L-HOO" id="CJt-Aj-0z8"/>
+                        <outlet property="contentView" destination="YoM-sw-2k6" id="61M-6J-GCX"/>
                         <outlet property="handlebarView" destination="63a-iz-mY9" id="hfo-oG-RpU"/>
                         <outlet property="headerSpacerView" destination="D3m-Ct-uVk" id="NEU-vo-dOI"/>
                         <outlet property="headerStackView" destination="koA-Ij-Sid" id="uO1-6r-blG"/>
