@@ -53,7 +53,10 @@ public class FloatingPanelViewController: UIViewController {
     
     let floatingPanelWidth: CGFloat = 320
     
-    let defaultPartialHeight: CGFloat = 160
+    var defaultPartialHeight: CGFloat {
+        return maximumHeight * 0.40
+    }
+    
     var minimumHeight: CGFloat {
         return headerStackView.frame.origin.y + headerStackView.frame.size.height
     }
@@ -72,15 +75,28 @@ public class FloatingPanelViewController: UIViewController {
     // then using that height as the minimum height (+ the bottom handlebar view, if we're .regular
     // Then figure out how to do the same for maximumHeight; then use those heights in the "state" stuff.
     
+    //TODO: put handleBarview outside of stackView and have stackview anchored to the top of it; we want the transparency
+    // of the handlebar view to NOT show the table underneath
+    
+    
+    //TODO: check on other override of UIView.transiation (or maybe UIView.animate) that uses "Springs", to get cool
+    // rubberbanding effect.  Look at GitHub repo (and maybe Nathan's code) for that.
+    
+    // TODO: make public the anchor which can be used to anchor movable content
+    
     fileprivate func animateResizableConstrant(_ newConstant: CGFloat) {
+        guard let superview = view.superview else { return }
         // Ensures that all pending layout operations have been completed
-        view.layoutIfNeeded()
+//        view.layoutIfNeeded()
+        superview.layoutIfNeeded()
 
         UIView.transition(with: view,
-                          duration: 2.5,
-                          options: [.layoutSubviews, .curveEaseOut],
+                          duration: 0.5,
+                          options: [.layoutSubviews, .curveEaseInOut],
                           animations: { [weak self] in
                             self?.resizeableLayoutConstraint.constant = newConstant
+                            self?.view.setNeedsUpdateConstraints()
+                            superview.layoutIfNeeded()
 //                            self?.view.layoutIfNeeded()
         })
     }
@@ -90,8 +106,6 @@ public class FloatingPanelViewController: UIViewController {
             var newConstant: CGFloat = 0
             switch state {
             case .minimized:
-//                bottomHandlebarView.topAnchor.constraint(greaterThanOrEqualTo: headerSpacerView.bottomAnchor),
-//                let distance = bottomHandlebarView.topAnchor - headerSpacerView.bottomAnchor
                 newConstant = minimumHeight
             case .partial:
                 newConstant = defaultPartialHeight
@@ -100,12 +114,6 @@ public class FloatingPanelViewController: UIViewController {
             }
             
             animateResizableConstrant(newConstant)
-//            UIView.animate(withDuration: 0.5) { [weak self] in
-//                self?.resizeableLayoutConstraint.constant = newConstant
-//                self?.view.layoutIfNeeded()
-//            }
-
-//            resizeableLayoutConstraint.constant = newConstant
         }
     }
     
@@ -150,15 +158,18 @@ public class FloatingPanelViewController: UIViewController {
                 let _ = view // Make sure we're loaded...
                 addChild(viewController)
                 contentView.addSubview(viewController.view)
+                viewController.view.translatesAutoresizingMaskIntoConstraints = false
+                NSLayoutConstraint.activate([
+                    viewController.view.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+                    viewController.view.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+                    viewController.view.topAnchor.constraint(equalTo: contentView.topAnchor),
+                    viewController.view.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
+                ])
             }
         }
     }
     
-    internal var resizeableLayoutConstraint: NSLayoutConstraint = NSLayoutConstraint() {
-        didSet {
-            initialResizableLayoutConstraintConstant = resizeableLayoutConstraint.constant
-        }
-    }
+    internal var resizeableLayoutConstraint = NSLayoutConstraint()
     var initialResizableLayoutConstraintConstant: CGFloat = 0.0
     
     
@@ -260,16 +271,19 @@ public class FloatingPanelViewController: UIViewController {
         //        }
         
         //
+        
         compactWidthConstraints = [
             view.leadingAnchor.constraint(equalTo: superview.safeAreaLayoutGuide.leadingAnchor, constant: edgeInsets.left),
             view.trailingAnchor.constraint(equalTo: superview.safeAreaLayoutGuide.trailingAnchor, constant: edgeInsets.right),
             view.bottomAnchor.constraint(equalTo: superview.bottomAnchor, constant: edgeInsets.bottom),
             
-            view.topAnchor.constraint(lessThanOrEqualTo: superview.safeAreaLayoutGuide.topAnchor, constant: edgeInsets.top),
-            view.heightAnchor.constraint(greaterThanOrEqualToConstant: 88.0),
+            view.topAnchor.constraint(greaterThanOrEqualTo: superview.safeAreaLayoutGuide.topAnchor, constant: edgeInsets.top),
+            
+            headerSpacerView.bottomAnchor.constraint(lessThanOrEqualTo: superview.safeAreaLayoutGuide.bottomAnchor, constant: edgeInsets.bottom),
             
             resizeableLayoutConstraint
             //            DisplayedContentView.BottomAnchor.ConstraintEqualTo(View.BottomAnchor)
+            
         ]
         //
         //        if (AllowsManualResize)
@@ -299,7 +313,7 @@ public class FloatingPanelViewController: UIViewController {
         
         NSLayoutConstraint.deactivate(regularWidthConstraints)
         NSLayoutConstraint.deactivate(compactWidthConstraints);
-        
+                
         if isCompactWidth {
             NSLayoutConstraint.activate(compactWidthConstraints);
             //                if (_handlebarSeparator != null)
@@ -314,9 +328,10 @@ public class FloatingPanelViewController: UIViewController {
             //                    _handlebarSeparator.BackgroundColor = ApplicationTheme.SeparatorColor;
             //                }
         }
-        
-        //            SetState(_currentState);
-        
+//
+//        // Reset state to adjust constraint constants
+//        let currentState = state
+//        state = currentState
     }
     
     /*
@@ -363,6 +378,8 @@ public class FloatingPanelViewController: UIViewController {
                 state = .partial
             }
             
+            print(".ended; state = \(state); velocity = \(velocity.y)")
+
 //            else if resizeableLayoutConstraint.constant > minimumHeight &&
 //                resizeableLayoutConstraint.constant < maximumHeight {
 ////            if resizeableLayoutConstraint.constant <= minimumHeight {
@@ -394,6 +411,7 @@ public class FloatingPanelViewController: UIViewController {
 //                max(superview.frame.height, initialResizableLayoutConstraintConstant + delta)
             
             resizeableLayoutConstraint.constant = newConstant
+            print("!.cancelled; newConstant = \(newConstant)")
         }
         else {
             // On cancellation, return the piece to its original location.
@@ -401,36 +419,61 @@ public class FloatingPanelViewController: UIViewController {
         }
     }
     
+    //TODO:  handle flick from minimized state to full - check if constraint is > partial height and go to full directly???
+    
     public func handleFlick(_ velocity: CGPoint) {
-        switch (state) {
-        case .minimized:
-            if isCompactWidth && velocity.y < 0 {
-                state = .partial
+//        switch (state) {
+//        case .minimized:
+//            if isCompactWidth && velocity.y < 0 {
+//                state = .partial
+//            }
+//            else if !isCompactWidth {
+//                if velocity.y > 0 {
+//                    state = resizeableLayoutConstraint.constant <= defaultPartialHeight ? .partial : .full
+//                }
+//                else {
+//                    state = resizeableLayoutConstraint.constant <= defaultPartialHeight ? .minimized : .partial
+//                }
+//            }
+//        case .partial:
+//            if isCompactWidth && velocity.y < 0 {
+//                state = .full
+//            }
+//            else if !isCompactWidth && velocity.y < 0 {
+//                state = .minimized
+//            }
+//            else if isCompactWidth && velocity.y > 0 {
+//                state = .minimized
+//            }
+//            else if !isCompactWidth && velocity.y > 0 {
+//                state = .full
+//            }
+//        case .full:
+//            if isCompactWidth && velocity.y > 0 {
+//                state = .partial
+//            }
+//            else if !isCompactWidth && velocity.y < 0 {
+//                state = .partial
+//            }
+//        }
+        if isCompactWidth {
+            if velocity.y > 0 {
+                state = resizeableLayoutConstraint.constant <= defaultPartialHeight ? .minimized : .partial
             }
-            else if !isCompactWidth && velocity.y > 0 {
-                state = .partial
-            }
-        case .partial:
-            if isCompactWidth && velocity.y < 0 {
-                state = .full
-            }
-            else if !isCompactWidth && velocity.y < 0 {
-                state = .minimized
-            }
-            else if isCompactWidth && velocity.y > 0 {
-                state = .minimized
-            }
-            else if !isCompactWidth && velocity.y > 0 {
-                state = .full
-            }
-        case .full:
-            if isCompactWidth && velocity.y > 0 {
-                state = .partial
-            }
-            else if !isCompactWidth && velocity.y < 0 {
-                state = .partial
+            else {
+                state = resizeableLayoutConstraint.constant <= defaultPartialHeight ? .partial : .full
             }
         }
+        else {
+            if velocity.y > 0 {
+                state = resizeableLayoutConstraint.constant <= defaultPartialHeight ? .partial : .full
+            }
+            else {
+                state = resizeableLayoutConstraint.constant <= defaultPartialHeight ? .minimized : .partial
+            }
+        }
+
+        print("Post-flick state: = \(state); velocity = \(velocity.y); \(isCompactWidth ? "Compact" : "Regular")")
     }
     
     public override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
