@@ -336,13 +336,15 @@ public class FloatingPanelViewController: UIViewController {
         superview.layoutIfNeeded()
 
         // Animate the transition to the new constraint constant value.
-        UIView.transition(with: view,
-                          duration: 0.5,
-                          options: [.layoutSubviews, .curveEaseInOut],
-                          animations: { [weak self] in
-                            self?.resizeableLayoutConstraint.constant = newConstant
-                            self?.view.setNeedsUpdateConstraints()
-                            superview.layoutIfNeeded()
+        UIView.animate(withDuration: 0.2,
+                       delay: 0,
+                       usingSpringWithDamping: 0.85,
+                       initialSpringVelocity: 25,
+                       options: [.layoutSubviews, .curveEaseInOut],
+                       animations: { [weak self] in
+                        self?.resizeableLayoutConstraint.constant = newConstant
+                        self?.view.setNeedsUpdateConstraints()
+                        superview.layoutIfNeeded()
         })
     }
 }
