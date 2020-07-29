@@ -194,7 +194,7 @@
                             </constraints>
                         </view>
                         <gestureRecognizers/>
-                        <blurEffect style="regular"/>
+                        <blurEffect style="systemChromeMaterial"/>
                         <userDefinedRuntimeAttributes>
                             <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
                                 <integer key="value" value="14"/>
