@@ -47,32 +47,33 @@ public enum FloatingPanelState {
 /// for displaying a title, subtitle, image, close button and other common
 /// items as a convenience to the client.
 public class FloatingPanelViewController: UIViewController {
-    @IBOutlet var closeButton: UIButton!
-    @IBOutlet var contentView: UIView!
+    @IBOutlet private var closeButton: UIButton!
+    @IBOutlet private var contentView: UIView!
     
-    @IBOutlet var titleLabel: UILabel!
-    @IBOutlet var subTitleLabel: UILabel!
+    @IBOutlet private var titleLabel: UILabel!
+    @IBOutlet private var subTitleLabel: UILabel!
     
-    @IBOutlet var topHandlebarView: UIView!
-    @IBOutlet var bottomHandlebarView: UIView!
-
-    @IBOutlet var headerStackView: UIStackView!
-    @IBOutlet var titleStackView: UIStackView!
-    @IBOutlet var subtitleStackView: UIStackView!
-
-    @IBOutlet var imageStackView: UIStackView!
-    @IBOutlet var imageView: UIImageView!
-
-    @IBOutlet var panGestureRecognizer: UIPanGestureRecognizer!
-
+    @IBOutlet private var topHandlebarView: UIView!
+    @IBOutlet private var bottomHandlebarView: UIView!
+    
+    @IBOutlet private var headerStackView: UIStackView!
+    @IBOutlet private var titleStackView: UIStackView!
+    @IBOutlet private var subtitleStackView: UIStackView!
+    
+    @IBOutlet private var imageStackView: UIStackView!
+    @IBOutlet private var imageView: UIImageView!
+    
+    @IBOutlet private var panGestureRecognizer: UIPanGestureRecognizer!
+    
     /// The delegate to be notified of FloatingPanelViewControllerDelegate events.
     public var delegate: FloatingPanelViewControllerDelegate?
     
     /// The vertical size of the floating panel view controller used
-    /// when the `FloatingPanelState` is set to `.partial`
+    /// when the `FloatingPanelState` is set to `.partial`.
+    /// The computed default is 40% of the maximum panel height.
     public var partialHeight: CGFloat = 0
     
-    // Returns the user-specified partial height or a calculated default value.
+    /// Returns the user-specified partial height or a calculated default value.
     private var internalPartialHeight: CGFloat {
         return partialHeight > 0 ? partialHeight : maximumHeight * 0.40
     }
@@ -91,7 +92,7 @@ public class FloatingPanelViewController: UIViewController {
     /// The maximum height of the floating panel, taking into account the edge insets.
     private var maximumHeight: CGFloat {
         if let superview = view.superview {
-            return superview.frame.height - edgeInsets.top - edgeInsets.bottom
+            return superview.frame.height - internalEdgeInsets.top - internalEdgeInsets.bottom
         }
         else {
             return 320
@@ -100,7 +101,7 @@ public class FloatingPanelViewController: UIViewController {
     
     /// The width of the floating panel for regular width size class scenarios.
     private let floatingPanelWidth: CGFloat = 320
-
+    
     /// The vertical state of the floating panel.  When changed, the
     /// floating panel will animate to the new state.
     private func updateState(_ animate: Bool = true) {
@@ -123,82 +124,90 @@ public class FloatingPanelViewController: UIViewController {
         }
     }
     
-    var state: FloatingPanelState = .partial {
+    /// The state representing the vertical size of the floating panel.
+    /// Defaults to `.partial`.
+    public var state: FloatingPanelState = .partial {
         didSet {
             guard isViewLoaded else { return }
             updateState()
         }
     }
     
-    /// Determines whether the header view, comprising the image, title,
-    /// subtitle and close button is hidden or not.
     private func updateHeaderStackView() {
         headerStackView.isHidden = headerViewHidden
     }
     
-    var headerViewHidden: Bool = false {
+    /// Determines whether the header view, comprising the image, title,
+    /// subtitle and close button is hidden or not.
+    /// Defaults to `false`.
+    public var headerViewHidden: Bool = false {
         didSet {
             guard isViewLoaded else { return }
             updateHeaderStackView()
         }
     }
     
-    /// Determines whether the close button is hidden or not.
     private func updateCloseButton() {
         closeButton.isHidden = closeButtonHidden
     }
     
-    var closeButtonHidden: Bool = false {
+    /// Determines whether the close button is hidden or not.
+    /// Defaults to `false`.
+    public var closeButtonHidden: Bool = false {
         didSet {
             guard isViewLoaded else { return }
             updateCloseButton()
         }
     }
-
-    /// Determines whether the floating panel is resizable via user interaction.
+    
     private func updateAllowManualResize() {
         updateHandlebarVisibility()
         panGestureRecognizer.isEnabled = allowManualResize
     }
     
-    var allowManualResize = true {
+    /// Determines whether the floating panel is resizable via user interaction.
+    /// Defaults to `true`.
+    public var allowManualResize = true {
         didSet {
             guard isViewLoaded else { return }
             updateAllowManualResize()
         }
     }
     
-    /// The image to display in the header.
     private func updateImage() {
         imageView.image = image
         imageStackView.isHidden = (image == nil)
     }
     
-    var image: UIImage? {
+    /// The image to display in the header.
+    /// Defaults to nil.
+    public var image: UIImage? {
         didSet {
             guard isViewLoaded else { return }
             updateImage()
         }
     }
     
-    /// The title to display in the header.
     private func updateFloatingPanelTitle() {
         titleLabel.text = floatingPanelTitle
     }
     
-    var floatingPanelTitle: String? {
+    /// The title to display in the header.
+    /// Defaults to "Title".
+    public var floatingPanelTitle: String? = "Title" {
         didSet {
             guard isViewLoaded else { return }
             updateFloatingPanelTitle()
         }
     }
     
-    /// The subtitle to display in the header.
     private func updateFloatingPanelSubtitle() {
         subTitleLabel.text = floatingPanelSubtitle
     }
     
-    var floatingPanelSubtitle: String? {
+    /// The subtitle to display in the header.
+    /// Defaults to "Subtitle".
+    public var floatingPanelSubtitle: String? = "Subtitle" {
         didSet {
             guard isViewLoaded else { return }
             updateFloatingPanelSubtitle()
@@ -227,32 +236,34 @@ public class FloatingPanelViewController: UIViewController {
     }
     
     /// The constraint used by the gesture to resize the floating panel view.
-    internal var resizeableLayoutConstraint = NSLayoutConstraint()
+    private var resizeableLayoutConstraint = NSLayoutConstraint()
     
     /// The `resizableLayoutConstraint` constant at the beginning of
     /// user interaction; used to reset the constant in the event the
     /// user cancels the gesture.
-    internal var initialResizableLayoutConstraintConstant: CGFloat = 0.0
+    private var initialResizableLayoutConstraintConstant: CGFloat = 0.0
     
     // TODO: test changing the insets after things are setup
     // TODO: test setting title, subtitle, image, etc prior to displaying the panel to make sure the outlets are set up.
     
     /// The insets from the edge of the screen for the regular width size class.
+    /// Defaults to `8.0, 8.0, 8.0, 8.0`
     public var regularWidthInsets = UIEdgeInsets(top: 8.0, left: 8.0, bottom: 8.0, right: 8.0) {
         didSet {
             setupConstraints()
         }
     }
-
+    
     /// The insets from the edge of the screen for the compact width size class.
+    /// Defaults to `8.0, 0.0, 0.0, 0.0`
     public var compactWidthInsets = UIEdgeInsets(top: 8.0, left: 0.0, bottom: 0.0, right: 0.0) {
-           didSet {
-               setupConstraints()
-           }
-       }
+        didSet {
+            setupConstraints()
+        }
+    }
     
     /// The edge insets for the current layout.
-    private var edgeInsets: UIEdgeInsets {
+    private var internalEdgeInsets: UIEdgeInsets {
         return isCompactWidth ? compactWidthInsets : regularWidthInsets
     }
     
@@ -276,16 +287,16 @@ public class FloatingPanelViewController: UIViewController {
     
     /// Constraints for the regular width size class.
     private var regularWidthConstraints = [NSLayoutConstraint]()
-
+    
     /// Constraints for the compact width size class.
     private var compactWidthConstraints = [NSLayoutConstraint]()
     
     override public func viewDidLoad() {
         super.viewDidLoad()
         view.translatesAutoresizingMaskIntoConstraints = false
-
+        
         isCompactWidth = traitCollection.horizontalSizeClass == .compact
-
+        
         // Initialize controls from properties that may have been set before
         // the view was loaded.
         updateImage()
@@ -300,11 +311,11 @@ public class FloatingPanelViewController: UIViewController {
     /// - Parameter superview: The superview of the floating panel.
     private func setupConstraints() {
         guard let superview = view.superview else { return }
-
+        
         // Set the resizable constraint used by the panGestureRecognizer to resize the panel.
         resizeableLayoutConstraint = view.heightAnchor.constraint(equalToConstant: 0)
         resizeableLayoutConstraint.priority = .defaultLow
-
+        
         // updateState will update the resizableLayoutConstraint constant
         // based on the current state.
         updateState(false)
@@ -351,23 +362,23 @@ public class FloatingPanelViewController: UIViewController {
     private func updateInterfaceForCurrentTraits() {
         NSLayoutConstraint.deactivate(regularWidthConstraints)
         NSLayoutConstraint.deactivate(compactWidthConstraints);
-                
+        
         NSLayoutConstraint.activate(isCompactWidth ? compactWidthConstraints : regularWidthConstraints);
     }
     
     /// Handles a user tap on the close button
     /// - Parameter sender: The button tapped.
-    @IBAction func closeButtonAction(_ sender: Any) {
+    @IBAction private func closeButtonAction(_ sender: Any) {
         delegate?.userDidRequestDismissFloatingPanel(self)
     }
-
+    
     /// Handles the pan gesture used to resize the floating panel.
     /// - Parameter gestureRecognizer: The active gesture recognizer.
-    @IBAction func handlePanGesture(_ gestureRecognizer : UIPanGestureRecognizer) {
+    @IBAction private func handlePanGesture(_ gestureRecognizer : UIPanGestureRecognizer) {
         // Get the changes in the X and Y directions relative to
         // the superview's coordinate space.
         let translation = gestureRecognizer.translation(in: gestureRecognizer.view?.superview)
-
+        
         if gestureRecognizer.state == .began {
             // Save the view's original constant.
             initialResizableLayoutConstraintConstant = resizeableLayoutConstraint.constant
@@ -401,7 +412,7 @@ public class FloatingPanelViewController: UIViewController {
             // Limit the constant to be within min/max.
             newConstant = max(minimumHeight, newConstant)
             newConstant = min(maximumHeight, newConstant)
-
+            
             // Set the new constant on the resizable constraint.
             resizeableLayoutConstraint.constant = newConstant
         }
@@ -417,7 +428,7 @@ public class FloatingPanelViewController: UIViewController {
         topHandlebarView.isHidden = !allowManualResize || !isCompactWidth
         bottomHandlebarView.isHidden = !allowManualResize || isCompactWidth
     }
-
+    
     /// Handles resizing the panel when the user resizes via a "flick".
     /// - Parameter velocity: The velocity of the gesture.
     private func handleFlick(_ velocity: CGPoint) {
@@ -461,7 +472,7 @@ public class FloatingPanelViewController: UIViewController {
         
         // Complete all pending layout operations.
         superview.layoutIfNeeded()
-
+        
         // Animate the transition to the new constraint constant value.
         UIView.animate(withDuration: 0.2,
                        delay: 0,
