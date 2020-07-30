@@ -13,8 +13,8 @@
 // limitations under the License.
 
 import UIKit
-import ArcGISToolkit
-import ArcGIS
+//import ArcGISToolkit
+//import ArcGIS
 
 /// The protocol implemented to respond to floating panel view controller events.
 public protocol FloatingPanelViewControllerDelegate: AnyObject {
@@ -38,16 +38,22 @@ public class FloatingPanelViewController: UIViewController {
     
     @IBOutlet var closeButton: UIButton!
     @IBOutlet var contentView: UIView!
+    
     @IBOutlet var titleLabel: UILabel!
     @IBOutlet var subTitleLabel: UILabel!
-    @IBOutlet var handlebarView: UIView!
-    @IBOutlet var visualEffectsView: UIVisualEffectView!
-    @IBOutlet var headerStackView: UIStackView!
-    @IBOutlet var imageView: UIImageView!
-    @IBOutlet var bottomHandlebarView: UIView!
-    @IBOutlet var headerSpacerView: UIView!
-    @IBOutlet var panGestureRecognizer: UIPanGestureRecognizer!
     
+    @IBOutlet var topHandlebarView: UIView!
+    @IBOutlet var bottomHandlebarView: UIView!
+
+    @IBOutlet var headerStackView: UIStackView!
+    @IBOutlet var titleStackView: UIStackView!
+    @IBOutlet var subtitleStackView: UIStackView!
+
+    @IBOutlet var imageStackView: UIStackView!
+    @IBOutlet var imageView: UIImageView!
+
+    @IBOutlet var panGestureRecognizer: UIPanGestureRecognizer!
+
     /// The delegate to be notified of FloatingPanelViewControllerDelegate events.
     var delegate: FloatingPanelViewControllerDelegate?
     
@@ -60,7 +66,12 @@ public class FloatingPanelViewController: UIViewController {
     }
 
     private var minimumHeight: CGFloat {
-        return headerStackView.frame.origin.y + headerStackView.frame.size.height
+        let headerBottom = headerStackView.frame.origin.y + headerStackView.frame.size.height
+        let handlerbarHeight = bottomHandlebarView.frame.height
+        
+        // For compactWidth, handlebar is on top, so headerBottom is the limit;
+        // For regularWidth, handlebar is on bottom, so we need to add that.
+        return isCompactWidth ? headerBottom : headerBottom + handlerbarHeight
     }
     
     private var maximumHeight: CGFloat {
@@ -98,18 +109,24 @@ public class FloatingPanelViewController: UIViewController {
         }
     }
     
+    /// Determines whether the header view, comprising the image, title, subtitle and close button is hidden or not.
+    var headerViewHidden: Bool = false {
+        didSet {
+            headerStackView.isHidden = headerViewHidden
+        }
+    }
+    
     /// Determines whether the close button is hidden or not.
     var closeButtonHidden: Bool = false {
         didSet {
             closeButton.isHidden = closeButtonHidden
         }
     }
-    
+
     /// Determines whether to allow user to resize the floating panel.
     var allowManualResize = true {
         didSet {
-            handlebarView.isHidden = !allowManualResize && !isCompactWidth
-            bottomHandlebarView.isHidden = !allowManualResize && isCompactWidth
+            updateHandlebarVisibility()
             panGestureRecognizer.isEnabled = allowManualResize
         }
     }
@@ -118,24 +135,28 @@ public class FloatingPanelViewController: UIViewController {
     var image: UIImage? {
         didSet {
             imageView.image = image
-            imageView.isHidden = (image == nil)
+            imageStackView.isHidden = (image == nil)
         }
     }
     
     /// The title to display in the header.
     var floatingPanelTitle: String? {
         didSet {
-            let _ = view // Make sure we're loaded...
+            let _ = view
+//            // If floatingPanelTitle is nil or empty, use a `space` as the title
+//            // which will keep the close button in it's correct spot.
+//            let isEmpty = floatingPanelTitle == nil || floatingPanelTitle!.isEmpty
+//            let newTitle = isEmpty ? " " : floatingPanelTitle
+//            titleLabel.text = newTitle
             titleLabel.text = floatingPanelTitle
-            titleLabel.isHidden = floatingPanelTitle?.isEmpty ?? true
         }
     }
     
     /// The subtitle to display in the header.
     var floatingPanelSubtitle: String? {
         didSet {
+            let _ = view
             subTitleLabel.text = floatingPanelSubtitle
-            subTitleLabel.isHidden = floatingPanelSubtitle?.isEmpty ?? true
         }
     }
     
@@ -173,11 +194,10 @@ public class FloatingPanelViewController: UIViewController {
     
     /// Denotes whether the floating panel view controller is being displayed in
     /// a compact width layout.
-    internal var isCompactWidth: Bool = false {
+    var isCompactWidth: Bool = false {
         didSet {
-            handlebarView.isHidden = !isCompactWidth
-            bottomHandlebarView.isHidden = isCompactWidth
-            
+            updateHandlebarVisibility()
+
             updateInterfaceForCurrentTraits()
             
             // Set corner masks
@@ -204,6 +224,8 @@ public class FloatingPanelViewController: UIViewController {
         // Skip if already initialized or we don't have a superview.
         guard !initialized, let superview = view.superview else { return }
         
+        view.translatesAutoresizingMaskIntoConstraints = false
+        
         // Enable the panGesture if manual resize is allowed.
         panGestureRecognizer.isEnabled = allowManualResize
         
@@ -218,7 +240,7 @@ public class FloatingPanelViewController: UIViewController {
             view.topAnchor.constraint(equalTo: superview.safeAreaLayoutGuide.topAnchor, constant: regularWidthInsets.top),
             view.bottomAnchor.constraint(lessThanOrEqualTo: superview.safeAreaLayoutGuide.bottomAnchor, constant: -regularWidthInsets.bottom),
 
-            bottomHandlebarView.topAnchor.constraint(greaterThanOrEqualTo: headerSpacerView.bottomAnchor),
+            bottomHandlebarView.topAnchor.constraint(greaterThanOrEqualTo: headerStackView.bottomAnchor),
 
             resizeableLayoutConstraint
         ]
@@ -231,7 +253,7 @@ public class FloatingPanelViewController: UIViewController {
             
             view.topAnchor.constraint(greaterThanOrEqualTo: superview.safeAreaLayoutGuide.topAnchor, constant: compactWidthInsets.top),
             
-            headerSpacerView.bottomAnchor.constraint(lessThanOrEqualTo: superview.safeAreaLayoutGuide.bottomAnchor/*, constant: compactWidthInsets.bottom*/),
+            headerStackView.bottomAnchor.constraint(lessThanOrEqualTo: superview.safeAreaLayoutGuide.bottomAnchor/*, constant: compactWidthInsets.bottom*/),
             
             resizeableLayoutConstraint
         ]
@@ -250,6 +272,11 @@ public class FloatingPanelViewController: UIViewController {
     
     @IBAction func closeButtonAction(_ sender: Any) {
         delegate?.userDidRequestDismissFloatingPanel(self)
+    }
+    
+    internal func updateHandlebarVisibility() {
+        topHandlebarView.isHidden = !allowManualResize || !isCompactWidth
+        bottomHandlebarView.isHidden = !allowManualResize || isCompactWidth
     }
 
     // Handles the pan gesture.
