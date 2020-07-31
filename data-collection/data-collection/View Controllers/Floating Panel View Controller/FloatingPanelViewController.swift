@@ -243,9 +243,6 @@ public class FloatingPanelViewController: UIViewController {
     /// user cancels the gesture.
     private var initialResizableLayoutConstraintConstant: CGFloat = 0.0
     
-    // TODO: test changing the insets after things are setup
-    // TODO: test setting title, subtitle, image, etc prior to displaying the panel to make sure the outlets are set up.
-    
     /// The insets from the edge of the screen for the regular width size class.
     /// Defaults to `8.0, 8.0, 8.0, 8.0`
     public var regularWidthInsets = UIEdgeInsets(top: 8.0, left: 8.0, bottom: 8.0, right: 8.0) {
@@ -348,7 +345,6 @@ public class FloatingPanelViewController: UIViewController {
         updateInterfaceForCurrentTraits()
     }
     
-    // TODO:  Test again and make sure things are OK in both apps; test setting edge insets and initializing properties prior to display.
     override public func viewDidAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
