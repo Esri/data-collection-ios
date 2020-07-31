@@ -58,7 +58,9 @@ class MapViewController: UIViewController {
     
     var extrasNavigationController: UINavigationController?
     var layerContentsViewController: LayerContentsViewController?
-    var bookmarksViewController: BookmarksViewController?
+    lazy var bookmarksViewController: BookmarksViewController = {
+        return BookmarksViewController(geoView: mapView)
+    }()
 
     var mapViewMode: MapViewMode = .defaultView {
         didSet {
