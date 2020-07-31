@@ -58,16 +58,7 @@ class MapViewController: UIViewController {
     
     var extrasNavigationController: UINavigationController?
     var layerContentsViewController: LayerContentsViewController?
-    var bookmarksViewController: BookmarksViewController {
-        let bookmarksVC = BookmarksViewController(geoView: mapView)
-        bookmarksVC.title = MapViewControllerExtras.bookmarks.title
-
-        // Add a done button.
-        let doneButton = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(done))
-        bookmarksVC.navigationItem.leftBarButtonItem = doneButton
-        bookmarksVC.delegate = self
-        return bookmarksVC
-    }
+    var bookmarksViewController: BookmarksViewController?
 
     var mapViewMode: MapViewMode = .defaultView {
         didSet {
