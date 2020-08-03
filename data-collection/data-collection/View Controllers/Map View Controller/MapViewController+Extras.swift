@@ -64,8 +64,12 @@ extension MapViewController {
     }
     
     func showLayerContents(_ barButtonItem: UIBarButtonItem?) {
+        if floatingPanelViewController != nil {
+            floatingPanelViewController?.removeFromParent()
+            floatingPanelViewController?.view.removeFromSuperview()
+        }
+        
         let layerContentsVC: LayerContentsViewController
-        let extrasVC: UINavigationController
         
         // Create the LayerContentsViewController if it's not already created.
         if let existingViewController = layerContentsViewController {
@@ -75,53 +79,58 @@ extension MapViewController {
             let dataSource = LayerContentsDataSource(geoView: mapView)
             layerContentsVC = TableOfContentsViewController(dataSource: dataSource)
             layerContentsVC.title = MapViewControllerExtras.layers.title
-
-            // Add a done button.
-            let doneButton = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(done))
-            layerContentsVC.navigationItem.leftBarButtonItem = doneButton
             layerContentsViewController = layerContentsVC
         }
 
-        // Create the navigation controller if it's not already created.
-        if let existingNavigationVC = extrasNavigationController {
-            extrasVC = existingNavigationVC
-            extrasVC.setViewControllers([layerContentsVC], animated: false)
-        } else {
-            extrasVC = UINavigationController(rootViewController: layerContentsVC)
-            extrasNavigationController = extrasVC
-        }
-        
-        // Display the extrasVC as a popover controller.
-        extrasVC.modalPresentationStyle = .popover
-        extrasVC.popoverPresentationController?.barButtonItem = barButtonItem
-        present(extrasVC, animated: true)
-    }
-    
-    func showBookmarks(_ barButtonItem: UIBarButtonItem?) {
         // Get the bundle and then the storyboard for the FloatingPanelViewController.
         let bundle = Bundle(for: FloatingPanelViewController.self)
         let storyboard = UIStoryboard(name: "FloatingPanelViewController", bundle: bundle)
         
         // Create the floatingPanelViewController from the storyboard.
-        guard let floatingPanelViewController = storyboard.instantiateInitialViewController() as? FloatingPanelViewController else { return }
+        guard let floatingPanelVC = storyboard.instantiateInitialViewController() as? FloatingPanelViewController else { return }
+        
+        // Create and configure the view controller.
+        floatingPanelVC.floatingPanelTitle = MapViewControllerExtras.layers.title
+        floatingPanelVC.floatingPanelSubtitle = nil
+        floatingPanelVC.image = UIImage(named: "layers")
+        
+        floatingPanelVC.initialViewController = layerContentsViewController
+        floatingPanelVC.delegate = self
+        
+        addChild(floatingPanelVC)
+        view.addSubview(floatingPanelVC.view)
+        floatingPanelVC.didMove(toParent: self)
+        
+        floatingPanelViewController = floatingPanelVC
+    }
+    
+    func showBookmarks(_ barButtonItem: UIBarButtonItem?) {
+        if floatingPanelViewController != nil {
+            floatingPanelViewController?.removeFromParent()
+            floatingPanelViewController?.view.removeFromSuperview()
+        }
+
+        // Get the bundle and then the storyboard for the FloatingPanelViewController.
+        let bundle = Bundle(for: FloatingPanelViewController.self)
+        let storyboard = UIStoryboard(name: "FloatingPanelViewController", bundle: bundle)
+        
+        // Create the floatingPanelViewController from the storyboard.
+        guard let floatingPanelVC = storyboard.instantiateInitialViewController() as? FloatingPanelViewController else { return }
 
         // Create and configure the view controller.
-        floatingPanelViewController.floatingPanelTitle = MapViewControllerExtras.bookmarks.title
-        floatingPanelViewController.floatingPanelSubtitle = "Select a bookmark"
-        floatingPanelViewController.image = UIImage(named: "bookmark")
+        floatingPanelVC.floatingPanelTitle = MapViewControllerExtras.bookmarks.title
+        floatingPanelVC.floatingPanelSubtitle = "Select a bookmark"
+        floatingPanelVC.image = UIImage(named: "bookmark")
         
-        floatingPanelViewController.initialViewController = bookmarksViewController
+        floatingPanelVC.initialViewController = bookmarksViewController
         bookmarksViewController.delegate = self
-        floatingPanelViewController.delegate = self
+        floatingPanelVC.delegate = self
         
-        addChild(floatingPanelViewController)
-        view.addSubview(floatingPanelViewController.view)
-        floatingPanelViewController.didMove(toParent: self)
-    }
-
-    @objc
-    func done() {
-        dismiss(animated: true)
+        addChild(floatingPanelVC)
+        view.addSubview(floatingPanelVC.view)
+        floatingPanelVC.didMove(toParent: self)
+        
+        floatingPanelViewController = floatingPanelVC
     }
 }
 
@@ -143,8 +152,8 @@ extension MapViewController: FloatingPanelViewControllerDelegate {
             floatingPanelViewController.removeFromParent()
             floatingPanelViewController.view.removeFromSuperview()
             
-            // Reset view alpha.
-            floatingPanelViewController.view.alpha = 1.0
+            // Reset self.floatingPanelViewController.
+            self.floatingPanelViewController = nil
         }
     }
 }

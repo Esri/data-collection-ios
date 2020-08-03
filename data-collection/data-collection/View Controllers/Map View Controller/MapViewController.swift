@@ -56,6 +56,7 @@ class MapViewController: UIViewController {
     
     var extrasNavigationController: UINavigationController?
     var layerContentsViewController: LayerContentsViewController?
+    var floatingPanelViewController: FloatingPanelViewController?
     lazy var bookmarksViewController: BookmarksViewController = {
         return BookmarksViewController(geoView: mapView)
     }()
