@@ -63,12 +63,38 @@ extension MapViewController {
         present(action, animated: true)
     }
     
-    func showLayerContents(_ barButtonItem: UIBarButtonItem?) {
+    func showFloatingPanel(_ initialViewController: UIViewController,
+                              title: String?,
+                              subtitle: String?,
+                              image: UIImage?) {
         if floatingPanelViewController != nil {
             floatingPanelViewController?.removeFromParent()
             floatingPanelViewController?.view.removeFromSuperview()
         }
+
+        // Get the bundle and then the storyboard for the FloatingPanelViewController.
+        let bundle = Bundle(for: FloatingPanelViewController.self)
+        let storyboard = UIStoryboard(name: "FloatingPanelViewController", bundle: bundle)
         
+        // Create the floatingPanelViewController from the storyboard.
+        guard let floatingPanelVC = storyboard.instantiateInitialViewController() as? FloatingPanelViewController else { return }
+
+        // Create and configure the view controller.
+        floatingPanelVC.floatingPanelTitle = title
+        floatingPanelVC.floatingPanelSubtitle = subtitle
+        floatingPanelVC.image = image
+        
+        floatingPanelVC.initialViewController = initialViewController
+        floatingPanelVC.delegate = self
+        
+        addChild(floatingPanelVC)
+        view.addSubview(floatingPanelVC.view)
+        floatingPanelVC.didMove(toParent: self)
+        
+        floatingPanelViewController = floatingPanelVC
+    }
+    
+    func showLayerContents(_ barButtonItem: UIBarButtonItem?) {
         let layerContentsVC: LayerContentsViewController
         
         // Create the LayerContentsViewController if it's not already created.
@@ -82,55 +108,18 @@ extension MapViewController {
             layerContentsViewController = layerContentsVC
         }
 
-        // Get the bundle and then the storyboard for the FloatingPanelViewController.
-        let bundle = Bundle(for: FloatingPanelViewController.self)
-        let storyboard = UIStoryboard(name: "FloatingPanelViewController", bundle: bundle)
-        
-        // Create the floatingPanelViewController from the storyboard.
-        guard let floatingPanelVC = storyboard.instantiateInitialViewController() as? FloatingPanelViewController else { return }
-        
-        // Create and configure the view controller.
-        floatingPanelVC.floatingPanelTitle = MapViewControllerExtras.layers.title
-        floatingPanelVC.floatingPanelSubtitle = nil
-        floatingPanelVC.image = UIImage(named: "layers")
-        
-        floatingPanelVC.initialViewController = layerContentsViewController
-        floatingPanelVC.delegate = self
-        
-        addChild(floatingPanelVC)
-        view.addSubview(floatingPanelVC.view)
-        floatingPanelVC.didMove(toParent: self)
-        
-        floatingPanelViewController = floatingPanelVC
+        showFloatingPanel(layerContentsVC,
+                             title: MapViewControllerExtras.layers.title,
+                             subtitle: nil,
+                             image: UIImage(named: "layers"))
     }
     
     func showBookmarks(_ barButtonItem: UIBarButtonItem?) {
-        if floatingPanelViewController != nil {
-            floatingPanelViewController?.removeFromParent()
-            floatingPanelViewController?.view.removeFromSuperview()
-        }
-
-        // Get the bundle and then the storyboard for the FloatingPanelViewController.
-        let bundle = Bundle(for: FloatingPanelViewController.self)
-        let storyboard = UIStoryboard(name: "FloatingPanelViewController", bundle: bundle)
-        
-        // Create the floatingPanelViewController from the storyboard.
-        guard let floatingPanelVC = storyboard.instantiateInitialViewController() as? FloatingPanelViewController else { return }
-
-        // Create and configure the view controller.
-        floatingPanelVC.floatingPanelTitle = MapViewControllerExtras.bookmarks.title
-        floatingPanelVC.floatingPanelSubtitle = "Select a bookmark"
-        floatingPanelVC.image = UIImage(named: "bookmark")
-        
-        floatingPanelVC.initialViewController = bookmarksViewController
         bookmarksViewController.delegate = self
-        floatingPanelVC.delegate = self
-        
-        addChild(floatingPanelVC)
-        view.addSubview(floatingPanelVC.view)
-        floatingPanelVC.didMove(toParent: self)
-        
-        floatingPanelViewController = floatingPanelVC
+        showFloatingPanel(bookmarksViewController,
+                             title: MapViewControllerExtras.bookmarks.title,
+                             subtitle: "Select a bookmarkd",
+                             image: UIImage(named: "bookmark"))
     }
 }
 
@@ -145,15 +134,19 @@ extension MapViewController: BookmarksViewControllerDelegate {
 
 extension MapViewController: FloatingPanelViewControllerDelegate {
     func userDidRequestDismissFloatingPanel(_ floatingPanelViewController: FloatingPanelViewController) {
+        dismissFloatingPanel(floatingPanelViewController)
+    }
+    
+    func dismissFloatingPanel(_ floatingPanelViewController: FloatingPanelViewController) {        
+        // Reset self.floatingPanelViewController.
+        self.floatingPanelViewController = nil
+
         // Animate the alpha of the panel to 0.0 then remove from parent
         UIView.animate(withDuration: 0.5, animations: {
             floatingPanelViewController.view.alpha = 0.0
         }) { (_) in
             floatingPanelViewController.removeFromParent()
             floatingPanelViewController.view.removeFromSuperview()
-            
-            // Reset self.floatingPanelViewController.
-            self.floatingPanelViewController = nil
         }
     }
 }

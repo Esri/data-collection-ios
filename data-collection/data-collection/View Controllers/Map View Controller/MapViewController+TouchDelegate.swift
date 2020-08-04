@@ -37,7 +37,10 @@ extension MapViewController: AGSGeoViewTouchDelegate {
         identifyOperation = nil
         
         // Identify layers for the geo view's tap point.
-        identifyOperation = geoView.identifyLayers(atScreenPoint: screenPoint, tolerance: 10, returnPopupsOnly: true, maximumResultsPerLayer: 5) { [weak self] (result, error) in
+        identifyOperation = geoView.identifyLayers(atScreenPoint: screenPoint,
+                                                   tolerance: 10,
+                                                   returnPopupsOnly: true,
+                                                   maximumResultsPerLayer: 50) { [weak self] (result, error) in
             
             guard let self = self else { return }
             
