@@ -207,6 +207,13 @@ class MapViewController: UIViewController {
     // MARK: Current Pop-Up
     
     private(set) var currentPopupManager: RichPopupManager?
+    private(set) var selectedPopups = [RichPopup]()
+
+    func setSelectedPopups(popups: [RichPopup]) {
+        // Clear existing selection
+        (currentPopupManager?.popup.feature?.featureTable?.layer as? AGSFeatureLayer)?.clearSelection()
+        selectedPopups = popups
+    }
 
     func setCurrentPopup(popup: RichPopup) {
         

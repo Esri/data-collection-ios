@@ -17,8 +17,8 @@ import UIKit
 extension MapViewController {
     
     func adjustForMapViewMode(from: MapViewMode?, to: MapViewMode) {
-                
-        let smallPopViewVisible: (Bool) -> UIViewAnimations = { [weak self] (visible) in
+        
+        let identifyResultsVisible: (Bool) -> UIViewAnimations = { [weak self] (visible) in
             return {
                 guard let self = self else { return }
                 self.smallPopupView.alpha = CGFloat(visible)
@@ -26,6 +26,14 @@ extension MapViewController {
             }
         }
         
+        let smallPopViewVisible: (Bool) -> UIViewAnimations = { [weak self] (visible) in
+            return {
+                guard let self = self else { return }
+                self.smallPopupView.alpha = CGFloat(visible)
+                self.featureDetailViewBottomConstraint.constant = visible ? 8 : -156
+            }
+        }
+
         let selectViewVisible: (Bool) -> UIViewAnimations = { [weak self] (visible) in
             return {
                 guard let self = self else { return }
