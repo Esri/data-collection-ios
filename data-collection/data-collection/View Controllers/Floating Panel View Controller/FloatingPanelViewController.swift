@@ -57,10 +57,6 @@ public class FloatingPanelViewController: UIViewController {
     @IBOutlet private var bottomHandlebarView: UIView!
     
     @IBOutlet private var headerStackView: UIStackView!
-    @IBOutlet private var titleStackView: UIStackView!
-    @IBOutlet private var subtitleStackView: UIStackView!
-    
-    @IBOutlet private var imageStackView: UIStackView!
     @IBOutlet private var imageView: UIImageView!
     
     @IBOutlet private var panGestureRecognizer: UIPanGestureRecognizer!
@@ -176,7 +172,7 @@ public class FloatingPanelViewController: UIViewController {
     
     private func updateImage() {
         imageView.image = image
-        imageStackView.isHidden = (image == nil)
+        imageView.isHidden = (image == nil)
     }
     
     /// The image to display in the header.
@@ -194,7 +190,7 @@ public class FloatingPanelViewController: UIViewController {
     
     /// The title to display in the header.
     /// Defaults to "Title".
-    public var floatingPanelTitle: String? = "Title" {
+    public var floatingPanelTitle: String? = "" {
         didSet {
             guard isViewLoaded else { return }
             updateFloatingPanelTitle()
@@ -207,7 +203,7 @@ public class FloatingPanelViewController: UIViewController {
     
     /// The subtitle to display in the header.
     /// Defaults to "Subtitle".
-    public var floatingPanelSubtitle: String? = "Subtitle" {
+    public var floatingPanelSubtitle: String? = "" {
         didSet {
             guard isViewLoaded else { return }
             updateFloatingPanelSubtitle()
