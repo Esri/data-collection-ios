@@ -134,7 +134,7 @@ extension MapViewController: BookmarksViewControllerDelegate {
     }
 }
 
-extension MapViewController: FloatingPanelViewControllerDelegate {
+extension MapViewController: FloatingPanelViewControllerDelegate {    
     func userDidRequestDismissFloatingPanel(_ floatingPanelViewController: FloatingPanelViewController) {
         // Animate the alpha of the panel to 0.0 then remove from parent
         UIView.animate(withDuration: 0.5, animations: {
