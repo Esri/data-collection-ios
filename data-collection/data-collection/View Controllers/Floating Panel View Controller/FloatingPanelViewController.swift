@@ -22,15 +22,43 @@ public protocol FloatingPanelViewControllerDelegate: AnyObject {
     func userDidRequestDismissFloatingPanel(_ floatingPanelViewController: FloatingPanelViewController)
 }
 
-/// Defines the vertical state of the floating panel view controller.
-public enum FloatingPanelState {
-    /// The floating panel is displayed at its minimum height.
-    case minimized
-    /// The floating panel is displayed at a height roughly 40% of the screen.
-    /// The actual value is user-customizable.
-    case partial
-    /// The floating panel is displayed at its maximum height.
-    case full
+/// Implementing the `FloatingPanelItem` protocol on a `UIViewController` embedded
+/// in a `FloatingPanelViewController` allows the embedded view controller to
+/// access certain properties of the view controller and change them as
+/// appropriate for the current setup.
+public protocol FloatingPanelItem: AnyObject {
+    /// The title to display in the header.
+    var floatingPanelTitle: String? { get set }
+    
+    /// The subtitle to display in the header.
+    var floatingPanelSubtitle: String? { get set }
+    
+    /// The image to display in the header.
+    var image: UIImage? { get set }
+
+    /// Determines whether the close button is hidden or not.
+    var closeButtonHidden: Bool { get set }
+
+    /// The vertical size of the floating panel view controller used
+    /// when the `FloatingPanelState` is set to `.partial`.
+    var partialHeight: CGFloat { get set }
+    
+    /// The state representing the vertical size of the floating panel.
+    var state: FloatingPanelViewController.State { get set }
+    
+    /// Controls the visibility of the floating panel header view.
+    /// - Parameters:
+    ///   - hidden: whether to hide or show the header view.
+    ///   - animated: whether to animate the change to the header view visibility.
+    func setHeaderViewHidden(_ hidden: Bool, animated: Bool)
+}
+
+/// Protocol used by a `UIViewController` embedded in a `FloatingPanelViewController`
+/// if the embedded controller needs to modify some floating panel properties.
+public protocol FloatingPanelEmbeddable: UIViewController {
+    /// The `FloatingPanelItem` used to access and change certain
+    /// floating panel view controller properties.
+    var floatingPanelItem: FloatingPanelItem? { get set }
 }
 
 /// A floating panel is a view that overlays a map view and supplies map-related
@@ -46,7 +74,18 @@ public enum FloatingPanelState {
 /// FloatingPanelViewController will contain a basic set of optional UI elements
 /// for displaying a title, subtitle, image, close button and other common
 /// items as a convenience to the client.
-public class FloatingPanelViewController: UIViewController {
+public class FloatingPanelViewController: UIViewController, FloatingPanelItem {
+    /// Defines the vertical state of the floating panel view controller.
+    public enum State {
+        /// The floating panel is displayed at its minimum height.
+        case minimized
+        /// The floating panel is displayed at a height roughly 40% of the screen.
+        /// The actual value is user-customizable.
+        case partial
+        /// The floating panel is displayed at its maximum height.
+        case full
+    }
+    
     @IBOutlet private var closeButton: UIButton!
     @IBOutlet private var contentView: UIView!
     
@@ -60,14 +99,93 @@ public class FloatingPanelViewController: UIViewController {
     @IBOutlet private var imageView: UIImageView!
     
     @IBOutlet private var panGestureRecognizer: UIPanGestureRecognizer!
+
+    // MARK: FloatingPanelItem
     
-    /// The delegate to be notified of FloatingPanelViewControllerDelegate events.
-    public var delegate: FloatingPanelViewControllerDelegate?
+    private func updateFloatingPanelTitle() {
+        titleLabel.text = floatingPanelTitle
+    }
     
+    /// The title to display in the header.
+    /// Defaults to "Title".
+    public var floatingPanelTitle: String? = "" {
+        didSet {
+            guard isViewLoaded else { return }
+            updateFloatingPanelTitle()
+        }
+    }
+    
+    private func updateFloatingPanelSubtitle() {
+        subTitleLabel.text = floatingPanelSubtitle
+    }
+    
+    /// The subtitle to display in the header.
+    /// Defaults to "Subtitle".
+    public var floatingPanelSubtitle: String? = "" {
+        didSet {
+            guard isViewLoaded else { return }
+            updateFloatingPanelSubtitle()
+        }
+    }
+    
+    private func updateImage() {
+        imageView.image = image
+        imageView.isHidden = (image == nil)
+    }
+    
+    /// The image to display in the header.
+    /// Defaults to nil.
+    public var image: UIImage? {
+        didSet {
+            guard isViewLoaded else { return }
+            updateImage()
+        }
+    }
+    
+    private func updateCloseButton() {
+        closeButton.isHidden = closeButtonHidden
+    }
+    
+    /// Determines whether the close button is hidden or not.
+    /// Defaults to `false`.
+    public var closeButtonHidden: Bool = false {
+        didSet {
+            guard isViewLoaded else { return }
+            updateCloseButton()
+        }
+    }
+
     /// The vertical size of the floating panel view controller used
     /// when the `FloatingPanelState` is set to `.partial`.
     /// The computed default is 40% of the maximum panel height.
     public var partialHeight: CGFloat = 0
+    
+    /// The state representing the vertical size of the floating panel.
+    /// Defaults to `.partial`.
+    public var state: State = .partial {
+        didSet {
+            guard isViewLoaded else { return }
+            updateState()
+        }
+    }
+    
+    /// Sets the visibility of the header view, optionally animating the change.
+    /// - Parameters:
+    ///   - hidden: Whether to hide the header view or not.
+    ///   - animated: Whether to animate the visibility change.
+    public func setHeaderViewHidden(_ hidden: Bool, animated: Bool) {
+        if animated {
+            UIView.animate(withDuration: 0.4) { [weak self] in
+                self?.headerViewHidden = hidden
+            }
+        }
+        else {
+            headerViewHidden = hidden
+        }
+    }
+    
+    /// The delegate to be notified of FloatingPanelViewControllerDelegate events.
+    public var delegate: FloatingPanelViewControllerDelegate?
     
     /// Returns the user-specified partial height or a calculated default value.
     private var internalPartialHeight: CGFloat {
@@ -120,39 +238,22 @@ public class FloatingPanelViewController: UIViewController {
         }
     }
     
-    /// The state representing the vertical size of the floating panel.
-    /// Defaults to `.partial`.
-    public var state: FloatingPanelState = .partial {
-        didSet {
-            guard isViewLoaded else { return }
-            updateState()
-        }
-    }
-    
+    /// Determines whether the header view, comprising the image, title,
+    /// subtitle and close button is hidden or not.
+    /// Defaults to `false`.
     private func updateHeaderStackView() {
         headerStackView.isHidden = headerViewHidden
-    }
+        headerStackView.alpha = headerViewHidden ? 0 : 1
+}
     
     /// Determines whether the header view, comprising the image, title,
     /// subtitle and close button is hidden or not.
     /// Defaults to `false`.
-    public var headerViewHidden: Bool = false {
+    private var headerViewHidden: Bool = false {
         didSet {
+            // TODO: test this stuff and all the changes in the test app with a navigation controller and check the feasibility of this stuff.
             guard isViewLoaded else { return }
             updateHeaderStackView()
-        }
-    }
-    
-    private func updateCloseButton() {
-        closeButton.isHidden = closeButtonHidden
-    }
-    
-    /// Determines whether the close button is hidden or not.
-    /// Defaults to `false`.
-    public var closeButtonHidden: Bool = false {
-        didSet {
-            guard isViewLoaded else { return }
-            updateCloseButton()
         }
     }
     
@@ -170,49 +271,16 @@ public class FloatingPanelViewController: UIViewController {
         }
     }
     
-    private func updateImage() {
-        imageView.image = image
-        imageView.isHidden = (image == nil)
-    }
-    
-    /// The image to display in the header.
-    /// Defaults to nil.
-    public var image: UIImage? {
-        didSet {
-            guard isViewLoaded else { return }
-            updateImage()
-        }
-    }
-    
-    private func updateFloatingPanelTitle() {
-        titleLabel.text = floatingPanelTitle
-    }
-    
-    /// The title to display in the header.
-    /// Defaults to "Title".
-    public var floatingPanelTitle: String? = "" {
-        didSet {
-            guard isViewLoaded else { return }
-            updateFloatingPanelTitle()
-        }
-    }
-    
-    private func updateFloatingPanelSubtitle() {
-        subTitleLabel.text = floatingPanelSubtitle
-    }
-    
-    /// The subtitle to display in the header.
-    /// Defaults to "Subtitle".
-    public var floatingPanelSubtitle: String? = "" {
-        didSet {
-            guard isViewLoaded else { return }
-            updateFloatingPanelSubtitle()
-        }
-    }
-    
     /// The initial view controller to display in the content area of
     /// the floating panel view controller.
     public var initialViewController: UIViewController? {
+        willSet {
+            if let viewController = initialViewController {
+                viewController.willMove(toParent: nil)
+                viewController.view.removeFromSuperview()
+                viewController.removeFromParent()
+            }
+        }
         didSet {
             if let viewController = initialViewController {
                 // Make sure we're loaded...
@@ -227,6 +295,12 @@ public class FloatingPanelViewController: UIViewController {
                     viewController.view.topAnchor.constraint(equalTo: contentView.topAnchor),
                     viewController.view.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
                 ])
+            }
+            
+            // If the view implements `FloatingPanelEmbeddable`, set ourself
+            // as the `floatingPanelItem`.
+            if let floatingPanelEmbeddable = initialViewController as? FloatingPanelEmbeddable {
+                floatingPanelEmbeddable.floatingPanelItem = self
             }
         }
     }
@@ -473,6 +547,7 @@ public class FloatingPanelViewController: UIViewController {
                        options: [.layoutSubviews, .curveEaseInOut],
                        animations: { [weak self] in
                         self?.resizeableLayoutConstraint.constant = newConstant
+                        self?.contentView?.alpha = (self?.state == .minimized ? 0.0 : 1.0)
                         self?.view.setNeedsUpdateConstraints()
                         superview.layoutIfNeeded()
         })

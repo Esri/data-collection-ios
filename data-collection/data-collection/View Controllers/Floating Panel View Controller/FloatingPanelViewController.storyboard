@@ -2,7 +2,6 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="ezK-xJ-cea">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
@@ -12,7 +11,7 @@
         <!--Floating Panel View Controller-->
         <scene sceneID="un2-7U-vMy">
             <objects>
-                <viewController id="ezK-xJ-cea" userLabel="Floating Panel View Controller" customClass="FloatingPanelViewController" customModule="data_collection" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="ezK-xJ-cea" userLabel="Floating Panel View Controller" customClass="FloatingPanelViewController" customModule="FloatingPanelTesting" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" clipsSubviews="YES" contentMode="scaleToFill" id="Dcy-Mc-44B">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -62,28 +61,26 @@
                                                         </constraints>
                                                     </view>
                                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="ZL8-d5-1ZH" userLabel="Title Detail Stack View">
-                                                        <rect key="frame" x="8" y="2" width="398" height="146"/>
+                                                        <rect key="frame" x="8" y="0.0" width="398" height="150"/>
                                                         <subviews>
                                                             <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="FCz-rQ-Pi7" userLabel="Title Stack View">
-                                                                <rect key="frame" x="0.0" y="0.0" width="398" height="71"/>
+                                                                <rect key="frame" x="0.0" y="0.0" width="398" height="75"/>
                                                                 <subviews>
                                                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="750" verticalHuggingPriority="750" adjustsImageSizeForAccessibilityContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="GTY-EJ-r1v">
-                                                                        <rect key="frame" x="0.0" y="0.0" width="71" height="71"/>
+                                                                        <rect key="frame" x="0.0" y="0.0" width="75" height="75"/>
                                                                         <color key="tintColor" name="primary"/>
                                                                         <constraints>
-                                                                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="24" id="Rps-XZ-sTz"/>
-                                                                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="24" id="Tqi-mn-hqo"/>
                                                                             <constraint firstAttribute="width" secondItem="GTY-EJ-r1v" secondAttribute="height" multiplier="1:1" id="c5f-Jl-ywf"/>
                                                                         </constraints>
                                                                     </imageView>
-                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3b9-kp-okn">
-                                                                        <rect key="frame" x="75" y="10.5" width="295" height="50"/>
+                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="1000" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3b9-kp-okn">
+                                                                        <rect key="frame" x="79" y="0.0" width="291" height="75"/>
                                                                         <fontDescription key="fontDescription" style="UICTFontTextStyleTitle2"/>
                                                                         <nil key="textColor"/>
                                                                         <nil key="highlightedColor"/>
                                                                     </label>
                                                                     <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageSizeForAccessibilityContentSizeCategory="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AEG-zW-R6p">
-                                                                        <rect key="frame" x="374" y="23.5" width="24" height="24"/>
+                                                                        <rect key="frame" x="374" y="25.5" width="24" height="24"/>
                                                                         <color key="tintColor" name="primary"/>
                                                                         <state key="normal" image="x-circle">
                                                                             <color key="titleColor" name="primary"/>
@@ -93,16 +90,19 @@
                                                                         </connections>
                                                                     </button>
                                                                 </subviews>
+                                                                <constraints>
+                                                                    <constraint firstItem="GTY-EJ-r1v" firstAttribute="height" relation="lessThanOrEqual" secondItem="3b9-kp-okn" secondAttribute="height" id="7kR-SI-N3t"/>
+                                                                </constraints>
                                                             </stackView>
                                                             <stackView opaque="NO" contentMode="scaleToFill" alignment="top" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="Jr9-EQ-mBS">
-                                                                <rect key="frame" x="0.0" y="75" width="398" height="71"/>
+                                                                <rect key="frame" x="0.0" y="79" width="398" height="71"/>
                                                                 <subviews>
                                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3Uf-XU-QYV">
-                                                                        <rect key="frame" x="0.0" y="0.0" width="71" height="71"/>
+                                                                        <rect key="frame" x="0.0" y="0.0" width="75" height="71"/>
                                                                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                                                     </view>
                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" horizontalCompressionResistancePriority="250" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5r0-sY-dTY">
-                                                                        <rect key="frame" x="75" y="0.0" width="323" height="50"/>
+                                                                        <rect key="frame" x="79" y="0.0" width="319" height="50"/>
                                                                         <fontDescription key="fontDescription" style="UICTFontTextStyleCaption1"/>
                                                                         <color key="textColor" systemColor="secondaryLabelColor" red="0.23529411759999999" green="0.23529411759999999" blue="0.26274509800000001" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
                                                                         <nil key="highlightedColor"/>
