@@ -1,3 +1,7 @@
+# Release 1.2.2
+
+- Introduces new technique for managing [app secrets]](./docs#app-configuration).
+
 # Release 1.2.1
 
 - Adds doc table of contents to root README.md and docs/index.md

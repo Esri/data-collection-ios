@@ -21,7 +21,7 @@
 		944433EC21AC788800E96A6E /* FeatureTableError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 944433EB21AC788800E96A6E /* FeatureTableError.swift */; };
 		944433F121ACD59E00E96A6E /* RichPopupManagerError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 944433F021ACD59E00E96A6E /* RichPopupManagerError.swift */; };
 		944433F321AF5F2F00E96A6E /* RichPopupManager+CustomBehavior.swift in Sources */ = {isa = PBXBuildFile; fileRef = 944433F221AF5F2F00E96A6E /* RichPopupManager+CustomBehavior.swift */; };
-		944D0CC424E1DE4800EE49CB /* AppSecrets.swift.secret in Sources */ = {isa = PBXBuildFile; fileRef = 944D0CBF24E1DD0F00EE49CB /* AppSecrets.swift.secret */; };
+		944D0CC424E1DE4800EE49CB /* AppSecrets.swift.masque in Sources */ = {isa = PBXBuildFile; fileRef = 944D0CBF24E1DD0F00EE49CB /* AppSecrets.swift.masque */; };
 		944D81D72253E72300972941 /* ArcGIS.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 944D81D52253E72300972941 /* ArcGIS.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		9451EC5220D0705700792FFC /* CustomBehavior_IdentifyNeighborhood.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9451EC5120D0705700792FFC /* CustomBehavior_IdentifyNeighborhood.swift */; };
 		9458E2A5219B542700D18CEE /* HouseColors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9458E2A4219B542700D18CEE /* HouseColors.xcassets */; };
@@ -204,7 +204,7 @@
 		944D0CC324E1DD2100EE49CB /* PBXBuildRule */ = {
 			isa = PBXBuildRule;
 			compilerSpec = com.apple.compilers.proxy.script;
-			filePatterns = "*.secret";
+			filePatterns = "*.masque";
 			fileType = pattern.proxy;
 			inputFiles = (
 				"$(PROJECT_DIR)/.secrets",
@@ -215,7 +215,7 @@
 				"$(DERIVED_FILE_DIR)/$(INPUT_FILE_BASE)",
 			);
 			runOncePerArchitecture = 0;
-			script = "\"${PROJECT_DIR}/scripts/app-secrets/secrets\" -i \"${INPUT_FILE_PATH}\" -o \"${SCRIPT_OUTPUT_FILE_0}\" -s \"${SCRIPT_INPUT_FILE_0}\" -f\n";
+			script = "\"${PROJECT_DIR}/scripts/masquerade\" -i \"${INPUT_FILE_PATH}\" -o \"${SCRIPT_OUTPUT_FILE_0}\" -s \"${SCRIPT_INPUT_FILE_0}\" -f\n";
 		};
 /* End PBXBuildRule section */
 
@@ -280,7 +280,7 @@
 		944433EB21AC788800E96A6E /* FeatureTableError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeatureTableError.swift; sourceTree = "<group>"; };
 		944433F021ACD59E00E96A6E /* RichPopupManagerError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RichPopupManagerError.swift; sourceTree = "<group>"; };
 		944433F221AF5F2F00E96A6E /* RichPopupManager+CustomBehavior.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RichPopupManager+CustomBehavior.swift"; sourceTree = "<group>"; };
-		944D0CBF24E1DD0F00EE49CB /* AppSecrets.swift.secret */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = AppSecrets.swift.secret; sourceTree = "<group>"; };
+		944D0CBF24E1DD0F00EE49CB /* AppSecrets.swift.masque */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = AppSecrets.swift.masque; sourceTree = "<group>"; };
 		944D81D52253E72300972941 /* ArcGIS.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ArcGIS.framework; path = $HOME/Library/SDKs/ArcGIS/iOS/Frameworks/Dynamic/ArcGIS.framework; sourceTree = "<absolute>"; };
 		9451EC5120D0705700792FFC /* CustomBehavior_IdentifyNeighborhood.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomBehavior_IdentifyNeighborhood.swift; sourceTree = "<group>"; };
 		9458E2A4219B542700D18CEE /* HouseColors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = HouseColors.xcassets; sourceTree = "<group>"; };
@@ -1177,7 +1177,7 @@
 				94B3760B207EAE4600691F2A /* AppDelegate.swift */,
 				94B375A9207E8D5600691F2A /* AppGlobals.swift */,
 				94B3759F207E8D5600691F2A /* AppConfiguration.swift */,
-				944D0CBF24E1DD0F00EE49CB /* AppSecrets.swift.secret */,
+				944D0CBF24E1DD0F00EE49CB /* AppSecrets.swift.masque */,
 				946D20A621250F46001BF5CC /* AppReachability.swift */,
 				94B375A4207E8D5600691F2A /* AppLocation.swift */,
 				94DDEA7B215426D300DA533C /* AppRules.swift */,
@@ -1491,7 +1491,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				944D0CC424E1DE4800EE49CB /* AppSecrets.swift.secret in Sources */,
+				944D0CC424E1DE4800EE49CB /* AppSecrets.swift.masque in Sources */,
 				94D544BE207FC15D00ED0D04 /* AppContainerViewController+DrawerDelegate.swift in Sources */,
 				945F455421E96DC000F2DCBC /* AGSPopupAttachmentType+Icon.swift in Sources */,
 				948066382091595200A398EA /* RichPopupManager.swift in Sources */,
@@ -1842,7 +1842,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.2.0;
+				MARKETING_VERSION = 1.2.2;
 				OTHER_LDFLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.esri.arcgisruntime.opensourceapps.data-collection";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1867,7 +1867,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.2.0;
+				MARKETING_VERSION = 1.2.2;
 				OTHER_LDFLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.esri.arcgisruntime.opensourceapps.data-collection";
 				PRODUCT_NAME = "$(TARGET_NAME)";
