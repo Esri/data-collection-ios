@@ -1151,7 +1151,7 @@ Masquerade demands various parameters.
 - `-s`, the secrets file containing key/value pairs.
 - `-f`, an (optional) flag to overwrite the output file.
 
-For we could supply `masquerade` with these input and secret files.
+For example, we could supply `masquerade` with these _input_ and _secret_ files.
 
 **Input**
 
@@ -1169,7 +1169,7 @@ ARCGIS_CLIENT_ID=ABC123
 ARCGIS_LICENSE_KEY=fake.license.key.ABC123
 ```
 
-Which produces an output.
+Which would produce an output.
 
 **Output**
 
