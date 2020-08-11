@@ -6,10 +6,10 @@ helpFunction()
   echo "Usage: $0 -i /path/to/input/file -o /path/to/output/file -s /path/to/secrets/file"
   echo -e "\t-i Path to input file."
   echo -e "\t-o Path to output generated file."
-  echo -e "\t-s Path to a file containing secrets."
-  echo -e "\t-f Overwrite existing file at output path?"
+  echo -e "\t-s Path to a file containing key/value secrets."
+  echo -e "\t-f Force overwrite existing file at output path?"
   echo -e ""
-  exit 1 # Exit script after printing help
+  exit 1
 }
 
 FORCE_WRITE='false'

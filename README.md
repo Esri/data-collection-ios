@@ -3,16 +3,17 @@
 <!-- MDTOC maxdepth:6 firsth1:0 numbering:0 flatten:0 bullets:1 updateOnSave:1 -->
 
 - [Features](#features)   
-- [Best Practices](#best-practices)   
-- [Detailed Documentation](#detailed-documentation)   
-- [Get Started](#get-started)   
+- [Best practices](#best-practices)   
+- [Detailed documentation](#detailed-documentation)   
+- [Get started](#get-started)   
    - [Fork the repo](#fork-the-repo)   
    - [Clone the repo](#clone-the-repo)   
-      - [Command line Git](#command-line-git)   
-   - [Configuring a Remote for a Fork](#configuring-a-remote-for-a-fork)   
+   - [Grant permission](#grant-permission)   
+   - [Configuring a remote for a fork](#configuring-a-remote-for-a-fork)   
    - [Configure the app](#configure-the-app)   
-      - [1. Register an Application](#1-register-an-application)   
-      - [2. Configuring the project](#2-configuring-the-project)   
+      - [1. Register an application](#1-register-an-application)   
+      - [2. Configure the project](#2-configure-the-project)   
+      - [3. Configure app secrets](#3-configure-app-secrets)   
 - [Learn More](#learn-more)   
 - [Requirements](#requirements)   
 - [Contributing](#contributing)   
@@ -22,6 +23,7 @@
 
 <!-- /MDTOC -->
 ---
+
 [Data Collection for iOS](https://developers.arcgis.com/example-apps/data-collection-ios/) shows how a robust application can be built around the ArcGIS Platform using the ArcGIS Runtime SDK for iOS and Swift. It demonstrates best practices around some simple but key functionality of the ArcGIS Runtime. Using your organization's web maps, you can use Data Collection as is, or extend it to meet your specific needs.
 
 | Map | Portal | Pop-up | Attachments |
@@ -33,6 +35,7 @@
 | ![collect](./docs/images/new-feature.png) | ![extras](./docs/images/extras.png) | ![bookmarks](./docs/images/bookmarks.png) | ![layers](./docs/images/layers.png) |
 
 ## Features
+
 * Taking your web map and data offline
 * Editing your data both offline and online
 * Synchronizing offline edits
@@ -45,7 +48,8 @@
 * Using the World Geocoder service
 * Using Popup configuration to drive app behavior
 
-## Best Practices
+## Best practices
+
 The project also demonstrates some patterns for building real-world apps around the ArcGIS Runtime SDK.
 
 * Map-centric UI design
@@ -53,85 +57,157 @@ The project also demonstrates some patterns for building real-world apps around 
 * Swift class extensions
 * Swift KVO & NotificationCenter state handling
 
-## Detailed Documentation
+## Detailed documentation
+
 Read the [docs](./docs/README.md) for a detailed explanation of the application, including its architecture and how it leverages the ArcGIS platform, as well as how you can begin using the app right away.
 
-## Get Started
+## Get started
+
 You will need [Xcode 11](https://itunes.apple.com/us/app/xcode/id497799835?mt=12) and the [ArcGIS Runtime SDK for iOS](https://developers.arcgis.com/ios/latest/swift/guide/install.htm#ESRI_SECTION1_D57435A2BEBC4D29AFA3A4CAA722506A) (v100.8 or later) installed locally.
 
 The *Data Collection app* now incorporates the [ArcGIS Runtime Toolkit for iOS](https://github.com/Esri/arcgis-runtime-toolkit-ios) (v100.8 or later) for additional functionality.
 
 ### Fork the repo
-**Fork** the [Data Collection](https://github.com/Esri/data-collection-ios/fork) repo
+
+**Fork** the [Data Collection](https://github.com/Esri/data-collection-ios/fork) repo.
 
 ### Clone the repo
-Once you have forked the repo, you can make a clone and open `data-collection.xcodeproj` in Xcode.
 
-  > Make sure to use the "recursive" option to ensure you get the **ArcGIS Runtime Toolkit** submodule
-  >
-  >`git clone --recursive [URL to forked Git repo]`
-  >
-  > If you've already cloned the repo without the submodule, you can load the submodule using
-  >
-  >`git submodule update --init`
+Once you have forked the repo, make a clone.
 
-#### Command line Git
-1. [Clone Data Collection](https://help.github.com/articles/fork-a-repo/#step-2-create-a-local-clone-of-your-fork)
-2. `cd` into into the cloned repository's directory
-3. Make your changes and create a [pull request](https://help.github.com/articles/creating-a-pull-request)
+```bash
+git clone --recursive [URL to forked Git repo]
+```
 
-### Configuring a Remote for a Fork
+> Make sure to use the "recursive" option to ensure you get the **ArcGIS Runtime Toolkit** submodule
+
+If you've already cloned the repo without the submodule, you can load the submodule using
+
+```bash
+git submodule update --init
+```
+
+Change into the root repo directory.
+
+```bash
+cd data-collection-ios
+```
+
+### Grant permission
+
+The project uses a bash program named `masquerade` in custom build rule to conceal app secrets in versioned source code. Grant `masquerade` executable permissions.
+
+```bash
+chmod +rwx data-collection/scripts/masquerade
+```
+
+To learn more about `masquerade`, consult the app's [documentation](./docs#app-configuration).
+
+### Configuring a remote for a fork
+
 If you make changes in the fork and would like to [sync](https://help.github.com/articles/syncing-a-fork/) those changes with the upstream repository, you must first [configure the remote](https://help.github.com/articles/configuring-a-remote-for-a-fork/). This will be required when you have created local branches and would like to make a [pull request](https://help.github.com/articles/creating-a-pull-request) to your upstream branch.
 
-1. In the Terminal (for Mac users) or command prompt (for Windows and Linux users) type `git remote -v` to list the current configured remote repo for your fork.
-2. `git remote add upstream https://github.com/Esri/data-collection-ios.git` to specify new remote upstream repository that will be synced with the fork. You can type `git remote -v` to verify the new upstream.
+1. Specify a new remote upstream repository that will be synced with the fork.
 
-If there are changes made in the Original repository, you can sync the fork to keep it updated with upstream repository.
+  ```bash
+  git remote add upstream https://github.com/Esri/data-collection-ios.git
+  ```
 
-1. In the terminal, change the current working directory to your local project
-2. Type `git fetch upstream` to fetch the commits from the upstream repository
-3. `git checkout master` to checkout your fork's local master branch.
-4. `git merge upstream/master` to sync your local `master` branch with `upstream/master`. **Note**: Your local changes will be retained and your fork's master branch will be in sync with the upstream repository.
+2. Verify the new upstream is added.
+
+  ```bash
+  git remote -v
+  ```
+
+If there are changes made in the original repository, you can sync the fork to keep it updated with upstream repository.
+
+1. In the terminal, `cd` to your local project repo.
+
+2. Fetch the commits from the upstream repository.
+
+  ```bash
+  git fetch upstream
+  ```
+
+3. Checkout your fork's local master branch.
+
+  ```bash
+  git checkout master
+  ```
+
+4. Sync your local `master` branch with `upstream/master`.
+
+  ```bash
+  git merge upstream/master
+  ```
+
+  > Note, your local changes will be retained and your fork's master branch will be in sync with the upstream repository.
 
 ### Configure the app
 
-The app can be run as is, but it's recommended you do some configuration to set up OAuth to be relevant to your users. At minimum, the app should not be deployed without these changes:
+#### 1. Register an application
 
-1. Register an ArcGIS Portal Application.
-2. Configure Data Collection project to reference that application.
-3. License the app to remove the Developer Mode watermark and for deployment.
+The app uses OAuth to authenticate users to a web map hosted in your ArcGIS Portal. Register an application with the developers website to broker authentication between the app and your Portal.
 
-#### 1. Register an Application
+1. Log in to [developers.arcgis.com](https://developers.arcgis.com) with either your ArcGIS Organizational Account or an ArcGIS Developer Account.
+1. Create a [new application](https://developers.arcgis.com/applications/new).
+1. Click the 'Authentication' tab.
+1. Note the **Client ID**, we'll use it in a future step.
+1. Add a new **Redirect URI**, `data-collection://auth`
 
-For OAuth configuration, create a new Application in your ArcGIS Portal to obtain a `Client ID` and configure a `Redirect URL`. The **Client ID** configures the ArcGIS Runtime to show your users, during the login process, that the application was built by you and can be trusted. The **Redirect URL** configures the OAuth process to then return to your app once authentication is complete.
+> The **Client ID** configures the ArcGIS Runtime to show your users, during the login process, that the application was built by you and can be trusted.
+>
+> The **Redirect URL** configures the OAuth process to then return to your app once authentication is complete.
 
-1. Log in to [https://developers.arcgis.com](https://developers.arcgis.com) with either your ArcGIS Organizational Account or an ArcGIS Developer Account.
-2. Register a new Application. ![Register ArcGIS Application](./docs/images/Register-App.png)
-3. In the Authentication tab, note the **Client ID** and add a **Redirect URL**, e.g. `data-collection://auth`. We will use this URL in the **Configuring the project** section below. ![Configure ArcGIS Application](./docs/images/Configure-App.png)
+#### 2. Configure the project
 
-#### 2. Configuring the project
+Configure the project to access your organization's Portal and web map.
 
-**Configure Redirect URL**
+> If you would like to run the application using a demo data set maintained by Esri, you can ignore this step.
 
-![Configure Xcode Project](./docs/images/Configure-Project.png)
+1. Open the project named `data-collection.xcodeproj` in Xcode.
+1. Browse to the file named `AppConfiguration.swift` located in the directory named `data-collection`.
+1. Configure the app with your organization's base portal domain by modifying the value of the property named `basePortalDomain`.
+1. Configure the app with your organization's web map by modifying the value of the property named `webMapItemID`.
 
-1. Open the project in Xcode and browse to the file named `AppConfiguration.swift` located in the `data-collection` directory.
-2. _(Optionally)_ configure your organization's base portal domain and web map item id.
-3. Configure the OAuth Redirect URL.
-   * Set the `urlScheme` property to match the **Redirect URL** scheme (the part *before* the `://`, e.g. `data-collection`).
-   * Set the `urlAuthPath` property to match the **OAuth Redirect Path** (the part *after* the `://`, e.g. `auth`).
-   * (Note how the `urlScheme` and `urlAuthPath` combine to construct the **OAuth Redirect URL**.)
-4. Configure the license key and client ID.
-	* Set `licenseKey` property with your organization's [license](https://developers.arcgis.com/arcgis-runtime/licensing/). This step is optional during development but required for deployment. Licensing the app will remove the _"Licensed for Developer Use Only"_ watermark on the map view.
-	* Set the `clientID` property with the client ID generated when you registered your application (see section above).
-5. Navigate to the **project** -> the **target** named `data-collection` -> **Info** pane, and configure the URL Schemes to the same scheme configured in step 3 (e.g. `data-collection`).
+#### 3. Configure app secrets
 
-![Configure Xcode Project Info](./docs/images/Configure-Project-Info.png)
+As a best-practices principle, the project conceals app secrets from source code by generating and compiling an `AppSecrets.swift` source code file at build time using a custom build rule.
+
+This build rule looks for a secrets file stored in the project directory, `$(PROJECT_DIR)/.secrets`.
+
+1. Create a hidden secrets file in the project's root directory.
+
+  ```bash
+  touch data-collection/.secrets
+  ```
+
+2. Add your registered app's **Client ID** to the secrets file.
+
+  ```bash
+  echo ARCGIS_CLIENT_ID=your-client-id >> data-collection/.secrets
+  ```
+
+  > Replace 'your-client-id' with your app's **Client ID**.
+
+3. _Optionally_ add your **License Key** to the secrets file. Licensing the app will remove the 'Licensed for Development' watermark. Licensing the app is optional in development but required for production. Aquire your license key from your [dashboard](https://developers.arcgis.com/dashboard).
+
+  ```bash
+  echo ARCGIS_LICENSE_KEY=your-license-key >> data-collection/.secrets
+  ```
+
+  > Replace 'your-license-key' with your **License Key**.
+
+A Lite license is free and provides developers a good starting point. Visit the developers website to learn more about [licensing your ArcGIS Runtime app](https://developers.arcgis.com/pricing/licensing/).
+
+To learn more about `masquerade`, consult the app's [documentation]](./docs#app-configuration).
 
 ## Learn More
+
 Learn more about Esri open source apps [here](https://developers.arcgis.com/example-apps).
 
 ## Requirements
+
 * [Xcode 11 and Swift 5](https://itunes.apple.com/us/app/xcode/id497799835?mt=12)
 * [ArcGIS Runtime SDK for iOS](https://developers.arcgis.com/ios/)
 * To edit records or take a web map offline you will need an ArcGIS Online Organizational account, an ArcGIS Online Developer account or an ArcGIS Online account authenticated using a social login.
@@ -140,17 +216,14 @@ Learn more about Esri open source apps [here](https://developers.arcgis.com/exam
 **Note:**  Starting from the 100.8 release, the ArcGIS Runtime SDK for iOS uses Apple's Metal framework to display maps and scenes. However, Xcode does not support Metal based rendering in iOS 12 simulators on macOS Catalina, or in any version of iOS simulator on macOS Mojave. If you are developing map or scene based apps in these environments, you will need test and debug them on a physical device instead of the simulator.
 
 ## Contributing
-Anyone and everyone is welcome to [contribute](CONTRIBUTING.md). We do accept pull requests.
 
-1. Get involved
-2. Report issues
-3. Contribute code
-4. Improve documentation
+Anyone and everyone is welcome to [contribute](https://github.com/esri/contributing). We do accept pull requests.
 
 ## MDTOC
 Generation of this and other document's table of contents in this repository was performed using the [MDTOC package for Atom](https://atom.io/packages/atom-mdtoc).
 
 ## Licensing
+
 Copyright 2018 Esri
 
 Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at
@@ -164,6 +237,7 @@ A copy of the license is available in the repository's [LICENSE](LICENSE) file.
 For information about licensing your deployed app, see [License your app](https://developers.arcgis.com/ios/latest/swift/guide/license-your-app.htm).
 
 ### 3rd Party Component Licensing
+
 Some great open source components are available out there for iOS developers. The following have been used in this project, with much gratitude to their authors.
 
 * [SVProgressHUD](https://github.com/SVProgressHUD/SVProgressHUD) is licensed under the MIT License.
