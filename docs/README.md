@@ -1046,69 +1046,23 @@ internal func discardStagedAttachments()
 
 ### Reverse geocoding
 
-<<<<<<< HEAD:docs/README.md
 The *Trees of Portland* story contains a custom behavior that reverse geocodes a point into an address which is populated into a tree's attributes. In order to support both an online and an offline work flow, the app ships with a custom class named `AddressLocator` that loads two `AGSLocatorTask` objects, one side-loaded from the app's bundle and the other connected to the [world geocoder web service](https://developers.arcgis.com/features/geocoding/).
-=======
-The *Trees of Portland* story contains a custom behavior that reverse geocodes a point into an address which is populated into a tree's attributes. In order to support both an online and an offline work flow, the app ships with a custom class named `AppReverseGeocoderManager` that loads two `AGSLocatorTask` objects, one side-loaded from the app's bundle and the other connected to the [world geocoder web service](https://developers.arcgis.com/features/geocoding/).
-
-```swift
-class AppReverseGeocoderManager: AGSLoadableBase {
-    // ...
-
-    private var onlineLocatorTask = AGSLocatorTask(url: AppConfiguration.geocodeServiceURL)
-
-    private var offlineLocatorTask = AGSLocatorTask(name: "AddressLocator")
-
-    override func doStartLoading(_ retrying: Bool) {
-
-        let dispatchGroup = DispatchGroup()
-        var loadError: Error? = nil
-
-        dispatchGroup.enter(n: 2)
-
-        onlineLocatorTask.load { (error) in
-            if error != nil {
-                print("[Error] Online Locator Task error", error!.localizedDescription)
-                loadError = error
-            }
-            dispatchGroup.leave()
-        }
-
-        offlineLocatorTask.load { (error) in
-            if error != nil {
-                print("[Error] Offline Locator Task error", error!.localizedDescription)
-                loadError = error
-            }
-            dispatchGroup.leave()
-        }
-
-        dispatchGroup.notify(queue: OperationQueue.current?.underlyingQueue ?? .main) { [weak self] in
-            self?.loadDidFinishWithError(loadError)
-        }
-    }
-    // ...
-}
-```
->>>>>>> 24dbfc28783c573e7690acfe474d94212be46e56:docs/index.md
 
 When running a reverse geocode operation, the app selects which `AGSLocatorTask` to use considering the app context's work mode and if the app has a network connection.
 
 ```swift
 class AddressLocator {
     // ...
-<<<<<<< HEAD:docs/README.md
     func reverseGeocodeAddress(for point: AGSPoint, completion: @escaping (_ result: Result<String, Error>) -> Void) {
-        let locator: AGSLocatorTask
-        // We want to use the online locator if the work mode is online and the app has reachability.
-        if appContext.workMode == .online && appReachability.isReachable {
-            locator = onlineLocator
-        }
-        // Otherwise, we'll use the offline locator.
-        else {
-            locator = offlineLocator
-        }
-        // Load the chosen locator.
-        locator.load { (error) in
+        let locator = appContextAwareLocator
+        locator.load { [weak self] (error) in
+            // Ensure the loaded locator matches the app context aware locator.
+            // The app context might have changed since the locator started loading.
+            guard locator == self?.appContextAwareLocator else {
+                completion(.failure(NSError.unknown))
+                return
+            }
+            // If the locator load failed, end early.
             if let error = error {
                 completion(.failure(error))
                 return
@@ -1128,56 +1082,11 @@ class AddressLocator {
                 }
                 else if
                     let attributes = results?.first?.attributes,
-                    let address = attributes[.address] as? String ?? attributes[.matchAddress] as? String {
+                    let address = (attributes[.address] ?? attributes[.matchAddress]) as? String {
                     completion(.success(address))
                 }
                 else {
                     assertionFailure("Locator task unsupporting of required attribute key (\"\(String.address)\" for online locator, \"\(String.matchAddress)\" for offline locator).")
-=======
-    internal func reverseGeocode(forPoint point: AGSPoint, completion: @escaping (String?, Error?)->Void) {
-
-        load { [weak self] error in
-
-            guard let strongSelf = self else { return }
-
-            guard error == nil else {
-                completion(nil, error)
-                return
-            }
-
-            let locatorTask: AGSLocatorTask
-
-            // We want to use the online locator if the work mode is online and the app has reachability.
-            if appContext.workMode == .online && appReachability.isReachable {
-                locatorTask = strongSelf.onlineLocatorTask
-            }
-            // Otherwise, we'll use the offline locator.
-            else {
-                locatorTask = strongSelf.offlineLocatorTask
-            }
-
-            // We need to set the geocode parameters for storage true because the results of this reverse geocode is persisted to a table.
-            // Please familiarize yourself with the implications of this credits-consuming operation:
-            // https://developers.arcgis.com/rest/geocode/api-reference/geocoding-free-vs-paid.htm
-            let params = AGSReverseGeocodeParameters()
-            params.forStorage = true
-
-            // Perform the reverse geocode task.
-            locatorTask.reverseGeocode(withLocation: point, parameters: params) { (geoCodeResults: [AGSGeocodeResult]?, error: Error?) in
-
-                guard error == nil else {
-                    completion(nil, error)
-                    return
-                }
-
-                guard let results = geoCodeResults,
-                    let first = results.first,
-                    let attributesDict = first.attributes,
-                    let address = attributesDict[Keys.address] as? String ?? attributesDict[Keys.matchAddress] as? String
-                    else {
-                        completion(nil, ReverseGeocoderManagerError.missingAddressAttribute)
-                        return
->>>>>>> 24dbfc28783c573e7690acfe474d94212be46e56:docs/index.md
                 }
             }
         }
