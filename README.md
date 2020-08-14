@@ -193,7 +193,7 @@ This build rule looks for a secrets file stored in the project directory, `$(PRO
 
   > Replace 'your-license-key' with your **License Key**.
 
-A Lite license is free and provides developers a good starting point. Visit the developers website to learn more about [licensing your ArcGIS Runtime app](https://developers.arcgis.com/pricing/licensing/).
+A Lite license is free and enables all of the capabilities required by this app. Visit the developer's website to learn more about [licensing your ArcGIS Runtime app](https://developers.arcgis.com/pricing/licensing/).
 
 To learn more about `masquerade`, consult the app's [documentation]](./docs#app-configuration).
 
