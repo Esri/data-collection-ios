@@ -1192,7 +1192,7 @@ The program looks for keys using a regex pattern `{{ *$KEY *}}`. The pattern can
 - ` *`, a space-astrix again permits 0-to-n space characters
 - `}}`, two close-brackets specify the end of the pattern
 
-Masquerade demands various parameters.
+Masquerade requires the following parameters:
 
 - `-i`, the input file containing bracket-enclosed keys.
 - `-o`, the path to output the file.
