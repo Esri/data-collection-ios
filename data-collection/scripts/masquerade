@@ -1,8 +1,5 @@
 #!/usr/bin/env bash
 
-# Kill the program if any error is encountered
-set -e
-
 # Usage instructions
 helpFunction()
 {
@@ -66,7 +63,7 @@ if [ -z "${OUTPUT_FILE}" ]; then
   echo "error: -o output file param is missing."
   helpFunction
 elif [ -f "${OUTPUT_FILE}" ] && [ "${FORCE_WRITE}" == 'false' ]; then
-  echo "error: file exists at path ${OUTPUT_FILE}"
+  echo "error: ${OUTPUT_FILE} file exists at path."
   echo "error: supply the -f flag to overwrite the output file."
   exit 1
 fi
@@ -134,3 +131,9 @@ done < <(grep -Ev '^#' "${TEMP_FILE}")
 
 # Move finished working file to ouput
 mv "${TEMP_FILE}" "${OUTPUT_FILE}"
+
+# Confirm the move was successful
+if [ ! -f "${OUTPUT_FILE}" ]; then
+  echo "error: ${OUTPUT_FILE} could not write to output file."
+  exit 1
+fi
