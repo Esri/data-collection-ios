@@ -1,3 +1,80 @@
+# Contents
+
+<!-- MDTOC maxdepth:6 firsth1:0 numbering:0 flatten:0 bullets:1 updateOnSave:1 -->
+
+- [Description](#description)   
+   - [Generic application](#generic-application)   
+   - [Trees of Portland](#trees-of-portland)   
+   - [Custom behavior](#custom-behavior)   
+- [Using the app](#using-the-app)   
+   - [Manage the app's context](#manage-the-apps-context)   
+      - [Sign in and out of Portal](#sign-in-and-out-of-portal)   
+      - [App work mode](#app-work-mode)   
+   - [View map extras](#view-map-extras)   
+   - [View map bookmarks](#view-map-bookmarks)   
+   - [View the map's layers](#view-the-maps-layers)   
+   - [Identify map features](#identify-map-features)   
+   - [Add map feature](#add-map-feature)   
+   - [Rich pop-ups](#rich-pop-ups)   
+   - [View and edit data with pop-ups](#view-and-edit-data-with-pop-ups)   
+      - [View a pop-up](#view-a-pop-up)   
+      - [Edit a feature](#edit-a-feature)   
+- [Using web maps](#using-web-maps)   
+   - [Configure web map & feature services for data collection](#configure-web-map-feature-services-for-data-collection)   
+      - [Map title](#map-title)   
+      - [Organizing feature layers](#organizing-feature-layers)   
+      - [Feature layer visibility range](#feature-layer-visibility-range)   
+      - [Enable editing on feature layers and tables](#enable-editing-on-feature-layers-and-tables)   
+      - [Enable pop-up on feature layers and tables](#enable-pop-up-on-feature-layers-and-tables)   
+      - [Configure pop-up on feature layers and tables](#configure-pop-up-on-feature-layers-and-tables)   
+      - [Enable attachments on feature layers](#enable-attachments-on-feature-layers)   
+- [Identity model](#identity-model)   
+   - [Public map, social login](#public-map-social-login)   
+- [Using map definition & pop-up configurations to drive app behavior](#using-map-definition-pop-up-configurations-to-drive-app-behavior)   
+   - [Map identify rules](#map-identify-rules)   
+   - [Small pop-up view rules](#small-pop-up-view-rules)   
+   - [Add feature rules](#add-feature-rules)   
+   - [Pop-up view rules](#pop-up-view-rules)   
+      - [View mode](#view-mode)   
+      - [Edit mode](#edit-mode)   
+- [Consuming ArcGIS](#consuming-arcgis)   
+   - [Identifying map features](#identifying-map-features)   
+   - [Offline map jobs](#offline-map-jobs)   
+      - [Download map offline](#download-map-offline)   
+      - [Synchronize offline map](#synchronize-offline-map)   
+      - [Job status view controller](#job-status-view-controller)   
+      - [Deleting offline map](#deleting-offline-map)   
+   - [Querying feature tables](#querying-feature-tables)   
+      - [Query for all features](#query-for-all-features)   
+      - [Query for related features](#query-for-related-features)   
+      - [Spatial query](#spatial-query)   
+   - [Editing features](#editing-features)   
+      - [Creating features](#creating-features)   
+      - [Rich pop-up](#rich-pop-up)   
+      - [Editing features lifecycle](#editing-features-lifecycle)   
+      - [Editing related records](#editing-related-records)   
+      - [Editing attachments](#editing-attachments)   
+   - [Reverse geocoding](#reverse-geocoding)   
+- [Architecture](#architecture)   
+   - [App configuration](#app-configuration)   
+   - [App context](#app-context)   
+      - [App context change handler](#app-context-change-handler)   
+   - [Model: Pop-up configuration driven](#model-pop-up-configuration-driven)   
+   - [View: storyboards](#view-storyboards)   
+      - [Custom views](#custom-views)   
+   - [Controller: app context aware](#controller-app-context-aware)   
+   - [App location](#app-location)   
+   - [Network reachability manager](#network-reachability-manager)   
+   - [Ephemeral cache](#ephemeral-cache)   
+   - [File manager](#file-manager)   
+   - [App defaults](#app-defaults)   
+   - [App colors & fonts](#app-colors-fonts)   
+   - [App errors](#app-errors)   
+- [Xcode project configuration](#xcode-project-configuration)   
+   - [Privacy strings](#privacy-strings)   
+
+<!-- /MDTOC -->
+---
 ## Description
 
 Collect data in an app consuming your organization's web maps driven by the ArcGIS Web GIS information model. We provide an example *Trees of Portland* web map and dataset to get you started.
@@ -977,17 +1054,15 @@ When running a reverse geocode operation, the app selects which `AGSLocatorTask`
 class AddressLocator {
     // ...
     func reverseGeocodeAddress(for point: AGSPoint, completion: @escaping (_ result: Result<String, Error>) -> Void) {
-        let locator: AGSLocatorTask
-        // We want to use the online locator if the work mode is online and the app has reachability.
-        if appContext.workMode == .online && appReachability.isReachable {
-            locator = onlineLocator
-        }
-        // Otherwise, we'll use the offline locator.
-        else {
-            locator = offlineLocator
-        }
-        // Load the chosen locator.
-        locator.load { (error) in
+        let locator = appContextAwareLocator
+        locator.load { [weak self] (error) in
+            // Ensure the loaded locator matches the app context aware locator.
+            // The app context might have changed since the locator started loading.
+            guard locator == self?.appContextAwareLocator else {
+                completion(.failure(NSError.unknown))
+                return
+            }
+            // If the locator load failed, end early.
             if let error = error {
                 completion(.failure(error))
                 return
@@ -1007,7 +1082,7 @@ class AddressLocator {
                 }
                 else if
                     let attributes = results?.first?.attributes,
-                    let address = attributes[.address] as? String ?? attributes[.matchAddress] as? String {
+                    let address = (attributes[.address] ?? attributes[.matchAddress]) as? String {
                     completion(.success(address))
                 }
                 else {
