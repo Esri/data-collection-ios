@@ -27,10 +27,4 @@ var appBundleID: String {
     return Bundle.main.bundleIdentifier!
 }
 
-var appNotificationCenter: NotificationCenter {
-    return NotificationCenter.default
-}
-
-let appReverseGeocoder = AppReverseGeocoderManager()
-
-let appFiles = AppFiles()
+let appAddressLocator = AddressLocator()

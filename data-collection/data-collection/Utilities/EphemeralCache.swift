@@ -20,7 +20,7 @@ import Foundation
 /// - Note: The `EphemeralCache` uses `NSCache` and a concurrent `DispatchQueue` (with a barrier flag).
 class EphemeralCache {
 
-    private static let shared = EphemeralCache()
+    static let shared = EphemeralCache()
     
     private var cache = NSCache<AnyObject, AnyObject>()
     
@@ -45,21 +45,21 @@ class EphemeralCache {
         }
     }
     
-    static func set(object: Any, forKey: String) {
-        shared[forKey] = object as AnyObject
+    func setObject(_ object: Any, forKey key: String) {
+        self[key] = object as AnyObject
     }
     
-    static func get(objectForKey key: String) -> Any? {
-        let object: AnyObject? = shared[key]
-        shared[key] = nil
+    func object(forKey key: String) -> Any? {
+        let object: AnyObject? = self[key]
+        self[key] = nil
         return object
     }
     
-    static func remove(objectForKey key: String) {
-        shared[key] = nil
+    func removeObject(forKey key: String) {
+        self[key] = nil
     }
     
-    static func has(objectForKey key: String) -> Bool {
-        return shared[key] != nil
+    func containsObject(forKey key: String) -> Bool {
+        return self[key] != nil
     }
 }

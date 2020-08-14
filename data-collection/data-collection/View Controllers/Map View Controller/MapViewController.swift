@@ -16,20 +16,7 @@ import UIKit
 import ArcGIS
 import ArcGISToolkit
 
-protocol MapViewControllerDelegate: AnyObject {
-    func mapViewController(_ mapViewController: MapViewController, didSelect extent: AGSGeometry)
-    func mapViewController(_ mapViewController: MapViewController, shouldAllowNewFeature: Bool)
-    func mapViewController(_ mapViewController: MapViewController, didUpdateTitle title: String)
-    func mapViewController(_ mapViewController: MapViewController, didUpdateMapViewMode mapViewMode: MapViewController.MapViewMode)
-}
-
 class MapViewController: UIViewController {
-    
-    struct EphemeralCacheKeys {
-        static let newSpatialFeature = "MapViewController.newFeature.spatial"
-        static let newNonSpatialFeature = "MapViewController.newFeature.nonspatial"
-        static let newRelatedRecord = "MapViewController.newRelatedRecord"
-    }
     
     enum MapViewMode: Equatable {
         case defaultView
@@ -38,11 +25,7 @@ class MapViewController: UIViewController {
         case selectingFeature
         case offlineMask
     }
-
-    weak var delegate: MapViewControllerDelegate?
     
-    let changeHandler = AppContextChangeHandler()
-
     @IBOutlet weak var mapView: AGSMapView!
     @IBOutlet weak var smallPopupView: ShrinkingView!
     @IBOutlet weak var popupsContainerView: UIView!
@@ -102,8 +85,33 @@ class MapViewController: UIViewController {
         // Associate the compass view to the map view.
         compassView.mapView = mapView
         
-        // Begin listening to changes to the app context.
-        subscribeToAppContextChanges()
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(adjustForCurrentMap),
+            name: .currentMapDidChange,
+            object: nil
+        )
+        
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(adjustForLocationAuthorizationStatus),
+            name: .locationAuthorizationDidChange,
+            object: nil
+        )
+        
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(adjustForWorkMode),
+            name: .workModeDidChange,
+            object: nil
+        )
+        
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(adjustForReachability),
+            name: .reachabilityDidChange,
+            object: nil
+        )
         
         // Load map from the app context.
         appContext.loadOfflineMobileMapPackageAndSetMapForCurrentWorkMode()
@@ -120,10 +128,38 @@ class MapViewController: UIViewController {
         
         refreshCurrentPopup()
     }
+        
+    // MARK:- Extras
+    
+    @IBOutlet weak var extrasButton: UIBarButtonItem!
+    
+    @IBAction func userRequestsExtras(_ sender: Any) {
+        userRequestsExtras(sender as? UIBarButtonItem)
+    }
+    
+    // MARK:- Location Display
+    
+    @IBOutlet weak var zoomButton: UIBarButtonItem!
+    
+    @IBAction func userRequestsZoomLocationDisplay(_ sender: Any) {
+        userRequestsZoomOnUserLocation()
+    }
+    
+    // MARK:- Add Feature
+    
+    @IBOutlet weak var addFeatureButton: UIBarButtonItem!
+    
+    @IBAction func userRequestsAddFeature(_ sender: Any) {
+        userRequestsAddNewFeature(sender as? UIBarButtonItem)
+    }
+    
+    // MARK:- Reload
     
     @IBAction func userRequestsReloadMap(_ sender: Any) {
         loadMapViewMap()
     }
+    
+    // MARK:- Related Record
     
     @IBAction func userRequestsAddNewRelatedRecord(_ sender: Any) {
         
@@ -157,7 +193,10 @@ class MapViewController: UIViewController {
                 return
             }
 
-            EphemeralCache.set(object: relatedManager, forKey: EphemeralCacheKeys.newRelatedRecord)
+            EphemeralCache.shared.setObject(
+                relatedManager,
+                forKey: .newRelatedRecord
+            )
 
             self.performSegue(withIdentifier: "modallyPresentRelatedRecordsPopupViewController", sender: nil)
         }
@@ -198,13 +237,13 @@ class MapViewController: UIViewController {
         
         if let destination = segue.navigationDestination as? RichPopupViewController {
             
-            if let newPopup = EphemeralCache.get(objectForKey: EphemeralCacheKeys.newSpatialFeature) as? RichPopup {
+            if let newPopup = EphemeralCache.shared.object(forKey: .newSpatialFeature) as? RichPopup {
                 setCurrentPopup(popup: newPopup)
                 destination.popupManager = currentPopupManager!
                 destination.setEditing(true, animated: false)
                 mapViewMode = .selectedFeature(featureLoaded: false)
             }
-            else if let popupManager = EphemeralCache.get(objectForKey: EphemeralCacheKeys.newRelatedRecord) as? RichPopupManager {
+            else if let popupManager = EphemeralCache.shared.object(forKey: .newRelatedRecord) as? RichPopupManager {
                 destination.popupManager = popupManager
                 destination.setEditing(true, animated: false)
                 destination.shouldLoadRichPopupRelatedRecords = false
@@ -219,51 +258,53 @@ class MapViewController: UIViewController {
         else if let destination = segue.destination as? MaskViewController {
             maskViewController = destination
         }
+        else if let destination = segue.navigationDestination as? ProfileViewController {
+            destination.delegate = self
+        }
+        else if let destination = segue.destination as? JobStatusViewController {
+            destination.jobConstruct = EphemeralCache.shared.object(forKey: .offlineMapJob) as? OfflineMapJobConstruct
+            destination.delegate = self
+        }
     }
     
-    private func displayInitialReachabilityMessage() {
+    // MARK:- Reachability
     
+    private func displayInitialReachabilityMessage() {
         if !appReachability.isReachable {
             displayReachabilityMessage(isReachable: false)
         }
     }
     
-    private func displayReachabilityMessage(isReachable reachable: Bool) {
-        let connectionMessage = String(format: "Device %@ connection to the network.", (reachable ? "gained" : "lost"))
+    private func displayReachabilityMessage(isReachable reachable: Bool = appReachability.isReachable) {
+        let connectionMessage = String(
+            format: "Device %@ connection to the network.", (reachable ? "gained" : "lost")
+        )
         slideNotificationView.showLabel(withNotificationMessage: connectionMessage, forDuration: 6.0)
     }
     
-    func subscribeToAppContextChanges() {
-        
-        let currentMapChange: AppContextChange = .currentMap { [weak self] currentMap in
-            
-            guard let self = self else { return }
-            
-            self.clearCurrentPopup()
-            self.mapViewMode = .defaultView
-            self.mapView.map = currentMap
-            self.loadMapViewMap()
-        }
-        
-        let locationAuthorizationChange: AppContextChange = .locationAuthorization { [weak self] authorized in
-            self?.adjustForLocationAuthorizationStatus()
-        }
-
-        let workModeChange: AppContextChange = .workMode { [weak self] workMode in
-            
-            guard let self = self else { return }
-            
-            let color: UIColor = (workMode == .online) ? .primary : .offline
-            
-            self.activityBarView.colors = (color.lighter, color.darker)
-            self.slideNotificationView.messageBackgroundColor = (workMode == .online) ? UIColor.primary.lighter : UIColor.offline.darker
-            self.slideNotificationView.messageTextColor = .contrasting
-        }
-        
-        let reachabilityChange: AppContextChange = .reachability { [weak self] reachable in
-            self?.displayReachabilityMessage(isReachable: reachable)
-        }
-
-        changeHandler.subscribe(toChanges: [currentMapChange, locationAuthorizationChange, workModeChange, reachabilityChange])
+    @objc
+    func adjustForReachability() {
+        displayReachabilityMessage()
     }
+    
+    // MARK:- Work Mode
+    
+    @objc func adjustForWorkMode() {
+        let color: UIColor
+        if case WorkMode.online = appContext.workMode {
+            color = .primary
+            slideNotificationView.messageBackgroundColor = color.lighter
+        }
+        else { // WorkMode.offline = appContext.workMode
+            color = .offline
+            slideNotificationView.messageBackgroundColor = color.darker
+        }
+        activityBarView.colors = (color.lighter, color.darker)
+    }
+}
+
+extension String {
+    static let newSpatialFeature = "MapViewController.newFeature.spatial"
+    static let newNonSpatialFeature = "MapViewController.newFeature.nonspatial"
+    static let newRelatedRecord = "MapViewController.newRelatedRecord"
 }

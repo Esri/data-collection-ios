@@ -15,29 +15,26 @@
 import Foundation
 import ArcGIS
 
-/// This class is used for creating and removing directories and items needed for the app in the device's file documents directory.
-class AppFiles {
-    
-    private var fm: FileManager { return FileManager.default }
-    
+// This class extension is used to creating and removing directories and items needed for the app in the device's file documents directory.
+extension FileManager {
     /// Build a temporary directory, if needed, to store a map as it downloads.
     ///
     /// - Throws: FileManager errors thrown as a result of building the temporary offline map directory.
     func prepareTemporaryOfflineMapDirectory() throws {
         let url: URL = .temporaryOfflineMapDirectoryURL(forWebMapItemID: .webMapItemID)
-        try fm.createDirectory(at: url, withIntermediateDirectories: true)
-        try fm.removeItem(at: url)
+        try createDirectory(at: url, withIntermediateDirectories: true)
+        try removeItem(at: url)
     }
     
     // MARK: Offline Directory    
     func prepareOfflineMapDirectory() throws {
         let url: URL = .offlineMapDirectoryURL(forWebMapItemID: .webMapItemID)
-        try fm.createDirectory(at: url, withIntermediateDirectories: true, attributes: nil)
+        try createDirectory(at: url, withIntermediateDirectories: true, attributes: nil)
     }
     
     func deleteContentsOfOfflineMapDirectory() throws {
         let url: URL = .offlineMapDirectoryURL(forWebMapItemID: .webMapItemID)
-        try fm.removeItem(at: url)
+        try removeItem(at: url)
     }
 }
 

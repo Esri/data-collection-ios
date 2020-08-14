@@ -31,10 +31,10 @@ extension AppContext {
                 return
             }
             
-            UserDefaults.standard.set(newValue, forKey: visibleAreaDefaultsKey)
+            UserDefaults.standard.setSerializable(newValue, forKey: visibleAreaDefaultsKey)
         }
         get {
-            return AGSViewpoint.retrieveFromUserDefaults(forKey: visibleAreaDefaultsKey)
+            return UserDefaults.standard.getSerializable(forKey: visibleAreaDefaultsKey)
         }
     }
 }

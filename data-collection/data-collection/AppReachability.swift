@@ -14,10 +14,6 @@
 
 import Alamofire
 
-extension Notification.Name {    
-    static let reachabilityDidChange = Notification.Name("reachabilityDidChange")
-}
-
 extension NetworkReachabilityManager {
     
     /// A singleton `NetworkReachabilityManager` configured with the base portal domain.
@@ -39,7 +35,8 @@ extension NetworkReachabilityManager {
     func resetAndStartListening() {
         stopListening()
         NetworkReachabilityManager.firstReachabilityChangeObserved = false
-        startListening { (status) in
+        startListening { [weak self] (status) in
+            guard let self = self else { return }
             // Print
             switch status {
             case .unknown:
@@ -56,10 +53,26 @@ extension NetworkReachabilityManager {
             }
             // Notify
             if NetworkReachabilityManager.firstReachabilityChangeObserved {
-                NotificationCenter.default.post(name: .reachabilityDidChange, object: nil)
+                NotificationCenter.default.post(self.reachabilityNotification)
             } else {
                 NetworkReachabilityManager.firstReachabilityChangeObserved = true
             }
         }
+    }
+}
+
+// MARK:- Notification Center
+
+extension Notification.Name {
+    static let reachabilityDidChange = Notification.Name("reachabilityDidChange")
+}
+
+extension NetworkReachabilityManager {
+    var reachabilityNotification: Notification {
+        Notification(
+            name: .reachabilityDidChange,
+            object: self,
+            userInfo: nil
+        )
     }
 }

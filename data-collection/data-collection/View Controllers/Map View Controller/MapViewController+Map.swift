@@ -17,23 +17,26 @@ import ArcGIS
 
 extension MapViewController {
     
+    @objc
+    func adjustForCurrentMap() {
+        clearCurrentPopup()
+        mapViewMode = .defaultView
+        mapView.map = appContext.currentMap
+        loadMapViewMap()
+    }
+    
     func loadMapViewMap() {
         
+        addFeatureButton.isEnabled = false
+        
         guard let map = mapView.map else {
-            
-            mapViewMode = .disabled
-            delegate?.mapViewController(self, didUpdateTitle: "No Map")
-            delegate?.mapViewController(self, shouldAllowNewFeature: false)
+            disableMap()
             return
         }
         
-        let loadCompletion: ((Error?) -> Void)? = { [weak self] (error) in
-            
-            guard let self = self else { return }
-            
-            guard error == nil else {
-                let error = (error! as NSError)
-
+        func handleMapLoadCallback(error: Error?) -> Void {
+            // If there's an error loading the map we want to inform the user and disable the map.
+            if let error = error as NSError? {
                 print("[Error: Map Load]", "code: \(error.code)", error.localizedDescription)
                 
                 if AGSServicesErrorCode(rawValue: error.code) == .tokenRequired, !appContext.isLoggedIn {
@@ -43,7 +46,7 @@ extension MapViewController {
                     self.present(simpleAlertMessage: error.localizedDescription)
                 }
                 
-                self.mapViewMode = .disabled
+                disableMap()
                 return
             }
 
@@ -74,25 +77,23 @@ extension MapViewController {
             }
             
             self.mapViewMode = .defaultView
+            self.title = map.item?.title ?? "Map"
+            let layers = map.operationalLayers.compactMap { $0 as? AGSFeatureLayer }
             
-            self.delegate?.mapViewController(self, didUpdateTitle: map.item?.title ?? "Map")
-            
-            guard let operationalLayers = map.operationalLayers as? [AGSFeatureLayer] else {
-                self.delegate?.mapViewController(self, shouldAllowNewFeature: false)
-                return
-            }
-            
-            AGSLoadObjects(operationalLayers, { [weak self] (_) in
+            AGSLoadObjects(layers) { [weak self] _ in
                 guard let self = self else { return }
-                
-                let flag = !operationalLayers.featureAddableLayers.isEmpty
-                self.delegate?.mapViewController(self, shouldAllowNewFeature: flag)
-            })
+                self.addFeatureButton.isEnabled = !layers.featureAddableLayers.isEmpty
+            }
         }
         
-        if map.loadStatus == .failedToLoad { map.retryLoad(completion: loadCompletion) }
+        if map.loadStatus == .failedToLoad { map.retryLoad(completion: handleMapLoadCallback) }
             
-        else { map.load(completion: loadCompletion) }
+        else { map.load(completion: handleMapLoadCallback) }
     }
     
+    private func disableMap() {
+        mapViewMode = .disabled
+        title = "No Map"
+        addFeatureButton.isEnabled = false
+    }
 }

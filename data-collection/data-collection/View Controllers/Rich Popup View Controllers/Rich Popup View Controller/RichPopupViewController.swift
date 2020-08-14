@@ -44,23 +44,10 @@ class RichPopupViewController: SegmentedViewController {
         return childrenIdentifiers
     }
     
-    // MARK: App Context Change Handling
+    // MARK:- Work Mode
     
-    private let changeHandler = AppContextChangeHandler()
-    
-    private func subscribeToAppContextChanges() {
-        
-        let workModeChange = AppContextChange.workMode { [weak self] (_) in
-            
-            guard let self = self else { return }
-            
-            self.adjustViewControllerForWorkMode()
-        }
-        
-        changeHandler.subscribe(toChange: workModeChange)
-    }
-    
-    private func adjustViewControllerForWorkMode() {
+    @objc
+    func adjustViewControllerForWorkMode() {
         // Match the segmented control's tint color with that of the navigation bar's.
         switch appContext.workMode {
         case .online:
@@ -96,7 +83,12 @@ class RichPopupViewController: SegmentedViewController {
         conditionallyAddDeleteButton()
         
         // Begin listening for app context changes.
-        subscribeToAppContextChanges()
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(adjustViewControllerForWorkMode),
+            name: .workModeDidChange,
+            object: nil
+        )
         
         // Adjust visuals to reflect current work mode.
         adjustViewControllerForWorkMode()
@@ -114,7 +106,7 @@ class RichPopupViewController: SegmentedViewController {
         
         if identifier == "RichPopupEditStagedPhotoAttachment" {
             
-            guard EphemeralCache.has(objectForKey: "RichPopupEditStagedPhotoAttachment.EphemeralCacheKey") else {
+            guard EphemeralCache.shared.containsObject(forKey: "RichPopupEditStagedPhotoAttachment.EphemeralCacheKey") else {
                 
                 present(simpleAlertMessage: "Something went wrong, you are unable to edit this attachment.")
                 return false
@@ -124,7 +116,7 @@ class RichPopupViewController: SegmentedViewController {
         }
         else if identifier == "RichPopupSelectRelatedRecord" {
             
-            guard EphemeralCache.has(objectForKey: "RichPopupSelectRelatedRecord.EphemeralCacheKey") else {
+            guard EphemeralCache.shared.containsObject(forKey: "RichPopupSelectRelatedRecord.EphemeralCacheKey") else {
                 
                 present(simpleAlertMessage: "Something went wrong, you are unable to edit this related record.")
                 return false
@@ -159,13 +151,13 @@ class RichPopupViewController: SegmentedViewController {
         }
         else if let edit = segue.destination as? RichPopupEditStagedAttachmentViewController {
             
-            if let attachment = EphemeralCache.get(objectForKey: "RichPopupEditStagedPhotoAttachment.EphemeralCacheKey") as? RichPopupStagedAttachment {
+            if let attachment = EphemeralCache.shared.object(forKey: "RichPopupEditStagedPhotoAttachment.EphemeralCacheKey") as? RichPopupStagedAttachment {
                 edit.stagedAttachment = attachment as RichPopupStagedAttachment
             }
         }
         else if let related = segue.destination as? RichPopupSelectRelatedRecordViewController {
             
-            if let (popups, current) = EphemeralCache.get(objectForKey: "RichPopupSelectRelatedRecord.EphemeralCacheKey") as? ([AGSPopup], AGSPopup?) {
+            if let (popups, current) = EphemeralCache.shared.object(forKey: "RichPopupSelectRelatedRecord.EphemeralCacheKey") as? ([AGSPopup], AGSPopup?) {
                 related.popups = popups
                 related.currentRelatedPopup = current
                 related.delegate = self

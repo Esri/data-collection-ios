@@ -20,38 +20,55 @@ import CoreLocation
 /// is in the background. `AppLocation` processes these changes and exposes a
 /// `locationAuthorized: Bool` property that can be observed using KVO.
 ///
-/// - SeeAlso: AppContextChangeHandler.swift
-@objcMembers class AppLocation: NSObject, CLLocationManagerDelegate {
+class AppLocation: NSObject {
         
     private let locationManager = CLLocationManager()
     
-    dynamic var locationAuthorized: Bool = false
-
-    override init() {
-        super.init()
-        locationManager.delegate = self
-        process()
-    }
-    
-    /// Processes changes to the app's location permission authorization status.
-    ///
     /// Location is considered authorized when in use or always.
     /// - Parameter status: the app's new/changed `CLAuthorizationStatus`.
     ///
     /// - Note: `locationAuthorized` is also set true when `CLAuthorizationStatus` is `.notDetermined` because setting `mapView.locationDisplay.showLocation`
     /// to true will initiate a request for location permissions via the Runtime SDK.
-    private func process(status: CLAuthorizationStatus = CLLocationManager.authorizationStatus()) {
-        print("[App Location] Authorization status: \(status)")
-        locationAuthorized = status == .authorizedWhenInUse || status == .authorizedAlways || status == .notDetermined
+    var locationAuthorized: Bool {
+        let status = CLLocationManager.authorizationStatus()
+        return
+            status == .authorizedWhenInUse ||
+            status == .authorizedAlways ||
+            status == .notDetermined
     }
-    
-    // MARK: CLLocationManagerDelegate
-    
-    internal func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
-        process(status: status)
+
+    override init() {
+        super.init()
+        locationManager.delegate = self
     }
 }
 
+// MARK:- Location Manager Delegate
+
+extension AppLocation: CLLocationManagerDelegate {
+    internal func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
+        print("[AppLocation] did change status \(status)")
+        NotificationCenter.default.post(locationAuthorizationNotification)
+    }
+}
+
+// MARK:- Notification Center
+
+extension Notification.Name {
+    static let locationAuthorizationDidChange = Notification.Name("locationAuthorizationDidChange")
+}
+
+extension AppLocation {
+    var locationAuthorizationNotification: Notification {
+        Notification(
+            name: .locationAuthorizationDidChange,
+            object: self,
+            userInfo: nil
+        )
+    }
+}
+
+// MARK:- Custom String Convertible
 extension CLAuthorizationStatus: CustomStringConvertible {
     
     public var description: String {
