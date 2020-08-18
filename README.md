@@ -24,8 +24,13 @@
 ---
 [Data Collection for iOS](https://developers.arcgis.com/example-apps/data-collection-ios/) shows how a robust application can be built around the ArcGIS Platform using the ArcGIS Runtime SDK for iOS and Swift. It demonstrates best practices around some simple but key functionality of the ArcGIS Runtime. Using your organization's web maps, you can use Data Collection as is, or extend it to meet your specific needs.
 
-![General UI](./docs/images/General-UI.png)
-![General UI 2](./docs/images/General-UI-2.png)
+| Map | Portal | Pop-up | Attachments |
+| --- | ------ | ------ | ----------- |
+| ![map](./docs/images/map.png) | ![profile](./docs/images/profile.png) | ![pop-up](./docs/images/pop-up.png) | ![attachments](./docs/images/attachments.png) |
+
+| Collect | Map Content | Bookmarks | Layers |
+| ------- | ----------- | --------- | ------ |
+| ![collect](./docs/images/new-feature.png) | ![extras](./docs/images/extras.png) | ![bookmarks](./docs/images/bookmarks.png) | ![layers](./docs/images/layers.png) |
 
 ## Features
 * Taking your web map and data offline
