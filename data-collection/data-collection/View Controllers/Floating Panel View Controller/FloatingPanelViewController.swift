@@ -12,7 +12,43 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+// TODO: what about creating FloatingPanelViewController automatically when added to a FloatingPanel?
+// Can you access the navigationItem of the ViewController *before* it's added to a UINavigationController?
+
 import UIKit
+
+/// `FloatingPanelItem` dictates the appearance of a `FloatingPanelViewController`.
+public class FloatingPanelItem : NSObject {
+    /// The title to display in the header.
+    @objc
+    dynamic var title: String?
+    
+    /// The subtitle to display in the header.
+    @objc
+    dynamic var subtitle: String?
+    
+    /// The image to display in the header.
+    @objc
+    dynamic var image: UIImage? = UIImage(named: "goose.png")
+    
+    /// Determines whether the close button is hidden or not.
+    @objc
+    dynamic var closeButtonHidden: Bool = false
+    
+    /// The vertical size of the floating panel view controller used
+    /// when the `FloatingPanelState` is set to `.partial`.
+    @objc
+    dynamic var partialHeight: CGFloat = 0.0
+    
+    /// The state representing the vertical size of the floating panel.
+    @objc
+    dynamic var state: FloatingPanelViewController.State = .partial
+    
+    /// The visibility of the floating panel header view.
+    @objc
+    dynamic var headerHidden: Bool = false
+
+}
 
 /// The protocol implemented to respond to floating panel view controller events.
 public protocol FloatingPanelViewControllerDelegate: AnyObject {
@@ -22,43 +58,30 @@ public protocol FloatingPanelViewControllerDelegate: AnyObject {
     func userDidRequestDismissFloatingPanel(_ floatingPanelViewController: FloatingPanelViewController)
 }
 
-/// Implementing the `FloatingPanelItem` protocol on a `UIViewController` embedded
-/// in a `FloatingPanelViewController` allows the embedded view controller to
-/// access certain properties of the view controller and change them as
-/// appropriate for the current setup.
-public protocol FloatingPanelItem: AnyObject {
-    /// The title to display in the header.
-    var floatingPanelTitle: String? { get set }
-    
-    /// The subtitle to display in the header.
-    var floatingPanelSubtitle: String? { get set }
-    
-    /// The image to display in the header.
-    var image: UIImage? { get set }
-
-    /// Determines whether the close button is hidden or not.
-    var closeButtonHidden: Bool { get set }
-
-    /// The vertical size of the floating panel view controller used
-    /// when the `FloatingPanelState` is set to `.partial`.
-    var partialHeight: CGFloat { get set }
-    
-    /// The state representing the vertical size of the floating panel.
-    var state: FloatingPanelViewController.State { get set }
-    
-    /// Controls the visibility of the floating panel header view.
-    /// - Parameters:
-    ///   - hidden: whether to hide or show the header view.
-    ///   - animated: whether to animate the change to the header view visibility.
-    func setHeaderViewHidden(_ hidden: Bool, animated: Bool)
-}
-
 /// Protocol used by a `UIViewController` embedded in a `FloatingPanelViewController`
 /// if the embedded controller needs to modify some floating panel properties.
 public protocol FloatingPanelEmbeddable: UIViewController {
     /// The `FloatingPanelItem` used to access and change certain
     /// floating panel view controller properties.
-    var floatingPanelItem: FloatingPanelItem? { get set }
+    var floatingPanelItem: FloatingPanelItem { get set }
+}
+
+/// Helper class used to embed a view controller in a `FloatingPanelViewController`.
+public class FloatingPanelEmbeddableViewController: UIViewController, FloatingPanelEmbeddable {
+    /// The `FloatingPanelItem` used to access and change certain
+    /// floating panel view controller properties.
+    lazy public var floatingPanelItem: FloatingPanelItem = {
+        return FloatingPanelItem()
+    }()
+}
+
+/// Helper class used to embed a table view controller in a `FloatingPanelViewController`.
+public class FloatingPanelEmbeddableTableViewController: UITableViewController, FloatingPanelEmbeddable {
+    /// The `FloatingPanelItem` used to access and change certain
+    /// floating panel view controller properties.
+    lazy public var floatingPanelItem: FloatingPanelItem = {
+        return FloatingPanelItem()
+    }()
 }
 
 /// A floating panel is a view that overlays a map view and supplies map-related
@@ -74,9 +97,10 @@ public protocol FloatingPanelEmbeddable: UIViewController {
 /// FloatingPanelViewController will contain a basic set of optional UI elements
 /// for displaying a title, subtitle, image, close button and other common
 /// items as a convenience to the client.
-public class FloatingPanelViewController: UIViewController, FloatingPanelItem {
+public class FloatingPanelViewController: UIViewController {
     /// Defines the vertical state of the floating panel view controller.
-    public enum State {
+    @objc
+    public enum State: Int {
         /// The floating panel is displayed at its minimum height.
         case minimized
         /// The floating panel is displayed at a height roughly 40% of the screen.
@@ -86,103 +110,19 @@ public class FloatingPanelViewController: UIViewController, FloatingPanelItem {
         case full
     }
     
-    @IBOutlet private var closeButton: UIButton!
     @IBOutlet private var contentView: UIView!
-    
-    @IBOutlet private var titleLabel: UILabel!
-    @IBOutlet private var subTitleLabel: UILabel!
-    
+    @IBOutlet private var headerView: UIView!
+    @IBOutlet private var stackView: UIStackView!
     @IBOutlet private var topHandlebarView: UIView!
     @IBOutlet private var bottomHandlebarView: UIView!
-    
-    @IBOutlet private var headerStackView: UIStackView!
-    @IBOutlet private var imageView: UIImageView!
-    
     @IBOutlet private var panGestureRecognizer: UIPanGestureRecognizer!
-
-    // MARK: FloatingPanelItem
-    
-    private func updateFloatingPanelTitle() {
-        titleLabel.text = floatingPanelTitle
-    }
-    
-    /// The title to display in the header.
-    /// Defaults to "Title".
-    public var floatingPanelTitle: String? = "" {
-        didSet {
-            guard isViewLoaded else { return }
-            updateFloatingPanelTitle()
-        }
-    }
-    
-    private func updateFloatingPanelSubtitle() {
-        subTitleLabel.text = floatingPanelSubtitle
-    }
-    
-    /// The subtitle to display in the header.
-    /// Defaults to "Subtitle".
-    public var floatingPanelSubtitle: String? = "" {
-        didSet {
-            guard isViewLoaded else { return }
-            updateFloatingPanelSubtitle()
-        }
-    }
-    
-    private func updateImage() {
-        imageView.image = image
-        imageView.isHidden = (image == nil)
-    }
-    
-    /// The image to display in the header.
-    /// Defaults to nil.
-    public var image: UIImage? {
-        didSet {
-            guard isViewLoaded else { return }
-            updateImage()
-        }
-    }
-    
-    private func updateCloseButton() {
-        closeButton.isHidden = closeButtonHidden
-    }
-    
-    /// Determines whether the close button is hidden or not.
-    /// Defaults to `false`.
-    public var closeButtonHidden: Bool = false {
-        didSet {
-            guard isViewLoaded else { return }
-            updateCloseButton()
-        }
-    }
 
     /// The vertical size of the floating panel view controller used
     /// when the `FloatingPanelState` is set to `.partial`.
     /// The computed default is 40% of the maximum panel height.
-    public var partialHeight: CGFloat = 0
-    
-    /// The state representing the vertical size of the floating panel.
-    /// Defaults to `.partial`.
-    public var state: State = .partial {
-        didSet {
-            guard isViewLoaded else { return }
-            updateState()
-        }
-    }
-    
-    /// Sets the visibility of the header view, optionally animating the change.
-    /// - Parameters:
-    ///   - hidden: Whether to hide the header view or not.
-    ///   - animated: Whether to animate the visibility change.
-    public func setHeaderViewHidden(_ hidden: Bool, animated: Bool) {
-        if animated {
-            UIView.animate(withDuration: 0.4) { [weak self] in
-                self?.headerViewHidden = hidden
-            }
-        }
-        else {
-            headerViewHidden = hidden
-        }
-    }
+    public lazy var partialHeight: CGFloat = {
+        currentFloatingPanelItem.partialHeight
+    }()
     
     /// The delegate to be notified of FloatingPanelViewControllerDelegate events.
     public var delegate: FloatingPanelViewControllerDelegate?
@@ -195,12 +135,12 @@ public class FloatingPanelViewController: UIViewController, FloatingPanelItem {
     /// The minimum height of the floating panel, taking into account the
     /// horizontal size class.
     private var minimumHeight: CGFloat {
-        let headerBottom = headerStackView.frame.origin.y + headerStackView.frame.size.height
-        let handlerbarHeight = bottomHandlebarView.frame.height
+        let headerBottom = headerView.frame.origin.y + headerView.frame.size.height
+        let handlebarHeight = bottomHandlebarView.frame.height
         
         // For compactWidth, handlebar is on top, so headerBottom is the limit;
         // For regularWidth, handlebar is on bottom, so we need to add that.
-        return isCompactWidth ? headerBottom : headerBottom + (allowManualResize ? handlerbarHeight : 0)
+        return isCompactWidth ? headerBottom : headerBottom + (allowManualResize ? handlebarHeight : 0)
     }
     
     /// The maximum height of the floating panel, taking into account the edge insets.
@@ -215,12 +155,12 @@ public class FloatingPanelViewController: UIViewController, FloatingPanelItem {
     
     /// The width of the floating panel for regular width size class scenarios.
     private let floatingPanelWidth: CGFloat = 320
-    
+
     /// The vertical state of the floating panel.  When changed, the
     /// floating panel will animate to the new state.
-    private func updateState(_ animate: Bool = true) {
+    fileprivate func updateState(_ animate: Bool = true) {
         var newConstant: CGFloat = 0
-        switch state {
+        switch currentFloatingPanelItem.state {
         case .minimized:
             newConstant = minimumHeight
         case .partial:
@@ -241,19 +181,19 @@ public class FloatingPanelViewController: UIViewController, FloatingPanelItem {
     /// Determines whether the header view, comprising the image, title,
     /// subtitle and close button is hidden or not.
     /// Defaults to `false`.
-    private func updateHeaderStackView() {
-        headerStackView.isHidden = headerViewHidden
-        headerStackView.alpha = headerViewHidden ? 0 : 1
+    private func updateHeaderView() {
+        headerView.isHidden = headerViewHidden
+        headerView.alpha = headerViewHidden ? 0 : 1
 }
     
     /// Determines whether the header view, comprising the image, title,
     /// subtitle and close button is hidden or not.
     /// Defaults to `false`.
-    private var headerViewHidden: Bool = false {
+    public var headerViewHidden: Bool = false {
         didSet {
             // TODO: test this stuff and all the changes in the test app with a navigation controller and check the feasibility of this stuff.
             guard isViewLoaded else { return }
-            updateHeaderStackView()
+            updateHeaderView()
         }
     }
     
@@ -270,10 +210,36 @@ public class FloatingPanelViewController: UIViewController, FloatingPanelItem {
             updateAllowManualResize()
         }
     }
+    private var partialHeightObservation: NSKeyValueObservation?
+    private var stateObservation: NSKeyValueObservation?
+    private var headerHiddenObservation: NSKeyValueObservation?
+    private var currentFloatingPanelItem = FloatingPanelItem() {
+        didSet {
+            partialHeightObservation = currentFloatingPanelItem.observe(\.partialHeight, options: [.new]) { [weak self] (_, change) in
+                DispatchQueue.main.async {
+                    guard let self = self else { return }
+                    self.partialHeight = self.currentFloatingPanelItem.partialHeight
+                }
+            }
+            
+            stateObservation = currentFloatingPanelItem.observe(\.state, options: [.new]) { [weak self] (_, change) in
+                DispatchQueue.main.async {
+                    self?.updateState(true)
+                }
+            }
+            
+            headerHiddenObservation = currentFloatingPanelItem.observe(\.headerHidden, options: [.new]) { [weak self] (_, change) in
+                DispatchQueue.main.async {
+                    guard let self = self else { return }
+                    self.headerViewHidden = self.currentFloatingPanelItem.headerHidden
+                }
+            }
+        }
+    }
     
     /// The initial view controller to display in the content area of
     /// the floating panel view controller.
-    public var initialViewController: UIViewController? {
+    public var initialViewController: FloatingPanelEmbeddable? {
         willSet {
             if let viewController = initialViewController {
                 viewController.willMove(toParent: nil)
@@ -286,23 +252,41 @@ public class FloatingPanelViewController: UIViewController, FloatingPanelItem {
                 // Make sure we're loaded...
                 loadViewIfNeeded()
                 
-                addChild(viewController)
-                contentView.addSubview(viewController.view)
-                viewController.view.translatesAutoresizingMaskIntoConstraints = false
-                NSLayoutConstraint.activate([
-                    viewController.view.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
-                    viewController.view.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-                    viewController.view.topAnchor.constraint(equalTo: contentView.topAnchor),
-                    viewController.view.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
-                ])
-            }
-            
-            // If the view implements `FloatingPanelEmbeddable`, set ourself
-            // as the `floatingPanelItem`.
-            if let floatingPanelEmbeddable = initialViewController as? FloatingPanelEmbeddable {
-                floatingPanelEmbeddable.floatingPanelItem = self
+                contentNavigationController.setViewControllers([viewController], animated: true)
+                // TODO: Maybe remove `floatingPanelItem` and make it a computed property which returns `currentFloatingPanelHeaderViewController.floatingPanelItem`
+                currentFloatingPanelItem = viewController.floatingPanelItem
+                
+                let headerViewController = instantiateHeaderViewController(for: viewController)
+                headerNavigationController.setViewControllers([headerViewController], animated: true)
+                headerNavigationController.view.layoutSubviews()
+                headerConstraints = [
+                    headerNavigationController.view.heightAnchor.constraint(equalTo: headerViewController.view.heightAnchor, multiplier: 1.0),
+                    headerViewController.view.widthAnchor.constraint(equalTo: headerNavigationController.view.widthAnchor, multiplier: 1.0)
+                ]
+                NSLayoutConstraint.activate(headerConstraints)
             }
         }
+    }
+    
+    private func instantiateHeaderViewController(for fpEmbeddable: FloatingPanelEmbeddable) -> FloatingPanelHeaderViewController {
+        let headerViewController = FloatingPanelHeaderViewController.instantiateFloatingPanelHeaderViewController()
+        headerViewController.view.translatesAutoresizingMaskIntoConstraints = false
+        headerViewController.floatingPanelItem = fpEmbeddable.floatingPanelItem
+
+        headerViewController.closeButtonHandler = { [weak self] in
+            guard let self = self else { return }
+            if self.contentNavigationController.topViewController == self.contentNavigationController.viewControllers.first {
+                // We're showing the "root" view controller, user requested dismiss.
+                self.delegate?.userDidRequestDismissFloatingPanel(self)
+            }
+            else {
+                // We're showing pushed view controller, pop it and the header vc.
+                self.contentNavigationController.popViewController(animated: true)
+                self.headerNavigationController.popViewController(animated: true)
+            }
+        }
+
+        return headerViewController
     }
     
     /// The constraint used by the gesture to resize the floating panel view.
@@ -358,20 +342,63 @@ public class FloatingPanelViewController: UIViewController, FloatingPanelItem {
     /// Constraints for the compact width size class.
     private var compactWidthConstraints = [NSLayoutConstraint]()
     
+    /// Constraints for the header.
+    private var headerConstraints = [NSLayoutConstraint]()
+
+    private let contentNavigationController = UINavigationController()
+    private let headerNavigationController = UINavigationController()
+    
+    /// Add our internal header navigation controller to the `headerView`.
+    private func setupHeaderNavigationController() {
+        headerNavigationController.view.translatesAutoresizingMaskIntoConstraints = false
+//        headerNavigationController.view.setContentHuggingPriority(.required, for: .vertical)
+        headerNavigationController.view.backgroundColor = .blue
+        addChild(headerNavigationController)
+        headerView.addSubview(headerNavigationController.view)
+        headerNavigationController.didMove(toParent: self)
+        NSLayoutConstraint.activate([
+            headerNavigationController.view.topAnchor.constraint(equalTo: headerView.topAnchor),
+            headerNavigationController.view.trailingAnchor.constraint(equalTo: headerView.trailingAnchor),
+            headerNavigationController.view.bottomAnchor.constraint(equalTo: headerView.bottomAnchor),
+            headerNavigationController.view.leadingAnchor.constraint(equalTo: headerView.leadingAnchor)
+        ])
+        headerNavigationController.navigationBar.isHidden = true
+        headerNavigationController.delegate = self
+    }
+    
+    /// Add our internal navigation controller to the `contentView`.
+    private func setupContentNavigationController() {
+        contentNavigationController.view.translatesAutoresizingMaskIntoConstraints = false
+        addChild(contentNavigationController)
+        //TODO: Is this right?  should this be in the `contentView`?
+        contentView.addSubview(contentNavigationController.view)
+        contentNavigationController.didMove(toParent: self)
+        NSLayoutConstraint.activate([
+            contentNavigationController.view.topAnchor.constraint(equalTo: contentView.topAnchor),
+            contentNavigationController.view.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+            contentNavigationController.view.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
+            contentNavigationController.view.leadingAnchor.constraint(equalTo: contentView.leadingAnchor)
+        ])
+        contentNavigationController.navigationBar.isHidden = true
+        contentNavigationController.delegate = self
+    }
+    
     override public func viewDidLoad() {
         super.viewDidLoad()
         view.translatesAutoresizingMaskIntoConstraints = false
         
-        isCompactWidth = traitCollection.horizontalSizeClass == .compact
+        setupContentNavigationController()
+        setupHeaderNavigationController()
         
-        // Initialize controls from properties that may have been set before
-        // the view was loaded.
-        updateImage()
-        updateCloseButton()
-        updateHeaderStackView()
-        updateAllowManualResize()
-        updateFloatingPanelTitle()
-        updateFloatingPanelSubtitle()
+        // Set `isCompactWidth`.
+        isCompactWidth = traitCollection.horizontalSizeClass == .compact
+    }
+    
+    override public func removeFromParent() {
+        super.removeFromParent()
+        NSLayoutConstraint.deactivate(regularWidthConstraints)
+        NSLayoutConstraint.deactivate(compactWidthConstraints);
+        initialized = false
     }
     
     /// Sets up the constrains for both regular and compact horizontal size classes.
@@ -383,10 +410,6 @@ public class FloatingPanelViewController: UIViewController, FloatingPanelItem {
         resizeableLayoutConstraint = view.heightAnchor.constraint(equalToConstant: 0)
         resizeableLayoutConstraint.priority = .defaultLow
         
-        // updateState will update the resizableLayoutConstraint constant
-        // based on the current state.
-        updateState(false)
-        
         // Define the constraints used for a regular-width layout.
         regularWidthConstraints = [
             view.leadingAnchor.constraint(equalTo: superview.safeAreaLayoutGuide.leadingAnchor, constant: regularWidthInsets.left),
@@ -394,7 +417,7 @@ public class FloatingPanelViewController: UIViewController, FloatingPanelItem {
             view.topAnchor.constraint(equalTo: superview.safeAreaLayoutGuide.topAnchor, constant: regularWidthInsets.top),
             view.bottomAnchor.constraint(lessThanOrEqualTo: superview.safeAreaLayoutGuide.bottomAnchor, constant: -regularWidthInsets.bottom),
             
-            bottomHandlebarView.topAnchor.constraint(greaterThanOrEqualTo: headerStackView.bottomAnchor),
+            bottomHandlebarView.topAnchor.constraint(greaterThanOrEqualTo: headerView.bottomAnchor),
             
             resizeableLayoutConstraint
         ]
@@ -406,13 +429,17 @@ public class FloatingPanelViewController: UIViewController, FloatingPanelItem {
             view.bottomAnchor.constraint(equalTo: superview.bottomAnchor, constant: compactWidthInsets.bottom),
             view.topAnchor.constraint(greaterThanOrEqualTo: superview.safeAreaLayoutGuide.topAnchor, constant: compactWidthInsets.top),
             
-            headerStackView.bottomAnchor.constraint(lessThanOrEqualTo: superview.safeAreaLayoutGuide.bottomAnchor, constant: -compactWidthInsets.bottom),
+            headerView.bottomAnchor.constraint(lessThanOrEqualTo: superview.safeAreaLayoutGuide.bottomAnchor, constant: -compactWidthInsets.bottom),
             
             resizeableLayoutConstraint
         ]
         
         // This will activate the appropriate set of constraints.
         updateInterfaceForCurrentTraits()
+        
+        // updateState will update the resizableLayoutConstraint constant
+        // based on the current state.
+        updateState(false)
     }
     
     override public func viewDidAppear(_ animated: Bool) {
@@ -430,12 +457,6 @@ public class FloatingPanelViewController: UIViewController, FloatingPanelItem {
         NSLayoutConstraint.deactivate(compactWidthConstraints);
         
         NSLayoutConstraint.activate(isCompactWidth ? compactWidthConstraints : regularWidthConstraints);
-    }
-    
-    /// Handles a user tap on the close button
-    /// - Parameter sender: The button tapped.
-    @IBAction private func closeButtonAction(_ sender: Any) {
-        delegate?.userDidRequestDismissFloatingPanel(self)
     }
     
     /// Handles the pan gesture used to resize the floating panel.
@@ -459,16 +480,16 @@ public class FloatingPanelViewController: UIViewController, FloatingPanelItem {
             }
             else if resizeableLayoutConstraint.constant < minimumHeight {
                 // Constraint is less than minimum.
-                state = .minimized
+                currentFloatingPanelItem.state = .minimized
                 resizeableLayoutConstraint.constant = minimumHeight
             }
             else if resizeableLayoutConstraint.constant > maximumHeight {
                 // Constraint is greater than maximum.
-                state = .full
+                currentFloatingPanelItem.state = .full
                 resizeableLayoutConstraint.constant = maximumHeight
             }
             else {
-                state = .partial
+                currentFloatingPanelItem.state = .partial
             }
         }
         else if gestureRecognizer.state != .cancelled {
@@ -502,12 +523,12 @@ public class FloatingPanelViewController: UIViewController, FloatingPanelItem {
             if velocity.y > 0 {
                 // Velocity > 0 means the user is dragging the view shorter.
                 // Switch to either .minimized or .partial depending on the constraint constant value.
-                state = resizeableLayoutConstraint.constant <= internalPartialHeight ? .minimized : .partial
+                currentFloatingPanelItem.state = resizeableLayoutConstraint.constant <= internalPartialHeight ? .minimized : .partial
             }
             else {
                 // The user is dragging the view larger.
                 // Switch to either .partial or .full depending on the constraint constant value.
-                state = resizeableLayoutConstraint.constant <= internalPartialHeight ? .partial : .full
+                currentFloatingPanelItem.state = resizeableLayoutConstraint.constant <= internalPartialHeight ? .partial : .full
             }
         }
         else {
@@ -515,12 +536,12 @@ public class FloatingPanelViewController: UIViewController, FloatingPanelItem {
             if velocity.y > 0 {
                 // Velocity > 0 means the user is dragging the view larger.
                 // Switch to either .partial or .full depending on the constraint constant value.
-                state = resizeableLayoutConstraint.constant <= internalPartialHeight ? .partial : .full
+                currentFloatingPanelItem.state = resizeableLayoutConstraint.constant <= internalPartialHeight ? .partial : .full
             }
             else {
                 // The user is dragging the view shorter.
                 // Switch to either .minimized or .partial depending on the constraint constant value.
-                state = resizeableLayoutConstraint.constant <= internalPartialHeight ? .minimized : .partial
+                currentFloatingPanelItem.state = resizeableLayoutConstraint.constant <= internalPartialHeight ? .minimized : .partial
             }
         }
     }
@@ -547,9 +568,149 @@ public class FloatingPanelViewController: UIViewController, FloatingPanelItem {
                        options: [.layoutSubviews, .curveEaseInOut],
                        animations: { [weak self] in
                         self?.resizeableLayoutConstraint.constant = newConstant
-                        self?.contentView?.alpha = (self?.state == .minimized ? 0.0 : 1.0)
+                        self?.contentView?.alpha = (self?.currentFloatingPanelItem.state == .minimized ? 0.0 : 1.0)
                         self?.view.setNeedsUpdateConstraints()
                         superview.layoutIfNeeded()
         })
+    }
+    
+    /// For some reason, the first time the initial view controller is set there
+    /// are two calls to `navigationController:didShow:viewController:animated`.
+    /// The second call messes up the logic for which header view controller to show.
+    /// Adding a check for `animating` prevents the second call from happening.
+    fileprivate var animating = false
+}
+
+fileprivate let transitionAnimationDuration: TimeInterval = 0.5
+
+fileprivate class PushTransitionAnimation: NSObject, UIViewControllerAnimatedTransitioning {
+    func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval {
+        return transitionAnimationDuration
+    }
+    
+    func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
+        let fromViewController = transitionContext.viewController(forKey: UITransitionContextViewControllerKey.from)!
+        let toViewController = transitionContext.viewController(forKey: UITransitionContextViewControllerKey.to)!
+        let finalFrameForVC = transitionContext.finalFrame(for: toViewController)
+        let containerView = transitionContext.containerView
+        toViewController.view.frame = finalFrameForVC.offsetBy(dx: 0, dy: finalFrameForVC.size.height)
+        containerView.addSubview(toViewController.view)
+
+        UIView.animate(withDuration: transitionDuration(using: transitionContext), animations: {
+            fromViewController.view.alpha = 0.5
+            toViewController.view.frame = finalFrameForVC
+        }) { (_) in
+            transitionContext.completeTransition(true)
+            fromViewController.view.alpha = 1.0
+        }
+    }
+}
+
+fileprivate class PopTransitionAnimation: NSObject, UIViewControllerAnimatedTransitioning {
+    func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval {
+        return transitionAnimationDuration
+    }
+    
+    func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
+        let fromViewController = transitionContext.viewController(forKey: UITransitionContextViewControllerKey.from)!
+        let toViewController = transitionContext.viewController(forKey: UITransitionContextViewControllerKey.to)!
+        
+        let finalFrameForVC = transitionContext.finalFrame(for: toViewController)
+        let containerView = transitionContext.containerView
+        
+        toViewController.view.frame = finalFrameForVC
+        toViewController.view.alpha = 0.5
+        containerView.addSubview(toViewController.view)
+        containerView.addSubview(fromViewController.view)
+
+        UIView.animate(withDuration: transitionDuration(using: transitionContext), animations: {
+            toViewController.view.alpha = 1.0
+            fromViewController.view.frame = finalFrameForVC.offsetBy(dx: 0, dy: finalFrameForVC.size.height)
+        }) { (_) in
+            transitionContext.completeTransition(true)
+        }
+    }
+}
+
+extension FloatingPanelViewController: UINavigationControllerDelegate {
+    public func navigationController(_ navigationController: UINavigationController,
+                                     animationControllerFor operation: UINavigationController.Operation,
+                                     from fromVC: UIViewController,
+                                     to toVC: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        
+        // For a `pop` operation, use pop animation; for all other operations, use push.
+        return operation == .pop ? PopTransitionAnimation() : PushTransitionAnimation()
+    }
+    
+    public func navigationController(_ navigationController: UINavigationController, willShow viewController: UIViewController, animated: Bool) {
+        print("count: \(navigationController.viewControllers.count); Will show vc: \(viewController); topmost = \(String(describing: navigationController.topViewController))")
+        guard navigationController == contentNavigationController else { return }
+        if !(viewController == initialViewController) {
+            // We're not the initial view controller, so create and setup
+            // a new headerVC to push onto the header navigation controller stack.
+            guard let fpEmbeddable = viewController as? FloatingPanelEmbeddable else { return }
+            let headerViewController = instantiateHeaderViewController(for: fpEmbeddable)
+            headerNavigationController.pushViewController(headerViewController, animated: true)
+            headerNavigationController.view.layoutSubviews()
+            NSLayoutConstraint.activate([
+                headerNavigationController.view.heightAnchor.constraint(equalTo: headerNavigationController.topViewController!.view.heightAnchor, multiplier: 1.0),
+                headerNavigationController.view.widthAnchor.constraint(equalTo: headerNavigationController.topViewController!.view.widthAnchor, multiplier: 1.0)
+            ])
+            print("count - ending: \(navigationController.viewControllers.count) headernav count: \(headerNavigationController.viewControllers.count)")
+        }
+        else {
+            headerNavigationController.popViewController(animated: true)
+        }
+
+        
+////        if (viewController == initialViewController) {
+//            animateHeader(true)
+////        }
+    }
+    
+    public func navigationController(_ navigationController: UINavigationController, didShow viewController: UIViewController, animated: Bool) {
+        print("Did show vc: \(viewController)")
+
+        // Setup FloatingPanelItem if we transitioned with the floatingPanelNavigationController
+        guard navigationController == contentNavigationController, let floatingPanelItem = (viewController as? FloatingPanelEmbeddable)?.floatingPanelItem else { return }
+        self.currentFloatingPanelItem = floatingPanelItem
+
+//        if !(viewController == initialViewController) {
+//            animateHeader(false)
+//        }
+
+        // TODO:  Need to get better animation for this... Maybe a view containing the header stuff and then animating that up/down
+        // based on push/pop and sliding in/out the new one?
+        
+        // Then, better animation
+        // and make sure that we can change values and have them be shown in the header.
+        // Also, make sure setting image to nil doesn't mess up the header title display
+//        let currentFrame = currentFloatingPanelHeaderViewController.view.frame
+//        pendingFloatingPanelHeaderViewController.view.frame = CGRect(origin: CGPoint(x: currentFrame.minX, y: currentFrame.minY + currentFrame.height), size: currentFrame.size)
+//        pendingFloatingPanelHeaderViewController.view.alpha = 1.0
+//        self.floatingPanelItem = floatingPanelItem
+//
+//        UIView.animate(withDuration: transitionAnimationDuration, animations: { [weak self] in
+//            guard let self = self, !self.animating else { return }
+//            self.currentFloatingPanelHeaderViewController.view.alpha = 0.0
+//            self.pendingFloatingPanelHeaderViewController.view.frame = currentFrame
+//            self.animating = true
+//        }) { [weak self] (finished) in
+//            guard let self = self, self.animating else { return }
+//            let tmp = self.currentFloatingPanelHeaderViewController
+//            self.currentFloatingPanelHeaderViewController = self.pendingFloatingPanelHeaderViewController
+//            self.pendingFloatingPanelHeaderViewController = tmp
+//            self.animating = false
+//        }
+    }
+}
+
+fileprivate class UIFloatingPanelContentController: UINavigationController {
+    override func pushViewController(_ viewController: UIViewController, animated: Bool) {
+        super.pushViewController(viewController, animated: animated)
+        
+        //We're pushing a new content VC; create a header VC and push that...
+        
+        //TODO:  this stuff!!!
     }
 }

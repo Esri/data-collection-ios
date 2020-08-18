@@ -65,7 +65,6 @@ extension MapViewController {
     
     func showLayerContents(_ barButtonItem: UIBarButtonItem?) {
         let layerContentsVC: LayerContentsViewController
-        let extrasVC: UINavigationController
         
         // Create the LayerContentsViewController if it's not already created.
         if let existingViewController = layerContentsViewController {
@@ -76,47 +75,55 @@ extension MapViewController {
             layerContentsVC = TableOfContentsViewController(dataSource: dataSource)
             layerContentsVC.title = MapViewControllerExtras.layers.title
 
-            // Add a done button.
-            let doneButton = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(done))
-            layerContentsVC.navigationItem.leftBarButtonItem = doneButton
             layerContentsViewController = layerContentsVC
         }
 
-        // Create the navigation controller if it's not already created.
-        if let existingNavigationVC = extrasNavigationController {
-            extrasVC = existingNavigationVC
-            extrasVC.setViewControllers([layerContentsVC], animated: false)
-        } else {
-            extrasVC = UINavigationController(rootViewController: layerContentsVC)
-            extrasNavigationController = extrasVC
+        // Get the bundle and then the storyboard for the FloatingPanelViewController.
+        let floatingPanelVC: FloatingPanelViewController
+        if let existingFloatingPanelVC = floatingPanelViewController {
+            floatingPanelVC = existingFloatingPanelVC
+        }
+        else {
+            let bundle = Bundle(for: FloatingPanelViewController.self)
+            let storyboard = UIStoryboard(name: "FloatingPanelViewController", bundle: bundle)
+            
+            // Create the floatingPanelViewController from the storyboard.
+            floatingPanelVC = storyboard.instantiateInitialViewController() as? FloatingPanelViewController ?? FloatingPanelViewController()
+            floatingPanelViewController = floatingPanelVC
         }
         
-        // Display the extrasVC as a popover controller.
-        extrasVC.modalPresentationStyle = .popover
-        extrasVC.popoverPresentationController?.barButtonItem = barButtonItem
-        present(extrasVC, animated: true)
+        // Create and configure the view controller.
+        floatingPanelVC.initialViewController = layerContentsVC
+        floatingPanelVC.delegate = self
+        
+        addChild(floatingPanelVC)
+        view.addSubview(floatingPanelVC.view)
+        floatingPanelVC.didMove(toParent: self)
     }
     
     func showBookmarks(_ barButtonItem: UIBarButtonItem?) {
         // Get the bundle and then the storyboard for the FloatingPanelViewController.
-        let bundle = Bundle(for: FloatingPanelViewController.self)
-        let storyboard = UIStoryboard(name: "FloatingPanelViewController", bundle: bundle)
+        let floatingPanelVC: FloatingPanelViewController
+        if let existingFloatingPanelVC = floatingPanelViewController {
+            floatingPanelVC = existingFloatingPanelVC
+        }
+        else {
+            let bundle = Bundle(for: FloatingPanelViewController.self)
+            let storyboard = UIStoryboard(name: "FloatingPanelViewController", bundle: bundle)
+            
+            // Create the floatingPanelViewController from the storyboard.
+            floatingPanelVC = storyboard.instantiateInitialViewController() as? FloatingPanelViewController ?? FloatingPanelViewController()
+            floatingPanelViewController = floatingPanelVC
+        }
         
-        // Create the floatingPanelViewController from the storyboard.
-        guard let floatingPanelViewController = storyboard.instantiateInitialViewController() as? FloatingPanelViewController else { return }
-
-        // Create and configure the view controller.
-        floatingPanelViewController.floatingPanelTitle = MapViewControllerExtras.bookmarks.title
-        floatingPanelViewController.floatingPanelSubtitle = "Select a bookmark"
-        floatingPanelViewController.image = UIImage(named: "bookmark")
-        
-        floatingPanelViewController.initialViewController = bookmarksViewController
+        // Configure the view controller.
+        floatingPanelVC.initialViewController = bookmarksViewController
+        floatingPanelVC.delegate = self
         bookmarksViewController.delegate = self
-        floatingPanelViewController.delegate = self
         
-        addChild(floatingPanelViewController)
-        view.addSubview(floatingPanelViewController.view)
-        floatingPanelViewController.didMove(toParent: self)
+        addChild(floatingPanelVC)
+        view.addSubview(floatingPanelVC.view)
+        floatingPanelVC.didMove(toParent: self)
     }
 
     @objc
@@ -145,6 +152,43 @@ extension MapViewController: FloatingPanelViewControllerDelegate {
             
             // Reset view alpha.
             floatingPanelViewController.view.alpha = 1.0
+        }
+    }
+}
+
+extension BookmarksViewController: FloatingPanelEmbeddable {
+    // We know that the BookmarksViewController will not be making
+    // changes to the floating panel item, so it's OK to just have
+    // this as a computed property.  Otherwise, that class would need
+    // to be updated to implement FloatingPanelEmbeddable.
+    public var floatingPanelItem: FloatingPanelItem {
+        get {
+            let fpItem = FloatingPanelItem()
+            fpItem.title = MapViewControllerExtras.bookmarks.title
+            fpItem.subtitle = "Select a bookmark"
+            fpItem.image = UIImage(named: "bookmark")
+            return fpItem
+        }
+        set {
+            //No-op
+        }
+    }
+}
+
+extension LayerContentsViewController: FloatingPanelEmbeddable {
+    // We know that the LayerContentsViewController will not be making
+    // changes to the floating panel item, so it's OK to just have
+    // this as a computed property.  Otherwise, that class would need
+    // to be updated to implement FloatingPanelEmbeddable.
+    public var floatingPanelItem: FloatingPanelItem {
+        get {
+            let fpItem = FloatingPanelItem()
+            fpItem.title = MapViewControllerExtras.layers.title
+            fpItem.image = UIImage(named: "layer")
+            return fpItem
+        }
+        set {
+            //No-op
         }
     }
 }

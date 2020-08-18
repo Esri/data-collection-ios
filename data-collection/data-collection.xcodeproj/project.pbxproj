@@ -187,6 +187,7 @@
 		E480B9A72421309E00982756 /* LayerContentsDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = E480B9A62421309E00982756 /* LayerContentsDataSource.swift */; };
 		E4BA04A624B4E338000A1D43 /* FloatingPanelViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4BA04A524B4E338000A1D43 /* FloatingPanelViewController.swift */; };
 		E4BA04A824B4E35C000A1D43 /* FloatingPanelViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E4BA04A724B4E35C000A1D43 /* FloatingPanelViewController.storyboard */; };
+		E4CF0EAA24E32C0F00E8EE20 /* FloatingPanelHeaderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4CF0EA624E32C0F00E8EE20 /* FloatingPanelHeaderViewController.swift */; };
 		E4F93A2F255C8ADE00298E30 /* ArcGIS.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = E4F93A2E255C8ADE00298E30 /* ArcGIS.xcframework */; };
 		E4F93A30255C8ADE00298E30 /* ArcGIS.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = E4F93A2E255C8ADE00298E30 /* ArcGIS.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
@@ -454,6 +455,7 @@
 		E480B9A62421309E00982756 /* LayerContentsDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LayerContentsDataSource.swift; sourceTree = "<group>"; };
 		E4BA04A524B4E338000A1D43 /* FloatingPanelViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatingPanelViewController.swift; sourceTree = "<group>"; };
 		E4BA04A724B4E35C000A1D43 /* FloatingPanelViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = FloatingPanelViewController.storyboard; sourceTree = "<group>"; };
+		E4CF0EA624E32C0F00E8EE20 /* FloatingPanelHeaderViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FloatingPanelHeaderViewController.swift; sourceTree = "<group>"; };
 		E4F93A2E255C8ADE00298E30 /* ArcGIS.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = ArcGIS.xcframework; path = $HOME/Library/SDKs/ArcGIS/Frameworks/ArcGIS.xcframework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -1221,6 +1223,7 @@
 		E4BA04A024B4E2A4000A1D43 /* Floating Panel View Controller */ = {
 			isa = PBXGroup;
 			children = (
+				E4CF0EA624E32C0F00E8EE20 /* FloatingPanelHeaderViewController.swift */,
 				E4BA04A524B4E338000A1D43 /* FloatingPanelViewController.swift */,
 				E4BA04A724B4E35C000A1D43 /* FloatingPanelViewController.storyboard */,
 			);
@@ -1538,6 +1541,7 @@
 				94C550F622123C2E00DD7E40 /* PopupSelectRelatedRecordCell.swift in Sources */,
 				948D85232151C11F00E2048F /* AGSPopupManager+FeatureTable.swift in Sources */,
 				94D2714020D0315900304E27 /* CustomBehavior_Map.swift in Sources */,
+				E4CF0EAA24E32C0F00E8EE20 /* FloatingPanelHeaderViewController.swift in Sources */,
 				946D20C22130C236001BF5CC /* LastSyncMobileMapPackage.swift in Sources */,
 				945CEE7720DDC2AC00CD3E0D /* SVProgressHUD.m in Sources */,
 				945F455D21EFA90C00F2DCBC /* UserDefaults+RawRepresentable.swift in Sources */,
