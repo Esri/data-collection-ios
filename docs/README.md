@@ -116,7 +116,7 @@ The app launches to a navigation based application containing a map view.
 The navigation bar's title reflects the name of the web map and the navigation bar button items are as follows:
 
 | Icon | Description |
-| ---- | ----------- |
+|:----:| ----------- |
 | ![Profile](/docs/images/profile-nav.png) | Show user profile and online/offline map context. |
 | ![Zoom To Location](/docs/images/zoom-to-location.png) | Zoom to user's location. |
 | ![Add Feature](/docs/images/add-feature.png) | Add a new spatial feature to map. |
