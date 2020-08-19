@@ -1,3 +1,80 @@
+# Contents
+
+<!-- MDTOC maxdepth:6 firsth1:0 numbering:0 flatten:0 bullets:1 updateOnSave:1 -->
+
+- [Description](#description)   
+   - [Generic application](#generic-application)   
+   - [Trees of Portland](#trees-of-portland)   
+   - [Custom behavior](#custom-behavior)   
+- [Using the app](#using-the-app)   
+   - [Manage the app's context](#manage-the-apps-context)   
+      - [Sign in and out of Portal](#sign-in-and-out-of-portal)   
+      - [App work mode](#app-work-mode)   
+   - [View map extras](#view-map-extras)   
+   - [View map bookmarks](#view-map-bookmarks)   
+   - [View the map's layers](#view-the-maps-layers)   
+   - [Identify map features](#identify-map-features)   
+   - [Add map feature](#add-map-feature)   
+   - [Rich pop-ups](#rich-pop-ups)   
+   - [View and edit data with pop-ups](#view-and-edit-data-with-pop-ups)   
+      - [View a pop-up](#view-a-pop-up)   
+      - [Edit a feature](#edit-a-feature)   
+- [Using web maps](#using-web-maps)   
+   - [Configure web map & feature services for data collection](#configure-web-map-feature-services-for-data-collection)   
+      - [Map title](#map-title)   
+      - [Organizing feature layers](#organizing-feature-layers)   
+      - [Feature layer visibility range](#feature-layer-visibility-range)   
+      - [Enable editing on feature layers and tables](#enable-editing-on-feature-layers-and-tables)   
+      - [Enable pop-up on feature layers and tables](#enable-pop-up-on-feature-layers-and-tables)   
+      - [Configure pop-up on feature layers and tables](#configure-pop-up-on-feature-layers-and-tables)   
+      - [Enable attachments on feature layers](#enable-attachments-on-feature-layers)   
+- [Identity model](#identity-model)   
+   - [Public map, social login](#public-map-social-login)   
+- [Using map definition & pop-up configurations to drive app behavior](#using-map-definition-pop-up-configurations-to-drive-app-behavior)   
+   - [Map identify rules](#map-identify-rules)   
+   - [Small pop-up view rules](#small-pop-up-view-rules)   
+   - [Add feature rules](#add-feature-rules)   
+   - [Pop-up view rules](#pop-up-view-rules)   
+      - [View mode](#view-mode)   
+      - [Edit mode](#edit-mode)   
+- [Consuming ArcGIS](#consuming-arcgis)   
+   - [Identifying map features](#identifying-map-features)   
+   - [Offline map jobs](#offline-map-jobs)   
+      - [Download map offline](#download-map-offline)   
+      - [Synchronize offline map](#synchronize-offline-map)   
+      - [Job status view controller](#job-status-view-controller)   
+      - [Deleting offline map](#deleting-offline-map)   
+   - [Querying feature tables](#querying-feature-tables)   
+      - [Query for all features](#query-for-all-features)   
+      - [Query for related features](#query-for-related-features)   
+      - [Spatial query](#spatial-query)   
+   - [Editing features](#editing-features)   
+      - [Creating features](#creating-features)   
+      - [Rich pop-up](#rich-pop-up)   
+      - [Editing features lifecycle](#editing-features-lifecycle)   
+      - [Editing related records](#editing-related-records)   
+      - [Editing attachments](#editing-attachments)   
+   - [Reverse geocoding](#reverse-geocoding)   
+- [Architecture](#architecture)   
+   - [App configuration](#app-configuration)   
+   - [App context](#app-context)   
+      - [App context change handler](#app-context-change-handler)   
+   - [Model: Pop-up configuration driven](#model-pop-up-configuration-driven)   
+   - [View: storyboards](#view-storyboards)   
+      - [Custom views](#custom-views)   
+   - [Controller: app context aware](#controller-app-context-aware)   
+   - [App location](#app-location)   
+   - [Network reachability manager](#network-reachability-manager)   
+   - [Ephemeral cache](#ephemeral-cache)   
+   - [File manager](#file-manager)   
+   - [App defaults](#app-defaults)   
+   - [App colors & fonts](#app-colors-fonts)   
+   - [App errors](#app-errors)   
+- [Xcode project configuration](#xcode-project-configuration)   
+   - [Privacy strings](#privacy-strings)   
+
+<!-- /MDTOC -->
+---
 ## Description
 
 Collect data in an app consuming your organization's web maps driven by the ArcGIS Web GIS information model. We provide an example *Trees of Portland* web map and dataset to get you started.
@@ -34,13 +111,13 @@ While these custom behaviors may not work with your web map, they illustrate bes
 
 The app launches to a navigation based application containing a map view.
 
-![Main Map View](/docs/images/anatomy-map-view.png)
+![map](/docs/images/map.png)
 
 The navigation bar's title reflects the name of the web map and the navigation bar button items are as follows:
 
 | Icon | Description |
-| ---- | ----------- |
-| ![Hamburger Drawer View](/docs/images/hamburger.png) | Hamburger button to reveal or hide the app context drawer view. |
+|:----:| ----------- |
+| ![Profile](/docs/images/profile-nav.png) | Show user profile and online/offline map context. |
 | ![Zoom To Location](/docs/images/zoom-to-location.png) | Zoom to user's location. |
 | ![Add Feature](/docs/images/add-feature.png) | Add a new spatial feature to map. |
 | ![Extras](/docs/images/ellipsis.png) | Extras button to access Layers and Bookmarks. |
@@ -49,7 +126,7 @@ The navigation bar's title reflects the name of the web map and the navigation b
 
 Tapping the navigation bar's hamburger button reveals the app context drawer view.
 
-![App Context Drawer View](/docs/images/anatomy-app-context-drawer.png)
+![App Context Drawer View](/docs/images/profile.png)
 
 #### Sign in and out of Portal
 
@@ -73,7 +150,7 @@ A user may need to collect data in a location where they are disconnected from t
 
 > Because *Trees of Portland* uses a premium content basemap, a user must be authenticated to fully take the web map offline.
 
-![Download Map Offline Extent](/docs/images/anatomy-offline-extent.png)
+![Download Map Offline Extent](/docs/images/offline-extent.png)
 
 When taking the web map offline, the app asks the user to specify the area of the web map they want to take offline for storage in the device's documents directory following the offline map creation [on-demand workflow](https://developers.arcgis.com/ios/latest/swift/guide/take-map-offline-on-demand.htm). After the generate offline map job finishes, the app enters offline work mode and loads the offline mobile map package.
 
@@ -89,7 +166,7 @@ If a user elects to delete the offline map, the app deletes the offline mobile m
 
 Selecting the map Extras button displays allows you to choose either "Layer" or "Bookmarks".
 
-![Screenshot showing map extras on iPhone](/docs/images/extras-iphone.png)
+![Screenshot showing map extras on iPhone](/docs/images/extras.png)
 
 ### View map bookmarks
 
@@ -97,19 +174,19 @@ Web maps can include a list of bookmarks. Each bookmark consists of a map extent
 
 You can select the Bookmark item in Extras to see a list of bookmarks in the map. Selecting a bookmark will show that bookmark's extent.
 
-![Screenshot showing bookmarks on iPhone](/docs/images/component-bookmarks-iphone.png)
+![Screenshot showing bookmarks on iPhone](/docs/images/bookmarks.png)
 
 ### View the map's layers
 
 You can select the Layers item in Extras to view the symbology for each layer. You can "flip" the switch control to hide or show each layer. Selecting the "chevron" button to the left of the layer name will hide or show the symbology, if any, for each layer.
 
-![Screenshot showing layers on iPhone](/docs/images/component-layers-iphone.png)
+![Screenshot showing layers on iPhone](/docs/images/layers.png)
 
 ### Identify map features
 
 Tapping the map performs an identify function on the map. One best result is chosen, a small pop-up view is revealed and the feature is selected on the map. If no results are found, the user is notified.
 
-![Identified Map Feature](/docs/images/anatomy-identified-feature.png)
+![Identified Map Feature](/docs/images/identify.png)
 
 Tapping the small pop-up view presents modally a full pop-up view for deeper interrogation of the data.
 
@@ -121,7 +198,7 @@ If the map contains a spatial feature layer that adheres to the rules specified 
 
 If there is more than one eligible feature layer, a modal action sheet is presented, prompting the user to select onto which layer they would like to add a new feature. If there is only one eligible feature layer, the app selects this layer.
 
-![Add New Feature](/docs/images/anatomy-new-feature.png)
+![Add New Feature](/docs/images/new-feature.png)
 
 An action banner appears and a pin drops to the center of the map view. The action banner contains a select and a cancel button. The pin remains fixed to the center of the map view as the map is panned and zoomed beneath it. If the user taps the select button, a new feature is created using the fixed map view's center point translated to a spatial coordinate.
 
@@ -137,7 +214,7 @@ After identifying a pop-up, tapping the small pop-up view modally presents that 
 
 A full screen table-based view controller allows the user to interrogate the map view's selected pop-up in greater detail. The table-based view is broken down into a number of sub-components.
 
-![View A Pop-up](/docs/images/anatomy-popup-view.png)
+![View A Pop-up](/docs/images/pop-up.png)
 
 The first section displays each attribute configured for display. Following the display attributes are each many-to-one related records. In the *Trees of Portland* web map the trees table has one many-to-one relationship, the species table.
 
@@ -159,7 +236,7 @@ Starting an edit session enables the user to edit the pop-up's attributes, relat
 
 The pop-up's attributes configured as editable can be edited and validated inline within the same pop-up view.
 
-![Edit A Pop-up](/docs/images/anatomy-popup-edit.png)
+![Edit A Pop-up](/docs/images/pop-up-edit.png)
 
 As values for fields are updated, the app informs the user of invalid changes and why it's invalid. The pop-up won't save if there are invalid fields.
 
@@ -977,17 +1054,15 @@ When running a reverse geocode operation, the app selects which `AGSLocatorTask`
 class AddressLocator {
     // ...
     func reverseGeocodeAddress(for point: AGSPoint, completion: @escaping (_ result: Result<String, Error>) -> Void) {
-        let locator: AGSLocatorTask
-        // We want to use the online locator if the work mode is online and the app has reachability.
-        if appContext.workMode == .online && appReachability.isReachable {
-            locator = onlineLocator
-        }
-        // Otherwise, we'll use the offline locator.
-        else {
-            locator = offlineLocator
-        }
-        // Load the chosen locator.
-        locator.load { (error) in
+        let locator = appContextAwareLocator
+        locator.load { [weak self] (error) in
+            // Ensure the loaded locator matches the app context aware locator.
+            // The app context might have changed since the locator started loading.
+            guard locator == self?.appContextAwareLocator else {
+                completion(.failure(NSError.unknown))
+                return
+            }
+            // If the locator load failed, end early.
             if let error = error {
                 completion(.failure(error))
                 return
@@ -1007,7 +1082,7 @@ class AddressLocator {
                 }
                 else if
                     let attributes = results?.first?.attributes,
-                    let address = attributes[.address] as? String ?? attributes[.matchAddress] as? String {
+                    let address = (attributes[.address] ?? attributes[.matchAddress]) as? String {
                     completion(.success(address))
                 }
                 else {
