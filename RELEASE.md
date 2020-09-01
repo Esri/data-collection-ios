@@ -1,5 +1,8 @@
 # Release 1.2.2
 
+- Certification for the 100.9.0 release of the ArcGIS Runtime SDK for iOS.
+- Updates the ArcGIS Runtime Toolkit submodule to the 100.9.0 version.
+
 # Release 1.2.1
 
 - Renames, updates, and fixes `AddressLocator` (formally `AppReverseGeocoderManager`).
