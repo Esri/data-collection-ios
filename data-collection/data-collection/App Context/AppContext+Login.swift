@@ -52,8 +52,16 @@ extension AppContext {
     ///
     /// The app does this by removing all cached credentials and no longer requiring authentication in the portal.
     func signOut() {
-        // We want to remove cached credentials upon sign-out.
-        AGSAuthenticationManager.shared().credentialCache.removeAllCredentials()
+        // We want to remove cached credentials and revoke tokens upon sign-out.
+        AGSAuthenticationManager.shared().credentialCache.removeAndRevokeAllCredentials { (results) in
+            if !results.isEmpty {
+                print("Could not revoke the following credentials:")
+                results.forEach { (credential, error) in
+                    print("  \(credential.username ?? ""); error: \(error.localizedDescription)")
+                }
+            }
+        }
+        
         // We want to remove cached credentials from geo-coder services, in case they are cached.
         appAddressLocator.removeCredentialsFromServices()
         // Setting `loginRequired` to `false` will allow unauthenticated users to consume the map (but not edit!)

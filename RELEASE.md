@@ -1,3 +1,10 @@
+# Release 1.2.2
+
+- Introduces new technique for managing [app secrets]](./docs#app-configuration).
+- At v100.6.0 the ArcGIS Runtime SDK for iOS introduced a [method](https://developers.arcgis.com/ios/latest/api-reference/interface_a_g_s_credential_cache.html#a0796cf2506fa0edfdeb2b62198bbbea7) to remove and revoke all credentials. Data Collection now uses that method to revoke the portal user's credential on the server side.
+- Certification for the 100.9.0 release of the ArcGIS Runtime SDK for iOS.
+- Updates the ArcGIS Runtime Toolkit submodule to the 100.9.0 version.
+
 # Release 1.2.1
 
 - Renames, updates, and fixes `AddressLocator` (formally `AppReverseGeocoderManager`).
