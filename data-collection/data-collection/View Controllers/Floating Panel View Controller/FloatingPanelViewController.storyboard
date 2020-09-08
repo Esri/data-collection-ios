@@ -2,7 +2,6 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="ezK-xJ-cea">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
@@ -169,14 +168,14 @@
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Thq-YG-pDT" userLabel="Header View">
-                                        <rect key="frame" x="0.0" y="16" width="414" height="44"/>
+                                        <rect key="frame" x="0.0" y="16" width="414" height="12"/>
                                         <color key="backgroundColor" systemColor="systemPinkColor" red="1" green="0.1764705882" blue="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="44" placeholder="YES" id="Ixn-aE-XXA"/>
+                                            <constraint firstAttribute="height" constant="12" placeholder="YES" id="Ixn-aE-XXA"/>
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YoM-sw-2k6">
-                                        <rect key="frame" x="0.0" y="60" width="414" height="836"/>
+                                        <rect key="frame" x="0.0" y="28" width="414" height="868"/>
                                     </view>
                                     <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8Nn-6x-IaX" userLabel="BottomHandleBarView">
                                         <rect key="frame" x="0.0" y="896" width="414" height="24"/>
