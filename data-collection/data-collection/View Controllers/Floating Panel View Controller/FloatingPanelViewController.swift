@@ -282,7 +282,7 @@ public class FloatingPanelViewController: UIViewController {
             else {
                 // We're showing pushed view controller, pop it and the header vc.
                 self.contentNavigationController.popViewController(animated: true)
-                self.headerNavigationController.popViewController(animated: true)
+//                self.headerNavigationController.popViewController(animated: true)
             }
         }
 
@@ -345,7 +345,7 @@ public class FloatingPanelViewController: UIViewController {
     /// Constraints for the header.
     private var headerConstraints = [NSLayoutConstraint]()
 
-    private let contentNavigationController = UINavigationController()
+    private let contentNavigationController = FloatingPanelNavigationController()
     private let headerNavigationController = UINavigationController()
     
     /// Add our internal header navigation controller to the `headerView`.
@@ -363,7 +363,7 @@ public class FloatingPanelViewController: UIViewController {
             headerNavigationController.view.leadingAnchor.constraint(equalTo: headerView.leadingAnchor)
         ])
         headerNavigationController.navigationBar.isHidden = true
-        headerNavigationController.delegate = self
+//        headerNavigationController.delegate = self
     }
     
     /// Add our internal navigation controller to the `contentView`.
@@ -386,9 +386,13 @@ public class FloatingPanelViewController: UIViewController {
     override public func viewDidLoad() {
         super.viewDidLoad()
         view.translatesAutoresizingMaskIntoConstraints = false
-        
         setupContentNavigationController()
         setupHeaderNavigationController()
+        
+        contentNavigationController.headerNavigationController = headerNavigationController
+        contentNavigationController.createHeaderViewControllerHandler = { [weak self] (floatingPanelEmbeddable: FloatingPanelEmbeddable) in
+            return self?.instantiateHeaderViewController(for: floatingPanelEmbeddable)
+        }
         
         // Set `isCompactWidth`.
         isCompactWidth = traitCollection.horizontalSizeClass == .compact
@@ -643,24 +647,24 @@ extension FloatingPanelViewController: UINavigationControllerDelegate {
     }
     
     public func navigationController(_ navigationController: UINavigationController, willShow viewController: UIViewController, animated: Bool) {
-        print("count: \(navigationController.viewControllers.count); Will show vc: \(viewController); topmost = \(String(describing: navigationController.topViewController))")
-        guard navigationController == contentNavigationController else { return }
-        if !(viewController == initialViewController) {
-            // We're not the initial view controller, so create and setup
-            // a new headerVC to push onto the header navigation controller stack.
-            guard let fpEmbeddable = viewController as? FloatingPanelEmbeddable else { return }
-            let headerViewController = instantiateHeaderViewController(for: fpEmbeddable)
-            headerNavigationController.pushViewController(headerViewController, animated: true)
-            headerNavigationController.view.layoutSubviews()
-            NSLayoutConstraint.activate([
-                headerNavigationController.view.heightAnchor.constraint(equalTo: headerNavigationController.topViewController!.view.heightAnchor, multiplier: 1.0),
-                headerNavigationController.view.widthAnchor.constraint(equalTo: headerNavigationController.topViewController!.view.widthAnchor, multiplier: 1.0)
-            ])
-            print("count - ending: \(navigationController.viewControllers.count) headernav count: \(headerNavigationController.viewControllers.count)")
-        }
-        else {
-            headerNavigationController.popViewController(animated: true)
-        }
+//        print("count: \(navigationController.viewControllers.count); Will show vc: \(viewController); topmost = \(String(describing: navigationController.topViewController))")
+//        guard navigationController == contentNavigationController else { return }
+//        if !(viewController == initialViewController) {
+////            // We're not the initial view controller, so create and setup
+////            // a new headerVC to push onto the header navigation controller stack.
+////            guard let fpEmbeddable = viewController as? FloatingPanelEmbeddable else { return }
+////            let headerViewController = instantiateHeaderViewController(for: fpEmbeddable)
+////            headerNavigationController.pushViewController(headerViewController, animated: true)
+////            headerNavigationController.view.layoutSubviews()
+////            NSLayoutConstraint.activate([
+////                headerNavigationController.view.heightAnchor.constraint(equalTo: headerNavigationController.topViewController!.view.heightAnchor, multiplier: 1.0),
+////                headerNavigationController.view.widthAnchor.constraint(equalTo: headerNavigationController.topViewController!.view.widthAnchor, multiplier: 1.0)
+////            ])
+////            print("count - ending: \(navigationController.viewControllers.count) headernav count: \(headerNavigationController.viewControllers.count)")
+//        }
+//        else {
+//            headerNavigationController.popViewController(animated: true)
+//        }
 
         
 ////        if (viewController == initialViewController) {
@@ -705,12 +709,49 @@ extension FloatingPanelViewController: UINavigationControllerDelegate {
     }
 }
 
-fileprivate class UIFloatingPanelContentController: UINavigationController {
+fileprivate class FloatingPanelNavigationController: UINavigationController {
+    public typealias CreateHeaderViewControllerHandler = (FloatingPanelEmbeddable) -> UIViewController?
+
+    var headerNavigationController: UINavigationController?
+    var createHeaderViewControllerHandler: CreateHeaderViewControllerHandler?
+    
     override func pushViewController(_ viewController: UIViewController, animated: Bool) {
         super.pushViewController(viewController, animated: animated)
+        print(".pushViewController: \(viewController)")
         
+        guard let headerNavVC = headerNavigationController,
+            let fpEmbeddable = viewController as? FloatingPanelEmbeddable,
+            let newHeaderVC = createHeaderViewControllerHandler?(fpEmbeddable) else { return }
+
+        headerNavVC.pushViewController(newHeaderVC, animated: animated)
+
         //We're pushing a new content VC; create a header VC and push that...
-        
         //TODO:  this stuff!!!
+//        guard navigationController == contentNavigationController else { return }
+//        if !(viewController == initialViewController) {
+            // We're not the initial view controller, so create and setup
+            // a new headerVC to push onto the header navigation controller stack.
+//            guard let fpEmbeddable = viewController as? FloatingPanelEmbeddable else { return }
+//            let headerViewController = instantiateHeaderViewController(for: fpEmbeddable)
+//            headerNavigationController.pushViewController(headerViewController, animated: true)
+//            headerNavigationController.view.layoutSubviews()
+//            NSLayoutConstraint.activate([
+//                headerNavigationController.view.heightAnchor.constraint(equalTo: headerNavigationController.topViewController!.view.heightAnchor, multiplier: 1.0),
+//                headerNavigationController.view.widthAnchor.constraint(equalTo: headerNavigationController.topViewController!.view.widthAnchor, multiplier: 1.0)
+//            ])
+//            print("count - ending: \(navigationController.viewControllers.count) headernav count: \(headerNavigationController.viewControllers.count)")
+//        }
+//        else {
+//            headerNavigationController.popViewController(animated: true)
+//        }
+
+        
+    }
+    
+    override func popViewController(animated: Bool) -> UIViewController? {
+        let returnVC = super.popViewController(animated: animated)
+        print(".popViewController: \(returnVC)")
+        headerNavigationController?.popViewController(animated: animated)
+        return returnVC
     }
 }
