@@ -95,7 +95,7 @@ cd data-collection-ios
 
 ### Grant permission
 
-The project uses a bash program named `masquerade` in custom build rule to conceal app secrets in versioned source code. Grant `masquerade` executable permissions.
+The project uses a bash program named `masquerade` in a custom build rule to conceal app secrets in versioned source code. Grant `masquerade` executable permissions.
 
 ```bash
 chmod +rwx data-collection/scripts/masquerade
