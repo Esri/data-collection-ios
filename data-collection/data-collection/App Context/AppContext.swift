@@ -27,7 +27,9 @@ let appContext = AppContext()
 class AppContext: NSObject {
     
     override init() {
+        
         let defaultWorkMode: WorkMode = .retrieveDefaultWorkMode()
+        
         switch defaultWorkMode {
         case .online, .offline:
             workMode = defaultWorkMode
@@ -38,13 +40,8 @@ class AppContext: NSObject {
         super.init()
         
         locationManager.delegate = self
-        
         portalSession.delegate = self
-        portalSession.enableAutoSyncToKeychain()
-        portalSession.restorePreviousPortalSessionOrFallbackToDefault()
-        
         offlineMapManager.delegate = self
-        offlineMapManager.loadOfflineMobileMapPackage()
     }
     
     // MARK: Locator
