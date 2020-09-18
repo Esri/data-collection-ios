@@ -88,13 +88,6 @@ class MapViewController: UIViewController {
         
         NotificationCenter.default.addObserver(
             self,
-            selector: #selector(adjustForCurrentMap),
-            name: .currentMapDidChange,
-            object: nil
-        )
-        
-        NotificationCenter.default.addObserver(
-            self,
             selector: #selector(adjustForLocationAuthorizationStatus),
             name: .locationAuthorizationDidChange,
             object: nil
@@ -109,19 +102,13 @@ class MapViewController: UIViewController {
         
         NotificationCenter.default.addObserver(
             self,
-            selector: #selector(adjustForReachability),
-            name: .reachabilityDidChange,
+            selector: #selector(adjustForPortal),
+            name: .portalDidChange,
             object: nil
         )
-        
-        // Load map from the app context.
-        appContext.loadOfflineMobileMapPackageAndSetMapForCurrentWorkMode()
-        
+                
         // Adjust location display for app location authorization status. If location authorized is undetermined, this will prompt the user for authorization.
         adjustForLocationAuthorizationStatus()
-        
-        // If device is not reachable upon launch, inform the end-user.
-        displayInitialReachabilityMessage()
     }
         
     // MARK:- Extras
@@ -266,44 +253,33 @@ class MapViewController: UIViewController {
             destination.delegate = self
         }
         else if let destination = segue.destination as? JobStatusViewController {
-            destination.jobConstruct = EphemeralCache.shared.object(forKey: .offlineMapJob) as? OfflineMapJobConstruct
-            destination.delegate = self
+            destination.job = EphemeralCache.shared.object(forKey: "OfflineMapJobID") as? OfflineMapJobManager.Job
         }
-    }
-    
-    // MARK:- Reachability
-    
-    private func displayInitialReachabilityMessage() {
-        if !appReachability.isReachable {
-            displayReachabilityMessage(isReachable: false)
-        }
-    }
-    
-    private func displayReachabilityMessage(isReachable reachable: Bool = appReachability.isReachable) {
-        let connectionMessage = String(
-            format: "Device %@ connection to the network.", (reachable ? "gained" : "lost")
-        )
-        slideNotificationView.showLabel(withNotificationMessage: connectionMessage, forDuration: 6.0)
-    }
-    
-    @objc
-    func adjustForReachability() {
-        displayReachabilityMessage()
     }
     
     // MARK:- Work Mode
     
     @objc func adjustForWorkMode() {
         let color: UIColor
-        if case WorkMode.online = appContext.workMode {
+        if case .online = appContext.workMode {
             color = .primary
             slideNotificationView.messageBackgroundColor = color.lighter
         }
-        else { // WorkMode.offline = appContext.workMode
+        else { // .offline = appContext.workMode
             color = .offline
             slideNotificationView.messageBackgroundColor = color.darker
         }
         activityBarView.colors = (color.lighter, color.darker)
+        
+        adjustForCurrentMap()
+    }
+    
+    // MARK:- Portal
+    
+    @objc func adjustForPortal() {
+        if let error = appContext.portalSession.error {
+            present(simpleAlertMessage: error.localizedDescription)
+        }
     }
 }
 

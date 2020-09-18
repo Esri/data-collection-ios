@@ -63,55 +63,24 @@ class ProfileViewController: UITableViewController {
         )
         
         adjustForPortal()
-        
-        // MARK: Reachability
-        
-        NotificationCenter.default.addObserver(
-            self,
-            selector: #selector(adjustForReachability),
-            name: .reachabilityDidChange,
-            object: nil
-        )
-        
-        adjustForReachability()
-        
-        // MARK: Last Sync Date
-        
-        NotificationCenter.default.addObserver(
-            self,
-            selector: #selector(adjustForLastSyncDate),
-            name: .lastSyncDidChange,
-            object: nil
-        )
-        
-        adjustForLastSyncDate()
-        
+
         // MARK: Offline Map
         
         NotificationCenter.default.addObserver(
             self,
             selector: #selector(adjustForHasOfflineMap),
-            name: .hasOfflineMapDidChange,
+            name: .offlineMapDidChange,
             object: nil
         )
         
         adjustForHasOfflineMap()
-    }
-    
-    // MARK:- Reachability
-    
-    @objc
-    func adjustForReachability() {
-        let reachable = appReachability.isReachable
-        if reachable {
-            workOnlineCell.subtitleLabel.isHidden = true
-            workOnlineCell.brighten()
-        }
-        else {
-            workOnlineCell.subtitleLabel.text = "no network connectivity"
-            workOnlineCell.subtitleLabel.isHidden = false
-            workOnlineCell.dim()
-        }
+        
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(userRequestsTakeMapOffline),
+            name: .requestsDownloadOfflineMap,
+            object: nil
+        )
     }
     
     // MARK:- Work Mode
@@ -119,43 +88,31 @@ class ProfileViewController: UITableViewController {
     @objc
     func adjustForWorkMode() {
         switch appContext.workMode {
-        case .online:
+        case .none:
+            deselect(indexPath: .workOnline)
+            deselect(indexPath: .workOffline)
+        case .online(_):
             select(indexPath: .workOnline)
             deselect(indexPath: .workOffline)
-        case .offline:
+        case .offline(_):
             select(indexPath: .workOffline)
             deselect(indexPath: .workOnline)
         }
     }
     
     private func workOnline() {
-        
-        guard appContext.workMode == .offline else { return }
-        
-        guard appReachability.isReachable else {
-            present(
-                simpleAlertMessage: "Your device must be connected to a network to work online.",
-                animated: true,
-                completion: nil
-            )
-            return
-        }
-        
-        appContext.setWorkModeOnlineWithMapFromPortal()
+        if case .online(_) = appContext.workMode { return }
+        appContext.setWorkModeOnline()
     }
     
     private func workOffline() {
-        
-        guard appContext.workMode == .online else { return }
-        
-        if !appContext.setMapFromOfflineMobileMapPackage() {
-            delegate?.profileViewControllerRequestsDownloadMapOfflineOnDemand(profileViewController: self)
-        }
+        if case .offline(_) = appContext.workMode { return }
+        appContext.setWorkModeOffline()
     }
     
     @objc
     func adjustForHasOfflineMap() {
-        let hasOfflineMap = appContext.hasOfflineMap
+        let hasOfflineMap = appContext.offlineMapManager.hasMap
         workOfflineCell.subtitleLabel.isHidden = hasOfflineMap
         if hasOfflineMap {
             synchronizeMapCell.brighten()
@@ -165,13 +122,28 @@ class ProfileViewController: UITableViewController {
             synchronizeMapCell.dim()
             deleteMapCell.dim()
         }
+        if let date = appContext.offlineMapManager.lastSync {
+            synchronizeMapCell.subtitleLabel.isHidden = false
+            synchronizeMapCell.subtitleLabel.text = String(
+                format: "last sync %@",
+                Self.dateFormatter.string(from: date)
+            )
+        }
+        else {
+            synchronizeMapCell.subtitleLabel.isHidden = true
+        }
+    }
+    
+    @objc
+    func userRequestsTakeMapOffline() {
+        delegate.profileViewControllerRequestsDownloadMapOfflineOnDemand(profileViewController: self)
     }
     
     // MARK:- Portal
     
     @objc
     func adjustForPortal() {
-        if let user = appContext.portal.user {
+        if let user = appContext.portalSession.portal?.user {
             load(user: user)
         }
         else {
@@ -197,6 +169,7 @@ class ProfileViewController: UITableViewController {
         portalUserCell.userFullNameLabel.text = "Access Portal"
         portalUserCell.userEmailLabel.text = .basePortalDomain
         portalUserCell.authButton.setTitle("Sign In", for: .normal)
+        portalUserCell.authButton.removeTarget(self, action: #selector(userRequestsSignOut), for: .touchUpInside)
         portalUserCell.authButton.addTarget(self, action: #selector(userRequestsSignIn), for: .touchUpInside)
     }
     
@@ -205,6 +178,7 @@ class ProfileViewController: UITableViewController {
         portalUserCell.userEmailLabel.text = user.email
         portalUserCell.userFullNameLabel.text = user.fullName
         portalUserCell.authButton.setTitle("Sign Out", for: .normal)
+        portalUserCell.authButton.removeTarget(self, action: #selector(userRequestsSignIn), for: .touchUpInside)
         portalUserCell.authButton.addTarget(self, action: #selector(userRequestsSignOut), for: .touchUpInside)
         
         if let thumbnail = user.thumbnail {
@@ -230,18 +204,7 @@ class ProfileViewController: UITableViewController {
     // MARK:- Sync
     
     private func synchronizeMap() {
-        
-        guard appReachability.isReachable else {
-            present(
-                simpleAlertMessage: "Your device must be connected to a network to synchronize the offline map.",
-                animated: true,
-                completion: nil
-            )
-            return
-        }
-        
-        precondition(appContext.hasOfflineMap, "There is no map to synchronize.")
-        
+        precondition(appContext.offlineMapManager.hasMap, "There is no map to synchronize.")
         delegate?.profileViewControllerRequestsSynchronizeMap(profileViewController: self)
     }
     
@@ -252,29 +215,15 @@ class ProfileViewController: UITableViewController {
         return formatter
     }()
     
-    @objc
-    func adjustForLastSyncDate() {
-        if let date = appContext.mobileMapPackage?.lastSyncDate {
-            synchronizeMapCell.subtitleLabel.isHidden = false
-            synchronizeMapCell.subtitleLabel.text = String(
-                format: "last sync %@",
-                Self.dateFormatter.string(from: date)
-            )
-        }
-        else {
-            synchronizeMapCell.subtitleLabel.isHidden = true
-        }
-    }
-    
     // MARK:- Delete Offline Map
     
     private func promptDeleteOfflineMap() {
         
-        precondition(appContext.hasOfflineMap, "There is no map to delete.")
+        precondition(appContext.offlineMapManager.hasMap, "There is no map to delete.")
         
         var message = "Are you sure you want to delete your offline map?"
 
-        if let mobileMapPackage = appContext.mobileMapPackage, mobileMapPackage.hasLocalEdits {
+        if appContext.offlineMapManager.mapHasLocalEdits {
             message += "\n\nThe offline map contains un-synchronized changes."
         }
         
@@ -298,18 +247,7 @@ class ProfileViewController: UITableViewController {
     }
     
     private func deleteOfflineMap() {
-        do {
-            try appContext.deleteOfflineMapAndAttemptToGoOnline()
-        }
-        catch {
-            let alert = UIAlertController(
-                title: nil,
-                message: error.localizedDescription,
-                preferredStyle: .alert
-            )
-            alert.addAction(.okay())
-            present(alert, animated: true, completion: nil)
-        }
+        appContext.deleteOfflineMapAndAttemptToGoOnline()
     }
     
     // MARK:- Programmatic cell selection / deselection to reflect state
@@ -329,10 +267,7 @@ class ProfileViewController: UITableViewController {
             return nil
         }
         else if indexPath == .workOnline {
-            guard appContext.workMode == .offline else {
-                return nil
-            }
-            if appReachability.isReachable {
+            if case .offline = appContext.workMode {
                 return indexPath
             }
             else {
@@ -340,13 +275,15 @@ class ProfileViewController: UITableViewController {
             }
         }
         else if indexPath == .workOffline {
-            guard appContext.workMode == .online else {
+            if case .online = appContext.workMode {
+                return indexPath
+            }
+            else {
                 return nil
             }
-            return indexPath
         }
         else if indexPath == .synchronize {
-            if appContext.hasOfflineMap {
+            if appContext.offlineMapManager.hasMap {
                 return indexPath
             }
             else {
@@ -354,7 +291,7 @@ class ProfileViewController: UITableViewController {
             }
         }
         else if indexPath == .delete {
-            if appContext.hasOfflineMap {
+            if appContext.offlineMapManager.hasMap {
                 return indexPath
             }
             else {
