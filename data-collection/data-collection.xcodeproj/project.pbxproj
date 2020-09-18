@@ -145,7 +145,6 @@
 		94B37603207E8E4800691F2A /* CGPoint+Modify.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94B375EF207E8E4800691F2A /* CGPoint+Modify.swift */; };
 		94B3760C207EAE4700691F2A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94B3760B207EAE4600691F2A /* AppDelegate.swift */; };
 		94BA7D3A20FD140500C78255 /* AppColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94BA7D3920FD140500C78255 /* AppColors.swift */; };
-		94BA7D3C20FD151A00C78255 /* AppFonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94BA7D3B20FD151A00C78255 /* AppFonts.swift */; };
 		94C550EA221207C500DD7E40 /* UIResponder+InputAccessoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94C550E9221207C500DD7E40 /* UIResponder+InputAccessoryView.swift */; };
 		94C550ED22120A0700DD7E40 /* UITextView+InputAccessoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94C550EC22120A0700DD7E40 /* UITextView+InputAccessoryView.swift */; };
 		94C550F022120A3500DD7E40 /* UITextField+InputAccessoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94C550EF22120A3500DD7E40 /* UITextField+InputAccessoryView.swift */; };
@@ -403,7 +402,6 @@
 		94B375EF207E8E4800691F2A /* CGPoint+Modify.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CGPoint+Modify.swift"; sourceTree = "<group>"; };
 		94B3760B207EAE4600691F2A /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		94BA7D3920FD140500C78255 /* AppColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppColors.swift; sourceTree = "<group>"; };
-		94BA7D3B20FD151A00C78255 /* AppFonts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppFonts.swift; sourceTree = "<group>"; };
 		94C550E9221207C500DD7E40 /* UIResponder+InputAccessoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIResponder+InputAccessoryView.swift"; sourceTree = "<group>"; };
 		94C550EC22120A0700DD7E40 /* UITextView+InputAccessoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextView+InputAccessoryView.swift"; sourceTree = "<group>"; };
 		94C550EF22120A3500DD7E40 /* UITextField+InputAccessoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextField+InputAccessoryView.swift"; sourceTree = "<group>"; };
@@ -1115,7 +1113,6 @@
 				94B3759F207E8D5600691F2A /* AppConfiguration.swift */,
 				944D0CBF24E1DD0F00EE49CB /* AppSecrets.swift.masque */,
 				94DDEA7B215426D300DA533C /* AppRules.swift */,
-				94BA7D3B20FD151A00C78255 /* AppFonts.swift */,
 				94BA7D3920FD140500C78255 /* AppColors.swift */,
 				944433E421AC766000E96A6E /* App Errors */,
 				94B375A5207E8D5600691F2A /* App Context */,
@@ -1479,7 +1476,6 @@
 				4CA46A8522FB973B001A9CB9 /* UIAlertAction.swift in Sources */,
 				9487944222022777007BC15E /* RichPopupDetailsViewController+UITableViewDataSource.swift in Sources */,
 				94ADD3C821F266AC000A5DB9 /* AGSPopupManager+AttachmentAccess.swift in Sources */,
-				94BA7D3C20FD151A00C78255 /* AppFonts.swift in Sources */,
 				948D85032151B85200E2048F /* AGSArcGISFeature+Collection.swift in Sources */,
 				94D2714320D0578000304E27 /* OneToManyRelationship.swift in Sources */,
 				94B375C1207E8D5600691F2A /* AppConfiguration.swift in Sources */,
