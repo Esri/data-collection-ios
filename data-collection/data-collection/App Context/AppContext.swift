@@ -131,7 +131,7 @@ class AppContext: NSObject {
         }
         else {
             workMode = .online(nil)
-            portalSession.loadSilentCredentialRequiredPortalSession()
+            portalSession.silentlyLoadCredentialRequiredPortalSession()
         }
     }
     
@@ -161,6 +161,10 @@ private extension String {
 
 extension AppContext: CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
+        print(
+            "[Location Manager]",
+            "\n\tStatus - \(status)"
+        )
         NotificationCenter.default.post(locationAuthorizationNotification)
     }
 }

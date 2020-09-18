@@ -29,7 +29,32 @@ class OfflineMapJobManager {
         case synchronizing(UUID, AGSOfflineMapSyncJob)
     }
     
-    private var status: Status = .none
+    private var status: Status = .none {
+        didSet {
+            switch status {
+            case .none:
+                print(
+                    "[Offline Map Job Manager]",
+                    "\n\tNo job"
+                )
+            case .staged(_, let job):
+                print(
+                    "[Offline Map Job Manager]",
+                    "\n\tStaged - ", "\(type(of: job))"
+                )
+            case .downloading(_, let job):
+                print(
+                    "[Offline Map Job Manager]",
+                    "\n\tDownloading - ", job.onlineMap?.item?.title ?? "(no title)"
+                )
+            case .synchronizing(_, let job):
+                print(
+                    "[Offline Map Job Manager]",
+                    "\n\tSynchronizing - ", job.parameters.syncDirection
+                )
+            }
+        }
+    }
     
     private var currentJobID: UUID? {
         switch status {
@@ -228,7 +253,10 @@ class OfflineMapJobManager {
         // Print Job messages to console.
         while i < job.messages.count {
             let message = job.messages[i]
-            print("[Job: \(i)] \(message.message)")
+            print(
+                "[Job: \(i)]",
+                "\n\t\(message.message)"
+            )
             i += 1
         }
     }
@@ -236,4 +264,21 @@ class OfflineMapJobManager {
     // MARK: Delegate
     
     weak var delegate: OfflineMapJobManagerDelegate?
+}
+
+extension AGSSyncDirection: CustomStringConvertible {
+    public var description: String {
+        switch self {
+        case .bidirectional:
+            return "Bi-directional"
+        case .upload:
+            return "Upload"
+        case .download:
+            return "Download"
+        case .none:
+            return "None"
+        @unknown default:
+            fatalError("Unsupported \(type(of: self)) type.")
+        }
+    }
 }

@@ -47,9 +47,9 @@ class AppContextAwareNavigationController: UINavigationController {
         navBarAppearance.titleTextAttributes = [.foregroundColor: UIColor.contrasting]
         navBarAppearance.largeTitleTextAttributes = [.foregroundColor: UIColor.contrasting]
         switch appContext.workMode {
-        case .none, .online(_):
+        case .none, .online:
             navBarAppearance.backgroundColor = .primary
-        case .offline(_):
+        case .offline:
             navBarAppearance.backgroundColor = .offline
         }
         navigationBar.standardAppearance = navBarAppearance
