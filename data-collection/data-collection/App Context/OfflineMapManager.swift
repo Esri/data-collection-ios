@@ -53,13 +53,13 @@ class OfflineMapManager {
             case .loading(let mmpk):
                 print(
                     "[Offline Map Manager]",
-                    "\n\tLoading MMPK -", mmpk.item?.title ?? mmpk.fileURL.absoluteString
+                    "\n\tLoading MMPK -", mmpk.fileURL.absoluteString
                 )
                 break
             case .loaded(let mmpk, let map):
                 print(
                     "[Offline Map Manager]",
-                    "\n\tLoaded MMPK -", mmpk.item?.title ?? mmpk.fileURL.absoluteString,
+                    "\n\tLoaded MMPK -", mmpk.fileURL.absoluteString,
                     "\n\tLoaded Map -", map.item?.title ?? "(missing title)"
                 )
             case .failed(let error):
