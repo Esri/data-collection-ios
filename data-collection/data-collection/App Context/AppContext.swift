@@ -121,9 +121,18 @@ class AppContext: NSObject {
     }
     
     func deleteOfflineMapAndAttemptToGoOnline() {
-        workMode = .online(nil)
+        
         offlineMapManager.deleteOfflineMap()
-        portalSession.loadDefaultPortalSession()
+
+        if let portal = portalSession.portal {
+            let map = portal.configuredMap
+            map.load(completion: nil)
+            workMode = .online(map)
+        }
+        else {
+            workMode = .online(nil)
+            portalSession.loadSilentCredentialRequiredPortalSession()
+        }
     }
     
     // MARK: Map

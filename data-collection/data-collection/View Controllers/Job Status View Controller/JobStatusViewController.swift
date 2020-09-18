@@ -18,8 +18,7 @@ class JobStatusViewController: UIViewController {
         
     @IBOutlet weak var jobStatusLabel: UILabel!
     @IBOutlet weak var jobStatusProgressView: UIProgressView!
-    @IBOutlet weak var cancelButton: UIButton!
-    @IBOutlet weak var doneButton: UIButton!
+    @IBOutlet weak var actionButton: UIButton!
     
     var job: OfflineMapJobManager.Job!
     
@@ -70,8 +69,12 @@ class JobStatusViewController: UIViewController {
     // MARK: Finished Job
     
     private func updateForFinishedJob(successfully success: Bool) {
-        cancelButton.isEnabled = false
-        doneButton.isEnabled = true
+        
+        actionButton.removeTarget(self, action: #selector(userDidTapCancelJob), for: .touchUpInside)
+        actionButton.addTarget(self, action: #selector(userDidTapDone), for: .touchUpInside)
+        actionButton.setTitle("Done", for: .normal)
+        actionButton.setTitleColor(.primary, for: .normal)
+        
         if !success {
             jobStatusProgressView.progress = 0.0
         }
