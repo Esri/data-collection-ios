@@ -19,10 +19,15 @@ extension MapViewController {
     
     @objc
     func adjustForCurrentMap() {
-        clearCurrentPopup()
-        mapViewMode = .defaultView
-        mapView.map = appContext.currentMap
-        loadMapViewMap()
+        if let map = appContext.currentMap {
+            clearCurrentPopup()
+            mapView.map = map
+            mapViewMode = .defaultView
+            loadMapViewMap()
+        }
+        else {
+            disableMap()
+        }
     }
     
     func loadMapViewMap() {
@@ -39,7 +44,7 @@ extension MapViewController {
             if let error = error as NSError? {
                 print("[Error: Map Load]", "code: \(error.code)", error.localizedDescription)
                 
-                if AGSServicesErrorCode(rawValue: error.code) == .tokenRequired, !appContext.isLoggedIn {
+                if AGSServicesErrorCode(rawValue: error.code) == .tokenRequired, !appContext.portalSession.isSignedIn {
                     self.present(signInAlertMessage: "You must sign in to access this resource.")
                 }
                 else {
@@ -57,7 +62,7 @@ extension MapViewController {
             if let sharedVisibleArea = appContext.sharedVisibleArea {
                 
                 // Is the newly loaded map the offline map?
-                if let offlineMap = appContext.offlineMap, offlineMap == map {
+                if let offlineMap = appContext.offlineMapManager.map, offlineMap == map {
                     
                     // Get the initial viewpoint of the offline map
                     if let offlineMapInitialViewpoint = offlineMap.initialViewpoint {

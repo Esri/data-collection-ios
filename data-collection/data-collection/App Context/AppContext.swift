@@ -24,93 +24,159 @@ import ArcGIS
 
 class AppContext: NSObject {
     
-    // MARK: Portal
+    // MARK: Portal Session Manager
     
-    /// The app's current portal.
-    ///
-    /// The portal drives whether the user is signed in or not.
-    ///
-    /// When set, the portal is configured for OAuth authentication so that if login is required,
-    /// the Runtime SDK and iOS can work together to authenticate the current user.
-    var portal:AGSPortal = AGSPortal.configuredPortal(loginRequired: false) {
-        didSet {
-            portal.load { [weak self] (error: Error?) in
-                
-                guard let self = self else { return }
-                
-                defer {
-                    NotificationCenter.default.post(self.portalNotification)
-                }
-                
-                if let error = (error as NSError?),
-                    self.workMode == .online && error.code != NSUserCancelledError {
-                    self.currentMap = nil
-                    return
-                }
-
-                if self.isLoggedIn {
-                    print("[Portal] user is signed in")
-                }
-                else {
-                    print("[Portal] user is signed out")
-                }
-                
-                if self.workMode == .online {
-                    self.setWorkModeOnlineWithMapFromPortal()
-                }
-            }
+    let portalSession = PortalSessionManager(portal: .basePortal)
+    
+    override init() {
+        let defaultWorkMode: WorkMode = .retrieveDefaultWorkMode()
+        switch defaultWorkMode {
+        case .online, .offline:
+            workMode = defaultWorkMode
+        default:
+            workMode = .online(nil)
         }
+        
+        super.init()
+        
+        portalSession.delegate = self
+        portalSession.enableAutoSyncToKeychain()
+        portalSession.restorePreviousPortalSessionOrFallbackToDefault()
+        
+        offlineMapManager.delegate = self
+        offlineMapManager.loadOfflineMobileMapPackage()
     }
     
-    var isLoggedIn:Bool {
-        return portal.user != nil
-    }
+    // MARK: Locator
     
-    // MARK: Map
+    let addressLocator = AddressLocator()
     
-    /// The app's current map.
+    // MARK: Portal Session
+    
+    /// Trigger a sign-in sequence to a portal by building a portal where `loginRequired` is `true`.
     ///
-    /// The current map is derived from a portal web map, the same web map can be taken offline or can be nil.
+    /// - Note: The ArcGIS Runtime SDK will present a modal sign-in web view if it cannot find any suitable cached credentials.
+    func signIn() {
+        portalSession.loadCredentialRequiredPortalSession()
+    }
+    
+    /// Log out in the app and from the portal.
     ///
-    /// - Note: `MapViewController` updates its AGSMapView's AGSMap upon observed changes.
-    var currentMap: AGSMap? {
-        didSet {
-            NotificationCenter.default.post(currentMapNotification)
-        }
+    /// The app does this by removing all cached credentials and no longer requiring authentication in the portal.
+    func signOut() {
+        addressLocator.removeCredentialsFromServices()
+        portalSession.loadDefaultPortalSession()
     }
     
-    var isCurrentMapLoaded: Bool {
-        return currentMap?.loadStatus == .loaded
-    }
+    // MARK: Offline Map Manager
     
-    // MARK: Offline Map
+    let offlineMapManager = OfflineMapManager(webmap: .webMapItemID)
     
-    /// The app's currently downloaded offline mobile map package.
-    ///
-    /// - Note: A reference to the offline mobile map package persists even if the user operates the app in online work mode to signify state.
-    /// - Note: A nil `mobileMapPackage` signifies there is no offline mobile map package currently downloaded to the device.
-    var mobileMapPackage: LastSyncMobileMapPackage?
-    
-    var offlineMap: AGSMap? {
-        return mobileMapPackage?.maps.first
-    }
-    
-    /// A kv-observable boolean value that signifies if the app has a downloaded offline `mobileMapPackage`.
-    var hasOfflineMap: Bool = false {
-        didSet {
-            NotificationCenter.default.post(hasOfflineMapNotification)
-        }
-    }
+    // MARK:- Work Mode
     
     /// The app's current work mode.
     ///
     /// This property is initialized with the work mode from the user's last session.
     ///
     /// - Note: The app can have an offline map even when working online.
-    var workMode: WorkMode = WorkMode.retrieveDefaultWorkMode() {
+    var workMode: WorkMode {
         didSet {
             workMode.storeDefaultWorkMode()
             NotificationCenter.default.post(workModeNotification)
+        }
+    }
+    
+    func setWorkModeOnline() {
+        if let portal = portalSession.portal {
+            workMode = .online(portal.configuredMap)
+        }
+        else {
+            workMode = .none
+        }
+        
+    }
+    
+    func setWorkModeOffline() {
+        switch offlineMapManager.status {
+        case .none, .failed(_):
+            NotificationCenter.default.post(requestsDownloadOfflineMap)
+        case .loading(_):
+            workMode = .offline(nil)
+            return
+        case .loaded(_, let map):
+            workMode = .offline(map)
+        }
+    }
+    
+    func deleteOfflineMapAndAttemptToGoOnline() {
+        workMode = .online(nil)
+        offlineMapManager.deleteOfflineMap()
+        portalSession.loadDefaultPortalSession()
+    }
+    
+    // MARK: Map
+
+    var currentMap: AGSMap? {
+        switch workMode {
+        case .none:
+            return nil
+        case .online(let map):
+            return map
+        case .offline(let map):
+            return map
+        }
+    }
+    
+    var isCurrentMapLoaded: Bool {
+        return currentMap?.loadStatus == .loaded
+    }
+}
+
+private extension String {
+    static let userDefaultsWorkModeKey = "WorkMode.\(String.webMapItemID)"
+}
+
+// MARK:- Portal Session Manager Delegate
+
+extension AppContext: PortalSessionManagerDelegate {
+    
+    func portalSessionManager(manager: PortalSessionManager, didChangeStatus status: PortalSessionManager.Status) {
+
+        NotificationCenter.default.post(portalNotification)
+        
+        guard case .online = workMode else { return }
+        
+        switch status {
+        case .loaded(let portal), .fallback(let portal, _):
+            let map = portal.configuredMap
+            map.load(completion: nil)
+            workMode = .online(map)
+        case .failed:
+            workMode = .online(nil)
+        default:
+            break
+        }
+    }
+}
+
+// MARK:- Offline Map Manager Delegate
+
+extension AppContext: OfflineMapManagerDelegate {
+    
+    func offlineMapManager(_ manager: OfflineMapManager, didUpdateLastSync date: Date?) {
+        NotificationCenter.default.post(offlineMapNotification)
+    }
+    
+    func offlineMapManager(_ manager: OfflineMapManager, didUpdate status: OfflineMapManager.Status) {
+        NotificationCenter.default.post(offlineMapNotification)
+        if case let .offline(currentOfflineMap) = workMode, case let .loaded(_, managedOfflineMap) = status, currentOfflineMap == nil {
+            workMode = .offline(managedOfflineMap)
+        }
+    }
+    
+    func offlineMapManager(_ manager: OfflineMapManager, didFinishJob result: Result<JobResult, Error>) {
+        if case let .success(jobResult) = result, let offlineJobResult = jobResult as? AGSGenerateOfflineMapResult {
+            workMode = .offline(offlineJobResult.offlineMap)
         }
     }
 }
@@ -120,8 +186,8 @@ class AppContext: NSObject {
 extension Notification.Name {
     static let portalDidChange = Notification.Name("portalDidChange")
     static let workModeDidChange = Notification.Name("workModeDidChange")
-    static let hasOfflineMapDidChange = Notification.Name("hasOfflineMapDidChange")
-    static let currentMapDidChange = Notification.Name("currentMapDidChange")
+    static let offlineMapDidChange = Notification.Name("offlineMapDidChange")
+    static let requestsDownloadOfflineMap = Notification.Name("requestsDownloadOfflineMap")
 }
 
 extension AppContext {
@@ -142,19 +208,63 @@ extension AppContext {
         )
     }
     
-    var hasOfflineMapNotification: Notification {
+    var offlineMapNotification: Notification {
         Notification(
-            name: .hasOfflineMapDidChange,
+            name: .offlineMapDidChange,
             object: self,
             userInfo: nil
         )
     }
     
-    var currentMapNotification: Notification {
+    var requestsDownloadOfflineMap: Notification {
         Notification(
-            name: .currentMapDidChange,
+            name: .requestsDownloadOfflineMap,
             object: self,
             userInfo: nil
         )
+    }
+}
+
+extension AppContext {
+    
+    enum WorkMode {
+        
+        case none
+        /// This case is only set with a nil map when retrieved from `UserDefaults` or because a resource is loading.
+        /// Otherwise, the AppContext will set `.none`.
+        case online(AGSMap?), offline(AGSMap?)
+                
+        func storeDefaultWorkMode() {
+            UserDefaults.standard.set(userDefault, forKey: .userDefaultsWorkModeKey)
+        }
+        
+        private var userDefault: String {
+            switch self {
+            case .none:
+                return "none"
+            case .online(_):
+                return "online"
+            case .offline(_):
+                return "offline"
+            }
+        }
+        
+        static func retrieveDefaultWorkMode() -> WorkMode {
+            if let stored = UserDefaults.standard.string(forKey: .userDefaultsWorkModeKey) {
+                switch stored {
+                case "none":
+                    return .none
+                case "online":
+                    return .online(nil)
+                case "offline":
+                    return .offline(nil)
+                default:
+                    return .none
+                }
+            }
+            else {
+                return .none
+            }
+        }
     }
 }

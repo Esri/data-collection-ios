@@ -208,28 +208,21 @@ extension MapViewController {
     private func prepareForOfflineMapDownloadJob() {
         
         guard let map = mapView.map else { return }
-        
-        let geometry: AGSGeometry
-        
+                
         do {
-            geometry = try mapView.convertExtent(fromRect: maskViewController.maskRect)
-            try FileManager.default.prepareTemporaryOfflineMapDirectory()
-            try FileManager.default.prepareOfflineMapDirectory()
+            let geometry = try mapView.convertExtent(
+                fromRect: maskViewController.maskRect
+            )
+            let job = try appContext.offlineMapManager.stageOnDemandDownloadMapJob(
+                map,
+                extent: geometry,
+                scale: map.minScale
+            )
+            EphemeralCache.shared.setObject(job, forKey: "OfflineMapJobID")
+            performSegue(withIdentifier: "presentJobStatusViewController", sender: nil)
         }
         catch {
             present(simpleAlertMessage: error.localizedDescription)
-            return
         }
-        
-        let scale = map.minScale
-        let directory: URL = .temporaryOfflineMapDirectoryURL(forWebMapItemID: .webMapItemID)
-        let offlineJob = OfflineMapJobConstruct.downloadMapOffline(map, directory, geometry, scale)
-        
-        EphemeralCache.shared.setObject(
-            offlineJob,
-            forKey: .offlineMapJob
-        )
-        
-        performSegue(withIdentifier: "presentJobStatusViewController", sender: nil)
     }
 }

@@ -47,7 +47,12 @@ class AppContextAwareNavigationController: UINavigationController {
         navBarAppearance.configureWithOpaqueBackground()
         navBarAppearance.titleTextAttributes = [.foregroundColor: UIColor.contrasting]
         navBarAppearance.largeTitleTextAttributes = [.foregroundColor: UIColor.contrasting]
-        navBarAppearance.backgroundColor = appContext.workMode == .online ? .primary : .offline
+        switch appContext.workMode {
+        case .none, .online(_):
+            navBarAppearance.backgroundColor = .primary
+        case .offline(_):
+            navBarAppearance.backgroundColor = .offline
+        }
         navigationBar.standardAppearance = navBarAppearance
         navigationBar.scrollEdgeAppearance = navBarAppearance
         navigationBar.compactAppearance = navBarAppearance

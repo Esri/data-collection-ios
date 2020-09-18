@@ -13,11 +13,6 @@
 // limitations under the License.
 
 import UIKit
-import Alamofire
-
-var appReachability: NetworkReachabilityManager {
-    return NetworkReachabilityManager.shared
-}
 
 let appLocation = AppLocation()
 
@@ -26,5 +21,3 @@ let appContext = AppContext()
 var appBundleID: String {
     return Bundle.main.bundleIdentifier!
 }
-
-let appAddressLocator = AddressLocator()

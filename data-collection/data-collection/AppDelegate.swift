@@ -34,28 +34,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Configure default app colors.
         AppDelegate.setAppApperanceWithAppColors()
         
-        // Reset first reachability change status flag then start listening to reachability status changes.
-        appReachability.resetAndStartListening()
-        
-        // Attempt to sign in from previously stored credentials.
-        appContext.signInCurrentPortalIfPossible()
-        
         return true
-    }
-    
-    func applicationWillEnterForeground(_ application: UIApplication) {
-        // Reset first reachability change status flag then start listening to reachability status changes.
-        appReachability.resetAndStartListening()
-    }
-    
-    func applicationWillResignActive(_ application: UIApplication) {
-        // Stop listening to reachability status changes.
-        appReachability.stopListening()
-    }
-    
-    func applicationWillTerminate(_ application: UIApplication) {
-        // Stop listening to reachability status changes.
-        appReachability.stopListening()
     }
 }
 
@@ -73,12 +52,6 @@ extension AppDelegate {
             
             // Pass the OAuth callback through to the ArcGIS Runtime SDK's helper function.
             AGSApplicationDelegate.shared().application(app, open: url, options: options)
-            
-            // See if we were called back with confirmation that we're authorized.
-            if redirect.hasParameter(named: "code") {
-                // If we were authenticated, there should now be a shared credential to use. Let's try it.
-                appContext.signInCurrentPortalIfPossible()
-            }
         }
         return true
     }
