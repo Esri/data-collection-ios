@@ -82,7 +82,7 @@ class AppContext: NSObject {
     var workMode: WorkMode {
         didSet {
             workMode.storeDefaultWorkMode()
-            NotificationCenter.default.post(workModeNotification)
+            NotificationCenter.default.post(workModeDidChange)
         }
     }
     
@@ -96,13 +96,12 @@ class AppContext: NSObject {
         
     }
     
-    func setWorkModeOffline() {
+    func setWorkModeOffline() throws {
         switch offlineMapManager.status {
         case .none, .failed(_):
-            NotificationCenter.default.post(requestsDownloadOfflineMap)
+            throw OfflineMapManager.MissingOfflineMapError()
         case .loading(_):
             workMode = .offline(nil)
-            return
         case .loaded(_, let map):
             workMode = .offline(map)
         }
@@ -142,7 +141,7 @@ extension AppContext: PortalSessionManagerDelegate {
     
     func portalSessionManager(manager: PortalSessionManager, didChangeStatus status: PortalSessionManager.Status) {
 
-        NotificationCenter.default.post(portalNotification)
+        NotificationCenter.default.post(portalDidChange)
         
         guard case .online = workMode else { return }
         
@@ -164,11 +163,11 @@ extension AppContext: PortalSessionManagerDelegate {
 extension AppContext: OfflineMapManagerDelegate {
     
     func offlineMapManager(_ manager: OfflineMapManager, didUpdateLastSync date: Date?) {
-        NotificationCenter.default.post(offlineMapNotification)
+        NotificationCenter.default.post(offlineMapDidChange)
     }
     
     func offlineMapManager(_ manager: OfflineMapManager, didUpdate status: OfflineMapManager.Status) {
-        NotificationCenter.default.post(offlineMapNotification)
+        NotificationCenter.default.post(offlineMapDidChange)
         if case .offline = workMode, case let .loaded(_, managedOfflineMap) = status {
             workMode = .offline(managedOfflineMap)
         }
@@ -193,12 +192,11 @@ extension Notification.Name {
     static let portalDidChange = Notification.Name("portalDidChange")
     static let workModeDidChange = Notification.Name("workModeDidChange")
     static let offlineMapDidChange = Notification.Name("offlineMapDidChange")
-    static let requestsDownloadOfflineMap = Notification.Name("requestsDownloadOfflineMap")
 }
 
 extension AppContext {
     
-    var portalNotification: Notification {
+    var portalDidChange: Notification {
         Notification(
             name: .portalDidChange,
             object: self,
@@ -206,7 +204,7 @@ extension AppContext {
         )
     }
     
-    var workModeNotification: Notification {
+    var workModeDidChange: Notification {
         Notification(
             name: .workModeDidChange,
             object: self,
@@ -214,17 +212,9 @@ extension AppContext {
         )
     }
     
-    var offlineMapNotification: Notification {
+    var offlineMapDidChange: Notification {
         Notification(
             name: .offlineMapDidChange,
-            object: self,
-            userInfo: nil
-        )
-    }
-    
-    var requestsDownloadOfflineMap: Notification {
-        Notification(
-            name: .requestsDownloadOfflineMap,
             object: self,
             userInfo: nil
         )

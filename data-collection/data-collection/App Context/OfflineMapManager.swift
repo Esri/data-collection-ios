@@ -112,8 +112,12 @@ class OfflineMapManager {
     
     // MARK: Offline Map Job Manager
     
-    struct OfflineMapManagerError: LocalizedError {
-        let localizedDescription: String
+    struct MissingOfflineMapError: LocalizedError {
+        let localizedDescription = "Map is not downloaded."
+    }
+    
+    struct ExistingOfflineMapError: LocalizedError {
+        let localizedDescription = "A map is already downloaded."
     }
     
     private lazy var jobManager: OfflineMapJobManager = {
@@ -134,7 +138,7 @@ class OfflineMapManager {
     func stageOnDemandDownloadMapJob(_ map: AGSMap, extent: AGSGeometry, scale: Double) throws -> OfflineMapJobManager.Job {
         
         if !canOnDemandDownloadMap {
-            throw OfflineMapManagerError(localizedDescription: "A map is already downloaded.")
+            throw ExistingOfflineMapError()
         }
 
         try FileManager.default.prepareTemporaryOfflineMapDirectory(id: webMapItemID)
@@ -159,7 +163,7 @@ class OfflineMapManager {
     func stageSyncMapJob() throws -> OfflineMapJobManager.Job {
         
         guard case let .loaded(_, map) = status else {
-            throw OfflineMapManagerError(localizedDescription: "Map is not downloaded.")
+            throw MissingOfflineMapError()
         }
         
         return try jobManager.stageSyncMapJob(map)
@@ -170,11 +174,11 @@ class OfflineMapManager {
         switch job.type {
         case .GenerateOfflineMap:
             if !canOnDemandDownloadMap {
-                throw OfflineMapManagerError(localizedDescription: "A map is already downloaded.")
+                throw ExistingOfflineMapError()
             }
         case .OfflineMapSync:
             if !canSyncMap {
-                throw OfflineMapManagerError(localizedDescription: "Map is not downloaded.")
+                throw MissingOfflineMapError()
             }
         }
         
