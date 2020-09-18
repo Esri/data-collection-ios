@@ -12,19 +12,27 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import UIKit
 import ArcGIS
 
-extension URL {
-    /// The URL to the base portal.
-    /// - Note: A `fatalError` is thrown if a URL can't be built from the configuration.
-    static let basePortal: URL = {
-        guard let url = URL(string: "https://\(String.basePortalDomain)") else {
-            fatalError("App Configuration must contain a valid portal service url.")
-        }
-        return url
-    }()
+// MARK:- Configurable
+
+extension String {
+    /// The ID of your portal's [web map](https://runtime.maps.arcgis.com/home/item.html?id=16f1b8ba37b44dc3884afc8d5f454dd2).
+    static let webMapItemID = "16f1b8ba37b44dc3884afc8d5f454dd2"
     
+    /// The base portal's domain.
+    /// This is used to both build a `URL` to your portal as well as the base URL string used to check reachability.
+    /// - Note: exclude `http` or `https`, this is configured in `basePortalURL`.
+    static let basePortalDomain = "www.arcgis.com"
+}
+
+enum OAuth {
+    /// The App's oAuth redirect URL.
+    /// - The URL must match the path created in the **Current Redirect URIs** section of the **Authentication** tab within the [Dashboard of the ArcGIS for Developers site](https://developers.arcgis.com/applications).
+    static let redirectUrl: String = "data-collection://auth"
+}
+
+extension URL {
     /// The URL to the world geocode service.
     /// Swap out for another geocoder server if you prefer.
     /// - Note: A `fatalError` is thrown if a URL can't be built from the configuration.
@@ -36,24 +44,9 @@ extension URL {
     }()
 }
 
-extension String {
-    /// The ID of your portal's [web map](https://runtime.maps.arcgis.com/home/item.html?id=16f1b8ba37b44dc3884afc8d5f454dd2).
-    static let webMapItemID = "16f1b8ba37b44dc3884afc8d5f454dd2"
-    
-    /// The base portal's domain.
-    /// This is used to both build a `URL` to your portal as well as the base URL string used to check reachability.
-    /// - Note: exclude `http` or `https`, this is configured in `basePortalURL`.
-    static let basePortalDomain = "www.arcgis.com"
-    
-    /// Used by the shared `AGSAuthenticationManager` to auto synchronize cached credentials to the device's keychain.
-    static let keychainIdentifier: String = "\(Bundle.main.bundleIdentifier!).keychain"
-}
+// MARK:- Not Configurable, DO NOT TOUCH!
 
-enum OAuth {
-    /// The App's oAuth redirect URL.
-    /// - The URL must match the path created in the **Current Redirect URIs** section of the **Authentication** tab within the [Dashboard of the ArcGIS for Developers site](https://developers.arcgis.com/applications).
-    static let redirectUrl: String = "data-collection://auth"
-    
+extension OAuth {
     /// The App's full oAuth redirect URL as a `URLComponents` object.
     static let components: URLComponents = {
         guard let components = URLComponents(string: redirectUrl) else {
@@ -63,22 +56,27 @@ enum OAuth {
     }()
 }
 
+extension URL {
+    /// The URL to the base portal.
+    /// - Note: A `fatalError` is thrown if a URL can't be built from the configuration.
+    static let basePortal: URL = {
+        guard let url = URL(string: "https://\(String.basePortalDomain)") else {
+            fatalError("App Configuration must contain a valid portal service url.")
+        }
+        return url
+    }()
+}
 
 extension AGSPortal {
     
-    // MARK: Portal From Configuration
-
     static func configuredPortal(loginRequired: Bool) -> AGSPortal {
         AGSPortal(url: .basePortal, loginRequired: loginRequired)
     }
-    
-    // MARK: Configured Portal Item
-    
+        
     var configuredPortalItem: AGSPortalItem {
         AGSPortalItem(portal: self, itemID: .webMapItemID)
     }
 
-    // MARK: Configured Map
     var configuredMap: AGSMap {
         let map = AGSMap(item: configuredPortalItem)
         map.load(completion: nil)
