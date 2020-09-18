@@ -46,7 +46,7 @@ extension String {
     static let basePortalDomain = "www.arcgis.com"
     
     /// Used by the shared `AGSAuthenticationManager` to auto synchronize cached credentials to the device's keychain.
-    static let keychainIdentifier: String = "\(appBundleID).keychain"
+    static let keychainIdentifier: String = "\(Bundle.main.bundleIdentifier!).keychain"
 }
 
 enum OAuth {

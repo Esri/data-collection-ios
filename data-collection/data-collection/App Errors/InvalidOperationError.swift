@@ -17,6 +17,6 @@ import Foundation
 extension NSError {
     
     static var invalidOperation: NSError {
-        return NSError(domain: "\(appBundleID).AppError.InvalidOperation", code: AppErrorBaseCode.InvalidOperation.rawValue, userInfo: [NSLocalizedDescriptionKey: "The operation you are trying to perform is not permitted."])
+        return NSError(domain: "\(Bundle.main.bundleIdentifier!).AppError.InvalidOperation", code: AppErrorBaseCode.InvalidOperation.rawValue, userInfo: [NSLocalizedDescriptionKey: "The operation you are trying to perform is not permitted."])
     }
 }

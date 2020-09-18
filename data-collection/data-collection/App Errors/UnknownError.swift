@@ -17,6 +17,6 @@ import Foundation
 extension NSError {
     
     static var unknown: NSError {
-        return NSError(domain: "\(appBundleID).AppError.UnknownError", code: AppErrorBaseCode.UnknownError.rawValue, userInfo: [NSLocalizedDescriptionKey: "An unknown error occurred."])
+        return NSError(domain: "\(Bundle.main.bundleIdentifier!).AppError.UnknownError", code: AppErrorBaseCode.UnknownError.rawValue, userInfo: [NSLocalizedDescriptionKey: "An unknown error occurred."])
     }
 }
