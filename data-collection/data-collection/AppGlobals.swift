@@ -14,8 +14,6 @@
 
 import UIKit
 
-let appLocation = AppLocation()
-
 let appContext = AppContext()
 
 var appBundleID: String {
