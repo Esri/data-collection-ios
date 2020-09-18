@@ -43,6 +43,32 @@ class OfflineMapManager {
     
     private(set) var status: Status = .none {
         didSet {
+            
+            switch status {
+            case .none:
+                print(
+                    "[Offline Map Manager]",
+                    "\n\tNo offline map"
+                )
+            case .loading(let mmpk):
+                print(
+                    "[Offline Map Manager]",
+                    "\n\tLoading MMPK -", mmpk.item?.title ?? mmpk.fileURL.absoluteString
+                )
+                break
+            case .loaded(let mmpk, let map):
+                print(
+                    "[Offline Map Manager]",
+                    "\n\tLoaded MMPK -", mmpk.item?.title ?? mmpk.fileURL.absoluteString,
+                    "\n\tLoaded Map -", map.item?.title ?? "(missing title)"
+                )
+            case .failed(let error):
+                print(
+                    "[Offline Map Manager]",
+                    "\n\tFailed -", error.localizedDescription
+                )
+            }
+            
             delegate?.offlineMapManager(self, didUpdate: status)
         }
     }
@@ -96,7 +122,6 @@ class OfflineMapManager {
             guard let self = self else { return }
             
             if let error = error {
-                print("[Error: Mobile Map Package]", error.localizedDescription)
                 self.status = .failed(error)
             }
             else {

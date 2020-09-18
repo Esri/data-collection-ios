@@ -35,7 +35,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         AppDelegate.setAppApperanceWithAppColors()
         
         // Attempt to sign in from previously stored credentials.
-        appContext.portalSession.loadSilentCredentialRequiredPortalSession()
+        appContext.portalSession.silentlyLoadCredentialRequiredPortalSession()
         
         // Load offline map, if one exists.
         appContext.offlineMapManager.loadOfflineMobileMapPackage()
@@ -59,7 +59,7 @@ extension AppDelegate {
             // Pass the OAuth callback through to the ArcGIS Runtime SDK's helper function.
             AGSApplicationDelegate.shared().application(app, open: url, options: options)
             
-            appContext.portalSession.loadSilentCredentialRequiredPortalSession()
+            appContext.portalSession.silentlyLoadCredentialRequiredPortalSession()
         }
         return true
     }
