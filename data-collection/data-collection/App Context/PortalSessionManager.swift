@@ -71,17 +71,15 @@ class PortalSessionManager {
     
     private static let portalSessionURLKey = "\(Bundle.main.bundleIdentifier!).portalSessionManager.urlKey"
     
-    func restorePreviousPortalSessionOrFallbackToDefault() {
+    func loadSilentCredentialRequiredPortalSession() {
         
-        guard case Status.none = status else { return }
+        if case Status.loading = status { return }
         
         guard let url = UserDefaults.standard.url(forKey: Self.portalSessionURLKey) else {
             loadDefaultPortalSession()
             return
         }
         
-//        enableAutoSyncToKeychain()
-
         let silentPortal = AGSPortal(url: url, loginRequired: true)
         
         status = .loading(silentPortal)
@@ -119,9 +117,7 @@ class PortalSessionManager {
     func loadCredentialRequiredPortalSession() {
         
         if case Status.loading = status { return }
-        
-//        enableAutoSyncToKeychain()
-        
+                
         let portal = configuredPortal(loginRequired: true)
         
         status = .loading(portal)
@@ -147,7 +143,7 @@ class PortalSessionManager {
         
         let portal = configuredPortal(loginRequired: false)
         
-        revokeAndDisableAutoSyncToKeychain {
+        revokeCredentials {
             
             portal.load { [weak self] (error) in
                 guard let self = self else { return }
@@ -172,7 +168,7 @@ class PortalSessionManager {
 
         status = .loading(portal)
         
-        revokeAndDisableAutoSyncToKeychain {
+        revokeCredentials {
             
             portal.load { [weak self] (error) in
                 guard let self = self else { return }
@@ -188,23 +184,8 @@ class PortalSessionManager {
     }
         
     // MARK:- Credential
-    
-    private static let autoSyncToKeychainID = "\(Bundle.main.bundleIdentifier!).autoSyncToKeychain"
-    
-    func enableAutoSyncToKeychain() {
-        AGSAuthenticationManager.shared()
-            .credentialCache
-            .enableAutoSyncToKeychain(
-                withIdentifier: Self.autoSyncToKeychainID,
-                accessGroup: nil,
-                acrossDevices: false
-        )
-    }
-    
-    private func revokeAndDisableAutoSyncToKeychain(_ completion: @escaping ()->Void) {
-//        AGSAuthenticationManager.shared()
-//            .credentialCache
-//            .disableAutoSyncToKeychain()
+        
+    private func revokeCredentials(_ completion: @escaping ()->Void) {
         AGSAuthenticationManager.shared()
             .credentialCache
             .removeAndRevokeAllCredentials { (_) in
