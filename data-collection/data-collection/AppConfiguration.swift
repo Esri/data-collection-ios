@@ -24,6 +24,9 @@ extension String {
     /// This is used to both build a `URL` to your portal as well as the base URL string used to check reachability.
     /// - Note: exclude `http` or `https`, this is configured in `basePortalURL`.
     static let basePortalDomain = "www.arcgis.com"
+    
+    /// The name of your side-loaded offline Locator.
+    static let offlineLocator = "AddressLocator"
 }
 
 enum OAuth {

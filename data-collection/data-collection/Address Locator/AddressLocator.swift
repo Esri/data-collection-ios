@@ -93,5 +93,4 @@ class AddressLocator {
 private extension String {
     static let address = "Address"
     static let matchAddress = "Match_addr"
-    static let offlineLocator = "AddressLocator"
 }
