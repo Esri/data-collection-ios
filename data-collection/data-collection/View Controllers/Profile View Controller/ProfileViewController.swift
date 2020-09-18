@@ -68,19 +68,12 @@ class ProfileViewController: UITableViewController {
         
         NotificationCenter.default.addObserver(
             self,
-            selector: #selector(adjustForHasOfflineMap),
+            selector: #selector(adjustForOfflineMap),
             name: .offlineMapDidChange,
             object: nil
         )
         
-        adjustForHasOfflineMap()
-        
-        NotificationCenter.default.addObserver(
-            self,
-            selector: #selector(userRequestsTakeMapOffline),
-            name: .requestsDownloadOfflineMap,
-            object: nil
-        )
+        adjustForOfflineMap()
     }
     
     // MARK:- Work Mode
@@ -107,11 +100,18 @@ class ProfileViewController: UITableViewController {
     
     private func workOffline() {
         if case .offline(_) = appContext.workMode { return }
-        appContext.setWorkModeOffline()
+        do {
+            try appContext.setWorkModeOffline()
+        }
+        catch {
+            if error is OfflineMapManager.MissingOfflineMapError {
+                userRequestsTakeMapOffline()
+            }
+        }
     }
     
     @objc
-    func adjustForHasOfflineMap() {
+    func adjustForOfflineMap() {
         let hasOfflineMap = appContext.offlineMapManager.hasMap
         workOfflineCell.subtitleLabel.isHidden = hasOfflineMap
         if hasOfflineMap {
