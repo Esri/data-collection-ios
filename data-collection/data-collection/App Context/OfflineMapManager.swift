@@ -55,7 +55,6 @@ class OfflineMapManager {
                     "[Offline Map Manager]",
                     "\n\tLoading MMPK -", mmpk.fileURL.absoluteString
                 )
-                break
             case .loaded(let mmpk, let map):
                 print(
                     "[Offline Map Manager]",
