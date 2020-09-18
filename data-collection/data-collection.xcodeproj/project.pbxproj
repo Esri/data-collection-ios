@@ -127,7 +127,6 @@
 		94B375C1207E8D5600691F2A /* AppConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94B3759F207E8D5600691F2A /* AppConfiguration.swift */; };
 		94B375C4207E8D5600691F2A /* AppErrors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94B375A2207E8D5600691F2A /* AppErrors.swift */; };
 		94B375C9207E8D5600691F2A /* AppContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94B375A8207E8D5600691F2A /* AppContext.swift */; };
-		94B375CA207E8D5600691F2A /* AppGlobals.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94B375A9207E8D5600691F2A /* AppGlobals.swift */; };
 		94B375D2207E8D5600691F2A /* EphemeralCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94B375BB207E8D5600691F2A /* EphemeralCache.swift */; };
 		94B375D6207E8DD600691F2A /* AddressLocator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94B375D4207E8DD600691F2A /* AddressLocator.swift */; };
 		94B375F2207E8E4800691F2A /* AGSLoadStatus+CustomStringConvertible.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94B375DB207E8E4800691F2A /* AGSLoadStatus+CustomStringConvertible.swift */; };
@@ -374,7 +373,6 @@
 		94B3759F207E8D5600691F2A /* AppConfiguration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppConfiguration.swift; sourceTree = "<group>"; };
 		94B375A2207E8D5600691F2A /* AppErrors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppErrors.swift; sourceTree = "<group>"; };
 		94B375A8207E8D5600691F2A /* AppContext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppContext.swift; sourceTree = "<group>"; };
-		94B375A9207E8D5600691F2A /* AppGlobals.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppGlobals.swift; sourceTree = "<group>"; };
 		94B375B4207E8D5600691F2A /* data-collection-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "data-collection-Bridging-Header.h"; sourceTree = "<group>"; };
 		94B375BB207E8D5600691F2A /* EphemeralCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EphemeralCache.swift; sourceTree = "<group>"; };
 		94B375D4207E8DD600691F2A /* AddressLocator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddressLocator.swift; sourceTree = "<group>"; };
@@ -1098,7 +1096,6 @@
 			isa = PBXGroup;
 			children = (
 				94B3760B207EAE4600691F2A /* AppDelegate.swift */,
-				94B375A9207E8D5600691F2A /* AppGlobals.swift */,
 				94B3759F207E8D5600691F2A /* AppConfiguration.swift */,
 				944D0CBF24E1DD0F00EE49CB /* AppSecrets.swift.masque */,
 				94DDEA7B215426D300DA533C /* AppRules.swift */,
@@ -1507,7 +1504,6 @@
 				948D85282151C22A00E2048F /* UIViewController+Root.swift in Sources */,
 				948794382200CEE0007BC15E /* RichPopupViewController+UIImagePickerControllerDelegate.swift in Sources */,
 				945CEE7620DDC2AC00CD3E0D /* SVProgressAnimatedView.m in Sources */,
-				94B375CA207E8D5600691F2A /* AppGlobals.swift in Sources */,
 				946569142088023600599E55 /* AGSPopupManager+Formatting.swift in Sources */,
 				948D84F1214C899600E2048F /* AppContext+VisibleArea.swift in Sources */,
 				9451EC5220D0705700792FFC /* CustomBehavior_IdentifyNeighborhood.swift in Sources */,
