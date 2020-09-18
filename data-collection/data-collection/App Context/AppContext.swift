@@ -169,14 +169,20 @@ extension AppContext: OfflineMapManagerDelegate {
     
     func offlineMapManager(_ manager: OfflineMapManager, didUpdate status: OfflineMapManager.Status) {
         NotificationCenter.default.post(offlineMapNotification)
-        if case let .offline(currentOfflineMap) = workMode, case let .loaded(_, managedOfflineMap) = status, currentOfflineMap == nil {
+        if case .offline = workMode, case let .loaded(_, managedOfflineMap) = status {
             workMode = .offline(managedOfflineMap)
         }
     }
     
     func offlineMapManager(_ manager: OfflineMapManager, didFinishJob result: Result<JobResult, Error>) {
-        if case let .success(jobResult) = result, let offlineJobResult = jobResult as? AGSGenerateOfflineMapResult {
-            workMode = .offline(offlineJobResult.offlineMap)
+        if case let .success(jobResult) = result, jobResult is AGSGenerateOfflineMapResult {
+            workMode = .offline(nil)
+            offlineMapManager.loadOfflineMobileMapPackage()
+        }
+        else if case let .success(jobResult) = result, let syncJobResult = jobResult as? AGSOfflineMapSyncResult {
+            if syncJobResult.isMobileMapPackageReopenRequired {
+                offlineMapManager.loadOfflineMobileMapPackage()
+            }
         }
     }
 }
