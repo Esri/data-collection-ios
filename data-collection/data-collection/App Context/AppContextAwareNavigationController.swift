@@ -18,17 +18,17 @@ import Foundation
 /// and adjusts the bar's tint color accordingly.
 ///
 class AppContextAwareNavigationController: UINavigationController {
-        
+
     override init(navigationBarClass: AnyClass?, toolbarClass: AnyClass?) {
         super.init(navigationBarClass: navigationBarClass, toolbarClass: toolbarClass)
         sharedInit()
     }
-    
+
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         sharedInit()
     }
-    
+
     func sharedInit() {
         NotificationCenter.default.addObserver(
             self,
@@ -36,13 +36,13 @@ class AppContextAwareNavigationController: UINavigationController {
             name: .workModeDidChange,
             object: nil
         )
-        
+
         adjustNavigationBarTintForWorkMode()
     }
-    
+
     @objc
     func adjustNavigationBarTintForWorkMode() {
-        
+
         let navBarAppearance = UINavigationBarAppearance()
         navBarAppearance.configureWithOpaqueBackground()
         navBarAppearance.titleTextAttributes = [.foregroundColor: UIColor.contrasting]
@@ -56,7 +56,7 @@ class AppContextAwareNavigationController: UINavigationController {
         navigationBar.standardAppearance = navBarAppearance
         navigationBar.scrollEdgeAppearance = navBarAppearance
         navigationBar.compactAppearance = navBarAppearance
-        
+
         // Hiding then un-hiding the navigation bar appears to force a redraw.
         // This fixes an issue with iOS 13 where the background color doesn't update.
         isNavigationBarHidden = true

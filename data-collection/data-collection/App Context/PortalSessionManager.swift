@@ -52,6 +52,39 @@ class PortalSessionManager {
     
     var status: Status = .none {
         didSet {
+            
+            switch status {
+            case .none:
+                print(
+                    "[Portal Session Manager]",
+                    "\n\tNo portal"
+                )
+                break
+            case .loading(let portal):
+                print(
+                    "[Portal Session Manager]",
+                    "\n\tLoading Portal -", portal.url?.absoluteString ?? "(missing)"
+                )
+            case .loaded(let portal):
+                print(
+                    "[Portal Session Manager]",
+                    "\n\tLoaded Portal -", portal.url?.absoluteString ?? "(missing)",
+                    "\n\tUser -", portal.user?.username ?? "(no user)"
+                )
+            case .fallback(let portal, let error):
+                print(
+                    "[Portal Session Manager]",
+                    "\n\tFallback -", error.localizedDescription,
+                    "\n\tPortal -", portal.url?.absoluteString ?? "(missing)",
+                    "\n\tUser -", portal.user?.username ?? "(no user)"
+                )
+            case .failed(let error):
+                print(
+                    "[Portal Session Manager]",
+                    "\n\tFailed -", error.localizedDescription
+                )
+            }
+            
             if let portal = portal {
                 UserDefaults.standard.set(portal.url, forKey: Self.portalSessionURLKey)
             }
@@ -71,7 +104,7 @@ class PortalSessionManager {
     
     private static let portalSessionURLKey = "\(Bundle.main.bundleIdentifier!).portalSessionManager.urlKey"
     
-    func loadSilentCredentialRequiredPortalSession() {
+    func silentlyLoadCredentialRequiredPortalSession() {
         
         if case Status.loading = status { return }
         
@@ -102,7 +135,10 @@ class PortalSessionManager {
             silentPortal.requestConfiguration = originalRequestConfiguration
             
             if let error = error {
-                print("[Portal Session Manager] Silent Portal -", error.localizedDescription)
+                print(
+                    "[Portal Session Manager]",
+                    "\n\tSilent Portal Failed -", error.localizedDescription
+                )
                 self.status = .none
                 self.loadDefaultPortalSession()
             }
@@ -126,7 +162,6 @@ class PortalSessionManager {
             guard let self = self else { return }
             
             if let error = error {
-                print("[Portal Session Manager]", error.localizedDescription)
                 self.fallbackToDefaultPortalSession(previousError: error)
             }
             else {
@@ -148,7 +183,6 @@ class PortalSessionManager {
             portal.load { [weak self] (error) in
                 guard let self = self else { return }
                 if let error = error {
-                    print("[Portal Session Manager]", error.localizedDescription)
                     self.status = .failed(error)
                 }
                 else {
@@ -173,7 +207,6 @@ class PortalSessionManager {
             portal.load { [weak self] (error) in
                 guard let self = self else { return }
                 if let error = error {
-                    print("[Portal Session Manager]", error.localizedDescription)
                     self.status = .failed(error)
                 }
                 else {
