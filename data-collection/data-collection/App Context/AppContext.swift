@@ -15,6 +15,8 @@
 import Foundation
 import ArcGIS
 
+let appContext = AppContext()
+
 /// The `AppContext` maintains the app's current state.
 ///
 /// Primarily, the `AppContext` is responsible for:
