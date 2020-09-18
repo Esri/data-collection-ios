@@ -24,10 +24,6 @@ import ArcGIS
 
 class AppContext: NSObject {
     
-    // MARK: Portal Session Manager
-    
-    let portalSession = PortalSessionManager(portal: .basePortal)
-    
     override init() {
         let defaultWorkMode: WorkMode = .retrieveDefaultWorkMode()
         switch defaultWorkMode {
@@ -38,6 +34,8 @@ class AppContext: NSObject {
         }
         
         super.init()
+        
+        locationManager.delegate = self
         
         portalSession.delegate = self
         portalSession.enableAutoSyncToKeychain()
@@ -50,6 +48,22 @@ class AppContext: NSObject {
     // MARK: Locator
     
     let addressLocator = AddressLocator()
+    
+    // MARK: Location Manger
+    
+    private let locationManager = CLLocationManager()
+    
+    var locationAuthorized: Bool {
+        let status = CLLocationManager.authorizationStatus()
+        return
+            status == .authorizedWhenInUse ||
+            status == .authorizedAlways ||
+            status == .notDetermined
+    }
+    
+    // MARK: Portal Session Manager
+    
+    let portalSession = PortalSessionManager(portal: .basePortal)
     
     // MARK: Portal Session
     
@@ -135,6 +149,14 @@ private extension String {
     static let userDefaultsWorkModeKey = "WorkMode.\(String.webMapItemID)"
 }
 
+// MARK:- Location Manager Delegate
+
+extension AppContext: CLLocationManagerDelegate {
+    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
+        NotificationCenter.default.post(locationAuthorizationNotification)
+    }
+}
+
 // MARK:- Portal Session Manager Delegate
 
 extension AppContext: PortalSessionManagerDelegate {
@@ -192,6 +214,7 @@ extension Notification.Name {
     static let portalDidChange = Notification.Name("portalDidChange")
     static let workModeDidChange = Notification.Name("workModeDidChange")
     static let offlineMapDidChange = Notification.Name("offlineMapDidChange")
+    static let locationAuthorizationDidChange = Notification.Name("locationAuthorizationDidChange")
 }
 
 extension AppContext {
@@ -215,6 +238,14 @@ extension AppContext {
     var offlineMapDidChange: Notification {
         Notification(
             name: .offlineMapDidChange,
+            object: self,
+            userInfo: nil
+        )
+    }
+    
+    var locationAuthorizationNotification: Notification {
+        Notification(
+            name: .locationAuthorizationDidChange,
             object: self,
             userInfo: nil
         )
@@ -261,6 +292,26 @@ extension AppContext {
             else {
                 return .none
             }
+        }
+    }
+}
+
+extension CLAuthorizationStatus: CustomStringConvertible {
+    
+    public var description: String {
+        switch self {
+        case .authorizedAlways:
+            return "Authorized Always"
+        case .authorizedWhenInUse:
+            return "Authorized When In-Use"
+        case .denied:
+            return "Denied"
+        case .notDetermined:
+            return "Not Determined"
+        case .restricted:
+            return "Restricted"
+        @unknown default:
+            fatalError("Unsupported case \(self).")
         }
     }
 }
