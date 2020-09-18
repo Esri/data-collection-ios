@@ -63,14 +63,26 @@ enum OAuth {
     }()
 }
 
-// MARK: Portal From Configuration
 
 extension AGSPortal {
     
-    /// Build an `AGSPortal` based on the app's configuration.
-    /// - Parameter loginRequired: `false` if you intend to access the portal anonymously. `true` if you want to use a credential (the ArcGIS Runtime SDK will present a modal login web view if needed).
-    /// - Returns: A new configured `AGSPortal`.
+    // MARK: Portal From Configuration
+
     static func configuredPortal(loginRequired: Bool) -> AGSPortal {
-        return AGSPortal(url: .basePortal, loginRequired: loginRequired)
+        AGSPortal(url: .basePortal, loginRequired: loginRequired)
+    }
+    
+    // MARK: Configured Portal Item
+    
+    var configuredPortalItem: AGSPortalItem {
+        AGSPortalItem(portal: self, itemID: .webMapItemID)
+    }
+
+    // MARK: Configured Map
+    var configuredMap: AGSMap {
+        let map = AGSMap(item: configuredPortalItem)
+        map.load(completion: nil)
+        return map
     }
 }
+

@@ -48,13 +48,23 @@ class AppContextAwareNavigationController: UINavigationController {
             navBarAppearance.configureWithOpaqueBackground()
             navBarAppearance.titleTextAttributes = [.foregroundColor: UIColor.contrasting]
             navBarAppearance.largeTitleTextAttributes = [.foregroundColor: UIColor.contrasting]
-            navBarAppearance.backgroundColor = appContext.workMode == .online ? .primary : .offline
+            switch appContext.workMode {
+            case .none, .online(_):
+                navBarAppearance.backgroundColor = .primary
+            case .offline(_):
+                navBarAppearance.backgroundColor = .offline
+            }
             navigationBar.standardAppearance = navBarAppearance
             navigationBar.scrollEdgeAppearance = navBarAppearance
             navigationBar.compactAppearance = navBarAppearance
         }
         else {
-            navigationBar.barTintColor = appContext.workMode == .online ? .primary : .offline
+            switch appContext.workMode {
+            case .none, .online(_):
+                navigationBar.barTintColor = .primary
+            case .offline(_):
+                navigationBar.barTintColor = .offline
+            }
         }
         
         // Hiding then un-hiding the navigation bar appears to force a redraw.

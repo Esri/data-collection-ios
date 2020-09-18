@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="wi2-LE-L7E">
-    <device id="retina5_9" orientation="portrait">
-        <adaptation id="fullscreen"/>
-    </device>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097.3" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="wi2-LE-L7E">
+    <device id="retina5_9" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14283.14"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -23,6 +22,17 @@
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="4hc-Ox-lNT">
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                    <subviews>
+                                        <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="i9H-gA-crb">
+                                            <rect key="frame" x="318" y="52" width="41" height="33"/>
+                                            <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                            <color key="tintColor" name="primary"/>
+                                            <state key="normal" title="Done"/>
+                                            <connections>
+                                                <action selector="userDidTapDone:" destination="wi2-LE-L7E" eventType="touchUpInside" id="qwS-Tg-R34"/>
+                                            </connections>
+                                        </button>
+                                    </subviews>
                                 </view>
                                 <color key="tintColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <blurEffect style="dark"/>
@@ -30,7 +40,7 @@
                             <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="cbB-aM-87m">
                                 <rect key="frame" x="16" y="405" width="343" height="2"/>
                             </progressView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Downloading Offline Map" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cgZ-dL-zfG">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Starting job" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cgZ-dL-zfG">
                                 <rect key="frame" x="16" y="345" width="343" height="44"/>
                                 <constraints>
                                     <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="44" id="V33-yu-5gB"/>
@@ -60,11 +70,13 @@
                             <constraint firstItem="cbB-aM-87m" firstAttribute="trailing" secondItem="Yl1-bm-N5h" secondAttribute="trailingMargin" id="MAM-Re-h7p"/>
                             <constraint firstItem="cbB-aM-87m" firstAttribute="leading" secondItem="Yl1-bm-N5h" secondAttribute="leadingMargin" id="NVo-nw-1GH"/>
                             <constraint firstItem="8HX-1A-MyG" firstAttribute="top" secondItem="cbB-aM-87m" secondAttribute="bottom" constant="48" id="QDI-bR-nuv"/>
+                            <constraint firstItem="Xfs-RY-Yc2" firstAttribute="trailing" secondItem="i9H-gA-crb" secondAttribute="trailing" constant="16" id="SwD-wp-KLp"/>
                             <constraint firstItem="cbB-aM-87m" firstAttribute="top" secondItem="cgZ-dL-zfG" secondAttribute="bottom" constant="16" id="Vci-XF-wmn"/>
                             <constraint firstItem="Xfs-RY-Yc2" firstAttribute="trailing" secondItem="cgZ-dL-zfG" secondAttribute="trailing" constant="16" id="Wtl-FE-SyD"/>
                             <constraint firstItem="Aru-y8-8m0" firstAttribute="top" secondItem="Yl1-bm-N5h" secondAttribute="top" id="a2v-VY-xFG"/>
                             <constraint firstItem="Aru-y8-8m0" firstAttribute="leading" secondItem="Yl1-bm-N5h" secondAttribute="leading" id="ifx-jM-pNN"/>
                             <constraint firstItem="Aru-y8-8m0" firstAttribute="trailing" secondItem="Yl1-bm-N5h" secondAttribute="trailing" id="n45-Hf-nRL"/>
+                            <constraint firstItem="i9H-gA-crb" firstAttribute="top" secondItem="Xfs-RY-Yc2" secondAttribute="top" constant="8" id="wlR-nb-Gzn"/>
                             <constraint firstItem="cbB-aM-87m" firstAttribute="centerY" secondItem="Yl1-bm-N5h" secondAttribute="centerY" id="xCF-qz-vFw"/>
                             <constraint firstAttribute="bottom" secondItem="Aru-y8-8m0" secondAttribute="bottom" id="yqD-4m-q6I"/>
                         </constraints>
@@ -72,6 +84,7 @@
                     </view>
                     <connections>
                         <outlet property="cancelButton" destination="8HX-1A-MyG" id="OG9-aS-DY3"/>
+                        <outlet property="doneButton" destination="i9H-gA-crb" id="mRF-uK-axK"/>
                         <outlet property="jobStatusLabel" destination="cgZ-dL-zfG" id="JTZ-Hv-gSt"/>
                         <outlet property="jobStatusProgressView" destination="cbB-aM-87m" id="mDv-oX-63c"/>
                     </connections>
@@ -81,4 +94,9 @@
             <point key="canvasLocation" x="1781" y="-480"/>
         </scene>
     </scenes>
+    <resources>
+        <namedColor name="primary">
+            <color red="0.37999999523162842" green="0.60000002384185791" blue="0.23999999463558197" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+    </resources>
 </document>

@@ -26,7 +26,7 @@ class AddressLocator {
     
     private var appContextAwareLocator: AGSLocatorTask {
         // We want to use the online locator if the work mode is online and the app has reachability.
-        if appContext.workMode == .online && appReachability.isReachable {
+        if case .online = appContext.workMode {
             return onlineLocator
         }
         // Otherwise, we'll use the offline locator.
