@@ -2,16 +2,17 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="ezK-xJ-cea">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
+        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Floating Panel Header View Controller-->
+        <!--Floating Panel Header Controller-->
         <scene sceneID="pp1-iL-1AH">
             <objects>
-                <viewController storyboardIdentifier="FloatingPanelHeaderViewController" id="17n-kR-tlS" customClass="FloatingPanelHeaderViewController" customModule="FloatingPanelTesting" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="FloatingPanelHeaderController" id="17n-kR-tlS" customClass="FloatingPanelHeaderController" customModule="FloatingPanelTesting" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" horizontalHuggingPriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="0la-Po-rJ4">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <subviews>
@@ -112,7 +113,7 @@
                                 <color key="tintColor" name="primary"/>
                             </stackView>
                         </subviews>
-                        <color key="backgroundColor" systemColor="systemYellowColor" red="1" green="0.80000000000000004" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
                             <constraint firstItem="AwH-UW-fqK" firstAttribute="bottom" secondItem="0la-Po-rJ4" secondAttribute="bottom" id="18B-n4-E4a"/>
                             <constraint firstItem="AwH-UW-fqK" firstAttribute="top" secondItem="0la-Po-rJ4" secondAttribute="top" id="9oZ-HQ-yia"/>
@@ -136,7 +137,7 @@
         <!--Floating Panel View Controller-->
         <scene sceneID="un2-7U-vMy">
             <objects>
-                <viewController id="ezK-xJ-cea" userLabel="Floating Panel View Controller" customClass="FloatingPanelViewController" customModule="FloatingPanelTesting" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="ezK-xJ-cea" userLabel="Floating Panel View Controller" customClass="FloatingPanelController" customModule="FloatingPanelTesting" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" clipsSubviews="YES" contentMode="scaleToFill" id="Dcy-Mc-44B">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
