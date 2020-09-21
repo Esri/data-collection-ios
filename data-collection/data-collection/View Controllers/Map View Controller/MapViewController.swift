@@ -58,12 +58,6 @@ class MapViewController: UIViewController {
     
     var extrasNavigationController: UINavigationController?
     var layerContentsViewController: LayerContentsViewController?
-    lazy var bookmarksViewController: BookmarksViewController = {
-        let bm = mapView.map?.bookmarks as! [AGSBookmark]
-        let bmvc = BookmarksViewController(bookmarks: bm)
-        return bmvc//BookmarksViewController(geoView: mapView)
-    }()
-    var floatingPanelViewController: FloatingPanelViewController?
 
     var mapViewMode: MapViewMode = .defaultView {
         didSet {

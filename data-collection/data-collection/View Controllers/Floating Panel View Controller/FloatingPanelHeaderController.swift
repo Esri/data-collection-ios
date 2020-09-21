@@ -12,33 +12,38 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-// TODO: what about creating FloatingPanelViewController automatically when added to a FloatingPanel?
-// Can you access the navigationItem of the ViewController *before* it's added to a UINavigationController?
-
 import UIKit
 
-public class FloatingPanelHeaderViewController: UIViewController {
+/// The `UIViewController` representing the header of a `FloatingPanelController`.
+internal class FloatingPanelHeaderController: UIViewController {
     @IBOutlet private var closeButton: UIButton!
     @IBOutlet private var titleLabel: UILabel!
     @IBOutlet private var subtitleLabel: UILabel!
     @IBOutlet private var imageView: UIImageView!
     @IBOutlet private var subtitleSpacerView: UIView!
-
+    
+    /// Observers for `FloatingPanelItem` properties that are
+    /// displayed by the `FloatingPanelHeaderController`.
     private var closeButtonObservation: NSKeyValueObservation?
     private var titleLabelObservation: NSKeyValueObservation?
     private var subtitleLabelObservation: NSKeyValueObservation?
     private var imageViewObservation: NSKeyValueObservation?
     
-    public var floatingPanelItem: FloatingPanelItem? {
+    var floatingPanelItem: FloatingPanelItem? {
         didSet {
             guard let fpItem = floatingPanelItem else { return }
+            
+            // Ensure the view is loaded.
             loadViewIfNeeded()
+            
+            // Set the applicable `FloatingPanelItem` properties on our controls.
             titleLabel.text = fpItem.title
             subtitleLabel.text = fpItem.subtitle
             imageView.image = fpItem.image
             setImageViewHidden(imageView.image == nil)
             closeButton.isHidden = fpItem.closeButtonHidden
             
+            // Set up the `FloatingPanelItem` observers.
             closeButtonObservation = fpItem.observe(\.closeButtonHidden, options: [.new]) { [weak self] (_, change) in
                 DispatchQueue.main.async {
                     self?.closeButton.isHidden = fpItem.closeButtonHidden
@@ -66,24 +71,25 @@ public class FloatingPanelHeaderViewController: UIViewController {
         }
     }
     
-    public var closeButtonHandler: (() -> Void)?
+    /// The handler called when the user taps the button.
+    var closeButtonHandler: (() -> Void)?
     
-    // use this static method to instantiate the view controller from our storyboard
-    static func instantiateFloatingPanelHeaderViewController() -> FloatingPanelHeaderViewController {
-        // Create the FloatingPanelViewController.
-        // Create and configure the view controller.
-        // Get the bundle and then the storyboard for the LayerContentsTableViewController.
-        let bundle = Bundle(for: FloatingPanelHeaderViewController.self)
-        let storyboard = UIStoryboard(name: "FloatingPanelViewController", bundle: bundle)
-        // Create the layerContentsTableViewController from the storyboard.
-        let floatingPanelHeaderVC = storyboard.instantiateViewController(withIdentifier: "FloatingPanelHeaderViewController") as? FloatingPanelHeaderViewController ?? FloatingPanelHeaderViewController()
-        return floatingPanelHeaderVC
+    /// Instantiates a `FloatingPanelHeaderController` from the storyboard.
+    /// - Returns: A `FloatingPanelHeaderController`.
+    static func instantiate() -> FloatingPanelHeaderController {
+        // Get the storyboard for the FloatingPanelHeaderController.
+        let storyboard = UIStoryboard(name: "FloatingPanelController", bundle: .main)
+
+        // Instantiate the FloatingPanelHeaderController.
+        return storyboard.instantiateViewController(withIdentifier: "FloatingPanelHeaderController") as! FloatingPanelHeaderController
     }
     
     @IBAction func closeButtonAction(_ sender: Any) {
         closeButtonHandler?()
     }
     
+    /// Shows or hides the imageView and associated subtitle spacer.
+    /// - Parameter isHidden: Denotes whether the imageView should be hidden.
     private func setImageViewHidden(_ isHidden: Bool) {
         imageView.isHidden = isHidden
         subtitleSpacerView.isHidden = isHidden
