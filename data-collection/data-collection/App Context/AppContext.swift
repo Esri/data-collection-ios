@@ -92,7 +92,7 @@ class AppContext: NSObject {
     /// This property is initialized with the work mode from the user's last session.
     ///
     /// - Note: The app can have an offline map even when working online.
-    var workMode: WorkMode {
+    private(set) var workMode: WorkMode {
         didSet {
             workMode.storeDefaultWorkMode()
             NotificationCenter.default.post(workModeDidChange)
