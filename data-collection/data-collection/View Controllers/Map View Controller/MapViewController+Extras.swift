@@ -78,9 +78,9 @@ extension MapViewController {
             layerContentsViewController = layerContentsVC
         }
 
-        // Create the floating panel view controller if it's not already created.
-        let floatingPanelController = presentFloatingPanel(layerContentsVC)
-        floatingPanelController.delegate = self
+        // Show the layer contents in a floating panel.
+        floatingPanelController = presentFloatingPanel(layerContentsVC)
+        floatingPanelController?.delegate = self
     }
     
     func showBookmarks(_ barButtonItem: UIBarButtonItem?) {
@@ -88,8 +88,9 @@ extension MapViewController {
         let bookmarksVC = BookmarksViewController(geoView: mapView)
         bookmarksVC.delegate = self
         
-        let floatingPanelController = presentFloatingPanel(bookmarksVC)
-        floatingPanelController.delegate = self
+        // Dismiss the existing floating panel and show the layer contents.
+        floatingPanelController = presentFloatingPanel(bookmarksVC)
+        floatingPanelController?.delegate = self
     }
 
     @objc
@@ -114,9 +115,6 @@ extension MapViewController: FloatingPanelControllerDelegate {
             floatingPanelController.view.alpha = 0.0
         }) { [weak self] (_) in
             self?.dismissFloatingPanel(floatingPanelController)
-
-            // Make sure to reset alpha so we can display it again.
-            floatingPanelController.view.alpha = 1.0
         }
     }
 }
