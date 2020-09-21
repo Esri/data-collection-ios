@@ -78,52 +78,18 @@ extension MapViewController {
             layerContentsViewController = layerContentsVC
         }
 
-        // Get the bundle and then the storyboard for the FloatingPanelViewController.
-        let floatingPanelVC: FloatingPanelViewController
-        if let existingFloatingPanelVC = floatingPanelViewController {
-            floatingPanelVC = existingFloatingPanelVC
-        }
-        else {
-            let bundle = Bundle(for: FloatingPanelViewController.self)
-            let storyboard = UIStoryboard(name: "FloatingPanelViewController", bundle: bundle)
-            
-            // Create the floatingPanelViewController from the storyboard.
-            floatingPanelVC = storyboard.instantiateInitialViewController() as? FloatingPanelViewController ?? FloatingPanelViewController()
-            floatingPanelViewController = floatingPanelVC
-        }
-        
-        // Create and configure the view controller.
-        floatingPanelVC.initialViewController = layerContentsVC
-        floatingPanelVC.delegate = self
-        
-        addChild(floatingPanelVC)
-        view.addSubview(floatingPanelVC.view)
-        floatingPanelVC.didMove(toParent: self)
+        // Create the floating panel view controller if it's not already created.
+        let floatingPanelController = presentFloatingPanel(layerContentsVC)
+        floatingPanelController.delegate = self
     }
     
     func showBookmarks(_ barButtonItem: UIBarButtonItem?) {
-        // Get the bundle and then the storyboard for the FloatingPanelViewController.
-        let floatingPanelVC: FloatingPanelViewController
-        if let existingFloatingPanelVC = floatingPanelViewController {
-            floatingPanelVC = existingFloatingPanelVC
-        }
-        else {
-            let bundle = Bundle(for: FloatingPanelViewController.self)
-            let storyboard = UIStoryboard(name: "FloatingPanelViewController", bundle: bundle)
-            
-            // Create the floatingPanelViewController from the storyboard.
-            floatingPanelVC = storyboard.instantiateInitialViewController() as? FloatingPanelViewController ?? FloatingPanelViewController()
-            floatingPanelViewController = floatingPanelVC
-        }
-        
         // Configure the view controller.
-        floatingPanelVC.initialViewController = bookmarksViewController
-        floatingPanelVC.delegate = self
-        bookmarksViewController.delegate = self
+        let bookmarksVC = BookmarksViewController(geoView: mapView)
+        bookmarksVC.delegate = self
         
-        addChild(floatingPanelVC)
-        view.addSubview(floatingPanelVC.view)
-        floatingPanelVC.didMove(toParent: self)
+        let floatingPanelController = presentFloatingPanel(bookmarksVC)
+        floatingPanelController.delegate = self
     }
 
     @objc
@@ -141,17 +107,16 @@ extension MapViewController: BookmarksViewControllerDelegate {
     }
 }
 
-extension MapViewController: FloatingPanelViewControllerDelegate {    
-    func userDidRequestDismissFloatingPanel(_ floatingPanelViewController: FloatingPanelViewController) {
-        // Animate the alpha of the panel to 0.0 then remove from parent
+extension MapViewController: FloatingPanelControllerDelegate {
+    func userDidRequestDismissFloatingPanel(_ floatingPanelController: FloatingPanelController) {
+        // Animate the alpha of the panel to 0.0 then dismiss it.
         UIView.animate(withDuration: 0.5, animations: {
-            floatingPanelViewController.view.alpha = 0.0
-        }) { (_) in
-            floatingPanelViewController.removeFromParent()
-            floatingPanelViewController.view.removeFromSuperview()
-            
-            // Reset view alpha.
-            floatingPanelViewController.view.alpha = 1.0
+            floatingPanelController.view.alpha = 0.0
+        }) { [weak self] (_) in
+            self?.dismissFloatingPanel(floatingPanelController)
+
+            // Make sure to reset alpha so we can display it again.
+            floatingPanelController.view.alpha = 1.0
         }
     }
 }
