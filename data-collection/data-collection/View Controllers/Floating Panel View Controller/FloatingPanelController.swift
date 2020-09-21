@@ -100,13 +100,6 @@ public class FloatingPanelController: UIViewController {
     /// Denotes that the dimension in question should be calculated automatically.
     static let automaticDimension: CGFloat = 0.0
     
-    /// A shared instance of the floating panel.  This is used by the UIViewController
-    /// extension containing the `presentFloatingPanel` and `dismissFloatingPanel`
-    /// methods and is for convenience when using those methods.
-    /// Clients are free to create their own floating panel and present
-    /// and dismiss it any way they choose.
-    static let shared = FloatingPanelController.instantiate()
-    
     /// Defines the vertical state of the floating panel view controller.
     @objc
     public enum State: Int {
@@ -126,19 +119,12 @@ public class FloatingPanelController: UIViewController {
     @IBOutlet private var bottomHandlebarView: UIView!
     @IBOutlet private var panGestureRecognizer: UIPanGestureRecognizer!
     
-    /// The vertical size of the floating panel view controller used
-    /// when the `FloatingPanelController.state` is set to `.partial`.
-    /// The computed default is 40% of the maximum panel height.
-    public lazy var partialHeight: CGFloat = {
-        currentFloatingPanelItem.partialHeight
-    }()
-    
     /// The delegate to be notified of FloatingPanelControllerDelegate events.
     weak var delegate: FloatingPanelControllerDelegate?
 
     /// Returns the user-specified partial height or a calculated default value.
     private var internalPartialHeight: CGFloat {
-        return (partialHeight == FloatingPanelController.automaticDimension) ? maximumHeight * 0.40 : partialHeight
+        return (currentFloatingPanelItem.partialHeight == FloatingPanelController.automaticDimension) ? maximumHeight * 0.40 : currentFloatingPanelItem.partialHeight
     }
     
     /// The minimum height of the floating panel, taking into account the
@@ -224,8 +210,7 @@ public class FloatingPanelController: UIViewController {
         didSet {
             partialHeightObservation = currentFloatingPanelItem.observe(\.partialHeight, options: [.new]) { [weak self] (_, change) in
                 DispatchQueue.main.async {
-                    guard let self = self else { return }
-                    self.partialHeight = self.currentFloatingPanelItem.partialHeight
+                    self?.stateDidChange(animated: true)
                 }
             }
             
@@ -253,7 +238,7 @@ public class FloatingPanelController: UIViewController {
 
     /// The initial view controller to display in the content area of
     /// the floating panel view controller.
-    var initialViewController: FloatingPanelEmbeddable? {
+    private(set) var initialViewController: FloatingPanelEmbeddable? {
         willSet {
             guard let viewController = initialViewController else { return }
             viewController.willMove(toParent: nil)
@@ -424,11 +409,13 @@ public class FloatingPanelController: UIViewController {
     
     /// Instantiates a `FloatingPanelController` from the storyboard.
     /// - Returns: A `FloatingPanelController`.
-    static func instantiate() -> FloatingPanelController {
+    static func instantiate(_ initialViewController: FloatingPanelEmbeddable) -> FloatingPanelController {
         // Get the storyboard for the FloatingPanelController.
         let storyboard = UIStoryboard(name: "FloatingPanelController", bundle: .main)
         // Instantiate the FloatingPanelController.
-        return storyboard.instantiateInitialViewController() as! FloatingPanelController
+        let floatingPanel = storyboard.instantiateInitialViewController() as! FloatingPanelController
+        floatingPanel.initialViewController = initialViewController
+        return floatingPanel
     }
 
     /// Sets up the constraints for both regular and compact horizontal size classes.
@@ -792,12 +779,12 @@ fileprivate class FloatingPanelNavigationController: UINavigationController {
 }
 
 extension UIViewController {
-    /// Presents the shared floating panel view controller.
+    /// Presents a new floating panel view controller with
+    /// the given `initialViewController`
     /// - Parameter initialViewController: The intial view controller to display.
     /// - Returns: The floating panel displayed.
     func presentFloatingPanel(_ initialViewController: FloatingPanelEmbeddable) -> FloatingPanelController {
-        let floatingPanelController = FloatingPanelController.instantiate()
-        floatingPanelController.initialViewController = initialViewController
+        let floatingPanelController = FloatingPanelController.instantiate(initialViewController)
         floatingPanelController.view.translatesAutoresizingMaskIntoConstraints = false
 
         addChild(floatingPanelController)
@@ -826,7 +813,7 @@ extension UIViewController {
         return floatingPanelController
     }
     
-    /// Dismisses the shared floating panel view controller.
+    /// Dismisses the given floating panel view controller.
     func dismissFloatingPanel(_ floatingPanel: FloatingPanelController) {
         floatingPanel.willMove(toParent: nil)
         floatingPanel.removeFromParent()
