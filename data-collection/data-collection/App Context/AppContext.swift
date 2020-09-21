@@ -96,6 +96,24 @@ class AppContext: NSObject {
         didSet {
             workMode.storeDefaultWorkMode()
             NotificationCenter.default.post(workModeDidChange)
+            
+            switch workMode {
+            case .none:
+                print(
+                    "[App Context]",
+                    "\n\tWork Mode - None"
+                )
+            case .offline(let map):
+                print(
+                    "[App Context]",
+                    "\n\tWork Mode - Offline,", map?.item?.title ?? "(no map)"
+                )
+            case .online(let map):
+                print(
+                    "[App Context]",
+                    "\n\tWork Mode - Online,", map?.item?.title ?? "(no map)"
+                )
+            }
         }
     }
     
