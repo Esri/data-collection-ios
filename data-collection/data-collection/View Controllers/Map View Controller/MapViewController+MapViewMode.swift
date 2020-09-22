@@ -21,25 +21,18 @@ extension MapViewController {
         func setIdentifyResultsVisible(_ visible: Bool) {
             // If we're showing a floating panel...
             if visible {
-                if floatingPanelViewController?.initialViewController == identifyResultsViewController {
-                    floatingPanelViewController?.floatingPanelSubtitle = String("\(selectedPopups.count) Features")
-                }
-                else {
-                    showFloatingPanel(identifyResultsViewController,
-                                      title: "Identify Results",
-                                      subtitle: String("\(selectedPopups.count) Features"),
-                                      image: UIImage(named: "feature-details"))
-                }
-                
                 // Set the selected popups on the identify results view controller.
                 identifyResultsViewController.selectedPopups = selectedPopups
+
+                let floatingPanelItem = identifyResultsViewController.floatingPanelItem
+                floatingPanelItem.title = "Identify Results"
+                
+                let selected = selectedPopups.count
+                floatingPanelItem.subtitle = String("\(selected) Feature\(selected > 1 ? "s" : "")")
+                floatingPanelItem.image = UIImage(named: "feature-details")
+                floatingPanelController = presentFloatingPanel(identifyResultsViewController)
+                floatingPanelController?.delegate = self
             }
-//            else if let floatingPanelVC = floatingPanelViewController {
-//                if floatingPanelVC.initialViewController == identifyResultsViewController {
-//                    // Dismiss the floating panel if we're displaying identify results.
-//                    dismissFloatingPanel(floatingPanelVC)
-//                }
-//            }
         }
         
 //        let smallPopViewVisible: (Bool) -> UIViewAnimations = { [weak self] (visible) in
@@ -89,7 +82,7 @@ extension MapViewController {
             selectViewHeaderLabel.text = "Choose location"
             selectViewSubheaderLabel.text = "Pan & zoom map under pin"
             
-        case .selectedFeature(let loaded):
+        case .selectedFeature(_):
             pinDropView.pinDropped = false
             animations = [ selectViewVisible(false),
                            mapViewVisible(true) ]

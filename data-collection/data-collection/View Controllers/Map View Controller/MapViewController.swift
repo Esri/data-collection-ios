@@ -64,6 +64,17 @@ class MapViewController: UIViewController {
             }
         }
     }
+    
+    //TODO: create `instantiate()` like in FloatingPanelController
+    lazy var identifyResultsViewController: IdentifyResultsViewController = {
+        // Get the bundle and then the storyboard for the IdentifyResultsViewController.
+        let bundle = Bundle(for: IdentifyResultsViewController.self)
+        let storyboard = UIStoryboard(name: "IdentifyResultsViewController", bundle: bundle)
+        
+        // Create the identifyResultsViewController from the storyboard.
+        let vc = storyboard.instantiateInitialViewController() as? IdentifyResultsViewController
+        return vc ?? IdentifyResultsViewController()
+    }()
 
     var mapViewMode: MapViewMode = .defaultView {
         didSet {

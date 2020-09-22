@@ -63,37 +63,6 @@ extension MapViewController {
         present(action, animated: true)
     }
     
-    func showFloatingPanel(_ initialViewController: UIViewController,
-                              title: String?,
-                              subtitle: String?,
-                              image: UIImage?) {
-        if floatingPanelViewController != nil {
-            floatingPanelViewController?.removeFromParent()
-            floatingPanelViewController?.view.removeFromSuperview()
-        }
-
-        // Get the bundle and then the storyboard for the FloatingPanelViewController.
-        let bundle = Bundle(for: FloatingPanelViewController.self)
-        let storyboard = UIStoryboard(name: "FloatingPanelViewController", bundle: bundle)
-        
-        // Create the floatingPanelViewController from the storyboard.
-        guard let floatingPanelVC = storyboard.instantiateInitialViewController() as? FloatingPanelViewController else { return }
-
-        // Create and configure the view controller.
-        floatingPanelVC.floatingPanelTitle = title
-        floatingPanelVC.floatingPanelSubtitle = subtitle
-        floatingPanelVC.image = image
-        
-        floatingPanelVC.initialViewController = initialViewController
-        floatingPanelVC.delegate = self
-        
-        addChild(floatingPanelVC)
-        view.addSubview(floatingPanelVC.view)
-        floatingPanelVC.didMove(toParent: self)
-        
-        floatingPanelViewController = floatingPanelVC
-    }
-    
     func showLayerContents(_ barButtonItem: UIBarButtonItem?) {
         let layerContentsVC: LayerContentsViewController
         
