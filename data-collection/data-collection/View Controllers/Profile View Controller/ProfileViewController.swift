@@ -143,10 +143,17 @@ class ProfileViewController: UITableViewController {
     
     @objc
     func adjustForPortal() {
-        if let user = appContext.portalSession.portal?.user {
-            load(user: user)
-        }
-        else {
+        switch appContext.portalSession.status {
+        case .fallback(let portal, _), .loaded(let portal):
+            if let user = portal.user {
+                set(user: user)
+            }
+            else {
+                setNoUser()
+            }
+        case .loading:
+            setLoading()
+        case .failed(_), .none:
             setNoUser()
         }
     }
@@ -164,6 +171,12 @@ class ProfileViewController: UITableViewController {
         }
     }
     
+    private func setLoading() {
+        portalUserCell.authButton.isHidden = true
+        portalUserCell.authActivityIndicator.isHidden = false
+        portalUserCell.authActivityIndicator.startAnimating()
+    }
+    
     private func setNoUser() {
         portalUserCell.thumbnailImageView.image = UIImage(named: "UserLoginIcon-Large")
         portalUserCell.userFullNameLabel.text = "Access Portal"
@@ -171,6 +184,9 @@ class ProfileViewController: UITableViewController {
         portalUserCell.authButton.setTitle("Sign In", for: .normal)
         portalUserCell.authButton.removeTarget(self, action: #selector(userRequestsSignOut), for: .touchUpInside)
         portalUserCell.authButton.addTarget(self, action: #selector(userRequestsSignIn), for: .touchUpInside)
+        portalUserCell.authButton.isHidden = false
+        portalUserCell.authActivityIndicator.isHidden = true
+        portalUserCell.authActivityIndicator.stopAnimating()
     }
     
     private func set(user: AGSPortalUser) {
@@ -180,6 +196,9 @@ class ProfileViewController: UITableViewController {
         portalUserCell.authButton.setTitle("Sign Out", for: .normal)
         portalUserCell.authButton.removeTarget(self, action: #selector(userRequestsSignIn), for: .touchUpInside)
         portalUserCell.authButton.addTarget(self, action: #selector(userRequestsSignOut), for: .touchUpInside)
+        portalUserCell.authButton.isHidden = false
+        portalUserCell.authActivityIndicator.isHidden = true
+        portalUserCell.authActivityIndicator.stopAnimating()
         
         if let thumbnail = user.thumbnail {
             thumbnail.load { [weak self] (error) in
@@ -350,6 +369,7 @@ class PortalUserCell: UITableViewCell {
     @IBOutlet weak var userFullNameLabel: UILabel!
     @IBOutlet weak var userEmailLabel: UILabel!
     @IBOutlet weak var authButton: UIButton!
+    @IBOutlet weak var authActivityIndicator: UIActivityIndicatorView!
 }
 
 protocol Dimmable {
