@@ -57,10 +57,23 @@
                                                                 </label>
                                                             </subviews>
                                                         </stackView>
-                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="trailing" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nUI-jX-Ssq">
-                                                            <rect key="frame" x="160" y="12" width="214" height="30"/>
-                                                            <state key="normal" title="Sign Out"/>
-                                                        </button>
+                                                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="bottom" translatesAutoresizingMaskIntoConstraints="NO" id="44v-Fl-9lX">
+                                                            <rect key="frame" x="160" y="17" width="214" height="20"/>
+                                                            <subviews>
+                                                                <stackView opaque="NO" contentMode="scaleToFill" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="STg-iC-TVP">
+                                                                    <rect key="frame" x="130" y="0.0" width="84" height="20"/>
+                                                                    <subviews>
+                                                                        <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="xIM-op-Q8K">
+                                                                            <rect key="frame" x="0.0" y="0.0" width="20" height="20"/>
+                                                                        </activityIndicatorView>
+                                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="trailing" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nUI-jX-Ssq">
+                                                                            <rect key="frame" x="24" y="0.0" width="60" height="20"/>
+                                                                            <state key="normal" title="Sign Out"/>
+                                                                        </button>
+                                                                    </subviews>
+                                                                </stackView>
+                                                            </subviews>
+                                                        </stackView>
                                                     </subviews>
                                                     <constraints>
                                                         <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="54" id="ud1-tY-72V"/>
@@ -75,6 +88,7 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
+                                            <outlet property="authActivityIndicator" destination="xIM-op-Q8K" id="lJc-9I-0iI"/>
                                             <outlet property="authButton" destination="nUI-jX-Ssq" id="4bi-p8-Bq3"/>
                                             <outlet property="thumbnailImageView" destination="yPD-Bp-0Xw" id="CxP-ad-7pY"/>
                                             <outlet property="userEmailLabel" destination="elg-qx-Zz7" id="x2b-kV-9GJ"/>
