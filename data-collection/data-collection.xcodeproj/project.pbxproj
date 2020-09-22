@@ -186,8 +186,9 @@
 		E480B9A72421309E00982756 /* LayerContentsDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = E480B9A62421309E00982756 /* LayerContentsDataSource.swift */; };
 		E483B9C724D9F0CE0026391F /* IdentifyResultsViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E483B9C624D9F0CE0026391F /* IdentifyResultsViewController.storyboard */; };
 		E483B9C924D9F0DD0026391F /* IdentifyResultsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E483B9C824D9F0DD0026391F /* IdentifyResultsViewController.swift */; };
-		E4BA04A624B4E338000A1D43 /* FloatingPanelViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4BA04A524B4E338000A1D43 /* FloatingPanelViewController.swift */; };
-		E4BA04A824B4E35C000A1D43 /* FloatingPanelViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E4BA04A724B4E35C000A1D43 /* FloatingPanelViewController.storyboard */; };
+		E4BA04A624B4E338000A1D43 /* FloatingPanelController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4BA04A524B4E338000A1D43 /* FloatingPanelController.swift */; };
+		E4BA04A824B4E35C000A1D43 /* FloatingPanelController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E4BA04A724B4E35C000A1D43 /* FloatingPanelController.storyboard */; };
+		E4CF0EAA24E32C0F00E8EE20 /* FloatingPanelHeaderController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4CF0EA624E32C0F00E8EE20 /* FloatingPanelHeaderController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -426,8 +427,9 @@
 		E480B9A62421309E00982756 /* LayerContentsDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LayerContentsDataSource.swift; sourceTree = "<group>"; };
 		E483B9C624D9F0CE0026391F /* IdentifyResultsViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = IdentifyResultsViewController.storyboard; sourceTree = "<group>"; };
 		E483B9C824D9F0DD0026391F /* IdentifyResultsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IdentifyResultsViewController.swift; sourceTree = "<group>"; };
-		E4BA04A524B4E338000A1D43 /* FloatingPanelViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatingPanelViewController.swift; sourceTree = "<group>"; };
-		E4BA04A724B4E35C000A1D43 /* FloatingPanelViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = FloatingPanelViewController.storyboard; sourceTree = "<group>"; };
+		E4BA04A524B4E338000A1D43 /* FloatingPanelController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatingPanelController.swift; sourceTree = "<group>"; };
+		E4BA04A724B4E35C000A1D43 /* FloatingPanelController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = FloatingPanelController.storyboard; sourceTree = "<group>"; };
+		E4CF0EA624E32C0F00E8EE20 /* FloatingPanelHeaderController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FloatingPanelHeaderController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1201,8 +1203,9 @@
 		E4BA04A024B4E2A4000A1D43 /* Floating Panel View Controller */ = {
 			isa = PBXGroup;
 			children = (
-				E4BA04A524B4E338000A1D43 /* FloatingPanelViewController.swift */,
-				E4BA04A724B4E35C000A1D43 /* FloatingPanelViewController.storyboard */,
+				E4CF0EA624E32C0F00E8EE20 /* FloatingPanelHeaderController.swift */,
+				E4BA04A524B4E338000A1D43 /* FloatingPanelController.swift */,
+				E4BA04A724B4E35C000A1D43 /* FloatingPanelController.storyboard */,
 			);
 			path = "Floating Panel View Controller";
 			sourceTree = "<group>";
@@ -1354,7 +1357,7 @@
 				948066332091474F00A398EA /* RichPopup.storyboard in Resources */,
 				94D544C9207FC67B00ED0D04 /* Assets.xcassets in Resources */,
 				946D20BE2130965A001BF5CC /* MapViewController.storyboard in Resources */,
-				E4BA04A824B4E35C000A1D43 /* FloatingPanelViewController.storyboard in Resources */,
+				E4BA04A824B4E35C000A1D43 /* FloatingPanelController.storyboard in Resources */,
 				94B375BF207E8D5600691F2A /* AddressLocator.loc in Resources */,
 				E480B9A32421303600982756 /* LayerContentsTableViewController.storyboard in Resources */,
 				946D20BA213093DE001BF5CC /* JobStatusViewController.storyboard in Resources */,
@@ -1435,7 +1438,7 @@
 				940DA97B2098E1C600AB4BF6 /* AGSArcGISFeatureTable+Query.swift in Sources */,
 				94AB811C211E0AD300B9C920 /* AGSLicense+Description.swift in Sources */,
 				944433E621AC76B400E96A6E /* UnknownError.swift in Sources */,
-				E4BA04A624B4E338000A1D43 /* FloatingPanelViewController.swift in Sources */,
+				E4BA04A624B4E338000A1D43 /* FloatingPanelController.swift in Sources */,
 				948D850A2151BA0100E2048F /* AGSPopup+Sort.swift in Sources */,
 				94D544D820852A5100ED0D04 /* ShrinkingView.swift in Sources */,
 				94B375C2207E8D5600691F2A /* OfflineMapJobConstruct.swift in Sources */,
@@ -1554,6 +1557,7 @@
 				94C550F622123C2E00DD7E40 /* PopupSelectRelatedRecordCell.swift in Sources */,
 				948D85232151C11F00E2048F /* AGSPopupManager+FeatureTable.swift in Sources */,
 				94D2714020D0315900304E27 /* CustomBehavior_Map.swift in Sources */,
+				E4CF0EAA24E32C0F00E8EE20 /* FloatingPanelHeaderController.swift in Sources */,
 				946D20C22130C236001BF5CC /* LastSyncMobileMapPackage.swift in Sources */,
 				945CEE7720DDC2AC00CD3E0D /* SVProgressHUD.m in Sources */,
 				945F455D21EFA90C00F2DCBC /* UserDefaults+RawRepresentable.swift in Sources */,

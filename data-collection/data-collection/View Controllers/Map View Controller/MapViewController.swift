@@ -56,19 +56,14 @@ class MapViewController: UIViewController {
     
     var extrasNavigationController: UINavigationController?
     var layerContentsViewController: LayerContentsViewController?
-    var floatingPanelViewController: FloatingPanelViewController?
-    lazy var bookmarksViewController: BookmarksViewController = {
-        return BookmarksViewController(geoView: mapView)
-    }()
-    lazy var identifyResultsViewController: IdentifyResultsViewController = {
-        // Get the bundle and then the storyboard for the IdentifyResultsViewController.
-        let bundle = Bundle(for: IdentifyResultsViewController.self)
-        let storyboard = UIStoryboard(name: "IdentifyResultsViewController", bundle: bundle)
-        
-        // Create the identifyResultsViewController from the storyboard.
-        let vc = storyboard.instantiateInitialViewController() as? IdentifyResultsViewController
-        return vc ?? IdentifyResultsViewController()
-    }()
+    var floatingPanelController: FloatingPanelController? {
+        willSet {
+            // Dismiss the existing floating panel if we're showing one.
+            if let exsistingFloatingPanel = floatingPanelController {
+                dismissFloatingPanel(exsistingFloatingPanel)
+            }
+        }
+    }
 
     var mapViewMode: MapViewMode = .defaultView {
         didSet {

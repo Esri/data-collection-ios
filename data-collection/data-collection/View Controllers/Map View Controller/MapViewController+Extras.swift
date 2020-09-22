@@ -108,18 +108,24 @@ extension MapViewController {
             layerContentsViewController = layerContentsVC
         }
 
-        showFloatingPanel(layerContentsVC,
-                             title: MapViewControllerExtras.layers.title,
-                             subtitle: nil,
-                             image: UIImage(named: "layers"))
+        // Show the layer contents in a floating panel.
+        floatingPanelController = presentFloatingPanel(layerContentsVC)
+        floatingPanelController?.delegate = self
     }
     
     func showBookmarks(_ barButtonItem: UIBarButtonItem?) {
-        bookmarksViewController.delegate = self
-        showFloatingPanel(bookmarksViewController,
-                             title: MapViewControllerExtras.bookmarks.title,
-                             subtitle: "Select a bookmarkd",
-                             image: UIImage(named: "bookmark"))
+        // Configure the view controller.
+        let bookmarksVC = BookmarksViewController(geoView: mapView)
+        bookmarksVC.delegate = self
+        
+        // Dismiss the existing floating panel and show the layer contents.
+        floatingPanelController = presentFloatingPanel(bookmarksVC)
+        floatingPanelController?.delegate = self
+    }
+
+    @objc
+    func done() {
+        dismiss(animated: true)
     }
 }
 
@@ -132,21 +138,50 @@ extension MapViewController: BookmarksViewControllerDelegate {
     }
 }
 
-extension MapViewController: FloatingPanelViewControllerDelegate {
-    func userDidRequestDismissFloatingPanel(_ floatingPanelViewController: FloatingPanelViewController) {
-        dismissFloatingPanel(floatingPanelViewController)
-    }
-    
-    func dismissFloatingPanel(_ floatingPanelViewController: FloatingPanelViewController) {        
-        // Reset self.floatingPanelViewController.
-        self.floatingPanelViewController = nil
-
-        // Animate the alpha of the panel to 0.0 then remove from parent
+extension MapViewController: FloatingPanelControllerDelegate {
+    func userDidRequestDismissFloatingPanel(_ floatingPanelController: FloatingPanelController) {
+        // Animate the alpha of the panel to 0.0 then dismiss it.
         UIView.animate(withDuration: 0.5, animations: {
-            floatingPanelViewController.view.alpha = 0.0
-        }) { (_) in
-            floatingPanelViewController.removeFromParent()
-            floatingPanelViewController.view.removeFromSuperview()
+            floatingPanelController.view.alpha = 0.0
+        }) { [weak self] (_) in
+            self?.dismissFloatingPanel(floatingPanelController)
+        }
+    }
+}
+
+extension BookmarksViewController: FloatingPanelEmbeddable {
+    // We know that the BookmarksViewController will not be making
+    // changes to the floating panel item, so it's OK to just have
+    // this as a computed property.  Otherwise, that class would need
+    // to be updated to implement FloatingPanelEmbeddable.
+    public var floatingPanelItem: FloatingPanelItem {
+        get {
+            let fpItem = FloatingPanelItem()
+            fpItem.title = MapViewControllerExtras.bookmarks.title
+            fpItem.subtitle = "Select a bookmark"
+            fpItem.image = UIImage(named: "bookmark")
+            return fpItem
+        }
+        set {
+            //No-op
+        }
+    }
+}
+
+extension LayerContentsViewController: FloatingPanelEmbeddable {
+    // We know that the LayerContentsViewController will not be making
+    // changes to the floating panel item, so it's OK to just have
+    // this as a computed property.  Otherwise, that class would need
+    // to be updated to implement FloatingPanelEmbeddable.
+    public var floatingPanelItem: FloatingPanelItem {
+        get {
+            let fpItem = FloatingPanelItem()
+            fpItem.title = MapViewControllerExtras.layers.title
+            fpItem.image = UIImage(named: "layer")
+            return fpItem
+        }
+        set {
+            //No-op
         }
     }
 }
