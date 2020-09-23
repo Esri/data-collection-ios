@@ -111,10 +111,17 @@ class OfflineMapManager {
         
         if case .loading = status { return }
         
-        let mmpk = AGSMobileMapPackage(
-            fileURL: .offlineMapDirectoryURL(forWebMapItemID: .webMapItemID)
-        )
+        // Build a path to the offline map.
+        let path: URL = .offlineMapDirectoryURL(forWebMapItemID: .webMapItemID)
+
+        // Exit early if the path is empty.
+        guard !FileManager.default.fileExists(at: path) else {
+            self.status = .none
+            return
+        }
         
+        // Build offline map mmpk, load.
+        let mmpk = AGSMobileMapPackage(fileURL: path)
         status = .loading(mmpk)
         
         mmpk.load  { [weak self] (error) in
@@ -166,6 +173,12 @@ class OfflineMapManager {
         }
 
         try FileManager.default.prepareTemporaryOfflineMapDirectory(id: webMapItemID)
+        
+        if FileManager.default.fileExistsAtOfflineMapDirectory(id: webMapItemID) {
+            try FileManager.default.deleteContentsOfOfflineMapDirectory(id: webMapItemID)
+        }
+        
+        try FileManager.default.prepareOfflineMapDirectory(id: webMapItemID)
         
         return try jobManager.stageOnDemandDownloadMapJob(
             map,
@@ -309,6 +322,20 @@ fileprivate extension FileManager {
         _ = try replaceItemAt(
             .offlineMapDirectoryURL(forWebMapItemID: id),
             withItemAt: .temporaryOfflineMapDirectoryURL(forWebMapItemID: id)
+        )
+    }
+    
+    // MARK: File Exists At Path
+    
+    func fileExistsAtOfflineMapDirectory(id: String) -> Bool {
+        fileExists(at: .offlineMapDirectoryURL(forWebMapItemID: id))
+    }
+    
+    func fileExists(at path: URL) -> Bool {
+        var directory: ObjCBool = ObjCBool(false)
+        return FileManager.default.fileExists(
+            atPath: path.absoluteString,
+            isDirectory: &directory
         )
     }
 }

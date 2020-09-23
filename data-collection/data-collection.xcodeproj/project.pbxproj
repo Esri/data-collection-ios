@@ -10,6 +10,7 @@
 		4CA46A8522FB973B001A9CB9 /* UIAlertAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CA46A8422FB973B001A9CB9 /* UIAlertAction.swift */; };
 		94071BE02512923F002EDC53 /* OfflineMapManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94071BDF2512923F002EDC53 /* OfflineMapManager.swift */; };
 		94071BE6251422EE002EDC53 /* OfflineMapJobManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94071BE5251422EE002EDC53 /* OfflineMapJobManager.swift */; };
+		94071BF4251ABEBA002EDC53 /* GlobalAlertQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94071BF3251ABEBA002EDC53 /* GlobalAlertQueue.swift */; };
 		940DA9722097825700AB4BF6 /* UILabel+EmptyString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 940DA9712097825700AB4BF6 /* UILabel+EmptyString.swift */; };
 		940DA97B2098E1C600AB4BF6 /* AGSArcGISFeatureTable+Query.swift in Sources */ = {isa = PBXBuildFile; fileRef = 940DA97A2098E1C600AB4BF6 /* AGSArcGISFeatureTable+Query.swift */; };
 		9416A19320BF3334001377ED /* Relationship.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9416A19220BF3334001377ED /* Relationship.swift */; };
@@ -251,6 +252,7 @@
 		4CA46A8422FB973B001A9CB9 /* UIAlertAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIAlertAction.swift; sourceTree = "<group>"; };
 		94071BDF2512923F002EDC53 /* OfflineMapManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfflineMapManager.swift; sourceTree = "<group>"; };
 		94071BE5251422EE002EDC53 /* OfflineMapJobManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfflineMapJobManager.swift; sourceTree = "<group>"; };
+		94071BF3251ABEBA002EDC53 /* GlobalAlertQueue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalAlertQueue.swift; sourceTree = "<group>"; };
 		940DA9712097825700AB4BF6 /* UILabel+EmptyString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+EmptyString.swift"; sourceTree = "<group>"; };
 		940DA97A2098E1C600AB4BF6 /* AGSArcGISFeatureTable+Query.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AGSArcGISFeatureTable+Query.swift"; sourceTree = "<group>"; };
 		9416A19220BF3334001377ED /* Relationship.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Relationship.swift; sourceTree = "<group>"; };
@@ -869,6 +871,7 @@
 			children = (
 				94B375BB207E8D5600691F2A /* EphemeralCache.swift */,
 				945F455721EECA9F00F2DCBC /* ImagePickerPermissions.swift */,
+				94071BF3251ABEBA002EDC53 /* GlobalAlertQueue.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -1452,6 +1455,7 @@
 				94B375F6207E8E4800691F2A /* AGSPortal+CachedCredentials.swift in Sources */,
 				948794342200CE7B007BC15E /* RichPopupViewController+RichPopupSelectRelatedRecordViewControllerDelegate.swift in Sources */,
 				94D544D620852A5100ED0D04 /* SlideNotificationView.swift in Sources */,
+				94071BF4251ABEBA002EDC53 /* GlobalAlertQueue.swift in Sources */,
 				948D84FA2151B48400E2048F /* AGSMapView+Rotation.swift in Sources */,
 				9487942521F8F524007BC15E /* PopupAttributeDomainCell.swift in Sources */,
 				94ACAD272193B46200C2C824 /* RichPopup.swift in Sources */,
