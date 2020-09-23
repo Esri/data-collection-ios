@@ -95,7 +95,6 @@ class OfflineMapManager {
     func deleteOfflineMap() {
         do {
             try FileManager.default.deleteContentsOfOfflineMapDirectory(id: webMapItemID)
-            try FileManager.default.prepareOfflineMapDirectory(id: webMapItemID)
             status = .none
         }
         catch {
@@ -111,17 +110,16 @@ class OfflineMapManager {
         
         if case .loading = status { return }
         
-        // Build a path to the offline map.
-        let path: URL = .offlineMapDirectoryURL(forWebMapItemID: .webMapItemID)
-
-        // Exit early if the path is empty.
-        guard !FileManager.default.fileExists(at: path) else {
-            self.status = .none
+        // Ensure the offline map directory does exist.
+        guard FileManager.default.doesOfflineMapDirectoryExist(id: webMapItemID) else {
+            status = .none
             return
         }
         
         // Build offline map mmpk, load.
-        let mmpk = AGSMobileMapPackage(fileURL: path)
+        let mmpk = AGSMobileMapPackage(
+            fileURL: .offlineMapDirectoryURL(forWebMapItemID: .webMapItemID)
+        )
         status = .loading(mmpk)
         
         mmpk.load  { [weak self] (error) in
@@ -173,12 +171,6 @@ class OfflineMapManager {
         }
 
         try FileManager.default.prepareTemporaryOfflineMapDirectory(id: webMapItemID)
-        
-        if FileManager.default.fileExistsAtOfflineMapDirectory(id: webMapItemID) {
-            try FileManager.default.deleteContentsOfOfflineMapDirectory(id: webMapItemID)
-        }
-        
-        try FileManager.default.prepareOfflineMapDirectory(id: webMapItemID)
         
         return try jobManager.stageOnDemandDownloadMapJob(
             map,
@@ -250,6 +242,7 @@ extension OfflineMapManager: OfflineMapJobManagerDelegate {
     
     func offlineMapJobManager(_ manager: OfflineMapJobManager, job: OfflineMapJobManager.Job, onDemandDownloadResult: AGSGenerateOfflineMapResult) {
         do {
+            try FileManager.default.prepareOfflineMapDirectory(id: webMapItemID)
             try FileManager.default.moveOfflineMapFromTemporaryToPermanentDirectory(id: self.webMapItemID)
             status = .loaded(onDemandDownloadResult.mobileMapPackage, onDemandDownloadResult.offlineMap)
             setLastSyncNow()
@@ -325,18 +318,24 @@ fileprivate extension FileManager {
         )
     }
     
-    // MARK: File Exists At Path
+    // MARK: Checking If Offline Map Exists
     
-    func fileExistsAtOfflineMapDirectory(id: String) -> Bool {
-        fileExists(at: .offlineMapDirectoryURL(forWebMapItemID: id))
-    }
-    
-    func fileExists(at path: URL) -> Bool {
-        var directory: ObjCBool = ObjCBool(false)
-        return FileManager.default.fileExists(
-            atPath: path.absoluteString,
-            isDirectory: &directory
-        )
+    func doesOfflineMapDirectoryExist(id: String) -> Bool {
+        
+        var isDirectory: ObjCBool = false
+        let url = URL.offlineMapDirectoryURL(forWebMapItemID: id)
+        
+        guard fileExists(atPath: url.path, isDirectory: &isDirectory) && isDirectory.boolValue else {
+            return false
+        }
+        
+        do {
+            let urls = try contentsOfDirectory(atPath: url.path)
+            return !urls.isEmpty
+        }
+        catch {
+            return false
+        }
     }
 }
 
