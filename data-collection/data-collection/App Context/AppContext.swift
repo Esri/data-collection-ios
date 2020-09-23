@@ -178,6 +178,7 @@ private extension String {
 // MARK:- Location Manager Delegate
 
 extension AppContext: CLLocationManagerDelegate {
+    
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
         print(
             "[Location Manager]",
@@ -197,13 +198,21 @@ extension AppContext: PortalSessionManagerDelegate {
         
         guard case .online = workMode else { return }
         
-        switch status {
-        case .loaded(let portal), .fallback(let portal, _):
+        func setWorkModeOnline(with portal: AGSPortal) {
             let map = portal.configuredMap
             map.load(completion: nil)
             workMode = .online(map)
-        case .failed:
+        }
+        
+        switch status {
+        case .loaded(let portal):
+            setWorkModeOnline(with: portal)
+        case .fallback(let portal, let error):
+            setWorkModeOnline(with: portal)
+            UIApplication.shared.showError(error)
+        case .failed(let error):
             workMode = .online(nil)
+            UIApplication.shared.showError(error)
         default:
             break
         }
@@ -215,19 +224,28 @@ extension AppContext: PortalSessionManagerDelegate {
 extension AppContext: OfflineMapManagerDelegate {
     
     func offlineMapManager(_ manager: OfflineMapManager, didUpdateLastSync date: Date?) {
+        
         NotificationCenter.default.post(offlineMapDidChange)
     }
     
     func offlineMapManager(_ manager: OfflineMapManager, didUpdate status: OfflineMapManager.Status) {
+        
         NotificationCenter.default.post(offlineMapDidChange)
+        
         if case .offline = workMode, case let .loaded(_, managedOfflineMap) = status {
             workMode = .offline(managedOfflineMap)
+        }
+        else if case let .failed(error) = status {
+            UIApplication.shared.showError(error)
         }
     }
     
     func offlineMapManager(_ manager: OfflineMapManager, didFinishJob result: Result<JobResult, Error>) {
+        
         if case let .success(jobResult) = result, jobResult is AGSGenerateOfflineMapResult {
+            // Set work mode to offline with nil, indicating a resource needs to load.
             workMode = .offline(nil)
+            // Load offline map resource.
             offlineMapManager.loadOfflineMobileMapPackage()
         }
         else if case let .success(jobResult) = result, let syncJobResult = jobResult as? AGSOfflineMapSyncResult {
@@ -235,6 +253,8 @@ extension AppContext: OfflineMapManagerDelegate {
                 offlineMapManager.loadOfflineMobileMapPackage()
             }
         }
+        // Note, we don't want to publish a job failure's error as an alert,
+        // the UI should reflect this through the `Job.jobMessages` API.
     }
 }
 
