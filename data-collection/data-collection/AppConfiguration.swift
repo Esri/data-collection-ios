@@ -19,7 +19,6 @@ import ArcGIS
 // MARK: 1. Portal & Web Map
 
 extension URL {
-    
     /// The URL to the base portal.
     /// - Note: A `fatalError` is thrown if a URL can't be built from the configuration.
     static let basePortal: URL = {
@@ -51,7 +50,6 @@ extension String {
 }
 
 extension URL {
-    
     /// The URL to the world geocode service.
     /// Swap out for another geocoder server if you prefer.
     /// - Note: A `fatalError` is thrown if a URL can't be built from the configuration.
