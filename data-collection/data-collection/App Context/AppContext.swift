@@ -20,9 +20,10 @@ let appContext = AppContext()
 /// The `AppContext` maintains the app's current state.
 ///
 /// Primarily, the `AppContext` is responsible for:
-/// * Authentication and user lifecyle management.
-/// * Loading AGSMaps from an AGSPortal or an offline AGSMobileMapPackage.
-/// * Managing online and offline work modes.
+/// * Portal session and user lifecycle management.
+/// * Managing online and offline maps.
+/// * Delegating `CLLocationManager` authorization.
+/// * Locating addresses.
 
 class AppContext: NSObject {
     
@@ -118,13 +119,18 @@ class AppContext: NSObject {
     }
     
     func setWorkModeOnline() {
-        if let portal = portalSession.portal {
-            workMode = .online(portal.configuredMap)
-        }
-        else {
+        switch portalSession.status {
+        case .none:
+            workMode = .none
+        case .loading:
+            workMode = .online(nil)
+        case .loaded(let portal), .fallback(let portal, _):
+            let map = portal.configuredMap
+            map.load(completion: nil)
+            workMode = .online(map)
+        case .failed:
             workMode = .none
         }
-        
     }
     
     func setWorkModeOffline() throws {
