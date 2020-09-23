@@ -36,8 +36,10 @@ protocol GlobalAlertQueueable: class {
 
 extension GlobalAlertQueueable {
     
-    func showError(_ error: Error) {
-        
+    func showError(_ error: Error, ignoreUserCancelledError: Bool = true) {
+        if ignoreUserCancelledError, (error as NSError).code == NSUserCancelledError {
+            return
+        }
         let alert = UIAlertController(title: nil, message: error.localizedDescription, preferredStyle: .alert)
         alert.addAction(.done)
         showAlert(alert, animated: true, completion: nil)
