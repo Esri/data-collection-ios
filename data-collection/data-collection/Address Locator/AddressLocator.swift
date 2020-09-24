@@ -22,7 +22,7 @@ class AddressLocator {
     private lazy var onlineLocator = AGSLocatorTask(url: .geocodeService)
     
     // Offline locator using the side loaded 'AddressLocator'.
-    private lazy var offlineLocator = AGSLocatorTask(name: .offlineLocator)
+    private lazy var offlineLocator = AGSLocatorTask(name: .offlineLocatorName)
     
     private var appContextAwareLocator: AGSLocatorTask {
         // We want to use the online locator if the work mode is online and the app has reachability.
