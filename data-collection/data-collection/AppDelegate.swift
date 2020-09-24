@@ -53,8 +53,8 @@ extension AppDelegate {
         // See also AppSettings and AppContext.setupAndLoadPortal() to see how the AGSPortal is configured
         // to handle OAuth and call back to this application.
         if let redirect = URLComponents(url: url, resolvingAgainstBaseURL: false),
-            redirect.scheme == OAuth.components.scheme,
-            redirect.host == OAuth.components.host {
+            redirect.scheme == OAuthConfig.components.scheme,
+            redirect.host == OAuthConfig.components.host {
             
             // Pass the OAuth callback through to the ArcGIS Runtime SDK's helper function.
             AGSApplicationDelegate.shared().application(app, open: url, options: options)
@@ -76,7 +76,7 @@ extension AppDelegate {
         let oauthConfig = AGSOAuthConfiguration(
             portalURL: .basePortal,
             clientID: .clientID,
-            redirectURL: OAuth.redirectUrl
+            redirectURL: OAuthConfig.redirectUrl
         )
         AGSAuthenticationManager.shared().oAuthConfigurations.add(oauthConfig)
     }

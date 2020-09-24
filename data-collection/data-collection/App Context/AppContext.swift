@@ -84,7 +84,7 @@ class AppContext: NSObject {
     
     // MARK: Offline Map Manager
     
-    let offlineMapManager = OfflineMapManager(webmap: .webMapItemID)
+    let offlineMapManager = OfflineMapManager(webmap: PortalConfig.webMapItemID)
     
     // MARK:- Work Mode
     
@@ -178,7 +178,7 @@ class AppContext: NSObject {
 }
 
 private extension String {
-    static let userDefaultsWorkModeKey = "WorkMode.\(String.webMapItemID)"
+    static let userDefaultsWorkModeKey = "WorkMode.\(PortalConfig.webMapItemID)"
 }
 
 // MARK:- Location Manager Delegate
