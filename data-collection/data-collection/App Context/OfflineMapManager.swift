@@ -14,10 +14,6 @@
 
 import ArcGIS
 
-protocol JobResult {}
-extension AGSGenerateOfflineMapResult: JobResult {}
-extension AGSOfflineMapSyncResult: JobResult {}
-
 protocol OfflineMapManagerDelegate: class {
     func offlineMapManager(_ manager: OfflineMapManager, didUpdateLastSync date: Date?)
     func offlineMapManager(_ manager: OfflineMapManager, didUpdate status: OfflineMapManager.Status)
@@ -91,18 +87,6 @@ class OfflineMapManager {
         guard let lastSync = lastSync, let map = map else { return false }
         return map.allOfflineTables.contains { $0.hasLocalEdits(since: lastSync) }
     }
-
-    func deleteOfflineMap() {
-        do {
-            try FileManager.default.deleteContentsOfOfflineMapDirectory(id: webMapItemID)
-            status = .none
-        }
-        catch {
-            status = .failed(error)
-        }
-        
-        clearLastSyncDate()
-    }
     
     // MARK: Load Offline Map
     
@@ -139,6 +123,20 @@ class OfflineMapManager {
         }
     }
     
+    // MARK: Delete Offline Map
+    
+    func deleteOfflineMap() {
+        do {
+            try FileManager.default.deleteContentsOfOfflineMapDirectory(id: webMapItemID)
+            status = .none
+        }
+        catch {
+            status = .failed(error)
+        }
+        
+        clearLastSyncDate()
+    }
+    
     // MARK: Offline Map Job Manager
     
     struct MissingOfflineMapError: LocalizedError {
@@ -155,7 +153,25 @@ class OfflineMapManager {
         return manager
     }()
     
-    var canOnDemandDownloadMap: Bool {
+    func startJob(job: OfflineMapJobManager.Job) throws {
+        
+        switch job.type {
+        case .GenerateOfflineMap:
+            if !canOnDemandDownloadMap {
+                throw ExistingOfflineMapError()
+            }
+        case .OfflineMapSync:
+            if !canSyncMap {
+                throw MissingOfflineMapError()
+            }
+        }
+        
+        return try jobManager.startJob(job)
+    }
+    
+    // MARK: Offline Map Job Manager - On Demand Download Map
+    
+    private var canOnDemandDownloadMap: Bool {
         switch status {
         case .none, .failed:
             return true
@@ -180,7 +196,9 @@ class OfflineMapManager {
         )
     }
     
-    var canSyncMap: Bool {
+    // MARK: Offline Map Job Manager - Sync Offline Map
+    
+    private var canSyncMap: Bool {
         switch status {
         case .loaded:
             return true
@@ -196,22 +214,6 @@ class OfflineMapManager {
         }
         
         return try jobManager.stageSyncMapJob(map)
-    }
-    
-    func startJob(job: OfflineMapJobManager.Job) throws {
-        
-        switch job.type {
-        case .GenerateOfflineMap:
-            if !canOnDemandDownloadMap {
-                throw ExistingOfflineMapError()
-            }
-        case .OfflineMapSync:
-            if !canSyncMap {
-                throw MissingOfflineMapError()
-            }
-        }
-        
-        return try jobManager.startJob(job)
     }
     
     // MARK: Last Sync
@@ -331,6 +333,7 @@ fileprivate extension FileManager {
         
         do {
             let urls = try contentsOfDirectory(atPath: url.path)
+            // An offline map exists if the offline map directory has files.
             return !urls.isEmpty
         }
         catch {
@@ -373,3 +376,7 @@ fileprivate extension URL {
             .appendingPathComponent(itemID)
     }
 }
+
+protocol JobResult {}
+extension AGSGenerateOfflineMapResult: JobResult {}
+extension AGSOfflineMapSyncResult: JobResult {}
