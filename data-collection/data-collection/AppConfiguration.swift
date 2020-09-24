@@ -18,58 +18,62 @@ import ArcGIS
 
 // MARK: 1. Portal & Web Map
 
-extension URL {
-    /// The URL to the base portal.
-    /// - Note: A `fatalError` is thrown if a URL can't be built from the configuration.
-    static let basePortal: URL = {
-        guard let url = URL(string: "https://www.arcgis.com") else {
-            fatalError("App Configuration must contain a valid portal service url.")
-        }
-        return url
-    }()
-}
-
-extension String {
+enum PortalConfig {
+    /// The base URL (`String`) to your portal.
+    static let basePortalDomain = "www.arcgis.com"
     /// The ID of your portal's [web map](https://runtime.maps.arcgis.com/home/item.html?id=16f1b8ba37b44dc3884afc8d5f454dd2).
     static let webMapItemID = "16f1b8ba37b44dc3884afc8d5f454dd2"
 }
 
 // MARK: 2. OAuth Redirect URL
 
-enum OAuth {
+enum OAuthConfig {
     /// The App's oAuth redirect URL.
     /// - The URL must match the path created in the **Current Redirect URIs** section of the **Authentication** tab within the [Dashboard of the ArcGIS for Developers site](https://developers.arcgis.com/applications).
-    static let redirectUrl: String = "data-collection://auth"
+    static let redirectUrl = "data-collection://auth"
 }
 
 // MARK: 3. Address Locator
 
-extension String {
+enum AddressLocatorConfig {
     /// The name of your side-loaded offline Locator.
-    static let offlineLocator = "AddressLocator"
+    static let offlineLocatorName = "AddressLocator"
+    /// The URL (`String`) to the world geocode service.
+    /// Swap out for another geocoder server if you prefer.
+    static let geocodeService = "https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer"
 }
 
+// MARK:- Not Configurable, DO NOT TOUCH!
+
 extension URL {
-    /// The URL to the world geocode service.
-    /// Swap out for another geocoder server if you prefer.
+    /// The URL to the base portal.
     /// - Note: A `fatalError` is thrown if a URL can't be built from the configuration.
-    static let geocodeService: URL = {
-        guard let url = URL(string: "https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer") else {
-            fatalError("App Configuration must contain a valid geocode service url.")
+    static let basePortal: URL = {
+        guard let url = URL(string: String(format: "https://%@", PortalConfig.basePortalDomain)) else {
+            fatalError("App Configuration must contain a valid portal service url.")
         }
         return url
     }()
 }
 
-// MARK:- Not Configurable, DO NOT TOUCH!
-
-extension OAuth {
+extension OAuthConfig {
     /// The App's full oAuth redirect URL as a `URLComponents` object.
     static let components: URLComponents = {
         guard let components = URLComponents(string: redirectUrl) else {
             fatalError("OAuth.redirectUrl must contain a valid URL.")
         }
         return components
+    }()
+}
+
+extension URL {
+    /// The URL to the world geocode service.
+    /// - Note: A `fatalError` is thrown if a URL can't be built from the configuration.
+    static let geocodeService: URL = {
+        guard let url = URL(string: AddressLocatorConfig.geocodeService) else {
+            fatalError("App Configuration must contain a valid geocode service url.")
+        }
+        return url
     }()
 }
 
@@ -80,7 +84,7 @@ extension AGSPortal {
     }
         
     var configuredPortalItem: AGSPortalItem {
-        AGSPortalItem(portal: self, itemID: .webMapItemID)
+        AGSPortalItem(portal: self, itemID: PortalConfig.webMapItemID)
     }
 
     var configuredMap: AGSMap {
@@ -89,4 +93,3 @@ extension AGSPortal {
         return map
     }
 }
-

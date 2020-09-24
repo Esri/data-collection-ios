@@ -180,7 +180,7 @@ class ProfileViewController: UITableViewController {
     private func setNoUser() {
         portalUserCell.thumbnailImageView.image = UIImage(named: "UserLoginIcon-Large")
         portalUserCell.userFullNameLabel.text = "Access Portal"
-        portalUserCell.userEmailLabel.text = .basePortalDomain
+        portalUserCell.userEmailLabel.text = URL.basePortal.host
         portalUserCell.authButton.setTitle("Sign In", for: .normal)
         portalUserCell.authButton.removeTarget(self, action: #selector(userRequestsSignOut), for: .touchUpInside)
         portalUserCell.authButton.addTarget(self, action: #selector(userRequestsSignIn), for: .touchUpInside)
