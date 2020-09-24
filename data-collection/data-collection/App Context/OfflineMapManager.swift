@@ -118,7 +118,7 @@ class OfflineMapManager {
         
         // Build offline map mmpk, load.
         let mmpk = AGSMobileMapPackage(
-            fileURL: .offlineMapDirectoryURL(forWebMapItemID: .webMapItemID)
+            fileURL: .offlineMapDirectoryURL(forWebMapItemID: PortalConfig.webMapItemID)
         )
         status = .loading(mmpk)
         
@@ -273,7 +273,7 @@ extension OfflineMapManager: OfflineMapJobManagerDelegate {
 
 private extension String {
     static var lastSyncUserDefaultsKey: String {
-         String(format: "LastSyncMobileMapPackage.%@", String.webMapItemID)
+         String(format: "LastSyncMobileMapPackage.%@", PortalConfig.webMapItemID)
     }
 }
 
