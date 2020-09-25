@@ -134,7 +134,7 @@ public class FloatingPanelController: UIViewController {
         let handlebarHeight = bottomHandlebarView.frame.height
         
         // For compactWidth, handlebar is on top, so headerBottom is the limit.
-        // For regularWidth, handlebar is on bottom, so we need to add that.
+        // For regularWidth, handlebar is on bottom, so we need to add that to handlebarHeight.
         var height = headerBottom
         if !isCompactWidth && allowManualResize {
             height += handlebarHeight
