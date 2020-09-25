@@ -18,33 +18,19 @@ protocol PortalSessionManagerDelegate: class {
     func portalSessionManager(manager: PortalSessionManager, didChangeStatus status: PortalSessionManager.Status)
 }
 
+/// The `PortalSessionManager` is responsible for managing the active portal session.
+///
+/// The `AppContext.WorkMode.online` case depends on a loaded portal session.
+/// The portal session does not necessarily require user authentication,
+/// allowing the web map's sharing permissions to drive whether to issue an authentication challenge.
+/// The `PortalSessionManager` uses a state-machine design pattern to maintain an active portal session and
+/// the delegate pattern to report changes of state back to the `AppContext`.
+/// The `PortalSessionManager` strives to maintain an active portal session,
+/// even attempting to silently load a restored from a previous session upon app relaunch.
+///
 class PortalSessionManager {
     
-    // MARK:- Portal
-    
-    var portal: AGSPortal? {
-        switch status {
-        case .loaded(let portal):
-            return portal
-        case .fallback(let portal, _):
-            return portal
-        default:
-            return nil
-        }
-    }
-    
-    var error: Error? {
-        switch status {
-        case .fallback(_, let error):
-            return error
-        case .failed(let error):
-            return error
-        default:
-            return nil
-        }
-    }
-    
-    // MARK:- Status
+    // MARK: Status
     
     enum Status {
         case none, loading(AGSPortal), loaded(AGSPortal), fallback(AGSPortal, Error), failed(Error)
@@ -96,11 +82,35 @@ class PortalSessionManager {
         }
     }
     
+    // MARK: Portal
+    
+    var portal: AGSPortal? {
+        switch status {
+        case .loaded(let portal):
+            return portal
+        case .fallback(let portal, _):
+            return portal
+        default:
+            return nil
+        }
+    }
+    
+    var error: Error? {
+        switch status {
+        case .fallback(_, let error):
+            return error
+        case .failed(let error):
+            return error
+        default:
+            return nil
+        }
+    }
+    
     var isSignedIn: Bool {
         portal?.user != nil
     }
     
-    // MARK:- Restore Session
+    // MARK: Restore Session
     
     private static let portalSessionURLKey = "\(Bundle.main.bundleIdentifier!).portalSessionManager.urlKey"
     
@@ -148,7 +158,7 @@ class PortalSessionManager {
         }
     }
     
-    // MARK:- Sign In
+    // MARK: Sign In
         
     func loadCredentialRequiredPortalSession() {
         
@@ -170,7 +180,7 @@ class PortalSessionManager {
         }
     }
     
-    // MARK:- fallbackToDefaultPortalSession
+    // MARK: Fallback Portal
     
     private func fallbackToDefaultPortalSession(previousError: Error) {
         
@@ -192,7 +202,7 @@ class PortalSessionManager {
         }
     }
     
-    // MARK:- Sign Out
+    // MARK: Sign Out
     
     func loadDefaultPortalSession() {
         
@@ -216,7 +226,7 @@ class PortalSessionManager {
         }
     }
         
-    // MARK:- Credential
+    // MARK: Credential
         
     private func revokeCredentials(_ completion: @escaping ()->Void) {
         AGSAuthenticationManager.shared()
@@ -226,7 +236,7 @@ class PortalSessionManager {
         }
     }
     
-    // MARK:- Init
+    // MARK: Init
     
     private let url: URL
         

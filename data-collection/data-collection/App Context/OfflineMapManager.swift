@@ -20,6 +20,16 @@ protocol OfflineMapManagerDelegate: class {
     func offlineMapManager(_ manager: OfflineMapManager, didFinishJob result: Result<JobResult, Error>)
 }
 
+/// The `OfflineMapManager` is responsible for managing the offline map and offline map jobs.
+///
+/// The `OfflineMapManager` is designed using the state-machine design pattern, performs a series of tasks,
+/// and reports it's status using a delegate pattern to the `AppContext`. The `OfflineMapManager` will:
+///
+/// - Load offline map.
+/// - Delete offline map.
+/// - Download map offline using on-demand workflow.
+/// - Perform bi-direction sync of offline and online maps.
+///
 class OfflineMapManager {
     
     private let webMapItemID: String

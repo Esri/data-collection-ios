@@ -76,20 +76,3 @@ extension URL {
         return url
     }()
 }
-
-extension AGSPortal {
-    
-    static func configuredPortal(loginRequired: Bool) -> AGSPortal {
-        AGSPortal(url: .basePortal, loginRequired: loginRequired)
-    }
-        
-    var configuredPortalItem: AGSPortalItem {
-        AGSPortalItem(portal: self, itemID: PortalConfig.webMapItemID)
-    }
-
-    var configuredMap: AGSMap {
-        let map = AGSMap(item: configuredPortalItem)
-        map.load(completion: nil)
-        return map
-    }
-}
