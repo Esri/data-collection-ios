@@ -722,7 +722,7 @@ extension FloatingPanelController: UINavigationControllerDelegate {
         else {
             animatedTransitioning = operation == .pop ? PopTransitionAnimation() : PushTransitionAnimation()
         }
-        return animatedTransitioning//operation == .pop ? PopTransitionAnimation() : PushTransitionAnimation()
+        return animatedTransitioning
     }
     
     public func navigationController(_ navigationController: UINavigationController, didShow viewController: UIViewController, animated: Bool) {
