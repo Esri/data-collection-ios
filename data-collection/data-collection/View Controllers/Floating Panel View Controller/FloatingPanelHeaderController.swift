@@ -62,7 +62,7 @@ internal class FloatingPanelHeaderController: UIViewController {
                 }
             }
             
-            imageViewObservation = fpItem.observe(\.image, options: [.new]) { [weak self] (_, change) in
+            imageViewObservation = fpItem.observe(\.image) { [weak self] (_, _) in
                 DispatchQueue.main.async {
                     self?.imageView.image = fpItem.image
                     self?.setImageViewHidden(self?.imageView.image == nil)
