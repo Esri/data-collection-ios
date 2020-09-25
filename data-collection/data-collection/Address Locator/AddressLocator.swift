@@ -24,25 +24,33 @@ class AddressLocator {
     // Offline locator using the side loaded 'AddressLocator'.
     private lazy var offlineLocator = AGSLocatorTask(name: OfflineGeocoderConfig.name)
     
-    private var appContextAwareLocator: AGSLocatorTask {
-        // We want to use the online locator if the work mode is online and the app has reachability.
-        if case .online = appContext.workMode {
-            return onlineLocator
-        }
-        // Otherwise, we'll use the offline locator.
-        else {
-            return offlineLocator
+    init(default workMode: AppContext.WorkMode) {
+        prepareLocator(for: workMode)
+    }
+    
+    func prepareLocator(for workMode: AppContext.WorkMode) {
+        switch workMode {
+        case .offline:
+            offlineLocator.load(completion: nil)
+            currentLocator = offlineLocator
+        case .online:
+            onlineLocator.load(completion: nil)
+            currentLocator = onlineLocator
+        case .none:
+            currentLocator = nil
         }
     }
+    
+    private var currentLocator: AGSLocatorTask?
     
     // MARK: Errors
     
-    struct NoResultsError: LocalizedError {
-        let localizedDescription = "Operation yeilded no results."
+    struct NoLocatorError: LocalizedError {
+        let localizedDescription = "No locator."
     }
     
-    struct UnknownError: LocalizedError {
-        let localizedDescription = "An unknown error occured."
+    struct NoResultsError: LocalizedError {
+        let localizedDescription = "Operation yeilded no results."
     }
     
     struct MissingAttribute: LocalizedError {
@@ -50,6 +58,10 @@ class AddressLocator {
         var localizedDescription: String {
             String(format: "Geocode result missing value for key '%@'", key)
         }
+    }
+    
+    struct UnknownError: LocalizedError {
+        let localizedDescription = "An unknown error occured."
     }
     
     /// Reverse geocode an address from a map point.
@@ -60,14 +72,13 @@ class AddressLocator {
     ///   - result: The result of the reverse geocode operation, with either the
     ///   address or an error.
     func reverseGeocodeAddress(for point: AGSPoint, completion: @escaping (_ result: Result<String, Error>) -> Void) {
-        let locator = appContextAwareLocator
+        
+        guard let locator = currentLocator else {
+            completion(.failure(NoLocatorError()))
+            return
+        }
+        
         locator.load { [weak self] (error) in
-            // Ensure the loaded locator matches the app context aware locator.
-            // The app context might have changed since the locator started loading.
-            guard locator == self?.appContextAwareLocator else {
-                completion(.failure(NSError.unknown))
-                return
-            }
             // If the locator load failed, end early.
             if let error = error {
                 completion(.failure(error))

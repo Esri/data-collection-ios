@@ -38,6 +38,8 @@ class AppContext: NSObject {
             workMode = .online(nil)
         }
         
+        addressLocator = AddressLocator(default: workMode)
+        
         super.init()
         
         locationManager.delegate = self
@@ -47,7 +49,7 @@ class AppContext: NSObject {
     
     // MARK: Locator
     
-    let addressLocator = AddressLocator()
+    let addressLocator: AddressLocator
     
     // MARK: Location Manger
     
@@ -96,6 +98,9 @@ class AppContext: NSObject {
     private(set) var workMode: WorkMode {
         didSet {
             workMode.storeDefaultWorkMode()
+            
+            addressLocator.prepareLocator(for: workMode)
+            
             NotificationCenter.default.post(workModeDidChange)
             
             switch workMode {
