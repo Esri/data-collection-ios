@@ -84,7 +84,7 @@ public class FloatingPanelEmbeddableTableViewController: UITableViewController, 
 }
 
 /// A floating panel is a view that overlays a view and supplies view-related
-/// content such as, for a map view, a legend, bookmarks, search results, etc..
+/// content. For a map view, for instance, it could display a legend, bookmarks, search results, etc..
 /// Apple Maps, Google Maps, Windows 10, and Collector have floating panel
 /// implementations, sometimes referred to as a "bottom sheet".
 ///
