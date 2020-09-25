@@ -342,7 +342,7 @@ public class FloatingPanelController: UIViewController {
 
     /// Constraints for the compact width size class.  These will be set
     /// from the `presentFloatingPanel` method in the UIViewController extension.
-    internal var compactWidthConstraints: [NSLayoutConstraint]? {
+    var compactWidthConstraints: [NSLayoutConstraint]? {
         didSet {
             setupConstraints()
         }
