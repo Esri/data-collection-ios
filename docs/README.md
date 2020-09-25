@@ -57,23 +57,29 @@
    - [Reverse geocoding](#reverse-geocoding)   
 - [Architecture](#architecture)   
    - [App configuration](#app-configuration)   
+      - [1. Portal Configuration](#1-portal-configuration)   
+      - [2. OAuth Configuration](#2-oauth-configuration)   
+      - [3. Address Locator, Geocoder Configuration](#3-address-locator-geocoder-configuration)   
    - [App secrets](#app-secrets)   
       - [Masquerade](#masquerade)   
       - [Build rule](#build-rule)   
          - [Usage](#usage)   
    - [App context](#app-context)   
-      - [App context change handler](#app-context-change-handler)   
+      - [Work Mode](#work-mode)   
+      - [Portal Session Manager](#portal-session-manager)   
+      - [Offline Map Manager](#offline-map-manager)   
+      - [Offline Map Job Manager](#offline-map-job-manager)   
+      - [Address Locator](#address-locator)   
+      - [App context change notifications](#app-context-change-notifications)   
    - [Model: Pop-up configuration driven](#model-pop-up-configuration-driven)   
    - [View: storyboards](#view-storyboards)   
       - [Custom views](#custom-views)   
    - [Controller: app context aware](#controller-app-context-aware)   
    - [App location](#app-location)   
-   - [Network reachability manager](#network-reachability-manager)   
    - [Ephemeral cache](#ephemeral-cache)   
    - [File manager](#file-manager)   
    - [App defaults](#app-defaults)   
-   - [App colors & fonts](#app-colors-fonts)   
-   - [App errors](#app-errors)   
+   - [App colors](#app-colors)   
 - [Xcode project configuration](#xcode-project-configuration)   
    - [Privacy strings](#privacy-strings)   
 
@@ -1182,14 +1188,27 @@ In effect the `AppSecrets.swift.masque` key-laden swift template becomes `AppSec
 
 ### App context
 
-The `AppContext` maintains and notifies the app of its current state, providing an API interface into:
+The `AppContext` maintains and notifies the app of its current state. The app context establishes a separation of concerns for managing different aspects of the app's state. Changes made to the app context and it's sub-components are broadcast to the rest of the app as notifications.
 
-* Portal session and user lifecycle management
-* Managing online and offline maps
-* Delegating `CLLocationManager` device authorization
-* Locating addresses
+#### Work Mode
 
-Changes made to the `AppContext` are broadcast to the rest of the app.
+The `AppContext` persists the current `WorkMode` throughout the duration of the app session. A map is supplied alongside the work mode.
+
+#### Portal Session Manager
+
+The `PortalSessionManager` is responsible for managing the active portal session. Upon re-launch of the application, the portal session manager will silently try to restore the portal used in the previous app session.
+
+#### Offline Map Manager
+
+The `OfflineMapManager` is responsible for managing the offline map and delegating offline map jobs.
+
+#### Offline Map Job Manager
+
+The `OfflineMapJobManager` performs jobs as requested by the offline map manager, reporting the job's evolving status to watchful UIs along the way.
+
+#### Address Locator
+
+The `AddressLocator` is used to reverse geocode addresses from points and can be used to populate feature attributes.
 
 #### App context change notifications
 
@@ -1288,9 +1307,9 @@ The app accounts for errors that might arise while downloading the map offline s
 A number of preferences are stored in the app's `UserDefaults` to help maintain state between app usage.
 
 1. Last sync date of offline map
-1. Work mode
-1. Map's visible area
-1. Pop-up attachment size
+1. Current work mode
+1. Map view's visible area
+1. Last selected pop-up attachment size
 
 ### App colors
 
