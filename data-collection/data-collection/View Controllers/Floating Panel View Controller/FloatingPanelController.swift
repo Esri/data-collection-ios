@@ -227,7 +227,7 @@ public class FloatingPanelController: UIViewController {
                 }
             }
             
-            allowManualResizeObservation = currentFloatingPanelItem.observe(\.allowManualResize, options: [.new]) { [weak self] (_, change) in
+            allowManualResizeObservation = currentFloatingPanelItem.observe(\.allowManualResize) { [weak self] (_, _) in
                 DispatchQueue.main.async {
                     guard let self = self else { return }
                     self.allowManualResize = self.currentFloatingPanelItem.allowManualResize
