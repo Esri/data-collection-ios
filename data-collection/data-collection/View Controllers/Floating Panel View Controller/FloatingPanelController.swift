@@ -413,9 +413,9 @@ public class FloatingPanelController: UIViewController {
         // Get the storyboard for the FloatingPanelController.
         let storyboard = UIStoryboard(name: "FloatingPanelController", bundle: .main)
         // Instantiate the FloatingPanelController.
-        let floatingPanel = storyboard.instantiateInitialViewController() as! FloatingPanelController
-        floatingPanel.initialViewController = initialViewController
-        return floatingPanel
+        let floatingPanelController = storyboard.instantiateInitialViewController() as! FloatingPanelController
+        floatingPanelController.initialViewController = initialViewController
+        return floatingPanelController
     }
 
     /// Sets up the constraints for both regular and compact horizontal size classes.
