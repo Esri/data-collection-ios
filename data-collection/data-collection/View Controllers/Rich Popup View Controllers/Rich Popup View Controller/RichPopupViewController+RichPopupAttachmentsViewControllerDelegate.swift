@@ -20,21 +20,21 @@ extension RichPopupViewController: RichPopupAttachmentsViewControllerDelegate {
     func attachmentsViewControllerDidRequestAddAttachment(_ attachmentsViewController: RichPopupAttachmentsViewController) {
         
         if !isEditing {
-            
-            // Prompt user to start editing session.
-            present(confirmationAlertMessage: "To add an attachment, you need to start an editing session. Start editing?",
-                    confirmationTitle: "Edit",
-                    isDestructive: false,
-                    confirmationAction: { [weak self] (_) in
-                
-                        guard let self = self else { return }
-                        
-                        // 1. Start editing session
-                        self.setEditing(true, animated: true)
-                        
-                        // 2. Build requests
-                        self.imagePickerPermissions.request(options: [.photo, .library])
-            })
+            let alert = UIAlertController(
+                title: nil,
+                message: "To add an attachment, you need to start an editing session. Start editing?",
+                preferredStyle: .alert
+            )
+            let edit = UIAlertAction(title: "Edit", style: .default) { [weak self] (_) in
+                guard let self = self else { return }
+                // 1. Start editing session
+                self.setEditing(true, animated: true)
+                // 2. Build requests
+                self.imagePickerPermissions.request(options: [.photo, .library])
+            }
+            alert.addAction(.cancel())
+            alert.addAction(edit)
+            showAlert(alert, animated: true, completion: nil)
         }
         else {
             // Request, straight away.

@@ -25,7 +25,7 @@ extension RichPopupViewController: RichPopupSelectRelatedRecordViewControllerDel
             try popupManager.update(manyToOne: popup)
         }
         catch {
-            present(simpleAlertMessage: "Something went wrong editing the related record. \(error.localizedDescription)")
+            showError(error)
         }
     }
 }

@@ -26,8 +26,5 @@ extension RichPopupViewController: ImagePickerPermissionsDelegate {
             imagePicker.delegate = self
             self.present(imagePicker, animated: true)
         }
-        else {
-            present(simpleAlertMessage: "Something went wrong adding the image attachment.")
-        }
     }
 }

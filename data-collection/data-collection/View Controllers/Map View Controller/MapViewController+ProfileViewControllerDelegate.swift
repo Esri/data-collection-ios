@@ -33,7 +33,7 @@ extension MapViewController: ProfileViewControllerOfflineDelegate {
             }
         }
         catch {
-            present(simpleAlertMessage: error.localizedDescription)
+            showError(error)
         }
     }
 }
