@@ -35,12 +35,19 @@ enum OAuthConfig {
 
 // MARK: 3. Address Locator
 
-enum AddressLocatorConfig {
-    /// The name of your side-loaded offline Locator.
-    static let offlineLocatorName = "AddressLocator"
+enum OnlineGeocoderConfig {
     /// The URL (`String`) to the world geocode service.
     /// Swap out for another geocoder server if you prefer.
-    static let geocodeService = "https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer"
+    static let urlString = "https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer"
+    /// The geocoder's `AGSGeocodeResult` address attribute key.
+    static let addressAttributeKey = "Address"
+}
+
+enum OfflineGeocoderConfig {
+    /// The name of your side-loaded offline Locator.
+    static let name = "AddressLocator"
+    /// The geocoder's `AGSGeocodeResult` address attribute key.
+    static let addressAttributeKey = "Match_addr"
 }
 
 // MARK:- Not Configurable, DO NOT TOUCH!
@@ -66,11 +73,11 @@ extension OAuthConfig {
     }()
 }
 
-extension URL {
+extension OnlineGeocoderConfig {
     /// The URL to the world geocode service.
     /// - Note: A `fatalError` is thrown if a URL can't be built from the configuration.
-    static let geocodeService: URL = {
-        guard let url = URL(string: AddressLocatorConfig.geocodeService) else {
+    static let url: URL = {
+        guard let url = URL(string: OnlineGeocoderConfig.urlString) else {
             fatalError("App Configuration must contain a valid geocode service url.")
         }
         return url
