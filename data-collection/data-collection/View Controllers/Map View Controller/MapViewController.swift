@@ -152,7 +152,7 @@ class MapViewController: UIViewController {
         assert(currentPopupManager != nil, "This function should not be reached if a popup is not currently selected.")
         
         guard let manager = currentPopupManager, let relationships = manager.richPopup.relationships, let relationship = relationships.oneToMany.first else {
-            present(simpleAlertMessage: "Unable to add a new related record.")
+            showError(UnknownError())
             return
         }
 
@@ -162,7 +162,7 @@ class MapViewController: UIViewController {
             relatedManager = try manager.buildRichPopupManagerForNewOneToManyRecord(for: relationship)
         }
         catch {
-            present(simpleAlertMessage: "Unable to add a new related record. \(error.localizedDescription)")
+            showError(error)
             return
         }
 
@@ -174,8 +174,8 @@ class MapViewController: UIViewController {
 
             guard let self = self else { return }
 
-            guard error == nil else {
-                self.present(simpleAlertMessage: error!.localizedDescription)
+            if let error = error {
+                self.showError(error)
                 return
             }
 
@@ -273,7 +273,7 @@ class MapViewController: UIViewController {
     
     @objc func adjustForPortal() {
         if let error = appContext.portalSession.error {
-            present(simpleAlertMessage: error.localizedDescription)
+            showError(error)
         }
     }
 }

@@ -41,14 +41,14 @@ extension GlobalAlertQueueable {
             return
         }
         let alert = UIAlertController(title: nil, message: error.localizedDescription, preferredStyle: .alert)
-        alert.addAction(.done)
+        alert.addAction(.okay())
         showAlert(alert, animated: true, completion: nil)
     }
     
-    func showMessage(_ message: String) {
+    func showMessage(title: String? = nil, message: String) {
         
-        let alert = UIAlertController(title: nil, message: message, preferredStyle: .alert)
-        alert.addAction(.done)
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        alert.addAction(.okay())
         showAlert(alert, animated: true, completion: nil)
     }
 }
@@ -169,9 +169,42 @@ private struct AlertItem {
     let completion: (() -> Void)?
 }
 
-private extension UIAlertAction {
+extension UIAlertAction {
+    /// Creates a new alert action with "Cancel" as the title and `cancel` as
+    /// the style.
+    ///
+    /// - Parameter handler: A closure to execute when the user selects the
+    /// action.
+    /// - Returns: A new alert action object.
+    class func cancel(handler: ((_ action: UIAlertAction) -> Void)? = nil) -> UIAlertAction {
+        return UIAlertAction(title: "Cancel", style: .cancel, handler: handler)
+    }
     
-    static var done: UIAlertAction {
-        UIAlertAction(title: "Done", style: .default, handler: nil)
+    /// Creates a new alert action with "OK" as the title and `default` as
+    /// the style.
+    ///
+    /// - Parameter handler: A closure to execute when the user selects the
+    /// action.
+    /// - Returns: A new alert action object.
+    class func okay(handler: ((_ action: UIAlertAction) -> Void)? = nil) -> UIAlertAction {
+        return UIAlertAction(title: "OK", style: .default, handler: handler)
+    }
+}
+
+extension UIAlertController {
+    
+    static func settingsAlert(_ message: String) -> UIAlertController {
+        let alert = UIAlertController(title: nil, message: message, preferredStyle: .alert)
+        let settings = UIAlertAction(title: "Settings", style: .default) { (_) in
+            if let url = URL(string: UIApplication.openSettingsURLString), UIApplication.shared.canOpenURL(url) {
+                UIApplication.shared.open(url, options: [:], completionHandler: nil)
+            }
+            else {
+                fatalError("Something is wrong with iOS.")
+            }
+        }
+        alert.addAction(.cancel())
+        alert.addAction(settings)
+        return alert
     }
 }

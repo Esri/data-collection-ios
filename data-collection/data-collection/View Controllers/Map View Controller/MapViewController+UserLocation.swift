@@ -31,7 +31,11 @@ extension MapViewController {
             mapView.setViewpoint(viewpoint, duration: 1.2, completion: nil)
         }
         else {
-            present(settingsAlertMessage: "You must enable Data Collection to access your location in your device's settings to zoom to your location.")
+            showAlert(
+                .settingsAlert("You must enable Data Collection to access your location in your device's settings to zoom to your location."),
+                animated: true,
+                completion: nil
+            )
         }
     }
     

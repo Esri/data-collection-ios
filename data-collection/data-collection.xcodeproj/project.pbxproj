@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		4CA46A8522FB973B001A9CB9 /* UIAlertAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CA46A8422FB973B001A9CB9 /* UIAlertAction.swift */; };
 		94071BE02512923F002EDC53 /* OfflineMapManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94071BDF2512923F002EDC53 /* OfflineMapManager.swift */; };
 		94071BE6251422EE002EDC53 /* OfflineMapJobManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94071BE5251422EE002EDC53 /* OfflineMapJobManager.swift */; };
 		94071BF4251ABEBA002EDC53 /* GlobalAlertQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94071BF3251ABEBA002EDC53 /* GlobalAlertQueue.swift */; };
@@ -136,11 +135,9 @@
 		94B375F6207E8E4800691F2A /* AGSPortal+CachedCredentials.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94B375DF207E8E4800691F2A /* AGSPortal+CachedCredentials.swift */; };
 		94B375F8207E8E4800691F2A /* AGSDrawStatus+CustomStringConvertible.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94B375E1207E8E4800691F2A /* AGSDrawStatus+CustomStringConvertible.swift */; };
 		94B375F9207E8E4800691F2A /* AGSArcGISFeature+FeatureTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94B375E2207E8E4800691F2A /* AGSArcGISFeature+FeatureTable.swift */; };
-		94B375FA207E8E4800691F2A /* UIViewController+Alert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94B375E4207E8E4800691F2A /* UIViewController+Alert.swift */; };
 		94B375FC207E8E4800691F2A /* UIView+StackViewAutoLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94B375E6207E8E4800691F2A /* UIView+StackViewAutoLayout.swift */; };
 		94B375FD207E8E4800691F2A /* UIColor+Modify.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94B375E7207E8E4800691F2A /* UIColor+Modify.swift */; };
 		94B375FF207E8E4800691F2A /* UIStoryboardSegue+NavigationDestination.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94B375E9207E8E4800691F2A /* UIStoryboardSegue+NavigationDestination.swift */; };
-		94B37600207E8E4800691F2A /* UIAlertController+Alert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94B375EA207E8E4800691F2A /* UIAlertController+Alert.swift */; };
 		94B37601207E8E4800691F2A /* DispatchGroup+Enter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94B375EC207E8E4800691F2A /* DispatchGroup+Enter.swift */; };
 		94B37603207E8E4800691F2A /* CGPoint+Modify.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94B375EF207E8E4800691F2A /* CGPoint+Modify.swift */; };
 		94B3760C207EAE4700691F2A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94B3760B207EAE4600691F2A /* AppDelegate.swift */; };
@@ -249,7 +246,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		4CA46A8422FB973B001A9CB9 /* UIAlertAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIAlertAction.swift; sourceTree = "<group>"; };
 		94071BDF2512923F002EDC53 /* OfflineMapManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfflineMapManager.swift; sourceTree = "<group>"; };
 		94071BE5251422EE002EDC53 /* OfflineMapJobManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfflineMapJobManager.swift; sourceTree = "<group>"; };
 		94071BF3251ABEBA002EDC53 /* GlobalAlertQueue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalAlertQueue.swift; sourceTree = "<group>"; };
@@ -384,11 +380,9 @@
 		94B375DF207E8E4800691F2A /* AGSPortal+CachedCredentials.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AGSPortal+CachedCredentials.swift"; sourceTree = "<group>"; };
 		94B375E1207E8E4800691F2A /* AGSDrawStatus+CustomStringConvertible.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AGSDrawStatus+CustomStringConvertible.swift"; sourceTree = "<group>"; };
 		94B375E2207E8E4800691F2A /* AGSArcGISFeature+FeatureTable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AGSArcGISFeature+FeatureTable.swift"; sourceTree = "<group>"; };
-		94B375E4207E8E4800691F2A /* UIViewController+Alert.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController+Alert.swift"; sourceTree = "<group>"; };
 		94B375E6207E8E4800691F2A /* UIView+StackViewAutoLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+StackViewAutoLayout.swift"; sourceTree = "<group>"; };
 		94B375E7207E8E4800691F2A /* UIColor+Modify.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+Modify.swift"; sourceTree = "<group>"; };
 		94B375E9207E8E4800691F2A /* UIStoryboardSegue+NavigationDestination.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIStoryboardSegue+NavigationDestination.swift"; sourceTree = "<group>"; };
-		94B375EA207E8E4800691F2A /* UIAlertController+Alert.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIAlertController+Alert.swift"; sourceTree = "<group>"; };
 		94B375EC207E8E4800691F2A /* DispatchGroup+Enter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "DispatchGroup+Enter.swift"; sourceTree = "<group>"; };
 		94B375EF207E8E4800691F2A /* CGPoint+Modify.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CGPoint+Modify.swift"; sourceTree = "<group>"; };
 		94B3760B207EAE4600691F2A /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -798,7 +792,6 @@
 		948D85242151C1DB00E2048F /* UIViewController */ = {
 			isa = PBXGroup;
 			children = (
-				94B375E4207E8E4800691F2A /* UIViewController+Alert.swift */,
 				948D85252151C1F700E2048F /* UIViewController+Dismiss.swift */,
 				948D85272151C22A00E2048F /* UIViewController+Root.swift */,
 			);
@@ -828,15 +821,6 @@
 				94B375E9207E8E4800691F2A /* UIStoryboardSegue+NavigationDestination.swift */,
 			);
 			path = UIStoryboardSegue;
-			sourceTree = "<group>";
-		};
-		948D853A2151CB0600E2048F /* UIAlertController */ = {
-			isa = PBXGroup;
-			children = (
-				94B375EA207E8E4800691F2A /* UIAlertController+Alert.swift */,
-				4CA46A8422FB973B001A9CB9 /* UIAlertAction.swift */,
-			);
-			path = UIAlertController;
 			sourceTree = "<group>";
 		};
 		948D853B2151CB9500E2048F /* UILabel */ = {
@@ -950,7 +934,6 @@
 				94C550EB221209EF00DD7E40 /* UITextView */,
 				94C550E8221207A800DD7E40 /* UIResponder */,
 				948D853B2151CB9500E2048F /* UILabel */,
-				948D853A2151CB0600E2048F /* UIAlertController */,
 				948D85392151CAE400E2048F /* UIStoryboardSegue */,
 				948D85362151C8A400E2048F /* UIColor */,
 				948D852F2151C7E900E2048F /* UIView */,
@@ -1428,7 +1411,6 @@
 				E4BA04A624B4E338000A1D43 /* FloatingPanelController.swift in Sources */,
 				948D850A2151BA0100E2048F /* AGSPopup+Sort.swift in Sources */,
 				94D544D820852A5100ED0D04 /* ShrinkingView.swift in Sources */,
-				94B375FA207E8E4800691F2A /* UIViewController+Alert.swift in Sources */,
 				946569022087FAE700599E55 /* MapViewController+MapViewMode.swift in Sources */,
 				948D85102151BAF500E2048F /* AGSPopup+RelatedRecords.swift in Sources */,
 				944433E821AC76DC00E96A6E /* InvalidOperationError.swift in Sources */,
@@ -1481,7 +1463,6 @@
 				945B8ACD247874F90078D69A /* MapViewController+ProfileViewControllerDelegate.swift in Sources */,
 				948D85202151C01500E2048F /* AGSArcGISFeatureTable+Edit.swift in Sources */,
 				948D84F82151B46000E2048F /* AGSMapView+Centerpoint.swift in Sources */,
-				94B37600207E8E4800691F2A /* UIAlertController+Alert.swift in Sources */,
 				9499821924AA4ED5001967A9 /* AGSPopupAttachmentSize+PreferredSize.swift in Sources */,
 				948D84CF2142227900E2048F /* CGFloat+Conversions.swift in Sources */,
 				946569042087FB5000599E55 /* MapViewController+LocationSelection.swift in Sources */,
@@ -1498,7 +1479,6 @@
 				940DA9722097825700AB4BF6 /* UILabel+EmptyString.swift in Sources */,
 				948D851E2151BFD900E2048F /* AGSArcGISFeatureTable+Popup.swift in Sources */,
 				948D84CB213F578800E2048F /* AGSMap+GeodatabaseFeatureTable.swift in Sources */,
-				4CA46A8522FB973B001A9CB9 /* UIAlertAction.swift in Sources */,
 				9487944222022777007BC15E /* RichPopupDetailsViewController+UITableViewDataSource.swift in Sources */,
 				94ADD3C821F266AC000A5DB9 /* AGSPopupManager+AttachmentAccess.swift in Sources */,
 				948D85032151B85200E2048F /* AGSArcGISFeature+Collection.swift in Sources */,

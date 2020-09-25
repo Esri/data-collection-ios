@@ -107,8 +107,7 @@ class RichPopupViewController: SegmentedViewController {
         if identifier == "RichPopupEditStagedPhotoAttachment" {
             
             guard EphemeralCache.shared.containsObject(forKey: "RichPopupEditStagedPhotoAttachment.EphemeralCacheKey") else {
-                
-                present(simpleAlertMessage: "Something went wrong, you are unable to edit this attachment.")
+                showMessage(message: "Something went wrong, you are unable to edit this attachment.")
                 return false
             }
             
@@ -117,8 +116,7 @@ class RichPopupViewController: SegmentedViewController {
         else if identifier == "RichPopupSelectRelatedRecord" {
             
             guard EphemeralCache.shared.containsObject(forKey: "RichPopupSelectRelatedRecord.EphemeralCacheKey") else {
-                
-                present(simpleAlertMessage: "Something went wrong, you are unable to edit this related record.")
+                showMessage(message: "Something went wrong, you are unable to edit this related record.")
                 return false
             }
             return true
@@ -207,6 +205,10 @@ class RichPopupViewController: SegmentedViewController {
         self.setEditing(false, animated: true, persist: false)
     }
     
+    struct CannotEditPopupError: LocalizedError {
+        let localizedDescription = "Cannot edit pop-up."
+    }
+    
     // Adding the persist flag introduces the ability to 'cancel' an edit session, as is supported by the pop-up manager.
     private func setEditing(_ editing: Bool, animated: Bool, persist: Bool) {
         
@@ -221,7 +223,7 @@ class RichPopupViewController: SegmentedViewController {
         
             // User is requesting to start an editing session.
             guard popupManager.shouldAllowEdit, popupManager.startEditing() else {
-                self.present(simpleAlertMessage: "Could not edit pop-up.")
+                showError(CannotEditPopupError())
                 return
             }
         }
@@ -238,8 +240,7 @@ class RichPopupViewController: SegmentedViewController {
                 self.enableUserInteraction()
 
                 if let error = error {
-                                        
-                    self.present(simpleAlertMessage: "Could not save record. \(error.localizedDescription)")
+                    self.showError(error)
                 }
                 
                 self.updateViewControllerUI(animated: animated)
@@ -254,7 +255,7 @@ class RichPopupViewController: SegmentedViewController {
                 guard let self = self else { return }
                 
                 if let error = error {
-                    self.present(simpleAlertMessage: "Something went wrong. \(error.localizedDescription)")
+                    self.showError(error)
                 }
                 
                 // If the feature is not added to the the table, we can dismiss the view controller.
@@ -272,16 +273,15 @@ class RichPopupViewController: SegmentedViewController {
     
     private func confirmCancelEditingSession(_ completion: ((Error?) -> Void)? = nil) {
         
-        let cancelAction: ((UIAlertAction) -> Void) = { [weak self] (_) in
-            
+        let alert = UIAlertController(title: nil, message: "Discard changes?", preferredStyle: .alert)
+        let discard = UIAlertAction(title: "Discard", style: .destructive) { [weak self] (_) in
             guard let self = self else { return }
-            
             self.popupManager.cancelEditing()
-            
             completion?(nil)
         }
-        
-        present(confirmationAlertMessage: "Discard changes?", confirmationTitle: "Discard", confirmationAction: cancelAction)
+        alert.addAction(.cancel())
+        alert.addAction(discard)
+        showAlert(alert, animated: true, completion: nil)
     }
     
     // MARK: Delete Pop-up
@@ -323,7 +323,7 @@ class RichPopupViewController: SegmentedViewController {
             guard let self = self else { return }
             
             if let error = error {
-                self.present(simpleAlertMessage: "Could not delete record. \(error.localizedDescription)")
+                self.showError(error)
             }
             else {
                 self.popOrDismiss(animated: true)
@@ -333,23 +333,25 @@ class RichPopupViewController: SegmentedViewController {
     
     private func confirmDeleteRecord(_ completion: ((Error?) -> Void)? = nil) {
         
-        let deleteAction: ((UIAlertAction) -> Void) = { [weak self] (_) in
-            
+        let alert = UIAlertController(
+            title: nil,
+            message: String(format: "Delete %@", popupManager.title ?? "Record"),
+            preferredStyle: .alert
+        )
+        
+        let delete = UIAlertAction(title: "Delete", style: .destructive) { [weak self] (_) in
             guard let self = self else { return }
-
             self.disableUserInteraction(status: "Deleting Record")
-
-            self.deleteRecord() { [weak self] (error) in
-                
-                guard let self = self else { return }
-
+            self.deleteRecord() { (error) in
                 self.enableUserInteraction()
-                
                 self.popupManager.conditionallyPerformCustomBehavior { completion?(error) }
             }
         }
         
-        present(confirmationAlertMessage: String(format: "Delete %@", popupManager.title ?? "Record"), confirmationTitle: "Delete", confirmationAction: deleteAction)
+        alert.addAction(.cancel())
+        alert.addAction(delete)
+        
+        showAlert(alert, animated: true, completion: nil)
     }
     
     // MARK: Activity Status (Async load, save, delete)

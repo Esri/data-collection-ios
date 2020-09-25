@@ -28,12 +28,12 @@ extension RichPopupViewController: RichPopupDetailsViewControllerDelegate {
             guard let self = self else { return }
             
             if let error = error {
-                self.present(simpleAlertMessage: error.localizedDescription)
+                self.showError(error)
                 return
             }
             
             guard let popups = popups else {
-                self.present(simpleAlertMessage: NSError.unknown.localizedDescription)
+                self.showError(NSError.unknown)
                 return
             }
             
@@ -54,25 +54,18 @@ extension RichPopupViewController: RichPopupDetailsViewControllerDelegate {
     func detailsViewController(_ detailsViewController: RichPopupDetailsViewController, selectedViewRelatedPopup manager: RichPopupManager) {
         
         // There is no segue to self, therefore we must instantiate a `RichPopupViewController` to display the related pop-up.
-        let richPopupViewController = storyboard?.instantiateViewController(withIdentifier: "RichPopupViewController") as? RichPopupViewController
+        let controller = storyboard?.instantiateViewController(withIdentifier: "RichPopupViewController") as? RichPopupViewController
         
-        assert(richPopupViewController != nil, "A configuration to this view controller's storyboard has changed. Please fix.")
+        assert(controller != nil, "A configuration to this view controller's storyboard has changed. Please fix.")
         
-        if let richPopupViewController = richPopupViewController {
-            
-            richPopupViewController.popupManager = manager
-            
-            // We only want to traverse down 1 layer at most.
-            // Toggle this value to `true` for endless depth record traversal.
-            richPopupViewController.shouldLoadRichPopupRelatedRecords = false
-            
-            // Pushes and shows the new view controller onto the navigation stack.
-            show(richPopupViewController, sender: self)
-        }
-        else {
-            
-            present(simpleAlertMessage: "Unable to show record.")
-        }
+        controller!.popupManager = manager
+        
+        // We only want to traverse down 1 layer at most.
+        // Toggle this value to `true` for endless depth record traversal.
+        controller!.shouldLoadRichPopupRelatedRecords = false
+        
+        // Pushes and shows the new view controller onto the navigation stack.
+        show(controller!, sender: self)
     }
     
     func detailsViewController(_ detailsViewController: RichPopupDetailsViewController, selectedAddNewOneToManyRelatedRecordForRelationship relationship: OneToManyRelationship) {
@@ -84,7 +77,7 @@ extension RichPopupViewController: RichPopupDetailsViewControllerDelegate {
             newPopupManager = try popupManager.buildRichPopupManagerForNewOneToManyRecord(for: relationship)
         }
         catch {
-            self.present(simpleAlertMessage: error.localizedDescription)
+            showError(error)
             return
         }
         
