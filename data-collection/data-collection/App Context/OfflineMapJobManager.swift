@@ -20,6 +20,13 @@ protocol OfflineMapJobManagerDelegate: class {
     func offlineMapJobManager(_ manager: OfflineMapJobManager, job: OfflineMapJobManager.Job, failed error: Error)
 }
 
+/// The `OfflineMapJobManager` is responsible for creating, performing, and reporting the status of offline map jobs.
+///
+/// The `OfflineMapJobManager` permits a user to stage and perform offline map jobs, doing so one job at a time. The manager asks the user to stage a job with supplied parameters. The tool obfuscates the `AGSJob` from the user, supplying a unique ID and tools for a UI to report on the job's status. The manager supports two `AGSJob` types:
+///
+/// - On-demand download map job (`AGSGenerateOfflineMapJob`)
+/// - Sync map job (`AGSOfflineMapSyncJob`)
+///
 class OfflineMapJobManager {
     
     private enum Status {
@@ -83,7 +90,7 @@ class OfflineMapJobManager {
     
     // MARK: Job
     
-    class Job: NSObject {
+    class Job {
         
         let id = UUID()
         let progress: Progress
