@@ -220,7 +220,7 @@ public class FloatingPanelController: UIViewController {
                 }
             }
             
-            headerHiddenObservation = currentFloatingPanelItem.observe(\.headerHidden, options: [.new]) { [weak self] (_, change) in
+            headerHiddenObservation = currentFloatingPanelItem.observe(\.headerHidden) { [weak self] (_, _) in
                 DispatchQueue.main.async {
                     guard let self = self else { return }
                     self.headerViewHidden = self.currentFloatingPanelItem.headerHidden
