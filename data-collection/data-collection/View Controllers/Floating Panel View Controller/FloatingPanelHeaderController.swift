@@ -56,7 +56,7 @@ internal class FloatingPanelHeaderController: UIViewController {
                 }
             }
             
-            subtitleLabelObservation = fpItem.observe(\.subtitle, options: [.new]) { [weak self] (_, change) in
+            subtitleLabelObservation = fpItem.observe(\.subtitle) { [weak self] (_, _) in
                 DispatchQueue.main.async {
                     self?.subtitleLabel.text = fpItem.subtitle
                 }
