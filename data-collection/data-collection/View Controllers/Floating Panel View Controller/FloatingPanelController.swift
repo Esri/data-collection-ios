@@ -605,7 +605,7 @@ fileprivate class PushTransitionAnimation: NSObject, UIViewControllerAnimatedTra
         let finalFrameForVC = transitionContext.finalFrame(for: toViewController)
         let containerView = transitionContext.containerView
         
-        toViewController.view.frame = finalFrameForVC.offsetBy(dx: 0, dy: finalFrameForVC.size.height)
+        toViewController.view.frame = finalFrameForVC.offsetBy(dx: 0, dy: finalFrameForVC.height)
         containerView.addSubview(toViewController.view)
         
         UIView.animate(withDuration: transitionDuration(using: transitionContext), animations: {
