@@ -44,7 +44,7 @@ internal class FloatingPanelHeaderController: UIViewController {
             closeButton.isHidden = fpItem.closeButtonHidden
             
             // Set up the `FloatingPanelItem` observers.
-            closeButtonObservation = fpItem.observe(\.closeButtonHidden, options: [.new]) { [weak self] (_, change) in
+            closeButtonObservation = fpItem.observe(\.closeButtonHidden) { [weak self] (_, _) in
                 DispatchQueue.main.async {
                     self?.closeButton.isHidden = fpItem.closeButtonHidden
                 }
