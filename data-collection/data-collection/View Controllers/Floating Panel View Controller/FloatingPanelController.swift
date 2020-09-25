@@ -144,7 +144,7 @@ public class FloatingPanelController: UIViewController {
     
     /// The maximum height of the floating panel, taking into account the edge insets.
     private var maximumHeight: CGFloat {
-        return view.superview.map { $0.frame.inset(by: internalEdgeInsets).height } ?? 320
+        view.superview?.frame.inset(by: internalEdgeInsets).height ?? 320
     }
     
     /// The width of the floating panel for regular width size class scenarios.
