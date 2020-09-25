@@ -638,7 +638,7 @@ fileprivate class PopTransitionAnimation: NSObject, UIViewControllerAnimatedTran
         
         UIView.animate(withDuration: transitionDuration(using: transitionContext), animations: {
             toViewController.view.alpha = 1.0
-            fromViewController.view.frame = finalFrameForVC.offsetBy(dx: 0, dy: finalFrameForVC.size.height)
+            fromViewController.view.frame = finalFrameForVC.offsetBy(dx: 0, dy: finalFrameForVC.height)
         }) { (_) in
             transitionContext.completeTransition(true)
         }
