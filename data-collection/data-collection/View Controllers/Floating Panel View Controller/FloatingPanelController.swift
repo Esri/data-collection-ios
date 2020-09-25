@@ -727,7 +727,7 @@ extension FloatingPanelController: UINavigationControllerDelegate {
     
     public func navigationController(_ navigationController: UINavigationController, didShow viewController: UIViewController, animated: Bool) {
         // If we're showing the header navigation controller, set
-        // the constraints to property size the displayed view controller.
+        // the constraints to properly size the displayed view controller.
         if navigationController == headerNavigationController {
             viewController.view.layoutSubviews()
             NSLayoutConstraint.activate([
