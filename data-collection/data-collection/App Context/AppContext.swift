@@ -352,6 +352,16 @@ extension AppContext {
     }
 }
 
+private extension AGSPortal {
+
+    var configuredMap: AGSMap {
+        let item = AGSPortalItem(portal: self, itemID: PortalConfig.webMapItemID)
+        let map = AGSMap(item: item)
+        map.load(completion: nil)
+        return map
+    }
+}
+
 extension CLAuthorizationStatus: CustomStringConvertible {
     
     public var description: String {
