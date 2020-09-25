@@ -256,8 +256,8 @@ public class FloatingPanelController: UIViewController {
             
             // If we already displaying a content view controller,
             // set the state of the new view controller to match.
-            if previousFloatingPanelItem != nil {
-                viewController.floatingPanelItem.state = previousFloatingPanelItem!.state
+            if let floatingPanelItem = previousFloatingPanelItem {
+                viewController.floatingPanelItem.state = floatingPanelItem.state
             }
             
             // Create the initial header view controller and set it
