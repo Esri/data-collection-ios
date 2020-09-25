@@ -62,7 +62,7 @@ protocol FloatingPanelControllerDelegate: AnyObject {
 protocol FloatingPanelEmbeddable: UIViewController {
     /// The `FloatingPanelItem` used to access and change certain
     /// floating panel view controller properties.
-    var floatingPanelItem: FloatingPanelItem { get set }
+    var floatingPanelItem: FloatingPanelItem { get }
 }
 
 /// Helper class used to embed a view controller in a `FloatingPanelController`.
