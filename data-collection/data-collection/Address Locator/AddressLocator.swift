@@ -19,10 +19,10 @@ import ArcGIS
 class AddressLocator {
     
     // Online locator using the world geocoder service.
-    private lazy var onlineLocator = AGSLocatorTask(url: .geocodeService)
+    private lazy var onlineLocator = AGSLocatorTask(url: OnlineGeocoderConfig.url)
     
     // Offline locator using the side loaded 'AddressLocator'.
-    private lazy var offlineLocator = AGSLocatorTask(name: AddressLocatorConfig.offlineLocatorName)
+    private lazy var offlineLocator = AGSLocatorTask(name: OfflineGeocoderConfig.name)
     
     private var appContextAwareLocator: AGSLocatorTask {
         // We want to use the online locator if the work mode is online and the app has reachability.
@@ -34,6 +34,24 @@ class AddressLocator {
             return offlineLocator
         }
     }
+    
+    // MARK: Errors
+    
+    struct NoResultsError: LocalizedError {
+        let localizedDescription = "Operation yeilded no results."
+    }
+    
+    struct UnknownError: LocalizedError {
+        let localizedDescription = "An unknown error occured."
+    }
+    
+    struct MissingAttribute: LocalizedError {
+        let key: String
+        var localizedDescription: String {
+            String(format: "Geocode result missing value for key '%@'", key)
+        }
+    }
+    
     /// Reverse geocode an address from a map point.
     ///
     /// - Parameters:
@@ -65,16 +83,30 @@ class AddressLocator {
             }()
             // Perform the reverse geocode task.
             locator.reverseGeocode(withLocation: point, parameters: params) { (results, error) in
+                guard let self = self else {
+                    completion(.failure(UnknownError()))
+                    return
+                }
                 if let error = error {
                     completion(.failure(error))
                 }
-                else if
-                    let attributes = results?.first?.attributes,
-                    let address = (attributes[.address] ?? attributes[.matchAddress]) as? String {
-                    completion(.success(address))
+                else if let result = results?.first {
+                    let key: String
+                    if locator == self.onlineLocator {
+                        key = OnlineGeocoderConfig.addressAttributeKey
+                    }
+                    else {
+                        key = OfflineGeocoderConfig.addressAttributeKey
+                    }
+                    if let address = result.attributes?[key] as? String {
+                        completion(.success(address))
+                    }
+                    else {
+                        completion(.failure(MissingAttribute(key: key)))
+                    }
                 }
                 else {
-                    assertionFailure("Locator task unsupporting of required attribute key (\"\(String.address)\" for online locator, \"\(String.matchAddress)\" for offline locator).")
+                    completion(.failure(NoResultsError()))
                 }
             }
         }
@@ -88,9 +120,4 @@ class AddressLocator {
     deinit {
         removeCredentialsFromServices()
     }
-}
-
-private extension String {
-    static let address = "Address"
-    static let matchAddress = "Match_addr"
 }
