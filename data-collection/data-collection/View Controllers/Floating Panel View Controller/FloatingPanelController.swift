@@ -208,7 +208,7 @@ public class FloatingPanelController: UIViewController {
     private var allowManualResizeObservation: NSKeyValueObservation?
     private var currentFloatingPanelItem = FloatingPanelItem() {
         didSet {
-            partialHeightObservation = currentFloatingPanelItem.observe(\.partialHeight, options: [.new]) { [weak self] (_, change) in
+            partialHeightObservation = currentFloatingPanelItem.observe(\.partialHeight) { [weak self] (_, _) in
                 DispatchQueue.main.async {
                     self?.stateDidChange(animated: true)
                 }
