@@ -162,7 +162,7 @@ class ProfileViewController: UITableViewController {
          user.load { [weak self] (error) in
             guard let self = self else { return }
             if let error = error {
-                self.present(simpleAlertMessage: error.localizedDescription)
+                self.showError(error)
                 self.setNoUser()
             }
             else {
