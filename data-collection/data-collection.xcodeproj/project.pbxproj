@@ -112,8 +112,6 @@
 		948D851E2151BFD900E2048F /* AGSArcGISFeatureTable+Popup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 948D851D2151BFD900E2048F /* AGSArcGISFeatureTable+Popup.swift */; };
 		948D85202151C01500E2048F /* AGSArcGISFeatureTable+Edit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 948D851F2151C01500E2048F /* AGSArcGISFeatureTable+Edit.swift */; };
 		948D85232151C11F00E2048F /* AGSPopupManager+FeatureTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 948D85222151C11F00E2048F /* AGSPopupManager+FeatureTable.swift */; };
-		948D85262151C1F700E2048F /* UIViewController+Dismiss.swift in Sources */ = {isa = PBXBuildFile; fileRef = 948D85252151C1F700E2048F /* UIViewController+Dismiss.swift */; };
-		948D85282151C22A00E2048F /* UIViewController+Root.swift in Sources */ = {isa = PBXBuildFile; fileRef = 948D85272151C22A00E2048F /* UIViewController+Root.swift */; };
 		948D85312151C80400E2048F /* UIView+Animation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 948D85302151C80400E2048F /* UIView+Animation.swift */; };
 		9499821924AA4ED5001967A9 /* AGSPopupAttachmentSize+PreferredSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9499821824AA4ED5001967A9 /* AGSPopupAttachmentSize+PreferredSize.swift */; };
 		94A8103B20B635A000D4BC68 /* AGSQueryParameters+All.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94A8103A20B635A000D4BC68 /* AGSQueryParameters+All.swift */; };
@@ -365,8 +363,6 @@
 		948D851D2151BFD900E2048F /* AGSArcGISFeatureTable+Popup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AGSArcGISFeatureTable+Popup.swift"; sourceTree = "<group>"; };
 		948D851F2151C01500E2048F /* AGSArcGISFeatureTable+Edit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AGSArcGISFeatureTable+Edit.swift"; sourceTree = "<group>"; };
 		948D85222151C11F00E2048F /* AGSPopupManager+FeatureTable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AGSPopupManager+FeatureTable.swift"; sourceTree = "<group>"; };
-		948D85252151C1F700E2048F /* UIViewController+Dismiss.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Dismiss.swift"; sourceTree = "<group>"; };
-		948D85272151C22A00E2048F /* UIViewController+Root.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Root.swift"; sourceTree = "<group>"; };
 		948D85302151C80400E2048F /* UIView+Animation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Animation.swift"; sourceTree = "<group>"; };
 		9499821824AA4ED5001967A9 /* AGSPopupAttachmentSize+PreferredSize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AGSPopupAttachmentSize+PreferredSize.swift"; sourceTree = "<group>"; };
 		94A8103A20B635A000D4BC68 /* AGSQueryParameters+All.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AGSQueryParameters+All.swift"; sourceTree = "<group>"; };
@@ -801,15 +797,6 @@
 			path = AGSPopupManager;
 			sourceTree = "<group>";
 		};
-		948D85242151C1DB00E2048F /* UIViewController */ = {
-			isa = PBXGroup;
-			children = (
-				948D85252151C1F700E2048F /* UIViewController+Dismiss.swift */,
-				948D85272151C22A00E2048F /* UIViewController+Root.swift */,
-			);
-			path = UIViewController;
-			sourceTree = "<group>";
-		};
 		948D852F2151C7E900E2048F /* UIView */ = {
 			isa = PBXGroup;
 			children = (
@@ -949,7 +936,6 @@
 				948D85392151CAE400E2048F /* UIStoryboardSegue */,
 				948D85362151C8A400E2048F /* UIColor */,
 				948D852F2151C7E900E2048F /* UIView */,
-				948D85242151C1DB00E2048F /* UIViewController */,
 			);
 			path = UIKit;
 			sourceTree = "<group>";
@@ -1408,7 +1394,6 @@
 				945F454C21E8009A00F2DCBC /* PopupAddAttachmentCell.swift in Sources */,
 				945F453F21E7CA6B00F2DCBC /* PopupAttributeTextFieldCell.swift in Sources */,
 				945F451121E683C000F2DCBC /* RichPopupViewController.swift in Sources */,
-				948D85262151C1F700E2048F /* UIViewController+Dismiss.swift in Sources */,
 				94D544D720852A5100ED0D04 /* CompassView.swift in Sources */,
 				94B375F6207E8E4800691F2A /* AGSPortal+CachedCredentials.swift in Sources */,
 				948794342200CE7B007BC15E /* RichPopupViewController+RichPopupSelectRelatedRecordViewControllerDelegate.swift in Sources */,
@@ -1461,7 +1446,6 @@
 				94D2714320D0578000304E27 /* OneToManyRelationship.swift in Sources */,
 				94B375C1207E8D5600691F2A /* AppConfiguration.swift in Sources */,
 				946569062087FBF700599E55 /* MapViewController+UserLocation.swift in Sources */,
-				948D85282151C22A00E2048F /* UIViewController+Root.swift in Sources */,
 				948794382200CEE0007BC15E /* RichPopupViewController+UIImagePickerControllerDelegate.swift in Sources */,
 				945CEE7620DDC2AC00CD3E0D /* SVProgressAnimatedView.m in Sources */,
 				946569142088023600599E55 /* AGSPopupManager+Formatting.swift in Sources */,
