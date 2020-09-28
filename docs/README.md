@@ -1285,7 +1285,7 @@ A `StyledFirstResponderLabel` is a custom `UILabel` subclass that converts the l
 
 **Floating Panel Controller**
 
-`FloatingPanelController` is a custom `UIViewController` subclass that allows for display of content in a "floating panel", sometimes also referred to as a "bottom sheet".  Displayed content is encapsulated in a `UIViewController` that implements the `FloatingPanelEmbeddable` protocol.  Currently both "Layers" and "Bookmarks" display in a `FloatingPanelController`.
+`FloatingPanelController` is a custom `UIViewController` subclass that allows for display of content in a "floating panel", sometimes referred to as a "bottom sheet".  Displayed content is encapsulated in a `UIViewController` that implements the `FloatingPanelEmbeddable` protocol.  Currently both "Layers" and "Bookmarks" are shown in a `FloatingPanelController`.
 
 ### Controller: app context aware
 
