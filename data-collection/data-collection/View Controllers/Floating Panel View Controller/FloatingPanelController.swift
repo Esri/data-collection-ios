@@ -126,7 +126,8 @@ public class FloatingPanelController: UIViewController {
     
     /// The maximum height of the floating panel, taking into account the edge insets.
     private var maximumHeight: CGFloat {
-        view.superview?.frame.inset(by: internalEdgeInsets).height ?? 320
+        let edgeInsets = isCompactWidth ? compactWidthInsets : regularWidthInsets
+        return view.superview?.frame.inset(by: edgeInsets).height ?? 320
     }
     
     /// The width of the floating panel for regular width size class scenarios.
@@ -288,24 +289,11 @@ public class FloatingPanelController: UIViewController {
     
     /// The insets from the edge of the screen for the regular width size class.
     /// Defaults to `8.0, 8.0, 8.0, 8.0`
-    public var regularWidthInsets = UIEdgeInsets(top: 8.0, left: 8.0, bottom: 8.0, right: 8.0) {
-        didSet {
-            setupConstraints()
-        }
-    }
+    private(set) var regularWidthInsets = UIEdgeInsets(top: 8.0, left: 8.0, bottom: 8.0, right: 8.0)
     
     /// The insets from the edge of the screen for the compact width size class.
     /// Defaults to `8.0, 0.0, 0.0, 0.0`
-    public var compactWidthInsets = UIEdgeInsets(top: 8.0, left: 0.0, bottom: 0.0, right: 0.0) {
-        didSet {
-            setupConstraints()
-        }
-    }
-    
-    /// The edge insets for the current layout.
-    private var internalEdgeInsets: UIEdgeInsets {
-        return isCompactWidth ? compactWidthInsets : regularWidthInsets
-    }
+    private(set) var compactWidthInsets = UIEdgeInsets(top: 8.0, left: 0.0, bottom: 0.0, right: 0.0)
     
     /// Denotes whether the floating panel view controller is being displayed in
     /// a compact width layout.
@@ -397,12 +385,20 @@ public class FloatingPanelController: UIViewController {
     
     /// Instantiates a `FloatingPanelController` from the storyboard.
     /// - Returns: A `FloatingPanelController`.
-    static func instantiate(_ initialViewController: FloatingPanelEmbeddable) -> FloatingPanelController {
+    /// - Parameters:
+    ///   - initialViewController: The initial view controller to display.
+    ///   - regularWidthInsets: The UIEdgeInsets used in a regular width horizontal size class.
+    ///   - compactWidthInsets: The UIEdgeInsets used in a compact width horizontal size class.
+    static func instantiate(_ initialViewController: FloatingPanelEmbeddable,
+                            regularWidthInsets: UIEdgeInsets = UIEdgeInsets(top: 8.0, left: 8.0, bottom: 8.0, right: 8.0),
+                            compactWidthInsets: UIEdgeInsets = UIEdgeInsets(top: 8.0, left: 0.0, bottom: 0.0, right: 0.0)) -> FloatingPanelController {
         // Get the storyboard for the FloatingPanelController.
         let storyboard = UIStoryboard(name: "FloatingPanelController", bundle: .main)
         // Instantiate the FloatingPanelController.
         let floatingPanelController = storyboard.instantiateInitialViewController() as! FloatingPanelController
         floatingPanelController.initialViewController = initialViewController
+        floatingPanelController.regularWidthInsets = regularWidthInsets
+        floatingPanelController.compactWidthInsets = compactWidthInsets
         return floatingPanelController
     }
 
@@ -759,41 +755,35 @@ fileprivate class FloatingPanelNavigationController: UINavigationController {
 }
 
 extension UIViewController {
-    /// Presents a new floating panel view controller with
-    /// the given `initialViewController`
-    /// - Parameter initialViewController: The intial view controller to display.
-    /// - Returns: The floating panel displayed.
-    func presentFloatingPanel(_ initialViewController: FloatingPanelEmbeddable) -> FloatingPanelController {
-        let floatingPanelController = FloatingPanelController.instantiate(initialViewController)
-        floatingPanelController.view.translatesAutoresizingMaskIntoConstraints = false
-
-        addChild(floatingPanelController)
-        view.addSubview(floatingPanelController.view)
-        floatingPanelController.didMove(toParent: self)
+    /// Presents a `FloatingPanelController`.
+    /// - Parameter floatingPanel: The floating panel to display.
+    func presentFloatingPanel(_ floatingPanel: FloatingPanelController) {
+        addChild(floatingPanel)
+        view.addSubview(floatingPanel.view)
+        floatingPanel.didMove(toParent: self)
+        floatingPanel.view.translatesAutoresizingMaskIntoConstraints = false
 
         // Set the constraints needed to position the floating panel on the
         // left side of the screen, taking into account the size class insets.
-        if let floatingPanelView = floatingPanelController.view {
-            floatingPanelController.regularWidthConstraints = [
-                floatingPanelView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: floatingPanelController.regularWidthInsets.left),
+        if let floatingPanelView = floatingPanel.view {
+            floatingPanel.regularWidthConstraints = [
+                floatingPanelView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: floatingPanel.regularWidthInsets.left),
                 floatingPanelView.widthAnchor.constraint(equalToConstant: FloatingPanelController.floatingPanelWidth),
-                floatingPanelView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: floatingPanelController.regularWidthInsets.top),
-                view.safeAreaLayoutGuide.bottomAnchor.constraint(greaterThanOrEqualTo: floatingPanelView.bottomAnchor, constant: floatingPanelController.regularWidthInsets.bottom)
+                floatingPanelView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: floatingPanel.regularWidthInsets.top),
+                view.safeAreaLayoutGuide.bottomAnchor.constraint(greaterThanOrEqualTo: floatingPanelView.bottomAnchor, constant: floatingPanel.regularWidthInsets.bottom)
             ]
             
-            floatingPanelController.compactWidthConstraints = [
-                floatingPanelView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: floatingPanelController.compactWidthInsets.left),
-                floatingPanelView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: floatingPanelController.compactWidthInsets.right),
-                floatingPanelView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: floatingPanelController.compactWidthInsets.bottom),
-                floatingPanelView.topAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.topAnchor, constant: floatingPanelController.compactWidthInsets.top),
-                view.safeAreaLayoutGuide.bottomAnchor.constraint(greaterThanOrEqualTo: floatingPanelController.headerView.bottomAnchor, constant: floatingPanelController.compactWidthInsets.bottom)
+            floatingPanel.compactWidthConstraints = [
+                floatingPanelView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: floatingPanel.compactWidthInsets.left),
+                floatingPanelView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: floatingPanel.compactWidthInsets.right),
+                floatingPanelView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: floatingPanel.compactWidthInsets.bottom),
+                floatingPanelView.topAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.topAnchor, constant: floatingPanel.compactWidthInsets.top),
+                view.safeAreaLayoutGuide.bottomAnchor.constraint(greaterThanOrEqualTo: floatingPanel.headerView.bottomAnchor, constant: floatingPanel.compactWidthInsets.bottom)
             ]
         }
-
-        return floatingPanelController
     }
     
-    /// Dismisses the given floating panel view controller.
+    /// Dismisses the given `FloatingPanelController`.
     func dismissFloatingPanel(_ floatingPanel: FloatingPanelController) {
         floatingPanel.willMove(toParent: nil)
         floatingPanel.removeFromParent()
