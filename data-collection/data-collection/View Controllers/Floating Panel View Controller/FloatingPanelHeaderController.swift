@@ -31,41 +31,39 @@ internal class FloatingPanelHeaderController: UIViewController {
     
     var floatingPanelItem: FloatingPanelItem? {
         didSet {
-            guard let fpItem = floatingPanelItem else { return }
+            guard let item = floatingPanelItem else { return }
             
             // Ensure the view is loaded.
             loadViewIfNeeded()
             
             // Set the applicable `FloatingPanelItem` properties on our controls.
-            titleLabel.text = fpItem.title
-            subtitleLabel.text = fpItem.subtitle
-            imageView.image = fpItem.image
-            setImageViewHidden(imageView.image == nil)
-            closeButton.isHidden = fpItem.closeButtonHidden
+            titleLabel.text = item.title
+            subtitleLabel.text = item.subtitle
+            setImage(from: item)
+            closeButton.isHidden = item.closeButtonHidden
             
             // Set up the `FloatingPanelItem` observers.
-            closeButtonObservation = fpItem.observe(\.closeButtonHidden) { [weak self] (_, _) in
+            closeButtonObservation = item.observe(\.closeButtonHidden) { [weak self] (_, _) in
                 DispatchQueue.main.async {
-                    self?.closeButton.isHidden = fpItem.closeButtonHidden
+                    self?.closeButton.isHidden = item.closeButtonHidden
                 }
             }
             
-            titleLabelObservation = fpItem.observe(\.title) { [weak self] (_, _) in
+            titleLabelObservation = item.observe(\.title) { [weak self] (_, _) in
                 DispatchQueue.main.async {
-                    self?.titleLabel.text = fpItem.title
+                    self?.titleLabel.text = item.title
                 }
             }
             
-            subtitleLabelObservation = fpItem.observe(\.subtitle) { [weak self] (_, _) in
+            subtitleLabelObservation = item.observe(\.subtitle) { [weak self] (_, _) in
                 DispatchQueue.main.async {
-                    self?.subtitleLabel.text = fpItem.subtitle
+                    self?.subtitleLabel.text = item.subtitle
                 }
             }
             
-            imageViewObservation = fpItem.observe(\.image) { [weak self] (_, _) in
+            imageViewObservation = item.observe(\.image) { [weak self] (_, _) in
                 DispatchQueue.main.async {
-                    self?.imageView.image = fpItem.image
-                    self?.setImageViewHidden(self?.imageView.image == nil)
+                    self?.setImage(from: item)
                 }
             }
         }
@@ -84,14 +82,36 @@ internal class FloatingPanelHeaderController: UIViewController {
         return storyboard.instantiateViewController(withIdentifier: "FloatingPanelHeaderController") as! FloatingPanelHeaderController
     }
     
+    public override func viewDidLoad() {
+//        if #available(iOS 13.0, *) {
+//            // In iOS 12.x, this used to crash without using `.alert` or setting either
+//            // a UIBarButtonItem or sourceView and rect.  Fixed in iOS 13.
+//            closeButton.buttonType = .close
+//        }
+//        else {
+//            style = .alert
+//        }
+//
+    }
+    
     @IBAction func closeButtonAction(_ sender: Any) {
         closeButtonHandler?()
     }
     
-    /// Shows or hides the imageView and associated subtitle spacer.
+    /// Sets the image on the image view and adjusts the visibility of
+    /// the imageView and subtitle spacer view based on the presence
+    /// of `item.image`.
     /// - Parameter isHidden: Denotes whether the imageView should be hidden.
-    private func setImageViewHidden(_ isHidden: Bool) {
-        imageView.isHidden = isHidden
-        subtitleSpacerView.isHidden = isHidden
+    private func setImage(from item: FloatingPanelItem) {
+        if let image = item.image {
+            imageView.image = image
+            imageView.isHidden = false
+            subtitleSpacerView.isHidden = false
+        }
+        else {
+            imageView.image = nil
+            imageView.isHidden = true
+            subtitleSpacerView.isHidden = true
+        }
     }
 }
