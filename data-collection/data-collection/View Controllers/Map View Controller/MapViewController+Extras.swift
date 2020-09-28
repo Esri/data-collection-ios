@@ -77,10 +77,15 @@ extension MapViewController {
 
             layerContentsViewController = layerContentsVC
         }
-
-        // Show the layer contents in a floating panel.
-        floatingPanelController = presentFloatingPanel(layerContentsVC)
-        floatingPanelController?.delegate = self
+        
+        // Show the layer contents in a floating panel.  Use the adjusted insets
+        // for the regular width case, as for compact width the floating panel
+        // will extent all the way to the bottom.
+        let floatingPanel = FloatingPanelController.instantiate(layerContentsVC,
+                                                                regularWidthInsets: adjustedFloatingPanelInsets())
+        floatingPanelController = floatingPanel
+        presentFloatingPanel(floatingPanel)
+        floatingPanel.delegate = self
     }
     
     func showBookmarks(_ barButtonItem: UIBarButtonItem?) {
@@ -88,14 +93,26 @@ extension MapViewController {
         let bookmarksVC = BookmarksViewController(geoView: mapView)
         bookmarksVC.delegate = self
         
-        // Dismiss the existing floating panel and show the layer contents.
-        floatingPanelController = presentFloatingPanel(bookmarksVC)
-        floatingPanelController?.delegate = self
+        // Show the bookmarks in a floating panel.  Use the adjusted insets
+        // for the regular width case, as for compact width the floating panel
+        // will extent all the way to the bottom.
+        let floatingPanel = FloatingPanelController.instantiate(bookmarksVC,
+                                                                regularWidthInsets: adjustedFloatingPanelInsets())
+        floatingPanelController = floatingPanel
+        presentFloatingPanel(floatingPanel)
+        floatingPanel.delegate = self
     }
 
     @objc
     func done() {
         dismiss(animated: true)
+    }
+    
+    /// Create the floating panel insets, taking into account the map view's
+    /// adjusted content inset for the attribution bar.
+    /// - Returns: The floating panel insets.
+    private func adjustedFloatingPanelInsets() -> UIEdgeInsets {
+        return UIEdgeInsets(top: 8.0, left: 8.0, bottom: mapView.adjustedContentInset.bottom + 8.0, right: 8.0)
     }
 }
 
