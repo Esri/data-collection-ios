@@ -80,7 +80,7 @@ extension MapViewController {
         
         // Show the layer contents in a floating panel.  Use the adjusted insets
         // for the regular width case, as for compact width the floating panel
-        // will extent all the way to the bottom.
+        // will extend all the way to the bottom.
         let floatingPanel = FloatingPanelController.instantiate(layerContentsVC,
                                                                 regularWidthInsets: adjustedFloatingPanelInsets())
         floatingPanelController = floatingPanel
@@ -95,7 +95,7 @@ extension MapViewController {
         
         // Show the bookmarks in a floating panel.  Use the adjusted insets
         // for the regular width case, as for compact width the floating panel
-        // will extent all the way to the bottom.
+        // will extend all the way to the bottom.
         let floatingPanel = FloatingPanelController.instantiate(bookmarksVC,
                                                                 regularWidthInsets: adjustedFloatingPanelInsets())
         floatingPanelController = floatingPanel

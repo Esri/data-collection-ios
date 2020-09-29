@@ -722,7 +722,7 @@ extension FloatingPanelController: UINavigationControllerDelegate {
 /// automatically display the header representing the displayed
 /// view controller's floating panel item.
 fileprivate class FloatingPanelNavigationController: UINavigationController {
-    public typealias CreateHeaderViewControllerHandler = (FloatingPanelEmbeddable) -> UIViewController?
+    typealias CreateHeaderViewControllerHandler = (FloatingPanelEmbeddable) -> UIViewController?
     
     /// The header navigation controller which displays the header view controller
     var headerNavigationController: UINavigationController?
