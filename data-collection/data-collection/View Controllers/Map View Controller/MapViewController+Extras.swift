@@ -142,16 +142,11 @@ extension BookmarksViewController: FloatingPanelEmbeddable {
     // this as a computed property.  Otherwise, that class would need
     // to be updated to implement FloatingPanelEmbeddable.
     public var floatingPanelItem: FloatingPanelItem {
-        get {
-            let fpItem = FloatingPanelItem()
-            fpItem.title = MapViewControllerExtras.bookmarks.title
-            fpItem.subtitle = "Select a bookmark"
-            fpItem.image = UIImage(named: "bookmark")
-            return fpItem
-        }
-        set {
-            //No-op
-        }
+        let fpItem = FloatingPanelItem()
+        fpItem.title = MapViewControllerExtras.bookmarks.title
+        fpItem.subtitle = "Select a bookmark"
+        fpItem.image = UIImage(named: "bookmark")
+        return fpItem
     }
 }
 
