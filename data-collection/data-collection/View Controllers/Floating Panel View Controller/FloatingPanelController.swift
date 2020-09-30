@@ -786,7 +786,7 @@ extension UIViewController {
     /// Dismisses the given `FloatingPanelController`.
     func dismissFloatingPanel(_ floatingPanel: FloatingPanelController) {
         floatingPanel.willMove(toParent: nil)
-        floatingPanel.removeFromParent()
         floatingPanel.view.removeFromSuperview()
+        floatingPanel.removeFromParent()
     }
 }
