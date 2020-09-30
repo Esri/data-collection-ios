@@ -561,7 +561,7 @@ public class FloatingPanelController: UIViewController {
     }
     
     /// For some reason, the first time the initial view controller is set there
-    /// are two calls to `navigationController:didShow:viewController:animated`.
+    /// are two calls to `navigationController(_:didShow:animated:)`.
     /// The second call messes up the logic for which header view controller to show.
     /// Adding a check for `animating` prevents the second call from happening.
     fileprivate var animating = false
