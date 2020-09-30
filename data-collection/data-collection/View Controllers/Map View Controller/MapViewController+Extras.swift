@@ -81,26 +81,18 @@ extension MapViewController {
         // Show the layer contents in a floating panel.  Use the adjusted insets
         // for the regular width case, as for compact width the floating panel
         // will extend all the way to the bottom.
-        let floatingPanel = FloatingPanelController.instantiate(layerContentsVC,
-                                                                regularWidthInsets: adjustedFloatingPanelInsets())
-        floatingPanelController = floatingPanel
-        presentFloatingPanel(floatingPanel)
-        floatingPanel.delegate = self
+        presentInFloatingPanel(layerContentsVC, regularWidthInsets: adjustedFloatingPanelInsets())
     }
     
     func showBookmarks(_ barButtonItem: UIBarButtonItem?) {
         // Configure the view controller.
         let bookmarksVC = BookmarksViewController(geoView: mapView)
         bookmarksVC.delegate = self
-        
+
         // Show the bookmarks in a floating panel.  Use the adjusted insets
         // for the regular width case, as for compact width the floating panel
         // will extend all the way to the bottom.
-        let floatingPanel = FloatingPanelController.instantiate(bookmarksVC,
-                                                                regularWidthInsets: adjustedFloatingPanelInsets())
-        floatingPanelController = floatingPanel
-        presentFloatingPanel(floatingPanel)
-        floatingPanel.delegate = self
+        presentInFloatingPanel(bookmarksVC, regularWidthInsets: adjustedFloatingPanelInsets())
     }
 
     @objc
@@ -131,7 +123,7 @@ extension MapViewController: FloatingPanelControllerDelegate {
         UIView.animate(withDuration: 0.5, animations: {
             floatingPanelController.view.alpha = 0.0
         }) { [weak self] (_) in
-            self?.dismissFloatingPanel(floatingPanelController)
+            self?.dismissFloatingPanel()
         }
     }
 }
@@ -162,3 +154,5 @@ extension LayerContentsViewController: FloatingPanelEmbeddable {
         return item
     }
 }
+
+extension MapViewController: FloatingPanelPresenter { }

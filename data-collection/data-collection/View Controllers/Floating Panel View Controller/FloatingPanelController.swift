@@ -757,10 +757,27 @@ fileprivate class FloatingPanelNavigationController: UINavigationController {
     }
 }
 
-extension UIViewController {
+/// Protocol designed to be implemented by objects that will display a floating panel.
+protocol FloatingPanelPresenter: class {
+    /// The floating panel to be displayed.
+    var floatingPanelController: FloatingPanelController? { get set }
+}
+
+extension FloatingPanelPresenter where Self: FloatingPanelControllerDelegate, Self: UIViewController {
     /// Presents a `FloatingPanelController`.
-    /// - Parameter floatingPanel: The floating panel to display.
-    func presentFloatingPanel(_ floatingPanel: FloatingPanelController) {
+    /// - Parameters:
+    ///   - embeddable: The initial `FloatingPanelEmbeddable` view controller to display.
+    ///   - regularWidthInsets: The UIEdgeInsets used in a regular width horizontal size class.
+    ///   - compactWidthInsets: The UIEdgeInsets used in a compact width horizontal size class.
+    func presentInFloatingPanel(_ embeddable: FloatingPanelEmbeddable,
+                                regularWidthInsets: UIEdgeInsets = UIEdgeInsets(top: 8.0, left: 8.0, bottom: 8.0, right: 8.0),
+                                compactWidthInsets: UIEdgeInsets = UIEdgeInsets(top: 8.0, left: 0.0, bottom: 0.0, right: 0.0)) {
+        let floatingPanel = FloatingPanelController.instantiate(embeddable,
+                                                                regularWidthInsets: regularWidthInsets,
+                                                                compactWidthInsets: compactWidthInsets)
+        floatingPanelController = floatingPanel
+        floatingPanel.delegate = self
+
         addChild(floatingPanel)
         view.addSubview(floatingPanel.view)
         floatingPanel.didMove(toParent: self)
@@ -786,10 +803,10 @@ extension UIViewController {
         }
     }
     
-    /// Dismisses the given `FloatingPanelController`.
-    func dismissFloatingPanel(_ floatingPanel: FloatingPanelController) {
-        floatingPanel.willMove(toParent: nil)
-        floatingPanel.view.removeFromSuperview()
-        floatingPanel.removeFromParent()
+    /// Dismisses the `FloatingPanelController`.
+    func dismissFloatingPanel() {
+        floatingPanelController?.willMove(toParent: nil)
+        floatingPanelController?.view.removeFromSuperview()
+        floatingPanelController?.removeFromParent()
     }
 }
