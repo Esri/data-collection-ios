@@ -156,11 +156,9 @@ extension LayerContentsViewController: FloatingPanelEmbeddable {
     // this as a computed property.  Otherwise, that class would need
     // to be updated to implement FloatingPanelEmbeddable.
     public var floatingPanelItem: FloatingPanelItem {
-        get {
-            let item = FloatingPanelItem()
-            item.title = MapViewControllerExtras.layers.title
-            item.image = UIImage(named: "layers")
-            return item
-        }
+        let item = FloatingPanelItem()
+        item.title = MapViewControllerExtras.layers.title
+        item.image = UIImage(named: "layers")
+        return item
     }
 }
