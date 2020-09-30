@@ -365,6 +365,10 @@ public class FloatingPanelController: UIViewController {
     
     override public func viewDidLoad() {
         super.viewDidLoad()
+        
+        // Set clipToBounds = true so that the rounded corner masks will work.
+        view.clipsToBounds = true
+
         setupContentNavigationController()
         setupHeaderNavigationController()
         
@@ -535,7 +539,6 @@ public class FloatingPanelController: UIViewController {
             maskedCorners.formUnion([.layerMaxXMaxYCorner, .layerMinXMaxYCorner])
         }
         view.layer.maskedCorners = maskedCorners
-        view.clipsToBounds = true
     }
     
     /// Animates the resizable constraint to the new constant value.
@@ -567,7 +570,7 @@ public class FloatingPanelController: UIViewController {
     fileprivate var animating = false
 }
 
-fileprivate let transitionAnimationDuration: TimeInterval = 0.5
+private let transitionAnimationDuration: TimeInterval = 0.5
 
 /// The class handling push transition animations for the content navigation controller.
 fileprivate class PushTransitionAnimation: NSObject, UIViewControllerAnimatedTransitioning {

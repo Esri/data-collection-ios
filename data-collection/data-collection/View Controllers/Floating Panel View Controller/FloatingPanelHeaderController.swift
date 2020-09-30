@@ -24,10 +24,7 @@ internal class FloatingPanelHeaderController: UIViewController {
     
     /// Observers for `FloatingPanelItem` properties that are
     /// displayed by the `FloatingPanelHeaderController`.
-    private var closeButtonObservation: NSKeyValueObservation?
-    private var titleLabelObservation: NSKeyValueObservation?
-    private var subtitleLabelObservation: NSKeyValueObservation?
-    private var imageViewObservation: NSKeyValueObservation?
+    private var observers: [NSKeyValueObservation]?
     
     var floatingPanelItem: FloatingPanelItem? {
         didSet {
@@ -43,29 +40,27 @@ internal class FloatingPanelHeaderController: UIViewController {
             closeButton.isHidden = item.closeButtonHidden
             
             // Set up the `FloatingPanelItem` observers.
-            closeButtonObservation = item.observe(\.closeButtonHidden) { [weak self] (_, _) in
-                DispatchQueue.main.async {
-                    self?.closeButton.isHidden = item.closeButtonHidden
-                }
-            }
-            
-            titleLabelObservation = item.observe(\.title) { [weak self] (_, _) in
-                DispatchQueue.main.async {
-                    self?.titleLabel.text = item.title
-                }
-            }
-            
-            subtitleLabelObservation = item.observe(\.subtitle) { [weak self] (_, _) in
-                DispatchQueue.main.async {
-                    self?.subtitleLabel.text = item.subtitle
-                }
-            }
-            
-            imageViewObservation = item.observe(\.image) { [weak self] (_, _) in
-                DispatchQueue.main.async {
-                    self?.setImage(from: item)
-                }
-            }
+            observers = [
+                item.observe(\.closeButtonHidden) { [weak self] (_, _) in
+                    DispatchQueue.main.async {
+                        self?.closeButton.isHidden = item.closeButtonHidden
+                    }
+                },
+                item.observe(\.title) { [weak self] (_, _) in
+                    DispatchQueue.main.async {
+                        self?.titleLabel.text = item.title
+                    }
+                },
+                item.observe(\.subtitle) { [weak self] (_, _) in
+                    DispatchQueue.main.async {
+                        self?.subtitleLabel.text = item.subtitle
+                    }
+                },
+                item.observe(\.image) { [weak self] (_, _) in
+                    DispatchQueue.main.async {
+                        self?.setImage(from: item)
+                    }
+                }]
         }
     }
     
