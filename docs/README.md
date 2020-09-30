@@ -1209,6 +1209,10 @@ These custom views are built and their layouts are managed in a storyboard.
 
 A `StyledFirstResponderLabel` is a custom `UILabel` subclass that converts the label into a first responder and styles the label upon user interaction. Similarly, `StyledTextView` and `StyledTextField` are subclasses that style (`UITextView` and `UITextField`, respectively)  to appear editable or not based on if user interaction is enabled.
 
+**Floating Panel Controller**
+
+`FloatingPanelController` is a custom `UIViewController` subclass that allows for display of content in a "floating panel", sometimes referred to as a "bottom sheet".  Displayed content is encapsulated in a `UIViewController` that implements the `FloatingPanelEmbeddable` protocol.  Currently both "Layers" and "Bookmarks" are shown in a `FloatingPanelController`.
+
 ### Controller: app context aware
 
 Some view controllers are made aware of changes to the app context so they may update accordingly. Because all changes broadcasted by the `AppContextChangeHandler` are performed on the main thread, these view controllers can safely update UI. To learn more about the `AppContextChangeHandler` see above section entitled [_App Context Change Handler_](#app-context-change-handler).
