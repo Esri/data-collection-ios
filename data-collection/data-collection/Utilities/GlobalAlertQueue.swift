@@ -61,7 +61,7 @@ private class GlobalAlertQueue: PhantomDelegate {
     
     private init() { }
     
-    var alertWindow: UIWindow?
+    private var alertWindow: UIWindow?
     
     private var queue = Queue<AlertItem>()
     
