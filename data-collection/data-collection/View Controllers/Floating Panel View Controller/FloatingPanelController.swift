@@ -762,8 +762,8 @@ fileprivate class FloatingPanelNavigationController: UINavigationController {
 protocol FloatingPanelPresenter: UIViewController { }
 
 extension FloatingPanelPresenter {
-    /// The presented floating panel controller.  This will not be populated
-    /// until the panel has been presented.
+    /// The presented floating panel controller.  This will be nil
+    /// until `presentInFloatingPanel` has been called.
     var floatingPanelController: FloatingPanelController? {
         children.first(where: { $0 is FloatingPanelController }) as? FloatingPanelController
     }
