@@ -58,12 +58,6 @@ class MapViewController: UIViewController {
     
     var extrasNavigationController: UINavigationController?
     var layerContentsViewController: LayerContentsViewController?
-    var floatingPanelController: FloatingPanelController? {
-        willSet {
-            // Dismiss the existing floating panel.
-            dismissFloatingPanel()
-        }
-    }
 
     var mapViewMode: MapViewMode = .defaultView {
         didSet {
