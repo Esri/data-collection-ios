@@ -757,13 +757,14 @@ fileprivate class FloatingPanelNavigationController: UINavigationController {
     }
 }
 
-/// Protocol designed to be implemented by objects that will display a floating panel.
-protocol FloatingPanelPresenter: class {
-    /// The floating panel to be displayed.
-    var floatingPanelController: FloatingPanelController? { get set }
-}
+/// An extension allowing view controllers to easily present and dismiss a floating panel.
+extension UIViewController {
+    /// The presented floating panel controller.  This will be nil
+    /// until `presentInFloatingPanel` has been called.
+    var floatingPanelController: FloatingPanelController? {
+        children.first(where: { $0 is FloatingPanelController }) as? FloatingPanelController
+    }
 
-extension FloatingPanelPresenter where Self: FloatingPanelControllerDelegate, Self: UIViewController {
     /// Presents a `FloatingPanelController`.
     /// - Parameters:
     ///   - embeddable: The initial `FloatingPanelEmbeddable` view controller to display.
@@ -772,11 +773,14 @@ extension FloatingPanelPresenter where Self: FloatingPanelControllerDelegate, Se
     func presentInFloatingPanel(_ embeddable: FloatingPanelEmbeddable,
                                 regularWidthInsets: UIEdgeInsets = UIEdgeInsets(top: 8.0, left: 8.0, bottom: 8.0, right: 8.0),
                                 compactWidthInsets: UIEdgeInsets = UIEdgeInsets(top: 8.0, left: 0.0, bottom: 0.0, right: 0.0)) {
+        // First, dismiss the existing floating panel.
+        dismissFloatingPanel()
+        
+        // Instantiate a new floating panel.
         let floatingPanel = FloatingPanelController.instantiate(embeddable,
                                                                 regularWidthInsets: regularWidthInsets,
                                                                 compactWidthInsets: compactWidthInsets)
-        floatingPanelController = floatingPanel
-        floatingPanel.delegate = self
+        floatingPanel.delegate = self as? FloatingPanelControllerDelegate
 
         addChild(floatingPanel)
         view.addSubview(floatingPanel.view)
@@ -805,8 +809,9 @@ extension FloatingPanelPresenter where Self: FloatingPanelControllerDelegate, Se
     
     /// Dismisses the `FloatingPanelController`.
     func dismissFloatingPanel() {
-        floatingPanelController?.willMove(toParent: nil)
-        floatingPanelController?.view.removeFromSuperview()
-        floatingPanelController?.removeFromParent()
+        guard let floatingPanel = floatingPanelController else { return }
+        floatingPanel.willMove(toParent: nil)
+        floatingPanel.view.removeFromSuperview()
+        floatingPanel.removeFromParent()
     }
 }
