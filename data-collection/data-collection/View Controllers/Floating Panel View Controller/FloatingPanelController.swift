@@ -757,8 +757,7 @@ fileprivate class FloatingPanelNavigationController: UINavigationController {
     }
 }
 
-/// A convenience protocol that can be implemented by view controllers
-/// displaying a floating panel to easily present and dismiss the panel.
+/// An extension allowing view controllers to easily present and dismiss a floating panel.
 extension UIViewController {
     /// The presented floating panel controller.  This will be nil
     /// until `presentInFloatingPanel` has been called.

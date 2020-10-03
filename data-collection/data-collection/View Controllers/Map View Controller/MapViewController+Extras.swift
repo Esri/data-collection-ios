@@ -154,5 +154,3 @@ extension LayerContentsViewController: FloatingPanelEmbeddable {
         return item
     }
 }
-
-extension MapViewController: FloatingPanelPresenter { }
