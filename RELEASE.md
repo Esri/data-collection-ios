@@ -1,6 +1,14 @@
 # Release 1.3
 
 - TODO
+- Introduces an improved `AppContext` state-based architecture and more clear separation of responsibility. This architecture achieves more stability and resolves some found Portal related edge cases. Consult [docs](./docs/README.md#app-context) for more information.
+- Dissolves `AppLocation` into sub-component of `AppContext`.
+- Dissolves `AppGlobals` into `AppContext`.
+- Dissolves `AppFiles` into `OfflineMapManager`.
+- Removes `AppFonts` as it provides very little utility.
+- Removes `NetworkReachabilityManager` as a first class state mechanism allowing app to determine reachability with every network request, removes `Alamofire` swift package.
+- Reformats `AppConfiguration` to be more clear.
+- Introduces `GlobalAlertQueue`, a utility for enqueueing and presenting alerts in a stand-alone alert window (`UIWindow`). This change improves the reliability of presenting alerts from any app component - context, view, or otherwise.
 
 # Release 1.2.2
 
