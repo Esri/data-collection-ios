@@ -15,7 +15,7 @@
 import Foundation
 import ArcGIS
 
-/// This class facilitates reverse geocoding, contingent on app work mode and reachability.
+/// This class facilitates reverse geocoding, contingent on app work mode.
 class AddressLocator {
     
     // Online locator using the world geocoder service.
