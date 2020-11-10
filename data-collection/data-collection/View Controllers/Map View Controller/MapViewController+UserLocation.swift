@@ -23,7 +23,7 @@ extension MapViewController {
             return
         }
         
-        if appLocation.locationAuthorized {
+        if appContext.locationAuthorized {
             guard mapView.locationDisplay.showLocation, let location = mapView.locationDisplay.location, let position = location.position else {
                 return
             }
@@ -31,17 +31,21 @@ extension MapViewController {
             mapView.setViewpoint(viewpoint, duration: 1.2, completion: nil)
         }
         else {
-            present(settingsAlertMessage: "You must enable Data Collection to access your location in your device's settings to zoom to your location.")
+            showAlert(
+                .settingsAlert("You must enable Data Collection to access your location in your device's settings to zoom to your location."),
+                animated: true,
+                completion: nil
+            )
         }
     }
     
     @objc
     func adjustForLocationAuthorizationStatus() {
         
-        mapView.locationDisplay.showLocation = appLocation.locationAuthorized
-        mapView.locationDisplay.showAccuracy = appLocation.locationAuthorized
+        mapView.locationDisplay.showLocation = appContext.locationAuthorized
+        mapView.locationDisplay.showAccuracy = appContext.locationAuthorized
         
-        if appLocation.locationAuthorized && !mapView.locationDisplay.started {
+        if appContext.locationAuthorized && !mapView.locationDisplay.started {
             mapView.locationDisplay.start { (err) in
                 if let error = err {
                     print("[Error] Cannot display user location: \(error.localizedDescription)")

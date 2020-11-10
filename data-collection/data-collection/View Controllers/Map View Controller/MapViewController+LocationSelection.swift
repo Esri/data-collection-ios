@@ -43,14 +43,16 @@ extension MapViewController {
     
     // MARK : New Feature
     
+    struct MapNoElegibleLayersError: LocalizedError {
+        let localizedDescription = "No feature layers of this map can be added to."
+    }
+    
     func userRequestsAddNewFeature(_ barButtonItem: UIBarButtonItem?) {
         
-        guard mapViewMode != .disabled else {
-            return
-        }
+        guard mapViewMode != .disabled else { return }
         
         guard let map = mapView.map, let layers = (map.operationalLayers as? [AGSFeatureLayer])?.featureAddableLayers, layers.count > 0 else {
-            present(simpleAlertMessage: "No eligible feature layer that you can add to.")
+            showError(MapNoElegibleLayersError())
             return
         }
                 
@@ -83,6 +85,13 @@ extension MapViewController {
         }
     }
     
+    struct CannotCreateNewFeatureError: LocalizedError {
+        let layer: AGSFeatureLayer
+        var localizedDescription: String {
+            String(format: "Cannot create new feature for layer, %@", layer.name)
+        }
+    }
+    
     private func addNewFeatureFor(featureLayer: AGSFeatureLayer) {
         
         clearCurrentPopup()
@@ -91,7 +100,7 @@ extension MapViewController {
             let featureTable = featureLayer.featureTable as? AGSArcGISFeatureTable,
             let newPopup = featureTable.createPopup()
             else {
-                present(simpleAlertMessage: "Unable to add a new feature.")
+                showError(CannotCreateNewFeatureError(layer: featureLayer))
                 mapViewMode = .defaultView
                 return
         }
@@ -109,7 +118,7 @@ extension MapViewController {
                 guard let self = self else { return }
                 
                 if let error = error  {
-                    self.present(simpleAlertMessage: error.localizedDescription)
+                    self.showError(error)
                 }
                 else {
                     EphemeralCache.shared.setObject(
@@ -132,10 +141,14 @@ extension MapViewController {
         }
     }
     
+    struct UnknownError: LocalizedError {
+        let localizedDescription = "An unknown error occured."
+    }
+    
     private func prepareNewFeatureForEdit() {
         
         guard let newPopup = EphemeralCache.shared.object(forKey: .newNonSpatialFeature) as? RichPopup else {
-            present(simpleAlertMessage: "Unable to add a new record.")
+            showError(UnknownError())
             return
         }
         
@@ -208,28 +221,21 @@ extension MapViewController {
     private func prepareForOfflineMapDownloadJob() {
         
         guard let map = mapView.map else { return }
-        
-        let geometry: AGSGeometry
-        
+                
         do {
-            geometry = try mapView.convertExtent(fromRect: maskViewController.maskRect)
-            try FileManager.default.prepareTemporaryOfflineMapDirectory()
-            try FileManager.default.prepareOfflineMapDirectory()
+            let geometry = try mapView.convertExtent(
+                fromRect: maskViewController.maskRect
+            )
+            let job = try appContext.offlineMapManager.stageOnDemandDownloadMapJob(
+                map,
+                extent: geometry,
+                scale: map.minScale
+            )
+            EphemeralCache.shared.setObject(job, forKey: "OfflineMapJobID")
+            performSegue(withIdentifier: "presentJobStatusViewController", sender: nil)
         }
         catch {
-            present(simpleAlertMessage: error.localizedDescription)
-            return
+            showError(error)
         }
-        
-        let scale = map.minScale
-        let directory: URL = .temporaryOfflineMapDirectoryURL(forWebMapItemID: .webMapItemID)
-        let offlineJob = OfflineMapJobConstruct.downloadMapOffline(map, directory, geometry, scale)
-        
-        EphemeralCache.shared.setObject(
-            offlineJob,
-            forKey: .offlineMapJob
-        )
-        
-        performSegue(withIdentifier: "presentJobStatusViewController", sender: nil)
     }
 }

@@ -34,28 +34,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Configure default app colors.
         AppDelegate.setAppApperanceWithAppColors()
         
-        // Reset first reachability change status flag then start listening to reachability status changes.
-        appReachability.resetAndStartListening()
-        
         // Attempt to sign in from previously stored credentials.
-        appContext.signInCurrentPortalIfPossible()
+        appContext.portalSession.silentlyLoadCredentialRequiredPortalSession()
+        
+        // Load offline map, if one exists.
+        appContext.offlineMapManager.loadOfflineMobileMapPackage()
         
         return true
-    }
-    
-    func applicationWillEnterForeground(_ application: UIApplication) {
-        // Reset first reachability change status flag then start listening to reachability status changes.
-        appReachability.resetAndStartListening()
-    }
-    
-    func applicationWillResignActive(_ application: UIApplication) {
-        // Stop listening to reachability status changes.
-        appReachability.stopListening()
-    }
-    
-    func applicationWillTerminate(_ application: UIApplication) {
-        // Stop listening to reachability status changes.
-        appReachability.stopListening()
     }
 }
 
@@ -68,24 +53,20 @@ extension AppDelegate {
         // See also AppSettings and AppContext.setupAndLoadPortal() to see how the AGSPortal is configured
         // to handle OAuth and call back to this application.
         if let redirect = URLComponents(url: url, resolvingAgainstBaseURL: false),
-            redirect.scheme == OAuth.components.scheme,
-            redirect.host == OAuth.components.host {
+            redirect.scheme == OAuthConfig.components.scheme,
+            redirect.host == OAuthConfig.components.host {
             
             // Pass the OAuth callback through to the ArcGIS Runtime SDK's helper function.
             AGSApplicationDelegate.shared().application(app, open: url, options: options)
             
-            // See if we were called back with confirmation that we're authorized.
-            if redirect.hasParameter(named: "code") {
-                // If we were authenticated, there should now be a shared credential to use. Let's try it.
-                appContext.signInCurrentPortalIfPossible()
-            }
+            appContext.portalSession.silentlyLoadCredentialRequiredPortalSession()
         }
         return true
     }
     
     static func configCredentialCacheAutoSyncToKeychain() {
         AGSAuthenticationManager.shared().credentialCache.enableAutoSyncToKeychain(
-            withIdentifier: .keychainIdentifier,
+            withIdentifier: "\(Bundle.main.bundleIdentifier!).keychain",
             accessGroup: nil,
             acrossDevices: false
         )
@@ -95,7 +76,7 @@ extension AppDelegate {
         let oauthConfig = AGSOAuthConfiguration(
             portalURL: .basePortal,
             clientID: .clientID,
-            redirectURL: OAuth.redirectUrl
+            redirectURL: OAuthConfig.redirectUrl
         )
         AGSAuthenticationManager.shared().oAuthConfigurations.add(oauthConfig)
     }

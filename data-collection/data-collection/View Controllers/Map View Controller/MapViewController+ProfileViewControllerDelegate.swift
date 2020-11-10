@@ -25,17 +25,15 @@ extension MapViewController: ProfileViewControllerOfflineDelegate {
     
     func profileViewControllerRequestsSynchronizeMap(profileViewController: ProfileViewController) {
         
-        guard let map = appContext.offlineMap else {
-            preconditionFailure("There is no map to synchronize.")
+        do {
+            let job = try appContext.offlineMapManager.stageSyncMapJob()
+            EphemeralCache.shared.setObject(job, forKey: "OfflineMapJobID")
+            profileViewController.dismiss(animated: true) {
+                self.performSegue(withIdentifier: "presentJobStatusViewController", sender: nil)
+            }
         }
-                
-        EphemeralCache.shared.setObject(
-            OfflineMapJobConstruct.syncOfflineMap(map),
-            forKey: .offlineMapJob
-        )
-        
-        profileViewController.dismiss(animated: true) {
-            self.performSegue(withIdentifier: "presentJobStatusViewController", sender: nil)
+        catch {
+            showError(error)
         }
     }
 }
