@@ -1531,6 +1531,7 @@
 				94C550F622123C2E00DD7E40 /* PopupSelectRelatedRecordCell.swift in Sources */,
 				948D85232151C11F00E2048F /* AGSPopupManager+FeatureTable.swift in Sources */,
 				94D2714020D0315900304E27 /* CustomBehavior_Map.swift in Sources */,
+                946D20C22130C236001BF5CC /* LastSyncMobileMapPackage.swift in Sources */,
 				945CEE7720DDC2AC00CD3E0D /* SVProgressHUD.m in Sources */,
 				945F455D21EFA90C00F2DCBC /* UserDefaults+RawRepresentable.swift in Sources */,
 				9487944022022724007BC15E /* RichPopupDetailsViewController+PopupAttributeCellDelegate.swift in Sources */,
