@@ -122,7 +122,6 @@
 		94B375D2207E8D5600691F2A /* EphemeralCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94B375BB207E8D5600691F2A /* EphemeralCache.swift */; };
 		94B375D6207E8DD600691F2A /* AddressLocator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94B375D4207E8DD600691F2A /* AddressLocator.swift */; };
 		94B375F2207E8E4800691F2A /* AGSLoadStatus+CustomStringConvertible.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94B375DB207E8E4800691F2A /* AGSLoadStatus+CustomStringConvertible.swift */; };
-		94B375F4207E8E4800691F2A /* AGSJobStatus+CustomStringConvertible.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94B375DD207E8E4800691F2A /* AGSJobStatus+CustomStringConvertible.swift */; };
 		94B375F5207E8E4800691F2A /* AGSMapView+ExtentForCGRect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94B375DE207E8E4800691F2A /* AGSMapView+ExtentForCGRect.swift */; };
 		94B375F6207E8E4800691F2A /* AGSPortal+CachedCredentials.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94B375DF207E8E4800691F2A /* AGSPortal+CachedCredentials.swift */; };
 		94B375F8207E8E4800691F2A /* AGSDrawStatus+CustomStringConvertible.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94B375E1207E8E4800691F2A /* AGSDrawStatus+CustomStringConvertible.swift */; };
@@ -368,7 +367,6 @@
 		94B375BB207E8D5600691F2A /* EphemeralCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EphemeralCache.swift; sourceTree = "<group>"; };
 		94B375D4207E8DD600691F2A /* AddressLocator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddressLocator.swift; sourceTree = "<group>"; };
 		94B375DB207E8E4800691F2A /* AGSLoadStatus+CustomStringConvertible.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AGSLoadStatus+CustomStringConvertible.swift"; sourceTree = "<group>"; };
-		94B375DD207E8E4800691F2A /* AGSJobStatus+CustomStringConvertible.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AGSJobStatus+CustomStringConvertible.swift"; sourceTree = "<group>"; };
 		94B375DE207E8E4800691F2A /* AGSMapView+ExtentForCGRect.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AGSMapView+ExtentForCGRect.swift"; sourceTree = "<group>"; };
 		94B375DF207E8E4800691F2A /* AGSPortal+CachedCredentials.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AGSPortal+CachedCredentials.swift"; sourceTree = "<group>"; };
 		94B375E1207E8E4800691F2A /* AGSDrawStatus+CustomStringConvertible.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AGSDrawStatus+CustomStringConvertible.swift"; sourceTree = "<group>"; };
@@ -662,14 +660,6 @@
 			path = AGSLoadStatus;
 			sourceTree = "<group>";
 		};
-		948D84F52151B43C00E2048F /* AGSJobStatus */ = {
-			isa = PBXGroup;
-			children = (
-				94B375DD207E8E4800691F2A /* AGSJobStatus+CustomStringConvertible.swift */,
-			);
-			path = AGSJobStatus;
-			sourceTree = "<group>";
-		};
 		948D84F62151B44800E2048F /* AGSMapView */ = {
 			isa = PBXGroup;
 			children = (
@@ -861,7 +851,6 @@
 				948D84FC2151B4FE00E2048F /* AGSDrawStatus */,
 				948D84FB2151B4E400E2048F /* AGSPortal */,
 				948D84F62151B44800E2048F /* AGSMapView */,
-				948D84F52151B43C00E2048F /* AGSJobStatus */,
 				948D84F42151B42D00E2048F /* AGSLoadStatus */,
 			);
 			path = ArcGIS;
@@ -1346,7 +1335,6 @@
 				948D84E121484C7500E2048F /* URLComponents+Parameter.swift in Sources */,
 				9440D35120D4662E005ED582 /* CustomBehavior_NewTreeCondition.swift in Sources */,
 				945F454521E7D24200F2DCBC /* PopupNewRelatedRecordCell.swift in Sources */,
-				94B375F4207E8E4800691F2A /* AGSJobStatus+CustomStringConvertible.swift in Sources */,
 				94B375F8207E8E4800691F2A /* AGSDrawStatus+CustomStringConvertible.swift in Sources */,
 				945F450E21E681DE00F2DCBC /* SegmentedViewController.swift in Sources */,
 				945F451421E6878A00F2DCBC /* RichPopupDetailsViewController.swift in Sources */,
