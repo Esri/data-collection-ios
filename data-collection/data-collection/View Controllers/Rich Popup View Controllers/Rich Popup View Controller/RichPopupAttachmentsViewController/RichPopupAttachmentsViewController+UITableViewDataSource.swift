@@ -98,7 +98,7 @@ extension RichPopupAttachmentsViewController /* UITableViewDataSource */ {
 
 // MARK: - Attachment Type
 
-extension AGSPopupAttachmentType {
+private extension AGSPopupAttachmentType {
     
     var icon: UIImage {
         switch self {
