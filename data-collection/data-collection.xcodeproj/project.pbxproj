@@ -51,7 +51,6 @@
 		945F455B21EFA75600F2DCBC /* AGSPopupAttachmentSize+String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 945F455A21EFA75600F2DCBC /* AGSPopupAttachmentSize+String.swift */; };
 		945F455D21EFA90C00F2DCBC /* UserDefaults+RawRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 945F455C21EFA90C00F2DCBC /* UserDefaults+RawRepresentable.swift */; };
 		945F456021EFACB500F2DCBC /* RichPopupPreviewableAttachment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 945F455F21EFACB500F2DCBC /* RichPopupPreviewableAttachment.swift */; };
-		945F456221F00AD200F2DCBC /* AGSPopupAttachment+AppAttachment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 945F456121F00AD200F2DCBC /* AGSPopupAttachment+AppAttachment.swift */; };
 		945F456421F00B1A00F2DCBC /* RichPopupStagedPhotoAttachment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 945F456321F00B1A00F2DCBC /* RichPopupStagedPhotoAttachment.swift */; };
 		945F456721F0ED9300F2DCBC /* RichPopupEditStagedAttachmentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 945F456621F0ED9300F2DCBC /* RichPopupEditStagedAttachmentViewController.swift */; };
 		945F456B21F146A000F2DCBC /* RichPopupStagedAttachment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 945F456A21F146A000F2DCBC /* RichPopupStagedAttachment.swift */; };
@@ -301,7 +300,6 @@
 		945F455A21EFA75600F2DCBC /* AGSPopupAttachmentSize+String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AGSPopupAttachmentSize+String.swift"; sourceTree = "<group>"; };
 		945F455C21EFA90C00F2DCBC /* UserDefaults+RawRepresentable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserDefaults+RawRepresentable.swift"; sourceTree = "<group>"; };
 		945F455F21EFACB500F2DCBC /* RichPopupPreviewableAttachment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RichPopupPreviewableAttachment.swift; sourceTree = "<group>"; };
-		945F456121F00AD200F2DCBC /* AGSPopupAttachment+AppAttachment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AGSPopupAttachment+AppAttachment.swift"; sourceTree = "<group>"; };
 		945F456321F00B1A00F2DCBC /* RichPopupStagedPhotoAttachment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RichPopupStagedPhotoAttachment.swift; sourceTree = "<group>"; };
 		945F456621F0ED9300F2DCBC /* RichPopupEditStagedAttachmentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RichPopupEditStagedAttachmentViewController.swift; sourceTree = "<group>"; };
 		945F456A21F146A000F2DCBC /* RichPopupStagedAttachment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RichPopupStagedAttachment.swift; sourceTree = "<group>"; };
@@ -561,7 +559,6 @@
 		945F454F21E94FA400F2DCBC /* AGSPopupAttachment */ = {
 			isa = PBXGroup;
 			children = (
-				945F456121F00AD200F2DCBC /* AGSPopupAttachment+AppAttachment.swift */,
 				945F455021E94FD900F2DCBC /* AGSPopupAttachment+QLPreviewItem.swift */,
 			);
 			path = AGSPopupAttachment;
@@ -1352,7 +1349,6 @@
 				947AC8C9256EF25F00C30598 /* PopupAttributeDatePickerCell.swift in Sources */,
 				945F455421E96DC000F2DCBC /* AGSPopupAttachmentType+Icon.swift in Sources */,
 				948066382091595200A398EA /* RichPopupManager.swift in Sources */,
-				945F456221F00AD200F2DCBC /* AGSPopupAttachment+AppAttachment.swift in Sources */,
 				948D85142151BB5E00E2048F /* AGSPopup+RecordType.swift in Sources */,
 				945F455121E94FD900F2DCBC /* AGSPopupAttachment+QLPreviewItem.swift in Sources */,
 				94B3760C207EAE4700691F2A /* AppDelegate.swift in Sources */,

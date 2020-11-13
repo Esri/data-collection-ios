@@ -312,3 +312,8 @@ extension RichPopupAttachmentsManager {
         return IndexPath(row: row, section: section)
     }
 }
+
+// MARK:- Popup Attachment Previewable
+
+// `AGSPopupAttachment` has automatic conformance to `RichPopupPreviewableAttachment`.
+extension AGSPopupAttachment: RichPopupPreviewableAttachment { }
