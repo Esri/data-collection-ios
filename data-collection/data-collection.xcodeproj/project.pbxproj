@@ -47,7 +47,6 @@
 		945F454A21E8003F00F2DCBC /* PopupAttachmentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 945F454921E8003F00F2DCBC /* PopupAttachmentCell.swift */; };
 		945F454C21E8009A00F2DCBC /* PopupAddAttachmentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 945F454B21E8009A00F2DCBC /* PopupAddAttachmentCell.swift */; };
 		945F455121E94FD900F2DCBC /* AGSPopupAttachment+QLPreviewItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 945F455021E94FD900F2DCBC /* AGSPopupAttachment+QLPreviewItem.swift */; };
-		945F455421E96DC000F2DCBC /* AGSPopupAttachmentType+Icon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 945F455321E96DC000F2DCBC /* AGSPopupAttachmentType+Icon.swift */; };
 		945F455621EE7CBE00F2DCBC /* RichPopupAttachmentsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 945F455521EE7CBE00F2DCBC /* RichPopupAttachmentsManager.swift */; };
 		945F455821EECA9F00F2DCBC /* ImagePickerPermissions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 945F455721EECA9F00F2DCBC /* ImagePickerPermissions.swift */; };
 		945F455B21EFA75600F2DCBC /* AGSPopupAttachmentSize+String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 945F455A21EFA75600F2DCBC /* AGSPopupAttachmentSize+String.swift */; };
@@ -289,7 +288,6 @@
 		945F454921E8003F00F2DCBC /* PopupAttachmentCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupAttachmentCell.swift; sourceTree = "<group>"; };
 		945F454B21E8009A00F2DCBC /* PopupAddAttachmentCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupAddAttachmentCell.swift; sourceTree = "<group>"; };
 		945F455021E94FD900F2DCBC /* AGSPopupAttachment+QLPreviewItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AGSPopupAttachment+QLPreviewItem.swift"; sourceTree = "<group>"; };
-		945F455321E96DC000F2DCBC /* AGSPopupAttachmentType+Icon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AGSPopupAttachmentType+Icon.swift"; sourceTree = "<group>"; };
 		945F455521EE7CBE00F2DCBC /* RichPopupAttachmentsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RichPopupAttachmentsManager.swift; sourceTree = "<group>"; };
 		945F455721EECA9F00F2DCBC /* ImagePickerPermissions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePickerPermissions.swift; sourceTree = "<group>"; };
 		945F455A21EFA75600F2DCBC /* AGSPopupAttachmentSize+String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AGSPopupAttachmentSize+String.swift"; sourceTree = "<group>"; };
@@ -556,14 +554,6 @@
 				945F455021E94FD900F2DCBC /* AGSPopupAttachment+QLPreviewItem.swift */,
 			);
 			path = AGSPopupAttachment;
-			sourceTree = "<group>";
-		};
-		945F455221E96DA800F2DCBC /* AGSPopupAttachmentType */ = {
-			isa = PBXGroup;
-			children = (
-				945F455321E96DC000F2DCBC /* AGSPopupAttachmentType+Icon.swift */,
-			);
-			path = AGSPopupAttachmentType;
 			sourceTree = "<group>";
 		};
 		945F455921EFA6E000F2DCBC /* AGSPopupAttachmentSize */ = {
@@ -893,7 +883,6 @@
 			isa = PBXGroup;
 			children = (
 				945F455921EFA6E000F2DCBC /* AGSPopupAttachmentSize */,
-				945F455221E96DA800F2DCBC /* AGSPopupAttachmentType */,
 				945F454F21E94FA400F2DCBC /* AGSPopupAttachment */,
 				948D85212151C0B500E2048F /* AGSPopupManager */,
 				948D851C2151BFA500E2048F /* AGSArcGISFeatureTable */,
@@ -1385,7 +1374,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				944D0CC424E1DE4800EE49CB /* AppSecrets.swift.masque in Sources */,
-				945F455421E96DC000F2DCBC /* AGSPopupAttachmentType+Icon.swift in Sources */,
 				948066382091595200A398EA /* RichPopupManager.swift in Sources */,
 				945F456221F00AD200F2DCBC /* AGSPopupAttachment+AppAttachment.swift in Sources */,
 				948D85142151BB5E00E2048F /* AGSPopup+RecordType.swift in Sources */,
@@ -1503,7 +1491,6 @@
 				948D85232151C11F00E2048F /* AGSPopupManager+FeatureTable.swift in Sources */,
 				94D2714020D0315900304E27 /* CustomBehavior_Map.swift in Sources */,
 				E4CF0EAA24E32C0F00E8EE20 /* FloatingPanelHeaderController.swift in Sources */,
-				946D20C22130C236001BF5CC /* LastSyncMobileMapPackage.swift in Sources */,
 				945CEE7720DDC2AC00CD3E0D /* SVProgressHUD.m in Sources */,
 				9426E9CD25093C69007DC18D /* PortalSessionManager.swift in Sources */,
 				945F455D21EFA90C00F2DCBC /* UserDefaults+RawRepresentable.swift in Sources */,
