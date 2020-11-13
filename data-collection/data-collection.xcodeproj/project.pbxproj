@@ -45,7 +45,6 @@
 		945F454721E7D2BA00F2DCBC /* PopupRelatedRecordCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 945F454621E7D2BA00F2DCBC /* PopupRelatedRecordCell.swift */; };
 		945F454A21E8003F00F2DCBC /* PopupAttachmentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 945F454921E8003F00F2DCBC /* PopupAttachmentCell.swift */; };
 		945F454C21E8009A00F2DCBC /* PopupAddAttachmentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 945F454B21E8009A00F2DCBC /* PopupAddAttachmentCell.swift */; };
-		945F455121E94FD900F2DCBC /* AGSPopupAttachment+QLPreviewItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 945F455021E94FD900F2DCBC /* AGSPopupAttachment+QLPreviewItem.swift */; };
 		945F455621EE7CBE00F2DCBC /* RichPopupAttachmentsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 945F455521EE7CBE00F2DCBC /* RichPopupAttachmentsManager.swift */; };
 		945F455821EECA9F00F2DCBC /* ImagePickerPermissions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 945F455721EECA9F00F2DCBC /* ImagePickerPermissions.swift */; };
 		945F455B21EFA75600F2DCBC /* AGSPopupAttachmentSize+String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 945F455A21EFA75600F2DCBC /* AGSPopupAttachmentSize+String.swift */; };
@@ -294,7 +293,6 @@
 		945F454621E7D2BA00F2DCBC /* PopupRelatedRecordCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupRelatedRecordCell.swift; sourceTree = "<group>"; };
 		945F454921E8003F00F2DCBC /* PopupAttachmentCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupAttachmentCell.swift; sourceTree = "<group>"; };
 		945F454B21E8009A00F2DCBC /* PopupAddAttachmentCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupAddAttachmentCell.swift; sourceTree = "<group>"; };
-		945F455021E94FD900F2DCBC /* AGSPopupAttachment+QLPreviewItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AGSPopupAttachment+QLPreviewItem.swift"; sourceTree = "<group>"; };
 		945F455521EE7CBE00F2DCBC /* RichPopupAttachmentsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RichPopupAttachmentsManager.swift; sourceTree = "<group>"; };
 		945F455721EECA9F00F2DCBC /* ImagePickerPermissions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePickerPermissions.swift; sourceTree = "<group>"; };
 		945F455A21EFA75600F2DCBC /* AGSPopupAttachmentSize+String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AGSPopupAttachmentSize+String.swift"; sourceTree = "<group>"; };
@@ -554,14 +552,6 @@
 				948794532204DA5D007BC15E /* Related Record Cells */,
 			);
 			path = "Table Cells";
-			sourceTree = "<group>";
-		};
-		945F454F21E94FA400F2DCBC /* AGSPopupAttachment */ = {
-			isa = PBXGroup;
-			children = (
-				945F455021E94FD900F2DCBC /* AGSPopupAttachment+QLPreviewItem.swift */,
-			);
-			path = AGSPopupAttachment;
 			sourceTree = "<group>";
 		};
 		945F455921EFA6E000F2DCBC /* AGSPopupAttachmentSize */ = {
@@ -892,7 +882,6 @@
 			isa = PBXGroup;
 			children = (
 				945F455921EFA6E000F2DCBC /* AGSPopupAttachmentSize */,
-				945F454F21E94FA400F2DCBC /* AGSPopupAttachment */,
 				948D85212151C0B500E2048F /* AGSPopupManager */,
 				948D851C2151BFA500E2048F /* AGSArcGISFeatureTable */,
 				948D851A2151BF5500E2048F /* AGSMap */,
@@ -1350,7 +1339,6 @@
 				945F455421E96DC000F2DCBC /* AGSPopupAttachmentType+Icon.swift in Sources */,
 				948066382091595200A398EA /* RichPopupManager.swift in Sources */,
 				948D85142151BB5E00E2048F /* AGSPopup+RecordType.swift in Sources */,
-				945F455121E94FD900F2DCBC /* AGSPopupAttachment+QLPreviewItem.swift in Sources */,
 				94B3760C207EAE4700691F2A /* AppDelegate.swift in Sources */,
 				940DA97B2098E1C600AB4BF6 /* AGSArcGISFeatureTable+Query.swift in Sources */,
 				94AB811C211E0AD300B9C920 /* AGSLicense+Description.swift in Sources */,
