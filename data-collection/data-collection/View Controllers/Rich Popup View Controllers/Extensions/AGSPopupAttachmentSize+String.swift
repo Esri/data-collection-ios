@@ -16,7 +16,15 @@ import ArcGIS
 
 extension AGSPopupAttachmentSize {
     
-    var actualSize: CGSize {
+    // MARK: Internal
+    
+    var actualSizeScaledTitle: String {
+        return title(forSize: actualSizeScaled)
+    }
+    
+    // MARK: Private
+    
+    private var actualSize: CGSize {
         switch self {
         case .actual:
             return .zero
@@ -33,17 +41,9 @@ extension AGSPopupAttachmentSize {
         }
     }
     
-    var actualSizeScaled: CGSize {
+    private var actualSizeScaled: CGSize {
         let scale = UIScreen.main.scale
         return actualSize.applying(.init(scaleX: scale, y: scale))
-    }
-    
-    var actualSizeTitle: String {
-        return title(forSize: actualSize)
-    }
-    
-    var actualSizeScaledTitle: String {
-        return title(forSize: actualSizeScaled)
     }
     
     private func title(forSize size: CGSize) -> String {

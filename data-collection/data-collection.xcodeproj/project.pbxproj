@@ -467,6 +467,14 @@
 			path = "App Errors";
 			sourceTree = "<group>";
 		};
+		94502059255F1F4B00457AA5 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				945F455A21EFA75600F2DCBC /* AGSPopupAttachmentSize+String.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
 		945CEE6A20DDC2AC00CD3E0D /* SVProgressHUD */ = {
 			isa = PBXGroup;
 			children = (
@@ -539,14 +547,6 @@
 			path = "Table Cells";
 			sourceTree = "<group>";
 		};
-		945F455921EFA6E000F2DCBC /* AGSPopupAttachmentSize */ = {
-			isa = PBXGroup;
-			children = (
-				945F455A21EFA75600F2DCBC /* AGSPopupAttachmentSize+String.swift */,
-			);
-			path = AGSPopupAttachmentSize;
-			sourceTree = "<group>";
-		};
 		945F455E21EFAC8800F2DCBC /* Attachments */ = {
 			isa = PBXGroup;
 			children = (
@@ -579,6 +579,7 @@
 		946D20BF2130AC02001BF5CC /* Rich Popup View Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				94502059255F1F4B00457AA5 /* Extensions */,
 				945F450D21E681DE00F2DCBC /* SegmentedViewController.swift */,
 				945F450F21E6837D00F2DCBC /* Rich Popup View Controller */,
 				948066322091474F00A398EA /* RichPopup.storyboard */,
@@ -849,7 +850,6 @@
 		94B375DA207E8E4800691F2A /* ArcGIS */ = {
 			isa = PBXGroup;
 			children = (
-				945F455921EFA6E000F2DCBC /* AGSPopupAttachmentSize */,
 				948D85212151C0B500E2048F /* AGSPopupManager */,
 				948D851C2151BFA500E2048F /* AGSArcGISFeatureTable */,
 				948D85182151BEDF00E2048F /* AGSQueryParameters */,
