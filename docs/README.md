@@ -57,6 +57,10 @@
    - [Reverse geocoding](#reverse-geocoding)   
 - [Architecture](#architecture)   
    - [App configuration](#app-configuration)   
+   - [App secrets](#app-secrets)   
+      - [Masquerade](#masquerade)   
+      - [Build rule](#build-rule)   
+         - [Usage](#usage)   
    - [App context](#app-context)   
       - [App context change handler](#app-context-change-handler)   
    - [Model: Pop-up configuration driven](#model-pop-up-configuration-driven)   
@@ -1123,6 +1127,76 @@ The `AppConfiguration` contains a series of static configuration resources. Modi
 * app client ID
 
 > `AppConfiguration` configures a single global build environment. You can easily modify the project for multiple build environments.
+
+### App secrets
+
+The project manages app secrets using a custom _build rule_ and _bash program_ named `masquerade`. This technique is employed to keep compiled app secrets out of source control.
+
+#### Masquerade
+
+The program parses an input file looking for unique bracket-enclosed key pattern matches substituting found keys with supplied secret values before writing the file to output.
+
+The program looks for keys using a regex pattern `{{ *$KEY *}}`. The pattern can be chopped up into a number of sub-components.
+
+- `{{`, two open-brackets specify the start of the pattern
+- ` *`, a space-astrix permits 0-to-n space characters
+- `$KEY`, a key variable specified in the secrets file
+- ` *`, a space-astrix again permits 0-to-n space characters
+- `}}`, two close-brackets specify the end of the pattern
+
+Masquerade requires the following parameters:
+
+- `-i`, the input file containing bracket-enclosed keys.
+- `-o`, the path to output the file.
+- `-s`, the secrets file containing key/value pairs.
+- `-f`, an (optional) flag to overwrite the output file.
+
+For example, we could supply `masquerade` with these _input_ and _secret_ files.
+
+**Input**
+
+```swift
+extension String {
+    static let clientID = "{{ ARCGIS_CLIENT_ID }}"
+    static let licenseKey = "{{ ARCGIS_LICENSE_KEY }}"
+}
+```
+
+**Secret**
+
+```txt
+ARCGIS_CLIENT_ID=ABC123
+ARCGIS_LICENSE_KEY=fake.license.key.ABC123
+```
+
+Which would produce an output.
+
+**Output**
+
+```swift
+extension String {
+    static let clientID = "ABC123"
+    static let licenseKey = "fake.license.key.ABC123"
+}
+```
+
+#### Build rule
+
+The project implements a custom build rule, executing `masquerade` for all source files with names matching the pattern `*.masque`.
+
+The build rule supplies `masquerade` with files that match the bracket-enclosed key pattern as well as a hidden secrets file that must live in the project's root directory.
+
+`$(PROJECT_DIR)/.secrets`
+
+The build rule outputs the file to the Derived Data directory supplied by Xcode, stripping the `.masque` file extension.
+
+`$(DERIVED_FILE_DIR)/$(INPUT_FILE_BASE)`
+
+##### Usage
+
+The build rule is used to inject secrets into swift source code by including in-line bracket-enclosed keys and appending `.masque` to a swift file.
+
+In effect the `AppSecrets.swift.masque` key-laden swift template becomes `AppSecrets.swift`, a swift source code file that is compiled and linked with the app at build time and is never introduced to version control.
 
 ### App context
 
