@@ -18,12 +18,12 @@ import ArcGIS
 extension AGSRelationshipInfo {
     
     /// Is this a many-to-one relationship?
-    public var isManyToOne: Bool {
+    var isManyToOne: Bool {
         return cardinality == .oneToMany && role == .destination
     }
     
     /// Is this a one-to-many relationship?
-    public var isOneToMany: Bool {
+    var isOneToMany: Bool {
         return cardinality == .oneToMany && role == .origin
     }
 }
