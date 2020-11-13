@@ -99,9 +99,7 @@
 		948D84F82151B46000E2048F /* AGSMapView+Centerpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 948D84F72151B46000E2048F /* AGSMapView+Centerpoint.swift */; };
 		948D84FA2151B48400E2048F /* AGSMapView+Rotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 948D84F92151B48400E2048F /* AGSMapView+Rotation.swift */; };
 		948D85032151B85200E2048F /* AGSArcGISFeature+Collection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 948D85022151B85200E2048F /* AGSArcGISFeature+Collection.swift */; };
-		948D85062151B93800E2048F /* AGSPopup+Comparison.swift in Sources */ = {isa = PBXBuildFile; fileRef = 948D85052151B93800E2048F /* AGSPopup+Comparison.swift */; };
 		948D85082151B9C200E2048F /* AGSPopup+Collection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 948D85072151B9C200E2048F /* AGSPopup+Collection.swift */; };
-		948D850A2151BA0100E2048F /* AGSPopup+Sort.swift in Sources */ = {isa = PBXBuildFile; fileRef = 948D85092151BA0100E2048F /* AGSPopup+Sort.swift */; };
 		948D85102151BAF500E2048F /* AGSPopup+RelatedRecords.swift in Sources */ = {isa = PBXBuildFile; fileRef = 948D850F2151BAF500E2048F /* AGSPopup+RelatedRecords.swift */; };
 		948D85122151BB3600E2048F /* AGSPopup+FeatureTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 948D85112151BB3600E2048F /* AGSPopup+FeatureTable.swift */; };
 		948D85142151BB5E00E2048F /* AGSPopup+RecordType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 948D85132151BB5E00E2048F /* AGSPopup+RecordType.swift */; };
@@ -341,9 +339,7 @@
 		948D84F72151B46000E2048F /* AGSMapView+Centerpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AGSMapView+Centerpoint.swift"; sourceTree = "<group>"; };
 		948D84F92151B48400E2048F /* AGSMapView+Rotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AGSMapView+Rotation.swift"; sourceTree = "<group>"; };
 		948D85022151B85200E2048F /* AGSArcGISFeature+Collection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AGSArcGISFeature+Collection.swift"; sourceTree = "<group>"; };
-		948D85052151B93800E2048F /* AGSPopup+Comparison.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AGSPopup+Comparison.swift"; sourceTree = "<group>"; };
 		948D85072151B9C200E2048F /* AGSPopup+Collection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AGSPopup+Collection.swift"; sourceTree = "<group>"; };
-		948D85092151BA0100E2048F /* AGSPopup+Sort.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AGSPopup+Sort.swift"; sourceTree = "<group>"; };
 		948D850F2151BAF500E2048F /* AGSPopup+RelatedRecords.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AGSPopup+RelatedRecords.swift"; sourceTree = "<group>"; };
 		948D85112151BB3600E2048F /* AGSPopup+FeatureTable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AGSPopup+FeatureTable.swift"; sourceTree = "<group>"; };
 		948D85132151BB5E00E2048F /* AGSPopup+RecordType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AGSPopup+RecordType.swift"; sourceTree = "<group>"; };
@@ -678,8 +674,6 @@
 		948D85042151B8B300E2048F /* AGSPopup */ = {
 			isa = PBXGroup;
 			children = (
-				948D85052151B93800E2048F /* AGSPopup+Comparison.swift */,
-				948D85092151BA0100E2048F /* AGSPopup+Sort.swift */,
 				948D85072151B9C200E2048F /* AGSPopup+Collection.swift */,
 				948D850F2151BAF500E2048F /* AGSPopup+RelatedRecords.swift */,
 				948D85132151BB5E00E2048F /* AGSPopup+RecordType.swift */,
@@ -1277,7 +1271,6 @@
 				940DA97B2098E1C600AB4BF6 /* AGSArcGISFeatureTable+Query.swift in Sources */,
 				944433E621AC76B400E96A6E /* UnknownError.swift in Sources */,
 				E4BA04A624B4E338000A1D43 /* FloatingPanelController.swift in Sources */,
-				948D850A2151BA0100E2048F /* AGSPopup+Sort.swift in Sources */,
 				94D544D820852A5100ED0D04 /* ShrinkingView.swift in Sources */,
 				946569022087FAE700599E55 /* MapViewController+MapViewMode.swift in Sources */,
 				948D85102151BAF500E2048F /* AGSPopup+RelatedRecords.swift in Sources */,
@@ -1367,7 +1360,6 @@
 				E480B9A72421309E00982756 /* LayerContentsDataSource.swift in Sources */,
 				94B375C4207E8D5600691F2A /* AppErrors.swift in Sources */,
 				94B375F5207E8E4800691F2A /* AGSMapView+ExtentForCGRect.swift in Sources */,
-				948D85062151B93800E2048F /* AGSPopup+Comparison.swift in Sources */,
 				94B375FF207E8E4800691F2A /* UIStoryboardSegue+NavigationDestination.swift in Sources */,
 				946E6A9521F2A96000B315B6 /* RichPopupViewController+EditingSession.swift in Sources */,
 				9465691E208802CE00599E55 /* AGSFeatureTable+PopupEnabled.swift in Sources */,
