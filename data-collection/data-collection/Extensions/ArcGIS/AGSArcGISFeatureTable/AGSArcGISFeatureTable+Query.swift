@@ -162,3 +162,16 @@ extension AGSArcGISFeatureTable {
         }
     }
 }
+
+// MARK: Query Parameters
+
+private extension AGSQueryParameters {
+    
+    /// Return a new `AGSQueryParameters` with a `whereClause` requesting all features in the table.
+    
+    static func all() -> AGSQueryParameters {
+        let query = AGSQueryParameters()
+        query.whereClause = "1 = 1"
+        return query
+    }
+}
