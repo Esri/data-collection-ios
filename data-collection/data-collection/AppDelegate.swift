@@ -85,7 +85,7 @@ extension AppDelegate {
 
 // MARK:- ArcGIS License
 
-extension AppDelegate {
+private extension AppDelegate {
     
     /// License the ArcGIS application with the configured ArcGIS Runtime deployment license key.
     ///
