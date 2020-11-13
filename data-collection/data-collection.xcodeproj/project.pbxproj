@@ -91,7 +91,6 @@
 		9487944A2202634E007BC15E /* RichPopupAttachmentsViewController+UITableViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 948794492202634E007BC15E /* RichPopupAttachmentsViewController+UITableViewDelegate.swift */; };
 		948794552204F198007BC15E /* PopupAttributeReadonlyCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 948794542204F198007BC15E /* PopupAttributeReadonlyCell.swift */; };
 		948D84C92139B27D00E2048F /* Bundle+Version.swift in Sources */ = {isa = PBXBuildFile; fileRef = 948D84C82139B27D00E2048F /* Bundle+Version.swift */; };
-		948D84CB213F578800E2048F /* AGSMap+GeodatabaseFeatureTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 948D84CA213F578800E2048F /* AGSMap+GeodatabaseFeatureTable.swift */; };
 		948D84CF2142227900E2048F /* CGFloat+Conversions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 948D84CE2142227900E2048F /* CGFloat+Conversions.swift */; };
 		948D84DA2142E29C00E2048F /* CGRect+Modify.swift in Sources */ = {isa = PBXBuildFile; fileRef = 948D84D92142E29C00E2048F /* CGRect+Modify.swift */; };
 		948D84E121484C7500E2048F /* URLComponents+Parameter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 948D84E021484C7500E2048F /* URLComponents+Parameter.swift */; };
@@ -329,7 +328,6 @@
 		948794492202634E007BC15E /* RichPopupAttachmentsViewController+UITableViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RichPopupAttachmentsViewController+UITableViewDelegate.swift"; sourceTree = "<group>"; };
 		948794542204F198007BC15E /* PopupAttributeReadonlyCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupAttributeReadonlyCell.swift; sourceTree = "<group>"; };
 		948D84C82139B27D00E2048F /* Bundle+Version.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bundle+Version.swift"; sourceTree = "<group>"; };
-		948D84CA213F578800E2048F /* AGSMap+GeodatabaseFeatureTable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AGSMap+GeodatabaseFeatureTable.swift"; sourceTree = "<group>"; };
 		948D84CE2142227900E2048F /* CGFloat+Conversions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGFloat+Conversions.swift"; sourceTree = "<group>"; };
 		948D84D92142E29C00E2048F /* CGRect+Modify.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGRect+Modify.swift"; sourceTree = "<group>"; };
 		948D84E021484C7500E2048F /* URLComponents+Parameter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URLComponents+Parameter.swift"; sourceTree = "<group>"; };
@@ -725,14 +723,6 @@
 			path = AGSQueryParameters;
 			sourceTree = "<group>";
 		};
-		948D851A2151BF5500E2048F /* AGSMap */ = {
-			isa = PBXGroup;
-			children = (
-				948D84CA213F578800E2048F /* AGSMap+GeodatabaseFeatureTable.swift */,
-			);
-			path = AGSMap;
-			sourceTree = "<group>";
-		};
 		948D851C2151BFA500E2048F /* AGSArcGISFeatureTable */ = {
 			isa = PBXGroup;
 			children = (
@@ -862,7 +852,6 @@
 				945F455921EFA6E000F2DCBC /* AGSPopupAttachmentSize */,
 				948D85212151C0B500E2048F /* AGSPopupManager */,
 				948D851C2151BFA500E2048F /* AGSArcGISFeatureTable */,
-				948D851A2151BF5500E2048F /* AGSMap */,
 				948D85182151BEDF00E2048F /* AGSQueryParameters */,
 				948D85172151BEAF00E2048F /* AGSFeatureTable */,
 				948D85152151BE4000E2048F /* AGSRelationshipInfo */,
@@ -1423,7 +1412,6 @@
 				9416A19320BF3334001377ED /* Relationship.swift in Sources */,
 				940DA9722097825700AB4BF6 /* UILabel+EmptyString.swift in Sources */,
 				948D851E2151BFD900E2048F /* AGSArcGISFeatureTable+Popup.swift in Sources */,
-				948D84CB213F578800E2048F /* AGSMap+GeodatabaseFeatureTable.swift in Sources */,
 				9487944222022777007BC15E /* RichPopupDetailsViewController+UITableViewDataSource.swift in Sources */,
 				94ADD3C821F266AC000A5DB9 /* AGSPopupManager+AttachmentAccess.swift in Sources */,
 				948D85032151B85200E2048F /* AGSArcGISFeature+Collection.swift in Sources */,
