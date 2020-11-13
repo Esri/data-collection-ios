@@ -447,6 +447,7 @@
 				948066372091595200A398EA /* RichPopupManager.swift */,
 				94D2714120D0575A00304E27 /* Related Records */,
 				945F455E21EFAC8800F2DCBC /* Attachments */,
+				94502062255F243400457AA5 /* Extensions */,
 			);
 			path = "Rich Popup";
 			sourceTree = "<group>";
@@ -469,6 +470,14 @@
 			isa = PBXGroup;
 			children = (
 				945F455A21EFA75600F2DCBC /* AGSPopupAttachmentSize+String.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		94502062255F243400457AA5 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				946569192088028E00599E55 /* AGSRelationshipInfo+Role.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -698,14 +707,6 @@
 			path = AGSPopup;
 			sourceTree = "<group>";
 		};
-		948D85152151BE4000E2048F /* AGSRelationshipInfo */ = {
-			isa = PBXGroup;
-			children = (
-				946569192088028E00599E55 /* AGSRelationshipInfo+Role.swift */,
-			);
-			path = AGSRelationshipInfo;
-			sourceTree = "<group>";
-		};
 		948D85172151BEAF00E2048F /* AGSFeatureTable */ = {
 			isa = PBXGroup;
 			children = (
@@ -843,7 +844,6 @@
 				948D85212151C0B500E2048F /* AGSPopupManager */,
 				948D851C2151BFA500E2048F /* AGSArcGISFeatureTable */,
 				948D85172151BEAF00E2048F /* AGSFeatureTable */,
-				948D85152151BE4000E2048F /* AGSRelationshipInfo */,
 				948D85042151B8B300E2048F /* AGSPopup */,
 				948D84FD2151B53300E2048F /* AGSArcGISFeature */,
 				948D84FC2151B4FE00E2048F /* AGSDrawStatus */,
