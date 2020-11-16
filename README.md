@@ -63,9 +63,7 @@ Read the [docs](./docs/README.md) for a detailed explanation of the application,
 
 ## Get started
 
-You will need [Xcode 11](https://itunes.apple.com/us/app/xcode/id497799835?mt=12) and the [ArcGIS Runtime SDK for iOS](https://developers.arcgis.com/ios/latest/swift/guide/install.htm#ESRI_SECTION1_D57435A2BEBC4D29AFA3A4CAA722506A) (v100.10 or later) installed locally.
-
-The *Data Collection app* incorporates the [ArcGIS Runtime Toolkit for iOS](https://github.com/Esri/arcgis-runtime-toolkit-ios) (v100.10 or later) for additional functionality.
+Make sure you've installed XCode and the ArcGIS Runtime SDK for iOS and that they meet these [requirements](#requirements).
 
 Note that the 100.10 release of the ArcGIS Runtime SDK for iOS replaces the installed "fat framework" `ArcGIS.framework` with a new binary framework `ArcGIS.xcframework`.  It also changes the location of the installed framework file and removes the need for the `strip-frameworks.sh` Build Phase.  These changes have been incorporated in the lastest release of the *Data Collection app*.
 
@@ -211,7 +209,8 @@ Learn more about Esri open source apps [here](https://developers.arcgis.com/exam
 ## Requirements
 
 * [Xcode 11 and Swift 5](https://itunes.apple.com/us/app/xcode/id497799835?mt=12)
-* [ArcGIS Runtime SDK for iOS](https://developers.arcgis.com/ios/), version 100.10.
+* [ArcGIS Runtime SDK for iOS](https://developers.arcgis.com/ios/latest/swift/guide/install.htm#ESRI_SECTION1_D57435A2BEBC4D29AFA3A4CAA722506A), version 100.10.
+* [ArcGIS Runtime Toolkit for iOS](https://github.com/Esri/arcgis-runtime-toolkit-ios), version 100.10.
 * To edit records or take a web map offline you will need an ArcGIS Online Organizational account, an ArcGIS Online Developer account or an ArcGIS Online account authenticated using a social login.
 * To consume your own web map you will need an ArcGIS Online Organizational account.
 
