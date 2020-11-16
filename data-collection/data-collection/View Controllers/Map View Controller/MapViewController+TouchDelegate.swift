@@ -37,7 +37,10 @@ extension MapViewController: AGSGeoViewTouchDelegate {
         identifyOperation = nil
         
         // Identify layers for the geo view's tap point.
-        identifyOperation = geoView.identifyLayers(atScreenPoint: screenPoint, tolerance: 10, returnPopupsOnly: true, maximumResultsPerLayer: 5) { [weak self] (result, error) in
+        identifyOperation = geoView.identifyLayers(atScreenPoint: screenPoint,
+                                                   tolerance: 10,
+                                                   returnPopupsOnly: true,
+                                                   maximumResultsPerLayer: 50) { [weak self] (result, error) in
             
             guard let self = self else { return }
             
@@ -60,7 +63,7 @@ extension MapViewController: AGSGeoViewTouchDelegate {
                 return AppRules.isLayerIdentifiable(layer)
             })
             
-            // Inform the user if the identify did not yeild any results.
+            // Inform the user if the identify did not yield any results.
             guard let identifyResult = firstIdentifiableResult, identifyResult.popups.count > 0 else {
                 self.slideNotificationView.showLabel(withNotificationMessage: "Found no results.", forDuration: 2.0)
                 self.clearCurrentPopup()
@@ -68,20 +71,29 @@ extension MapViewController: AGSGeoViewTouchDelegate {
                 return
             }
             
-            // Use the geometry engine to determine the nearest pop-up to the touch point.
-            if let nearest = identifyResult.popups.popupNearestTo(mapPoint: mapPoint) {
-                let richPopup = RichPopup(popup: nearest)
-                self.setCurrentPopup(popup: richPopup)
-            }
-            else {
+            // Need to accomodate multiple results
+            // - start by displaying all those results
+            // - as user selects new result from displayed list, update selection in MapView
+            self.setSelectedPopups(popups: identifyResult.popups.map({ (popup) -> RichPopup in
+                return RichPopup(popup: popup)
+            }))
+            
                 self.clearCurrentPopup()
-            }
+            
+//            // Use the geometry engine to determine the nearest pop-up to the touch point.
+//            if let nearest = identifyResult.popups.popupNearestTo(mapPoint: mapPoint) {
+//                let richPopup = RichPopup(popup: nearest)
+//                self.setCurrentPopup(popup: richPopup)
+//            }
+//            else {
+//                self.clearCurrentPopup()
+//            }
             
             // Set the map view mode to selected feature
             self.mapViewMode = .selectedFeature(featureLoaded: false)
             
-            // Load the new current pop up
-            self.refreshCurrentPopup()
+//            // Load the new current pop up
+//            self.refreshCurrentPopup()
         }
     }
 }

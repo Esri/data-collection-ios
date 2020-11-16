@@ -33,7 +33,6 @@
 		945CEE7720DDC2AC00CD3E0D /* SVProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 945CEE7120DDC2AC00CD3E0D /* SVProgressHUD.m */; };
 		945CEE7820DDC2AC00CD3E0D /* SVIndefiniteAnimatedView.m in Sources */ = {isa = PBXBuildFile; fileRef = 945CEE7220DDC2AC00CD3E0D /* SVIndefiniteAnimatedView.m */; };
 		945CEE7920DDC2AC00CD3E0D /* SVProgressHUD.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 945CEE7320DDC2AC00CD3E0D /* SVProgressHUD.bundle */; };
-		945CEE7D20E2FAFE00CD3E0D /* MapViewController+SmallPopupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 945CEE7C20E2FAFE00CD3E0D /* MapViewController+SmallPopupView.swift */; };
 		945F450E21E681DE00F2DCBC /* SegmentedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 945F450D21E681DE00F2DCBC /* SegmentedViewController.swift */; };
 		945F451121E683C000F2DCBC /* RichPopupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 945F451021E683C000F2DCBC /* RichPopupViewController.swift */; };
 		945F451421E6878A00F2DCBC /* RichPopupDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 945F451321E6878A00F2DCBC /* RichPopupDetailsViewController.swift */; };
@@ -177,6 +176,8 @@
 		E4CF0EAA24E32C0F00E8EE20 /* FloatingPanelHeaderController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4CF0EA624E32C0F00E8EE20 /* FloatingPanelHeaderController.swift */; };
 		E4F93A2F255C8ADE00298E30 /* ArcGIS.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = E4F93A2E255C8ADE00298E30 /* ArcGIS.xcframework */; };
 		E4F93A30255C8ADE00298E30 /* ArcGIS.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = E4F93A2E255C8ADE00298E30 /* ArcGIS.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		E4F93AF825631C7D00298E30 /* IdentifyResultsViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E4F93AF425631C7D00298E30 /* IdentifyResultsViewController.storyboard */; };
+		E4F93AF925631C7D00298E30 /* IdentifyResultsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4F93AF525631C7D00298E30 /* IdentifyResultsViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXBuildRule section */
@@ -276,7 +277,6 @@
 		945CEE7220DDC2AC00CD3E0D /* SVIndefiniteAnimatedView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVIndefiniteAnimatedView.m; sourceTree = "<group>"; };
 		945CEE7320DDC2AC00CD3E0D /* SVProgressHUD.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = SVProgressHUD.bundle; sourceTree = "<group>"; };
 		945CEE7420DDC2AC00CD3E0D /* SVProgressAnimatedView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVProgressAnimatedView.h; sourceTree = "<group>"; };
-		945CEE7C20E2FAFE00CD3E0D /* MapViewController+SmallPopupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MapViewController+SmallPopupView.swift"; sourceTree = "<group>"; };
 		945F450D21E681DE00F2DCBC /* SegmentedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SegmentedViewController.swift; sourceTree = "<group>"; };
 		945F451021E683C000F2DCBC /* RichPopupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RichPopupViewController.swift; sourceTree = "<group>"; };
 		945F451321E6878A00F2DCBC /* RichPopupDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RichPopupDetailsViewController.swift; sourceTree = "<group>"; };
@@ -425,6 +425,8 @@
 		E4BA04A724B4E35C000A1D43 /* FloatingPanelController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = FloatingPanelController.storyboard; sourceTree = "<group>"; };
 		E4CF0EA624E32C0F00E8EE20 /* FloatingPanelHeaderController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FloatingPanelHeaderController.swift; sourceTree = "<group>"; };
 		E4F93A2E255C8ADE00298E30 /* ArcGIS.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = ArcGIS.xcframework; path = $HOME/Library/SDKs/ArcGIS/Frameworks/ArcGIS.xcframework; sourceTree = "<group>"; };
+		E4F93AF425631C7D00298E30 /* IdentifyResultsViewController.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = IdentifyResultsViewController.storyboard; sourceTree = "<group>"; };
+		E4F93AF525631C7D00298E30 /* IdentifyResultsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IdentifyResultsViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1019,7 +1021,6 @@
 				946569052087FBF700599E55 /* MapViewController+UserLocation.swift */,
 				9465690B2087FCCE00599E55 /* MapViewController+Setup.swift */,
 				946569282089066800599E55 /* MapViewController+Map.swift */,
-				945CEE7C20E2FAFE00CD3E0D /* MapViewController+SmallPopupView.swift */,
 				94D544BB207FC15D00ED0D04 /* MaskViewController.swift */,
 				E41B13022421339A00FC2888 /* MapViewController+Extras.swift */,
 				945B8ACC247874F90078D69A /* MapViewController+ProfileViewControllerDelegate.swift */,
@@ -1121,6 +1122,7 @@
 		94FA8B54207BF5DF00972C75 /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				E4F93AF325631C7D00298E30 /* Identify Results View Controller */,
 				E4BA04A024B4E2A4000A1D43 /* Floating Panel View Controller */,
 				E480B99F2421303600982756 /* Layer Contents View Controllers */,
 				94682ADA246EFFEC005B733E /* Profile View Controller */,
@@ -1167,6 +1169,15 @@
 				E4BA04A724B4E35C000A1D43 /* FloatingPanelController.storyboard */,
 			);
 			path = "Floating Panel View Controller";
+			sourceTree = "<group>";
+		};
+		E4F93AF325631C7D00298E30 /* Identify Results View Controller */ = {
+			isa = PBXGroup;
+			children = (
+				E4F93AF425631C7D00298E30 /* IdentifyResultsViewController.storyboard */,
+				E4F93AF525631C7D00298E30 /* IdentifyResultsViewController.swift */,
+			);
+			path = "Identify Results View Controller";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -1321,6 +1332,7 @@
 				945CEE7920DDC2AC00CD3E0D /* SVProgressHUD.bundle in Resources */,
 				94B375BC207E8D5600691F2A /* AddressLocator.locb in Resources */,
 				9458E2A5219B542700D18CEE /* HouseColors.xcassets in Resources */,
+				E4F93AF825631C7D00298E30 /* IdentifyResultsViewController.storyboard in Resources */,
 				94B375BE207E8D5600691F2A /* AddressLocator.lox in Resources */,
 				94682ADE246F0088005B733E /* Profile.storyboard in Resources */,
 				94D544CA207FC67B00ED0D04 /* AppIcon.xcassets in Resources */,
@@ -1441,8 +1453,8 @@
 				94C550F22212129D00DD7E40 /* StyledTextView.swift in Sources */,
 				94879444220227EB007BC15E /* RichPopupDetailsViewController+UITableViewDelegate.swift in Sources */,
 				9440D35C20DC2809005ED582 /* CustomBehavior_TreeSymbology.swift in Sources */,
-				945CEE7D20E2FAFE00CD3E0D /* MapViewController+SmallPopupView.swift in Sources */,
 				9465691A2088028E00599E55 /* AGSRelationshipInfo+Role.swift in Sources */,
+				E4F93AF925631C7D00298E30 /* IdentifyResultsViewController.swift in Sources */,
 				945F454321E7D1CF00F2DCBC /* PopupAttributeTextViewCell.swift in Sources */,
 				9416A19320BF3334001377ED /* Relationship.swift in Sources */,
 				940DA9722097825700AB4BF6 /* UILabel+EmptyString.swift in Sources */,
@@ -1487,7 +1499,6 @@
 				948D85232151C11F00E2048F /* AGSPopupManager+FeatureTable.swift in Sources */,
 				94D2714020D0315900304E27 /* CustomBehavior_Map.swift in Sources */,
 				E4CF0EAA24E32C0F00E8EE20 /* FloatingPanelHeaderController.swift in Sources */,
-				946D20C22130C236001BF5CC /* LastSyncMobileMapPackage.swift in Sources */,
 				945CEE7720DDC2AC00CD3E0D /* SVProgressHUD.m in Sources */,
 				9426E9CD25093C69007DC18D /* PortalSessionManager.swift in Sources */,
 				945F455D21EFA90C00F2DCBC /* UserDefaults+RawRepresentable.swift in Sources */,

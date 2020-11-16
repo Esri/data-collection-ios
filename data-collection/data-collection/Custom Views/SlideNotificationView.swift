@@ -33,7 +33,7 @@ class SlideNotificationView: UIView {
     
     private var hideLabelTimer: Timer?
     
-    private let label = UILabel()
+    private let label:UILabel = UILabel()
     
     private var topSlideConstraint: NSLayoutConstraint!
     

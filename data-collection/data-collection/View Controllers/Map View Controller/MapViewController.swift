@@ -27,7 +27,6 @@ class MapViewController: UIViewController {
     }
     
     @IBOutlet weak var mapView: AGSMapView!
-    @IBOutlet weak var smallPopupView: ShrinkingView!
     @IBOutlet weak var popupsContainerView: UIView!
     @IBOutlet weak var addPopupRelatedRecordButton: UIButton!
     @IBOutlet weak var selectView: UIView!
@@ -56,6 +55,25 @@ class MapViewController: UIViewController {
     
     var extrasNavigationController: UINavigationController?
     var layerContentsViewController: LayerContentsViewController?
+//    var floatingPanelController: FloatingPanelController? {
+//        willSet {
+//            // Dismiss the existing floating panel if we're showing one.
+//            if let exsistingFloatingPanel = floatingPanelController {
+//                dismissFloatingPanel(exsistingFloatingPanel)
+//            }
+//        }
+//    }
+    
+    //TODO: create `instantiate()` like in FloatingPanelController
+    lazy var identifyResultsViewController: IdentifyResultsViewController = {
+        // Get the bundle and then the storyboard for the IdentifyResultsViewController.
+        let bundle = Bundle(for: IdentifyResultsViewController.self)
+        let storyboard = UIStoryboard(name: "IdentifyResultsViewController", bundle: bundle)
+        
+        // Create the identifyResultsViewController from the storyboard.
+        let vc = storyboard.instantiateInitialViewController() as? IdentifyResultsViewController
+        return vc ?? IdentifyResultsViewController()
+    }()
 
     var mapViewMode: MapViewMode = .defaultView {
         didSet {
@@ -71,12 +89,6 @@ class MapViewController: UIViewController {
         
         // Builds and constrains the activity view to the map view.
         setupActivityBarView()
-        
-        // Ensure the map view attribution bar top auto layout constraint is attached to the small pop-up view.
-        setupMapViewAttributionBarAutoLayoutConstraints()
-        
-        // Set up the small pop-up view.
-        setupSmallPopupView()
 
         // Set initial map view mode.
         adjustForMapViewMode(from: nil, to: mapViewMode)
@@ -112,7 +124,8 @@ class MapViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        refreshCurrentPopup()
+        // TODO: ?
+//        refreshCurrentPopup()
     }
         
     // MARK:- Extras
@@ -191,6 +204,13 @@ class MapViewController: UIViewController {
     // MARK: Current Pop-Up
     
     private(set) var currentPopupManager: RichPopupManager?
+    private(set) var selectedPopups = [RichPopup]()
+
+    func setSelectedPopups(popups: [RichPopup]) {
+        // Clear existing selection
+        (currentPopupManager?.popup.feature?.featureTable?.layer as? AGSFeatureLayer)?.clearSelection()
+        selectedPopups = popups
+    }
 
     func setCurrentPopup(popup: RichPopup) {
         
