@@ -63,7 +63,7 @@ Read the [docs](./docs/README.md) for a detailed explanation of the application,
 
 ## Get started
 
-Make sure you've installed XCode and the ArcGIS Runtime SDK for iOS and that they meet these [requirements](#requirements).
+Make sure you've installed Xcode and the ArcGIS Runtime SDK for iOS and that they meet these [requirements](#requirements).
 
 Note that the 100.10 release of the ArcGIS Runtime SDK for iOS replaces the installed "fat framework" `ArcGIS.framework` with a new binary framework `ArcGIS.xcframework`.  It also changes the location of the installed framework file and removes the need for the `strip-frameworks.sh` Build Phase.  These changes have been incorporated in the lastest release of the *Data Collection app*.
 
