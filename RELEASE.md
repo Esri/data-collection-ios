@@ -10,6 +10,14 @@
 - Reformats `AppConfiguration` to be more clear.
 - Introduces `GlobalAlertQueue`, a utility for enqueueing and presenting alerts in a stand-alone alert window (`UIWindow`). This change improves the reliability of presenting alerts from any app component - context, view, or otherwise.
 
+# Release 1.2.3
+
+- The 100.10.0 release of the ArcGIS Runtime for iOS is now distributed as a binary framework.  This necessitated the following changes in the Data Collection Xcode project file:
+    - The `ArcGIS.framework` framework has been replaced with `ArcGIS.xcframework`.
+    - The Build Phase which ran the `strip-frameworks.sh` shell script is no longer necessary.
+- Certification for the 100.10.0 release of the ArcGIS Runtime SDK for iOS.
+- Updates the ArcGIS Runtime Toolkit submodule to the 100.10.0 version.
+
 # Release 1.2.2
 
 - Introduces new technique for managing [app secrets](./docs#app-configuration).
