@@ -239,3 +239,13 @@ extension MapViewController {
         }
     }
 }
+
+// MARK: Map View Center Point
+
+private extension AGSMapView {
+    
+    /// An `AGSPoint` representing the center point of the `AGSMapView`'s frame, in the `AGSMapView`'s spatial reference.
+    var centerAGSPoint: AGSPoint {
+        return screen(toLocation: bounds.center)
+    }
+}
