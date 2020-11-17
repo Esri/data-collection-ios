@@ -19,7 +19,7 @@ extension MapViewController: AGSGeoViewTouchDelegate {
     
     func geoView(_ geoView: AGSGeoView, didTapAtScreenPoint screenPoint: CGPoint, mapPoint: AGSPoint) {
         
-        guard mapViewMode == .defaultView || mapViewMode == .selectedFeature(featureLoaded: false) || mapViewMode == .selectedFeature(featureLoaded: true) else {
+        guard mapViewMode == .defaultView || mapViewMode == .selectedFeature(visible: false) || mapViewMode == .selectedFeature(visible: true) else {
             return
         }
         
@@ -90,7 +90,7 @@ extension MapViewController: AGSGeoViewTouchDelegate {
 //            }
             
             // Set the map view mode to selected feature
-            self.mapViewMode = .selectedFeature(featureLoaded: false)
+            self.mapViewMode = .selectedFeature(visible: true)
             
 //            // Load the new current pop up
 //            self.refreshCurrentPopup()

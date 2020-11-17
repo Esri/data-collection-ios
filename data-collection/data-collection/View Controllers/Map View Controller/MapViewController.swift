@@ -21,7 +21,7 @@ class MapViewController: UIViewController {
     enum MapViewMode: Equatable {
         case defaultView
         case disabled
-        case selectedFeature(featureLoaded: Bool)
+        case selectedFeature(visible: Bool)
         case selectingFeature
         case offlineMask
     }
@@ -247,7 +247,7 @@ class MapViewController: UIViewController {
                 setCurrentPopup(popup: newPopup)
                 destination.popupManager = currentPopupManager!
                 destination.setEditing(true, animated: false)
-                mapViewMode = .selectedFeature(featureLoaded: false)
+                mapViewMode = .selectedFeature(visible: false)
             }
             else if let popupManager = EphemeralCache.shared.object(forKey: .newRelatedRecord) as? RichPopupManager {
                 destination.popupManager = popupManager

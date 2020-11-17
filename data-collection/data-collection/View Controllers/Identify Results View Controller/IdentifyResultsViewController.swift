@@ -1,12 +1,19 @@
+// Copyright 2020 Esri
 //
-//  IdentifyResultsViewController.swift
-//  data-collection
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
 //
-//  Created by Mark Dostal on 8/4/20.
-//  Copyright © 2020 Esri. All rights reserved.
+//   http://www.apache.org/licenses/LICENSE-2.0
 //
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
 
 import UIKit
+import ArcGIS
 
 class IdentifyResultsViewController: UITableViewController, FloatingPanelEmbeddable {
     var floatingPanelItem: FloatingPanelItem = {
@@ -21,6 +28,11 @@ class IdentifyResultsViewController: UITableViewController, FloatingPanelEmbedda
             }
         }
     }
+    
+    
+    // Dictionary of symbol swatches (images); keys are the symbol used to create the swatch.
+    private var symbolSwatches = [AGSSymbol: UIImage]()
+
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -47,7 +59,30 @@ class IdentifyResultsViewController: UITableViewController, FloatingPanelEmbedda
         
         let richPopup = selectedPopups[indexPath.row]
         cell.textLabel?.text = richPopup.title
-        cell.imageView?.image = UIImage(named: "feature-details")
+        cell.detailTextLabel?.text = "Detail text here..."
+        if let symbol = richPopup.symbol {
+            if let swatch = symbolSwatches[symbol] {
+                // we have a swatch, so set it into the imageView and stop the activity indicator
+                cell.imageView?.image = swatch
+            } else {
+                // tag the cell so we know what index path it's being used for
+                cell.tag = indexPath.hashValue
+
+                // we don't have a swatch for the given symbol, start the activity indicator
+                // and create the swatch
+                symbol.createSwatch(completion: { [weak self] (image, _) -> Void in
+                    // make sure this is the cell we still care about and that it
+                    // wasn't already recycled by the time we get the swatch
+                    if cell.tag != indexPath.hashValue {
+                        return
+                    }
+
+                    // set the swatch into our dictionary and reload the row
+                    self?.symbolSwatches[symbol] = image
+                    tableView.reloadRows(at: [indexPath], with: .automatic)
+                })
+            }
+        }
         return cell
     }
     

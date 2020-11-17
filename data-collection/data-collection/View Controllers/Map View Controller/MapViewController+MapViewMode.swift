@@ -90,10 +90,10 @@ extension MapViewController {
             selectViewHeaderLabel.text = "Choose location"
             selectViewSubheaderLabel.text = "Pan & zoom map under pin"
             
-        case .selectedFeature(let loaded):
+        case .selectedFeature(let visible):
             pinDropView.pinDropped = false
             animations = [ selectViewVisible(false),
-                           identifyResultsVisible(true),
+                           identifyResultsVisible(visible),
                            mapViewVisible(true) ]
             hideMapMaskViewForOfflineDownloadArea()
             
