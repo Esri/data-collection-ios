@@ -96,7 +96,6 @@
 		948D84E121484C7500E2048F /* URLComponents+Parameter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 948D84E021484C7500E2048F /* URLComponents+Parameter.swift */; };
 		948D84F1214C899600E2048F /* AppContext+VisibleArea.swift in Sources */ = {isa = PBXBuildFile; fileRef = 948D84F0214C899600E2048F /* AppContext+VisibleArea.swift */; };
 		948D84F3215015A300E2048F /* UserDefaults+AGSJSONSerializable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 948D84F2215015A300E2048F /* UserDefaults+AGSJSONSerializable.swift */; };
-		948D84F82151B46000E2048F /* AGSMapView+Centerpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 948D84F72151B46000E2048F /* AGSMapView+Centerpoint.swift */; };
 		948D84FA2151B48400E2048F /* AGSMapView+Rotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 948D84F92151B48400E2048F /* AGSMapView+Rotation.swift */; };
 		948D85032151B85200E2048F /* AGSArcGISFeature+Collection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 948D85022151B85200E2048F /* AGSArcGISFeature+Collection.swift */; };
 		948D85082151B9C200E2048F /* AGSPopup+Collection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 948D85072151B9C200E2048F /* AGSPopup+Collection.swift */; };
@@ -336,7 +335,6 @@
 		948D84E021484C7500E2048F /* URLComponents+Parameter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URLComponents+Parameter.swift"; sourceTree = "<group>"; };
 		948D84F0214C899600E2048F /* AppContext+VisibleArea.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppContext+VisibleArea.swift"; sourceTree = "<group>"; };
 		948D84F2215015A300E2048F /* UserDefaults+AGSJSONSerializable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserDefaults+AGSJSONSerializable.swift"; sourceTree = "<group>"; };
-		948D84F72151B46000E2048F /* AGSMapView+Centerpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AGSMapView+Centerpoint.swift"; sourceTree = "<group>"; };
 		948D84F92151B48400E2048F /* AGSMapView+Rotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AGSMapView+Rotation.swift"; sourceTree = "<group>"; };
 		948D85022151B85200E2048F /* AGSArcGISFeature+Collection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AGSArcGISFeature+Collection.swift"; sourceTree = "<group>"; };
 		948D85072151B9C200E2048F /* AGSPopup+Collection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AGSPopup+Collection.swift"; sourceTree = "<group>"; };
@@ -647,7 +645,6 @@
 		948D84F62151B44800E2048F /* AGSMapView */ = {
 			isa = PBXGroup;
 			children = (
-				948D84F72151B46000E2048F /* AGSMapView+Centerpoint.swift */,
 				948D84F92151B48400E2048F /* AGSMapView+Rotation.swift */,
 				94B375DE207E8E4800691F2A /* AGSMapView+ExtentForCGRect.swift */,
 			);
@@ -1319,7 +1316,6 @@
 				9487943A2200CF0F007BC15E /* RichPopupViewController+UINavigationControllerDelegate.swift in Sources */,
 				945B8ACD247874F90078D69A /* MapViewController+ProfileViewControllerDelegate.swift in Sources */,
 				948D85202151C01500E2048F /* AGSArcGISFeatureTable+Edit.swift in Sources */,
-				948D84F82151B46000E2048F /* AGSMapView+Centerpoint.swift in Sources */,
 				9499821924AA4ED5001967A9 /* AGSPopupAttachmentSize+PreferredSize.swift in Sources */,
 				948D84CF2142227900E2048F /* CGFloat+Conversions.swift in Sources */,
 				946569042087FB5000599E55 /* MapViewController+LocationSelection.swift in Sources */,
