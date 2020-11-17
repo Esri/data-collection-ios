@@ -392,7 +392,7 @@ extension AGSGenerateOfflineMapResult: JobResult {}
 extension AGSOfflineMapSyncResult: JobResult {}
 
 
-extension AGSMap {
+private extension AGSMap {
     
     /// Return **all** offline tables contained in a map, considering both feature layers and feature tables.
     ///
