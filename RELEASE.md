@@ -4,7 +4,7 @@
     - The `ArcGIS.framework` framework has been replaced with `ArcGIS.xcframework`.
     - The Build Phase which ran the `strip-frameworks.sh` shell script is no longer necessary.
 - Certification for the 100.10 release of the ArcGIS Runtime SDK for iOS.
-- Updates the ArcGIS Runtime Toolkit submodule to the 100.10.0 version.
+- Updates the ArcGIS Runtime Toolkit submodule to the 100.10 version.
 
 # Release 1.2.2
 
