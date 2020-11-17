@@ -117,7 +117,6 @@
 		94B375C9207E8D5600691F2A /* AppContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94B375A8207E8D5600691F2A /* AppContext.swift */; };
 		94B375D2207E8D5600691F2A /* EphemeralCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94B375BB207E8D5600691F2A /* EphemeralCache.swift */; };
 		94B375D6207E8DD600691F2A /* AddressLocator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94B375D4207E8DD600691F2A /* AddressLocator.swift */; };
-		94B375F5207E8E4800691F2A /* AGSMapView+ExtentForCGRect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94B375DE207E8E4800691F2A /* AGSMapView+ExtentForCGRect.swift */; };
 		94B375F6207E8E4800691F2A /* AGSPortal+CachedCredentials.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94B375DF207E8E4800691F2A /* AGSPortal+CachedCredentials.swift */; };
 		94B375F9207E8E4800691F2A /* AGSArcGISFeature+FeatureTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94B375E2207E8E4800691F2A /* AGSArcGISFeature+FeatureTable.swift */; };
 		94B375FC207E8E4800691F2A /* UIView+StackViewAutoLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94B375E6207E8E4800691F2A /* UIView+StackViewAutoLayout.swift */; };
@@ -356,7 +355,6 @@
 		94B375B4207E8D5600691F2A /* data-collection-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "data-collection-Bridging-Header.h"; sourceTree = "<group>"; };
 		94B375BB207E8D5600691F2A /* EphemeralCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EphemeralCache.swift; sourceTree = "<group>"; };
 		94B375D4207E8DD600691F2A /* AddressLocator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddressLocator.swift; sourceTree = "<group>"; };
-		94B375DE207E8E4800691F2A /* AGSMapView+ExtentForCGRect.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AGSMapView+ExtentForCGRect.swift"; sourceTree = "<group>"; };
 		94B375DF207E8E4800691F2A /* AGSPortal+CachedCredentials.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AGSPortal+CachedCredentials.swift"; sourceTree = "<group>"; };
 		94B375E2207E8E4800691F2A /* AGSArcGISFeature+FeatureTable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AGSArcGISFeature+FeatureTable.swift"; sourceTree = "<group>"; };
 		94B375E6207E8E4800691F2A /* UIView+StackViewAutoLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+StackViewAutoLayout.swift"; sourceTree = "<group>"; };
@@ -640,14 +638,6 @@
 			path = Dispatch;
 			sourceTree = "<group>";
 		};
-		948D84F62151B44800E2048F /* AGSMapView */ = {
-			isa = PBXGroup;
-			children = (
-				94B375DE207E8E4800691F2A /* AGSMapView+ExtentForCGRect.swift */,
-			);
-			path = AGSMapView;
-			sourceTree = "<group>";
-		};
 		948D84FB2151B4E400E2048F /* AGSPortal */ = {
 			isa = PBXGroup;
 			children = (
@@ -817,7 +807,6 @@
 				948D85042151B8B300E2048F /* AGSPopup */,
 				948D84FD2151B53300E2048F /* AGSArcGISFeature */,
 				948D84FB2151B4E400E2048F /* AGSPortal */,
-				948D84F62151B44800E2048F /* AGSMapView */,
 			);
 			path = ArcGIS;
 			sourceTree = "<group>";
@@ -1350,7 +1339,6 @@
 				945CEE7820DDC2AC00CD3E0D /* SVIndefiniteAnimatedView.m in Sources */,
 				E480B9A72421309E00982756 /* LayerContentsDataSource.swift in Sources */,
 				94B375C4207E8D5600691F2A /* AppErrors.swift in Sources */,
-				94B375F5207E8E4800691F2A /* AGSMapView+ExtentForCGRect.swift in Sources */,
 				94B375FF207E8E4800691F2A /* UIStoryboardSegue+NavigationDestination.swift in Sources */,
 				946E6A9521F2A96000B315B6 /* RichPopupViewController+EditingSession.swift in Sources */,
 				9465691E208802CE00599E55 /* AGSFeatureTable+PopupEnabled.swift in Sources */,
