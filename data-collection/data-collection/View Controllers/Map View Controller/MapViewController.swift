@@ -124,8 +124,7 @@ class MapViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        // TODO: ?
-//        refreshCurrentPopup()
+        refreshCurrentPopup()
     }
         
     // MARK:- Extras
@@ -302,4 +301,13 @@ extension String {
     static let newSpatialFeature = "MapViewController.newFeature.spatial"
     static let newNonSpatialFeature = "MapViewController.newFeature.nonspatial"
     static let newRelatedRecord = "MapViewController.newRelatedRecord"
+}
+
+// MARK: MapViewController Identifyf extension
+extension MapViewController {
+    func userDidRequestPopupViewController(_ sender: Any) {
+        guard case MapViewMode.selectedFeature(visible: true) = mapViewMode, currentPopupManager != nil else { return }
+        mapViewMode = .selectedFeature(visible: true)
+        performSegue(withIdentifier: "modallyPresentRelatedRecordsPopupViewController", sender: nil)
+    }
 }

@@ -33,7 +33,6 @@ class IdentifyResultsViewController: UITableViewController, FloatingPanelEmbedda
     // Dictionary of symbol swatches (images); keys are the symbol used to create the swatch.
     private var symbolSwatches = [AGSSymbol: UIImage]()
 
-
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -87,7 +86,16 @@ class IdentifyResultsViewController: UITableViewController, FloatingPanelEmbedda
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        <#code#>
+        //            // Use the geometry engine to determine the nearest pop-up to the touch point.
+        //            if let nearest = identifyResult.popups.popupNearestTo(mapPoint: mapPoint) {
+        //                let richPopup = RichPopup(popup: nearest)
+        //                self.setCurrentPopup(popup: richPopup)
+        //            }
+        //            else {
+        //                self.clearCurrentPopup()
+        //            }
+
+        performSegue(withIdentifier: "modallyPresentRelatedRecordsPopupViewController", sender: nil)
     }
 
     // MARK: - Navigation
@@ -96,5 +104,47 @@ class IdentifyResultsViewController: UITableViewController, FloatingPanelEmbedda
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destination.
         // Pass the selected object to the new view controller.
+    }
+
+    // TODO
+    Add handler property for when current popup changes.  That way the mapViewController
+    can pass in a handler that would take care of selecting the appropriate graphic and UI (if any)
+    based on when the user selects a new popup.  It would have to take nil, which would be the
+    "unselect" case, like when the user goes back to the main list.
+    
+    func refreshCurrentPopup() {
+        
+        guard case MapViewMode.selectedFeature = mapViewMode, let popup = currentPopupManager?.richPopup else {
+            return
+        }
+        
+        guard popup.isFeatureAddedToTable else {
+            clearCurrentPopup()
+            mapViewMode = .defaultView
+            return
+        }
+        
+        // Select the underlying feature
+        if let feature = popup.feature {
+            (feature.featureTable?.layer as? AGSFeatureLayer)?.select(feature)
+        }
+        
+        if let popupRelationships = popup.relationships {
+            
+            popupRelationships.load { [weak self] (error) in
+                
+                if let error = error {
+                    print("[Error: RichPopup] relationships load error: \(error)")
+                }
+                
+                guard let self = self else { return }
+                
+                self.populateContentIntoSmallPopupView(popup)
+            }
+        }
+        else {
+            
+            populateContentIntoSmallPopupView(popup)
+        }
     }
 }

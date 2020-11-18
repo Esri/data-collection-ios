@@ -40,6 +40,9 @@
                                         </label>
                                     </subviews>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <segue destination="PkY-Ts-ie5" kind="showDetail" id="633-Xi-TfI"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -51,6 +54,14 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="uOV-L3-NBY" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="90" y="114"/>
+        </scene>
+        <!--RichPopup-->
+        <scene sceneID="h9L-jS-PUP">
+            <objects>
+                <viewControllerPlaceholder storyboardName="RichPopup" id="PkY-Ts-ie5" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="a1d-yf-xu8" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2123" y="995"/>
         </scene>
     </scenes>
     <resources>
