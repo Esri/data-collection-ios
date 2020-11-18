@@ -9,6 +9,7 @@
 - Removes `NetworkReachabilityManager` as a first class state mechanism allowing app to determine reachability with every network request, removes `Alamofire` swift package.
 - Reformats `AppConfiguration` to be more clear.
 - Introduces `GlobalAlertQueue`, a utility for enqueueing and presenting alerts in a stand-alone alert window (`UIWindow`). This change improves the reliability of presenting alerts from any app component - context, view, or otherwise.
+- Introduces nuanced offline map icons in Profile view.
 
 # Release 1.2.2
 
