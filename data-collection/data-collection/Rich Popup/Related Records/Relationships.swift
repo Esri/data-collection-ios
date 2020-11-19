@@ -35,7 +35,7 @@ class Relationships: AGSLoadableBase {
     
     private(set) var oneToMany = [OneToManyRelationship]()
     
-    private var loadingRelationships: [AGSLoadable]?
+    private var loadingRelationships: [Relationship]?
     
     override func doCancelLoading() {
         
@@ -79,7 +79,7 @@ class Relationships: AGSLoadableBase {
             return
         }
         
-        var loadables = [AGSLoadable]()
+        var loadables = [Relationship]()
         
         for info in layerInfo.relationshipInfos {
             
@@ -117,12 +117,9 @@ class Relationships: AGSLoadableBase {
             
             self.loadingRelationships = nil
             
-            let errors: [(String, Error)] = loadedRelationships.compactMap { (relationship) in
+            let errors = loadedRelationships.reduce(into: [Relationship: Error]()) { (errors, relationship) in
                 if let error = relationship.loadError {
-                    return ((relationship as! Relationship).name ?? "(missing tablename)", error)
-                }
-                else {
-                    return nil
+                    errors[relationship] = error
                 }
             }
             
@@ -148,9 +145,9 @@ class Relationships: AGSLoadableBase {
     }
     
     struct RelationshipsLoadError: LocalizedError {
-        let errors: [(tablename: String, error: Error)]
+        let errors: [Relationship: Error]
         var localizedDescription: String {
-            "Failed to load relationships: \(errors.map{$0.tablename}.joined(separator: ","))"
+            "Failed to load relationships: \(errors.keys.map{ $0.name ?? "(missing tablename)" }.joined(separator: ","))"
         }
     }
     
