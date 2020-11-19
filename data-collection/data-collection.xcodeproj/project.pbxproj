@@ -17,7 +17,6 @@
 		942B48F121A714FC0061C47A /* Relationships.swift in Sources */ = {isa = PBXBuildFile; fileRef = 942B48F021A714FC0061C47A /* Relationships.swift */; };
 		9440D35120D4662E005ED582 /* CustomBehavior_NewTreeCondition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9440D35020D4662E005ED582 /* CustomBehavior_NewTreeCondition.swift */; };
 		9440D35C20DC2809005ED582 /* CustomBehavior_TreeSymbology.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9440D35B20DC2809005ED582 /* CustomBehavior_TreeSymbology.swift */; };
-		944433E321AC756400E96A6E /* LoadablesError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 944433E221AC756400E96A6E /* LoadablesError.swift */; };
 		944433E621AC76B400E96A6E /* UnknownError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 944433E521AC76B400E96A6E /* UnknownError.swift */; };
 		944433E821AC76DC00E96A6E /* InvalidOperationError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 944433E721AC76DC00E96A6E /* InvalidOperationError.swift */; };
 		944433EA21AC772300E96A6E /* UserCancelledError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 944433E921AC772300E96A6E /* UserCancelledError.swift */; };
@@ -240,7 +239,6 @@
 		942B48F021A714FC0061C47A /* Relationships.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Relationships.swift; sourceTree = "<group>"; };
 		9440D35020D4662E005ED582 /* CustomBehavior_NewTreeCondition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomBehavior_NewTreeCondition.swift; sourceTree = "<group>"; };
 		9440D35B20DC2809005ED582 /* CustomBehavior_TreeSymbology.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomBehavior_TreeSymbology.swift; sourceTree = "<group>"; };
-		944433E221AC756400E96A6E /* LoadablesError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadablesError.swift; sourceTree = "<group>"; };
 		944433E521AC76B400E96A6E /* UnknownError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnknownError.swift; sourceTree = "<group>"; };
 		944433E721AC76DC00E96A6E /* InvalidOperationError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InvalidOperationError.swift; sourceTree = "<group>"; };
 		944433E921AC772300E96A6E /* UserCancelledError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCancelledError.swift; sourceTree = "<group>"; };
@@ -440,7 +438,6 @@
 			isa = PBXGroup;
 			children = (
 				94B375A2207E8D5600691F2A /* AppErrors.swift */,
-				944433E221AC756400E96A6E /* LoadablesError.swift */,
 				944433E521AC76B400E96A6E /* UnknownError.swift */,
 				944433E721AC76DC00E96A6E /* InvalidOperationError.swift */,
 				944433E921AC772300E96A6E /* UserCancelledError.swift */,
@@ -1397,7 +1394,6 @@
 				94C550F42212138D00DD7E40 /* StyledTextField.swift in Sources */,
 				944433EC21AC788800E96A6E /* FeatureTableError.swift in Sources */,
 				E480B9A52421303600982756 /* LayerContentsViewController.swift in Sources */,
-				944433E321AC756400E96A6E /* LoadablesError.swift in Sources */,
 				948D85312151C80400E2048F /* UIView+Animation.swift in Sources */,
 				945F454721E7D2BA00F2DCBC /* PopupRelatedRecordCell.swift in Sources */,
 				945F456021EFACB500F2DCBC /* RichPopupPreviewableAttachment.swift in Sources */,
