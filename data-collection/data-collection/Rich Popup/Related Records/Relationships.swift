@@ -117,19 +117,23 @@ class Relationships: AGSLoadableBase {
             
             self.loadingRelationships = nil
             
-            var errors = [Error]()
-            
-            for relationship in loadedRelationships {
-                
-                guard relationship.loadStatus == .loaded else {
-                    
-                    if let error = relationship.loadError {
-                        errors.append(error)
-                    }
-                    
-                    continue
+            let errors: [(String, Error)] = loadedRelationships.compactMap { (relationship) in
+                if let error = relationship.loadError {
+                    return ((relationship as! Relationship).name ?? "(missing tablename)", error)
                 }
-                
+                else {
+                    return nil
+                }
+            }
+            
+            guard errors.isEmpty else {
+                self.loadDidFinishWithError(
+                    RelationshipsLoadError(errors: errors)
+                )
+                return
+            }
+                        
+            for relationship in loadedRelationships {
                 if relationship is OneToManyRelationship {
                     self.oneToMany.append(relationship as! OneToManyRelationship)
                 }
@@ -139,12 +143,14 @@ class Relationships: AGSLoadableBase {
                 }
             }
             
-            if !errors.isEmpty {
-                self.loadDidFinishWithError(LoadableError.multiLoadableFailure("related records", errors))
-            }
-            else {
-                self.loadDidFinishWithError(nil)
-            }
+            self.loadDidFinishWithError(nil)
+        }
+    }
+    
+    struct RelationshipsLoadError: LocalizedError {
+        let errors: [(tablename: String, error: Error)]
+        var localizedDescription: String {
+            "Failed to load relationships: \(errors.map{$0.tablename}.joined(separator: ","))"
         }
     }
     
