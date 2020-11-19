@@ -48,10 +48,7 @@ class RichPopupAttachmentsManager: AGSLoadableBase {
         }
         
         guard popupManager.shouldShowAttachments else {
-            assertionFailure("The `RichPopupAttachmentsManager` should not perform a load operation if showing attachments is not supported.")
-            // Fail gracefully finish load without loading attachments.
-            loadDidFinishWithError(nil)
-            return
+            preconditionFailure("The `RichPopupAttachmentsManager` should not perform a load operation if showing attachments is not supported.")
         }
         
         cancelableFetch = popupAttachmentsManager.fetchAttachments { [weak self] (_, error) in
