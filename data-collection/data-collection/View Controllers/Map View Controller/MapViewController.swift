@@ -124,7 +124,7 @@ class MapViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        refreshCurrentPopup()
+//        refreshCurrentPopup()
     }
         
     // MARK:- Extras
@@ -303,7 +303,7 @@ extension String {
     static let newRelatedRecord = "MapViewController.newRelatedRecord"
 }
 
-// MARK: MapViewController Identifyf extension
+// MARK: MapViewController Identify extension
 extension MapViewController {
     func userDidRequestPopupViewController(_ sender: Any) {
         guard case MapViewMode.selectedFeature(visible: true) = mapViewMode, currentPopupManager != nil else { return }

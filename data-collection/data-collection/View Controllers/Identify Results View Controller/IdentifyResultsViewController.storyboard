@@ -41,7 +41,7 @@
                                     </subviews>
                                 </tableViewCellContentView>
                                 <connections>
-                                    <segue destination="PkY-Ts-ie5" kind="showDetail" id="633-Xi-TfI"/>
+                                    <segue destination="PkY-Ts-ie5" kind="show" identifier="showRichPopup" id="633-Xi-TfI"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -58,10 +58,12 @@
         <!--RichPopup-->
         <scene sceneID="h9L-jS-PUP">
             <objects>
-                <viewControllerPlaceholder storyboardName="RichPopup" id="PkY-Ts-ie5" sceneMemberID="viewController"/>
+                <viewControllerPlaceholder storyboardName="RichPopup" id="PkY-Ts-ie5" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="u2n-dx-IT5"/>
+                </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="a1d-yf-xu8" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2123" y="995"/>
+            <point key="canvasLocation" x="257" y="539"/>
         </scene>
     </scenes>
     <resources>

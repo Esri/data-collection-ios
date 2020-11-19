@@ -16,6 +16,8 @@ import UIKit
 import ArcGIS
 
 class IdentifyResultsViewController: UITableViewController, FloatingPanelEmbeddable {
+    var popupChangedHandler: ((RichPopup?) -> Void)?
+
     var floatingPanelItem: FloatingPanelItem = {
         return FloatingPanelItem()
     }()
@@ -85,6 +87,7 @@ class IdentifyResultsViewController: UITableViewController, FloatingPanelEmbedda
         return cell
     }
     
+    var richPopup: RichPopup?
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         //            // Use the geometry engine to determine the nearest pop-up to the touch point.
         //            if let nearest = identifyResult.popups.popupNearestTo(mapPoint: mapPoint) {
@@ -94,57 +97,118 @@ class IdentifyResultsViewController: UITableViewController, FloatingPanelEmbedda
         //            else {
         //                self.clearCurrentPopup()
         //            }
-
-        performSegue(withIdentifier: "modallyPresentRelatedRecordsPopupViewController", sender: nil)
+        richPopup = selectedPopups[indexPath.row]
+//        popupChangedHandler?(richPopup)
+//        performSegue(withIdentifier: "showRichPopup", sender: nil)
+        if let popup = richPopup, let vc = prepareRichPopupViewController(popup) {
+            print("pushing popupvc")
+            navigationController?.pushViewController(vc, animated: true)
+        }
     }
 
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    func prepareRichPopupViewController(_ richPopups: RichPopup) -> UIViewController? {
+        popupChangedHandler?(richPopup)
+        
+        let bundle = Bundle(for: RichPopupViewController.self)
+        let storyboard = UIStoryboard(name: "RichPopup", bundle: bundle)
+        
+        // create the legend VC from the storyboard
+        let popupVC = storyboard.instantiateInitialViewController() as? AppContextAwareNavigationController
+        return popupVC
+//        guard let destination = segue.navigationDestination as? RichPopupViewController else { return }
+//        if let newPopup = EphemeralCache.shared.object(forKey: .newSpatialFeature) as? RichPopup {
+//            //                setCurrentPopup(popup: newPopup)
+//            destination.popupManager = RichPopupManager(richPopup: newPopup)
+//            destination.setEditing(true, animated: false)
+//            //                mapViewMode = .selectedFeature(visible: false)
+//        }
+//        else if let popupManager = EphemeralCache.shared.object(forKey: .newRelatedRecord) as? RichPopupManager {
+//            destination.setEditing(true, animated: false)
+//            destination.popupManager = popupManager
+//            destination.shouldLoadRichPopupRelatedRecords = false
+//        }
+//        else {
+//        else if let currentPopupManager = currentPopupManager {
+//            destination.popupManager = RichPopupManager(richPopup: richPopup!)
+//        }
+//        else {
+//            assertionFailure("A rich popup view controller should not present if any of the above scenarios are not met.")
+//        }
     }
 
-    // TODO
-    Add handler property for when current popup changes.  That way the mapViewController
-    can pass in a handler that would take care of selecting the appropriate graphic and UI (if any)
-    based on when the user selects a new popup.  It would have to take nil, which would be the
-    "unselect" case, like when the user goes back to the main list.
-    
-    func refreshCurrentPopup() {
-        
-        guard case MapViewMode.selectedFeature = mapViewMode, let popup = currentPopupManager?.richPopup else {
-            return
+    // In a storyboard-based application, you will often want to do a little preparation before navigation
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        guard let indexPath = tableView.indexPathForSelectedRow else { return }
+        richPopup = selectedPopups[indexPath.row]
+        popupChangedHandler?(richPopup)
+
+        guard let destination = segue.navigationDestination as? RichPopupViewController else { return }
+        if let newPopup = EphemeralCache.shared.object(forKey: .newSpatialFeature) as? RichPopup {
+            //                setCurrentPopup(popup: newPopup)
+            destination.popupManager = RichPopupManager(richPopup: newPopup)
+            destination.setEditing(true, animated: false)
+            //                mapViewMode = .selectedFeature(visible: false)
         }
-        
-        guard popup.isFeatureAddedToTable else {
-            clearCurrentPopup()
-            mapViewMode = .defaultView
-            return
-        }
-        
-        // Select the underlying feature
-        if let feature = popup.feature {
-            (feature.featureTable?.layer as? AGSFeatureLayer)?.select(feature)
-        }
-        
-        if let popupRelationships = popup.relationships {
-            
-            popupRelationships.load { [weak self] (error) in
-                
-                if let error = error {
-                    print("[Error: RichPopup] relationships load error: \(error)")
-                }
-                
-                guard let self = self else { return }
-                
-                self.populateContentIntoSmallPopupView(popup)
-            }
+        else if let popupManager = EphemeralCache.shared.object(forKey: .newRelatedRecord) as? RichPopupManager {
+            destination.setEditing(true, animated: false)
+            destination.popupManager = popupManager
+            destination.shouldLoadRichPopupRelatedRecords = false
         }
         else {
-            
-            populateContentIntoSmallPopupView(popup)
+//        else if let currentPopupManager = currentPopupManager {
+            destination.popupManager = RichPopupManager(richPopup: richPopup!)
         }
+//        else {
+//            assertionFailure("A rich popup view controller should not present if any of the above scenarios are not met.")
+//        }
     }
+
+//    override func showDetailViewController(_ vc: UIViewController, sender: Any?) {
+//        navigationController?.pushViewController(vc, animated: true)
+//    }
+
+    // TODO
+//    Add handler property for when current popup changes.  That way the mapViewController
+//    can pass in a handler that would take care of selecting the appropriate graphic and UI (if any)
+//    based on when the user selects a new popup.  It would have to take nil, which would be the
+//    "unselect" case, like when the user goes back to the main list.
+    
+//    func refreshCurrentPopup() {
+//
+//        guard case MapViewMode.selectedFeature = mapViewMode, let popup = currentPopupManager?.richPopup else {
+//            return
+//        }
+//
+//        guard popup.isFeatureAddedToTable else {
+//            clearCurrentPopup()
+//            mapViewMode = .defaultView
+//            return
+//        }
+//
+//        // Select the underlying feature
+//        if let feature = popup.feature {
+//            (feature.featureTable?.layer as? AGSFeatureLayer)?.select(feature)
+//        }
+//
+//        if let popupRelationships = popup.relationships {
+//
+//            popupRelationships.load { [weak self] (error) in
+//
+//                if let error = error {
+//                    print("[Error: RichPopup] relationships load error: \(error)")
+//                }
+//
+//                guard let self = self else { return }
+//
+//                self.populateContentIntoSmallPopupView(popup)
+//            }
+//        }
+//        else {
+//
+//            populateContentIntoSmallPopupView(popup)
+//        }
+//    }
 }
