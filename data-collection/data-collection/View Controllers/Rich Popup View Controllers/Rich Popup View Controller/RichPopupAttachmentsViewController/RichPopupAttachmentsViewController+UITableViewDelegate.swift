@@ -56,12 +56,16 @@ extension RichPopupAttachmentsViewController /* UITableViewDelegate */ {
         if adjustedAttachmentsTableSection(for: indexPath.section) == .attachmentsList, editingStyle == .delete {
             
             // Delete Attachment
-            if popupAttachmentsManager.deleteAttachment(at: indexPath.row) {
-                
-                // Update Table
-                tableView.performBatchUpdates({
-                    tableView.deleteRows(at: [indexPath], with: .bottom)
-                }, completion: nil)
+            do {
+                if try popupAttachmentsManager.deleteAttachment(at: indexPath.row) {
+                    // Update Table
+                    tableView.performBatchUpdates({
+                        tableView.deleteRows(at: [indexPath], with: .bottom)
+                    }, completion: nil)
+                }
+            }
+            catch {
+                showError(error)
             }
         }
     }

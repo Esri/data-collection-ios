@@ -27,11 +27,9 @@ class RichPopupAttachmentsManager: AGSLoadableBase {
     weak var delegate: RichPopupAttachmentsManagerDelegate?
     
     init?(richPopupManager: RichPopupManager) {
-        
+        guard richPopupManager.shouldShowAttachments || richPopupManager.shouldAllowEditAttachments else { return nil }
         guard let manager = richPopupManager.attachmentManager else { return nil }
-        
         self.popupManager = richPopupManager
-        
         self.popupAttachmentsManager = manager
     }
     
@@ -49,7 +47,9 @@ class RichPopupAttachmentsManager: AGSLoadableBase {
         }
         
         guard popupManager.shouldShowAttachments else {
-            loadDidFinishWithError(NSError.invalidOperation)
+            assertionFailure("The `RichPopupAttachmentsManager` should not perform a load operation if showing attachments is not supported.")
+            // Fail gracefully finish load without loading attachments.
+            loadDidFinishWithError(nil)
             return
         }
         
@@ -86,7 +86,11 @@ class RichPopupAttachmentsManager: AGSLoadableBase {
     }
     
     @discardableResult
-    func add(stagedAttachment: RichPopupStagedAttachment) -> Int {
+    func add(stagedAttachment: RichPopupStagedAttachment) throws -> Int {
+        
+        guard let popupManager = popupManager, popupManager.shouldAllowEditAttachments else {
+            throw InvalidOperation()
+        }
         
         stagedAttachments.append(stagedAttachment)
         
@@ -94,7 +98,11 @@ class RichPopupAttachmentsManager: AGSLoadableBase {
     }
     
     
-    func deleteAttachment(at index: Int) -> Bool {
+    func deleteAttachment(at index: Int) throws -> Bool {
+        
+        guard let popupManager = popupManager, popupManager.shouldAllowEditAttachments else {
+            throw InvalidOperation()
+        }
         
         assert(index < attachmentsCount, "Index \(index) out of range 0..<\(attachmentsCount).")
         
@@ -206,13 +214,13 @@ class RichPopupAttachmentsManager: AGSLoadableBase {
         if let attachment = attachment as? AGSPopupAttachment {
 
             guard self.fetchedAttachments.contains(attachment) else {
-                throw NSError.invalidOperation
+                throw InvalidOperation()
             }
         }
         else if let attachment = attachment as? RichPopupStagedAttachment {
             
             guard self.stagedAttachments.contains(attachment) else {
-                throw NSError.invalidOperation
+                throw InvalidOperation()
             }
         }
         else {
@@ -256,7 +264,7 @@ extension RichPopupAttachmentsManager {
     func loadAttachment(at index: Int) throws {
         
         guard let attachment = attachment(at: index) else {
-            throw NSError.invalidOperation
+            throw InvalidOperation()
         }
         
         if let attachment = attachment as? AGSLoadable {
@@ -310,5 +318,13 @@ extension RichPopupAttachmentsManager {
         }
         
         return IndexPath(row: row, section: section)
+    }
+}
+
+// MARK:- Error
+
+extension RichPopupAttachmentsManager {
+    struct InvalidOperation: LocalizedError {
+        let localizedDescription = "The operation you are trying to perform is not permitted."
     }
 }
