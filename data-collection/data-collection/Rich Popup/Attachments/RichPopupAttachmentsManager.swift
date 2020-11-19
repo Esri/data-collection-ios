@@ -339,6 +339,6 @@ extension AGSPopupAttachment: QLPreviewItem {
 
 extension RichPopupAttachmentsManager {
     struct InvalidOperation: LocalizedError {
-        let localizedDescription = "The operation you are trying to perform is not permitted."
+        var localizedDescription: String { "The operation you are trying to perform is not permitted." }
     }
 }
