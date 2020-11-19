@@ -61,13 +61,16 @@ class RichPopupAttachmentsViewController: UITableViewController {
     }
     
     func addAttachment(_ attachment: RichPopupStagedAttachment) {
-        
-        popupAttachmentsManager.add(stagedAttachment: attachment)
-        
-        if let indexPath = popupAttachmentsManager.indexPathFor(attachment: attachment) {
-            tableView.performBatchUpdates({
-                tableView.insertRows(at: [indexPath], with: .automatic)
-            }, completion: nil)
+        do {
+            try popupAttachmentsManager.add(stagedAttachment: attachment)
+            if let indexPath = popupAttachmentsManager.indexPathFor(attachment: attachment) {
+                tableView.performBatchUpdates({
+                    tableView.insertRows(at: [indexPath], with: .automatic)
+                }, completion: nil)
+            }
+        }
+        catch {
+            showError(error)
         }
     }
     
