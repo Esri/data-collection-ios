@@ -57,12 +57,11 @@ extension RichPopupAttachmentsViewController /* UITableViewDelegate */ {
             
             // Delete Attachment
             do {
-                if try popupAttachmentsManager.deleteAttachment(at: indexPath.row) {
-                    // Update Table
-                    tableView.performBatchUpdates({
-                        tableView.deleteRows(at: [indexPath], with: .bottom)
-                    }, completion: nil)
-                }
+                try popupAttachmentsManager.deleteAttachment(at: indexPath.row)
+                // Update Table
+                tableView.performBatchUpdates({
+                    tableView.deleteRows(at: [indexPath], with: .bottom)
+                }, completion: nil)
             }
             catch {
                 showError(error)
