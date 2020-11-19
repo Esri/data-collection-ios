@@ -41,7 +41,7 @@ extension RichPopupViewController {
         
         // Popup manager must not be in an editing session already.
         guard self.popupManager.isEditing else {
-            completion(NSError.invalidOperation)
+            completion(RichPopupManager.InvalidOperation())
             return
         }
         
@@ -91,13 +91,10 @@ extension RichPopupViewController {
     
     func deleteRecord(_ completion: ((_ error: Error?) -> Void)? = nil) {
         
-        guard
-            let feature = popupManager.popup.geoElement as? AGSArcGISFeature,
-            let featureTable = feature.featureTable as? AGSArcGISFeatureTable,
-            featureTable.canDelete(feature) else {
-                
-                completion?(NSError.invalidOperation)
-                
+        guard let feature = popupManager.popup.geoElement as? AGSArcGISFeature,
+              let featureTable = feature.featureTable as? AGSArcGISFeatureTable,
+              featureTable.canDelete(feature) else {
+                completion?(RichPopupManager.InvalidOperation())
                 return
         }
         
@@ -113,7 +110,6 @@ extension RichPopupViewController {
         
         // Delete the record from the table.
         featureTable.performDelete(feature: feature) { (error) in
-            
             completion?(error)
         }
     }
