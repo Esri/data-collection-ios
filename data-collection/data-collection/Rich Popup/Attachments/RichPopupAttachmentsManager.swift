@@ -82,29 +82,24 @@ class RichPopupAttachmentsManager: AGSLoadableBase {
         return !stagedAttachments.isEmpty
     }
     
-    @discardableResult
-    func add(stagedAttachment: RichPopupStagedAttachment) throws -> Int {
+    func add(stagedAttachment: RichPopupStagedAttachment) throws {
         
         guard let popupManager = popupManager, popupManager.shouldAllowEditAttachments else {
             throw InvalidOperation()
         }
         
         stagedAttachments.append(stagedAttachment)
-        
-        return stagedAttachments.endIndex
     }
     
     
-    func deleteAttachment(at index: Int) throws -> Bool {
+    func deleteAttachment(at index: Int) throws {
         
         guard let popupManager = popupManager, popupManager.shouldAllowEditAttachments else {
             throw InvalidOperation()
         }
         
-        assert(index < attachmentsCount, "Index \(index) out of range 0..<\(attachmentsCount).")
-        
-        guard index < attachmentsCount else { return false }
-        
+        precondition(index < attachmentsCount, "Index \(index) out of range 0..<\(attachmentsCount).")
+                
         if index < fetchedAttachments.endIndex {
             let attachment = fetchedAttachments.remove(at: index)
             popupAttachmentsManager.deleteAttachment(attachment)
@@ -113,8 +108,6 @@ class RichPopupAttachmentsManager: AGSLoadableBase {
             let stagedIndex = index - fetchedAttachments.count
             stagedAttachments.remove(at: stagedIndex)
         }
-        
-        return true
     }
     
     // MARK: Popup Manager Lifecycle
