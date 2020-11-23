@@ -100,7 +100,13 @@ class Relationship: AGSLoadableBase {
         cancelableQuery?.cancel()
         
         // Pass `userCancelled` error.
-        loadDidFinishWithError(NSError.userCancelled)
+        loadDidFinishWithError(CancelledError())
+    }
+    
+    // MARK: Errors
+    
+    struct CancelledError: LocalizedError {
+        var localizedDescription: String { "Cancelled loading relationship." }
     }
     
     // MARK: For Subclassing Eyes
