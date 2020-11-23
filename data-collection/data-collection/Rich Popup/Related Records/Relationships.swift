@@ -50,7 +50,7 @@ class Relationships: AGSLoadableBase {
         
         clear()
         
-        loadDidFinishWithError(NSError.userCancelled)
+        loadDidFinishWithError(CancelledError())
     }
     
     override func doStartLoading(_ retrying: Bool) {
@@ -144,12 +144,20 @@ class Relationships: AGSLoadableBase {
         }
     }
     
+    // MARK: Errors
+    
+    struct CancelledError: LocalizedError {
+        var localizedDescription: String { "Cancelled loading relationships." }
+    }
+    
     struct RelationshipsLoadError: LocalizedError {
         let errors: [Relationship: Error]
         var localizedDescription: String {
             "Failed to load relationships: \(errors.keys.map{ $0.name ?? "(missing tablename)" }.joined(separator: ","))"
         }
     }
+    
+    // MARK: Clear Related Records
     
     private func clear() {
 
