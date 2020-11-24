@@ -208,6 +208,13 @@
 /* End PBXBuildRule section */
 
 /* Begin PBXContainerItemProxy section */
+		4C39055A2565937F000862E5 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E41B130A24254CCC00FC2888 /* ArcGISToolkit.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 8812336F1DF601A700B2EA8E;
+			remoteInfo = ArcGISToolkit;
+		};
 		94FA8B34207BF2CD00972C75 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 94FA8B17207BF2CD00972C75 /* Project object */;
@@ -1219,6 +1226,8 @@
 				944D0CC324E1DD2100EE49CB /* PBXBuildRule */,
 			);
 			dependencies = (
+				4C39055F25659382000862E5 /* PBXTargetDependency */,
+				4C39055B2565937F000862E5 /* PBXTargetDependency */,
 			);
 			name = "data-collection";
 			packageProductDependencies = (
@@ -1562,6 +1571,15 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		4C39055B2565937F000862E5 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = ArcGISToolkit;
+			targetProxy = 4C39055A2565937F000862E5 /* PBXContainerItemProxy */;
+		};
+		4C39055F25659382000862E5 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			productRef = 4C39055E25659382000862E5 /* Alamofire */;
+		};
 		94FA8B35207BF2CD00972C75 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 94FA8B1E207BF2CD00972C75 /* data-collection */;
@@ -1880,6 +1898,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		4C39055E25659382000862E5 /* Alamofire */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 945B8AE3247F111D0078D69A /* XCRemoteSwiftPackageReference "Alamofire" */;
+			productName = Alamofire;
+		};
 		945B8AE4247F111D0078D69A /* Alamofire */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 945B8AE3247F111D0078D69A /* XCRemoteSwiftPackageReference "Alamofire" */;
