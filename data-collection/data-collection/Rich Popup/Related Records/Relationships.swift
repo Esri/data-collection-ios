@@ -21,10 +21,10 @@ class Relationships: AGSLoadableBase {
     
     init?(popup: AGSPopup) {
         
-        guard
-            let feature = popup.geoElement as? AGSArcGISFeature,
-            let featureTable = feature.featureTable as? AGSArcGISFeatureTable,
-            featureTable.layerInfo != nil else {
+        guard let feature = popup.geoElement as? AGSArcGISFeature,
+              let featureTable = feature.featureTable as? AGSArcGISFeatureTable,
+              featureTable.layerInfo != nil
+        else {
             return nil
         }
         
@@ -60,23 +60,15 @@ class Relationships: AGSLoadableBase {
         }
         
         guard let popup = popup else {
-            loadDidFinishWithError(NSError.unknown)
+            loadDidFinishWithError(MissingRecordError())
             return
         }
         
-        guard let feature = popup.geoElement as? AGSArcGISFeature else {
-            loadDidFinishWithError(FeatureTableError.invalidFeature)
-            return
-        }
-        
-        guard let featureTable = feature.featureTable as? AGSArcGISFeatureTable else {
-            loadDidFinishWithError(FeatureTableError.invalidFeatureTable)
-            return
-        }
-        
-        guard let layerInfo = featureTable.layerInfo else {
-            loadDidFinishWithError(FeatureTableError.missingRelationshipInfos)
-            return
+        guard let feature = popup.geoElement as? AGSArcGISFeature,
+              let featureTable = feature.featureTable as? AGSArcGISFeatureTable,
+              let layerInfo = featureTable.layerInfo
+        else {
+            preconditionFailure("Cannot load Relationships, invalid data model.")
         }
         
         var loadables = [Relationship]()
@@ -155,6 +147,10 @@ class Relationships: AGSLoadableBase {
         var localizedDescription: String {
             "Failed to load relationships: \(errors.keys.map{ $0.name ?? "(missing tablename)" }.joined(separator: ","))"
         }
+    }
+    
+    struct MissingRecordError: LocalizedError {
+        var localizedDescription: String { "Missing record." }
     }
     
     // MARK: Clear Related Records
