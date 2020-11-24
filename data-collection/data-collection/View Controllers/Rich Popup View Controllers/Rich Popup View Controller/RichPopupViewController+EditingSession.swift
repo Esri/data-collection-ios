@@ -46,11 +46,11 @@ extension RichPopupViewController {
         }
         
         // Ensure the popup validates.
-        let invalids = self.popupManager.validatePopup()
-        
-        // Before saving, check that the pop-up and related records are valid.
-        guard invalids.isEmpty else {
-            completion(RichPopupManagerError.invalidPopup(invalids))
+        do {
+            try self.popupManager.validatePopup()
+        }
+        catch {
+            completion(error)
             return
         }
         

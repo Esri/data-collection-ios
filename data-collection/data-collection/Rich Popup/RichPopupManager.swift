@@ -196,30 +196,41 @@ class RichPopupManager: AGSPopupManager {
     ///
     /// - Returns: An array of validation errors.
     ///
-    func validatePopup() -> [Error] {
+    func validatePopup() throws {
         
         guard isEditing else {
-            return [Error]()
+            throw InvalidOperation()
         }
         
-        var invalids = [Error]()
+        var invalids = [(String, Error)]()
         
         // Check M:1 relationships.
         // Only M:1 relationships can be edited during an editing session.
         if let relationships = richPopup.relationships {
-            
             invalids += relationships.manyToOne
                 .filter { record in
                     let isComposite = record.relationshipInfo?.isComposite ?? false
                     return isComposite && record.relatedPopup == nil
                 }
-                .map { RichPopupManagerError.missingManyToOneRelationship($0.name ?? "Unknown") as Error }
+                .map { relationship in
+                    let name = relationship.name ?? "(unknown)"
+                    return (name, ManyToOneRelationship.RequiredRelationship(name: name))
+                }
         }
         
         // Check validity on all popup editable display fields.
-        invalids += editableDisplayFields.compactMap { return validationError(for: $0) }
+        invalids += editableDisplayFields.compactMap {
+            if let error = validationError(for: $0) {
+                return ($0.fieldName, error)
+            }
+            else {
+                return nil
+            }
+        }
         
-        return invalids
+        if !invalids.isEmpty {
+            throw InvalidFields(fields: invalids)
+        }
     }
     
     // MARK: Public Editing Related Records
@@ -750,7 +761,15 @@ extension RichPopupManager {
 }
 
 extension RichPopupManager {
+    
     struct InvalidOperation: LocalizedError {
-        var localizedDescription: String { "The operation you are trying to perform is not permitted." }
+        var errorDescription: String? { "The operation you are trying to perform is not permitted." }
+    }
+    
+    struct InvalidFields: LocalizedError {
+        let fields: [(name: String, error: Error)]
+        var errorDescription: String? {
+            "Invalid fields: \(fields.map{$0.name}.joined(separator: ","))"
+        }
     }
 }
