@@ -31,6 +31,11 @@ class Relationship: AGSLoadableBase {
             return nil
         }
         
+        guard let feature = popup.geoElement as? AGSArcGISFeature,
+              feature.featureTable is AGSArcGISFeatureTable else {
+            return nil
+        }
+        
         self.relationshipInfo = info
         self.relatedTable = table
         self.popup = popup
@@ -58,18 +63,11 @@ class Relationship: AGSLoadableBase {
     
     override func doStartLoading(_ retrying: Bool) {
         
-        guard let feature = self.popup?.geoElement as? AGSArcGISFeature else {
-            loadDidFinishWithError(FeatureTableError.invalidFeature)
-            return
-        }
-        
-        guard let featureTable = feature.featureTable as? AGSArcGISFeatureTable else {
-            loadDidFinishWithError(FeatureTableError.invalidFeatureTable)
-            return
-        }
-        
-        guard let info = self.relationshipInfo else {
-            loadDidFinishWithError(FeatureTableError.missingRelationshipInfos)
+        guard let feature = self.popup?.geoElement as? AGSArcGISFeature,
+              let featureTable = feature.featureTable as? AGSArcGISFeatureTable,
+              let info = self.relationshipInfo
+        else {
+            self.loadDidFinishWithError(MissingRelationship())
             return
         }
         
@@ -77,20 +75,16 @@ class Relationship: AGSLoadableBase {
             
             guard let self = self else { return }
             
-            guard error == nil else {
-                self.loadDidFinishWithError(error!)
-                return
+            if let error = error {
+                self.loadDidFinishWithError(error)
             }
-            
-            assert(popupsResults != nil, "Something went very wrong.")
-            
-            guard let popups = popupsResults else {
-                self.loadDidFinishWithError(NSError.unknown)
-                return
+            else if let popups = popupsResults {
+                self.processRecords(popups)
+                self.loadDidFinishWithError(nil)
             }
-            
-            self.processRecords(popups)
-            self.loadDidFinishWithError(nil)
+            else {
+                preconditionFailure("Something went very wrong.")
+            }
         }
     }
     
@@ -104,6 +98,10 @@ class Relationship: AGSLoadableBase {
     }
     
     // MARK: Errors
+    
+    struct MissingRelationship: LocalizedError {
+        var localizedDescription: String { "The relationship is missing." }
+    }
     
     struct CancelledError: LocalizedError {
         var localizedDescription: String { "Cancelled loading relationship." }
@@ -137,11 +135,11 @@ class Relationship: AGSLoadableBase {
 extension Relationship {
     
     // MARK: Fetch and sort all related records for the many to one relationship.
-    // This is intended to be used by `ManyToOneRelationship`.
-    func queryAndSortAllRelatedPopups(_ completion: @escaping (Error?, [AGSPopup]?) -> Void) {
+    // This is intended to be used by `ManyToOneRelationship`.    
+    func queryAndSortAllRelatedPopups(_ completion: @escaping (Result<[AGSPopup], Error>) -> Void) {
         
         guard let featureTable = relatedTable else {
-            completion(NSError.unknown, nil)
+            completion(.failure(MissingRelationship()))
             return
         }
         
@@ -157,16 +155,14 @@ extension Relationship {
         featureTable.queryAllFeaturesAsPopups(sorted: sorted) { (popups, error) in
             
             if let error = error {
-                completion(error, nil)
-                return
+                completion(.failure(error))
             }
-            
-            guard let popups = popups else {
-                completion(NSError.unknown, nil)
-                return
+            else if let popups = popups {
+                completion(.success(popups))
             }
-            
-            completion(nil, popups)
+            else {
+                preconditionFailure("Something went wrong.")
+            }
         }
     }
 }
