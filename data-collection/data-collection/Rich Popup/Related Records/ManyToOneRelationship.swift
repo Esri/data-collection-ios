@@ -72,3 +72,12 @@ class ManyToOneRelationship: Relationship {
         }
     }
 }
+
+// MARK: Errors
+
+extension ManyToOneRelationship {
+    struct RequiredRelationship: LocalizedError {
+        let name: String
+        var errorDescription: String? { "Missing required relationship named \"\(name)\"." }
+    }
+}
