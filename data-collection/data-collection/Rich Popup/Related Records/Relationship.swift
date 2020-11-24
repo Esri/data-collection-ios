@@ -83,7 +83,7 @@ class Relationship: AGSLoadableBase {
                 self.loadDidFinishWithError(nil)
             }
             else {
-                preconditionFailure("Something went very wrong.")
+                assertionFailure("This should never happen.")
             }
         }
     }
@@ -161,7 +161,7 @@ extension Relationship {
                 completion(.success(popups))
             }
             else {
-                preconditionFailure("Something went wrong.")
+                assertionFailure("This should never happen.")
             }
         }
     }
