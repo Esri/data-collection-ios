@@ -239,11 +239,11 @@ class RichPopupManager: AGSPopupManager {
         }
         
         guard richPopup.relationships?.loadStatus == .loaded else {
-            throw richPopup.relationships?.loadError ?? NSError.unknown
+            throw richPopup.relationships?.loadError ?? InvalidOperation()
         }
         
         guard let info = self.popup.relationship(to: popup) else {
-            throw NSError.unknown
+            throw InvalidOperation()
         }
         
         guard info.isOneToMany else {
@@ -252,8 +252,9 @@ class RichPopupManager: AGSPopupManager {
         
         guard let feature = popup.geoElement as? AGSArcGISFeature,
               let featureTable = feature.featureTable as? AGSArcGISFeatureTable,
-              featureTable.canAddFeature else {
-                throw InvalidOperation()
+              featureTable.canAddFeature
+        else {
+            throw InvalidOperation()
         }
         
         try update(oneToMany: popup, forRelationship: info)
@@ -273,11 +274,11 @@ class RichPopupManager: AGSPopupManager {
         }
         
         guard richPopup.relationships?.loadStatus == .loaded else {
-            throw richPopup.relationships?.loadError ?? NSError.unknown
+            throw richPopup.relationships?.loadError ?? InvalidOperation()
         }
         
         guard let info = self.popup.relationship(to: popup) else {
-            throw NSError.unknown
+            throw InvalidOperation()
         }
         
         guard info.isOneToMany else {
@@ -286,8 +287,9 @@ class RichPopupManager: AGSPopupManager {
         
         guard let feature = popup.geoElement as? AGSArcGISFeature,
               let featureTable = feature.featureTable as? AGSArcGISFeatureTable,
-              featureTable.canUpdate(feature) else {
-                throw InvalidOperation()
+              featureTable.canUpdate(feature)
+        else {
+            throw InvalidOperation()
         }
         
         try update(oneToMany: popup, forRelationship: info)
@@ -306,7 +308,7 @@ class RichPopupManager: AGSPopupManager {
         }
         
         guard let info = self.popup.relationship(to: popup) else {
-            throw NSError.unknown
+            throw InvalidOperation()
         }
         
         guard info.isOneToMany else {
@@ -315,8 +317,9 @@ class RichPopupManager: AGSPopupManager {
         
         guard let feature = popup.geoElement as? AGSArcGISFeature,
               let featureTable = feature.featureTable as? AGSArcGISFeatureTable,
-              featureTable.canDelete(feature) else {
-                throw InvalidOperation()
+              featureTable.canDelete(feature)
+        else {
+            throw InvalidOperation()
         }
         
         try delete(oneToMany: popup, forRelationship: info)
@@ -337,11 +340,11 @@ class RichPopupManager: AGSPopupManager {
         }
         
         guard richPopup.relationships?.loadStatus == .loaded else {
-            throw richPopup.relationships?.loadError ?? NSError.unknown
+            throw richPopup.relationships?.loadError ?? InvalidOperation()
         }
         
         guard let info = self.popup.relationship(to: popup) else {
-            throw NSError.unknown
+            throw InvalidOperation()
         }
         
         guard info.isManyToOne else {
@@ -390,8 +393,10 @@ class RichPopupManager: AGSPopupManager {
     ///
     private func update(manyToOne popup: AGSPopup, forRelationship info: AGSRelationshipInfo) throws {
         
-        guard let relationships = richPopup.relationships, relationships.loadStatus == .loaded else {
-            throw richPopup.relationships?.loadError ?? NSError.unknown
+        guard let relationships = richPopup.relationships,
+              relationships.loadStatus == .loaded
+        else {
+            throw richPopup.relationships?.loadError ?? InvalidOperation()
         }
         
         guard isEditing else {
@@ -431,7 +436,7 @@ class RichPopupManager: AGSPopupManager {
     func buildRichPopupManagerForNewOneToManyRecord(for relationship: Relationship) throws -> RichPopupManager {
         
         guard self.richPopup.relationships?.loadStatus == .loaded else {
-            throw self.richPopup.relationships?.loadError ?? NSError.unknown
+            throw self.richPopup.relationships?.loadError ?? InvalidOperation()
         }
         
         guard !isEditing else {
@@ -458,7 +463,7 @@ class RichPopupManager: AGSPopupManager {
     public func buildRichPopupManagerForExistingRecord(at indexPath: IndexPath) throws -> RichPopupManager {
         
         guard self.richPopup.relationships?.loadStatus == .loaded else {
-            throw self.richPopup.relationships?.loadError ?? NSError.unknown
+            throw self.richPopup.relationships?.loadError ?? InvalidOperation()
         }
         
         guard !isEditing else {
@@ -505,7 +510,6 @@ class RichPopupManager: AGSPopupManager {
         return parentOneToManyManagers.keyEnumerator().allObjects
             .compactMap({ $0 as? Relationship })
             .compactMap({ (relationship) -> RichPopupManager? in
-            
                 parentOneToManyManagers.object(forKey: relationship)
         })
     }
