@@ -219,7 +219,7 @@ extension RichPopupDetailsViewController /* UITableViewDataSource */ {
         let container = UIView(frame: CGRect(x: 0.0, y: 0.0, width: tableView.frame.width, height: activityIndicatorViewHeight))
         container.backgroundColor = .clear
         
-        let activity = UIActivityIndicatorView(style: .gray)
+        let activity = UIActivityIndicatorView(style: .medium)
         activity.accessibilityLabel = "Loading Related Records"
         activity.startAnimating()
         
