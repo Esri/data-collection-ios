@@ -287,9 +287,14 @@ extension ImagePickerPermissions {
         var actionTitle: String {
             return "Image Library"
         }
-        
+
         func isAuthorized() -> Bool {
-            return PHPhotoLibrary.authorizationStatus() == .authorized
+            if #available(iOS 14, *) {
+                return PHPhotoLibrary.authorizationStatus(for: .readWrite) == .authorized
+            }
+            else {
+                return PHPhotoLibrary.authorizationStatus() == .authorized
+            }
         }
         
         func shouldRequest() -> Bool {
