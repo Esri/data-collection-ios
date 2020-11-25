@@ -81,7 +81,7 @@ extension PopupAttributeDateCell: StyledFirstResponderLabelDelegate {
     func inputViewForStyledFirstResponderLabel(_ label: StyledFirstResponderLabel) -> UIView? {
         
         let datePickerView = UIDatePicker()
-        datePickerView.datePickerMode = .date
+        datePickerView.datePickerMode = .dateAndTime
         datePickerView.addTarget(self, action: #selector(PopupAttributeDateCell.datePickerValueChanged(sender:)), for: .valueChanged)
         
         datePickerView.reloadInputViews()
