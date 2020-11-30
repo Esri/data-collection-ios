@@ -44,7 +44,7 @@ extension MapViewController {
     // MARK : New Feature
     
     struct MapNoElegibleLayersError: LocalizedError {
-        let localizedDescription = "No feature layers of this map can be added to."
+        var errorDescription: String? { "No feature layers of this map can be added to." }
     }
     
     func userRequestsAddNewFeature(_ barButtonItem: UIBarButtonItem?) {
@@ -87,7 +87,7 @@ extension MapViewController {
     
     struct CannotCreateNewFeatureError: LocalizedError {
         let layer: AGSFeatureLayer
-        var localizedDescription: String {
+        var errorDescription: String? {
             String(format: "Cannot create new feature for layer, %@", layer.name)
         }
     }
@@ -142,7 +142,7 @@ extension MapViewController {
     }
     
     struct UnknownError: LocalizedError {
-        let localizedDescription = "An unknown error occured."
+        var errorDescription: String? { "An unknown error occured." }
     }
     
     private func prepareNewFeatureForEdit() {

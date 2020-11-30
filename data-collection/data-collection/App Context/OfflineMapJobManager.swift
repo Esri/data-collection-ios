@@ -86,6 +86,7 @@ class OfflineMapJobManager {
     
     struct OfflineMapManagerError: LocalizedError {
         let localizedDescription: String
+        var errorDescription: String? { localizedDescription }
     }
     
     // MARK: Job
