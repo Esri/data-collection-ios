@@ -100,11 +100,11 @@ class Relationship: AGSLoadableBase {
     // MARK: Errors
     
     struct MissingRelationship: LocalizedError {
-        var localizedDescription: String { "The relationship is missing." }
+        var errorDescription: String? { "The relationship is missing." }
     }
     
     struct CancelledError: LocalizedError {
-        var localizedDescription: String { "Cancelled loading relationship." }
+        var errorDescription: String? { "Cancelled loading relationship." }
     }
     
     // MARK: For Subclassing Eyes

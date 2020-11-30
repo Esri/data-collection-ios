@@ -139,18 +139,18 @@ class Relationships: AGSLoadableBase {
     // MARK: Errors
     
     struct CancelledError: LocalizedError {
-        var localizedDescription: String { "Cancelled loading relationships." }
+        var errorDescription: String? { "Cancelled loading relationships." }
     }
     
     struct RelationshipsLoadError: LocalizedError {
         let errors: [Relationship: Error]
-        var localizedDescription: String {
+        var errorDescription: String? {
             "Failed to load relationships: \(errors.keys.map{ $0.name ?? "(missing tablename)" }.joined(separator: ","))"
         }
     }
     
     struct MissingRecordError: LocalizedError {
-        var localizedDescription: String { "Missing record." }
+        var errorDescription: String? { "Missing record." }
     }
     
     // MARK: Clear Related Records

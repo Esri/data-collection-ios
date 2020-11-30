@@ -150,11 +150,11 @@ class OfflineMapManager {
     // MARK: Offline Map Job Manager
     
     struct MissingOfflineMapError: LocalizedError {
-        let localizedDescription = "Map is not downloaded."
+        var errorDescription: String? { "Map is not downloaded." }
     }
     
     struct ExistingOfflineMapError: LocalizedError {
-        let localizedDescription = "A map is already downloaded."
+        var errorDescription: String? { "A map is already downloaded." }
     }
     
     private lazy var jobManager: OfflineMapJobManager = {

@@ -332,10 +332,10 @@ extension AGSPopupAttachment: QLPreviewItem {
 
 extension RichPopupAttachmentsManager {
     struct InvalidOperation: LocalizedError {
-        var localizedDescription: String { "The operation you are trying to perform is not permitted." }
+        var errorDescription: String? { "The operation you are trying to perform is not permitted." }
     }
     
     struct MissingRecordError: LocalizedError {
-        var localizedDescription: String { "Missing record." }
+        var errorDescription: String? { "Missing record." }
     }
 }
