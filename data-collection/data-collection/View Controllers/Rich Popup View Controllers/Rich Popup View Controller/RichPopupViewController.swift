@@ -209,7 +209,7 @@ class RichPopupViewController: SegmentedViewController {
     }
     
     struct CannotEditPopupError: LocalizedError {
-        let localizedDescription = "Cannot edit pop-up."
+        var errorDescription: String? { "Cannot edit pop-up." }
     }
     
     // Adding the persist flag introduces the ability to 'cancel' an edit session, as is supported by the pop-up manager.
