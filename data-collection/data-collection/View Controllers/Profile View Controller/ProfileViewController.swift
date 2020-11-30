@@ -117,10 +117,12 @@ class ProfileViewController: UITableViewController {
         if hasOfflineMap {
             synchronizeMapCell.brighten()
             deleteMapCell.brighten()
+            workOfflineCell.icon.image = UIImage(named: "offline")
         }
         else {
             synchronizeMapCell.dim()
             deleteMapCell.dim()
+            workOfflineCell.icon.image = UIImage(named: "download")
         }
         if let date = appContext.offlineMapManager.lastSync {
             synchronizeMapCell.subtitleLabel.isHidden = false
