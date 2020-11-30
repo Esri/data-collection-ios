@@ -30,14 +30,8 @@ class PopupAttributeDatePickerCell: UITableViewCell {
     
     override func setEditing(_ editing: Bool, animated: Bool) {
         super.setEditing(editing, animated: animated)
-        if editing {
-            datePicker.isHidden = false
-            attributeValueLabel.isHidden = true
-        }
-        else {
-            datePicker.isHidden = true
-            attributeValueLabel.isHidden = false
-        }
+        datePicker.isHidden = !editing
+        attributeValueLabel.isHidden = editing
     }
 }
 
