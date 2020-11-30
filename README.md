@@ -188,7 +188,7 @@ This build rule looks for a secrets file stored in the project directory, `$(PRO
 
   > Replace 'your-client-id' with your app's **Client ID**.
 
-3. _Optionally_ add your **License Key** to the secrets file. Licensing the app will remove the 'Licensed for Development' watermark. Licensing the app is optional in development but required for production. Aquire your license key from your [dashboard](https://developers.arcgis.com/dashboard).
+3. _Optionally_ add your **License Key** to the secrets file. Licensing the app will remove the 'Licensed for Development' watermark. Licensing the app is optional in development but required for production. Acquire your license key from your [dashboard](https://developers.arcgis.com/dashboard).
 
   ```bash
   echo ARCGIS_LICENSE_KEY=your-license-key >> data-collection/.secrets
