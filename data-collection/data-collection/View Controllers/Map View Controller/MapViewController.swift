@@ -147,7 +147,10 @@ class MapViewController: UIViewController {
         
         assert(currentPopupManager != nil, "This function should not be reached if a popup is not currently selected.")
         
-        guard let manager = currentPopupManager, let relationships = manager.richPopup.relationships, let relationship = relationships.oneToMany.first else {
+        guard let manager = currentPopupManager,
+              let relationships = manager.richPopup.relationships,
+              let relationship = relationships.oneToMany.first
+        else {
             showError(UnknownError())
             return
         }
