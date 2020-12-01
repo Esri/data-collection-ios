@@ -166,3 +166,9 @@ extension Relationship {
         }
     }
 }
+
+extension Relationship {
+    struct UnknownError: LocalizedError {
+        var errorDescription: String? { "An unknown error occured." }
+    }
+}
