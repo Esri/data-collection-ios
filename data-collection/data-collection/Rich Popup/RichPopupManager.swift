@@ -374,7 +374,7 @@ class RichPopupManager: AGSPopupManager {
     /// Handles deleting parent manager associations.
     func deleteRichPopup() throws {
         // Inform any parent one to many managers that this pop-up is to be deleted.
-        let errors = parentOneToManyManagers.keyEnumerator().allObjects
+        let errors = parentOneToManyManagers.keyEnumerator()
             .compactMap { relationship -> (OneToManyRelationship, Error)? in
                 if let relationship = relationship as? OneToManyRelationship {
                     if let parentManager = parentOneToManyManagers.object(forKey: relationship) {
