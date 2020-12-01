@@ -422,11 +422,7 @@ class RichPopupManager: AGSPopupManager {
             throw InvalidOperation()
         }
         
-        let foundManager = relationships.manyToOne
-            .first { (manager) -> Bool in
-                guard let relationshipInfo = manager.relationshipInfo else { return false }
-                return relationshipInfo == info
-            }
+        let foundManager = relationships.manyToOne.first { $0.relationshipInfo == info }
         
         guard let manager = foundManager else {
             throw InvalidOperation()
