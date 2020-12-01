@@ -557,11 +557,7 @@ class RichPopupManager: AGSPopupManager {
             preconditionFailure("Unsupported record type.")
         }
         
-        let foundRelationship = richPopup.relationships?.oneToMany
-            .first { (manager) -> Bool in
-                guard let relationshipInfo = manager.relationshipInfo else { return false }
-                return relationshipInfo == info
-            }
+        let foundRelationship = richPopup.relationships?.oneToMany.first { $0.relationshipInfo == info }
 
         guard let relationship = foundRelationship,
               let relatedFeature = relationship.popup?.geoElement as? AGSArcGISFeature
