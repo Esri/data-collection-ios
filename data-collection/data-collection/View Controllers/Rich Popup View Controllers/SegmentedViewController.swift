@@ -46,7 +46,7 @@ class SegmentedViewController: UIViewController {
         return visualEffectView
     }()
     
-    let segmentedControl: UISegmentedControl = {
+    lazy var segmentedControl: UISegmentedControl = {
         let segmentedControl = UISegmentedControl()
         segmentedControl.translatesAutoresizingMaskIntoConstraints = false
         segmentedControl.addTarget(self, action: #selector(segmentedControlValueDidChange(_:)), for: .valueChanged)
