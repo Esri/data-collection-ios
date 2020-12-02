@@ -234,7 +234,7 @@ class RichPopupManager: AGSPopupManager {
         }
         
         if !invalids.isEmpty {
-            throw InvalidFields(fields: invalids)
+            throw InvalidFieldsError(fields: invalids)
         }
     }
     
@@ -745,7 +745,7 @@ extension RichPopupManager {
         var errorDescription: String? { "The operation you are trying to perform is not permitted." }
     }
     
-    struct InvalidFields: LocalizedError {
+    struct InvalidFieldsError: LocalizedError {
         let fields: [(name: String, error: Error)]
         var errorDescription: String? {
             "Invalid fields: \(fields.map{$0.name}.joined(separator: ","))"

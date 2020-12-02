@@ -53,7 +53,7 @@ class AddressLocator {
         var errorDescription: String? { "Operation yeilded no results." }
     }
     
-    struct MissingAttribute: LocalizedError {
+    struct MissingAttributeError: LocalizedError {
         let key: String
         var errorDescription: String? {
             String(format: "Geocode result missing value for key '%@'", key)
@@ -113,7 +113,7 @@ class AddressLocator {
                         completion(.success(address))
                     }
                     else {
-                        completion(.failure(MissingAttribute(key: key)))
+                        completion(.failure(MissingAttributeError(key: key)))
                     }
                 }
                 else {
