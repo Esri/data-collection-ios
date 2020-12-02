@@ -107,7 +107,6 @@
 		94B375BE207E8D5600691F2A /* AddressLocator.lox in Resources */ = {isa = PBXBuildFile; fileRef = 94B3759A207E8D5600691F2A /* AddressLocator.lox */; };
 		94B375BF207E8D5600691F2A /* AddressLocator.loc in Resources */ = {isa = PBXBuildFile; fileRef = 94B3759B207E8D5600691F2A /* AddressLocator.loc */; };
 		94B375C1207E8D5600691F2A /* AppConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94B3759F207E8D5600691F2A /* AppConfiguration.swift */; };
-		94B375C4207E8D5600691F2A /* AppErrors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94B375A2207E8D5600691F2A /* AppErrors.swift */; };
 		94B375C9207E8D5600691F2A /* AppContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94B375A8207E8D5600691F2A /* AppContext.swift */; };
 		94B375D2207E8D5600691F2A /* EphemeralCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94B375BB207E8D5600691F2A /* EphemeralCache.swift */; };
 		94B375D6207E8DD600691F2A /* AddressLocator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94B375D4207E8DD600691F2A /* AddressLocator.swift */; };
@@ -338,7 +337,6 @@
 		94B3759A207E8D5600691F2A /* AddressLocator.lox */ = {isa = PBXFileReference; lastKnownFileType = file; path = AddressLocator.lox; sourceTree = "<group>"; };
 		94B3759B207E8D5600691F2A /* AddressLocator.loc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = AddressLocator.loc; sourceTree = "<group>"; };
 		94B3759F207E8D5600691F2A /* AppConfiguration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppConfiguration.swift; sourceTree = "<group>"; };
-		94B375A2207E8D5600691F2A /* AppErrors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppErrors.swift; sourceTree = "<group>"; };
 		94B375A8207E8D5600691F2A /* AppContext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppContext.swift; sourceTree = "<group>"; };
 		94B375B4207E8D5600691F2A /* data-collection-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "data-collection-Bridging-Header.h"; sourceTree = "<group>"; };
 		94B375BB207E8D5600691F2A /* EphemeralCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EphemeralCache.swift; sourceTree = "<group>"; };
@@ -433,14 +431,6 @@
 				94502062255F243400457AA5 /* Extensions */,
 			);
 			path = "Rich Popup";
-			sourceTree = "<group>";
-		};
-		944433E421AC766000E96A6E /* App Errors */ = {
-			isa = PBXGroup;
-			children = (
-				94B375A2207E8D5600691F2A /* AppErrors.swift */,
-			);
-			path = "App Errors";
 			sourceTree = "<group>";
 		};
 		94502059255F1F4B00457AA5 /* Extensions */ = {
@@ -951,7 +941,6 @@
 				944D0CBF24E1DD0F00EE49CB /* AppSecrets.swift.masque */,
 				94DDEA7B215426D300DA533C /* AppRules.swift */,
 				94BA7D3920FD140500C78255 /* AppColors.swift */,
-				944433E421AC766000E96A6E /* App Errors */,
 				94B375A5207E8D5600691F2A /* App Context */,
 				94B375D8207E8E4800691F2A /* Extensions */,
 				94B375D3207E8DD600691F2A /* Address Locator */,
@@ -1234,7 +1223,6 @@
 				948D85142151BB5E00E2048F /* AGSPopup+RecordType.swift in Sources */,
 				94B3760C207EAE4700691F2A /* AppDelegate.swift in Sources */,
 				940DA97B2098E1C600AB4BF6 /* AGSArcGISFeatureTable+Query.swift in Sources */,
-				94AB811C211E0AD300B9C920 /* AGSLicense+Description.swift in Sources */,
 				E4BA04A624B4E338000A1D43 /* FloatingPanelController.swift in Sources */,
 				94D544D820852A5100ED0D04 /* ShrinkingView.swift in Sources */,
 				946569022087FAE700599E55 /* MapViewController+MapViewMode.swift in Sources */,
@@ -1320,7 +1308,6 @@
 				94B37601207E8E4800691F2A /* DispatchGroup+Enter.swift in Sources */,
 				945CEE7820DDC2AC00CD3E0D /* SVIndefiniteAnimatedView.m in Sources */,
 				E480B9A72421309E00982756 /* LayerContentsDataSource.swift in Sources */,
-				94B375C4207E8D5600691F2A /* AppErrors.swift in Sources */,
 				94B375FF207E8E4800691F2A /* UIStoryboardSegue+NavigationDestination.swift in Sources */,
 				946E6A9521F2A96000B315B6 /* RichPopupViewController+EditingSession.swift in Sources */,
 				9465691E208802CE00599E55 /* AGSFeatureTable+PopupEnabled.swift in Sources */,
@@ -1351,7 +1338,6 @@
 				948794302200CDFF007BC15E /* RichPopupViewController+RichPopupDetailsViewControllerDelegate.swift in Sources */,
 				94C550EA221207C500DD7E40 /* UIResponder+InputAccessoryView.swift in Sources */,
 				94C550F42212138D00DD7E40 /* StyledTextField.swift in Sources */,
-				94A8103B20B635A000D4BC68 /* AGSQueryParameters+All.swift in Sources */,
 				E480B9A52421303600982756 /* LayerContentsViewController.swift in Sources */,
 				948D85312151C80400E2048F /* UIView+Animation.swift in Sources */,
 				945F454721E7D2BA00F2DCBC /* PopupRelatedRecordCell.swift in Sources */,
