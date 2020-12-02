@@ -13,6 +13,7 @@
 // limitations under the License.
 
 import ArcGIS
+import QuickLook
 
 protocol RichPopupAttachmentsManagerDelegate: AnyObject {
     func richPopupAttachmentsManager(_ manager: RichPopupAttachmentsManager, generatedThumbnailForAttachment attachment: RichPopupPreviewableAttachment)
@@ -310,5 +311,21 @@ extension RichPopupAttachmentsManager {
         }
         
         return IndexPath(row: row, section: section)
+    }
+}
+
+// MARK:- Popup Attachment Previewable
+
+// `AGSPopupAttachment` has automatic conformance to `RichPopupPreviewableAttachment`.
+extension AGSPopupAttachment: RichPopupPreviewableAttachment { }
+
+extension AGSPopupAttachment: QLPreviewItem {
+    
+    public var previewItemURL: URL? {
+        return fileURL
+    }
+    
+    public var previewItemTitle: String? {
+        return name
     }
 }
