@@ -71,21 +71,19 @@ class Relationship: AGSLoadableBase {
             return
         }
         
-        cancelableQuery = featureTable.queryRelatedFeaturesAsPopups(forFeature: feature, relationship: info) { [weak self] (popupsResults, error) in
-            
-            guard let self = self else { return }
-            
-            if let error = error {
-                self.loadDidFinishWithError(error)
-            }
-            else if let popups = popupsResults {
-                self.processRecords(popups)
-                self.loadDidFinishWithError(nil)
-            }
-            else {
-                assertionFailure("This should never happen.")
-            }
-        }
+        cancelableQuery = featureTable.queryRelatedFeaturesAsPopups(
+            forFeature: feature,
+            relationship: info,
+            completion: { [weak self] (result) in
+                guard let self = self else { return }
+                switch result {
+                case .failure(let error):
+                    self.loadDidFinishWithError(error)
+                case .success(let popups):
+                    self.processRecords(popups)
+                    self.loadDidFinishWithError(nil)
+                }
+        })
     }
     
     override func doCancelLoading() {
@@ -151,19 +149,8 @@ extension Relationship {
         else {
             sorted = nil
         }
-        
-        featureTable.queryAllFeaturesAsPopups(sorted: sorted) { (popups, error) in
-            
-            if let error = error {
-                completion(.failure(error))
-            }
-            else if let popups = popups {
-                completion(.success(popups))
-            }
-            else {
-                assertionFailure("This should never happen.")
-            }
-        }
+
+        featureTable.queryAllFeaturesAsPopups(sorted: sorted, completion: completion)
     }
 }
 

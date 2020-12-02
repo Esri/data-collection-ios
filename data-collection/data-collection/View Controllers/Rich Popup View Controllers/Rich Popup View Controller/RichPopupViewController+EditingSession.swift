@@ -63,13 +63,11 @@ extension RichPopupViewController {
     private func persistEditsToTable(_ completion: @escaping (_ error: Error?) -> Void) {
         
         guard let feature = self.popupManager.popup.geoElement as? AGSArcGISFeature else {
-            completion(FeatureTableError.invalidFeature)
-            return
+            preconditionFailure("Unsupported feature type.")
         }
         
         guard let featureTable = feature.featureTable as? AGSArcGISFeatureTable else {
-            completion(FeatureTableError.invalidFeatureTable)
-            return
+            preconditionFailure("Unsupported feature table type.")
         }
         
         featureTable.performEdit(feature: feature, completion: { [weak self] (error) in

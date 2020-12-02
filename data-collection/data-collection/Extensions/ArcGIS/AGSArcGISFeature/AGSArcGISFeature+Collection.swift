@@ -26,21 +26,40 @@ extension Collection where Iterator.Element == AGSArcGISFeature {
     
     func asPopups() throws -> [AGSPopup] {
         
-        guard let first = first else {
+        guard count > 0 else {
             return [AGSPopup]()
-        }
-        
-        guard let firstFeatureTable = first.featureTable, firstFeatureTable.isPopupActuallyEnabled else {
-            throw FeatureTableError.isNotPopupEnabled
         }
         
         return try map { (feature: AGSArcGISFeature) -> AGSPopup in
             
-            guard let featureTable = feature.featureTable, featureTable == firstFeatureTable, featureTable.isPopupActuallyEnabled, let popupDefinition = featureTable.popupDefinition else {
-                throw FeatureTableError.featuresAreNotFromTheSameTable
+            guard let featureTable = feature.featureTable else {
+                throw AGSArcGISFeature.MissingTable(feature: feature)
             }
             
-            return AGSPopup(geoElement: feature, popupDefinition: popupDefinition)
+            guard featureTable.isPopupActuallyEnabled else {
+                throw AGSFeatureTable.PopupsAreNotEnabled(table: featureTable)
+            }
+            
+            return AGSPopup(
+                geoElement: feature,
+                popupDefinition: featureTable.popupDefinition
+            )
         }        
+    }
+}
+
+// MARK:- Errors
+
+extension AGSArcGISFeature {
+    struct MissingTable: LocalizedError {
+        let feature: AGSArcGISFeature
+        var errorDescription: String? { "Feature is missing it's table." }
+    }
+}
+
+extension AGSFeatureTable {
+    struct PopupsAreNotEnabled: LocalizedError {
+        let table: AGSFeatureTable
+        var errorDescription: String? { "Pop-ups are not enabled for feature table." }
     }
 }

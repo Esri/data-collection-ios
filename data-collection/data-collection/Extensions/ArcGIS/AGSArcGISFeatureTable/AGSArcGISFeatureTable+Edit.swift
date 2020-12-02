@@ -36,7 +36,7 @@ extension AGSArcGISFeatureTable {
             performEdit(type: .add, forFeature: feature, completion: completion)
         }
         else {
-            completion(FeatureTableError.cannotEditFeature)
+            completion(InvalidOperation())
         }
     }
     
@@ -54,7 +54,7 @@ extension AGSArcGISFeatureTable {
             performEdit(type: .delete, forFeature: feature, completion: completion)
         }
         else {
-            completion(FeatureTableError.cannotEditFeature)
+            completion(InvalidOperation())
         }
     }
     
@@ -125,5 +125,11 @@ extension AGSArcGISFeatureTable {
         case .delete: delete(feature, completion: editCompletion)
         case .add: add(feature, completion: editCompletion)
         }
+    }
+}
+
+extension AGSArcGISFeatureTable {
+    struct InvalidOperation: LocalizedError {
+        var errorDescription: String? { "The operation you are trying to perform is not permitted." }
     }
 }
