@@ -17,7 +17,6 @@
 		942B48F121A714FC0061C47A /* Relationships.swift in Sources */ = {isa = PBXBuildFile; fileRef = 942B48F021A714FC0061C47A /* Relationships.swift */; };
 		9440D35120D4662E005ED582 /* CustomBehavior_NewTreeCondition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9440D35020D4662E005ED582 /* CustomBehavior_NewTreeCondition.swift */; };
 		9440D35C20DC2809005ED582 /* CustomBehavior_TreeSymbology.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9440D35B20DC2809005ED582 /* CustomBehavior_TreeSymbology.swift */; };
-		944433EC21AC788800E96A6E /* FeatureTableError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 944433EB21AC788800E96A6E /* FeatureTableError.swift */; };
 		944433F321AF5F2F00E96A6E /* RichPopupManager+CustomBehavior.swift in Sources */ = {isa = PBXBuildFile; fileRef = 944433F221AF5F2F00E96A6E /* RichPopupManager+CustomBehavior.swift */; };
 		944D0CC424E1DE4800EE49CB /* AppSecrets.swift.masque in Sources */ = {isa = PBXBuildFile; fileRef = 944D0CBF24E1DD0F00EE49CB /* AppSecrets.swift.masque */; };
 		9451EC5220D0705700792FFC /* CustomBehavior_IdentifyNeighborhood.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9451EC5120D0705700792FFC /* CustomBehavior_IdentifyNeighborhood.swift */; };
@@ -244,7 +243,6 @@
 		942B48F021A714FC0061C47A /* Relationships.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Relationships.swift; sourceTree = "<group>"; };
 		9440D35020D4662E005ED582 /* CustomBehavior_NewTreeCondition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomBehavior_NewTreeCondition.swift; sourceTree = "<group>"; };
 		9440D35B20DC2809005ED582 /* CustomBehavior_TreeSymbology.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomBehavior_TreeSymbology.swift; sourceTree = "<group>"; };
-		944433EB21AC788800E96A6E /* FeatureTableError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeatureTableError.swift; sourceTree = "<group>"; };
 		944433F221AF5F2F00E96A6E /* RichPopupManager+CustomBehavior.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RichPopupManager+CustomBehavior.swift"; sourceTree = "<group>"; };
 		944D0CBF24E1DD0F00EE49CB /* AppSecrets.swift.masque */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = AppSecrets.swift.masque; sourceTree = "<group>"; };
 		9451EC5120D0705700792FFC /* CustomBehavior_IdentifyNeighborhood.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomBehavior_IdentifyNeighborhood.swift; sourceTree = "<group>"; };
@@ -441,7 +439,6 @@
 			isa = PBXGroup;
 			children = (
 				94B375A2207E8D5600691F2A /* AppErrors.swift */,
-				944433EB21AC788800E96A6E /* FeatureTableError.swift */,
 			);
 			path = "App Errors";
 			sourceTree = "<group>";
@@ -1354,7 +1351,7 @@
 				948794302200CDFF007BC15E /* RichPopupViewController+RichPopupDetailsViewControllerDelegate.swift in Sources */,
 				94C550EA221207C500DD7E40 /* UIResponder+InputAccessoryView.swift in Sources */,
 				94C550F42212138D00DD7E40 /* StyledTextField.swift in Sources */,
-				944433EC21AC788800E96A6E /* FeatureTableError.swift in Sources */,
+				94A8103B20B635A000D4BC68 /* AGSQueryParameters+All.swift in Sources */,
 				E480B9A52421303600982756 /* LayerContentsViewController.swift in Sources */,
 				948D85312151C80400E2048F /* UIView+Animation.swift in Sources */,
 				945F454721E7D2BA00F2DCBC /* PopupRelatedRecordCell.swift in Sources */,
