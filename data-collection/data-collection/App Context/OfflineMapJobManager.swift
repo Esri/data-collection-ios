@@ -84,10 +84,6 @@ class OfflineMapJobManager {
         }
     }
     
-    struct OfflineMapManagerError: LocalizedError {
-        let localizedDescription: String
-    }
-    
     // MARK: Job
     
     class Job {
@@ -122,7 +118,7 @@ class OfflineMapJobManager {
     func stageOnDemandDownloadMapJob(_ map: AGSMap, extent: AGSGeometry, scale: Double, url: URL) throws -> Job {
         
         guard !isJobInProgress else {
-            throw OfflineMapManagerError(localizedDescription: "A job is already in progress.")
+            throw JobAlreadyInProgressError()
         }
                         
         let offlineMapTask = AGSOfflineMapTask(
@@ -150,7 +146,7 @@ class OfflineMapJobManager {
     func stageSyncMapJob(_ map: AGSMap) throws -> Job {
         
         guard !isJobInProgress else {
-            throw OfflineMapManagerError(localizedDescription: "A job is already in progress.")
+            throw JobAlreadyInProgressError()
         }
                 
         let task = AGSOfflineMapSyncTask(map: map)
@@ -174,12 +170,10 @@ class OfflineMapJobManager {
     
     func startJob(_ job: Job) throws {
         
-        guard case let .staged(stagedID, stagedJob) = status else {
-            throw OfflineMapManagerError(localizedDescription: "Job (\(job.id)) does not exist.")
-        }
-        
-        guard stagedID == job.id else {
-            throw OfflineMapManagerError(localizedDescription: "Job (\(job.id)) is no longer staged.")
+        guard case let .staged(stagedID, stagedJob) = status,
+              stagedID == job.id
+        else {
+            throw JobDoesNotExistError()
         }
         
         job.jobMessages?("Starting job...")
@@ -287,5 +281,18 @@ extension AGSSyncDirection: CustomStringConvertible {
         @unknown default:
             fatalError("Unsupported \(type(of: self)) type.")
         }
+    }
+}
+
+// MARK:- Errors
+
+extension OfflineMapJobManager {
+    
+    struct JobAlreadyInProgressError: LocalizedError {
+        var errorDescription: String? { "A job is already in progress." }
+    }
+    
+    struct JobDoesNotExistError: LocalizedError {
+        var errorDescription: String? { "Job does not exist." }
     }
 }

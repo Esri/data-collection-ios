@@ -46,22 +46,22 @@ class AddressLocator {
     // MARK: Errors
     
     struct NoLocatorError: LocalizedError {
-        let localizedDescription = "No locator."
+        var errorDescription: String? { "No locator." }
     }
     
     struct NoResultsError: LocalizedError {
-        let localizedDescription = "Operation yeilded no results."
+        var errorDescription: String? { "Operation yeilded no results." }
     }
     
-    struct MissingAttribute: LocalizedError {
+    struct MissingAttributeError: LocalizedError {
         let key: String
-        var localizedDescription: String {
+        var errorDescription: String? {
             String(format: "Geocode result missing value for key '%@'", key)
         }
     }
     
     struct UnknownError: LocalizedError {
-        let localizedDescription = "An unknown error occured."
+        var errorDescription: String? { "An unknown error occured." }
     }
     
     /// Reverse geocode an address from a map point.
@@ -113,7 +113,7 @@ class AddressLocator {
                         completion(.success(address))
                     }
                     else {
-                        completion(.failure(MissingAttribute(key: key)))
+                        completion(.failure(MissingAttributeError(key: key)))
                     }
                 }
                 else {

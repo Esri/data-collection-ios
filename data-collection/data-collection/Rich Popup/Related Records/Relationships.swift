@@ -21,10 +21,10 @@ class Relationships: AGSLoadableBase {
     
     init?(popup: AGSPopup) {
         
-        guard
-            let feature = popup.geoElement as? AGSArcGISFeature,
-            let featureTable = feature.featureTable as? AGSArcGISFeatureTable,
-            featureTable.layerInfo != nil else {
+        guard let feature = popup.geoElement as? AGSArcGISFeature,
+              let featureTable = feature.featureTable as? AGSArcGISFeatureTable,
+              featureTable.layerInfo != nil
+        else {
             return nil
         }
         
@@ -35,7 +35,7 @@ class Relationships: AGSLoadableBase {
     
     private(set) var oneToMany = [OneToManyRelationship]()
     
-    private var loadingRelationships: [AGSLoadable]?
+    private var loadingRelationships: [Relationship]?
     
     override func doCancelLoading() {
         
@@ -50,7 +50,7 @@ class Relationships: AGSLoadableBase {
         
         clear()
         
-        loadDidFinishWithError(NSError.userCancelled)
+        loadDidFinishWithError(CancelledError())
     }
     
     override func doStartLoading(_ retrying: Bool) {
@@ -60,26 +60,18 @@ class Relationships: AGSLoadableBase {
         }
         
         guard let popup = popup else {
-            loadDidFinishWithError(NSError.unknown)
+            loadDidFinishWithError(MissingRecordError())
             return
         }
         
-        guard let feature = popup.geoElement as? AGSArcGISFeature else {
-            loadDidFinishWithError(FeatureTableError.invalidFeature)
-            return
+        guard let feature = popup.geoElement as? AGSArcGISFeature,
+              let featureTable = feature.featureTable as? AGSArcGISFeatureTable,
+              let layerInfo = featureTable.layerInfo
+        else {
+            preconditionFailure("Cannot load Relationships, invalid data model.")
         }
         
-        guard let featureTable = feature.featureTable as? AGSArcGISFeatureTable else {
-            loadDidFinishWithError(FeatureTableError.invalidFeatureTable)
-            return
-        }
-        
-        guard let layerInfo = featureTable.layerInfo else {
-            loadDidFinishWithError(FeatureTableError.missingRelationshipInfos)
-            return
-        }
-        
-        var loadables = [AGSLoadable]()
+        var loadables = [Relationship]()
         
         for info in layerInfo.relationshipInfos {
             
@@ -117,19 +109,20 @@ class Relationships: AGSLoadableBase {
             
             self.loadingRelationships = nil
             
-            var errors = [Error]()
-            
-            for relationship in loadedRelationships {
-                
-                guard relationship.loadStatus == .loaded else {
-                    
-                    if let error = relationship.loadError {
-                        errors.append(error)
-                    }
-                    
-                    continue
+            let errors = loadedRelationships.reduce(into: [Relationship: Error]()) { (errors, relationship) in
+                if let error = relationship.loadError {
+                    errors[relationship] = error
                 }
-                
+            }
+            
+            guard errors.isEmpty else {
+                self.loadDidFinishWithError(
+                    RelationshipsLoadError(errors: errors)
+                )
+                return
+            }
+                        
+            for relationship in loadedRelationships {
                 if relationship is OneToManyRelationship {
                     self.oneToMany.append(relationship as! OneToManyRelationship)
                 }
@@ -139,14 +132,28 @@ class Relationships: AGSLoadableBase {
                 }
             }
             
-            if !errors.isEmpty {
-                self.loadDidFinishWithError(LoadableError.multiLoadableFailure("related records", errors))
-            }
-            else {
-                self.loadDidFinishWithError(nil)
-            }
+            self.loadDidFinishWithError(nil)
         }
     }
+    
+    // MARK: Errors
+    
+    struct CancelledError: LocalizedError {
+        var errorDescription: String? { "Cancelled loading relationships." }
+    }
+    
+    struct RelationshipsLoadError: LocalizedError {
+        let errors: [Relationship: Error]
+        var errorDescription: String? {
+            "Failed to load relationships: \(errors.keys.map{ $0.name ?? "(missing tablename)" }.joined(separator: ","))"
+        }
+    }
+    
+    struct MissingRecordError: LocalizedError {
+        var errorDescription: String? { "Missing record." }
+    }
+    
+    // MARK: Clear Related Records
     
     private func clear() {
 

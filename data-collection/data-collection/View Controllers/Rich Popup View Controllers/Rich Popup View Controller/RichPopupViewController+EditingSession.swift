@@ -41,16 +41,16 @@ extension RichPopupViewController {
         
         // Popup manager must not be in an editing session already.
         guard self.popupManager.isEditing else {
-            completion(NSError.invalidOperation)
+            completion(RichPopupManager.InvalidOperation())
             return
         }
         
         // Ensure the popup validates.
-        let invalids = self.popupManager.validatePopup()
-        
-        // Before saving, check that the pop-up and related records are valid.
-        guard invalids.isEmpty else {
-            completion(RichPopupManagerError.invalidPopup(invalids))
+        do {
+            try self.popupManager.validatePopup()
+        }
+        catch {
+            completion(error)
             return
         }
         
@@ -63,13 +63,11 @@ extension RichPopupViewController {
     private func persistEditsToTable(_ completion: @escaping (_ error: Error?) -> Void) {
         
         guard let feature = self.popupManager.popup.geoElement as? AGSArcGISFeature else {
-            completion(FeatureTableError.invalidFeature)
-            return
+            preconditionFailure("Unsupported feature type.")
         }
         
         guard let featureTable = feature.featureTable as? AGSArcGISFeatureTable else {
-            completion(FeatureTableError.invalidFeatureTable)
-            return
+            preconditionFailure("Unsupported feature table type.")
         }
         
         featureTable.performEdit(feature: feature, completion: { [weak self] (error) in
@@ -91,13 +89,10 @@ extension RichPopupViewController {
     
     func deleteRecord(_ completion: ((_ error: Error?) -> Void)? = nil) {
         
-        guard
-            let feature = popupManager.popup.geoElement as? AGSArcGISFeature,
-            let featureTable = feature.featureTable as? AGSArcGISFeatureTable,
-            featureTable.canDelete(feature) else {
-                
-                completion?(NSError.invalidOperation)
-                
+        guard let feature = popupManager.popup.geoElement as? AGSArcGISFeature,
+              let featureTable = feature.featureTable as? AGSArcGISFeatureTable,
+              featureTable.canDelete(feature) else {
+                completion?(RichPopupManager.InvalidOperation())
                 return
         }
         
@@ -113,7 +108,6 @@ extension RichPopupViewController {
         
         // Delete the record from the table.
         featureTable.performDelete(feature: feature) { (error) in
-            
             completion?(error)
         }
     }
