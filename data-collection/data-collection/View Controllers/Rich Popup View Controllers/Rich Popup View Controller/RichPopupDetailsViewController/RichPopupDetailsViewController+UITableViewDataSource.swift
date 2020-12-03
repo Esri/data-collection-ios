@@ -113,7 +113,18 @@ extension RichPopupDetailsViewController /* UITableViewDataSource */ {
                     cell = textFieldCell
                     
                 case (.date, _):
-                    cell = tableView.dequeueReusableCell(withIdentifier: "PopupAttributeDateCell", for: indexPath) as! PopupAttributeDateCell
+                    if #available(iOS 14, *) {
+                        cell = tableView.dequeueReusableCell(
+                            withIdentifier: "PopupAttributeDatePickerCell",
+                            for: indexPath
+                        ) as! PopupAttributeDatePickerCell
+                    }
+                    else {
+                        cell = tableView.dequeueReusableCell(
+                            withIdentifier: "PopupAttributeDateCell",
+                            for: indexPath
+                        ) as! PopupAttributeDateCell
+                    }
                     
                 case (.GUID, _), (.OID, _), (.globalID, _), (.unknown, _):
                     cell = tableView.dequeueReusableCell(withIdentifier: "PopupAttributeReadonlyCell", for: indexPath) as! PopupAttributeReadonlyCell

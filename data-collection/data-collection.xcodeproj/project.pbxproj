@@ -73,6 +73,7 @@
 		946D20BE2130965A001BF5CC /* MapViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 946D20BD2130965A001BF5CC /* MapViewController.storyboard */; };
 		946D20C22130C236001BF5CC /* LastSyncMobileMapPackage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 946D20C12130C236001BF5CC /* LastSyncMobileMapPackage.swift */; };
 		946E6A9521F2A96000B315B6 /* RichPopupViewController+EditingSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 946E6A9421F2A96000B315B6 /* RichPopupViewController+EditingSession.swift */; };
+		947AC8C9256EF25F00C30598 /* PopupAttributeDatePickerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 947AC8C8256EF25F00C30598 /* PopupAttributeDatePickerCell.swift */; };
 		948066332091474F00A398EA /* RichPopup.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 948066322091474F00A398EA /* RichPopup.storyboard */; };
 		948066382091595200A398EA /* RichPopupManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 948066372091595200A398EA /* RichPopupManager.swift */; };
 		9487942321F7CD47007BC15E /* StyledFirstResponderLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9487942221F7CD47007BC15E /* StyledFirstResponderLabel.swift */; };
@@ -331,6 +332,7 @@
 		946D20BD2130965A001BF5CC /* MapViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = MapViewController.storyboard; sourceTree = "<group>"; };
 		946D20C12130C236001BF5CC /* LastSyncMobileMapPackage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LastSyncMobileMapPackage.swift; sourceTree = "<group>"; };
 		946E6A9421F2A96000B315B6 /* RichPopupViewController+EditingSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RichPopupViewController+EditingSession.swift"; sourceTree = "<group>"; };
+		947AC8C8256EF25F00C30598 /* PopupAttributeDatePickerCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupAttributeDatePickerCell.swift; sourceTree = "<group>"; };
 		948066322091474F00A398EA /* RichPopup.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = RichPopup.storyboard; sourceTree = "<group>"; };
 		948066372091595200A398EA /* RichPopupManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RichPopupManager.swift; sourceTree = "<group>"; };
 		9487942221F7CD47007BC15E /* StyledFirstResponderLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StyledFirstResponderLabel.swift; sourceTree = "<group>"; };
@@ -665,6 +667,7 @@
 				9487942421F8F524007BC15E /* PopupAttributeDomainCell.swift */,
 				945F454221E7D1CF00F2DCBC /* PopupAttributeTextViewCell.swift */,
 				945F454021E7D11D00F2DCBC /* PopupAttributeDateCell.swift */,
+				947AC8C8256EF25F00C30598 /* PopupAttributeDatePickerCell.swift */,
 				948794542204F198007BC15E /* PopupAttributeReadonlyCell.swift */,
 			);
 			path = "Attribute Cells";
@@ -1392,6 +1395,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				944D0CC424E1DE4800EE49CB /* AppSecrets.swift.masque in Sources */,
+				947AC8C9256EF25F00C30598 /* PopupAttributeDatePickerCell.swift in Sources */,
 				945F455421E96DC000F2DCBC /* AGSPopupAttachmentType+Icon.swift in Sources */,
 				948066382091595200A398EA /* RichPopupManager.swift in Sources */,
 				945F456221F00AD200F2DCBC /* AGSPopupAttachment+AppAttachment.swift in Sources */,
