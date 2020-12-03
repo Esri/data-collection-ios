@@ -26,11 +26,7 @@ extension Collection where Iterator.Element == AGSArcGISFeature {
     
     func asPopups() throws -> [AGSPopup] {
         
-        guard count > 0 else {
-            return [AGSPopup]()
-        }
-        
-        return try map { (feature: AGSArcGISFeature) -> AGSPopup in
+        try map { (feature: AGSArcGISFeature) -> AGSPopup in
             
             guard let featureTable = feature.featureTable else {
                 throw AGSArcGISFeature.MissingTableError(feature: feature)
