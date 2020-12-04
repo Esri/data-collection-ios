@@ -113,7 +113,18 @@ extension RichPopupDetailsViewController /* UITableViewDataSource */ {
                     cell = textFieldCell
                     
                 case (.date, _):
-                    cell = tableView.dequeueReusableCell(withIdentifier: "PopupAttributeDateCell", for: indexPath) as! PopupAttributeDateCell
+                    if #available(iOS 14, *) {
+                        cell = tableView.dequeueReusableCell(
+                            withIdentifier: "PopupAttributeDatePickerCell",
+                            for: indexPath
+                        ) as! PopupAttributeDatePickerCell
+                    }
+                    else {
+                        cell = tableView.dequeueReusableCell(
+                            withIdentifier: "PopupAttributeDateCell",
+                            for: indexPath
+                        ) as! PopupAttributeDateCell
+                    }
                     
                 case (.GUID, _), (.OID, _), (.globalID, _), (.unknown, _):
                     cell = tableView.dequeueReusableCell(withIdentifier: "PopupAttributeReadonlyCell", for: indexPath) as! PopupAttributeReadonlyCell
@@ -219,7 +230,7 @@ extension RichPopupDetailsViewController /* UITableViewDataSource */ {
         let container = UIView(frame: CGRect(x: 0.0, y: 0.0, width: tableView.frame.width, height: activityIndicatorViewHeight))
         container.backgroundColor = .clear
         
-        let activity = UIActivityIndicatorView(style: .gray)
+        let activity = UIActivityIndicatorView(style: .medium)
         activity.accessibilityLabel = "Loading Related Records"
         activity.startAnimating()
         

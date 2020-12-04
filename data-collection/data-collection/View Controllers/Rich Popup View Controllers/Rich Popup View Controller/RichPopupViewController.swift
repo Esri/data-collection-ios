@@ -178,11 +178,8 @@ class RichPopupViewController: SegmentedViewController {
             self.navigationItem.leftBarButtonItem = self.dismissButton
         }
         
-        // Because iOS 13 introduces a new modal dismissal paradigm (swipe-down),
-        // we need to inform the view controller not to dismiss the view controller if editing.
-        if #available(iOS 13.0, *) {
-            isModalInPresentation = self.popupManager.isEditing
-        }
+        // Inform the view controller not to dismiss the view controller if editing.
+        isModalInPresentation = self.popupManager.isEditing
         
         // If this is a newly added record, we will need to add a delete button.
         conditionallyAddDeleteButton()

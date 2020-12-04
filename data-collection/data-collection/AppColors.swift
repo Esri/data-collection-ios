@@ -64,5 +64,7 @@ extension AppDelegate {
         UISegmentedControl.appearance().tintColor = .primary
         
         StyledFirstResponderLabel.appearance().tintColor = .primary
+        
+        UIDatePicker.appearance().tintColor = .primary
     }
 }

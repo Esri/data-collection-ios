@@ -43,19 +43,14 @@ class AppContextAwareNavigationController: UINavigationController {
     @objc
     func adjustNavigationBarTintForWorkMode() {
         
-        if #available(iOS 13.0, *) {
-            let navBarAppearance = UINavigationBarAppearance()
-            navBarAppearance.configureWithOpaqueBackground()
-            navBarAppearance.titleTextAttributes = [.foregroundColor: UIColor.contrasting]
-            navBarAppearance.largeTitleTextAttributes = [.foregroundColor: UIColor.contrasting]
-            navBarAppearance.backgroundColor = appContext.workMode == .online ? .primary : .offline
-            navigationBar.standardAppearance = navBarAppearance
-            navigationBar.scrollEdgeAppearance = navBarAppearance
-            navigationBar.compactAppearance = navBarAppearance
-        }
-        else {
-            navigationBar.barTintColor = appContext.workMode == .online ? .primary : .offline
-        }
+        let navBarAppearance = UINavigationBarAppearance()
+        navBarAppearance.configureWithOpaqueBackground()
+        navBarAppearance.titleTextAttributes = [.foregroundColor: UIColor.contrasting]
+        navBarAppearance.largeTitleTextAttributes = [.foregroundColor: UIColor.contrasting]
+        navBarAppearance.backgroundColor = appContext.workMode == .online ? .primary : .offline
+        navigationBar.standardAppearance = navBarAppearance
+        navigationBar.scrollEdgeAppearance = navBarAppearance
+        navigationBar.compactAppearance = navBarAppearance
         
         // Hiding then un-hiding the navigation bar appears to force a redraw.
         // This fixes an issue with iOS 13 where the background color doesn't update.

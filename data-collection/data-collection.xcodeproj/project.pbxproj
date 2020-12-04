@@ -73,6 +73,7 @@
 		946D20BE2130965A001BF5CC /* MapViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 946D20BD2130965A001BF5CC /* MapViewController.storyboard */; };
 		946D20C22130C236001BF5CC /* LastSyncMobileMapPackage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 946D20C12130C236001BF5CC /* LastSyncMobileMapPackage.swift */; };
 		946E6A9521F2A96000B315B6 /* RichPopupViewController+EditingSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 946E6A9421F2A96000B315B6 /* RichPopupViewController+EditingSession.swift */; };
+		947AC8C9256EF25F00C30598 /* PopupAttributeDatePickerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 947AC8C8256EF25F00C30598 /* PopupAttributeDatePickerCell.swift */; };
 		948066332091474F00A398EA /* RichPopup.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 948066322091474F00A398EA /* RichPopup.storyboard */; };
 		948066382091595200A398EA /* RichPopupManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 948066372091595200A398EA /* RichPopupManager.swift */; };
 		9487942321F7CD47007BC15E /* StyledFirstResponderLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9487942221F7CD47007BC15E /* StyledFirstResponderLabel.swift */; };
@@ -208,6 +209,13 @@
 /* End PBXBuildRule section */
 
 /* Begin PBXContainerItemProxy section */
+		4C39055A2565937F000862E5 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E41B130A24254CCC00FC2888 /* ArcGISToolkit.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 8812336F1DF601A700B2EA8E;
+			remoteInfo = ArcGISToolkit;
+		};
 		94FA8B34207BF2CD00972C75 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 94FA8B17207BF2CD00972C75 /* Project object */;
@@ -324,6 +332,7 @@
 		946D20BD2130965A001BF5CC /* MapViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = MapViewController.storyboard; sourceTree = "<group>"; };
 		946D20C12130C236001BF5CC /* LastSyncMobileMapPackage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LastSyncMobileMapPackage.swift; sourceTree = "<group>"; };
 		946E6A9421F2A96000B315B6 /* RichPopupViewController+EditingSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RichPopupViewController+EditingSession.swift"; sourceTree = "<group>"; };
+		947AC8C8256EF25F00C30598 /* PopupAttributeDatePickerCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupAttributeDatePickerCell.swift; sourceTree = "<group>"; };
 		948066322091474F00A398EA /* RichPopup.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = RichPopup.storyboard; sourceTree = "<group>"; };
 		948066372091595200A398EA /* RichPopupManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RichPopupManager.swift; sourceTree = "<group>"; };
 		9487942221F7CD47007BC15E /* StyledFirstResponderLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StyledFirstResponderLabel.swift; sourceTree = "<group>"; };
@@ -658,6 +667,7 @@
 				9487942421F8F524007BC15E /* PopupAttributeDomainCell.swift */,
 				945F454221E7D1CF00F2DCBC /* PopupAttributeTextViewCell.swift */,
 				945F454021E7D11D00F2DCBC /* PopupAttributeDateCell.swift */,
+				947AC8C8256EF25F00C30598 /* PopupAttributeDatePickerCell.swift */,
 				948794542204F198007BC15E /* PopupAttributeReadonlyCell.swift */,
 			);
 			path = "Attribute Cells";
@@ -1219,6 +1229,8 @@
 				944D0CC324E1DD2100EE49CB /* PBXBuildRule */,
 			);
 			dependencies = (
+				4C39055F25659382000862E5 /* PBXTargetDependency */,
+				4C39055B2565937F000862E5 /* PBXTargetDependency */,
 			);
 			name = "data-collection";
 			packageProductDependencies = (
@@ -1383,6 +1395,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				944D0CC424E1DE4800EE49CB /* AppSecrets.swift.masque in Sources */,
+				947AC8C9256EF25F00C30598 /* PopupAttributeDatePickerCell.swift in Sources */,
 				945F455421E96DC000F2DCBC /* AGSPopupAttachmentType+Icon.swift in Sources */,
 				948066382091595200A398EA /* RichPopupManager.swift in Sources */,
 				945F456221F00AD200F2DCBC /* AGSPopupAttachment+AppAttachment.swift in Sources */,
@@ -1562,6 +1575,15 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		4C39055B2565937F000862E5 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = ArcGISToolkit;
+			targetProxy = 4C39055A2565937F000862E5 /* PBXContainerItemProxy */;
+		};
+		4C39055F25659382000862E5 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			productRef = 4C39055E25659382000862E5 /* Alamofire */;
+		};
 		94FA8B35207BF2CD00972C75 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 94FA8B1E207BF2CD00972C75 /* data-collection */;
@@ -1710,6 +1732,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = "$(SRCROOT)/Resources/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1734,6 +1757,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 23PX5GD8E6;
 				INFOPLIST_FILE = "$(SRCROOT)/Resources/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1756,6 +1780,7 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				INFOPLIST_FILE = "data-collectionTests/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1776,6 +1801,7 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				INFOPLIST_FILE = "data-collectionTests/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1795,6 +1821,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				INFOPLIST_FILE = "data-collectionUITests/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1814,6 +1841,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				INFOPLIST_FILE = "data-collectionUITests/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1880,6 +1908,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		4C39055E25659382000862E5 /* Alamofire */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 945B8AE3247F111D0078D69A /* XCRemoteSwiftPackageReference "Alamofire" */;
+			productName = Alamofire;
+		};
 		945B8AE4247F111D0078D69A /* Alamofire */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 945B8AE3247F111D0078D69A /* XCRemoteSwiftPackageReference "Alamofire" */;

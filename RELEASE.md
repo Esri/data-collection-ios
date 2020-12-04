@@ -5,6 +5,10 @@
     - The Build Phase which ran the `strip-frameworks.sh` shell script is no longer necessary.
 - Certification for the 100.10 release of the ArcGIS Runtime SDK for iOS.
 - Updates the ArcGIS Runtime Toolkit submodule to the 100.10 version.
+- Increments app and testing deployment targets to iOS 13.0, drops support for iOS 12.0.
+- Introduces pop-up date attribute editing support for the new iOS 14 `UIDatePicker`.
+- Introduces pop-up date attribute editing support for time as well as date.
+- Fixes bug where `SegmentedViewController` does not respond to `segmentedControl`'s `.valueChanged` event.
 
 # Release 1.2.2
 
