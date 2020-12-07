@@ -141,6 +141,11 @@ class ProfileViewController: UITableViewController {
         delegate.profileViewControllerRequestsDownloadMapOfflineOnDemand(profileViewController: self)
     }
     
+    @objc
+    func userRequestsTakeMapOffline() {
+        delegate.profileViewControllerRequestsDownloadMapOfflineOnDemand(profileViewController: self)
+    }
+    
     // MARK:- Portal
     
     @objc
