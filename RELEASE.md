@@ -9,6 +9,7 @@
 - Introduces pop-up date attribute editing support for the new iOS 14 `UIDatePicker`.
 - Introduces pop-up date attribute editing support for time as well as date.
 - Fixes bug where `SegmentedViewController` does not respond to `segmentedControl`'s `.valueChanged` event.
+- On iOS 14, when adding image attachments to features using the user's "Photo Library", the "Selected Photos" privacy option is not yet supported.  The user will need to grant the app permission to use "All Photos".
 
 # Release 1.2.2
 
