@@ -15,6 +15,8 @@
 import UIKit
 import QuickLook
 import ArcGIS
+import Combine
+
 
 class RichPopupViewController: SegmentedViewController {
     
@@ -27,6 +29,10 @@ class RichPopupViewController: SegmentedViewController {
             detailsViewController?.shouldLoadRichPopupRelatedRecords = shouldLoadRichPopupRelatedRecords
         }
     }
+    
+    // MARK: Editing Subject
+    
+    let editsMade = PassthroughSubject<Result<RichPopup, Error>, Never>()
     
     // MARK: Segmented View Controller
     
@@ -233,13 +239,16 @@ class RichPopupViewController: SegmentedViewController {
                 guard let self = self else { return }
                 
                 self.enableUserInteraction()
+                self.updateViewControllerUI(animated: animated)
 
                 if let error = error {
-                                        
                     self.present(simpleAlertMessage: "Could not save record. \(error.localizedDescription)")
+                    self.editsMade.send(.failure(error))
+                }
+                else {
+                    self.editsMade.send(.success(self.popupManager.richPopup))
                 }
                 
-                self.updateViewControllerUI(animated: animated)
             }
         }
         else {
@@ -341,6 +350,13 @@ class RichPopupViewController: SegmentedViewController {
                 guard let self = self else { return }
 
                 self.enableUserInteraction()
+                
+                if let error = error {
+                    self.editsMade.send(.failure(error))
+                }
+                else {
+                    self.editsMade.send(.success(self.popupManager.richPopup))
+                }
                 
                 self.popupManager.conditionallyPerformCustomBehavior { completion?(error) }
             }
