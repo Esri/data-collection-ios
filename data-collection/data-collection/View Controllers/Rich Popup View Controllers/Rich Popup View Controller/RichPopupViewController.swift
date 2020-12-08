@@ -15,6 +15,8 @@
 import UIKit
 import QuickLook
 import ArcGIS
+import Combine
+
 
 class RichPopupViewController: SegmentedViewController {
     
@@ -27,6 +29,10 @@ class RichPopupViewController: SegmentedViewController {
             detailsViewController?.shouldLoadRichPopupRelatedRecords = shouldLoadRichPopupRelatedRecords
         }
     }
+    
+    // MARK: Editing Subject
+    
+    let editsMade = PassthroughSubject<Result<RichPopup, Error>, Never>()
     
     // MARK: Segmented View Controller
     

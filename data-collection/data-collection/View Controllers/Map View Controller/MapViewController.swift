@@ -15,6 +15,8 @@
 import UIKit
 import ArcGIS
 import ArcGISToolkit
+import Combine
+
 
 class MapViewController: UIViewController {
     
@@ -122,12 +124,6 @@ class MapViewController: UIViewController {
         // If device is not reachable upon launch, inform the end-user.
         displayInitialReachabilityMessage()
     }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
-        refreshCurrentPopup()
-    }
         
     // MARK:- Extras
     
@@ -224,6 +220,10 @@ class MapViewController: UIViewController {
         currentPopupManager = nil
     }
     
+    private var popupEditing: Cancellable?
+    
+    // MARK: Segues
+    
     override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
 
         if identifier == "modallyPresentRelatedRecordsPopupViewController" {
@@ -253,6 +253,11 @@ class MapViewController: UIViewController {
             }
             else {
                 assertionFailure("A rich popup view controller should not present if any of the above scenarios are not met.")
+            }
+            
+            popupEditing?.cancel()
+            popupEditing = destination.editsMade.sink { [weak self] (result) in
+                self?.refreshCurrentPopup()
             }
         }
         else if let destination = segue.destination as? MaskViewController {
