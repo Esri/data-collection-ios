@@ -9,6 +9,7 @@
 - Introduces pop-up date attribute editing support for the new iOS 14 `UIDatePicker`.
 - Introduces pop-up date attribute editing support for time as well as date.
 - Fixes bug where `SegmentedViewController` does not respond to `segmentedControl`'s `.valueChanged` event.
+- Fixes bug where `MapViewController` does not update current pop-up after edits are performed.
 
 # Release 1.2.2
 
