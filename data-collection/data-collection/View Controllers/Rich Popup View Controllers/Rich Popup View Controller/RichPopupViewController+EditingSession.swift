@@ -27,19 +27,12 @@ extension RichPopupViewController {
             
             if let error = error {
                 completion?(error)
-                self.editsMade.send(.failure(error))
                 return
             }
             
             // 2. Persist edits to table
             self.persistEditsToTable { (error) in
                 completion?(error)
-                if let error = error {
-                    self.editsMade.send(.failure(error))
-                }
-                else {
-                    self.editsMade.send(.success(self.popupManager.richPopup))
-                }
             }
         }
     }
@@ -101,12 +94,11 @@ extension RichPopupViewController {
         guard
             let feature = popupManager.popup.geoElement as? AGSArcGISFeature,
             let featureTable = feature.featureTable as? AGSArcGISFeatureTable,
-            featureTable.canDelete(feature)
-        else {
-            let error = NSError.invalidOperation
-            completion?(error)
-            self.editsMade.send(.failure(error))
-            return
+            featureTable.canDelete(feature) else {
+                
+                completion?(NSError.invalidOperation)
+                
+                return
         }
         
         self.popupManager.cancelEditing()
@@ -116,20 +108,13 @@ extension RichPopupViewController {
         }
         catch {
             completion?(error)
-            self.editsMade.send(.failure(error))
             return
         }
         
         // Delete the record from the table.
-        featureTable.performDelete(feature: feature) { [weak self] (error) in
-            guard let self = self else { return }
+        featureTable.performDelete(feature: feature) { (error) in
+            
             completion?(error)
-            if let error = error {
-                self.editsMade.send(.failure(error))
-            }
-            else {
-                self.editsMade.send(.success(self.popupManager.richPopup))
-            }
         }
     }
 }
