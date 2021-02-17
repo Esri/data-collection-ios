@@ -196,7 +196,7 @@ This build rule looks for a secrets file stored in the project directory, `$(PRO
 
   > Replace 'your-license-key' with your **License Key**.
 
-A Lite license is free and enables all of the capabilities required by this app. Visit the developer's website to learn more about [licensing your ArcGIS Runtime app](https://developers.arcgis.com/pricing/licensing/).
+A Lite license is free and enables all of the capabilities required by this app, with the exception of offline editing and syncing offline edits back to a feature service.  For offline editing and syncing, you need a "Basic" licence level. Visit the developer's website to learn more about [licensing your ArcGIS Runtime app](https://developers.arcgis.com/pricing/licensing/) and the different [ArcGIS Runtime license levels](https://developers.arcgis.com/ios/license-and-deployment/license/).
 
 To learn more about `masquerade`, consult the app's [documentation]](./docs#app-configuration).
 
