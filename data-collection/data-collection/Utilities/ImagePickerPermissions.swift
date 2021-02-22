@@ -296,16 +296,13 @@ extension ImagePickerPermissions {
             PHPhotoLibrary.requestAuthorization { (status) in
                 DispatchQueue.main.async {
                     var granted: Bool
-                    var shouldOpenSettings: Bool
                     if #available(iOS 14, *) {
                         granted = PHPhotoLibrary.authorizationStatus(for: .readWrite) == .authorized
-                        shouldOpenSettings = !granted
                     }
                     else {
                         granted = PHPhotoLibrary.authorizationStatus() == .authorized
-                        shouldOpenSettings = false
                     }
-                    completion(granted, shouldOpenSettings)
+                    completion(granted, false)
                 }
             }
         }
