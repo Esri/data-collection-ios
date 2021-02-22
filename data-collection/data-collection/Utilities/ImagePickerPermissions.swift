@@ -295,7 +295,7 @@ extension ImagePickerPermissions {
         func request(_ completion: @escaping (_ granted: Bool, _ shouldOpenSettings: Bool) -> Void) {
             PHPhotoLibrary.requestAuthorization { (status) in
                 DispatchQueue.main.async {
-                    var granted: Bool
+                    let granted: Bool
                     if #available(iOS 14, *) {
                         granted = PHPhotoLibrary.authorizationStatus(for: .readWrite) == .authorized
                     }
