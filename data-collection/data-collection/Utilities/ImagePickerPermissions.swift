@@ -133,29 +133,28 @@ public struct ImagePickerPermissions {
                     
                     // Ask to open Settings
                     let viewController = delegate.imagePickerPermissionsRequestsPresentingViewController()
-                    
-                    let alert = UIAlertController(title: "Not Authorized", message: "Go to Settings and authorize the use of the \(permission.title).", preferredStyle: .alert)
-                    
-                    if let settingsUrl = URL(string: UIApplication.openSettingsURLString), UIApplication.shared.canOpenURL(settingsUrl) {
-                        
-                        let settingsAction = UIAlertAction(title: "Settings", style: .default, handler: { _ in
-                            UIApplication.shared.open(settingsUrl)
-                        })
-                        
-                        alert.addAction(settingsAction)
+                    let alert: UIAlertController
+                    if #available(iOS 14, *), PHPhotoLibrary.authorizationStatus(for: .readWrite) == .limited {
+                        alert = notSupportedAlert()
                     }
-                    
-                    let okayAction = UIAlertAction.okay()
-                    alert.addAction(okayAction)
-                    alert.preferredAction = okayAction
-                    
+                    else {
+                        alert = notAuthorizedAlert(permission)
+                    }
                     viewController.present(alert, animated: true)
                     
                     // Finish with no image picker.
                     delegate.imagePickerPermissionsFinishedWith(imagePicker: nil)
                 }
+                else if #available(iOS 14, *) {
+                    if PHPhotoLibrary.authorizationStatus(for: .readWrite) == .limited {
+                        let viewController = delegate.imagePickerPermissionsRequestsPresentingViewController()
+                        let alert = notSupportedAlert()
+                        viewController.present(alert, animated: true)
+                    }
+                    delegate.imagePickerPermissionsFinishedWith(imagePicker: nil)
+                }
                 else {
-                    
+
                     // Finish with no image picker.
                     delegate.imagePickerPermissionsFinishedWith(imagePicker: nil)
                 }
@@ -188,6 +187,31 @@ public struct ImagePickerPermissions {
         alertController.addAction(.cancel())
 
         viewController.present(alertController, animated: true)
+    }
+    
+    fileprivate func notAuthorizedAlert(_ permission: ImagePickerPermission) -> UIAlertController {
+        return permissionAlert(title: "Not Authorized", message: "Go to Settings and authorize the use of the \(permission.title).")
+    }
+    
+    fileprivate func notSupportedAlert() -> UIAlertController {
+        return permissionAlert(title: "Not Supported", message: "The \"Selected Photos\" access option is not currently supported.  Allow access to all photos to add an image attatchment.")
+    }
+    
+    fileprivate func permissionAlert(title: String, message: String) -> UIAlertController {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        
+        if let settingsUrl = URL(string: UIApplication.openSettingsURLString), UIApplication.shared.canOpenURL(settingsUrl) {
+            let settingsAction = UIAlertAction(title: "Settings", style: .default, handler: { _ in
+                UIApplication.shared.open(settingsUrl)
+            })
+            
+            alert.addAction(settingsAction)
+        }
+        
+        let okayAction = UIAlertAction.okay()
+        alert.addAction(okayAction)
+        alert.preferredAction = okayAction
+        return alert
     }
 }
 
@@ -295,7 +319,14 @@ extension ImagePickerPermissions {
         func request(_ completion: @escaping (_ granted: Bool, _ shouldOpenSettings: Bool) -> Void) {
             PHPhotoLibrary.requestAuthorization { (status) in
                 DispatchQueue.main.async {
-                    completion(PHPhotoLibrary.authorizationStatus() == .authorized, false)
+                    let granted: Bool
+                    if #available(iOS 14, *) {
+                        granted = PHPhotoLibrary.authorizationStatus(for: .readWrite) == .authorized
+                    }
+                    else {
+                        granted = PHPhotoLibrary.authorizationStatus() == .authorized
+                    }
+                    completion(granted, false)
                 }
             }
         }
