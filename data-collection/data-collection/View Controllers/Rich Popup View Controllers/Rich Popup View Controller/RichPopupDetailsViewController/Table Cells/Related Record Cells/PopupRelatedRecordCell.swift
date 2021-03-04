@@ -145,3 +145,22 @@ class PopupRelatedRecordCell: UITableViewCell {
         }
     }
 }
+
+extension UIFont {
+    
+    static var tableCellTitle: UIFont {
+        return UIFont.preferredFont(forTextStyle: .footnote)
+    }
+    
+    static var tableCellValue: UIFont {
+        return UIFont.preferredFont(forTextStyle: .body)
+    }
+    
+    static var drawerButtonHeader: UIFont {
+        return UIFont.preferredFont(forTextStyle: .body)
+    }
+    
+    static var drawerButtonSubheader: UIFont {
+        return UIFont.preferredFont(forTextStyle: .caption1)
+    }
+}

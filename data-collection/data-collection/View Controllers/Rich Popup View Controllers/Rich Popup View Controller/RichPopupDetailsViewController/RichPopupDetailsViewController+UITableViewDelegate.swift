@@ -43,12 +43,8 @@ extension RichPopupDetailsViewController /* UITableViewDelegate */ {
                     assert(manyToOneRelationship != nil, "There should always be a relationship returned, something is wrong with the popup manager.")
                     
                     // Offer the ability to update the many to one record.
-                    if let relationship = manyToOneRelationship {
-                        delegate?.detailsViewController(self, selectedEditManyToOneRelationship: relationship)
-                    }
-                    else {
-                        present(simpleAlertMessage: "Something went wrong updating the record.")
-                    }
+                    let relationship = manyToOneRelationship!
+                    delegate?.detailsViewController(self, selectedEditManyToOneRelationship: relationship)
                 }
                 else {
                     let newPopupManager: RichPopupManager
@@ -56,7 +52,7 @@ extension RichPopupDetailsViewController /* UITableViewDelegate */ {
                         newPopupManager = try popupManager.buildRichPopupManagerForExistingRecord(at: indexPath)
                     }
                     catch {
-                        self.present(simpleAlertMessage: error.localizedDescription)
+                        self.showError(error)
                         return
                     }
                     
@@ -72,12 +68,8 @@ extension RichPopupDetailsViewController /* UITableViewDelegate */ {
                     let oneToManyRelationship = popupManager.relationship(forIndexPath: indexPath) as? OneToManyRelationship
                     assert(oneToManyRelationship != nil, "There should always be a relationship returned, something is wrong with the popup manager.")
                     
-                    if let relationship = oneToManyRelationship {
-                        delegate?.detailsViewController(self, selectedAddNewOneToManyRelatedRecordForRelationship: relationship)
-                    }
-                    else {
-                        present(simpleAlertMessage: "Something went wrong adding a new record.")
-                    }
+                    let relationship = oneToManyRelationship!
+                    delegate?.detailsViewController(self, selectedAddNewOneToManyRelatedRecordForRelationship: relationship)
                 }
                 else if popupManager.indexPathWithinOneToMany(indexPath) {
                     
@@ -86,7 +78,7 @@ extension RichPopupDetailsViewController /* UITableViewDelegate */ {
                         newPopupManager = try popupManager.buildRichPopupManagerForExistingRecord(at: indexPath)
                     }
                     catch {
-                        self.present(simpleAlertMessage: error.localizedDescription)
+                        self.showError(error)
                         return
                     }
                     

@@ -15,103 +15,257 @@
 import Foundation
 import ArcGIS
 
+let appContext = AppContext()
+
 /// The `AppContext` maintains the app's current state.
 ///
 /// Primarily, the `AppContext` is responsible for:
-/// * Authentication and user lifecyle management.
-/// * Loading AGSMaps from an AGSPortal or an offline AGSMobileMapPackage.
-/// * Managing online and offline work modes.
+/// * Portal session and user lifecycle management.
+/// * Managing online and offline maps.
+/// * Delegating `CLLocationManager` authorization.
+/// * Locating addresses.
 
 class AppContext: NSObject {
     
-    // MARK: Portal
-    
-    /// The app's current portal.
-    ///
-    /// The portal drives whether the user is signed in or not.
-    ///
-    /// When set, the portal is configured for OAuth authentication so that if login is required,
-    /// the Runtime SDK and iOS can work together to authenticate the current user.
-    var portal:AGSPortal = AGSPortal.configuredPortal(loginRequired: false) {
-        didSet {
-            portal.load { [weak self] (error: Error?) in
-                
-                guard let self = self else { return }
-                
-                defer {
-                    NotificationCenter.default.post(self.portalNotification)
-                }
-                
-                if let error = (error as NSError?),
-                    self.workMode == .online && error.code != NSUserCancelledError {
-                    self.currentMap = nil
-                    return
-                }
-
-                if self.isLoggedIn {
-                    print("[Portal] user is signed in")
-                }
-                else {
-                    print("[Portal] user is signed out")
-                }
-                
-                if self.workMode == .online {
-                    self.setWorkModeOnlineWithMapFromPortal()
-                }
-            }
+    override init() {
+        
+        let defaultWorkMode: WorkMode = .retrieveDefaultWorkMode()
+        
+        switch defaultWorkMode {
+        case .online, .offline:
+            workMode = defaultWorkMode
+        default:
+            workMode = .online(nil)
         }
+        
+        addressLocator = AddressLocator(default: workMode)
+        
+        super.init()
+        
+        locationManager.delegate = self
+        portalSession.delegate = self
+        offlineMapManager.delegate = self
     }
     
-    var isLoggedIn:Bool {
-        return portal.user != nil
+    // MARK: Locator
+    
+    let addressLocator: AddressLocator
+    
+    // MARK: Location Manger
+    
+    private let locationManager = CLLocationManager()
+    
+    var locationAuthorized: Bool {
+        let status = CLLocationManager.authorizationStatus()
+        return
+            status == .authorizedWhenInUse ||
+            status == .authorizedAlways ||
+            status == .notDetermined
     }
     
-    // MARK: Map
+    // MARK: Portal Session Manager
     
-    /// The app's current map.
+    let portalSession = PortalSessionManager(portal: .basePortal)
+    
+    // MARK: Portal Session
+    
+    /// Trigger a sign-in sequence to a portal by building a portal where `loginRequired` is `true`.
     ///
-    /// The current map is derived from a portal web map, the same web map can be taken offline or can be nil.
+    /// - Note: The ArcGIS Runtime SDK will present a modal sign-in web view if it cannot find any suitable cached credentials.
+    func signIn() {
+        portalSession.loadCredentialRequiredPortalSession()
+    }
+    
+    /// Log out in the app and from the portal.
     ///
-    /// - Note: `MapViewController` updates its AGSMapView's AGSMap upon observed changes.
-    var currentMap: AGSMap? {
-        didSet {
-            NotificationCenter.default.post(currentMapNotification)
-        }
+    /// The app does this by removing all cached credentials and no longer requiring authentication in the portal.
+    func signOut() {
+        addressLocator.removeCredentialsFromServices()
+        portalSession.loadDefaultPortalSession()
     }
     
-    var isCurrentMapLoaded: Bool {
-        return currentMap?.loadStatus == .loaded
-    }
+    // MARK: Offline Map Manager
     
-    // MARK: Offline Map
+    let offlineMapManager = OfflineMapManager(webmap: PortalConfig.webMapItemID)
     
-    /// The app's currently downloaded offline mobile map package.
-    ///
-    /// - Note: A reference to the offline mobile map package persists even if the user operates the app in online work mode to signify state.
-    /// - Note: A nil `mobileMapPackage` signifies there is no offline mobile map package currently downloaded to the device.
-    var mobileMapPackage: LastSyncMobileMapPackage?
-    
-    var offlineMap: AGSMap? {
-        return mobileMapPackage?.maps.first
-    }
-    
-    /// A kv-observable boolean value that signifies if the app has a downloaded offline `mobileMapPackage`.
-    var hasOfflineMap: Bool = false {
-        didSet {
-            NotificationCenter.default.post(hasOfflineMapNotification)
-        }
-    }
+    // MARK:- Work Mode
     
     /// The app's current work mode.
     ///
     /// This property is initialized with the work mode from the user's last session.
     ///
     /// - Note: The app can have an offline map even when working online.
-    var workMode: WorkMode = WorkMode.retrieveDefaultWorkMode() {
+    private(set) var workMode: WorkMode {
         didSet {
             workMode.storeDefaultWorkMode()
-            NotificationCenter.default.post(workModeNotification)
+            
+            addressLocator.prepareLocator(for: workMode)
+            
+            NotificationCenter.default.post(workModeDidChange)
+            
+            switch workMode {
+            case .none:
+                print(
+                    "[App Context]",
+                    "\n\tWork Mode - None"
+                )
+            case .offline(let map):
+                print(
+                    "[App Context]",
+                    "\n\tWork Mode - Offline,", map?.item?.title ?? "(no map)"
+                )
+            case .online(let map):
+                print(
+                    "[App Context]",
+                    "\n\tWork Mode - Online,", map?.item?.title ?? "(no map)"
+                )
+            }
         }
+    }
+    
+    func setWorkModeOnline() {
+        switch portalSession.status {
+        case .none:
+            workMode = .none
+        case .loading:
+            workMode = .online(nil)
+        case .loaded(let portal), .fallback(let portal, _):
+            let map = portal.configuredMap
+            map.load(completion: nil)
+            workMode = .online(map)
+        case .failed:
+            workMode = .none
+        }
+    }
+    
+    func setWorkModeOffline() throws {
+        switch offlineMapManager.status {
+        case .none, .failed(_):
+            throw OfflineMapManager.MissingOfflineMapError()
+        case .loading(_):
+            workMode = .offline(nil)
+        case .loaded(_, let map):
+            workMode = .offline(map)
+        }
+    }
+    
+    func deleteOfflineMapAndAttemptToGoOnline() {
+        
+        offlineMapManager.deleteOfflineMap()
+
+        if let portal = portalSession.portal {
+            let map = portal.configuredMap
+            map.load(completion: nil)
+            workMode = .online(map)
+        }
+        else {
+            workMode = .online(nil)
+            portalSession.silentlyLoadCredentialRequiredPortalSession()
+        }
+    }
+    
+    // MARK: Map
+
+    var currentMap: AGSMap? {
+        switch workMode {
+        case .none:
+            return nil
+        case .online(let map):
+            return map
+        case .offline(let map):
+            return map
+        }
+    }
+    
+    var isCurrentMapLoaded: Bool {
+        return currentMap?.loadStatus == .loaded
+    }
+}
+
+private extension String {
+    static let userDefaultsWorkModeKey = "WorkMode.\(PortalConfig.webMapItemID)"
+}
+
+// MARK:- Location Manager Delegate
+
+extension AppContext: CLLocationManagerDelegate {
+    
+    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
+        print(
+            "[Location Manager]",
+            "\n\tStatus - \(status)"
+        )
+        NotificationCenter.default.post(locationAuthorizationNotification)
+    }
+}
+
+// MARK:- Portal Session Manager Delegate
+
+extension AppContext: PortalSessionManagerDelegate {
+    
+    func portalSessionManager(manager: PortalSessionManager, didChangeStatus status: PortalSessionManager.Status) {
+
+        NotificationCenter.default.post(portalDidChange)
+        
+        guard case .online = workMode else { return }
+        
+        func setWorkModeOnline(with portal: AGSPortal) {
+            let map = portal.configuredMap
+            map.load(completion: nil)
+            workMode = .online(map)
+        }
+        
+        switch status {
+        case .loaded(let portal):
+            setWorkModeOnline(with: portal)
+        case .fallback(let portal, let error):
+            setWorkModeOnline(with: portal)
+            UIApplication.shared.showError(error)
+        case .failed(let error):
+            workMode = .online(nil)
+            UIApplication.shared.showError(error)
+        default:
+            break
+        }
+    }
+}
+
+// MARK:- Offline Map Manager Delegate
+
+extension AppContext: OfflineMapManagerDelegate {
+    
+    func offlineMapManager(_ manager: OfflineMapManager, didUpdateLastSync date: Date?) {
+        
+        NotificationCenter.default.post(offlineMapDidChange)
+    }
+    
+    func offlineMapManager(_ manager: OfflineMapManager, didUpdate status: OfflineMapManager.Status) {
+        
+        NotificationCenter.default.post(offlineMapDidChange)
+        
+        if case .offline = workMode, case let .loaded(_, managedOfflineMap) = status {
+            workMode = .offline(managedOfflineMap)
+        }
+        else if case let .failed(error) = status {
+            UIApplication.shared.showError(error)
+        }
+    }
+    
+    func offlineMapManager(_ manager: OfflineMapManager, didFinishJob result: Result<JobResult, Error>) {
+        
+        if case let .success(jobResult) = result, jobResult is AGSGenerateOfflineMapResult {
+            // Set work mode to offline with nil, indicating a resource needs to load.
+            workMode = .offline(nil)
+            // Load offline map resource.
+            offlineMapManager.loadOfflineMobileMapPackage()
+        }
+        else if case let .success(jobResult) = result, let syncJobResult = jobResult as? AGSOfflineMapSyncResult {
+            if syncJobResult.isMobileMapPackageReopenRequired {
+                offlineMapManager.loadOfflineMobileMapPackage()
+            }
+        }
+        // Note, we don't want to publish a job failure's error as an alert,
+        // the UI should reflect this through the `Job.jobMessages` API.
     }
 }
 
@@ -120,13 +274,13 @@ class AppContext: NSObject {
 extension Notification.Name {
     static let portalDidChange = Notification.Name("portalDidChange")
     static let workModeDidChange = Notification.Name("workModeDidChange")
-    static let hasOfflineMapDidChange = Notification.Name("hasOfflineMapDidChange")
-    static let currentMapDidChange = Notification.Name("currentMapDidChange")
+    static let offlineMapDidChange = Notification.Name("offlineMapDidChange")
+    static let locationAuthorizationDidChange = Notification.Name("locationAuthorizationDidChange")
 }
 
 extension AppContext {
     
-    var portalNotification: Notification {
+    var portalDidChange: Notification {
         Notification(
             name: .portalDidChange,
             object: self,
@@ -134,7 +288,7 @@ extension AppContext {
         )
     }
     
-    var workModeNotification: Notification {
+    var workModeDidChange: Notification {
         Notification(
             name: .workModeDidChange,
             object: self,
@@ -142,19 +296,93 @@ extension AppContext {
         )
     }
     
-    var hasOfflineMapNotification: Notification {
+    var offlineMapDidChange: Notification {
         Notification(
-            name: .hasOfflineMapDidChange,
+            name: .offlineMapDidChange,
             object: self,
             userInfo: nil
         )
     }
     
-    var currentMapNotification: Notification {
+    var locationAuthorizationNotification: Notification {
         Notification(
-            name: .currentMapDidChange,
+            name: .locationAuthorizationDidChange,
             object: self,
             userInfo: nil
         )
+    }
+}
+
+extension AppContext {
+    
+    enum WorkMode {
+        
+        case none
+        /// This case is only set with a nil map when retrieved from `UserDefaults` or because a resource is loading.
+        /// Otherwise, the AppContext will set `.none`.
+        case online(AGSMap?), offline(AGSMap?)
+                
+        func storeDefaultWorkMode() {
+            UserDefaults.standard.set(userDefault, forKey: .userDefaultsWorkModeKey)
+        }
+        
+        private var userDefault: String {
+            switch self {
+            case .none:
+                return "none"
+            case .online(_):
+                return "online"
+            case .offline(_):
+                return "offline"
+            }
+        }
+        
+        static func retrieveDefaultWorkMode() -> WorkMode {
+            if let stored = UserDefaults.standard.string(forKey: .userDefaultsWorkModeKey) {
+                switch stored {
+                case "none":
+                    return .none
+                case "online":
+                    return .online(nil)
+                case "offline":
+                    return .offline(nil)
+                default:
+                    return .none
+                }
+            }
+            else {
+                return .none
+            }
+        }
+    }
+}
+
+private extension AGSPortal {
+
+    var configuredMap: AGSMap {
+        let item = AGSPortalItem(portal: self, itemID: PortalConfig.webMapItemID)
+        let map = AGSMap(item: item)
+        map.load(completion: nil)
+        return map
+    }
+}
+
+extension CLAuthorizationStatus: CustomStringConvertible {
+    
+    public var description: String {
+        switch self {
+        case .authorizedAlways:
+            return "Authorized Always"
+        case .authorizedWhenInUse:
+            return "Authorized When In-Use"
+        case .denied:
+            return "Denied"
+        case .notDetermined:
+            return "Not Determined"
+        case .restricted:
+            return "Restricted"
+        @unknown default:
+            fatalError("Unsupported case \(self).")
+        }
     }
 }

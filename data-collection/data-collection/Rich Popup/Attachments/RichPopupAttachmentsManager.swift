@@ -13,6 +13,7 @@
 // limitations under the License.
 
 import ArcGIS
+import QuickLook
 
 protocol RichPopupAttachmentsManagerDelegate: AnyObject {
     func richPopupAttachmentsManager(_ manager: RichPopupAttachmentsManager, generatedThumbnailForAttachment attachment: RichPopupPreviewableAttachment)
@@ -27,11 +28,9 @@ class RichPopupAttachmentsManager: AGSLoadableBase {
     weak var delegate: RichPopupAttachmentsManagerDelegate?
     
     init?(richPopupManager: RichPopupManager) {
-        
+        guard richPopupManager.shouldShowAttachments || richPopupManager.shouldAllowEditAttachments else { return nil }
         guard let manager = richPopupManager.attachmentManager else { return nil }
-        
         self.popupManager = richPopupManager
-        
         self.popupAttachmentsManager = manager
     }
     
@@ -44,13 +43,12 @@ class RichPopupAttachmentsManager: AGSLoadableBase {
         if retrying { clear() }
         
         guard let popupManager = popupManager else {
-            loadDidFinishWithError(NSError.unknown)
+            loadDidFinishWithError(MissingRecordError())
             return
         }
         
         guard popupManager.shouldShowAttachments else {
-            loadDidFinishWithError(NSError.invalidOperation)
-            return
+            preconditionFailure("The `RichPopupAttachmentsManager` should not perform a load operation if showing attachments is not supported.")
         }
         
         cancelableFetch = popupAttachmentsManager.fetchAttachments { [weak self] (_, error) in
@@ -85,21 +83,24 @@ class RichPopupAttachmentsManager: AGSLoadableBase {
         return !stagedAttachments.isEmpty
     }
     
-    @discardableResult
-    func add(stagedAttachment: RichPopupStagedAttachment) -> Int {
+    func add(stagedAttachment: RichPopupStagedAttachment) throws {
+        
+        guard let popupManager = popupManager, popupManager.shouldAllowEditAttachments else {
+            throw InvalidOperation()
+        }
         
         stagedAttachments.append(stagedAttachment)
-        
-        return stagedAttachments.endIndex
     }
     
     
-    func deleteAttachment(at index: Int) -> Bool {
+    func deleteAttachment(at index: Int) throws {
         
-        assert(index < attachmentsCount, "Index \(index) out of range 0..<\(attachmentsCount).")
+        guard let popupManager = popupManager, popupManager.shouldAllowEditAttachments else {
+            throw InvalidOperation()
+        }
         
-        guard index < attachmentsCount else { return false }
-        
+        precondition(index < attachmentsCount, "Index \(index) out of range 0..<\(attachmentsCount).")
+                
         if index < fetchedAttachments.endIndex {
             let attachment = fetchedAttachments.remove(at: index)
             popupAttachmentsManager.deleteAttachment(attachment)
@@ -108,8 +109,6 @@ class RichPopupAttachmentsManager: AGSLoadableBase {
             let stagedIndex = index - fetchedAttachments.count
             stagedAttachments.remove(at: stagedIndex)
         }
-        
-        return true
     }
     
     // MARK: Popup Manager Lifecycle
@@ -206,13 +205,13 @@ class RichPopupAttachmentsManager: AGSLoadableBase {
         if let attachment = attachment as? AGSPopupAttachment {
 
             guard self.fetchedAttachments.contains(attachment) else {
-                throw NSError.invalidOperation
+                throw InvalidOperation()
             }
         }
         else if let attachment = attachment as? RichPopupStagedAttachment {
             
             guard self.stagedAttachments.contains(attachment) else {
-                throw NSError.invalidOperation
+                throw InvalidOperation()
             }
         }
         else {
@@ -256,7 +255,7 @@ extension RichPopupAttachmentsManager {
     func loadAttachment(at index: Int) throws {
         
         guard let attachment = attachment(at: index) else {
-            throw NSError.invalidOperation
+            throw InvalidOperation()
         }
         
         if let attachment = attachment as? AGSLoadable {
@@ -310,5 +309,33 @@ extension RichPopupAttachmentsManager {
         }
         
         return IndexPath(row: row, section: section)
+    }
+}
+
+// MARK:- Popup Attachment Previewable
+
+// `AGSPopupAttachment` has automatic conformance to `RichPopupPreviewableAttachment`.
+extension AGSPopupAttachment: RichPopupPreviewableAttachment { }
+
+extension AGSPopupAttachment: QLPreviewItem {
+    
+    public var previewItemURL: URL? {
+        return fileURL
+    }
+    
+    public var previewItemTitle: String? {
+        return name
+    }
+}
+
+// MARK:- Error
+
+extension RichPopupAttachmentsManager {
+    struct InvalidOperation: LocalizedError {
+        var errorDescription: String? { "The operation you are trying to perform is not permitted." }
+    }
+    
+    struct MissingRecordError: LocalizedError {
+        var errorDescription: String? { "Missing record." }
     }
 }

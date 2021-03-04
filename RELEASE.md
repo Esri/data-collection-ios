@@ -1,3 +1,17 @@
+# Release 1.3
+
+- TODO
+- Introduces an improved `AppContext` state-based architecture and more clear separation of responsibility. This architecture achieves more stability and resolves some found Portal related edge cases. Consult [docs](./docs/README.md#app-context) for more information.
+- Dissolves `AppLocation` into sub-component of `AppContext`.
+- Dissolves `AppGlobals` into `AppContext`.
+- Dissolves `AppFiles` into `OfflineMapManager`.
+- Removes `AppFonts` as it provides very little utility.
+- Removes `NetworkReachabilityManager` as a first class state mechanism allowing app to determine reachability with every network request, removes `Alamofire` swift package.
+- Reformats `AppConfiguration` to be more clear.
+- Introduces `GlobalAlertQueue`, a utility for enqueueing and presenting alerts in a stand-alone alert window (`UIWindow`). This change improves the reliability of presenting alerts from any app component - context, view, or otherwise.
+- Introduces nuanced offline map icons in Profile view.
+- Dissolves `AppError` protocol, reconsiders errors instead as members of types.
+
 # Release 1.2.3
 
 - The 100.10.0 release of the ArcGIS Runtime for iOS is now distributed as a binary framework.  This necessitated the following changes in the Data Collection Xcode project file:
@@ -14,7 +28,7 @@
 
 # Release 1.2.2
 
-- Introduces new technique for managing [app secrets]](./docs#app-configuration).
+- Introduces new technique for managing [app secrets](./docs#app-configuration).
 - At v100.6.0 the ArcGIS Runtime SDK for iOS introduced a [method](https://developers.arcgis.com/ios/latest/api-reference/interface_a_g_s_credential_cache.html#a0796cf2506fa0edfdeb2b62198bbbea7) to remove and revoke all credentials. Data Collection now uses that method to revoke the portal user's credential on the server side.
 - Certification for the 100.9.0 release of the ArcGIS Runtime SDK for iOS.
 - Updates the ArcGIS Runtime Toolkit submodule to the 100.9.0 version.

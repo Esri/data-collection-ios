@@ -45,7 +45,7 @@ class RichPopupAttachmentsViewController: UITableViewController {
             guard let self = self else { return }
             
             if let error = error {
-                self.present(simpleAlertMessage: "Something went wrong loading attachments. \(error.localizedDescription)")
+                self.showError(error)
             }
             
             self.tableView.reloadData()
@@ -61,13 +61,16 @@ class RichPopupAttachmentsViewController: UITableViewController {
     }
     
     func addAttachment(_ attachment: RichPopupStagedAttachment) {
-        
-        popupAttachmentsManager.add(stagedAttachment: attachment)
-        
-        if let indexPath = popupAttachmentsManager.indexPathFor(attachment: attachment) {
-            tableView.performBatchUpdates({
-                tableView.insertRows(at: [indexPath], with: .automatic)
-            }, completion: nil)
+        do {
+            try popupAttachmentsManager.add(stagedAttachment: attachment)
+            if let indexPath = popupAttachmentsManager.indexPathFor(attachment: attachment) {
+                tableView.performBatchUpdates({
+                    tableView.insertRows(at: [indexPath], with: .automatic)
+                }, completion: nil)
+            }
+        }
+        catch {
+            showError(error)
         }
     }
     

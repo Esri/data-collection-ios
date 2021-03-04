@@ -57,23 +57,29 @@
    - [Reverse geocoding](#reverse-geocoding)   
 - [Architecture](#architecture)   
    - [App configuration](#app-configuration)   
+      - [1. Portal Configuration](#1-portal-configuration)   
+      - [2. OAuth Configuration](#2-oauth-configuration)   
+      - [3. Address Locator, Geocoder Configuration](#3-address-locator-geocoder-configuration)   
    - [App secrets](#app-secrets)   
       - [Masquerade](#masquerade)   
       - [Build rule](#build-rule)   
          - [Usage](#usage)   
    - [App context](#app-context)   
-      - [App context change handler](#app-context-change-handler)   
+      - [Work Mode](#work-mode)   
+      - [Portal Session Manager](#portal-session-manager)   
+      - [Offline Map Manager](#offline-map-manager)   
+      - [Offline Map Job Manager](#offline-map-job-manager)   
+      - [Address Locator](#address-locator)   
+      - [App context change notifications](#app-context-change-notifications)   
    - [Model: Pop-up configuration driven](#model-pop-up-configuration-driven)   
    - [View: storyboards](#view-storyboards)   
       - [Custom views](#custom-views)   
    - [Controller: app context aware](#controller-app-context-aware)   
    - [App location](#app-location)   
-   - [Network reachability manager](#network-reachability-manager)   
    - [Ephemeral cache](#ephemeral-cache)   
    - [File manager](#file-manager)   
    - [App defaults](#app-defaults)   
-   - [App colors & fonts](#app-colors-fonts)   
-   - [App errors](#app-errors)   
+   - [App colors](#app-colors)   
 - [Xcode project configuration](#xcode-project-configuration)   
    - [Privacy strings](#privacy-strings)   
 
@@ -128,13 +134,13 @@ The navigation bar's title reflects the name of the web map and the navigation b
 
 ### Manage the app's context
 
-Tapping the navigation bar's hamburger button reveals the app context drawer view.
+Tapping the navigation bar's profile button reveals the profile view.
 
-![App Context Drawer View](/docs/images/profile.png)
+![App Context Profile View](/docs/images/profile.png)
 
 #### Sign in and out of Portal
 
-Upon first launch the user is not authenticated and the app does not prompt for authentication. To sign in, the user can tap the navigation bar's hamburger button to reveal the app context drawer view. Once revealed, the user can tap 'Sign in'. A modal login view presents, prompting for the user's portal username and password. If valid credentials are provided, an authenticated user is associated with the portal and their credentials are stored in the local credentials cache, for auto-sync to the device's keychain.
+Upon first launch the user is not authenticated and the app does not prompt for authentication. To sign in, the user can tap the navigation bar's profile button to reveal the profile view. Once revealed, the user can tap 'Sign in'. A modal login view presents, prompting for the user's portal username and password. If valid credentials are provided, an authenticated user is associated with the portal and their credentials are stored in the local credentials cache, for auto-sync to the device's keychain.
 
 Upon successfully signing in, the button that previously read 'Sign in' now reads 'Sign out' and tapping the button now signs the user out and removes the user from the local credentials cache.
 
@@ -1052,52 +1058,7 @@ internal func discardStagedAttachments()
 
 The *Trees of Portland* story contains a custom behavior that reverse geocodes a point into an address which is populated into a tree's attributes. In order to support both an online and an offline work flow, the app ships with a custom class named `AddressLocator` that loads two `AGSLocatorTask` objects, one side-loaded from the app's bundle and the other connected to the [world geocoder web service](https://developers.arcgis.com/features/geocoding/).
 
-When running a reverse geocode operation, the app selects which `AGSLocatorTask` to use considering the app context's work mode and if the app has a network connection.
-
-```swift
-class AddressLocator {
-    // ...
-    func reverseGeocodeAddress(for point: AGSPoint, completion: @escaping (_ result: Result<String, Error>) -> Void) {
-        let locator = appContextAwareLocator
-        locator.load { [weak self] (error) in
-            // Ensure the loaded locator matches the app context aware locator.
-            // The app context might have changed since the locator started loading.
-            guard locator == self?.appContextAwareLocator else {
-                completion(.failure(NSError.unknown))
-                return
-            }
-            // If the locator load failed, end early.
-            if let error = error {
-                completion(.failure(error))
-                return
-            }
-            // We need to set the geocode parameters for storage true because the results of this reverse geocode is persisted to a table.
-            // Please familiarize yourself with the implications of this credits-consuming operation:
-            // https://developers.arcgis.com/rest/geocode/api-reference/geocoding-free-vs-paid.htm
-            let params: AGSReverseGeocodeParameters = {
-                let params = AGSReverseGeocodeParameters()
-                params.forStorage = true
-                return params
-            }()
-            // Perform the reverse geocode task.
-            locator.reverseGeocode(withLocation: point, parameters: params) { (results, error) in
-                if let error = error {
-                    completion(.failure(error))
-                }
-                else if
-                    let attributes = results?.first?.attributes,
-                    let address = (attributes[.address] ?? attributes[.matchAddress]) as? String {
-                    completion(.success(address))
-                }
-                else {
-                    assertionFailure("Locator task unsupporting of required attribute key (\"\(String.address)\" for online locator, \"\(String.matchAddress)\" for offline locator).")
-                }
-            }
-        }
-    }
-    // ...
-}
-```
+When running a reverse geocode operation, the app selects which `AGSLocatorTask` to use with consideration for the app context's work mode.
 
 Because the *Trees of Portland* web map stores the results of a geocode operation, the reverse geocode parameters must have set `forStorage = true`. For more on the world geocoding service visit the [developers website](https://developers.arcgis.com/rest/geocode/api-reference/overview-world-geocoding-service.htm).
 
@@ -1108,25 +1069,52 @@ Because the *Trees of Portland* web map stores the results of a geocode operatio
 The app is built with a number of core architectural principles.
 
 1. ArcGIS SDK asynchronous design pattern
-2. iOS model-view-controller
-3. Cocoa Touch
-4. `AppConfiguration` to manage the app's static configuration
-5. `AppContext` to manage the app's current state
-6. `RichPopup` with `Relationships: <AGSLoadable>` supported by `RichPopupManager` and `RichPopupAttachmentManger`
+1. UIKit MVC (Model-View-Controller)
+1. `AppConfiguration` to manage the app's static configuration
+1. `AppSecrets` to manage the app's sensitive keys
+1. `AppContext` to manage the app's current state
+1. `RichPopup` with `Relationships: <AGSLoadable>` supported by `RichPopupManager` and `RichPopupAttachmentManger`
 
 ### App configuration
 
-The `AppConfiguration` contains a series of static configuration resources. Modify these configurations to suit your needs. They include:
+The `AppConfiguration` contains a series of static configuration resources. Modify these configurations to suit your needs.
 
-* web map portal ID
-* portal domain and url
-* geocode service url
-* app local url scheme OAuth redirect url
-* app keychain ID
-* app license key
-* app client ID
+#### 1. Portal Configuration
 
-> `AppConfiguration` configures a single global build environment. You can easily modify the project for multiple build environments.
+You can configure the app with a base URL that points to your portal as well as your desired web map item ID.
+
+```swift
+enum PortalConfig {
+    static let basePortalDomain: String
+    static let webMapItemID: String
+}
+```
+
+#### 2. OAuth Configuration
+
+Configure the URL to match the path created in the **Current Redirect URIs** section of the **Authentication** tab within the [Dashboard of the ArcGIS for Developers site](https://developers.arcgis.com/applications).
+
+```swift
+enum OAuthConfig {
+    static let redirectUrl: String
+}
+```
+
+#### 3. Address Locator, Geocoder Configuration
+
+You can configure the app with your own online and offline geocoders (`AGSLocatorTask`). Provide your own URL for an online geocoder service and/or an offline locator generated in ArcGIS Pro.
+
+```swift
+enum OnlineGeocoderConfig {
+    static let urlString: String
+    static let addressAttributeKey: String
+}
+
+enum OfflineGeocoderConfig {
+    static let name: String
+    static let addressAttributeKey: String
+}
+```
 
 ### App secrets
 
@@ -1200,40 +1188,41 @@ In effect the `AppSecrets.swift.masque` key-laden swift template becomes `AppSec
 
 ### App context
 
-The `AppContext` maintains and informs the app of its current state. It concerns itself with:
+The `AppContext` maintains and notifies the app of its current state. The app context establishes a separation of concerns for managing different aspects of the app's state. Changes made to the app context and it's sub-components are broadcast to the rest of the app as notifications.
 
-* Authentication and user lifecyle management
-* Loading `AGSMap`s from an `AGSPortal` or an offline `AGSMobileMapPackage`
-* Managing online and offline work modes
+#### Work Mode
 
-Changes made to the `AppContext` are broadcast to the rest of the app so it can respond accordingly.
+The `AppContext` persists the current `WorkMode` throughout the duration of the app session. A map is supplied alongside the work mode.
 
-#### App context change handler
+#### Portal Session Manager
+
+The `PortalSessionManager` is responsible for managing the active portal session. Upon re-launch of the application, the portal session manager will silently try to restore the portal used in the previous app session.
+
+#### Offline Map Manager
+
+The `OfflineMapManager` is responsible for managing the offline map and delegating offline map jobs.
+
+#### Offline Map Job Manager
+
+The `OfflineMapJobManager` performs jobs as requested by the offline map manager, reporting the job's evolving status to watchful UIs along the way.
+
+#### Address Locator
+
+The `AddressLocator` is used to reverse geocode addresses from points and can be used to populate feature attributes.
+
+#### App context change notifications
 
 Various components of the app needs to be aware of changes to the `AppContext`. These components leverage the `NotificationCenter` APIs to subscribe to these changes.
 
-For types that support publishing notifications the first step is to build a notification.
+The when the `AppContext` changes state, it will post a notification to the notification center. The `AppContext` posts four different notification types.
 
 ```swift
 extension Notification.Name {
     static let portalDidChange = Notification.Name("portalDidChange")
+    static let workModeDidChange = Notification.Name("workModeDidChange")
+    static let offlineMapDidChange = Notification.Name("offlineMapDidChange")
+    static let locationAuthorizationDidChange = Notification.Name("locationAuthorizationDidChange")
 }
-
-extension AppContext {
-    var portalNotification: Notification {
-        Notification(
-            name: .portalDidChange,
-            object: self,
-            userInfo: nil
-        )
-    }
-}
-```
-
-The next step is to post the notification.
-
-```swift
-NotificationCenter.default.post(self.portalNotification)
 ```
 
 Objects that wish to observe a notification must add an observer. When a notification is posted, objects that are observing the notification will perform the method specified by the selector.
@@ -1255,7 +1244,7 @@ An `AGSPopup` provides the app with a context defining how to represent its cont
 
 ### View: storyboards
 
-All views are built using Interface Builder and storyboards. The root view controller of the main storyboard upon launch is an instance of `AppContainerViewController` which embeds and maintains the layout of the `MapViewController` and the `DrawerViewController`. Once loaded, the app container view controller delegates messages from these two embedded view controllers, handles layout of these two view controller's views and handles state of the navigation bar accordingly. The app also leverages storyboard segues to facilitate transitions between view controllers.
+All views are built using Interface Builder and storyboards. The root view controller of the main storyboard upon launch is an instance of `MapViewController`. The app leverages storyboard segues to facilitate transitions between view controllers as the user begins to use the app.
 
 #### Custom views
 
@@ -1283,19 +1272,19 @@ These custom views are built and their layouts are managed in a storyboard.
 
 A `StyledFirstResponderLabel` is a custom `UILabel` subclass that converts the label into a first responder and styles the label upon user interaction. Similarly, `StyledTextView` and `StyledTextField` are subclasses that style (`UITextView` and `UITextField`, respectively)  to appear editable or not based on if user interaction is enabled.
 
+**Floating Panel Controller**
+
+`FloatingPanelController` is a custom `UIViewController` subclass that allows for display of content in a "floating panel", sometimes referred to as a "bottom sheet".  Displayed content is encapsulated in a `UIViewController` that implements the `FloatingPanelEmbeddable` protocol.  Currently both "Layers" and "Bookmarks" are shown in a `FloatingPanelController`.
+
 ### Controller: app context aware
 
-Some view controllers are made aware of changes to the app context so they may update accordingly. Because all changes broadcasted by the `AppContextChangeHandler` are performed on the main thread, these view controllers can safely update UI. To learn more about the `AppContextChangeHandler` see above section entitled [_App Context Change Handler_](#app-context-change-handler).
+Some view controllers subscribe to changes made to the `AppContext` state, thus reflecting these changes in their UI. Conversely, a view controller might receive an interaction from a user that requires interfacing with the `AppContext`.
 
 ### App location
 
 If the user has granted the app permission, the app shows the user their location on an `AGSMap` and to allow a user to zoom to their location. The `AGSMapView` comes with support for asking the user for permission to access the device's location and displaying the user's location on a map, out of the box.
 
 The app monitors for changes to the location authorization status manually. Using a `CLLocationManager`, the app broadcasts these changes to all app context aware view controllers. This status is monitored by a custom class named `AppLocation`.
-
-### Network reachability manager
-
-Working with a web map and accessing an `AGSPortal` require a network connection. The app uses [Alamofire](https://github.com/Alamofire/Foundation)'s [`NetworkReachabilityManager`](https://github.com/Alamofire/Alamofire/blob/master/Source/NetworkReachabilityManager.swift) to listen to changes in network reachability status. The app broadcasts these changes to all app context aware objects.
 
 ### Ephemeral cache
 
@@ -1305,32 +1294,7 @@ To perform a segue, a view controller calls `performSegue(withIdentifier, sender
 
 A problem arises when the view controller needs to send non-member object reference from itself to the destination view controller. Enter `EphemeralCache`.
 
-The `EphemeralCache` is a singleton, thread-safe caching system that allows you to set `AnyObject` that is retrieved and removed from the cache upon the first get of that object. Under the hood it accomplishes this using `NSCache` and a concurrent `DispatchQueue` (with a barrier flag). `EphemeralCache` is used with the following pattern:
-
-```swift
-// within a view controller responding to an event
-	... {
-
-	// Cache an object (for example, a new popup object)
-	EphemeralCache.set(object: newPopup, forKey: "keys.newPopupKey")
-
-	// trigger segue (for example, to a popup edit view controller)
-	self.performSegue(withIdentifier: "mapViewToPopupEditView", sender: nil)
-}
-
-// before executing the segue, UIViewController calls:
-override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-
-	// unwrap segue's destination view controller (for example, a related records popups view controller)
-	// unwrap the object from the cache (for example, the new popup object)
-	if let destination = segue.destination as? RelatedRecordsPopupsViewController, let newPopup = EphmeralCache.get(objectForKey: "keys.newPopupKey") as? AGSPopup {
-
-		// after getting an object from the EphemeralCache, that object no longer exist within the EphmeralCache
-		// set the object to the destination view controller
-		destination.popup = newPop
-	}
-}
-```
+The `EphemeralCache` is a singleton, thread-safe caching system that allows you to set `AnyObject` that is retrieved and removed from the cache upon the first get of that object. Under the hood it accomplishes this using `NSCache` and a concurrent `DispatchQueue` (with a barrier flag).
 
 ### File manager
 
@@ -1340,31 +1304,16 @@ The app accounts for errors that might arise while downloading the map offline s
 
 ### App defaults
 
-A number of settings are stored in the app's `UserDefaults` to help maintain state between app usage.
+A number of preferences are stored in the app's `UserDefaults` to help maintain state between app usage.
 
-**Last Sync Mobile Map Package**
+1. Last sync date of offline map
+1. Current work mode
+1. Map view's visible area
+1. Last selected pop-up attachment size
 
-`LastSyncMobileMapPackage` is a concrete subclass of `AGSMobileMapPackage` augmenting the class with the ability to store the `Date` a web map is downloaded, or subsequently, the `Date` it is last synchronized with the web map. The utility stores the `Date` in `UserDefaults` and posts an `AppContextChange` upon change.
+### App colors
 
-**Work Mode**
-
-`WorkMode` is a raw representable `Int` enumeration stored in `UserDefaults` when the app context's work mode changes based on user interaction.
-
-**Visible Area**
-
-As the map view navigates, the current visible area `AGSViewpoint` is stored in `UserDefaults` as JSON. The persisted visible area is retrieved and set when switching online and offline maps and when starting a new app session.
-
-**Pop-up Attachment Size**
-
-Specifying a new staged image attachment's `preferredSize` persists the selection in `UserDefaults`. The next time the user adds an image attachment, the stored `preferredSize` is retrieved.
-
-### App colors & fonts
-
-Much of the app's colors and fonts are configured dynamically. The app offers a configuration for design assets by globalizing `AppColors` and `AppFonts`. You can change these configurations to affect the design of those dynamically-generated views.
-
-### App errors
-
-The app includes a simple and informative error system. `AppError` is a protocol specifying requirements for errors used in the app. Error categories are demarcated as unique `enums` with subcategories represented as individual `cases`. Each app error contains a unique code and localized description.
+Much of the app's colors and fonts are configured dynamically. The app offers a configuration for design assets by globalizing `AppColors`. You can change these configurations to affect the design of those dynamically-generated views.
 
 ## Xcode project configuration
 
