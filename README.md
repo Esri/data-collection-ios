@@ -148,7 +148,7 @@ If there are changes made in the original repository, you can sync the fork to k
 The app uses OAuth to authenticate users to a web map hosted in your ArcGIS Portal. Register an application with the developers website to broker authentication between the app and your Portal.
 
 1. Log in to [developers.arcgis.com](https://developers.arcgis.com) with either your ArcGIS Organizational Account or an ArcGIS Developer Account.
-1. Create a [new application](https://developers.arcgis.com/applications/new).
+1. Visit your [dashboard](https://developers.arcgis.com/dashboard) and [create a new application](https://developers.arcgis.com/applications/).
 1. Click the 'Authentication' tab.
 1. Note the **Client ID**, we'll use it in a future step.
 1. Add a new **Redirect URI**, `data-collection://auth`
@@ -207,7 +207,7 @@ Learn more about Esri open source apps [here](https://developers.arcgis.com/exam
 ## Requirements
 
 * [Xcode 11 and Swift 5](https://itunes.apple.com/us/app/xcode/id497799835?mt=12)
-* [ArcGIS Runtime SDK for iOS](https://developers.arcgis.com/ios/latest/swift/guide/install.htm#ESRI_SECTION1_D57435A2BEBC4D29AFA3A4CAA722506A), version 100.10.
+* [ArcGIS Runtime SDK for iOS](https://developers.arcgis.com/ios/), version 100.10.
 * [ArcGIS Runtime Toolkit for iOS](https://github.com/Esri/arcgis-runtime-toolkit-ios), version 100.10.
 * To edit records or take a web map offline you will need an ArcGIS Online Organizational account, an ArcGIS Online Developer account or an ArcGIS Online account authenticated using a social login.
 * To consume your own web map you will need an ArcGIS Online Organizational account.
@@ -236,7 +236,7 @@ Unless required by applicable law or agreed to in writing, software distributed 
 
 A copy of the license is available in the repository's [LICENSE](LICENSE) file.
 
-For information about licensing your deployed app, see [License your app](https://developers.arcgis.com/ios/latest/swift/guide/license-your-app.htm).
+For information about licensing your deployed app, see [License your app](https://developers.arcgis.com/ios/license-and-deployment/).
 
 ### 3rd Party Component Licensing
 

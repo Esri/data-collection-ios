@@ -156,7 +156,7 @@ A user may need to collect data in a location where they are disconnected from t
 
 ![Download Map Offline Extent](/docs/images/offline-extent.png)
 
-When taking the web map offline, the app asks the user to specify the area of the web map they want to take offline for storage in the device's documents directory following the offline map creation [on-demand workflow](https://developers.arcgis.com/ios/latest/swift/guide/take-map-offline-on-demand.htm). After the generate offline map job finishes, the app enters offline work mode and loads the offline mobile map package.
+When taking the web map offline, the app asks the user to specify the area of the web map they want to take offline for storage in the device's documents directory following the offline map creation [on-demand workflow](https://developers.arcgis.com/ios/offline-maps-scenes-and-data/). After the generate offline map job finishes, the app enters offline work mode and loads the offline mobile map package.
 
 > If you perform this behavior using *Trees of Portland* you should expect the download job to take 10 minutes or so to complete.
 
@@ -633,7 +633,7 @@ Upon a successful download, the app finishes by moving the offline map from the 
 
 Synchronizing a map is even more straightforward than downloading a map. The app builds an `AGSOfflineMapSyncJob` by constructing an offline map sync task using the offline map and specifying the offline sync parameters sync direction `.bidirectional`.
 
-> A [bi-directional sync](https://developers.arcgis.com/ios/latest/swift/guide/sync-offline-edits.htm#GUID-364B63B9-BAE7-4BE7-A154-5CF3D1AB2996) synchronizes local changes with the web map and changes made to the web map are synchronized with the offline map. Synchronization conflicts are resolved following the rule "last-in wins".
+> A [bi-directional sync](https://developers.arcgis.com/documentation/mapping-apis-and-location-services/offline/offline-maps/working-with-offline-maps/#synchronize) synchronizes local changes with the web map and changes made to the web map are synchronized with the offline map. Synchronization conflicts are resolved following the rule "last-in wins".
 
 ```swift
 /**  
