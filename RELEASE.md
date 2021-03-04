@@ -1,3 +1,17 @@
+# Release 1.2.3
+
+- The 100.10.0 release of the ArcGIS Runtime for iOS is now distributed as a binary framework.  This necessitated the following changes in the Data Collection Xcode project file:
+    - The `ArcGIS.framework` framework has been replaced with `ArcGIS.xcframework`.
+    - The Build Phase which ran the `strip-frameworks.sh` shell script is no longer necessary.
+- Certification for the 100.10 release of the ArcGIS Runtime SDK for iOS.
+- Updates the ArcGIS Runtime Toolkit submodule to the 100.10 version.
+- Increments app and testing deployment targets to iOS 13.0, drops support for iOS 12.0.
+- Introduces pop-up date attribute editing support for the new iOS 14 `UIDatePicker`.
+- Introduces pop-up date attribute editing support for time as well as date.
+- Fixes bug where `SegmentedViewController` does not respond to `segmentedControl`'s `.valueChanged` event.
+- Fixes bug where `MapViewController` does not update current pop-up after edits are performed.
+- On iOS 14, when adding image attachments to features using the user's "Photo Library", the "Selected Photos" privacy option is not yet supported.  The user will need to grant the app permission to use "All Photos".
+
 # Release 1.2.2
 
 - Introduces new technique for managing [app secrets]](./docs#app-configuration).

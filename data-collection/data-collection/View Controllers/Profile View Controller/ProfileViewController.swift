@@ -422,21 +422,11 @@ protocol Dimmable {
 extension Dimmable {
     
     func dim() {
-        if #available(iOS 13.0, *) {
-            dimmableLabel.textColor = .secondaryLabel
-        }
-        else {
-            dimmableLabel.textColor = .gray
-        }
+        dimmableLabel.textColor = .secondaryLabel
     }
     
     func brighten() {
-        if #available(iOS 13.0, *) {
-            dimmableLabel.textColor = .label
-        }
-        else {
-            dimmableLabel.textColor = .black
-        }
+        dimmableLabel.textColor = .label
     }
 }
 
@@ -456,17 +446,10 @@ class WorkModeCell: UITableViewCell, Dimmable {
             icon.tintColor = .contrasting
         }
         else {
-            if #available(iOS 13.0, *) {
-                backgroundColor = .secondarySystemGroupedBackground
-                titleLabel.textColor = .label
-                subtitleLabel.textColor = .secondaryLabel
-                icon.tintColor = .primary
-            } else {
-                backgroundColor = .white
-                titleLabel.textColor = .black
-                subtitleLabel.textColor = .darkGray
-                icon.tintColor = .primary
-            }
+            backgroundColor = .secondarySystemGroupedBackground
+            titleLabel.textColor = .label
+            subtitleLabel.textColor = .secondaryLabel
+            icon.tintColor = .primary
         }
     }
 }
