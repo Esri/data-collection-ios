@@ -244,14 +244,10 @@ class RichPopupViewController: SegmentedViewController {
                 self.updateViewControllerUI(animated: animated)
 
                 if let error = error {
-<<<<<<< HEAD
-                    self.showError(error)
-=======
                     self.editsMade.send(.failure(error))
                 }
                 else {
                     self.editsMade.send(.success(self.popupManager.richPopup))
->>>>>>> v.next
                 }
                 
             }
@@ -354,15 +350,12 @@ class RichPopupViewController: SegmentedViewController {
             self.disableUserInteraction(status: "Deleting Record")
             self.deleteRecord() { (error) in
                 self.enableUserInteraction()
-<<<<<<< HEAD
-=======
                 if let error = error {
                     self.editsMade.send(.failure(error))
                 }
                 else {
                     self.editsMade.send(.success(self.popupManager.richPopup))
                 }
->>>>>>> v.next
                 self.popupManager.conditionallyPerformCustomBehavior { completion?(error) }
             }
         }

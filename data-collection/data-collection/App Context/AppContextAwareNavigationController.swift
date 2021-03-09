@@ -42,30 +42,6 @@ class AppContextAwareNavigationController: UINavigationController {
 
     @objc
     func adjustNavigationBarTintForWorkMode() {
-<<<<<<< HEAD
-        
-        if #available(iOS 13.0, *) {
-            let navBarAppearance = UINavigationBarAppearance()
-            navBarAppearance.configureWithOpaqueBackground()
-            navBarAppearance.titleTextAttributes = [.foregroundColor: UIColor.contrasting]
-            navBarAppearance.largeTitleTextAttributes = [.foregroundColor: UIColor.contrasting]
-            switch appContext.workMode {
-            case .none, .online:
-                navBarAppearance.backgroundColor = .primary
-            case .offline:
-                navBarAppearance.backgroundColor = .offline
-            }
-            navigationBar.standardAppearance = navBarAppearance
-            navigationBar.scrollEdgeAppearance = navBarAppearance
-            navigationBar.compactAppearance = navBarAppearance
-        }
-        else {
-            switch appContext.workMode {
-            case .none, .online(_):
-                navigationBar.barTintColor = .primary
-            case .offline(_):
-                navigationBar.barTintColor = .offline
-            }
         let navBarAppearance = UINavigationBarAppearance()
         navBarAppearance.configureWithOpaqueBackground()
         navBarAppearance.titleTextAttributes = [.foregroundColor: UIColor.contrasting]

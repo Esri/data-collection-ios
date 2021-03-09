@@ -121,15 +121,6 @@ class MapViewController: UIViewController {
                 
         // Adjust location display for app location authorization status. If location authorized is undetermined, this will prompt the user for authorization.
         adjustForLocationAuthorizationStatus()
-<<<<<<< HEAD
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
-//        refreshCurrentPopup()
-=======
->>>>>>> v.next
     }
         
     // MARK:- Extras
@@ -168,14 +159,10 @@ class MapViewController: UIViewController {
         
         assert(currentPopupManager != nil, "This function should not be reached if a popup is not currently selected.")
         
-<<<<<<< HEAD
-        guard let manager = currentPopupManager, let relationships = manager.richPopup.relationships, let relationship = relationships.oneToMany.first else {
-=======
         guard let manager = currentPopupManager,
               let relationships = manager.richPopup.relationships,
               let relationship = relationships.oneToMany.first
         else {
->>>>>>> v.next
             showError(UnknownError())
             return
         }
@@ -282,7 +269,8 @@ class MapViewController: UIViewController {
                 case .failure(let error):
                     self?.showError(error)
                 case .success(_):
-                    self?.refreshCurrentPopup()
+                    print("need self?.refreshCurrentPopup()")
+//                    self?.refreshCurrentPopup()
                 }
             }
         }
