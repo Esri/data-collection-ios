@@ -95,3 +95,23 @@ extension RichPopupAttachmentsViewController /* UITableViewDataSource */ {
         }
     }
 }
+
+// MARK: - Attachment Type
+
+private extension AGSPopupAttachmentType {
+    
+    var icon: UIImage {
+        switch self {
+        case .image:
+            return #imageLiteral(resourceName: "AttachmentImage")
+        case .video:
+            return #imageLiteral(resourceName: "AttachmentVideo")
+        case .document:
+            return #imageLiteral(resourceName: "AttachmentDocument")
+        case .other:
+            return #imageLiteral(resourceName: "AttachmentOther")
+        @unknown default:
+            fatalError("Unsupported case \(self).")
+        }
+    }
+}

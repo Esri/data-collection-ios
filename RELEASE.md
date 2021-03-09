@@ -9,6 +9,8 @@
 - Removes `NetworkReachabilityManager` as a first class state mechanism allowing app to determine reachability with every network request, removes `Alamofire` swift package.
 - Reformats `AppConfiguration` to be more clear.
 - Introduces `GlobalAlertQueue`, a utility for enqueueing and presenting alerts in a stand-alone alert window (`UIWindow`). This change improves the reliability of presenting alerts from any app component - context, view, or otherwise.
+- Introduces nuanced offline map icons in Profile view.
+- Dissolves `AppError` protocol, reconsiders errors instead as members of types.
 
 # Release 1.2.3
 
@@ -17,6 +19,12 @@
     - The Build Phase which ran the `strip-frameworks.sh` shell script is no longer necessary.
 - Certification for the 100.10 release of the ArcGIS Runtime SDK for iOS.
 - Updates the ArcGIS Runtime Toolkit submodule to the 100.10 version.
+- Increments app and testing deployment targets to iOS 13.0, drops support for iOS 12.0.
+- Introduces pop-up date attribute editing support for the new iOS 14 `UIDatePicker`.
+- Introduces pop-up date attribute editing support for time as well as date.
+- Fixes bug where `SegmentedViewController` does not respond to `segmentedControl`'s `.valueChanged` event.
+- Fixes bug where `MapViewController` does not update current pop-up after edits are performed.
+- On iOS 14, when adding image attachments to features using the user's "Photo Library", the "Selected Photos" privacy option is not yet supported.  The user will need to grant the app permission to use "All Photos".
 
 # Release 1.2.2
 

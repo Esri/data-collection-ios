@@ -58,12 +58,7 @@ class OneToManyRelationship: Relationship {
     /// Sort the one-to-many records in descending order.
     ///
     private func sortRelatedRecords() {
-        do {
-            try relatedPopups.sortPopupsByFirstField(.descending)
-        }
-        catch {
-            print("[Error: Sorting AGSPopup]", error.localizedDescription)
-        }
+        relatedPopups.sortPopupsByFirstField(.descending)
     }
 }
 
@@ -94,6 +89,65 @@ extension OneToManyRelationship {
         // Display popup at index
         else {
             return relatedPopups[rowIndex]
+        }
+    }
+}
+
+// MARK: - Popup List Comparison
+
+private extension AGSSortOrder {
+    func makeComparator<T: Comparable>() -> (T, T) -> Bool {
+        switch self {
+        case .ascending:
+            return (<)
+        case .descending:
+            return (>)
+        @unknown default:
+            fatalError("Unsupported case \(self).")
+        }
+    }
+}
+
+private extension Array where Element == AGSPopup {
+    mutating func sortPopupsByFirstField(_ order: AGSSortOrder = .ascending) {
+        sort { lhs, rhs in
+            return autoreleasepool { () -> Bool in
+                guard let lhsField = lhs.popupDefinition.fields.first, let rhsField = rhs.popupDefinition.fields.first else {
+                    return false
+                }
+                
+                let lhsManager = AGSPopupManager(popup: lhs)
+                let rhsManager = AGSPopupManager(popup: rhs)
+                
+                guard lhsManager.fieldType(for: lhsField) == rhsManager.fieldType(for: rhsField) else {
+                    fatalError("The first field for both pop-ups must be of the same field type.")
+                }
+                
+                guard let rhsValue = rhsManager.value(for: rhsField) else {
+                    return true
+                }
+                
+                guard let lhsValue = lhsManager.value(for: lhsField) else {
+                    return false
+                }
+
+                switch lhsManager.fieldType(for: lhsField) {
+                case .int16:
+                    return order.makeComparator()((lhsValue as! Int16), (rhsValue as! Int16))
+                case .int32:
+                    return order.makeComparator()((lhsValue as! Int32), (rhsValue as! Int32))
+                case .float:
+                    return order.makeComparator()((lhsValue as! Float), (rhsValue as! Float))
+                case .double:
+                    return order.makeComparator()((lhsValue as! Double), (rhsValue as! Double))
+                case .text:
+                    return order.makeComparator()((lhsValue as! String), (rhsValue as! String))
+                case .date:
+                    return order.makeComparator()((lhsValue as! Date), (rhsValue as! Date))
+                default:
+                    fatalError("A popup you are comparing contains an unsupported value type.")
+                }
+            }
         }
     }
 }

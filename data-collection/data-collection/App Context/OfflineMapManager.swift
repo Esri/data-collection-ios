@@ -150,11 +150,11 @@ class OfflineMapManager {
     // MARK: Offline Map Job Manager
     
     struct MissingOfflineMapError: LocalizedError {
-        let localizedDescription = "Map is not downloaded."
+        var errorDescription: String? { "Map is not downloaded." }
     }
     
     struct ExistingOfflineMapError: LocalizedError {
-        let localizedDescription = "A map is already downloaded."
+        var errorDescription: String? { "A map is already downloaded." }
     }
     
     private lazy var jobManager: OfflineMapJobManager = {
@@ -390,3 +390,16 @@ fileprivate extension URL {
 protocol JobResult {}
 extension AGSGenerateOfflineMapResult: JobResult {}
 extension AGSOfflineMapSyncResult: JobResult {}
+
+private extension AGSMap {
+    
+    /// Return **all** offline tables contained in a map, considering both feature layers and feature tables.
+    ///
+    /// This can be used to compute if there have been changes to the offline map since the date it was last synchronized.
+    
+    var allOfflineTables: [AGSGeodatabaseFeatureTable] {
+
+        return tables.compactMap { return ($0 as? AGSGeodatabaseFeatureTable) } +
+            operationalLayers.compactMap { return (($0 as? AGSFeatureLayer)?.featureTable as? AGSGeodatabaseFeatureTable) }
+    }
+}

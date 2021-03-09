@@ -23,31 +23,23 @@ extension RichPopupViewController: RichPopupDetailsViewControllerDelegate {
         disableUserInteraction(status: "Loading Records")
         
         // Query all related popup's for the selected many-to-one relationship
-        relationship.queryAndSortAllRelatedPopups { [weak self] (error, popups) in
-            
+        relationship.queryAndSortAllRelatedPopups { [weak self] (result) in
             guard let self = self else { return }
-            
-            if let error = error {
+            switch result {
+            case .success(let popups):
+                // Cache the results.
+                EphemeralCache.shared.setObject(
+                    (popups, relationship.relatedPopup),
+                    forKey: "RichPopupSelectRelatedRecord.EphemeralCacheKey"
+                )
+                // Segue to view controller that allows for a new related record to be selected.
+                self.performSegue(withIdentifier: "RichPopupSelectRelatedRecord", sender: self)
+                // Re-enabled user interaction.
+                self.enableUserInteraction()
+            case .failure(let error):
+                // Show error
                 self.showError(error)
-                return
             }
-            
-            guard let popups = popups else {
-                self.showError(NSError.unknown)
-                return
-            }
-            
-            // Cache the results.
-            EphemeralCache.shared.setObject(
-                (popups, relationship.relatedPopup),
-                forKey: "RichPopupSelectRelatedRecord.EphemeralCacheKey"
-            )
-            
-            // Segue to view controller that allows for a new related record to be selected.
-            self.performSegue(withIdentifier: "RichPopupSelectRelatedRecord", sender: self)
-            
-            // Re-enabled user interaction.
-            self.enableUserInteraction()
         }
     }
     

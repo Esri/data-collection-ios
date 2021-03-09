@@ -15,26 +15,15 @@
 import Foundation
 import ArcGIS
 
-/// Facilitates logging `AGSJobStatus` to console.
-///
-/// - Note: Calling `description` directly is discouraged.
-
-extension AGSJobStatus: CustomStringConvertible {
+extension AGSRelationshipInfo {
     
-    public var description: String {
-        switch self {
-        case .notStarted:
-            return "Not Started"
-        case .started:
-            return "Started"
-        case .paused:
-            return "Paused"
-        case .succeeded:
-            return "Succeeded"
-        case .failed:
-            return "Failed"
-        @unknown default:
-            fatalError("Unsupported case \(self).")
-        }
+    /// Is this a many-to-one relationship?
+    var isManyToOne: Bool {
+        return cardinality == .oneToMany && role == .destination
+    }
+    
+    /// Is this a one-to-many relationship?
+    var isOneToMany: Bool {
+        return cardinality == .oneToMany && role == .origin
     }
 }

@@ -18,17 +18,17 @@ import Foundation
 /// and adjusts the bar's tint color accordingly.
 ///
 class AppContextAwareNavigationController: UINavigationController {
-        
+
     override init(navigationBarClass: AnyClass?, toolbarClass: AnyClass?) {
         super.init(navigationBarClass: navigationBarClass, toolbarClass: toolbarClass)
         sharedInit()
     }
-    
+
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         sharedInit()
     }
-    
+
     func sharedInit() {
         NotificationCenter.default.addObserver(
             self,
@@ -36,12 +36,13 @@ class AppContextAwareNavigationController: UINavigationController {
             name: .workModeDidChange,
             object: nil
         )
-        
+
         adjustNavigationBarTintForWorkMode()
     }
-    
+
     @objc
     func adjustNavigationBarTintForWorkMode() {
+<<<<<<< HEAD
         
         if #available(iOS 13.0, *) {
             let navBarAppearance = UINavigationBarAppearance()
@@ -65,8 +66,20 @@ class AppContextAwareNavigationController: UINavigationController {
             case .offline(_):
                 navigationBar.barTintColor = .offline
             }
+        let navBarAppearance = UINavigationBarAppearance()
+        navBarAppearance.configureWithOpaqueBackground()
+        navBarAppearance.titleTextAttributes = [.foregroundColor: UIColor.contrasting]
+        navBarAppearance.largeTitleTextAttributes = [.foregroundColor: UIColor.contrasting]
+        switch appContext.workMode {
+        case .none, .online:
+            navBarAppearance.backgroundColor = .primary
+        case .offline:
+            navBarAppearance.backgroundColor = .offline
         }
-        
+        navigationBar.standardAppearance = navBarAppearance
+        navigationBar.scrollEdgeAppearance = navBarAppearance
+        navigationBar.compactAppearance = navBarAppearance
+
         // Hiding then un-hiding the navigation bar appears to force a redraw.
         // This fixes an issue with iOS 13 where the background color doesn't update.
         isNavigationBarHidden = true

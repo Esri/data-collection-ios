@@ -4,6 +4,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17125"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17126"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -88,13 +89,13 @@
                                             <rect key="frame" x="16" y="19" width="343" height="56"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="1000" text="Date Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Zzi-uL-6cL">
-                                                    <rect key="frame" x="0.0" y="0.0" width="343" height="21"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="343" height="17"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleFootnote"/>
                                                     <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="1000" text="Date Value" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xeO-Rr-RCV" customClass="StyledFirstResponderLabel" customModule="data_collection" customModuleProvider="target">
-                                                    <rect key="frame" x="0.0" y="27" width="343" height="29"/>
+                                                <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="1000" text="Date Value" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xeO-Rr-RCV" customClass="StyledFirstResponderLabel" customModule="data_collection" customModuleProvider="target">
+                                                    <rect key="frame" x="0.0" y="23" width="343" height="33"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
@@ -114,8 +115,58 @@
                                     <outlet property="attributeValueLabel" destination="xeO-Rr-RCV" id="eOu-Oc-lqz"/>
                                 </connections>
                             </tableViewCell>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="PopupAttributeDatePickerCell" rowHeight="94" id="H7q-qI-yLx" customClass="PopupAttributeDatePickerCell" customModule="data_collection" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="243.33333206176758" width="375" height="94"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="H7q-qI-yLx" id="uXr-h6-QOf">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="94"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" spacing="6" translatesAutoresizingMaskIntoConstraints="NO" id="nbO-0h-K5e">
+                                            <rect key="frame" x="16" y="19" width="343" height="56"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="1000" text="Date Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ABt-tD-yYa">
+                                                    <rect key="frame" x="0.0" y="0.0" width="343" height="15.666666666666666"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleFootnote"/>
+                                                    <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="V8b-qH-tw3">
+                                                    <rect key="frame" x="0.0" y="21.666666666666661" width="343" height="34.333333333333343"/>
+                                                    <subviews>
+                                                        <datePicker contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="30" translatesAutoresizingMaskIntoConstraints="NO" id="F05-ep-j1G">
+                                                            <rect key="frame" x="0.0" y="0.0" width="293" height="34.333333333333336"/>
+                                                            <connections>
+                                                                <action selector="pickerValueDidChange:" destination="H7q-qI-yLx" eventType="valueChanged" id="nK6-9H-7AU"/>
+                                                            </connections>
+                                                        </datePicker>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsLetterSpacingToFitWidth="YES" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TIn-Qv-oPh">
+                                                            <rect key="frame" x="293" y="0.0" width="50" height="34.333333333333336"/>
+                                                            <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                                            <nil key="textColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                    </subviews>
+                                                </stackView>
+                                            </subviews>
+                                        </stackView>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="nbO-0h-K5e" firstAttribute="leading" secondItem="uXr-h6-QOf" secondAttribute="leadingMargin" id="2vp-SV-IKi"/>
+                                        <constraint firstItem="nbO-0h-K5e" firstAttribute="bottom" secondItem="uXr-h6-QOf" secondAttribute="bottomMargin" priority="999" constant="-8" id="6zP-cG-7dl"/>
+                                        <constraint firstItem="nbO-0h-K5e" firstAttribute="top" secondItem="uXr-h6-QOf" secondAttribute="topMargin" priority="999" constant="8" id="edr-vH-kwk"/>
+                                        <constraint firstItem="nbO-0h-K5e" firstAttribute="trailing" secondItem="uXr-h6-QOf" secondAttribute="trailingMargin" id="gQH-Ng-Oi2"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="attributeTitleLabel" destination="ABt-tD-yYa" id="K0z-ea-hsG"/>
+                                    <outlet property="attributeValueLabel" destination="TIn-Qv-oPh" id="zmT-7C-Y3O"/>
+                                    <outlet property="datePicker" destination="F05-ep-j1G" id="PuI-Bt-rhh"/>
+                                </connections>
+                            </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="PopupAttributeDomainCell" rowHeight="94" id="cuS-GZ-9oX" customClass="PopupAttributeDomainCell" customModule="data_collection" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="243.33333206176758" width="375" height="94"/>
+                                <rect key="frame" x="0.0" y="337.33333206176758" width="375" height="94"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="cuS-GZ-9oX" id="wAK-Ke-6Dk">
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="94"/>
@@ -125,13 +176,13 @@
                                             <rect key="frame" x="16" y="19" width="343" height="56"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="1000" text="Domain Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nWc-dP-hOS">
-                                                    <rect key="frame" x="0.0" y="0.0" width="343" height="21"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="343" height="17"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleFootnote"/>
                                                     <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="1000" text="Domain Value" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rvg-2r-SkT" customClass="StyledFirstResponderLabel" customModule="data_collection" customModuleProvider="target">
-                                                    <rect key="frame" x="0.0" y="27" width="343" height="29"/>
+                                                    <rect key="frame" x="0.0" y="23" width="343" height="33"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
@@ -153,6 +204,7 @@
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="PopupAttributeTextViewCell" rowHeight="159.99999999999997" id="flH-9F-Kjw" customClass="PopupAttributeTextViewCell" customModule="data_collection" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="337.33333206176758" width="375" height="160"/>
+                                <rect key="frame" x="0.0" y="431.33333206176758" width="375" height="160"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="flH-9F-Kjw" id="5s8-Pn-vAf">
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="160"/>
@@ -193,6 +245,7 @@
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="PopupAttributeReadonlyCell" rowHeight="94" id="xjX-04-SCJ" customClass="PopupAttributeReadonlyCell" customModule="data_collection" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="497.33333206176758" width="375" height="94"/>
+                                <rect key="frame" x="0.0" y="591.33333206176758" width="375" height="94"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="xjX-04-SCJ" id="RWS-km-lBD">
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="94"/>
@@ -230,6 +283,7 @@
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="PopupNewOneToManyRecordCell" rowHeight="54" id="Ul5-hw-ZyM" customClass="PopupNewRelatedRecordCell" customModule="data_collection" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="591.33333206176758" width="375" height="54"/>
+                                <rect key="frame" x="0.0" y="685.33333206176758" width="375" height="54"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Ul5-hw-ZyM" id="Lu5-Jr-anz">
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="54"/>
@@ -266,6 +320,7 @@
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="PopupRelatedRecordCell" editingAccessoryType="disclosureIndicator" rowHeight="79" id="cIN-Sy-cNx" customClass="PopupRelatedRecordCell" customModule="data_collection" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="645.33333206176758" width="375" height="79"/>
+                                <rect key="frame" x="0.0" y="739.33333206176758" width="375" height="79"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="cIN-Sy-cNx" id="ryV-pL-yyY">
                                     <rect key="frame" x="0.0" y="0.0" width="347.66666666666669" height="79"/>
@@ -636,6 +691,10 @@
         </designable>
         <designable name="xeO-Rr-RCV">
             <size key="intrinsicContentSize" width="82" height="20.333333333333332"/>
+            <size key="intrinsicContentSize" width="118.33333333333333" height="30.333333333333332"/>
+        </designable>
+        <designable name="xeO-Rr-RCV">
+            <size key="intrinsicContentSize" width="96" height="30.333333333333332"/>
         </designable>
     </designables>
     <resources>

@@ -44,7 +44,7 @@ extension MapViewController {
     // MARK : New Feature
     
     struct MapNoElegibleLayersError: LocalizedError {
-        let localizedDescription = "No feature layers of this map can be added to."
+        var errorDescription: String? { "No feature layers of this map can be added to." }
     }
     
     func userRequestsAddNewFeature(_ barButtonItem: UIBarButtonItem?) {
@@ -87,7 +87,7 @@ extension MapViewController {
     
     struct CannotCreateNewFeatureError: LocalizedError {
         let layer: AGSFeatureLayer
-        var localizedDescription: String {
+        var errorDescription: String? {
             String(format: "Cannot create new feature for layer, %@", layer.name)
         }
     }
@@ -142,7 +142,7 @@ extension MapViewController {
     }
     
     struct UnknownError: LocalizedError {
-        let localizedDescription = "An unknown error occured."
+        var errorDescription: String? { "An unknown error occured." }
     }
     
     private func prepareNewFeatureForEdit() {
@@ -237,5 +237,47 @@ extension MapViewController {
         catch {
             showError(error)
         }
+    }
+}
+
+// MARK: Map View Center Point
+
+private extension AGSMapView {
+    
+    /// An `AGSPoint` representing the center point of the `AGSMapView`'s frame, in the `AGSMapView`'s spatial reference.
+    var centerAGSPoint: AGSPoint {
+        return screen(toLocation: bounds.center)
+    }
+}
+
+// MARK: Extent from CGRect
+
+private extension AGSMapView {
+    
+    /// Convert a `CGRect` to an `AGSPolygon` in relation to the `AGSMapView`'s bounds.
+    ///
+    /// - Parameter rect: The rect in point space that is to be converted to a spatial rectangular polygon.
+    ///
+    /// - Returns: The newly created geometry.
+    ///
+    /// - Throws: An error if the `fromRect` parameter cannot be contained by the map view's bounds.
+    
+    func convertExtent(fromRect rect: CGRect) throws -> AGSGeometry {
+        
+        guard bounds.contains(rect) else {
+            fatalError("The CGRect \(rect) provided is outside of the map view's bounds \(bounds).")
+        }
+        
+        let nw = rect.origin
+        let ne = CGPoint(x: rect.maxX, y: rect.minY)
+        let se = CGPoint(x: rect.maxX, y: rect.maxY)
+        let sw = CGPoint(x: rect.minX, y: rect.maxY)
+
+        let agsNW = screen(toLocation: nw)
+        let agsNE = screen(toLocation: ne)
+        let agsSE = screen(toLocation: se)
+        let agsSW = screen(toLocation: sw)
+
+        return AGSPolygon(points: [agsNW, agsNE, agsSE, agsSW])
     }
 }

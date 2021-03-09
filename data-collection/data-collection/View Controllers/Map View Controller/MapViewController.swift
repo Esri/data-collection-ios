@@ -15,6 +15,8 @@
 import UIKit
 import ArcGIS
 import ArcGISToolkit
+import Combine
+
 
 class MapViewController: UIViewController {
     
@@ -119,12 +121,15 @@ class MapViewController: UIViewController {
                 
         // Adjust location display for app location authorization status. If location authorized is undetermined, this will prompt the user for authorization.
         adjustForLocationAuthorizationStatus()
+<<<<<<< HEAD
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
 //        refreshCurrentPopup()
+=======
+>>>>>>> v.next
     }
         
     // MARK:- Extras
@@ -163,7 +168,14 @@ class MapViewController: UIViewController {
         
         assert(currentPopupManager != nil, "This function should not be reached if a popup is not currently selected.")
         
+<<<<<<< HEAD
         guard let manager = currentPopupManager, let relationships = manager.richPopup.relationships, let relationship = relationships.oneToMany.first else {
+=======
+        guard let manager = currentPopupManager,
+              let relationships = manager.richPopup.relationships,
+              let relationship = relationships.oneToMany.first
+        else {
+>>>>>>> v.next
             showError(UnknownError())
             return
         }
@@ -229,6 +241,10 @@ class MapViewController: UIViewController {
         currentPopupManager = nil
     }
     
+    private var popupEditing: Cancellable?
+    
+    // MARK: Segues
+    
     override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
 
         if identifier == "modallyPresentRelatedRecordsPopupViewController" {
@@ -258,6 +274,16 @@ class MapViewController: UIViewController {
             }
             else {
                 assertionFailure("A rich popup view controller should not present if any of the above scenarios are not met.")
+            }
+            
+            popupEditing?.cancel()
+            popupEditing = destination.editsMade.sink { [weak self] (result) in
+                switch result {
+                case .failure(let error):
+                    self?.showError(error)
+                case .success(_):
+                    self?.refreshCurrentPopup()
+                }
             }
         }
         else if let destination = segue.destination as? MaskViewController {
