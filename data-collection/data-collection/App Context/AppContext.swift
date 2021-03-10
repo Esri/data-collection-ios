@@ -38,7 +38,7 @@ class AppContext: NSObject {
             workMode = .online(nil)
         }
         
-        addressLocator = AddressLocator(default: workMode)
+        addressLocator = AddressLocator(default: workMode, credential: nil)
         
         super.init()
         
@@ -99,7 +99,7 @@ class AppContext: NSObject {
         didSet {
             workMode.storeDefaultWorkMode()
             
-            addressLocator.prepareLocator(for: workMode)
+            addressLocator.prepareLocator(for: workMode, credential: portalSession.portal?.credential)
             
             NotificationCenter.default.post(workModeDidChange)
             
@@ -205,6 +205,8 @@ extension AppContext: PortalSessionManagerDelegate {
     
     func portalSessionManager(manager: PortalSessionManager, didChangeStatus status: PortalSessionManager.Status) {
 
+        addressLocator.prepareLocator(for: workMode, credential: manager.portal?.credential)
+        
         NotificationCenter.default.post(portalDidChange)
         
         guard case .online = workMode else { return }
