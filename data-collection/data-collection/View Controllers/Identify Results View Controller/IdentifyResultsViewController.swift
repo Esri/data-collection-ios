@@ -109,7 +109,7 @@ class IdentifyResultsViewController: UITableViewController, FloatingPanelEmbedda
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
-    func prepareRichPopupViewController(_ richPopups: RichPopup) -> UIViewController? {
+    func prepareRichPopupViewController(_ richPopup: RichPopup) -> UIViewController? {
         popupChangedHandler?(richPopup)
         
         let bundle = Bundle(for: RichPopupViewController.self)
