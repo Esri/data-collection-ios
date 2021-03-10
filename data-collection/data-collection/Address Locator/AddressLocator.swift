@@ -19,23 +19,38 @@ import ArcGIS
 class AddressLocator {
     
     // Online locator using the world geocoder service.
-    private lazy var onlineLocator = AGSLocatorTask(url: OnlineGeocoderConfig.url)
-    
-    // Offline locator using the side loaded 'AddressLocator'.
-    private lazy var offlineLocator = AGSLocatorTask(name: OfflineGeocoderConfig.name)
-    
-    init(default workMode: AppContext.WorkMode) {
-        prepareLocator(for: workMode)
+    private var onlineLocator: AGSLocatorTask {
+        let locator = AGSLocatorTask(url: OnlineGeocoderConfig.url)
+        let silentRequestConfiguration: AGSRequestConfiguration
+        if let configuration = locator.requestConfiguration {
+            silentRequestConfiguration = configuration.copy() as! AGSRequestConfiguration
+        }
+        else {
+            silentRequestConfiguration = AGSRequestConfiguration.global().copy() as! AGSRequestConfiguration
+        }
+        silentRequestConfiguration.shouldIssueAuthenticationChallenge = { _ in false }
+        
+        locator.requestConfiguration = silentRequestConfiguration
+        return locator
     }
     
-    func prepareLocator(for workMode: AppContext.WorkMode) {
+    // Offline locator using the side loaded 'AddressLocator'.
+    private var offlineLocator: AGSLocatorTask {
+        AGSLocatorTask(name: OfflineGeocoderConfig.name)
+    }
+    
+    init(default workMode: AppContext.WorkMode, credential: AGSCredential?) {
+        prepareLocator(for: workMode, credential: credential)
+    }
+    
+    func prepareLocator(for workMode: AppContext.WorkMode, credential: AGSCredential?) {
         switch workMode {
         case .offline:
-            offlineLocator.load(completion: nil)
             currentLocator = offlineLocator
         case .online:
-            onlineLocator.load(completion: nil)
-            currentLocator = onlineLocator
+            let locator = onlineLocator
+            locator.credential = credential
+            currentLocator = locator
         case .none:
             currentLocator = nil
         }
