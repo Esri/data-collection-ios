@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097.3" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="5JK-vH-82G">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="5JK-vH-82G">
     <device id="retina5_9" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -34,16 +34,16 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" spacing="6" translatesAutoresizingMaskIntoConstraints="NO" id="F31-4h-0fs">
-                                <rect key="frame" x="110.66666666666667" y="376.33333333333331" width="153.66666666666663" height="59.333333333333314"/>
+                                <rect key="frame" x="111" y="376.33333333333331" width="153" height="59.333333333333314"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Could not load map." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rjg-aP-1qN">
-                                        <rect key="frame" x="0.0" y="0.0" width="153.66666666666666" height="20.333333333333332"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="153" height="20.333333333333332"/>
                                         <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="w1m-XM-YEC">
-                                        <rect key="frame" x="0.0" y="26.333333333333371" width="153.66666666666666" height="33"/>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="w1m-XM-YEC">
+                                        <rect key="frame" x="0.0" y="26.333333333333371" width="153" height="33"/>
                                         <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                         <state key="normal" title="Reload Map"/>
                                         <connections>
@@ -95,13 +95,13 @@
                                                 <rect key="frame" x="16" y="44.333333333333371" width="311" height="18"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="1000" text="Related Records Sub" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsLetterSpacingToFitWidth="YES" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eWg-bj-9Qn">
-                                                        <rect key="frame" x="0.0" y="0.0" width="153.66666666666666" height="18"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="152.33333333333334" height="18"/>
                                                         <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
                                                         <nil key="textColor"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="right" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="1000" text="(n) Related Records" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsLetterSpacingToFitWidth="YES" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ahu-50-KaZ">
-                                                        <rect key="frame" x="161.66666666666663" y="0.0" width="149.33333333333337" height="18"/>
+                                                        <rect key="frame" x="160.33333333333337" y="0.0" width="150.66666666666663" height="18"/>
                                                         <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
                                                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <nil key="highlightedColor"/>
@@ -190,7 +190,7 @@
                                         <rect key="frame" x="40" y="0.0" width="279" height="40"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalCompressionResistancePriority="1000" text="Choose location" textAlignment="center" lineBreakMode="middleTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" adjustsLetterSpacingToFitWidth="YES" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="mkq-dc-atb">
-                                                <rect key="frame" x="77.666666666666657" y="0.0" width="123.66666666666666" height="23.333333333333332"/>
+                                                <rect key="frame" x="78" y="0.0" width="123" height="23.333333333333332"/>
                                                 <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                 <color key="textColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <nil key="highlightedColor"/>
@@ -218,7 +218,7 @@
                                     </button>
                                 </subviews>
                             </stackView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bCz-JE-wcZ" customClass="CompassView" customModule="data_collection" customModuleProvider="target">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bCz-JE-wcZ" customClass="CompassView" customModule="data_collection" customModuleProvider="target">
                                 <rect key="frame" x="323" y="160" width="36" height="36"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="36" id="Fu2-gL-MWL"/>
@@ -233,6 +233,7 @@
                                 </userDefinedRuntimeAttributes>
                             </button>
                         </subviews>
+                        <viewLayoutGuide key="safeArea" id="5HZ-r9-azH"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="673-08-WQO" firstAttribute="trailing" secondItem="Iie-Za-UAs" secondAttribute="trailing" id="0Xd-84-vG5"/>
@@ -268,7 +269,6 @@
                             <constraint firstItem="Axc-7B-KP8" firstAttribute="leading" secondItem="pcE-3a-4ld" secondAttribute="leadingMargin" id="pPr-nH-GWw"/>
                             <constraint firstItem="JPL-Oj-pCs" firstAttribute="centerY" secondItem="Iie-Za-UAs" secondAttribute="centerY" id="vUm-ac-clo"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="5HZ-r9-azH"/>
                     </view>
                     <navigationItem key="navigationItem" title="Data Collection" id="kuP-yj-hzx">
                         <barButtonItem key="leftBarButtonItem" title="Show Drawer" image="UserLoginIcon-Small" width="44" id="qq2-IG-EgW">
@@ -312,7 +312,6 @@
                         <outlet property="selectViewSubheaderLabel" destination="iVC-yi-7h1" id="SkI-s5-aSl"/>
                         <outlet property="selectViewTopConstraint" destination="VKC-6t-gAW" id="dsO-Nf-Dg2"/>
                         <outlet property="slideNotificationView" destination="nd8-Es-e3p" id="djf-cX-Vrh"/>
-                        <outlet property="smallPopupView" destination="wWn-Jn-iZF" id="h9y-5A-MHf"/>
                         <outlet property="zoomButton" destination="aGZ-L7-ycY" id="43z-OO-ozw"/>
                         <segue destination="ked-vh-5W6" kind="presentation" identifier="modallyPresentRelatedRecordsPopupViewController" id="dgV-J0-b7h"/>
                         <segue destination="s1y-be-Dp1" kind="presentation" identifier="presentJobStatusViewController" modalPresentationStyle="currentContext" modalTransitionStyle="crossDissolve" id="OGR-lT-ZVT"/>
@@ -335,6 +334,7 @@
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </view>
                         </subviews>
+                        <viewLayoutGuide key="safeArea" id="5ol-99-Kov"/>
                         <color key="backgroundColor" white="0.33000000000000002" alpha="0.90000000000000002" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="DZZ-rh-s55" firstAttribute="leading" secondItem="5ol-99-Kov" secondAttribute="leading" constant="16" id="SGt-gw-fP8"/>
@@ -342,7 +342,6 @@
                             <constraint firstItem="DZZ-rh-s55" firstAttribute="top" secondItem="5ol-99-Kov" secondAttribute="top" constant="62" id="f0r-kJ-j0L"/>
                             <constraint firstItem="DZZ-rh-s55" firstAttribute="bottom" secondItem="5ol-99-Kov" secondAttribute="bottom" constant="-46" id="yen-XX-s66"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="5ol-99-Kov"/>
                     </view>
                     <connections>
                         <outlet property="maskView" destination="DZZ-rh-s55" id="q5i-ib-J6X"/>

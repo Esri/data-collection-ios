@@ -23,9 +23,20 @@ extension MapViewController {
                 guard let self = self else { return }
                 // If we're showing a floating panel...
                 if visible {
+                    if self.identifyResultsViewController == nil {
+                        let bundle = Bundle(for: IdentifyResultsViewController.self)
+                        let storyboard = UIStoryboard(name: "IdentifyResultsViewController", bundle: bundle)
+                        
+                        // create the legend VC from the storyboard
+                        let popupVC = storyboard.instantiateInitialViewController() as? AppContextAwareNavigationController
+                        self.identifyResultsViewController = popupVC?.viewControllers.first as? IdentifyResultsViewController
+                    }
+                    
+                    guard let identifyResultsVC = self.identifyResultsViewController else { return }
+                    
                     // Set the selected popups on the identify results view controller.
-                    self.identifyResultsViewController.selectedPopups = self.selectedPopups
-                    self.identifyResultsViewController.popupChangedHandler = { [weak self] (richPopup: RichPopup?) in
+                    identifyResultsVC.selectedPopups = self.selectedPopups
+                    identifyResultsVC.popupChangedHandler = { [weak self] (richPopup: RichPopup?) in
                         // Use the geometry engine to determine the nearest pop-up to the touch point.
                         if let popup = richPopup {
                             self?.setCurrentPopup(popup: popup)
@@ -34,13 +45,13 @@ extension MapViewController {
                             self?.clearCurrentPopup()
                         }
                     }
-                    let floatingPanelItem = self.identifyResultsViewController.floatingPanelItem
+                    let floatingPanelItem = identifyResultsVC.floatingPanelItem
                     floatingPanelItem.title = "Identify Results"
                     
                     let selected = self.selectedPopups.count
                     floatingPanelItem.subtitle = String("\(selected) Feature\(selected > 1 ? "s" : "")")
                     floatingPanelItem.image = UIImage(named: "feature-details")
-                    self.presentInFloatingPanel(self.identifyResultsViewController)
+                    self.presentInFloatingPanel(identifyResultsVC)
                     self.floatingPanelController?.delegate = self
                 }
                 else {

@@ -97,12 +97,12 @@ class IdentifyResultsViewController: UITableViewController, FloatingPanelEmbedda
         //                self.clearCurrentPopup()
         //            }
         richPopup = selectedPopups[indexPath.row]
-//        popupChangedHandler?(richPopup)
-//        performSegue(withIdentifier: "showRichPopup", sender: nil)
-        if let popup = richPopup, let vc = prepareRichPopupViewController(popup) {
-            print("pushing popupvc")
-            navigationController?.pushViewController(vc, animated: true)
-        }
+        popupChangedHandler?(richPopup)
+        performSegue(withIdentifier: "showRichPopup", sender: nil)
+//        if let popup = richPopup, let vc = prepareRichPopupViewController(popup) {
+//            print("pushing popupvc")
+//            navigationController?.pushViewController(vc, animated: true)
+//        }
     }
 
     // MARK: - Navigation
