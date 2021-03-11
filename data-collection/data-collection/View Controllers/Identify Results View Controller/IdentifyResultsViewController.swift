@@ -87,23 +87,23 @@ class IdentifyResultsViewController: UITableViewController, FloatingPanelEmbedda
     }
     
     var richPopup: RichPopup?
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        //            // Use the geometry engine to determine the nearest pop-up to the touch point.
-        //            if let nearest = identifyResult.popups.popupNearestTo(mapPoint: mapPoint) {
-        //                let richPopup = RichPopup(popup: nearest)
-        //                self.setCurrentPopup(popup: richPopup)
-        //            }
-        //            else {
-        //                self.clearCurrentPopup()
-        //            }
-        richPopup = selectedPopups[indexPath.row]
-        popupChangedHandler?(richPopup)
-        performSegue(withIdentifier: "showRichPopup", sender: nil)
-//        if let popup = richPopup, let vc = prepareRichPopupViewController(popup) {
-//            print("pushing popupvc")
-//            navigationController?.pushViewController(vc, animated: true)
-//        }
-    }
+//    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+//        //            // Use the geometry engine to determine the nearest pop-up to the touch point.
+//        //            if let nearest = identifyResult.popups.popupNearestTo(mapPoint: mapPoint) {
+//        //                let richPopup = RichPopup(popup: nearest)
+//        //                self.setCurrentPopup(popup: richPopup)
+//        //            }
+//        //            else {
+//        //                self.clearCurrentPopup()
+//        //            }
+//        richPopup = selectedPopups[indexPath.row]
+//        popupChangedHandler?(richPopup)
+//        performSegue(withIdentifier: "showRichPopup", sender: nil)
+////        if let popup = richPopup, let vc = prepareRichPopupViewController(popup) {
+////            print("pushing popupvc")
+////            navigationController?.pushViewController(vc, animated: true)
+////        }
+//    }
 
     // MARK: - Navigation
 
@@ -144,7 +144,7 @@ class IdentifyResultsViewController: UITableViewController, FloatingPanelEmbedda
         richPopup = selectedPopups[indexPath.row]
         popupChangedHandler?(richPopup)
 
-        guard let destination = segue.navigationDestination as? RichPopupViewController else { return }
+        guard let destination = segue.destination as? RichPopupViewController else { return }
         if let newPopup = EphemeralCache.shared.object(forKey: .newSpatialFeature) as? RichPopup {
             //                setCurrentPopup(popup: newPopup)
             destination.popupManager = RichPopupManager(richPopup: newPopup)
