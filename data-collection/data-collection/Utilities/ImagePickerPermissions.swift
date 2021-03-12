@@ -342,3 +342,232 @@ extension ImagePickerPermissions {
         }
     }
 }
+
+// MARK: - New Permissions
+
+public enum MediaSourceAuthStatus {
+    case authorized(limited: Bool)
+    case settings
+    case restricted
+    case ignore
+}
+
+public protocol MediaSource {
+    var title: String { get }
+    func requestAuthorization(_ completion: @escaping (MediaSourceAuthStatus) -> Void)
+    func showPicker(with presenter: UIViewController)
+}
+
+extension MediaSource {
+    
+    func showSettings(with presenter: UIViewController) {
+        let alert = UIAlertController(
+            title: "Not Authorized",
+            message: "Go to Settings and authorize the use of the \(title).",
+            preferredStyle: .alert
+        )
+        alert.addAction(
+            UIAlertAction(title: "Settings", style: .default) { _ in
+                UIApplication.shared.open(
+                    URL(string: UIApplication.openSettingsURLString)!
+                )
+            }
+        )
+        let okay: UIAlertAction = .okay()
+        alert.addAction(okay)
+        alert.preferredAction = okay
+        presenter.present(alert, animated: true, completion: nil)
+    }
+    
+    func showRestricted(with presenter: UIViewController) {
+        let alert = UIAlertController(
+            title: "Restricted",
+            message: "You do not have access to the \(title).",
+            preferredStyle: .alert
+        )
+        alert.addAction(.okay())
+        presenter.present(alert, animated: true, completion: nil)
+    }
+}
+
+public class CameraImagePicker: MediaSource {
+    
+    public var title: String = "Camera"
+    
+    private var usageDescription = "NSCameraUsageDescription"
+    
+    private var sourceType = UIImagePickerController.SourceType.camera
+    
+    private var mediaTypes: [CFString] = [kUTTypeImage]
+    
+    public func requestAuthorization(_ completion: @escaping (MediaSourceAuthStatus) -> Void) {
+        guard Bundle.main.infoDictionary![usageDescription] != nil else {
+            preconditionFailure("Info.plist must contain the \(usageDescription) key/value combination.")
+        }
+        guard UIImagePickerController.isSourceTypeAvailable(sourceType) else {
+            completion(.restricted)
+            return
+        }
+        AVCaptureDevice.requestAccess(for: .video) { _ in
+            switch AVCaptureDevice.authorizationStatus(for: .video) {
+            case .authorized:
+                completion(.authorized(limited: false))
+            case .denied:
+                completion(.settings)
+            case .restricted:
+                completion(.restricted)
+            case .notDetermined:
+                completion(.ignore)
+            @unknown default:
+                fatalError("Unsupported type.")
+            }
+        }
+    }
+    
+    public func showPicker(with presenter: UIViewController) {
+        guard presenter is UIImagePickerControllerDelegate else { return }
+        guard presenter is UINavigationControllerDelegate else { return }
+        let imagePicker = UIImagePickerController()
+        imagePicker.sourceType = sourceType
+        imagePicker.mediaTypes = mediaTypes as [String]
+        imagePicker.delegate = presenter as? UIImagePickerControllerDelegate & UINavigationControllerDelegate
+        presenter.present(imagePicker, animated: true, completion: nil)
+    }
+}
+
+public class LibraryImagePicker: MediaSource {
+    
+    public var title: String = "Image Library"
+    
+    private var usageDescription = "NSPhotoLibraryUsageDescription"
+    
+    private var sourceType = UIImagePickerController.SourceType.photoLibrary
+    
+    private var mediaTypes: [CFString] = [kUTTypeImage]
+    
+    public func requestAuthorization(_ completion: @escaping (MediaSourceAuthStatus) -> Void) {
+        guard Bundle.main.infoDictionary![usageDescription] != nil else {
+            preconditionFailure("Info.plist must contain the \(usageDescription) key/value combination.")
+        }
+        guard UIImagePickerController.isSourceTypeAvailable(sourceType) else {
+            completion(.restricted)
+            return
+        }
+
+        func respondToAuthStatus(status: PHAuthorizationStatus) {
+            switch status {
+            case .authorized:
+                completion(.authorized(limited:false))
+            case .limited:
+                completion(.authorized(limited:true))
+            case .denied:
+                completion(.settings)
+            case .restricted:
+                completion(.restricted)
+            case .notDetermined:
+                completion(.ignore)
+            @unknown default:
+                fatalError("Unsupported type.")
+            }
+        }
+        
+        if #available(iOS 14.0, *) {
+            PHPhotoLibrary.requestAuthorization(for: .readWrite, handler: respondToAuthStatus)
+        }
+        else {
+            PHPhotoLibrary.requestAuthorization(respondToAuthStatus)
+        }
+    }
+    
+    public func showPicker(with presenter: UIViewController) {
+        guard presenter is UIImagePickerControllerDelegate else { return }
+        guard presenter is UINavigationControllerDelegate else { return }
+        let imagePicker = UIImagePickerController()
+        imagePicker.sourceType = sourceType
+        imagePicker.mediaTypes = mediaTypes as [String]
+        imagePicker.delegate = presenter as? UIImagePickerControllerDelegate & UINavigationControllerDelegate
+        presenter.present(imagePicker, animated: true, completion: nil)
+    }
+}
+
+@available(iOS 14.0, *)
+public struct LibraryPhotoPicker: MediaSource {
+
+    public let title = "Image Library (Picker)"
+
+    public func requestAuthorization(_ completion: @escaping (MediaSourceAuthStatus) -> Void) {
+        PHPhotoLibrary.requestAuthorization(for: .readWrite) { (status) in
+            switch status {
+            case .authorized:
+                completion(.authorized(limited:false))
+            case .limited:
+                completion(.authorized(limited:true))
+            case .denied:
+                completion(.settings)
+            case .restricted:
+                completion(.restricted)
+            case .notDetermined:
+                break
+            @unknown default:
+                fatalError("Unsupported status.")
+            }
+        }
+    }
+    
+    public func showPicker(with presenter: UIViewController) {
+        guard presenter is PHPickerViewControllerDelegate else { return }
+        var config = PHPickerConfiguration()
+        config.filter = .images
+        config.selectionLimit = 3
+        let picker = PHPickerViewController(configuration: config)
+        picker.delegate = presenter as? PHPickerViewControllerDelegate
+        presenter.present(picker, animated: true, completion: nil)
+    }
+}
+
+extension UIViewController {
+    public func request(media sources: MediaSource...) {
+        guard !sources.isEmpty else { assertionFailure("Requesting media sources with empty MediaSource array."); return }
+        let actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        sources.forEach { (source) in
+            let action = UIAlertAction(title: source.title, style: .default) { _ in
+                source.requestAuthorization { (status) in
+                    DispatchQueue.main.async {
+                        switch status {
+                        case .authorized:
+                            source.showPicker(with: self)
+                        case .settings:
+                            source.showSettings(with: self)
+                        case .restricted:
+                            source.showRestricted(with: self)
+                        case .ignore:
+                            break
+                        }
+                    }
+                }
+            }
+            actionSheet.addAction(action)
+        }
+        actionSheet.addAction(.cancel())
+        present(actionSheet, animated: true, completion: nil)
+    }
+    
+}
+
+@available(iOS 14.0, *)
+extension RichPopupViewController: PHPickerViewControllerDelegate {
+    func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
+        guard let itemProvider = results.first?.itemProvider,
+              itemProvider.canLoadObject(ofClass: UIImage.self)
+        else {
+            picker.dismiss(animated: true, completion: nil)
+            return
+        }
+        itemProvider.loadObject(ofClass: UIImage.self) { image, error in
+            DispatchQueue.main.async { [itemProvider, weak self] in
+                print(image)
+            }
+        }
+    }
+}
+
