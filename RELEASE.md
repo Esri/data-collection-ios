@@ -11,6 +11,7 @@
 - Introduces nuanced offline map icons in Profile view.
 - Dissolves `AppError` protocol, reconsiders errors instead as members of types.
 - Fixes bug where `AddressLocator.onlineLocator` issues an authentication challenge amid creating a new feature.
+- Introduces support for iOS 14 PHPickerViewController.
 
 # Release 1.2.3
 
