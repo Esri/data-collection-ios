@@ -18,7 +18,6 @@ import QuickLook
 extension RichPopupViewController: RichPopupAttachmentsViewControllerDelegate {
     
     func attachmentsViewControllerDidRequestAddAttachment(_ attachmentsViewController: RichPopupAttachmentsViewController) {
-        
         if !isEditing {
             let alert = UIAlertController(
                 title: nil,
@@ -30,7 +29,7 @@ extension RichPopupViewController: RichPopupAttachmentsViewControllerDelegate {
                 // 1. Start editing session
                 self.setEditing(true, animated: true)
                 // 2. Build requests
-                self.imagePickerPermissions.request(options: [.photo, .library])
+                self.selectMedia()
             }
             alert.addAction(.cancel())
             alert.addAction(edit)
@@ -38,7 +37,7 @@ extension RichPopupViewController: RichPopupAttachmentsViewControllerDelegate {
         }
         else {
             // Request, straight away.
-            imagePickerPermissions.request(options: [.photo, .library])
+            selectMedia()
         }
     }
     

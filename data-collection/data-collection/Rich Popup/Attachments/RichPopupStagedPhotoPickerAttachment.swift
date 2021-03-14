@@ -1,4 +1,4 @@
-//// Copyright 2019 Esri
+// Copyright 2021 Esri
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -12,19 +12,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import UIKit
+import ArcGIS
 
-extension RichPopupViewController: ImagePickerPermissionsDelegate {
+class RichPopupStagedPhotoPickerAttachment: RichPopupStagedAttachment {
     
-    func imagePickerPermissionsRequestsPresentingViewController() -> UIViewController {
-        return self
-    }
+    override var type: AGSPopupAttachmentType { return .image }
     
-    func imagePickerPermissionsFinishedWith(imagePicker: UIImagePickerController?) {
-        
-        if let imagePicker = imagePicker {
-            imagePicker.delegate = self
-            self.present(imagePicker, animated: true)
-        }
+    override func generateThumbnail(withSize: Float, scaleMode: AGSImageScaleMode, completion: @escaping (UIImage?) -> Void) {
+        completion(
+            UIImage(data: attachmentData)
+        )
     }
 }
