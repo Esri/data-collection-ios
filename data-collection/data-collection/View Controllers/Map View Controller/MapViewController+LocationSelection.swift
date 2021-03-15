@@ -108,15 +108,14 @@ extension MapViewController {
         let newRichPopup = RichPopup(popup: newPopup)
         
         if let relationships = newRichPopup.relationships {
-            
-            SVProgressHUD.show(withStatus: String(format: "Creating %@", (newRichPopup.tableName ?? "Feature")))
+            self.showProgress(
+                String(format: "Creating %@", (newRichPopup.tableName ?? "Feature"))
+            )
 
             relationships.load(completion: { [weak self] (error) in
-                
-                SVProgressHUD.dismiss()
-                
                 guard let self = self else { return }
-                
+                self.hideProgress()
+
                 if let error = error  {
                     self.showError(error)
                 }
@@ -152,8 +151,9 @@ extension MapViewController {
             return
         }
         
-        SVProgressHUD.setContainerView(self.view)
-        SVProgressHUD.show(withStatus: String(format: "Preparing new %@.", (newPopup.tableName ?? "record")))
+        showProgress(
+            String(format: "Preparing new %@.", (newPopup.tableName ?? "record"))
+        )
         
         let centerPoint = mapView.centerAGSPoint
         
@@ -167,8 +167,7 @@ extension MapViewController {
                 forKey: .newSpatialFeature
             )
             
-            SVProgressHUD.dismiss()
-            SVProgressHUD.setContainerView(nil)
+            hideProgress()
             
             self.performSegue(withIdentifier: "modallyPresentRelatedRecordsPopupViewController", sender: nil)
         }

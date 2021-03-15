@@ -98,6 +98,8 @@
 		948D85232151C11F00E2048F /* AGSPopupManager+FeatureTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 948D85222151C11F00E2048F /* AGSPopupManager+FeatureTable.swift */; };
 		948D85312151C80400E2048F /* UIView+Animation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 948D85302151C80400E2048F /* UIView+Animation.swift */; };
 		9499821924AA4ED5001967A9 /* AGSPopupAttachmentSize+PreferredSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9499821824AA4ED5001967A9 /* AGSPopupAttachmentSize+PreferredSize.swift */; };
+		949A5E072600183F00325569 /* ProgressViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 949A5E052600183F00325569 /* ProgressViewController.xib */; };
+		949A5E082600183F00325569 /* ProgressViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 949A5E062600183F00325569 /* ProgressViewController.swift */; };
 		94ACAD272193B46200C2C824 /* RichPopup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94ACAD262193B46200C2C824 /* RichPopup.swift */; };
 		94ADD3C821F266AC000A5DB9 /* AGSPopupManager+AttachmentAccess.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94ADD3C721F266AC000A5DB9 /* AGSPopupManager+AttachmentAccess.swift */; };
 		94B375BC207E8D5600691F2A /* AddressLocator.locb in Resources */ = {isa = PBXBuildFile; fileRef = 94B37598207E8D5600691F2A /* AddressLocator.locb */; };
@@ -327,6 +329,8 @@
 		948D85222151C11F00E2048F /* AGSPopupManager+FeatureTable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AGSPopupManager+FeatureTable.swift"; sourceTree = "<group>"; };
 		948D85302151C80400E2048F /* UIView+Animation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Animation.swift"; sourceTree = "<group>"; };
 		9499821824AA4ED5001967A9 /* AGSPopupAttachmentSize+PreferredSize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AGSPopupAttachmentSize+PreferredSize.swift"; sourceTree = "<group>"; };
+		949A5E052600183F00325569 /* ProgressViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProgressViewController.xib; sourceTree = "<group>"; };
+		949A5E062600183F00325569 /* ProgressViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProgressViewController.swift; sourceTree = "<group>"; };
 		94ACAD262193B46200C2C824 /* RichPopup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RichPopup.swift; sourceTree = "<group>"; };
 		94ADD3C721F266AC000A5DB9 /* AGSPopupManager+AttachmentAccess.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AGSPopupManager+AttachmentAccess.swift"; sourceTree = "<group>"; };
 		94B37598207E8D5600691F2A /* AddressLocator.locb */ = {isa = PBXFileReference; lastKnownFileType = file; path = AddressLocator.locb; sourceTree = "<group>"; };
@@ -705,6 +709,15 @@
 			path = Extensions;
 			sourceTree = "<group>";
 		};
+		949A5E03260017D600325569 /* Progress View Controller */ = {
+			isa = PBXGroup;
+			children = (
+				949A5E062600183F00325569 /* ProgressViewController.swift */,
+				949A5E052600183F00325569 /* ProgressViewController.xib */,
+			);
+			path = "Progress View Controller";
+			sourceTree = "<group>";
+		};
 		94B37597207E8D5600691F2A /* Offline Locator */ = {
 			isa = PBXGroup;
 			children = (
@@ -719,6 +732,7 @@
 		94B3759D207E8D5600691F2A /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				949A5E03260017D600325569 /* Progress View Controller */,
 				94B375BB207E8D5600691F2A /* EphemeralCache.swift */,
 				94071BF3251ABEBA002EDC53 /* GlobalAlertQueue.swift */,
 			);
@@ -1189,6 +1203,7 @@
 				94B375BE207E8D5600691F2A /* AddressLocator.lox in Resources */,
 				94682ADE246F0088005B733E /* Profile.storyboard in Resources */,
 				94D544CA207FC67B00ED0D04 /* AppIcon.xcassets in Resources */,
+				949A5E072600183F00325569 /* ProgressViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1308,6 +1323,7 @@
 				946E6A9521F2A96000B315B6 /* RichPopupViewController+EditingSession.swift in Sources */,
 				9465691E208802CE00599E55 /* AGSFeatureTable+PopupEnabled.swift in Sources */,
 				944433F321AF5F2F00E96A6E /* RichPopupManager+CustomBehavior.swift in Sources */,
+				949A5E082600183F00325569 /* ProgressViewController.swift in Sources */,
 				945F455621EE7CBE00F2DCBC /* RichPopupAttachmentsManager.swift in Sources */,
 				945F455B21EFA75600F2DCBC /* AGSPopupAttachmentSize+String.swift in Sources */,
 				94DDEA7E215463AC00DA533C /* CGAffineTransform+Rotation.swift in Sources */,

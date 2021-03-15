@@ -381,7 +381,7 @@ class RichPopupViewController: SegmentedViewController {
         
         if let status = status {
             // Display status message with activity indicator.
-            SVProgressHUD.show(withStatus: status)
+            showProgress(status)
         }
     }
     
@@ -397,7 +397,7 @@ class RichPopupViewController: SegmentedViewController {
         navigationItem.rightBarButtonItem?.isEnabled = true
         
         // Display status message with activity indicator.
-        SVProgressHUD.dismiss(withDelay: 0.2)
+        hideProgress()
     }
     
     // MARK: Dismiss View Controller
