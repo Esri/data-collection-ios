@@ -108,13 +108,12 @@ extension MapViewController {
         let newRichPopup = RichPopup(popup: newPopup)
         
         if let relationships = newRichPopup.relationships {
-            self.showProgress(
+            UIApplication.shared.showProgress(
                 String(format: "Creating %@", (newRichPopup.tableName ?? "Feature"))
             )
-
             relationships.load(completion: { [weak self] (error) in
+                UIApplication.shared.hideProgress()
                 guard let self = self else { return }
-                self.hideProgress()
 
                 if let error = error  {
                     self.showError(error)
@@ -151,7 +150,7 @@ extension MapViewController {
             return
         }
         
-        showProgress(
+        UIApplication.shared.showProgress(
             String(format: "Preparing new %@.", (newPopup.tableName ?? "record"))
         )
         

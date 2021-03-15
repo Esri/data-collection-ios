@@ -165,14 +165,14 @@ class MapViewController: UIViewController {
             return
         }
 
-        showProgress(
+        UIApplication.shared.showProgress(
             String(format: "Creating new %@.", (relatedManager.title ?? "related record"))
         )
 
         relationships.load { [weak self] (error) in
+            UIApplication.shared.hideProgress()
             guard let self = self else { return }
-            self.hideProgress()
-
+            
             if let error = error {
                 self.showError(error)
                 return

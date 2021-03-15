@@ -118,7 +118,6 @@ fileprivate class PhantomViewController: UIViewController {
     init(_ progress: ProgressViewController) {
         self.progress = progress
         super.init(nibName: nil, bundle: nil)
-        self.view.backgroundColor = .clear
     }
     
     required init?(coder aDecoder: NSCoder) {
