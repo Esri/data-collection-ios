@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import Foundation
+import UIKit
 
 extension UIViewController: GlobalProgressDisplayable {
     func showProgress(_ message: String, duration: TimeInterval? = nil) {
