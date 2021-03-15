@@ -397,7 +397,7 @@ class RichPopupViewController: SegmentedViewController {
         navigationItem.rightBarButtonItem?.isEnabled = true
         
         // Display status message with activity indicator.
-        hideProgress()
+        UIApplication.shared.hideProgress()
     }
     
     // MARK: Dismiss View Controller

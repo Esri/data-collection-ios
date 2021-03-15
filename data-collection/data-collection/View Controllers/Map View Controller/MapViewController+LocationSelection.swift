@@ -166,7 +166,7 @@ extension MapViewController {
                 forKey: .newSpatialFeature
             )
             
-            hideProgress()
+            UIApplication.shared.hideProgress()
             
             self.performSegue(withIdentifier: "modallyPresentRelatedRecordsPopupViewController", sender: nil)
         }
