@@ -423,13 +423,7 @@ class RichPopupViewController: SegmentedViewController {
         self.popOrDismiss(animated: true)
     }
     
-    // MARK: Image Picker Permissions
-    
-    private(set) lazy var imagePickerPermissions: ImagePickerPermissions = { [unowned self] in
-        var imagePickerPermissions = ImagePickerPermissions()
-        imagePickerPermissions.delegate = self
-        return imagePickerPermissions
-    }()
+    // MARK: Media Picker Permissions
     
     var isProcessingNewAttachmentImage: Bool = false
 }

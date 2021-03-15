@@ -14,13 +14,13 @@
 
 import ArcGIS
 
-class RichPopupStagedPhotoAttachment: RichPopupStagedAttachment {
+class RichPopupStagedImagePickerAttachment: RichPopupStagedAttachment {
     
     private static var attachmentIncrement: Int = 1
     
     private func setAttachmentNameIncrementedNext() {
-        self.name = String(format: "Photo %d", RichPopupStagedPhotoAttachment.attachmentIncrement)
-        RichPopupStagedPhotoAttachment.attachmentIncrement += 1
+        self.name = String(format: "Photo %d", RichPopupStagedImagePickerAttachment.attachmentIncrement)
+        RichPopupStagedImagePickerAttachment.attachmentIncrement += 1
     }
     
     override var type: AGSPopupAttachmentType { return .image }
@@ -31,7 +31,7 @@ class RichPopupStagedPhotoAttachment: RichPopupStagedAttachment {
     
     let info: [UIImagePickerController.InfoKey : Any]
     
-     init?(imagePickerMediaInfo info: [UIImagePickerController.InfoKey : Any]) {
+    init?(imagePickerMediaInfo info: [UIImagePickerController.InfoKey : Any]) {
         
         self.info = info
 
