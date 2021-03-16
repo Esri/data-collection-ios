@@ -91,8 +91,6 @@ private class GlobalProgress {
 
 fileprivate class ProgressViewController: UIViewController {
     
-    static let shared = ProgressViewController()
-    
     @IBOutlet weak var label: UILabel!
     @IBOutlet weak var activityView: UIActivityIndicatorView!
     
