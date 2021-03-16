@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import Foundation
+import UIKit
 
 /// A `UINavigationController` concrete subclass that monitors changes to the app context's work mode
 /// and adjusts the bar's tint color accordingly.

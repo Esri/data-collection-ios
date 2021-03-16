@@ -12,6 +12,7 @@
 - Dissolves `AppError` protocol, reconsiders errors instead as members of types.
 - Fixes bug where `AddressLocator.onlineLocator` issues an authentication challenge amid creating a new feature.
 - Introduces support for iOS 14 PHPickerViewController.
+- Removes `SVProgressHUD` dependency, introduces `ProgressViewController` global presenter.
 
 # Release 1.2.3
 
