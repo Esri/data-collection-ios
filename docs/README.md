@@ -42,7 +42,6 @@
    - [Offline map jobs](#offline-map-jobs)   
       - [Download map offline](#download-map-offline)   
       - [Synchronize offline map](#synchronize-offline-map)   
-      - [Job status view controller](#job-status-view-controller)   
       - [Deleting offline map](#deleting-offline-map)   
    - [Querying feature tables](#querying-feature-tables)   
       - [Query for all features](#query-for-all-features)   
@@ -77,6 +76,8 @@
    - [Controller: app context aware](#controller-app-context-aware)   
    - [App location](#app-location)   
    - [Ephemeral cache](#ephemeral-cache)   
+   - [Global alert queue](#global-alert-queue)   
+   - [Global progress view controller](#global-progress-view-controller)   
    - [File manager](#file-manager)   
    - [App defaults](#app-defaults)   
    - [App colors](#app-colors)   
@@ -266,14 +267,6 @@ Existing attachments can be deleted from the pop-up.
 
 You can author your own web maps in [Portal/ArcGIS Online](https://enterprise.arcgis.com/en/portal/latest/use/what-is-web-map.htm) or [ArcGIS Desktop](https://desktop.arcgis.com/en/maps/) and share them in your app via your Portal; this is the central power of the Web GIS model built into ArcGIS. Building an app which uses a web map allows the cartography and map configuration to be completed in Portal rather than in code. This then allows the map to change over time, without any code changes or app updates. Learn more about the benefits of developing with web maps [here](https://developers.arcgis.com/web-map-specification/). Also, learn about authoring web maps in [Portal/ArcGIS Online](https://doc.arcgis.com/en/arcgis-online/create-maps/make-your-first-map.htm) and [ArcGIS Pro](https://pro.arcgis.com/en/pro-app/help/mapping/map-authoring/author-a-basemap.htm).
 
-Loading web maps in code is easy; the app loads a web map from a Portal (which may require the user to login, see the [_identity model_](#identity-model) section) with the following code:
-
-``` Swift
-let portal = AGSPortal(url: URL(string: "https://<your portal url>")!, loginRequired: false)
-let webMapItem = AGSPortalItem(portal: portal, itemID: "<your map id>")
-mapView.map = AGSMap(item: webMapItem)
-```
-
 ### Configure web map & feature services for data collection
 
 The app's behavior is configuration driven and the following configuration principles should guide you in the configuration of your **own** web map.
@@ -347,26 +340,9 @@ The process of accessing token secured services with a challenge handler is illu
 
 The `AGSOAuthConfiguration` class takes care of steps 1-6 in the diagram above. For an application to use this pattern, follow these [guides](https://developers.arcgis.com/authentication/signing-in-arcgis-online-users/) to register your app.
 
-``` Swift
-let oauthConfig = AGSOAuthConfiguration(portalURL: portal.url, clientID: clientId, redirectURL: oAuthRedirectURL)
-AGSAuthenticationManager.shared().oAuthConfigurations.add(oauthConfig)
-```
-
 Any time a secured service issues an authentication challenge, the `AGSOAuthConfiguration` and the app's `UIApplicationDelegate` work together to broker the authentication transaction. The `oAuthRedirectURL` above tells iOS how to call back to the app to confirm authentication with the Runtime SDK.
 
-iOS routes the redirect URL through the `UIApplicationDelegate` which the app passes directly to an ArcGIS Runtime SDK helper function to retrieve a token:
-
-``` Swift
-// UIApplicationDelegate function called when "data-collection://auth" is opened.
-func application(_ app: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any] = [:]) -> Bool {
-
-    // Pass the OAuth callback through to the ArcGIS Runtime helper function
-    AGSApplicationDelegate.shared().application(app, open: url, options: options)
-
-    // Let iOS know we handled the URL OK
-    return true
-}
-```
+iOS routes the redirect URL through the `UIApplicationDelegate` which the app passes directly to an ArcGIS Runtime SDK helper function to retrieve a token.
 
 To tell iOS to call back like this, the app configures a `URL Type` in the `Info.plist` file.
 
@@ -393,24 +369,7 @@ The app operates on a set of rules driven by map definitions and pop-up configur
 
 ### Map identify rules
 
-A tap gesture on the map view performs an identify function where only results for layers that adhere to certain rules are considered. These rules ask that the layer is visible, is of point type geometry and pop-ups are enabled.
-
-These rules are wrapped conveniently into a static class named `AppRules`.
-
-```swift
-static func isLayerIdentifiable(_ layer: AGSFeatureLayer) -> Bool {
-    guard
-        layer.isVisible,
-        let featureTable = layer.featureTable,
-        featureTable.geometryType == .point,
-        featureTable.isPopupActuallyEnabled else {
-            return false
-    }
-    return true
-}
-```
-
-> `isPopupActuallyEnabled` facilitates checking both that pop-up is enabled for the table and the pop-up definition is not nil.
+A tap gesture on the map view performs an identify function where only results for layers that adhere to certain rules are considered. These rules ask that the layer is visible, is of point type geometry and pop-ups are enabled. These rules are wrapped conveniently into a static class named `AppRules`.
 
 ### Small pop-up view rules
 
@@ -436,22 +395,6 @@ A user can add new spatial features to the map given those feature layers adhere
 * the layer can add a feature
 * the layer is a spatial layer of geometry type: point
 * the layer has enabled pop-ups
-
-These rules are wrapped conveniently into a static class named `AppRules`.
-
-```swift
-static func isLayerAddable(_ layer: AGSFeatureLayer) -> Bool {
-    guard
-        let featureTable = layer.featureTable,
-        featureTable.isEditable,
-        featureTable.canAddFeature,
-        featureTable.geometryType == .point,
-        featureTable.isPopupActuallyEnabled else {
-            return false
-    }
-    return true
-}
-```
 
 If no feature layers adhere to these rules, the add feature button is disabled. If 2 or more feature layers adhere to these rules, the app prompts the user to select the desired layer. And, if only one layer adheres to these rules, that layer is selected automatically.
 
@@ -507,6 +450,7 @@ Every field determined by the manager's `editableDisplayFields` is represented b
 * `PopupAttributeTextViewCell`: Strings, multi line and rich text. (The only cell that uses a text view.)
 * `PopupAttributeDomainCell`: Coded Value Domains, of any data type. _Overrides keyboard input view with picker view._
 * `PopupAttributeDateCell`: Date. _Overrides keyboard input view with a date picker view._
+* `PopupAttributeDatePickerCell`: Date (iOS 14 >=).
 * `PopupAttributeReadonlyCell`: GUID, OID, globalID, unknown.
 
 > Some pop-up field types remain unsupported, they are: geometry, raster, XML, and blob. If an unsupported field type is used the app will encounter an [`assertionFailure`](https://developer.apple.com/documentation/swift/1539616-assertionfailure).
@@ -535,103 +479,19 @@ The app demonstrates best practices for consuming the ArcGIS Runtime iOS SDK.
 
 The app's `MapViewController` specifies itself as the maps view's `AGSGeoViewTouchDelegate` and thus the `MapViewController` can recieve touch delegate messages including the message sent when the user taps the `AGSMapView`. The app uses this opportunity to identify features contained in layers of the `geoView`.
 
-```swift
-func geoView(_ geoView: AGSGeoView, didTapAtScreenPoint screenPoint: CGPoint, mapPoint: AGSPoint) {
-    // prepare for identify operation
-    identifyOperation = geoView.identifyLayers(atScreenPoint: screenPoint, tolerance: 10, returnPopupsOnly: true, maximumResultsPerLayer: 5) { [weak self] (result, error) in
-        // process results of identify operation
-    }
-}
-```
-
 > The `identifyLayers` function returns an object that is `AGSCancelable` and thus a previous `identifyOperation` can be canceled before the next one begins, for instance if a user taps the map view in quick succession.
 
 ### Offline map jobs
 
 The SDK facilitates taking a web map offline and synchronizing changes. The app only needs to prepare a few parameters before it is able to take a web map offline or synchronize changes between the offline map and the web map.
 
-`OfflineMapJobConstruct` is an `enum` of two cases, one for each job performed in the app, each performing two major functions.
-
-```swift
-enum OfflineMapJobConstruct {
-
-    case downloadMapOffline(AGSMap, URL, AGSEnvelope, Double)
-    case syncOfflineMap(AGSMap)
-    // ...
-}
-```
-
-Each case knows how to generate a job based on the parameters supplied to it.
-
-```swift
-enum OfflineMapJobConstruct {
-    // ...
-    func generateJob() -> AGSJob
-}
-```
-
-Each case also offers contextual information for display in `JobStatusViewController`.
-
-```swift
-enum OfflineMapJobConstruct {
-    // ...
-    var message: String { get }
-    var successMessage: String { get }
-    var errorMessage: String { get }
-    var cancelMessage: String { get }
-}
-```
+Consult the section entitled [Offline Map Manager](#offline-map-manager) to learn more about the architecture supporting offline map jobs.
 
 #### Download map offline
 
 Before generating an offline map job, the app asks the user to establish the area of the web map that they wish to take offline. Once established, the app converts the view mask area to an `AGSPolygon`.
 
-```swift
-extension AGSMapView {
-
-    func convertExtent(fromRect rect: CGRect) throws -> AGSGeometry {
-
-        guard bounds.contains(rect) else {
-            throw MapViewError.rectOutsideOfBounds
-        }
-
-        let nw = rect.origin
-        let ne = CGPoint(x: rect.maxX, y: rect.minY)
-        let se = CGPoint(x: rect.maxX, y: rect.maxY)
-        let sw = CGPoint(x: rect.minX, y: rect.maxY)
-
-        let agsNW = screen(toLocation: nw)
-        let agsNE = screen(toLocation: ne)
-        let agsSE = screen(toLocation: se)
-        let agsSW = screen(toLocation: sw)
-
-        return AGSPolygon(points: [agsNW, agsNE, agsSE, agsSW])
-    }
-}
-```
-
 The app gets the current `AGSMap`'s scale (`Double`) and retrieves a temporary file directory `URL`. With these parameters we can build a `AGSGenerateOfflineMapJob` object.
-
-```swift
-/**  
-  Parameter map: AGSMap
-  Parameter directory: URL
-  Parameter extent: AGSEnvelope
-  Parameter scale: Double
-
-  Returns: AGSGenerateOfflineMapJob
- */
-
-func generateJob() -> AGSJob {
-  // ...
-  case .downloadMapOffline(let map, let directory, let extent, let scale):
-      let offlineMapTask = AGSOfflineMapTask(onlineMap: map)
-      let offlineMapParameters = AGSGenerateOfflineMapParameters(areaOfInterest: extent, minScale: scale, maxScale: map.maxScale)
-      let offlineMapJob = offlineMapTask.generateOfflineMapJob(with: offlineMapParameters, downloadDirectory: directory)
-      return offlineMapJob
-  // ...
-}
-```
 
 Upon a successful download, the app finishes by moving the offline map from the temporary documents directory to a permanent one.
 
@@ -640,47 +500,6 @@ Upon a successful download, the app finishes by moving the offline map from the 
 Synchronizing a map is even more straightforward than downloading a map. The app builds an `AGSOfflineMapSyncJob` by constructing an offline map sync task using the offline map and specifying the offline sync parameters sync direction `.bidirectional`.
 
 > A [bi-directional sync](https://developers.arcgis.com/documentation/mapping-apis-and-location-services/offline/offline-maps/working-with-offline-maps/#synchronize) synchronizes local changes with the web map and changes made to the web map are synchronized with the offline map. Synchronization conflicts are resolved following the rule "last-in wins".
-
-```swift
-/**  
-  Parameter map: AGSMap
-
-  Returns: AGSOfflineMapSyncJob
- */
-
-func generateJob() -> AGSJob {
-  // ...
-  case .syncOfflineMap(let map):
-      let offlineMapSyncTask = AGSOfflineMapSyncTask(map: map)
-      let offlineMapSyncParameters = AGSOfflineMapSyncParameters()
-      offlineMapSyncParameters.syncDirection = .bidirectional
-      let offlineMapSyncJob = offlineMapSyncTask.offlineMapSyncJob(with: offlineMapSyncParameters)
-      return offlineMapSyncJob
-  // ...
-}
-```
-
-#### Job status view controller
-
-The `JobStatusViewController` conveniently works with each `OfflineMapJobConstruct` case. The job status view controller first generates the job.
-
-```swift
-mapJob = jobConstruct?.generateJob()
-```
-
-It then sets the progress view's `observedProgress` to the job's `progress` for updates to the UI.
-
-```swift
-jobStatusProgressView.observedProgress = mapJob.progress
-```
-
-And finally starts the asynchronous job, waiting for it to complete.
-
-```swift
-mapJob.start(statusHandler: nil) { (result, error) in
-    // ...
-}
-```
 
 #### Deleting offline map
 
@@ -700,108 +519,15 @@ The app contains `AGSArcGISFeatureTable` Swift extension helper functions that f
 
 The app queries for all records in a table under the circumstance where a user would like to relate a many-to-one related record. This is accomplished by specifying the `AGSQueryParameters` SQL-like `whereClause` to `"1 = 1"`. The app also offers additional support for ordering the results.
 
-```swift
-extension AGSArcGISFeatureTable {
-
-    func queryAllFeatures(sorted: AGSOrderBy? = nil, completion: @escaping (AGSFeatureQueryResult?, Error?) -> Void) {
-
-        // setting the SQL-like where clause to "1 = 1" fetches all results
-        let queryParams = AGSQueryParameters()
-        queryParams.whereClause = "1 = 1"
-
-        if let sort = sorted {
-            queryParams.orderByFields.append(sort)
-        }
-
-        // web map service feature table
-        if let serviceFeatureTable = self as? AGSServiceFeatureTable {
-            serviceFeatureTable.queryFeatures(with: queryParams, queryFeatureFields: .loadAll, completion: completion)
-        }
-        // offline map geodatabase feature table
-        else if let geodatabaseFeatureTable = self as? AGSGeodatabaseFeatureTable {
-            geodatabaseFeatureTable.queryFeatures(with: queryParams, completion: completion)
-        }
-        // feature table is not an ArcGIS feature table
-        else {
-            completion(nil, FeatureTableError.isNotArcGISFeatureTable)
-            return
-        }
-    }
-}
-
-```
-
 #### Query for related features
 
 There are a number of cases where the app queries a feature for its related records. The feature's containing feature table accomplishes this task by providing the feature in question and a relationship information that specifies which related record type to return.
 
-```swift
-extension AGSArcGISFeatureTable {
-
-    func queryRelatedFeatures(forFeature feature: AGSArcGISFeature, relationship: AGSRelationshipInfo, completion: @escaping ([AGSRelatedFeatureQueryResult]?, Error?)->()) {
-
-        let parameters = AGSRelatedQueryParameters(relationshipInfo: relationship)
-
-        if let serviceFeatureTable = self as? AGSServiceFeatureTable {
-            let fields = AGSQueryFeatureFields.loadAll
-            serviceFeatureTable.queryRelatedFeatures(for: feature, parameters: parameters, queryFeatureFields: fields, completion: completion)
-        }
-        else if let geodatabaseFeatureTable = self as? AGSGeodatabaseFeatureTable {
-            geodatabaseFeatureTable.queryRelatedFeatures(for: feature, parameters: parameters, completion: completion)
-        }
-        else {
-            completion(nil, FeatureTableError.isNotArcGISFeatureTable)
-            return
-        }
-    }
-}
-```
-
 An additional layer of abstraction has been built that converts the results from the query to an array of pop-ups for later viewing and editing.
-
-```swift
-extension AGSArcGISFeatureTable {
-
-    func queryRelatedFeaturesAsPopups(forFeature feature: AGSArcGISFeature, relationship: AGSRelationshipInfo, completion: @escaping ([AGSPopup]?, Error?)->()) {
-
-        queryRelatedFeatures(forFeature: feature, relationship: relationship) { (results, error) in
-
-            guard error == nil else {
-                completion(nil, error!)
-                return
-            }
-
-            guard let result = results?.first, let features = result.featureEnumerator().allObjects as? [AGSArcGISFeature] else {
-                completion(nil, FeatureTableError.queryResultsMissingFeatures)
-                return
-            }
-
-            guard let popups = features.asPopups else {
-                completion(nil, FeatureTableError.isNotPopupEnabled)
-                return
-            }
-
-            completion(popups, nil)
-        }
-    }
-}
-```
-
-These feature table extensions offer the app a powerful and simple API for querying related records used in various areas of the app.
 
 #### Spatial query
 
 The *Trees of Portland* story contains custom behavior to perform a spatial query on the neighborhoods layer to obtain a neighborhood's metadata which is populated into a tree's attributes. This spatial query is specified by a `AGSQueryParameters` object. In our example, we query the neighborhoods table for a neighborhood where the new tree's point falls within the bounds of the neighborhood's polygon.
-
-```swift
-let query = AGSQueryParameters()
-query.geometry = point
-query.spatialRelationship = .within
-
-neighborhoodFeatureTable.queryFeatures(with: query) { (result, error) in
-    // ...
-}
-```
 
 ### Editing features
 
@@ -813,71 +539,9 @@ Editing of an `AGSPopup` is facilitated by the [`AGSPopupManager`](https://devel
 
 When we create a new feature, we must also take the next step and build a pop-up using the newly-created feature and its feature table's pop-up definition. The app ships with an extension to `AGSArcGISFeatureTable` that facilitates this process.
 
-```swift
-extension AGSArcGISFeatureTable {
-
-    func createPopup() -> AGSPopup? {
-
-        guard canAddFeature, let popupDefinition = popupDefinition, let feature = createFeature() as? AGSArcGISFeature else {
-            return nil
-        }
-
-        return AGSPopup(geoElement: feature, popupDefinition: popupDefinition)
-    }
-}
-```
-
 #### Rich pop-up
 
-After creating a new pop-up from the table, the app builds a `RichPopup`.
-
-```swift
-class RichPopup: AGSPopup {
-
-    // MARK: Initializer
-
-    init(popup: AGSPopup) {
-        super.init(geoElement: popup.geoElement, popupDefinition: popup.popupDefinition)
-    }
-
-    // MARK: Relationships
-
-    /// A data structure that contains related records of the feature.
-    ///
-    /// Because `Relationships` conforms to `AGSLoadable`, there is a choice whether to, or not to, load the feature's related records.
-    ///
-    lazy private(set) var relationships: Relationships? = { [unowned self] in
-        return Relationships(popup: self)
-    }()
-}
-```
-
-A `RichPopup` augments `AGSPopup` by maintaining a instance of `Relationships`, which is `<AGSLoadable>`.
-
-```swift
-class Relationships: AGSLoadableBase {
-
-    weak private(set) var popup: AGSPopup?
-
-    init?(popup: AGSPopup) {
-
-        guard
-            let feature = popup.geoElement as? AGSArcGISFeature,
-            let featureTable = feature.featureTable as? AGSArcGISFeatureTable,
-            featureTable.layerInfo != nil else {
-            return nil
-        }
-
-        self.popup = popup
-    }
-
-    private(set) var manyToOne = [ManyToOneRelationship]()
-
-    private(set) var oneToMany = [OneToManyRelationship]()
-
-    // ...
-}
-```
+After creating a new pop-up from the table, the app builds a `RichPopup`. A `RichPopup` augments `AGSPopup` by maintaining a instance of `Relationships`, which is `<AGSLoadable>`.
 
 `Relationships` is responsible for maintaining lists of relationships of different types (one-to-many and many-to-one).
 
@@ -885,126 +549,11 @@ class Relationships: AGSLoadableBase {
 
 If editing is permitted, the `RichPopupManager` starts the edit session.
 
-```swift
-if recordsManager.shouldAllowEdit, recordsManager.startEditing() {
-    // start editing
-}
-```
-
 Updates are performed by passing a new value for a field of the pop-up. If the updated value is invalid, an error is thrown.
-
-```swift
-try? recordsManager.updateValue(value, field: field)
-```
 
 If the user decides to discard the changes to the feature, the `RichPopupManager` first cancels changes to each many-to-one record before cancelling the editing session (also deleting the copied attributes) and finally discarding any staged attachments.
 
-```swift
-override func cancelEditing() {
-
-    if let relationships = richPopup.relationships, relationships.loadStatus == .loaded {
-
-        // First, all staged many-to-one record changes are canceled.
-        // Only many-to-one related records can be edited during an editing session.
-        let manyToOne = relationships.manyToOne
-
-        manyToOne.forEach { (manager) in
-            manager.cancelChange()
-        }
-    }
-
-    // Call corresponding super class method.
-    super.cancelEditing()
-
-    // Then, discard any staged attachments (resetting the attachments to the condition before the editing session started).
-    richPopupAttachmentManager?.discardStagedAttachments()
-}
-```
-
-And if the user decides to persist changes to the feature, the `RichPopupManager` performs a series of operations. First, it commits changes to each many-to-one related records. Then, it updates many-to-one parent managers then commits staged attachments. Finally, it calls its super class function.
-
-```swift
-override func finishEditing(completion: @escaping (Error?) -> Void) {
-
-    var relatedRecordsErrors = [Error]()
-
-    // First, all staged many-to-one record changes are committed and features are related.
-    if let relationships = richPopup.relationships, relationships.loadStatus == .loaded {
-
-        let managers = relationships.manyToOne
-
-        for manager in managers {
-
-            guard let info = manager.relationshipInfo else {
-
-                manager.cancelChange()
-                continue
-            }
-
-            if let feature = manager.popup?.geoElement as? AGSArcGISFeature,
-                let relatedFeature = manager.relatedPopup?.geoElement as? AGSArcGISFeature {
-
-                manager.commitChange()
-                feature.relate(to: relatedFeature, relationshipInfo: info)
-            }
-            else {
-
-                if info.isComposite {
-                    relatedRecordsErrors.append(RichPopupManagerError.missingManyToOneRelationship(manager.name ?? "Unknown"))
-                }
-
-                manager.cancelChange()
-            }
-        }
-    }
-
-    // Then, update any parent one-to-many records.
-    let relationships = parentOneToManyManagers.keyEnumerator().allObjects as! [Relationship]
-
-    relationships.forEach { (relationship) in
-
-        if let parentManager = parentOneToManyManagers.object(forKey: relationship) {
-            do {
-
-                guard let feature = popup.geoElement as? AGSArcGISFeature, let featureTable = feature.featureTable as? AGSArcGISFeatureTable else {
-                    throw NSError.invalidOperation
-                }
-
-                if featureTable.canUpdate(feature) {
-                    try parentManager.update(oneToMany: self.richPopup)
-                }
-                else if featureTable.canAddFeature {
-                    try parentManager.add(oneToMany: self.richPopup)
-                }
-                else {
-                    throw NSError.invalidOperation
-                }
-            }
-            catch {
-                relatedRecordsErrors.append(error)
-            }
-        }
-    }
-
-    // Then, commit all staged (add/delete) attachments.
-    richPopupAttachmentManager?.commitStagedAttachments()
-
-    // Finally, the manager finishes editing its attributes.
-    super.finishEditing { (error) in
-
-        if let error = error {
-            relatedRecordsErrors.append(error)
-        }
-
-        if !relatedRecordsErrors.isEmpty {
-            completion(RichPopupManagerError.invalidPopup(relatedRecordsErrors))
-        }
-        else {
-            completion(nil)
-        }
-    }
-}
-```
+If the user decides to persist changes to the feature, the `RichPopupManager` performs a series of operations. First, it commits changes to each many-to-one related records. Then, it updates many-to-one parent managers then commits staged attachments. Finally, it calls its super class function.
 
 #### Editing related records
 
@@ -1012,47 +561,11 @@ The `RichPopupManager` handles a lot of the legwork in managing the editing of r
 
 The app leverages the data structure to perform all adding, updating and deleting of related records. The editing functions supported by the data structure are:
 
-```swift
-// One-to-many
-func add(oneToMany popup: AGSPopup) throws
-func update(oneToMany popup: AGSPopup) throws
-func delete(oneToMany popup: AGSPopup) throws
-
-// Many-to-one
-func update(manyToOne popup: AGSPopup) throws
-
-// Delete
-func deleteRichPopup() throws
-```
-
-The `RichPopupManager` also assists in providing context for formatting the `RichPopupDetailsViewController`.
-
-These helper functions inform the `RichPopupDetailsViewController`'s table view with what kind of table cell exists at an index path.
-
-```swift
-func indexPathWithinAttributes(_ indexPath: IndexPath) -> Bool
-func indexPathWithinManyToOne(_ indexPath: IndexPath) -> Bool
-func indexPathWithinOneToMany(_ indexPath: IndexPath) -> Bool
-func indexPathIsAddOneToMany(_ indexPath: IndexPath) -> Bool
-```
-
-They also help the `RichPopupDetailsViewController`'s table view retrieve pop-up attributes and relationships.
-
-```swift
-func attributeField(forIndexPath indexPath: IndexPath) -> AGSPopupField?
-func relationship(forIndexPath indexPath: IndexPath) -> Relationship?
-```
+The `RichPopupManager` also assists in providing context for formatting the `RichPopupDetailsViewController`. These helper functions inform the `RichPopupDetailsViewController`'s table view with what kind of table cell exists at an index path. They also help the `RichPopupDetailsViewController`'s table view retrieve pop-up attributes and relationships.
 
 #### Editing attachments
 
 The app uses a tool auxiliary to `AGSPopupAttachmentManager` named `RichPopupAttachmentsManager`. This tool allows the app to stage attachments before adding them to the `AGSPopupAttachmentManager` when the user decides to persist the editing session. Because the attachments are staged, the user can edit the attachment name and preferred content size (for image attachments).
-
-```swift
-internal func add(stagedAttachment: RichPopupStagedAttachment) -> Int
-internal func deleteAttachment(at index: Int) -> Bool
-internal func commitStagedAttachments()
-internal func discardStagedAttachments()
-```
 
 ### Reverse geocoding
 
@@ -1083,38 +596,13 @@ The `AppConfiguration` contains a series of static configuration resources. Modi
 
 You can configure the app with a base URL that points to your portal as well as your desired web map item ID.
 
-```swift
-enum PortalConfig {
-    static let basePortalDomain: String
-    static let webMapItemID: String
-}
-```
-
 #### 2. OAuth Configuration
 
 Configure the URL to match the path created in the **Current Redirect URIs** section of the **Authentication** tab within the [Dashboard of the ArcGIS for Developers site](https://developers.arcgis.com/applications).
 
-```swift
-enum OAuthConfig {
-    static let redirectUrl: String
-}
-```
-
 #### 3. Address Locator, Geocoder Configuration
 
 You can configure the app with your own online and offline geocoders (`AGSLocatorTask`). Provide your own URL for an online geocoder service and/or an offline locator generated in ArcGIS Pro.
-
-```swift
-enum OnlineGeocoderConfig {
-    static let urlString: String
-    static let addressAttributeKey: String
-}
-
-enum OfflineGeocoderConfig {
-    static let name: String
-    static let addressAttributeKey: String
-}
-```
 
 ### App secrets
 
@@ -1200,11 +688,11 @@ The `PortalSessionManager` is responsible for managing the active portal session
 
 #### Offline Map Manager
 
-The `OfflineMapManager` is responsible for managing the offline map and delegating offline map jobs.
+The `OfflineMapManager` is responsible for managing the offline map and delegating offline map jobs. The manager is a state machine responsible for initiating offline map jobs via the offline map job manager, loading the offline map, synchronizing the offline map, and deleting the offline map.
 
 #### Offline Map Job Manager
 
-The `OfflineMapJobManager` performs jobs as requested by the offline map manager, reporting the job's evolving status to watchful UIs along the way.
+The `OfflineMapJobManager` performs jobs as requested by the offline map manager, reporting the job's evolving status to watchful UIs along the way. The manager is a state machine responsible for performing offline map jobs, supporting one job at a time. The manager supports two types of offline map jobs, generating an offline map and offline map sync.
 
 #### Address Locator
 
@@ -1226,15 +714,6 @@ extension Notification.Name {
 ```
 
 Objects that wish to observe a notification must add an observer. When a notification is posted, objects that are observing the notification will perform the method specified by the selector.
-
-```swift
-NotificationCenter.default.addObserver(
-    self,
-    selector: #selector(adjustForPortal),
-    name: .portalDidChange,
-    object: nil
-)
-```
 
 ### Model: Pop-up configuration driven
 
@@ -1295,6 +774,14 @@ To perform a segue, a view controller calls `performSegue(withIdentifier, sender
 A problem arises when the view controller needs to send non-member object reference from itself to the destination view controller. Enter `EphemeralCache`.
 
 The `EphemeralCache` is a singleton, thread-safe caching system that allows you to set `AnyObject` that is retrieved and removed from the cache upon the first get of that object. Under the hood it accomplishes this using `NSCache` and a concurrent `DispatchQueue` (with a barrier flag).
+
+### Global alert queue
+
+A global alert queue is used to allow any number of alerts to be enqueued, displaying them one-by-one in a separate `UIWindow`.
+
+### Global progress view controller
+
+A global progress view controller is used to allow a progress HUD to display the status of a long-running operation and lock the screen's UI from receiving touch events, displaying the progress view in a separate `UIWindow`.
 
 ### File manager
 
