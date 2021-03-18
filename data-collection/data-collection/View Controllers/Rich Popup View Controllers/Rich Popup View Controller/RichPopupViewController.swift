@@ -17,13 +17,12 @@ import QuickLook
 import ArcGIS
 import Combine
 
-
 class RichPopupViewController: SegmentedViewController {
     
     // MARK: Rich Popup
     
     var popupManager: RichPopupManager!
-
+    
     var shouldLoadRichPopupRelatedRecords: Bool = true {
         didSet {
             detailsViewController?.shouldLoadRichPopupRelatedRecords = shouldLoadRichPopupRelatedRecords
@@ -168,7 +167,7 @@ class RichPopupViewController: SegmentedViewController {
             }
         }
     }
-
+    
     private func updateViewControllerUI(animated: Bool) {
         
         super.setEditing(popupManager.isEditing, animated: animated)
@@ -223,7 +222,7 @@ class RichPopupViewController: SegmentedViewController {
             defer {
                 self.updateViewControllerUI(animated: animated)
             }
-        
+            
             // User is requesting to start an editing session.
             guard popupManager.shouldAllowEdit, popupManager.startEditing() else {
                 showError(CannotEditPopupError())
@@ -242,7 +241,7 @@ class RichPopupViewController: SegmentedViewController {
                 
                 self.enableUserInteraction()
                 self.updateViewControllerUI(animated: animated)
-
+                
                 if let error = error {
                     self.editsMade.send(.failure(error))
                 }
@@ -307,9 +306,9 @@ class RichPopupViewController: SegmentedViewController {
             items.append( UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil) )
             
             let delete = UIBarButtonItem(title: String(format: "Delete %@", popupManager.title ?? "Record"),
-                                     style: .plain,
-                                    target: self,
-                                    action: #selector(userRequestsDeletePopup(_:)))
+                                         style: .plain,
+                                         target: self,
+                                         action: #selector(userRequestsDeletePopup(_:)))
             
             delete.tintColor = .destructive
             items.append( delete )
@@ -317,7 +316,7 @@ class RichPopupViewController: SegmentedViewController {
             items.append( UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil) )
             
             deleteButton = delete
-
+            
             toolbarItems = items
         }
     }
@@ -454,5 +453,38 @@ fileprivate extension UIViewController {
     
     var isRootViewController: Bool {
         return self == navigationController?.viewControllers.first
+    }
+}
+
+extension RichPopupViewController: FloatingPanelEmbeddable {
+    var floatingPanelItem: FloatingPanelItem {
+        let fpItem: FloatingPanelItem
+        let top = navigationController?.topViewController as? FloatingPanelEmbeddable
+        if self == top {
+            if detailsViewController != nil {
+                fpItem = detailsViewController.floatingPanelItem
+            }
+            else {
+                fpItem = FloatingPanelItem()
+            }
+        }
+        else if let top = top {
+            fpItem = top.floatingPanelItem
+        }
+        else {
+            fpItem = FloatingPanelItem()
+        }
+        return fpItem
+        //        if let fpEmbeddables = currentFloatingPanelEmbeddable {
+        //            return fpEmbeddables.floatingPanelItem
+        //        }
+        //        if segmentedControl.selectedSegmentIndex >= 0,
+        //           segmentedControl.selectedSegmentIndex < childrenViewControllers.count,
+        //           let floatingPanelItem = (childrenViewControllers[segmentedControl.selectedSegmentIndex] as? FloatingPanelEmbeddable)?.floatingPanelItem {
+        //            return floatingPanelItem
+        //        }
+        //        else {
+        //            return FloatingPanelItem()
+        //        }
     }
 }

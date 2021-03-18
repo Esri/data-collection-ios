@@ -28,6 +28,11 @@ class IdentifyResultsViewController: UITableViewController, FloatingPanelEmbedda
             if isViewLoaded {
                 tableView.reloadData()
             }
+            
+            floatingPanelItem.title = "Identify Results"
+            
+            let selected = self.selectedPopups.count
+            floatingPanelItem.subtitle = String("\(selected) Feature\(selected > 1 ? "s" : "")")
         }
     }
     
@@ -59,8 +64,7 @@ class IdentifyResultsViewController: UITableViewController, FloatingPanelEmbedda
         
         let richPopup = selectedPopups[indexPath.row]
         cell.textLabel?.text = richPopup.title
-        let attributes = richPopup.geoElement.attributes
-        cell.detailTextLabel?.text = "\(attributes["Address"] ?? ""); Diameter: \(attributes["DBH"] ?? "")"
+        cell.detailTextLabel?.text = richPopup.description
         if let symbol = richPopup.symbol {
             if let swatch = symbolSwatches[symbol] {
                 // we have a swatch, so set it into the imageView and stop the activity indicator

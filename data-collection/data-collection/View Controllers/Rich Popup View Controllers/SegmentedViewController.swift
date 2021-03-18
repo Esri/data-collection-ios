@@ -40,7 +40,7 @@ class SegmentedViewController: UIViewController {
             spacer.bottomAnchor.constraint(equalTo: visualEffectView.contentView.bottomAnchor),
             spacer.heightAnchor.constraint(equalToConstant: 1 / UIScreen.main.scale)
         ]
-
+        
         NSLayoutConstraint.activate(constraints)
         
         return visualEffectView
@@ -85,7 +85,7 @@ class SegmentedViewController: UIViewController {
         super.viewDidLoad()
         
         self.childrenIdentifiers = segmentedViewControllerChildIdentifiers()
-
+        
         addSubviews()
         performChildViewControllersSegues()
         embedFirstChildViewController()
@@ -208,7 +208,7 @@ class SegmentedViewController: UIViewController {
             // 9. Finish.
             view.layoutIfNeeded()
         }
-            // This is the first time a child view controller is embed.
+        // This is the first time a child view controller is embed.
         else {
             
             // 1. Add child view controller to parent.

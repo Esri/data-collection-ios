@@ -82,3 +82,16 @@ class RichPopupDetailsViewController: UITableViewController {
         self.tableView.reloadData()
     }
 }
+
+extension RichPopupDetailsViewController: FloatingPanelEmbeddable {
+    var floatingPanelItem: FloatingPanelItem {
+        let floatingPanelItem = FloatingPanelItem()
+
+        let richPopup = popupManager.richPopup
+        floatingPanelItem.title = richPopup.title
+        let attributes = richPopup.geoElement.attributes
+        floatingPanelItem.subtitle = "\(attributes["Address"] ?? ""); Diameter: \(attributes["DBH"] ?? "")"
+        floatingPanelItem.image = UIImage(named: "feature-details")
+        return floatingPanelItem
+    }
+}

@@ -32,3 +32,9 @@ class RichPopup: AGSPopup {
         return Relationships(popup: self)
     }()
 }
+
+extension RichPopup {
+    override var description: String {
+        return "\(geoElement.attributes["Address"] ?? ""); Diameter: \(geoElement.attributes["DBH"] ?? "")"
+    }
+}

@@ -222,6 +222,9 @@ public class FloatingPanelController: UIViewController {
                     self.allowManualResize = self.currentFloatingPanelItem.allowManualResize
                 }
             }
+            
+            // Finally, set the header nav controller's floating panel item:
+            (headerNavigationController.topViewController as? FloatingPanelHeaderController)?.floatingPanelItem = currentFloatingPanelItem
         }
     }
 

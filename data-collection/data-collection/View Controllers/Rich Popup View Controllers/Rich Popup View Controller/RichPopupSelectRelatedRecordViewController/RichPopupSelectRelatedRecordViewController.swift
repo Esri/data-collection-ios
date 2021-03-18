@@ -62,3 +62,19 @@ class RichPopupSelectRelatedRecordViewController: UITableViewController {
         delegate?.richPopupSelectRelatedRecordViewController(self, didSelectPopup: popup)
     }
 }
+
+extension RichPopupSelectRelatedRecordViewController: FloatingPanelEmbeddable {
+    var floatingPanelItem: FloatingPanelItem {
+        let floatingPanelItem = FloatingPanelItem()
+
+        floatingPanelItem.title = currentRelatedPopup?.title
+        if let attributes = currentRelatedPopup?.geoElement.attributes {
+            floatingPanelItem.subtitle = "\(attributes["Date"] ?? "")"
+        }
+        else {
+            floatingPanelItem.subtitle = ""
+        }
+        floatingPanelItem.image = UIImage(named: "data-clock-chart")
+        return floatingPanelItem
+    }
+}

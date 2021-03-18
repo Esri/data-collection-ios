@@ -45,12 +45,6 @@ extension MapViewController {
                             self?.clearCurrentPopup()
                         }
                     }
-                    let floatingPanelItem = identifyResultsVC.floatingPanelItem
-                    floatingPanelItem.title = "Identify Results"
-                    
-                    let selected = self.selectedPopups.count
-                    floatingPanelItem.subtitle = String("\(selected) Feature\(selected > 1 ? "s" : "")")
-                    floatingPanelItem.image = UIImage(named: "feature-details")
                     self.presentInFloatingPanel(identifyResultsVC)
                     self.floatingPanelController?.delegate = self
                 }
