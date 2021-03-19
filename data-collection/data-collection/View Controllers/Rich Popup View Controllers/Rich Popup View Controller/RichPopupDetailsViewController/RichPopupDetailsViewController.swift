@@ -89,9 +89,7 @@ extension RichPopupDetailsViewController: FloatingPanelEmbeddable {
 
         let richPopup = popupManager.richPopup
         floatingPanelItem.title = richPopup.title
-        let attributes = richPopup.geoElement.attributes
-        floatingPanelItem.subtitle = "\(attributes["Address"] ?? ""); Diameter: \(attributes["DBH"] ?? "")"
-        floatingPanelItem.image = UIImage(named: "feature-details")
+        floatingPanelItem.subtitle = richPopup.description
         return floatingPanelItem
     }
 }

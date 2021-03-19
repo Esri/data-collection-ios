@@ -35,6 +35,14 @@ class RichPopup: AGSPopup {
 
 extension RichPopup {
     override var description: String {
-        return "\(geoElement.attributes["Address"] ?? ""); Diameter: \(geoElement.attributes["DBH"] ?? "")"
+        let address = geoElement.attributes["Address"] as? String ?? ""
+        let dbh = geoElement.attributes["DBH"]
+        var descriptionString = ""
+        if !address.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+            descriptionString += "\(address); "
+        }
+        descriptionString += "Diameter: \(dbh ?? -1.0)"
+        
+        return descriptionString
     }
 }
