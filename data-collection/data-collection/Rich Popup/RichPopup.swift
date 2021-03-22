@@ -38,6 +38,8 @@ extension RichPopup {
         let address = geoElement.attributes["Address"] as? String ?? ""
         let dbh = geoElement.attributes["DBH"]
         var descriptionString = ""
+        
+        // Make sure address isn't an empty string or consist only of whitespace.
         if !address.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
             descriptionString += "\(address); "
         }

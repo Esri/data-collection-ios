@@ -29,6 +29,7 @@ class IdentifyResultsViewController: UITableViewController, FloatingPanelEmbedda
                 tableView.reloadData()
             }
             
+            // Set Floating Panel item properties.
             floatingPanelItem.title = "Identify Results"
             
             let selected = self.selectedPopups.count
@@ -41,12 +42,14 @@ class IdentifyResultsViewController: UITableViewController, FloatingPanelEmbedda
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        navigationController?.navigationBar.backgroundColor = .systemBackground
 
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem
+        navigationController?.navigationBar.isHidden = true
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        navigationController?.navigationBar.isHidden = true
     }
 
     // MARK: - Table view data source
@@ -92,23 +95,6 @@ class IdentifyResultsViewController: UITableViewController, FloatingPanelEmbedda
     }
     
     var richPopup: RichPopup?
-//    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        //            // Use the geometry engine to determine the nearest pop-up to the touch point.
-//        //            if let nearest = identifyResult.popups.popupNearestTo(mapPoint: mapPoint) {
-//        //                let richPopup = RichPopup(popup: nearest)
-//        //                self.setCurrentPopup(popup: richPopup)
-//        //            }
-//        //            else {
-//        //                self.clearCurrentPopup()
-//        //            }
-//        richPopup = selectedPopups[indexPath.row]
-//        popupChangedHandler?(richPopup)
-//        performSegue(withIdentifier: "showRichPopup", sender: nil)
-////        if let popup = richPopup, let vc = prepareRichPopupViewController(popup) {
-////            print("pushing popupvc")
-////            navigationController?.pushViewController(vc, animated: true)
-////        }
-//    }
 
     // MARK: - Navigation
 
@@ -122,30 +108,12 @@ class IdentifyResultsViewController: UITableViewController, FloatingPanelEmbedda
         // create the legend VC from the storyboard
         let popupVC = storyboard.instantiateInitialViewController() as? AppContextAwareNavigationController
         return popupVC
-//        guard let destination = segue.navigationDestination as? RichPopupViewController else { return }
-//        if let newPopup = EphemeralCache.shared.object(forKey: .newSpatialFeature) as? RichPopup {
-//            //                setCurrentPopup(popup: newPopup)
-//            destination.popupManager = RichPopupManager(richPopup: newPopup)
-//            destination.setEditing(true, animated: false)
-//            //                mapViewMode = .selectedFeature(visible: false)
-//        }
-//        else if let popupManager = EphemeralCache.shared.object(forKey: .newRelatedRecord) as? RichPopupManager {
-//            destination.setEditing(true, animated: false)
-//            destination.popupManager = popupManager
-//            destination.shouldLoadRichPopupRelatedRecords = false
-//        }
-//        else {
-//        else if let currentPopupManager = currentPopupManager {
-//            destination.popupManager = RichPopupManager(richPopup: richPopup!)
-//        }
-//        else {
-//            assertionFailure("A rich popup view controller should not present if any of the above scenarios are not met.")
-//        }
     }
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         guard let indexPath = tableView.indexPathForSelectedRow else { return }
+        tableView.deselectRow(at: indexPath, animated: false)
         richPopup = selectedPopups[indexPath.row]
         popupChangedHandler?(richPopup)
 
@@ -162,17 +130,9 @@ class IdentifyResultsViewController: UITableViewController, FloatingPanelEmbedda
             destination.shouldLoadRichPopupRelatedRecords = false
         }
         else {
-//        else if let currentPopupManager = currentPopupManager {
             destination.popupManager = RichPopupManager(richPopup: richPopup!)
         }
-//        else {
-//            assertionFailure("A rich popup view controller should not present if any of the above scenarios are not met.")
-//        }
     }
-
-//    override func showDetailViewController(_ vc: UIViewController, sender: Any?) {
-//        navigationController?.pushViewController(vc, animated: true)
-//    }
 
     // TODO
 //    Add handler property for when current popup changes.  That way the mapViewController

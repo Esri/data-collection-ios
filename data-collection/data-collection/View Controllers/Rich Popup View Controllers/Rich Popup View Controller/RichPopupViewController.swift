@@ -74,9 +74,14 @@ class RichPopupViewController: SegmentedViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        navigationController?.navigationBar.isHidden = false
+        navigationItem.hidesBackButton = true
+        navigationItem.titleView?.backgroundColor = .blue
         
-        // Set title
-        title = popupManager.title
+        adjustNavigationBarTintForWorkMode()
+
+        // Clear title
+        navigationItem.title = ""
         
         // Add dismiss button
         conditionallyAddDismissButton()
@@ -188,6 +193,30 @@ class RichPopupViewController: SegmentedViewController {
         conditionallyAddDeleteButton()
     }
     
+    // TODO: figure out how to combine this with the other method with this name...
+    // Maybe add KVO tho this file as well in order to get the updates to workmode.
+    func adjustNavigationBarTintForWorkMode() {
+        guard let navigationBar = navigationController?.navigationBar else { return }
+        let navBarAppearance = UINavigationBarAppearance()
+        navBarAppearance.configureWithOpaqueBackground()
+        navBarAppearance.titleTextAttributes = [.foregroundColor: UIColor.contrasting]
+        navBarAppearance.largeTitleTextAttributes = [.foregroundColor: UIColor.contrasting]
+        switch appContext.workMode {
+        case .none, .online:
+            navBarAppearance.backgroundColor = .primary
+        case .offline:
+            navBarAppearance.backgroundColor = .offline
+        }
+        navigationBar.standardAppearance = navBarAppearance
+        navigationBar.scrollEdgeAppearance = navBarAppearance
+        navigationBar.compactAppearance = navBarAppearance
+
+        // Hiding then un-hiding the navigation bar appears to force a redraw.
+        // This fixes an issue with iOS 13 where the background color doesn't update.
+        navigationController?.isNavigationBarHidden = true
+        navigationController?.isNavigationBarHidden = false
+    }
+
     // MARK: Edit Pop-up
     
     private func conditionallyAddEditButton() {
@@ -475,16 +504,5 @@ extension RichPopupViewController: FloatingPanelEmbeddable {
             fpItem = FloatingPanelItem()
         }
         return fpItem
-        //        if let fpEmbeddables = currentFloatingPanelEmbeddable {
-        //            return fpEmbeddables.floatingPanelItem
-        //        }
-        //        if segmentedControl.selectedSegmentIndex >= 0,
-        //           segmentedControl.selectedSegmentIndex < childrenViewControllers.count,
-        //           let floatingPanelItem = (childrenViewControllers[segmentedControl.selectedSegmentIndex] as? FloatingPanelEmbeddable)?.floatingPanelItem {
-        //            return floatingPanelItem
-        //        }
-        //        else {
-        //            return FloatingPanelItem()
-        //        }
     }
 }

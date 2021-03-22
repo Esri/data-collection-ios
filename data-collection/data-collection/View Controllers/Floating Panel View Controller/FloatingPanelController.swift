@@ -361,8 +361,7 @@ public class FloatingPanelController: UIViewController {
             contentNavigationController.view.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
             contentNavigationController.view.leadingAnchor.constraint(equalTo: contentView.leadingAnchor)
         ])
-        contentNavigationController.navigationBar.isHidden = false
-        contentNavigationController.navigationBar.topItem?.title = "My Title"
+        contentNavigationController.navigationBar.isHidden = true
         contentNavigationController.delegate = self
         contentNavigationController.didMove(toParent: self)
     }

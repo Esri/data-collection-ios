@@ -18,7 +18,7 @@ import UIKit
 class SegmentedViewController: UIViewController {
     
     // MARK: Views
-    
+
     private let effectsSegmentedControlContainerView: UIVisualEffectView = {
         
         // Build visual effect view with blur view.
@@ -227,7 +227,9 @@ class SegmentedViewController: UIViewController {
             currentViewController = to
             
             // 6. Finish.
-            view.layoutIfNeeded()
+            if view.superview != nil {
+                view.layoutIfNeeded()
+            }
         }
     }
     

@@ -27,11 +27,11 @@ extension MapViewController: AGSGeoViewTouchDelegate {
     }
     
     private func query(_ geoView: AGSGeoView, atScreenPoint screenPoint: CGPoint, mapPoint: AGSPoint) {
-
+        
         // Remove references to current pop-up and set the map view mode to default.
         clearCurrentPopup()
         mapViewMode = .defaultView
-
+        
         // If an identify operation is running, cancel it.
         identifyOperation?.cancel()
         identifyOperation = nil
@@ -56,7 +56,7 @@ extension MapViewController: AGSGeoViewTouchDelegate {
             assert(result != nil, "If there is no error, results must always be returned. Something very wrong happened.")
             
             let identifyResults = result!
-
+            
             // Find the first layer that is identifiable.
             let firstIdentifiableResult = identifyResults.first(where: { (identifyLayerResult) -> Bool in
                 guard let layer = identifyLayerResult.layerContent as? AGSFeatureLayer else { return false }
@@ -78,24 +78,8 @@ extension MapViewController: AGSGeoViewTouchDelegate {
                 return RichPopup(popup: popup)
             }))
             
-                self.clearCurrentPopup()
-            
-            
-            
-//            // Use the geometry engine to determine the nearest pop-up to the touch point.
-//            if let nearest = identifyResult.popups.popupNearestTo(mapPoint: mapPoint) {
-//                let richPopup = RichPopup(popup: nearest)
-//                self.setCurrentPopup(popup: richPopup)
-//            }
-//            else {
-//                self.clearCurrentPopup()
-//            }
-            
             // Set the map view mode to selected feature
             self.mapViewMode = .selectedFeature(visible: true)
-            
-//            // Load the new current pop up
-//            self.refreshCurrentPopup()
         }
     }
 }

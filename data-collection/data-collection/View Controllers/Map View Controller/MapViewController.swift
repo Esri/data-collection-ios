@@ -57,28 +57,10 @@ class MapViewController: UIViewController {
     
     var extrasNavigationController: UINavigationController?
     var layerContentsViewController: LayerContentsViewController?
-//    var floatingPanelController: FloatingPanelController? {
-//        willSet {
-//            // Dismiss the existing floating panel if we're showing one.
-//            if let exsistingFloatingPanel = floatingPanelController {
-//                dismissFloatingPanel(exsistingFloatingPanel)
-//            }
-//        }
-//    }
     
-    //TODO: create `instantiate()` like in FloatingPanelController
     var identifyResultsViewController: IdentifyResultsViewController?
-//     = {
-//        // Get the bundle and then the storyboard for the IdentifyResultsViewController.
-//        let bundle = Bundle(for: IdentifyResultsViewController.self)
-//        let storyboard = UIStoryboard(name: "IdentifyResultsViewController", bundle: bundle)
-//
-//        // Create the identifyResultsViewController from the storyboard.
-//        let vc = storyboard.instantiateInitialViewController() as? IdentifyResultsViewController
-//        return vc ?? IdentifyResultsViewController()
-//    }()
 
-    var mapViewMode: MapViewMode = .defaultView {
+        var mapViewMode: MapViewMode = .defaultView {
         didSet {
             adjustForMapViewMode(from: oldValue, to: mapViewMode)
         }
@@ -270,8 +252,8 @@ class MapViewController: UIViewController {
                 case .failure(let error):
                     self?.showError(error)
                 case .success(_):
-                    print("need self?.refreshCurrentPopup()")
-//                    self?.refreshCurrentPopup()
+//                    print("need self?.refreshCurrentPopup()")
+                    self?.refreshCurrentPopup()
                 }
             }
         }
@@ -316,13 +298,4 @@ extension String {
     static let newSpatialFeature = "MapViewController.newFeature.spatial"
     static let newNonSpatialFeature = "MapViewController.newFeature.nonspatial"
     static let newRelatedRecord = "MapViewController.newRelatedRecord"
-}
-
-// MARK: MapViewController Identify extension
-extension MapViewController {
-    func userDidRequestPopupViewController(_ sender: Any) {
-        guard case MapViewMode.selectedFeature(visible: true) = mapViewMode, currentPopupManager != nil else { return }
-        mapViewMode = .selectedFeature(visible: true)
-        performSegue(withIdentifier: "modallyPresentRelatedRecordsPopupViewController", sender: nil)
-    }
 }
