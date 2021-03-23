@@ -252,8 +252,8 @@ class MapViewController: UIViewController {
                 case .failure(let error):
                     self?.showError(error)
                 case .success(_):
-//                    print("need self?.refreshCurrentPopup()")
-                    self?.refreshCurrentPopup()
+                    print("Do we need self?.refreshCurrentPopup()?")
+//                    self?.refreshCurrentPopup()
                 }
             }
         }
