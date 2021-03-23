@@ -62,7 +62,7 @@
                                     <segue destination="ZtZ-f6-rZp" kind="embed" id="VcP-nO-K0c"/>
                                 </connections>
                             </containerView>
-                            <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="nd8-Es-e3p" customClass="SlideNotificationView" customModule="data_collection" customModuleProvider="target">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nd8-Es-e3p" customClass="SlideNotificationView" customModule="data_collection" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="88" width="375" height="32"/>
                                 <constraints>
                                     <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="32" id="TUB-b0-OlH"/>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="kgl-6z-heq">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="ym9-hy-6vu">
     <device id="retina5_9" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
@@ -386,6 +386,7 @@
                             <outlet property="delegate" destination="pTi-FO-nvB" id="rw0-ny-2mW"/>
                         </connections>
                     </tableView>
+                    <navigationItem key="navigationItem" id="dy7-WP-29X"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="IBh-Pi-bbs" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -652,6 +653,7 @@
                             <outlet property="delegate" destination="myS-Tu-q70" id="O86-8K-3cn"/>
                         </connections>
                     </tableView>
+                    <navigationItem key="navigationItem" id="XGr-VO-ww5"/>
                     <connections>
                         <outlet property="attachmentNameTextField" destination="VT8-vh-klL" id="J9f-g7-brf"/>
                     </connections>
@@ -659,6 +661,24 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="y5W-Id-pGH" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="3202" y="-284"/>
+        </scene>
+        <!--App Context Aware Navigation Controller-->
+        <scene sceneID="Hv7-10-4NM">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="ym9-hy-6vu" customClass="AppContextAwareNavigationController" customModule="data_collection" customModuleProvider="target" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="8Rv-jl-FvC">
+                        <rect key="frame" x="0.0" y="44" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="kgl-6z-heq" kind="relationship" relationship="rootViewController" id="HiP-tA-CJA"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="XBv-H3-oCR" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="658" y="-679"/>
         </scene>
     </scenes>
     <designables>

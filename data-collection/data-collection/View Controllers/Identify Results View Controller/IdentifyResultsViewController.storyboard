@@ -56,10 +56,10 @@
             </objects>
             <point key="canvasLocation" x="487" y="97"/>
         </scene>
-        <!--RichPopup-->
+        <!--RichPopupViewController-->
         <scene sceneID="h9L-jS-PUP">
             <objects>
-                <viewControllerPlaceholder storyboardName="RichPopup" id="PkY-Ts-ie5" sceneMemberID="viewController">
+                <viewControllerPlaceholder storyboardName="RichPopup" referencedIdentifier="RichPopupViewController" id="PkY-Ts-ie5" sceneMemberID="viewController">
                     <navigationItem key="navigationItem" id="u2n-dx-IT5"/>
                 </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="a1d-yf-xu8" userLabel="First Responder" sceneMemberID="firstResponder"/>
