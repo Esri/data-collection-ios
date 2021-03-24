@@ -18,9 +18,7 @@ import ArcGIS
 class IdentifyResultsViewController: UITableViewController, FloatingPanelEmbeddable {
     var popupChangedHandler: ((RichPopup?) -> Void)?
 
-    var floatingPanelItem: FloatingPanelItem = {
-        return FloatingPanelItem()
-    }()
+    var floatingPanelItem = FloatingPanelItem()
     
     let cellIdentifier = "Cell"
     var selectedPopups = [RichPopup]() {
@@ -54,11 +52,11 @@ class IdentifyResultsViewController: UITableViewController, FloatingPanelEmbedda
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
+       1
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return selectedPopups.count
+       selectedPopups.count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
