@@ -18,9 +18,7 @@ import ArcGIS
 class IdentifyResultsViewController: UITableViewController, FloatingPanelEmbeddable {
     var popupChangedHandler: ((RichPopup?) -> Void)?
 
-    var floatingPanelItem: FloatingPanelItem = {
-        return FloatingPanelItem()
-    }()
+    var floatingPanelItem = FloatingPanelItem()
     
     let cellIdentifier = "Cell"
     var selectedPopups = [RichPopup]() {
