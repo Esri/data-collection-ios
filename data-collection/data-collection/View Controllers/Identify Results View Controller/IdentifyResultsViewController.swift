@@ -31,7 +31,6 @@ class IdentifyResultsViewController: UITableViewController, FloatingPanelEmbedda
             
             // Set Floating Panel item properties.
             floatingPanelItem.title = "Identify Results"
-            
             let selected = self.selectedPopups.count
             floatingPanelItem.subtitle = String("\(selected) Feature\(selected > 1 ? "s" : "")")
         }

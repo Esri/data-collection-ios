@@ -42,8 +42,7 @@ extension MapViewController {
                             self?.clearCurrentPopup()
                         }
                     }
-                    self.presentInFloatingPanel(identifyResultsVC)
-                    self.floatingPanelController?.delegate = self
+                    self.presentInFloatingPanel(identifyResultsVC, regularWidthInsets: self.adjustedFloatingPanelInsets())
                 }
                 else {
                     // Dismiss the floating panel controller.

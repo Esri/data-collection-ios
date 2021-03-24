@@ -11,7 +11,7 @@
         <!--Identify Results View Controller-->
         <scene sceneID="b0a-ne-aLJ">
             <objects>
-                <tableViewController id="O1x-dy-5aY" customClass="IdentifyResultsViewController" customModule="data_collection" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController modalTransitionStyle="flipHorizontal" id="O1x-dy-5aY" customClass="IdentifyResultsViewController" customModule="data_collection" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="hqT-cb-T46">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

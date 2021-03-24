@@ -103,7 +103,7 @@ extension MapViewController {
     /// Create the floating panel insets, taking into account the map view's
     /// adjusted content inset for the attribution bar.
     /// - Returns: The floating panel insets.
-    private func adjustedFloatingPanelInsets() -> UIEdgeInsets {
+    internal func adjustedFloatingPanelInsets() -> UIEdgeInsets {
         return UIEdgeInsets(top: 8.0, left: 8.0, bottom: mapView.adjustedContentInset.bottom + 8.0, right: 8.0)
     }
 }
