@@ -57,7 +57,7 @@ class IdentifyResultsViewController: UITableViewController, FloatingPanelEmbedda
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return selectedPopups.count
+       selectedPopups.count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
