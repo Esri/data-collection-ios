@@ -79,82 +79,6 @@
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                             </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wWn-Jn-iZF" customClass="ShrinkingView" customModule="data_collection" customModuleProvider="target">
-                                <rect key="frame" x="16" y="668.66666666666663" width="343" height="93.333333333333371"/>
-                                <subviews>
-                                    <view contentMode="scaleToFill" verticalHuggingPriority="249" translatesAutoresizingMaskIntoConstraints="NO" id="XFk-gB-uaM">
-                                        <rect key="frame" x="0.0" y="15" width="343" height="78.333333333333329"/>
-                                        <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="1000" text="Related Records Header" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsLetterSpacingToFitWidth="YES" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qdc-PH-C8o">
-                                                <rect key="frame" x="16" y="15.999999999999998" width="257" height="20.333333333333329"/>
-                                                <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
-                                                <nil key="textColor"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
-                                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="88Q-C5-WBm">
-                                                <rect key="frame" x="16" y="44.333333333333371" width="311" height="18"/>
-                                                <subviews>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="1000" text="Related Records Sub" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsLetterSpacingToFitWidth="YES" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eWg-bj-9Qn">
-                                                        <rect key="frame" x="0.0" y="0.0" width="152.33333333333334" height="18"/>
-                                                        <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
-                                                        <nil key="textColor"/>
-                                                        <nil key="highlightedColor"/>
-                                                    </label>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="right" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="1000" text="(n) Related Records" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsLetterSpacingToFitWidth="YES" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ahu-50-KaZ">
-                                                        <rect key="frame" x="160.33333333333337" y="0.0" width="150.66666666666663" height="18"/>
-                                                        <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
-                                                        <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                        <nil key="highlightedColor"/>
-                                                    </label>
-                                                </subviews>
-                                            </stackView>
-                                        </subviews>
-                                        <color key="backgroundColor" white="1" alpha="0.80000000000000004" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        <constraints>
-                                            <constraint firstItem="qdc-PH-C8o" firstAttribute="leading" secondItem="XFk-gB-uaM" secondAttribute="leading" constant="16" id="K8W-fV-ksf"/>
-                                            <constraint firstItem="88Q-C5-WBm" firstAttribute="leading" secondItem="XFk-gB-uaM" secondAttribute="leading" constant="16" id="QWL-rw-mtG"/>
-                                            <constraint firstAttribute="trailing" secondItem="88Q-C5-WBm" secondAttribute="trailing" constant="16" id="avM-ld-rYE"/>
-                                            <constraint firstItem="qdc-PH-C8o" firstAttribute="top" secondItem="XFk-gB-uaM" secondAttribute="top" constant="16" id="dy5-71-0Yh"/>
-                                            <constraint firstItem="88Q-C5-WBm" firstAttribute="top" secondItem="qdc-PH-C8o" secondAttribute="bottom" constant="8" id="g0d-Xc-4uj"/>
-                                            <constraint firstAttribute="bottom" secondItem="88Q-C5-WBm" secondAttribute="bottom" constant="16" id="vjf-oe-dOL"/>
-                                        </constraints>
-                                        <userDefinedRuntimeAttributes>
-                                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                                                <integer key="value" value="8"/>
-                                            </userDefinedRuntimeAttribute>
-                                        </userDefinedRuntimeAttributes>
-                                    </view>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hFk-4Y-xfb">
-                                        <rect key="frame" x="281" y="4" width="46" height="46"/>
-                                        <color key="backgroundColor" name="primary"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="46" id="SXt-9j-7zo"/>
-                                            <constraint firstAttribute="height" constant="46" id="hcY-de-Odo"/>
-                                        </constraints>
-                                        <state key="normal" image="AddFeature">
-                                            <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        </state>
-                                        <userDefinedRuntimeAttributes>
-                                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                                                <integer key="value" value="23"/>
-                                            </userDefinedRuntimeAttribute>
-                                        </userDefinedRuntimeAttributes>
-                                        <connections>
-                                            <action selector="userRequestsAddNewRelatedRecord:" destination="nEg-xi-PLM" eventType="touchUpInside" id="7aw-AM-dAx"/>
-                                        </connections>
-                                    </button>
-                                </subviews>
-                                <constraints>
-                                    <constraint firstItem="hFk-4Y-xfb" firstAttribute="leading" secondItem="qdc-PH-C8o" secondAttribute="trailing" constant="8" id="FwY-tM-ewH"/>
-                                    <constraint firstAttribute="trailing" secondItem="hFk-4Y-xfb" secondAttribute="trailing" constant="16" id="HwB-lg-tdW"/>
-                                    <constraint firstAttribute="bottom" secondItem="XFk-gB-uaM" secondAttribute="bottom" id="JGd-E7-7IZ"/>
-                                    <constraint firstAttribute="height" relation="lessThanOrEqual" constant="220" id="Mg3-NB-yYT"/>
-                                    <constraint firstAttribute="trailing" secondItem="XFk-gB-uaM" secondAttribute="trailing" id="eb1-4B-ks6"/>
-                                    <constraint firstItem="XFk-gB-uaM" firstAttribute="top" secondItem="wWn-Jn-iZF" secondAttribute="top" constant="15" id="hwk-9y-OSI"/>
-                                    <constraint firstItem="hFk-4Y-xfb" firstAttribute="top" secondItem="wWn-Jn-iZF" secondAttribute="top" constant="4" id="mn1-Xi-EN2"/>
-                                    <constraint firstItem="XFk-gB-uaM" firstAttribute="leading" secondItem="wWn-Jn-iZF" secondAttribute="leading" id="zPS-Yk-arx"/>
-                                </constraints>
-                            </view>
                             <view opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JPL-Oj-pCs" customClass="PinDropView" customModule="data_collection" customModuleProvider="target">
                                 <rect key="frame" x="166.66666666666666" y="429" width="42" height="42"/>
                                 <constraints>
@@ -243,17 +167,14 @@
                             <constraint firstItem="673-08-WQO" firstAttribute="bottom" secondItem="Iie-Za-UAs" secondAttribute="bottom" id="Afj-mH-cGM"/>
                             <constraint firstItem="JPL-Oj-pCs" firstAttribute="centerX" secondItem="Iie-Za-UAs" secondAttribute="centerX" id="Mcl-Sm-zBv"/>
                             <constraint firstItem="nd8-Es-e3p" firstAttribute="trailing" secondItem="Iie-Za-UAs" secondAttribute="trailing" id="Mr4-HZ-mff"/>
-                            <constraint firstItem="5HZ-r9-azH" firstAttribute="trailing" secondItem="wWn-Jn-iZF" secondAttribute="trailing" constant="16" id="Pbc-7m-8Mf"/>
                             <constraint firstItem="5HZ-r9-azH" firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="F31-4h-0fs" secondAttribute="bottom" constant="16" id="QJO-Vv-BTt"/>
                             <constraint firstItem="Iie-Za-UAs" firstAttribute="leading" secondItem="kpE-SF-vK8" secondAttribute="leading" id="S1O-WV-qr3"/>
-                            <constraint firstItem="5HZ-r9-azH" firstAttribute="bottom" secondItem="wWn-Jn-iZF" secondAttribute="bottom" constant="16" placeholder="YES" id="Sgu-yL-0My"/>
                             <constraint firstItem="5HZ-r9-azH" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="F31-4h-0fs" secondAttribute="trailing" constant="16" id="TsY-fd-uEY"/>
                             <constraint firstItem="pcE-3a-4ld" firstAttribute="top" secondItem="Iie-Za-UAs" secondAttribute="top" id="VKC-6t-gAW"/>
                             <constraint firstItem="5HZ-r9-azH" firstAttribute="trailing" secondItem="bCz-JE-wcZ" secondAttribute="trailing" constant="16" id="XEj-x9-f2d"/>
                             <constraint firstItem="nd8-Es-e3p" firstAttribute="leading" secondItem="Iie-Za-UAs" secondAttribute="leading" id="XMa-xj-WIv"/>
                             <constraint firstItem="pcE-3a-4ld" firstAttribute="leading" secondItem="Iie-Za-UAs" secondAttribute="leading" id="ZLu-Qi-UfN"/>
                             <constraint firstItem="bCz-JE-wcZ" firstAttribute="top" secondItem="pcE-3a-4ld" secondAttribute="bottom" constant="16" id="Zvi-Yi-VqY"/>
-                            <constraint firstItem="wWn-Jn-iZF" firstAttribute="leading" secondItem="5HZ-r9-azH" secondAttribute="leading" constant="16" id="dKi-4X-nCw"/>
                             <constraint firstItem="pcE-3a-4ld" firstAttribute="bottom" secondItem="Iie-Za-UAs" secondAttribute="top" priority="750" id="dXB-SL-3DH"/>
                             <constraint firstItem="F31-4h-0fs" firstAttribute="centerX" secondItem="kpE-SF-vK8" secondAttribute="centerX" id="eQu-OE-y9o"/>
                             <constraint firstAttribute="trailing" secondItem="Iie-Za-UAs" secondAttribute="trailing" id="evB-78-ejO"/>
@@ -296,16 +217,11 @@
                     </navigationItem>
                     <connections>
                         <outlet property="addFeatureButton" destination="VQ4-oV-4QR" id="2uy-3L-nvB"/>
-                        <outlet property="addPopupRelatedRecordButton" destination="hFk-4Y-xfb" id="MKS-iz-r3Q"/>
                         <outlet property="compassView" destination="bCz-JE-wcZ" id="ru4-XR-LHp"/>
                         <outlet property="extrasButton" destination="ATD-QQ-gcs" id="gj5-vH-L6Z"/>
                         <outlet property="mapView" destination="Iie-Za-UAs" id="qSz-xf-Ger"/>
                         <outlet property="maskViewContainer" destination="673-08-WQO" id="sOa-1Y-1cv"/>
                         <outlet property="pinDropView" destination="JPL-Oj-pCs" id="3vt-tC-fGM"/>
-                        <outlet property="popupsContainerView" destination="XFk-gB-uaM" id="qpP-OR-B14"/>
-                        <outlet property="relatedRecordHeaderLabel" destination="qdc-PH-C8o" id="c8Z-yL-Fh3"/>
-                        <outlet property="relatedRecordSubheaderLabel" destination="eWg-bj-9Qn" id="qCL-Ad-RHL"/>
-                        <outlet property="relatedRecordsNLabel" destination="Ahu-50-KaZ" id="wg9-Ds-UlI"/>
                         <outlet property="reloadMapButton" destination="w1m-XM-YEC" id="Qsx-1T-Mmr"/>
                         <outlet property="selectView" destination="pcE-3a-4ld" id="WgX-fa-shE"/>
                         <outlet property="selectViewHeaderLabel" destination="mkq-dc-atb" id="5PB-la-eBs"/>

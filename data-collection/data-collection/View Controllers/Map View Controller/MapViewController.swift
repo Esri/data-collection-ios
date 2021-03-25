@@ -29,7 +29,6 @@ class MapViewController: UIViewController {
     }
     
     @IBOutlet weak var mapView: AGSMapView!
-    @IBOutlet weak var popupsContainerView: UIView!
     @IBOutlet weak var addPopupRelatedRecordButton: UIButton!
     @IBOutlet weak var selectView: UIView!
     @IBOutlet weak var pinDropView: PinDropView!

@@ -35,18 +35,15 @@ class IdentifyResultsViewController: UITableViewController, FloatingPanelEmbedda
     }
     
     // Dictionary of symbol swatches (images); keys are the symbol used to create the swatch.
-    private var symbolSwatches = [AGSSymbol: UIImage]()
+    private var swatches = NSCache<AGSSymbol, UIImage>()
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        navigationController?.navigationBar.backgroundColor = .systemBackground
-
-        navigationController?.navigationBar.isHidden = true
     }
     
     override func viewWillAppear(_ animated: Bool) {
         navigationController?.navigationBar.isHidden = true
+        navigationController?.isToolbarHidden = true
     }
 
     // MARK: - Table view data source
@@ -66,7 +63,7 @@ class IdentifyResultsViewController: UITableViewController, FloatingPanelEmbedda
         cell.textLabel?.text = richPopup.title
         cell.detailTextLabel?.text = richPopup.description
         if let symbol = richPopup.symbol {
-            if let swatch = symbolSwatches[symbol] {
+            if let swatch = swatches.object(forKey: symbol) {
                 // we have a swatch, so set it into the imageView and stop the activity indicator
                 cell.imageView?.image = swatch
             } else {
@@ -78,12 +75,10 @@ class IdentifyResultsViewController: UITableViewController, FloatingPanelEmbedda
                 symbol.createSwatch(completion: { [weak self] (image, _) -> Void in
                     // make sure this is the cell we still care about and that it
                     // wasn't already recycled by the time we get the swatch
-                    if cell.tag != indexPath.hashValue {
-                        return
-                    }
+                    guard cell.tag == indexPath.hashValue, let image = image else { return }
 
                     // set the swatch into our dictionary and reload the row
-                    self?.symbolSwatches[symbol] = image
+                    self?.swatches.setObject(image, forKey: symbol)
                     tableView.reloadRows(at: [indexPath], with: .automatic)
                 })
             }
