@@ -21,7 +21,6 @@ class AppRules {
     ///
     /// The rules determinig if a layer can identified include:
     /// * Is the layer visible?
-    /// * Is the layer's underlying table's geometry of type point?
     /// * Are pop-ups enabled on the layer's underlying table?
     ///
     /// - Parameters:
@@ -29,11 +28,11 @@ class AppRules {
     ///
     /// - Returns: If the layer is identifiable or not.
     
-    static func isLayerIdentifiable(_ layer: AGSFeatureLayer) -> Bool {
+    static func isLayerIdentifiable(_ layer: AGSFeatureLayer?) -> Bool {
         guard
+            let layer = layer,
             layer.isVisible,
             let featureTable = layer.featureTable,
-            featureTable.geometryType == .point,
             featureTable.isPopupActuallyEnabled else {
                 return false
         }

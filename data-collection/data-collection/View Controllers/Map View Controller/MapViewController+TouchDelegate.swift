@@ -57,14 +57,15 @@ extension MapViewController: AGSGeoViewTouchDelegate {
             
             let identifyResults = result!
             
-            // Find the first layer that is identifiable.
-            let firstIdentifiableResult = identifyResults.first(where: { (identifyLayerResult) -> Bool in
-                guard let layer = identifyLayerResult.layerContent as? AGSFeatureLayer else { return false }
-                return AppRules.isLayerIdentifiable(layer)
-            })
-            
+            // Find identify results for all identifiable feature layers
+            // and return them as an array of RichPopups.
+            let richPopups = identifyResults.filter {
+                AppRules.isLayerIdentifiable($0.layerContent as? AGSFeatureLayer)
+            }
+            .flatMap { $0.popups.map { RichPopup(popup: $0) } }
+
             // Inform the user if the identify did not yield any results.
-            guard let identifyResult = firstIdentifiableResult, identifyResult.popups.count > 0 else {
+            guard richPopups.count > 0 else {
                 self.slideNotificationView.showLabel(withNotificationMessage: "Found no results.", forDuration: 2.0)
                 self.clearCurrentPopup()
                 self.mapViewMode = .defaultView
@@ -74,9 +75,7 @@ extension MapViewController: AGSGeoViewTouchDelegate {
             // Need to accomodate multiple results
             // - start by displaying all those results
             // - as user selects new result from displayed list, update selection in MapView
-            self.setSelectedPopups(popups: identifyResult.popups.map({ (popup) -> RichPopup in
-                return RichPopup(popup: popup)
-            }))
+            self.setSelectedPopups(popups: richPopups)
             
             // Set the map view mode to selected feature
             self.mapViewMode = .selectedFeature(visible: true)
