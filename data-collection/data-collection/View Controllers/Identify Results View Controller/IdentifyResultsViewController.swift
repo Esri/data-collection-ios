@@ -36,6 +36,7 @@ class IdentifyResultsViewController: UITableViewController, FloatingPanelEmbedda
     
     // Dictionary of symbol swatches (images); keys are the symbol used to create the swatch.
     private var swatches = NSCache<AGSSymbol, UIImage>()
+    private var subtitles = NSCache<RichPopup, NSString>()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -61,7 +62,6 @@ class IdentifyResultsViewController: UITableViewController, FloatingPanelEmbedda
         
         let richPopup = selectedPopups[indexPath.row]
         cell.textLabel?.text = richPopup.title
-        cell.detailTextLabel?.text = richPopup.description
         if let symbol = richPopup.symbol {
             if let swatch = swatches.object(forKey: symbol) {
                 // we have a swatch, so set it into the imageView and stop the activity indicator
@@ -83,6 +83,16 @@ class IdentifyResultsViewController: UITableViewController, FloatingPanelEmbedda
                 })
             }
         }
+        if let subtitle = subtitles.object(forKey: richPopup) {
+            cell.detailTextLabel?.text = subtitle as String
+        }
+        else {
+            richPopup.evaluateSubtitle { [weak self] (subtitle) in
+                self?.subtitles.setObject(subtitle as NSString, forKey: richPopup)
+                self?.tableView.reloadRows(at: [indexPath], with: .automatic)
+            }
+        }
+        
         return cell
     }
     

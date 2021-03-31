@@ -34,17 +34,25 @@ class RichPopup: AGSPopup {
 }
 
 extension RichPopup {
-    override var description: String {
-        let address = geoElement.attributes["Address"] as? String ?? ""
-        let dbh = geoElement.attributes["DBH"]
-        var descriptionString = ""
-        
-        // Make sure address isn't an empty string or consist only of whitespace.
-        if !address.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
-            descriptionString += "\(address); "
+    func evaluateSubtitle(completion: @escaping (String) -> Void) {
+        evaluateExpressions { (expressions, error) in
+            if error == nil,
+               let expression = expressions?.first(where: { $0.popupExpression.title == "subtitle" }) {
+                let subtitle: String
+                switch expression.popupExpression.returnType {
+                case .number:
+                    let val = expression.result as! NSNumber
+                    subtitle = String(val.stringValue)
+                case .string:
+                    subtitle = String(expression.result as! NSString)
+                @unknown default:
+                    subtitle = "<Error>"
+                }
+                completion(subtitle)
+            }
+            else {
+                completion("")
+            }
         }
-        descriptionString += "Diameter: \(dbh ?? -1.0)"
-        
-        return descriptionString
     }
 }

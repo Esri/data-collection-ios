@@ -29,7 +29,7 @@ class RichPopupDetailsViewController: UITableViewController {
     }
     
     var popupManager: RichPopupManager!
-    
+
     var shouldLoadRichPopupRelatedRecords: Bool = true
     
     weak var delegate: RichPopupDetailsViewControllerDelegate?
@@ -89,7 +89,7 @@ extension RichPopupDetailsViewController: FloatingPanelEmbeddable {
 
         let richPopup = popupManager.richPopup
         floatingPanelItem.title = richPopup.title
-        floatingPanelItem.subtitle = richPopup.description
+        floatingPanelItem.subtitle = nil
         return floatingPanelItem
     }
 }
