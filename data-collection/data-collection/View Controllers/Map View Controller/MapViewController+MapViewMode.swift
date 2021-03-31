@@ -43,6 +43,7 @@ extension MapViewController {
                         }
                     }
                     self.presentInFloatingPanel(identifyResultsVC, regularWidthInsets: self.adjustedFloatingPanelInsets())
+                    self.floatingPanelController?.transitionDirection = .horizontal
                 }
                 else {
                     // Dismiss the floating panel controller.

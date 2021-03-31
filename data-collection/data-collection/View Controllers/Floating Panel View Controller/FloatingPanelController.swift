@@ -26,6 +26,16 @@ public enum FloatingPanelState: Int {
     case full
 }
 
+/// Defines the transition direction for the view controller content navigation animation.
+public enum TransitionDirection: Int {
+    /// The transition push animation happens from right to left (the new view
+    /// slides in from the right).  The pop animation is the reverse.
+    case horizontal
+    /// The transition push animation happens from bottom to top (the new view
+    /// slides up from the bottom).  The pop animation is the reverse.
+    case vertical
+}
+
 /// `FloatingPanelItem` dictates the appearance of a `FloatingPanelController`.
 public class FloatingPanelItem : NSObject {
     /// The title to display in the header.
@@ -100,6 +110,9 @@ public class FloatingPanelController: UIViewController {
     @IBOutlet private var topHandlebarView: UIView!
     @IBOutlet private var bottomHandlebarView: UIView!
     @IBOutlet private var panGestureRecognizer: UIPanGestureRecognizer!
+    
+    /// The transition direction for push/pop navigation animation.
+    public var transitionDirection: TransitionDirection = .horizontal
     
     /// The delegate to be notified of FloatingPanelControllerDelegate events.
     weak var delegate: FloatingPanelControllerDelegate?
@@ -577,6 +590,12 @@ private let transitionAnimationDuration: TimeInterval = 0.5
 
 /// The class handling push transition animations for the content navigation controller.
 fileprivate class PushTransitionAnimation: NSObject, UIViewControllerAnimatedTransitioning {
+    private var transitionDirection: TransitionDirection = .horizontal
+    convenience init(_ transitionDirection: TransitionDirection) {
+        self.init()
+        self.transitionDirection = transitionDirection
+    }
+    
     func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval {
         return transitionAnimationDuration
     }
@@ -587,7 +606,14 @@ fileprivate class PushTransitionAnimation: NSObject, UIViewControllerAnimatedTra
         let finalFrameForVC = transitionContext.finalFrame(for: toViewController)
         let containerView = transitionContext.containerView
         
-        toViewController.view.frame = finalFrameForVC.offsetBy(dx: 0, dy: finalFrameForVC.height)
+        let finalFrame: CGRect
+        switch transitionDirection {
+        case .horizontal:
+            finalFrame = finalFrameForVC.offsetBy(dx: finalFrameForVC.width, dy: 0)
+        case .vertical:
+            finalFrame = finalFrameForVC.offsetBy(dx: 0, dy: finalFrameForVC.height)
+        }
+        toViewController.view.frame = finalFrame
         containerView.addSubview(toViewController.view)
         
         UIView.animate(withDuration: transitionDuration(using: transitionContext), animations: {
@@ -602,6 +628,12 @@ fileprivate class PushTransitionAnimation: NSObject, UIViewControllerAnimatedTra
 
 /// The class handling pop transition animations for the content navigation controller.
 fileprivate class PopTransitionAnimation: NSObject, UIViewControllerAnimatedTransitioning {
+    private var transitionDirection: TransitionDirection = .horizontal
+    convenience init(_ transitionDirection: TransitionDirection) {
+        self.init()
+        self.transitionDirection = transitionDirection
+    }
+
     func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval {
         return transitionAnimationDuration
     }
@@ -620,7 +652,16 @@ fileprivate class PopTransitionAnimation: NSObject, UIViewControllerAnimatedTran
         
         UIView.animate(withDuration: transitionDuration(using: transitionContext), animations: {
             toViewController.view.alpha = 1.0
-            fromViewController.view.frame = finalFrameForVC.offsetBy(dx: 0, dy: finalFrameForVC.height)
+            
+            let finalFrame: CGRect
+            switch self.transitionDirection {
+            case .horizontal:
+                finalFrame = finalFrameForVC.offsetBy(dx: finalFrameForVC.width, dy: 0)
+            case .vertical:
+                finalFrame = finalFrameForVC.offsetBy(dx: 0, dy: finalFrameForVC.height)
+            }
+
+            fromViewController.view.frame = finalFrame
         }) { finished in
             transitionContext.completeTransition(finished)
         }
@@ -702,7 +743,7 @@ extension FloatingPanelController: UINavigationControllerDelegate {
             animatedTransitioning = operation == .pop ? HeaderPopTransitionAnimation() : HeaderPushTransitionAnimation()
         }
         else {
-            animatedTransitioning = operation == .pop ? PopTransitionAnimation() : PushTransitionAnimation()
+            animatedTransitioning = operation == .pop ? PopTransitionAnimation(transitionDirection) : PushTransitionAnimation(transitionDirection)
         }
         return animatedTransitioning
     }
