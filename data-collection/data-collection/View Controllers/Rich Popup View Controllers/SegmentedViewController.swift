@@ -22,7 +22,7 @@ class SegmentedViewController: UIViewController {
     private let effectsSegmentedControlContainerView: UIVisualEffectView = {
         
         // Build visual effect view with blur view.
-        let visualEffect = UIBlurEffect(style: .extraLight)
+        let visualEffect = UIBlurEffect(style: .systemThickMaterial)
         let visualEffectView = UIVisualEffectView(effect: visualEffect)
         visualEffectView.translatesAutoresizingMaskIntoConstraints = false
         
@@ -42,12 +42,12 @@ class SegmentedViewController: UIViewController {
         ]
         
         NSLayoutConstraint.activate(constraints)
-        
         return visualEffectView
     }()
     
     lazy var segmentedControl: UISegmentedControl = {
         let segmentedControl = UISegmentedControl()
+        segmentedControl.backgroundColor = .systemBackground
         segmentedControl.translatesAutoresizingMaskIntoConstraints = false
         segmentedControl.addTarget(self, action: #selector(segmentedControlValueDidChange(_:)), for: .valueChanged)
         return segmentedControl
