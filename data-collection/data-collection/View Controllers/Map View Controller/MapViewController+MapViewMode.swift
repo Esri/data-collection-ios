@@ -34,12 +34,11 @@ extension MapViewController {
                     // Set the selected popups on the identify results view controller.
                     identifyResultsVC.selectedPopups = self.selectedPopups
                     identifyResultsVC.popupChangedHandler = { [weak self] (richPopup: RichPopup?) in
-                        // Use the geometry engine to determine the nearest pop-up to the touch point.
                         if let popup = richPopup {
                             self?.setCurrentPopup(popup: popup)
                         }
                         else {
-                            self?.clearCurrentPopup()
+                            self?.setSelectedPopups(popups: identifyResultsVC.selectedPopups)
                         }
                     }
                     self.presentInFloatingPanel(identifyResultsVC, regularWidthInsets: self.adjustedFloatingPanelInsets())

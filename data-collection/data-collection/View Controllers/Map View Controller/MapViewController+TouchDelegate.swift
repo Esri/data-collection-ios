@@ -72,9 +72,6 @@ extension MapViewController: AGSGeoViewTouchDelegate {
                 return
             }
             
-            // Need to accomodate multiple results
-            // - start by displaying all those results
-            // - as user selects new result from displayed list, update selection in MapView
             self.setSelectedPopups(popups: richPopups)
             
             // Set the map view mode to selected feature

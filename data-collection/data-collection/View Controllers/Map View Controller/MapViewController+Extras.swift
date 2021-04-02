@@ -123,6 +123,7 @@ extension MapViewController: FloatingPanelControllerDelegate {
         UIView.animate(withDuration: 0.5, animations: {
             floatingPanelController.view.alpha = 0.0
         }) { [weak self] (_) in
+            self?.setSelectedPopups(popups: [])
             self?.dismissFloatingPanel()
         }
     }

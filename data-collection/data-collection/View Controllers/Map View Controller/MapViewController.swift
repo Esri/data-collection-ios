@@ -188,17 +188,38 @@ class MapViewController: UIViewController {
 
     func setSelectedPopups(popups: [RichPopup]) {
         // Clear existing selection
-        (currentPopupManager?.popup.feature?.featureTable?.layer as? AGSFeatureLayer)?.clearSelection()
+        mapView.map?.operationalLayers.forEach({ (layer) in
+            if let featureLayer = layer as? AGSFeatureLayer {
+                featureLayer.clearSelection()
+            }
+        })
+
         selectedPopups = popups
+        
+        //Select the features on the map:
+        selectedPopups.forEach { (richPopup) in
+            if let feature = richPopup.feature,
+               let layer = feature.featureTable?.layer as? AGSFeatureLayer {
+                layer.select(feature)
+            }
+        }
     }
 
     func setCurrentPopup(popup: RichPopup) {
         
         // Clear existing selection
-        (currentPopupManager?.popup.feature?.featureTable?.layer as? AGSFeatureLayer)?.clearSelection()
-        
+        mapView.map?.operationalLayers.forEach({ (layer) in
+            if let featureLayer = layer as? AGSFeatureLayer {
+                featureLayer.clearSelection()
+            }
+        })
+
         // Build new rich popup manager.
         currentPopupManager = RichPopupManager(richPopup: popup)
+
+        if let feature = currentPopupManager?.popup.feature {
+            (feature.featureTable?.layer as? AGSFeatureLayer)?.select(feature)
+        }
     }
     
     func clearCurrentPopup() {
@@ -251,8 +272,7 @@ class MapViewController: UIViewController {
                 case .failure(let error):
                     self?.showError(error)
                 case .success(_):
-                    print("Do we need self?.refreshCurrentPopup()?")
-//                    self?.refreshCurrentPopup()
+                    print("Feature added successfully")
                 }
             }
         }

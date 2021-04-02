@@ -13,6 +13,7 @@
 // limitations under the License.
 
 import ArcGIS
+import Combine
 
 class IdentifyResultsViewController: UITableViewController, FloatingPanelEmbeddable {
     var popupChangedHandler: ((RichPopup?) -> Void)?
@@ -44,6 +45,8 @@ class IdentifyResultsViewController: UITableViewController, FloatingPanelEmbedda
     override func viewWillAppear(_ animated: Bool) {
         navigationController?.navigationBar.isHidden = true
         navigationController?.isToolbarHidden = true
+        
+        popupChangedHandler?(nil)
     }
 
     // MARK: - Table view data source
@@ -111,6 +114,8 @@ class IdentifyResultsViewController: UITableViewController, FloatingPanelEmbedda
         return popupVC
     }
 
+    private var popupEditing: Cancellable?
+
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         guard let indexPath = tableView.indexPathForSelectedRow else { return }
@@ -120,10 +125,8 @@ class IdentifyResultsViewController: UITableViewController, FloatingPanelEmbedda
 
         guard let destination = segue.destination as? RichPopupViewController else { return }
         if let newPopup = EphemeralCache.shared.object(forKey: .newSpatialFeature) as? RichPopup {
-            //                setCurrentPopup(popup: newPopup)
             destination.popupManager = RichPopupManager(richPopup: newPopup)
             destination.setEditing(true, animated: false)
-            //                mapViewMode = .selectedFeature(visible: false)
         }
         else if let popupManager = EphemeralCache.shared.object(forKey: .newRelatedRecord) as? RichPopupManager {
             destination.setEditing(true, animated: false)
@@ -133,47 +136,17 @@ class IdentifyResultsViewController: UITableViewController, FloatingPanelEmbedda
         else {
             destination.popupManager = RichPopupManager(richPopup: richPopup!)
         }
-    }
 
-    // TODO
-//    Add handler property for when current popup changes.  That way the mapViewController
-//    can pass in a handler that would take care of selecting the appropriate graphic and UI (if any)
-//    based on when the user selects a new popup.  It would have to take nil, which would be the
-//    "unselect" case, like when the user goes back to the main list.
-    
-//    func refreshCurrentPopup() {
-//
-//        guard case MapViewMode.selectedFeature = mapViewMode, let popup = currentPopupManager?.richPopup else {
-//            return
-//        }
-//
-//        guard popup.isFeatureAddedToTable else {
-//            clearCurrentPopup()
-//            mapViewMode = .defaultView
-//            return
-//        }
-//
-//        // Select the underlying feature
-//        if let feature = popup.feature {
-//            (feature.featureTable?.layer as? AGSFeatureLayer)?.select(feature)
-//        }
-//
-//        if let popupRelationships = popup.relationships {
-//
-//            popupRelationships.load { [weak self] (error) in
-//
-//                if let error = error {
-//                    print("[Error: RichPopup] relationships load error: \(error)")
-//                }
-//
-//                guard let self = self else { return }
-//
-//                self.populateContentIntoSmallPopupView(popup)
-//            }
-//        }
-//        else {
-//
-//            populateContentIntoSmallPopupView(popup)
-//        }
-//    }
+        popupEditing?.cancel()
+        popupEditing = destination.editsMade.sink { [weak self] (result) in
+            switch result {
+            case .failure(let error):
+                self?.showError(error)
+            case .success(let richPopup):
+                if let index = self?.selectedPopups.firstIndex(of: richPopup) {
+                    self?.selectedPopups.remove(at: index)
+                }
+            }
+        }
+    }
 }
