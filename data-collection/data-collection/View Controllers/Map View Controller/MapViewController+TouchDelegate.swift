@@ -28,8 +28,8 @@ extension MapViewController: AGSGeoViewTouchDelegate {
     
     private func query(_ geoView: AGSGeoView, atScreenPoint screenPoint: CGPoint, mapPoint: AGSPoint) {
         
-        // Remove references to current pop-up and set the map view mode to default.
-        clearCurrentPopup()
+        // Unselect all features and set the map view mode to default.
+        clearFeatureSelection()
         mapViewMode = .defaultView
         
         // If an identify operation is running, cancel it.
@@ -48,7 +48,7 @@ extension MapViewController: AGSGeoViewTouchDelegate {
             if let error = error {
                 print("[Error] identifying layers", error.localizedDescription)
                 self.slideNotificationView.showLabel(withNotificationMessage: "Could not identify features.", forDuration: 2.0)
-                self.clearCurrentPopup()
+                self.clearFeatureSelection()
                 self.mapViewMode = .defaultView
                 return
             }
@@ -67,7 +67,7 @@ extension MapViewController: AGSGeoViewTouchDelegate {
             // Inform the user if the identify did not yield any results.
             guard richPopups.count > 0 else {
                 self.slideNotificationView.showLabel(withNotificationMessage: "Found no results.", forDuration: 2.0)
-                self.clearCurrentPopup()
+                self.clearFeatureSelection()
                 self.mapViewMode = .defaultView
                 return
             }

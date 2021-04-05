@@ -20,7 +20,7 @@ extension MapViewController {
     @objc
     func adjustForCurrentMap() {
         if let map = appContext.currentMap {
-            clearCurrentPopup()
+            clearFeatureSelection()
             mapView.map = map
             mapViewMode = .defaultView
             loadMapViewMap()

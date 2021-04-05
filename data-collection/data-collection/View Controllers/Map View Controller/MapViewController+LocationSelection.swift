@@ -94,7 +94,7 @@ extension MapViewController {
     
     private func addNewFeatureFor(featureLayer: AGSFeatureLayer) {
         
-        clearCurrentPopup()
+        clearFeatureSelection()
         
         guard
             let featureTable = featureLayer.featureTable as? AGSArcGISFeatureTable,
@@ -202,7 +202,7 @@ extension MapViewController {
     
     func prepareMapMaskViewForOfflineDownloadArea() {
         
-        clearCurrentPopup()
+        clearFeatureSelection()
         mapViewMode = .offlineMask
     }
     
