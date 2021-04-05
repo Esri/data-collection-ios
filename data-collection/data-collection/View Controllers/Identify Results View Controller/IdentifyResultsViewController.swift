@@ -97,8 +97,6 @@ class IdentifyResultsViewController: UITableViewController, FloatingPanelEmbedda
         
         return cell
     }
-    
-    var richPopup: RichPopup?
 
     // MARK: - Navigation
 
@@ -120,7 +118,7 @@ class IdentifyResultsViewController: UITableViewController, FloatingPanelEmbedda
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         guard let indexPath = tableView.indexPathForSelectedRow else { return }
         tableView.deselectRow(at: indexPath, animated: false)
-        richPopup = selectedPopups[indexPath.row]
+        let richPopup = selectedPopups[indexPath.row]
         popupChangedHandler?(richPopup)
 
         guard let destination = segue.destination as? RichPopupViewController else { return }
@@ -134,7 +132,7 @@ class IdentifyResultsViewController: UITableViewController, FloatingPanelEmbedda
             destination.shouldLoadRichPopupRelatedRecords = false
         }
         else {
-            destination.popupManager = RichPopupManager(richPopup: richPopup!)
+            destination.popupManager = RichPopupManager(richPopup: richPopup)
         }
 
         popupEditing?.cancel()
