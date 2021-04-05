@@ -100,18 +100,6 @@ class IdentifyResultsViewController: UITableViewController, FloatingPanelEmbedda
 
     // MARK: - Navigation
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    func prepareRichPopupViewController(_ richPopup: RichPopup) -> UIViewController? {
-        popupChangedHandler?(richPopup)
-        
-        let bundle = Bundle(for: RichPopupViewController.self)
-        let storyboard = UIStoryboard(name: "RichPopup", bundle: bundle)
-        
-        // create the legend VC from the storyboard
-        let popupVC = storyboard.instantiateInitialViewController() as? AppContextAwareNavigationController
-        return popupVC
-    }
-
     private var popupEditing: Cancellable?
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
@@ -122,18 +110,7 @@ class IdentifyResultsViewController: UITableViewController, FloatingPanelEmbedda
         popupChangedHandler?(richPopup)
 
         guard let destination = segue.destination as? RichPopupViewController else { return }
-        if let newPopup = EphemeralCache.shared.object(forKey: .newSpatialFeature) as? RichPopup {
-            destination.popupManager = RichPopupManager(richPopup: newPopup)
-            destination.setEditing(true, animated: false)
-        }
-        else if let popupManager = EphemeralCache.shared.object(forKey: .newRelatedRecord) as? RichPopupManager {
-            destination.setEditing(true, animated: false)
-            destination.popupManager = popupManager
-            destination.shouldLoadRichPopupRelatedRecords = false
-        }
-        else {
-            destination.popupManager = RichPopupManager(richPopup: richPopup)
-        }
+        destination.popupManager = RichPopupManager(richPopup: richPopup)
 
         popupEditing?.cancel()
         popupEditing = destination.editsMade.sink { [weak self] (result) in

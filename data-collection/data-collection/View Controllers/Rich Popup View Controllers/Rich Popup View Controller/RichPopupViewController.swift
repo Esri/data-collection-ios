@@ -442,24 +442,11 @@ fileprivate extension UIViewController {
 
 extension RichPopupViewController: FloatingPanelEmbeddable {
     var floatingPanelItem: FloatingPanelItem {
-        let fpItem: FloatingPanelItem
-        let top = navigationController?.topViewController as? FloatingPanelEmbeddable
-        if self == top {
-            if detailsViewController != nil {
-                fpItem = detailsViewController.floatingPanelItem
-            }
-            else {
-                fpItem = FloatingPanelItem()
-            }
-        }
-        else if let top = top {
-            fpItem = top.floatingPanelItem
-        }
-        else {
-            fpItem = FloatingPanelItem()
-        }
-        
-        currentFloatingPanelItem = fpItem
-        return fpItem
+        let floatingPanelItem = FloatingPanelItem()
+        let richPopup = popupManager.richPopup
+        floatingPanelItem.title = richPopup.title
+        floatingPanelItem.subtitle = nil
+        currentFloatingPanelItem = floatingPanelItem
+        return floatingPanelItem
     }
 }

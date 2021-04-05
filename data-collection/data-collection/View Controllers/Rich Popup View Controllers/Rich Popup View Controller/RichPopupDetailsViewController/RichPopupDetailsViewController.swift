@@ -82,14 +82,3 @@ class RichPopupDetailsViewController: UITableViewController {
         self.tableView.reloadData()
     }
 }
-
-extension RichPopupDetailsViewController: FloatingPanelEmbeddable {
-    var floatingPanelItem: FloatingPanelItem {
-        let floatingPanelItem = FloatingPanelItem()
-
-        let richPopup = popupManager.richPopup
-        floatingPanelItem.title = richPopup.title
-        floatingPanelItem.subtitle = nil
-        return floatingPanelItem
-    }
-}
