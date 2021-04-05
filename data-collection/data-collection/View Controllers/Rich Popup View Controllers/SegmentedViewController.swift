@@ -18,17 +18,17 @@ import UIKit
 class SegmentedViewController: UIViewController {
     
     // MARK: Views
-
+    
     private let effectsSegmentedControlContainerView: UIVisualEffectView = {
         
         // Build visual effect view with blur view.
-        let visualEffect = UIBlurEffect(style: .systemThickMaterial)
+        let visualEffect = UIBlurEffect(style: .systemMaterial)
         let visualEffectView = UIVisualEffectView(effect: visualEffect)
         visualEffectView.translatesAutoresizingMaskIntoConstraints = false
         
         // Build 1pt spacer view.
         let spacer = UIView()
-        spacer.backgroundColor = UIColor(white: 0.75, alpha: 1.0)
+        spacer.backgroundColor = .systemFill
         spacer.translatesAutoresizingMaskIntoConstraints = false
         
         // Add and constrain spacer.
@@ -40,14 +40,14 @@ class SegmentedViewController: UIViewController {
             spacer.bottomAnchor.constraint(equalTo: visualEffectView.contentView.bottomAnchor),
             spacer.heightAnchor.constraint(equalToConstant: 1 / UIScreen.main.scale)
         ]
-        
+
         NSLayoutConstraint.activate(constraints)
+        
         return visualEffectView
     }()
     
     lazy var segmentedControl: UISegmentedControl = {
         let segmentedControl = UISegmentedControl()
-        segmentedControl.backgroundColor = .systemBackground
         segmentedControl.translatesAutoresizingMaskIntoConstraints = false
         segmentedControl.addTarget(self, action: #selector(segmentedControlValueDidChange(_:)), for: .valueChanged)
         return segmentedControl
@@ -85,7 +85,7 @@ class SegmentedViewController: UIViewController {
         super.viewDidLoad()
         
         self.childrenIdentifiers = segmentedViewControllerChildIdentifiers()
-        
+
         addSubviews()
         performChildViewControllersSegues()
         embedFirstChildViewController()
@@ -208,7 +208,7 @@ class SegmentedViewController: UIViewController {
             // 9. Finish.
             view.layoutIfNeeded()
         }
-        // This is the first time a child view controller is embed.
+            // This is the first time a child view controller is embed.
         else {
             
             // 1. Add child view controller to parent.
@@ -227,9 +227,7 @@ class SegmentedViewController: UIViewController {
             currentViewController = to
             
             // 6. Finish.
-            if view.superview != nil {
-                view.layoutIfNeeded()
-            }
+            view.layoutIfNeeded()
         }
     }
     

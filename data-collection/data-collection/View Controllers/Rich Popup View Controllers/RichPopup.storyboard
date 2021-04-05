@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="ym9-hy-6vu">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="zWV-AL-ABc">
     <device id="retina5_9" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17505"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -386,7 +386,6 @@
                             <outlet property="delegate" destination="pTi-FO-nvB" id="rw0-ny-2mW"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" id="dy7-WP-29X"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="IBh-Pi-bbs" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -653,7 +652,6 @@
                             <outlet property="delegate" destination="myS-Tu-q70" id="O86-8K-3cn"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" id="XGr-VO-ww5"/>
                     <connections>
                         <outlet property="attachmentNameTextField" destination="VT8-vh-klL" id="J9f-g7-brf"/>
                     </connections>
@@ -663,22 +661,22 @@
             <point key="canvasLocation" x="3202" y="-284"/>
         </scene>
         <!--App Context Aware Navigation Controller-->
-        <scene sceneID="Hv7-10-4NM">
+        <scene sceneID="5kR-KO-vqD">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="ym9-hy-6vu" customClass="AppContextAwareNavigationController" customModule="data_collection" customModuleProvider="target" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="zWV-AL-ABc" customClass="AppContextAwareNavigationController" customModule="data_collection" customModuleProvider="target" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="8Rv-jl-FvC">
-                        <rect key="frame" x="0.0" y="44" width="375" height="44"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" barStyle="black" largeTitles="YES" id="91y-Hj-XuM">
+                        <rect key="frame" x="0.0" y="44" width="375" height="96"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
-                        <segue destination="kgl-6z-heq" kind="relationship" relationship="rootViewController" id="HiP-tA-CJA"/>
+                        <segue destination="kgl-6z-heq" kind="relationship" relationship="rootViewController" id="bWR-sz-aQf"/>
                     </connections>
                 </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="XBv-H3-oCR" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="abX-pq-cRj" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="658" y="-679"/>
+            <point key="canvasLocation" x="694" y="-669"/>
         </scene>
     </scenes>
     <designables>
@@ -693,6 +691,15 @@
         <namedColor name="primary">
             <color red="0.37999999523162842" green="0.60000002384185791" blue="0.23999999463558197" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
+        <systemColor name="groupTableViewBackgroundColor">
+            <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="groupTableViewBackgroundColor">
+            <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="groupTableViewBackgroundColor">
+            <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
         <systemColor name="groupTableViewBackgroundColor">
             <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>

@@ -125,8 +125,7 @@ class RichPopupAttachmentsManager: AGSLoadableBase {
         
         newAttachments.forEach { (attachment) in
 
-            if let photoAttachment = attachment as? RichPopupStagedPhotoAttachment {
-
+            if let photoAttachment = attachment as? RichPopupStagedImagePickerAttachment {
                 dispatchGroup.enter()
                 popupAttachmentsManager.addAttachment(withUIImagePickerControllerInfoDictionary: photoAttachment.info,
                                                       name: photoAttachment.name ?? "Image",
@@ -134,7 +133,6 @@ class RichPopupAttachmentsManager: AGSLoadableBase {
                                                       completion: { (_) in dispatchGroup.leave() })
             }
             else {
-                
                 popupAttachmentsManager.addAttachment(with: attachment.attachmentData,
                                                       name: attachment.name ?? "Attachment",
                                                       contentType: attachment.attachmentMimeType,

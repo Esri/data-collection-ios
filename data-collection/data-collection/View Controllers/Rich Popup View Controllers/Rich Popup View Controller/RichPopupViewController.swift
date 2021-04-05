@@ -383,7 +383,7 @@ class RichPopupViewController: SegmentedViewController {
 
         if let status = status {
             // Display status message with activity indicator.
-            SVProgressHUD.show(withStatus: status)
+            UIApplication.shared.showProgress(status)
         }
     }
     
@@ -396,7 +396,7 @@ class RichPopupViewController: SegmentedViewController {
         navigationController?.isToolbarHidden = false
         
         // Display status message with activity indicator.
-        SVProgressHUD.dismiss(withDelay: 0.2)
+        UIApplication.shared.hideProgress()
     }
     
     // MARK: Dismiss View Controller
@@ -406,13 +406,7 @@ class RichPopupViewController: SegmentedViewController {
         self.popOrDismiss(animated: true)
     }
     
-    // MARK: Image Picker Permissions
-    
-    private(set) lazy var imagePickerPermissions: ImagePickerPermissions = { [unowned self] in
-        var imagePickerPermissions = ImagePickerPermissions()
-        imagePickerPermissions.delegate = self
-        return imagePickerPermissions
-    }()
+    // MARK: Media Picker Permissions
     
     var isProcessingNewAttachmentImage: Bool = false
 }

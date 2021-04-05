@@ -1,4 +1,4 @@
-// Copyright 2017 Esri.
+// Copyright 2021 Esri
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -12,8 +12,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-//
-//  Use this file to import your target's public headers that you would like to expose to Swift.
-//
+import ArcGIS
 
-#include "SVProgressHUD.h"
+class RichPopupStagedPhotoPickerAttachment: RichPopupStagedAttachment {
+    
+    override var type: AGSPopupAttachmentType { return .image }
+    
+    override func generateThumbnail(withSize: Float, scaleMode: AGSImageScaleMode, completion: @escaping (UIImage?) -> Void) {
+        completion(
+            UIImage(data: attachmentData)
+        )
+    }
+}
