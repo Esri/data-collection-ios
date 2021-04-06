@@ -53,11 +53,7 @@ internal class FloatingPanelHeaderController: UIViewController {
                 },
                 item.observe(\.subtitle) { [weak self] (_, _) in
                     DispatchQueue.main.async {
-                        guard let self = self else { return }
-                        self.subtitleLabel.text = item.subtitle
-                        if self.isViewLoaded {
-                            self.navigationController?.updateViewConstraints()
-                        }
+                        self?.subtitleLabel.text = item.subtitle
                     }
                 },
                 item.observe(\.image) { [weak self] (_, _) in
