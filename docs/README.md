@@ -32,7 +32,7 @@
    - [Public map, social login](#public-map-social-login)   
 - [Using map definition & pop-up configurations to drive app behavior](#using-map-definition-pop-up-configurations-to-drive-app-behavior)   
    - [Map identify rules](#map-identify-rules)   
-   - [Small pop-up view rules](#small-pop-up-view-rules)   
+   - [Floating panel view rules](#floating-panel-view-rules)   
    - [Add feature rules](#add-feature-rules)   
    - [Pop-up view rules](#pop-up-view-rules)   
       - [View mode](#view-mode)   
@@ -195,13 +195,11 @@ You can select the Layers item in Extras to view the symbology for each layer. Y
 
 ### Identify map features
 
-Tapping the map performs an identify function on the map. One best result is chosen, a small pop-up view is revealed and the feature is selected on the map. If no results are found, the user is notified.
+Tapping the map performs an identify function on the map. One results are identified, a floating panel view is displayed and the feature(s) are selected on the map. If no results are found, the user is notified.
 
 ![Identified Map Feature](/docs/images/identify.png)
 
-Tapping the small pop-up view presents modally a full pop-up view for deeper interrogation of the data.
-
-If the selected pop-up's feature table contains a one-to-many relationship to another table, a plus button is be revealed. Tapping the plus button creates a new one-to-many related record and presents this pop-up in full pop-up view edit mode.
+Tapping a results in the floating panel view presents a full pop-up view for deeper interrogation of the data.
 
 ### Add map feature
 
@@ -219,7 +217,7 @@ The app supports pop-ups with related records (related tables) and attachments. 
 
 ### View and edit data with pop-ups
 
-After identifying a pop-up, tapping the small pop-up view modally presents that pop-up in a more detailed pop-up view.
+After identifying a pop-up, tapping a result presents that pop-up in a more detailed pop-up view.
 
 #### View a pop-up
 
@@ -371,21 +369,11 @@ The app operates on a set of rules driven by map definitions and pop-up configur
 
 A tap gesture on the map view performs an identify function where only results for layers that adhere to certain rules are considered. These rules ask that the layer is visible, is of point type geometry and pop-ups are enabled. These rules are wrapped conveniently into a static class named `AppRules`.
 
-### Small pop-up view rules
+### Floating panel view rules
 
-After the identify function returns a single successful result, the app selects the result on the map and populates a small pop-up view (contained by a `ShrinkingView`, see the section entitled [_Custom Views_](#custom-views)).
+After the identify function completes, the app selects the results on the map and populates a floating panel view with all the identified features.
 
-The small pop-up view prioritizes related record content over content derived from its own attributes.
-
-![Small Pop-up View](/docs/images/anatomy-small-popup-view.png)
-
-To understand how the small pop-up view populates it's content, divide the view in half leaving a left and right side, each with two UI elements.
-
-The left side concerns itself with the selected pop-up's many-to-one related records whereas the right side concerns itself with the selected pop-up's one-to-many related records.
-
-The left side chooses the top-most many-to-one related table, if there is one, and populates the view's upper label with the top-most attribute and bottom label with the next attribute, if possible. If not possible, content for either label is derived by the selected pop-up's top-most attribute successively.
-
-The right side chooses the top-most one-to-many related table, if there is one, and populates the bottom label with (n) records for that table name. If not possible, content for this label is derived by the selected pop-up's attributes successively. The circular plus button emerges if the top-most one-to-many related table allows the adding of new features. Tapping this button creates a new related record.
+![Floating Panel View](/docs/images/anatomy-floating-panel-view.png)
 
 ### Add feature rules
 

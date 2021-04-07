@@ -13,6 +13,10 @@
 - Fixes bug where `AddressLocator.onlineLocator` issues an authentication challenge amid creating a new feature.
 - Introduces support for iOS 14 PHPickerViewController.
 - Removes `SVProgressHUD` dependency, introduces `ProgressViewController` global presenter.
+- Introduces `FloatingPanelController` for displaying information in a customizable panel which "floats" about the map.
+- Moves the Bookmarks and Layer views into a `FloatingPanelController`.
+- Adds support for displaying multiple identify results from all identifiable layers in a map.
+- Fixes Dark Mode support in the `RichPopupViewController`.
 
 # Release 1.2.3
 
