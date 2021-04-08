@@ -249,7 +249,7 @@ The pop-up's attributes configured as editable can be edited and validated inlin
 
 As values for fields are updated, the app informs the user of invalid changes and why it's invalid. The pop-up won't save if there are invalid fields.
 
-Edits can be discarded by tapping the 'X' icon in the bottom tool bar. Saving the changes requires every field to pass validation and can be committed by tapping 'Disc' icon in the bottom tool bar.
+Edits can be discarded by tapping the 'X' button in the bottom tool bar. Saving the changes requires every field to pass validation and can be committed by tapping the 'Disk' button in the bottom tool bar.
 
 **Editing a Pop-up's Related Records**
 
@@ -367,7 +367,7 @@ The app operates on a set of rules driven by map definitions and pop-up configur
 
 ### Map identify rules
 
-A tap gesture on the map view performs an identify function where only results for layers that adhere to certain rules are considered. These rules ask that the layer is visible, is of point type geometry and pop-ups are enabled. These rules are wrapped conveniently into a static class named `AppRules`.
+A tap gesture on the map view performs an identify function where only results for layers that adhere to certain rules are considered. These rules ask that the layer is visible and pop-ups are enabled. These rules are wrapped conveniently into a static class named `AppRules`.
 
 ### Floating panel view rules
 
@@ -721,10 +721,6 @@ The app ships with a number of custom views with UI that extend beyond what is p
 
 A `SlideNotificationView` view is a `UIView` subclass that animates in from the top of the map an ephemeral contextual message that does not interfere with the user's ability to interact with the map.
 
-**Shrinking View**
-
-A `ShrinkingView` is a `UIControl` subclass that shrinks its scale on touch down and returns to its original scale upon touch up or cancel. The app uses a `ShrinkingView` to show a pop-up identified after a tap interaction on the map.
-
 **Pin Drop View**
 
 A `PinDropView` is a custom `UIView` subclass that leverages Core Animation to animate the dropping of a pin in the center of the `AGSMapView`. This view guides the user in determining the geometry of a new `AGSArcGISFeature`.
@@ -741,7 +737,7 @@ A `StyledFirstResponderLabel` is a custom `UILabel` subclass that converts the l
 
 **Floating Panel Controller**
 
-`FloatingPanelController` is a custom `UIViewController` subclass that allows for display of content in a "floating panel", sometimes referred to as a "bottom sheet".  Displayed content is encapsulated in a `UIViewController` that implements the `FloatingPanelEmbeddable` protocol.  Currently both "Layers" and "Bookmarks" are shown in a `FloatingPanelController`.
+`FloatingPanelController` is a custom `UIViewController` subclass that allows for display of content in a "floating panel", sometimes referred to as a "bottom sheet".  Displayed content is encapsulated in a `UIViewController` that implements the `FloatingPanelEmbeddable` protocol.  "Layers", "Bookmarks", and identify results are shown in a `FloatingPanelController`.
 
 ### Controller: app context aware
 
