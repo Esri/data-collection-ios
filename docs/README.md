@@ -221,7 +221,7 @@ After identifying a pop-up, tapping a result presents that pop-up in a more deta
 
 #### View a pop-up
 
-A full screen table-based view controller allows the user to interrogate the map view's selected pop-up in greater detail. The table-based view is broken down into a number of sub-components.
+A table-based view controller is displayed in a floating panel which allows the user to interrogate the map view's selected pop-up in greater detail. The table-based view is broken down into a number of sub-components.  The floating panel can be resized by dragging the handle at the top (iPhone) or bottom (iPad) of the view.
 
 ![View A Pop-up](/docs/images/pop-up.png)
 
@@ -233,9 +233,9 @@ Related record cells can be tapped and allows the user to interrogate the relate
 
 If the feature's table is configured for attachments, a segmented control reveals the option to view a list of attachments. Individual attachments can be viewed in full screen and shared.
 
-If the feature can be deleted from its containing table, a delete feature button is revealed at the bottom of the view.
+If the feature can be deleted from its containing table, a delete feature button (represented by a trash can) is revealed in the bottom tool bar.
 
-To begin an editing session, the user can tap the 'Edit' button located in the navigation bar.
+To begin an editing session, the user can tap the 'Pencil' button located in the bottom tool bar.
 
 #### Edit a feature
 
