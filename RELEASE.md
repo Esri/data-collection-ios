@@ -16,7 +16,7 @@
 - Introduces `FloatingPanelController` for displaying information in a customizable panel which "floats" about the map.
 - Moves the **Bookmarks** and **Layers** views into a `FloatingPanelController`.
 - Adds support for displaying multiple identify results from all identifiable layers in a map.
-- Fixes Dark Mode support in the `RichPopupViewController`.
+- Adds Dark Mode support in the `RichPopupViewController`.
 
 # Release 1.2.3
 
