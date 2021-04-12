@@ -221,7 +221,7 @@ After identifying a pop-up, tapping a result presents that pop-up in a more deta
 
 #### View a pop-up
 
-A table-based view controller is displayed in a floating panel which allows the user to interrogate the map view's selected pop-up in greater detail. The table-based view is broken down into a number of sub-components.  The floating panel can be resized by dragging the handle at the top (iPhone) or bottom (iPad) of the view.
+A table-based view controller is displayed in a floating panel which allows the user to interrogate the map view's selected pop-up in greater detail. The table-based view is broken down into a number of sub-components.  The floating panel can be resized by dragging the handle at the top (for a compact width size class) or bottom (for a regular width size class) of the view.
 
 ![View A Pop-up](/docs/images/pop-up.png)
 
