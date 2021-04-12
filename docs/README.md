@@ -195,7 +195,7 @@ You can select the Layers item in Extras to view the symbology for each layer. Y
 
 ### Identify map features
 
-Tapping the map performs an identify function on the map. One results are identified, a floating panel view is displayed and the feature(s) are selected on the map. If no results are found, the user is notified.
+Tapping the map performs an identify function on the map. After results are identified, a floating panel view is displayed and the feature(s) are selected on the map. If no results are found, the user is notified.
 
 ![Identified Map Feature](/docs/images/identify.png)
 
