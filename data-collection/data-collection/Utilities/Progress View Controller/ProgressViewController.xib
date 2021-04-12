@@ -21,9 +21,9 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <visualEffectView opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3mk-xg-GVK">
-                    <rect key="frame" x="87.5" y="389.5" width="239" height="127"/>
+                    <rect key="frame" x="88" y="389.5" width="238" height="127"/>
                     <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="tiG-wt-R88">
-                        <rect key="frame" x="0.0" y="0.0" width="239" height="127"/>
+                        <rect key="frame" x="0.0" y="0.0" width="238" height="127"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="R2o-b6-Ljz">
@@ -38,7 +38,7 @@
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" animating="YES" style="large" translatesAutoresizingMaskIntoConstraints="NO" id="fuJ-0p-PJT">
+                                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="large" translatesAutoresizingMaskIntoConstraints="NO" id="fuJ-0p-PJT">
                                                 <rect key="frame" x="0.0" y="58.5" width="206.5" height="37"/>
                                             </activityIndicatorView>
                                         </subviews>

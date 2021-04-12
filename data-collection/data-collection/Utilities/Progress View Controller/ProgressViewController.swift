@@ -15,23 +15,25 @@
 import UIKit
 
 extension UIViewController: GlobalProgressDisplayable {
-    func showProgress(_ message: String, duration: TimeInterval? = nil) {
-        GlobalProgress.shared.showProgress(message, duration: duration, window: view.window)
-    }
+    var window: UIWindow? { view.window }
 }
 
 extension UIApplication: GlobalProgressDisplayable {
-    func showProgress(_ message: String, duration: TimeInterval? = nil) {
-        GlobalProgress.shared.showProgress(message, duration: duration, window: windows.last)
-    }
+    var window: UIWindow? { windows.first }
 }
 
 protocol GlobalProgressDisplayable {
-    func showProgress(_ message: String, duration: TimeInterval?)
+    var window: UIWindow? { get }
 }
 
 extension GlobalProgressDisplayable {
-    func hideProgress() {
+    func showProgressHUD(_ message: String) {
+        GlobalProgress.shared.showProgress(message, duration: nil, window: window, animated: true)
+    }
+    func showErrorHUD(_ error: Error, duration: TimeInterval = 2.0) {
+        GlobalProgress.shared.showProgress(error.localizedDescription, duration: duration, window: window, animated: false)
+    }
+    func hideProgressHUD() {
         GlobalProgress.shared.hideProgress()
     }
 }
@@ -46,7 +48,7 @@ private class GlobalProgress {
     
     private var timer: Timer?
     
-    func showProgress(_ message: String, duration: TimeInterval?, window: UIWindow?) {
+    func showProgress(_ message: String, duration: TimeInterval?, window: UIWindow?, animated: Bool) {
         // Invalidate old timer, if one exists
         timer?.invalidate()
         timer = nil
