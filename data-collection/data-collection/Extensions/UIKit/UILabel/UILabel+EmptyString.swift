@@ -23,7 +23,10 @@ extension UILabel {
     /// and from being removed by the stack view by setting its text to a single space.
     
     func considerEmptyString() {
-        if let labelText = text, labelText.isEmpty {
+        if text == nil {
+            text = " "
+        }
+        else if let labelText = text, labelText.isEmpty {
             text = " "
         }
     }
