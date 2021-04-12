@@ -249,7 +249,7 @@ The pop-up's attributes configured as editable can be edited and validated inlin
 
 As values for fields are updated, the app informs the user of invalid changes and why it's invalid. The pop-up won't save if there are invalid fields.
 
-Edits can be discarded by tapping the 'X' button in the bottom tool bar. Saving the changes requires every field to pass validation and can be committed by tapping the 'Disk' button in the bottom tool bar.
+Edits can be discarded by tapping the 'X' button in the bottom tool bar. Saving the changes requires every field to pass validation and can be saved by tapping the 'Disk' button in the bottom tool bar.
 
 **Editing a Pop-up's Related Records**
 
