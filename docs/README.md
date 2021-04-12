@@ -369,7 +369,7 @@ The app operates on a set of rules driven by map definitions and pop-up configur
 
 A tap gesture on the map view performs an identify function where only results for layers that adhere to certain rules are considered. These rules ask that the layer is visible and pop-ups are enabled. These rules are wrapped conveniently into a static class named `AppRules`.
 
-### Floating panel view rules
+### Floating panel view results
 
 After the identify function completes, the app selects the results on the map and populates a floating panel view with all the identified features.
 
