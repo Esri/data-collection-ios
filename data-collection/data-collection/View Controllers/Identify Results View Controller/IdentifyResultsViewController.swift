@@ -20,7 +20,7 @@ class IdentifyResultsViewController: UITableViewController, FloatingPanelEmbedda
 
     var floatingPanelItem = FloatingPanelItem()
     
-    let cellIdentifier = "Cell"
+    private let cellIdentifier = "Cell"
     var selectedPopups = [RichPopup]() {
         didSet {
             if isViewLoaded {
@@ -85,8 +85,8 @@ class IdentifyResultsViewController: UITableViewController, FloatingPanelEmbedda
                 })
             }
         }
-        if let subtitle = subtitles.object(forKey: richPopup) {
-            cell.detailTextLabel?.text = subtitle as String
+        if let subtitle = subtitles.object(forKey: richPopup) as String? {
+            cell.detailTextLabel?.text = subtitle
         }
         else {
             richPopup.evaluateSubtitle { [weak self] (subtitle) in
