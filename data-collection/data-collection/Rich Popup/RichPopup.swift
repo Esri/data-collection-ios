@@ -36,8 +36,7 @@ class RichPopup: AGSPopup {
 extension RichPopup {
     func evaluateSubtitle(completion: @escaping (String) -> Void) {
         evaluateExpressions { (expressions, error) in
-            if error == nil,
-               let expression = expressions?.first(where: { $0.popupExpression.title == "subtitle" }) {
+            if let expression = expressions?.first(where: { $0.popupExpression.title == "subtitle" }) {
                 let subtitle: String
                 switch expression.popupExpression.returnType {
                 case .number:
