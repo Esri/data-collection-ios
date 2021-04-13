@@ -20,7 +20,7 @@ class IdentifyResultsViewController: UITableViewController, FloatingPanelEmbedda
 
     var floatingPanelItem = FloatingPanelItem()
     
-    let cellIdentifier = "Cell"
+    private let cellIdentifier = "Cell"
     var selectedPopups = [RichPopup]() {
         didSet {
             if isViewLoaded {
