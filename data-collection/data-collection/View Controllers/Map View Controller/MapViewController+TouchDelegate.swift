@@ -60,7 +60,12 @@ extension MapViewController: AGSGeoViewTouchDelegate {
             // Find identify results for all identifiable feature layers
             // and return them as an array of RichPopups.
             let richPopups = identifyResults.filter {
-                AppRules.isLayerIdentifiable($0.layerContent as? AGSFeatureLayer)
+                if let featureLayer = $0.layerContent as? AGSFeatureLayer {
+                    return AppRules.isLayerIdentifiable(featureLayer)
+                }
+                else {
+                    return false
+                }
             }
             .flatMap { $0.popups.map { RichPopup(popup: $0) } }
 

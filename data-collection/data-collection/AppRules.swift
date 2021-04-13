@@ -28,9 +28,8 @@ class AppRules {
     ///
     /// - Returns: If the layer is identifiable or not.
     
-    static func isLayerIdentifiable(_ layer: AGSFeatureLayer?) -> Bool {
+    static func isLayerIdentifiable(_ layer: AGSFeatureLayer) -> Bool {
         guard
-            let layer = layer,
             layer.isVisible,
             let featureTable = layer.featureTable,
             featureTable.isPopupActuallyEnabled else {

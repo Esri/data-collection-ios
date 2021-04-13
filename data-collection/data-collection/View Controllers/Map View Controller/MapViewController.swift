@@ -268,7 +268,7 @@ class MapViewController: UIViewController {
                 case .failure(let error):
                     self?.showError(error)
                 case .success(_):
-                    print("Feature added successfully")
+                    break
                 }
             }
         }
