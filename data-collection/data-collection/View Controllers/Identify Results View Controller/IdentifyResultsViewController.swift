@@ -85,8 +85,8 @@ class IdentifyResultsViewController: UITableViewController, FloatingPanelEmbedda
                 })
             }
         }
-        if let subtitle = subtitles.object(forKey: richPopup) {
-            cell.detailTextLabel?.text = subtitle as String
+        if let subtitle = subtitles.object(forKey: richPopup) as String? {
+            cell.detailTextLabel?.text = subtitle
         }
         else {
             richPopup.evaluateSubtitle { [weak self] (subtitle) in
