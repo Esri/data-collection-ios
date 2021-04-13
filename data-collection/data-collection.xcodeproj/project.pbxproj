@@ -130,7 +130,6 @@
 		94D544CA207FC67B00ED0D04 /* AppIcon.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 94D544C8207FC67B00ED0D04 /* AppIcon.xcassets */; };
 		94D544D620852A5100ED0D04 /* SlideNotificationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94D544D120852A5100ED0D04 /* SlideNotificationView.swift */; };
 		94D544D720852A5100ED0D04 /* CompassView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94D544D220852A5100ED0D04 /* CompassView.swift */; };
-		94D544D820852A5100ED0D04 /* ShrinkingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94D544D320852A5100ED0D04 /* ShrinkingView.swift */; };
 		94D544D920852A5100ED0D04 /* PinDropView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94D544D420852A5100ED0D04 /* PinDropView.swift */; };
 		94D544DA20852A5100ED0D04 /* ActivityBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94D544D520852A5100ED0D04 /* ActivityBarView.swift */; };
 		94DDEA7C215426D300DA533C /* AppRules.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94DDEA7B215426D300DA533C /* AppRules.swift */; };
@@ -352,7 +351,6 @@
 		94D544C8207FC67B00ED0D04 /* AppIcon.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = AppIcon.xcassets; path = "data-collection/AppIcon.xcassets"; sourceTree = SOURCE_ROOT; };
 		94D544D120852A5100ED0D04 /* SlideNotificationView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SlideNotificationView.swift; sourceTree = "<group>"; };
 		94D544D220852A5100ED0D04 /* CompassView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CompassView.swift; sourceTree = "<group>"; };
-		94D544D320852A5100ED0D04 /* ShrinkingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShrinkingView.swift; sourceTree = "<group>"; };
 		94D544D420852A5100ED0D04 /* PinDropView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PinDropView.swift; sourceTree = "<group>"; };
 		94D544D520852A5100ED0D04 /* ActivityBarView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivityBarView.swift; sourceTree = "<group>"; };
 		94DDEA7B215426D300DA533C /* AppRules.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppRules.swift; sourceTree = "<group>"; };
@@ -871,7 +869,6 @@
 			children = (
 				94D544D120852A5100ED0D04 /* SlideNotificationView.swift */,
 				94D544D220852A5100ED0D04 /* CompassView.swift */,
-				94D544D320852A5100ED0D04 /* ShrinkingView.swift */,
 				94D544D420852A5100ED0D04 /* PinDropView.swift */,
 				94D544D520852A5100ED0D04 /* ActivityBarView.swift */,
 				9487942221F7CD47007BC15E /* StyledFirstResponderLabel.swift */,
@@ -1203,7 +1200,6 @@
 				94B3760C207EAE4700691F2A /* AppDelegate.swift in Sources */,
 				940DA97B2098E1C600AB4BF6 /* AGSArcGISFeatureTable+Query.swift in Sources */,
 				E4BA04A624B4E338000A1D43 /* FloatingPanelController.swift in Sources */,
-				94D544D820852A5100ED0D04 /* ShrinkingView.swift in Sources */,
 				946569022087FAE700599E55 /* MapViewController+MapViewMode.swift in Sources */,
 				948D85102151BAF500E2048F /* AGSPopup+RelatedRecords.swift in Sources */,
 				948D84F3215015A300E2048F /* UserDefaults+AGSJSONSerializable.swift in Sources */,

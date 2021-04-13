@@ -32,7 +32,7 @@
    - [Public map, social login](#public-map-social-login)   
 - [Using map definition & pop-up configurations to drive app behavior](#using-map-definition-pop-up-configurations-to-drive-app-behavior)   
    - [Map identify rules](#map-identify-rules)   
-   - [Small pop-up view rules](#small-pop-up-view-rules)   
+   - [Floating panel view rules](#floating-panel-view-rules)   
    - [Add feature rules](#add-feature-rules)   
    - [Pop-up view rules](#pop-up-view-rules)   
       - [View mode](#view-mode)   
@@ -195,13 +195,11 @@ You can select the Layers item in Extras to view the symbology for each layer. Y
 
 ### Identify map features
 
-Tapping the map performs an identify function on the map. One best result is chosen, a small pop-up view is revealed and the feature is selected on the map. If no results are found, the user is notified.
+Tapping the map performs an identify function on the map. After results are identified, a floating panel view is displayed and the feature(s) are selected on the map. If no results are found, the user is notified.
 
 ![Identified Map Feature](/docs/images/identify.png)
 
-Tapping the small pop-up view presents modally a full pop-up view for deeper interrogation of the data.
-
-If the selected pop-up's feature table contains a one-to-many relationship to another table, a plus button is be revealed. Tapping the plus button creates a new one-to-many related record and presents this pop-up in full pop-up view edit mode.
+Tapping a results in the floating panel view presents a full pop-up view for deeper interrogation of the data.
 
 ### Add map feature
 
@@ -219,11 +217,11 @@ The app supports pop-ups with related records (related tables) and attachments. 
 
 ### View and edit data with pop-ups
 
-After identifying a pop-up, tapping the small pop-up view modally presents that pop-up in a more detailed pop-up view.
+After identifying a pop-up, tapping a result presents that pop-up in a more detailed pop-up view.
 
 #### View a pop-up
 
-A full screen table-based view controller allows the user to interrogate the map view's selected pop-up in greater detail. The table-based view is broken down into a number of sub-components.
+A table-based view controller is displayed in a floating panel which allows the user to interrogate the map view's selected pop-up in greater detail. The table-based view is broken down into a number of sub-components.  The floating panel can be resized by dragging the handle at the top (for a compact width size class) or bottom (for a regular width size class) of the view.
 
 ![View A Pop-up](/docs/images/pop-up.png)
 
@@ -235,9 +233,9 @@ Related record cells can be tapped and allows the user to interrogate the relate
 
 If the feature's table is configured for attachments, a segmented control reveals the option to view a list of attachments. Individual attachments can be viewed in full screen and shared.
 
-If the feature can be deleted from its containing table, a delete feature button is revealed at the bottom of the view.
+If the feature can be deleted from its containing table, a delete feature button (represented by a trash can) is revealed in the bottom tool bar.
 
-To begin an editing session, the user can tap the 'Edit' button located in the navigation bar.
+To begin an editing session, the user can tap the 'Pencil' button located in the bottom tool bar.
 
 #### Edit a feature
 
@@ -251,7 +249,7 @@ The pop-up's attributes configured as editable can be edited and validated inlin
 
 As values for fields are updated, the app informs the user of invalid changes and why it's invalid. The pop-up won't save if there are invalid fields.
 
-Edits can be discarded by tapping 'Cancel' in the navigation bar. Saving the changes requires every field to pass validation and can be committed by tapping 'Done' in the navigation bar.
+Edits can be discarded by tapping the 'X' button in the bottom tool bar. Saving the changes requires every field to pass validation and can be saved by tapping the 'Disk' button in the bottom tool bar.
 
 **Editing a Pop-up's Related Records**
 
@@ -369,23 +367,13 @@ The app operates on a set of rules driven by map definitions and pop-up configur
 
 ### Map identify rules
 
-A tap gesture on the map view performs an identify function where only results for layers that adhere to certain rules are considered. These rules ask that the layer is visible, is of point type geometry and pop-ups are enabled. These rules are wrapped conveniently into a static class named `AppRules`.
+A tap gesture on the map view performs an identify function where only results for layers that adhere to certain rules are considered. These rules ask that the layer is visible and pop-ups are enabled. These rules are wrapped conveniently into a static class named `AppRules`.
 
-### Small pop-up view rules
+### Floating panel view results
 
-After the identify function returns a single successful result, the app selects the result on the map and populates a small pop-up view (contained by a `ShrinkingView`, see the section entitled [_Custom Views_](#custom-views)).
+After the identify function completes, the app selects the results on the map and populates a floating panel view with all the identified features.
 
-The small pop-up view prioritizes related record content over content derived from its own attributes.
-
-![Small Pop-up View](/docs/images/anatomy-small-popup-view.png)
-
-To understand how the small pop-up view populates it's content, divide the view in half leaving a left and right side, each with two UI elements.
-
-The left side concerns itself with the selected pop-up's many-to-one related records whereas the right side concerns itself with the selected pop-up's one-to-many related records.
-
-The left side chooses the top-most many-to-one related table, if there is one, and populates the view's upper label with the top-most attribute and bottom label with the next attribute, if possible. If not possible, content for either label is derived by the selected pop-up's top-most attribute successively.
-
-The right side chooses the top-most one-to-many related table, if there is one, and populates the bottom label with (n) records for that table name. If not possible, content for this label is derived by the selected pop-up's attributes successively. The circular plus button emerges if the top-most one-to-many related table allows the adding of new features. Tapping this button creates a new related record.
+![Floating Panel View](/docs/images/anatomy-floating-panel-view.png)
 
 ### Add feature rules
 
@@ -733,10 +721,6 @@ The app ships with a number of custom views with UI that extend beyond what is p
 
 A `SlideNotificationView` view is a `UIView` subclass that animates in from the top of the map an ephemeral contextual message that does not interfere with the user's ability to interact with the map.
 
-**Shrinking View**
-
-A `ShrinkingView` is a `UIControl` subclass that shrinks its scale on touch down and returns to its original scale upon touch up or cancel. The app uses a `ShrinkingView` to show a pop-up identified after a tap interaction on the map.
-
 **Pin Drop View**
 
 A `PinDropView` is a custom `UIView` subclass that leverages Core Animation to animate the dropping of a pin in the center of the `AGSMapView`. This view guides the user in determining the geometry of a new `AGSArcGISFeature`.
@@ -753,7 +737,7 @@ A `StyledFirstResponderLabel` is a custom `UILabel` subclass that converts the l
 
 **Floating Panel Controller**
 
-`FloatingPanelController` is a custom `UIViewController` subclass that allows for display of content in a "floating panel", sometimes referred to as a "bottom sheet".  Displayed content is encapsulated in a `UIViewController` that implements the `FloatingPanelEmbeddable` protocol.  Currently both "Layers" and "Bookmarks" are shown in a `FloatingPanelController`.
+`FloatingPanelController` is a custom `UIViewController` subclass that allows for display of content in a "floating panel", sometimes referred to as a "bottom sheet".  Displayed content is encapsulated in a `UIViewController` that implements the `FloatingPanelEmbeddable` protocol.  "Layers", "Bookmarks", and identify results are shown in a `FloatingPanelController`.
 
 ### Controller: app context aware
 
