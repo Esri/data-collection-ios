@@ -46,7 +46,7 @@ extension RichPopup {
                 case .string:
                     subtitle = String(expression.result as! NSString)
                 @unknown default:
-                    subtitle = "<Error>"
+                    subtitle = ""
                 }
                 completion(subtitle)
             }
