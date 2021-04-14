@@ -23,29 +23,11 @@ extension MapViewController {
                 guard let self = self else { return }
                 // If we're showing a floating panel...
                 if visible {
-                    if self.identifyResultsViewController == nil {
-                        let bundle = Bundle(for: IdentifyResultsViewController.self)
-                        let storyboard = UIStoryboard(name: "IdentifyResultsViewController", bundle: bundle)
-                        self.identifyResultsViewController = storyboard.instantiateInitialViewController() as? IdentifyResultsViewController
-                    }
-                    
-                    guard let identifyResultsVC = self.identifyResultsViewController else { return }
-                    
-                    // Set the selected popups on the identify results view controller.
-                    identifyResultsVC.selectedPopups = self.selectedPopups
-                    identifyResultsVC.popupChangedHandler = { [weak self] (richPopup: RichPopup?) in
-                        if let popup = richPopup {
-                            self?.setCurrentPopup(popup: popup)
-                        }
-                        else {
-                            self?.setSelectedPopups(popups: identifyResultsVC.selectedPopups)
-                        }
-                    }
-                    self.presentInFloatingPanel(identifyResultsVC, regularWidthInsets: self.adjustedFloatingPanelInsets())
-                    self.floatingPanelController?.transitionDirection = .horizontal
+                    self.floatingPanelController?.view.alpha = 1.0
                 }
                 else {
                     // Dismiss the floating panel controller.
+                    self.floatingPanelController?.view.alpha = 0.0
                     self.dismissFloatingPanel()
                 }
             }
@@ -99,6 +81,9 @@ extension MapViewController {
                            identifyResultsVisible(visible),
                            mapViewVisible(true) ]
             hideMapMaskViewForOfflineDownloadArea()
+            if visible {
+                instantiateFloatingPanelForIdentifyResults()
+            }
             
         case .offlineMask:
             pinDropView.pinDropped = false
@@ -114,5 +99,33 @@ extension MapViewController {
             for animation in animations { animation() }
             self?.view.layoutIfNeeded()
         }
+    }
+
+    func instantiateFloatingPanelForIdentifyResults() {
+        // If we're showing a floating panel...
+        if identifyResultsViewController == nil {
+            let bundle = Bundle(for: IdentifyResultsViewController.self)
+            let storyboard = UIStoryboard(name: "IdentifyResultsViewController", bundle: bundle)
+            identifyResultsViewController = storyboard.instantiateInitialViewController() as? IdentifyResultsViewController
+        }
+        
+        identifyResultsViewController?.selectedPopups = []
+        
+        guard let identifyResultsVC = identifyResultsViewController else { return }
+        
+        // Set the selected popups on the identify results view controller.
+        identifyResultsVC.selectedPopups = selectedPopups
+        identifyResultsVC.popupChangedHandler = { [weak self] (richPopup: RichPopup?) in
+            if let popup = richPopup {
+                self?.setCurrentPopup(popup: popup)
+            }
+            else {
+                self?.setSelectedPopups(popups: identifyResultsVC.selectedPopups)
+            }
+        }
+        presentInFloatingPanel(identifyResultsVC, regularWidthInsets: adjustedFloatingPanelInsets())
+        floatingPanelController?.view.alpha = 0.0
+        floatingPanelController?.transitionDirection = .horizontal
+        floatingPanelController?.view.layoutIfNeeded()
     }
 }
