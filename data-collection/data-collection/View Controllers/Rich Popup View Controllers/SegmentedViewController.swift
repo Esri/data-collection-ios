@@ -227,7 +227,9 @@ class SegmentedViewController: UIViewController {
             currentViewController = to
             
             // 6. Finish.
-            view.layoutIfNeeded()
+            if view.superview != nil {
+                view.layoutIfNeeded()
+            }
         }
     }
     
