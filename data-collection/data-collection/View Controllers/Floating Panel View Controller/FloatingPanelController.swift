@@ -825,7 +825,18 @@ extension UIViewController {
                                                                 regularWidthInsets: regularWidthInsets,
                                                                 compactWidthInsets: compactWidthInsets)
         floatingPanel.delegate = self as? FloatingPanelControllerDelegate
-
+        if traitCollection.horizontalSizeClass == .compact {
+            floatingPanel.view.frame = floatingPanel.view.frame.offsetBy(
+                dx: 0.0,
+                dy: floatingPanel.view.frame.size.height
+            )
+        }
+        else {
+            floatingPanel.view.frame = floatingPanel.view.frame.offsetBy(
+                dx: 0.0,
+                dy: -floatingPanel.view.frame.size.height
+            )
+        }
         addChild(floatingPanel)
         view.addSubview(floatingPanel.view)
         floatingPanel.didMove(toParent: self)

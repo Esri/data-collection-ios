@@ -59,7 +59,7 @@ class MapViewController: UIViewController {
     
     var identifyResultsViewController: IdentifyResultsViewController?
 
-        var mapViewMode: MapViewMode = .defaultView {
+    var mapViewMode: MapViewMode = .defaultView {
         didSet {
             adjustForMapViewMode(from: oldValue, to: mapViewMode)
         }
