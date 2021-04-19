@@ -416,13 +416,7 @@ fileprivate extension UIViewController {
     func popOrDismiss(animated: Bool, completion: (() -> Void)? = nil) {
         
         if let navigationController = navigationController {
-            
-            if isRootViewController {
-                dismiss(animated: animated, completion: completion)
-            }
-            else {
-                navigationController.popViewController(animated: animated, completion: completion)
-            }
+            navigationController.popViewController(animated: animated, completion: completion)
         }
         else {
             dismiss(animated: animated, completion: completion)

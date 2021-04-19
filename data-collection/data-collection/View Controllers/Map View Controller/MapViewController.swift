@@ -24,6 +24,7 @@ class MapViewController: UIViewController {
         case defaultView
         case disabled
         case selectedFeature(visible: Bool)
+        case editNewFeature
         case selectingFeature
         case offlineMask
     }

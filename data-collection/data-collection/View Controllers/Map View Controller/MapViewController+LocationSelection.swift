@@ -168,7 +168,9 @@ extension MapViewController {
             
             UIApplication.shared.hideProgress()
             
-            self.performSegue(withIdentifier: "modallyPresentRelatedRecordsPopupViewController", sender: nil)
+            self.setSelectedPopups(popups: [newPopup])
+            setCurrentPopup(popup: newPopup)
+            mapViewMode = .editNewFeature
         }
         
         if shouldEnactCustomBehavior {

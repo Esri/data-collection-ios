@@ -118,7 +118,8 @@ class IdentifyResultsViewController: UITableViewController, FloatingPanelEmbedda
             case .failure(let error):
                 self?.showError(error)
             case .success(let richPopup):
-                if let index = self?.selectedPopups.firstIndex(of: richPopup) {
+                if !richPopup.isFeatureAddedToTable,
+                   let index = self?.selectedPopups.firstIndex(of: richPopup) {
                     self?.selectedPopups.remove(at: index)
                 }
             }

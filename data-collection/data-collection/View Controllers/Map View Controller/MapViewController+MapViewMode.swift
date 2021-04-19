@@ -18,7 +18,7 @@ extension MapViewController {
     
     func adjustForMapViewMode(from: MapViewMode?, to: MapViewMode) {
         
-        let identifyResultsVisible: (Bool) -> UIViewAnimations = { [weak self] (visible) in
+        let floatingPanelVisible: (Bool) -> UIViewAnimations = { [weak self] (visible) in
             return {
                 guard let self = self else { return }
                 // If we're showing a floating panel...
@@ -32,7 +32,7 @@ extension MapViewController {
                 }
             }
         }
-        
+
         let selectViewVisible: (Bool) -> UIViewAnimations = { [weak self] (visible) in
             return {
                 guard let self = self else { return }
@@ -55,21 +55,21 @@ extension MapViewController {
         case .defaultView:
             pinDropView.pinDropped = false
             animations = [ selectViewVisible(false),
-                           identifyResultsVisible(false),
+                           floatingPanelVisible(false),
                            mapViewVisible(true) ]
             hideMapMaskViewForOfflineDownloadArea()
             
         case .disabled:
             pinDropView.pinDropped = false
             animations = [ selectViewVisible(false),
-                           identifyResultsVisible(false),
+                           floatingPanelVisible(false),
                            mapViewVisible(false) ]
             hideMapMaskViewForOfflineDownloadArea()
             
         case .selectingFeature:
             pinDropView.pinDropped = true
             animations = [ selectViewVisible(true),
-                           identifyResultsVisible(false),
+                           floatingPanelVisible(false),
                            mapViewVisible(true) ]
             hideMapMaskViewForOfflineDownloadArea()
             selectViewHeaderLabel.text = "Choose location"
@@ -78,17 +78,25 @@ extension MapViewController {
         case .selectedFeature(let visible):
             pinDropView.pinDropped = false
             animations = [ selectViewVisible(false),
-                           identifyResultsVisible(visible),
+                           floatingPanelVisible(visible),
                            mapViewVisible(true) ]
             hideMapMaskViewForOfflineDownloadArea()
             if visible {
                 instantiateFloatingPanelForIdentifyResults()
             }
             
+        case .editNewFeature:
+            pinDropView.pinDropped = false
+            animations = [ selectViewVisible(false),
+                           floatingPanelVisible(true),
+                           mapViewVisible(true) ]
+            hideMapMaskViewForOfflineDownloadArea()
+            instantiateFloatingPanelForNewFeature()
+
         case .offlineMask:
             pinDropView.pinDropped = false
             animations = [ selectViewVisible(true),
-                           identifyResultsVisible(false),
+                           floatingPanelVisible(false),
                            mapViewVisible(true) ]
             presentMapMaskViewForOfflineDownloadArea()
             selectViewHeaderLabel.text = "Choose extent"
@@ -109,8 +117,6 @@ extension MapViewController {
             identifyResultsViewController = storyboard.instantiateInitialViewController() as? IdentifyResultsViewController
         }
         
-        identifyResultsViewController?.selectedPopups = []
-        
         guard let identifyResultsVC = identifyResultsViewController else { return }
         
         // Set the selected popups on the identify results view controller.
@@ -127,5 +133,20 @@ extension MapViewController {
         floatingPanelController?.view.alpha = 0.0
         floatingPanelController?.transitionDirection = .horizontal
         floatingPanelController?.view.layoutIfNeeded()
+    }
+
+    func instantiateFloatingPanelForNewFeature() {
+        let bundle = Bundle(for: RichPopupViewController.self)
+        let storyboard = UIStoryboard(name: "RichPopup", bundle: bundle)
+        if let richPopupViewController = storyboard.instantiateViewController(withIdentifier: "RichPopupViewController") as? RichPopupViewController {
+            richPopupViewController.popupManager = currentPopupManager!
+            richPopupViewController.setEditing(true, animated: false)
+            mapViewMode = .selectedFeature(visible: true)
+            presentInFloatingPanel(richPopupViewController)
+
+            floatingPanelController?.view.alpha = 0.0
+            floatingPanelController?.transitionDirection = .horizontal
+            floatingPanelController?.view.layoutIfNeeded()
+        }
     }
 }
