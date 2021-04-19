@@ -383,7 +383,7 @@ class RichPopupViewController: SegmentedViewController {
 
         if let status = status {
             // Display status message with activity indicator.
-            UIApplication.shared.showProgress(status)
+            UIApplication.shared.showProgressHUD(status)
         }
     }
     
@@ -396,7 +396,7 @@ class RichPopupViewController: SegmentedViewController {
         navigationController?.isToolbarHidden = false
         
         // Display status message with activity indicator.
-        UIApplication.shared.hideProgress()
+        UIApplication.shared.hideProgressHUD()
     }
     
     // MARK: Dismiss View Controller
