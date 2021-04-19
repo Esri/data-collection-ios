@@ -365,16 +365,6 @@ The app allows a user to authenticate against a portal as well as use social cre
 
 The app operates on a set of rules driven by map definitions and pop-up configurations. To learn how to configure your web map, see the section entitled [_Configure Web Map & Feature Services for Data Collection_](#configure-web-map--feature-services-for-data-collection).
 
-### Map identify rules
-
-A tap gesture on the map view performs an identify function where only results for layers that adhere to certain rules are considered. These rules ask that the layer is visible and pop-ups are enabled. These rules are wrapped conveniently into a static class named `AppRules`.
-
-### Floating panel view results
-
-After the identify function completes, the app selects the results on the map and populates a floating panel view with all the identified features.
-
-![Floating Panel View](/docs/images/anatomy-floating-panel-view.png)
-
 ### Add feature rules
 
 A user can add new spatial features to the map given those feature layers adhere to certain rules. An `AGSFeatureLayer` can add an `AGSArcGISFeature` to a layer if:
