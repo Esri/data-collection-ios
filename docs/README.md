@@ -31,8 +31,6 @@
 - [Identity model](#identity-model)   
    - [Public map, social login](#public-map-social-login)   
 - [Using map definition & pop-up configurations to drive app behavior](#using-map-definition-pop-up-configurations-to-drive-app-behavior)   
-   - [Map identify rules](#map-identify-rules)   
-   - [Floating panel view rules](#floating-panel-view-rules)   
    - [Add feature rules](#add-feature-rules)   
    - [Pop-up view rules](#pop-up-view-rules)   
       - [View mode](#view-mode)   
