@@ -37,7 +37,7 @@ class RichPopupStagedImagePickerAttachment: RichPopupStagedAttachment {
 
         guard (info[.editedImage] as? UIImage ?? info[.originalImage] as? UIImage) != nil else { return nil }
         
-        super.init(data: Data() /* will be inferred by SDK */, mimeType: "<will-be-inferred-by-SDK>", name: nil)
+        super.init()
         
         self.previewItemURL = info[.imageURL] as? URL
         

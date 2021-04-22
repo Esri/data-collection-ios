@@ -24,7 +24,7 @@ class RichPopupStagedPhotoPickerAttachment: RichPopupStagedAttachment {
             return nil
         }
         self.itemProvider = itemProvider
-        super.init(data: Data() /* will be inferred by SDK */, mimeType: "<will-be-inferred-by-SDK>", name: itemProvider.suggestedName)
+        super.init(name: itemProvider.suggestedName)
     }
     
     override var type: AGSPopupAttachmentType { return .image }

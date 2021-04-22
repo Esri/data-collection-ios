@@ -142,9 +142,9 @@ class RichPopupAttachmentsManager: AGSLoadableBase {
                                                       completion: { (_) in dispatchGroup.leave() })
             }
             else {
-                popupAttachmentsManager.addAttachment(with: attachment.attachmentData,
+                popupAttachmentsManager.addAttachment(with: attachment.attachmentData.data,
                                                       name: attachment.name ?? "Attachment",
-                                                      contentType: attachment.attachmentMimeType,
+                                                      contentType: attachment.attachmentData.mimeType,
                                                       preferredSize: attachment.preferredSize)
             }
         }
