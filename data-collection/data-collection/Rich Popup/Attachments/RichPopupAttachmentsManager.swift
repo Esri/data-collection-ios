@@ -117,15 +117,24 @@ class RichPopupAttachmentsManager: AGSLoadableBase {
     //
     
     func commitStagedAttachments(_ completion: @escaping () -> Void) {
-        
         // Add Staged Attachments
         let newAttachments = self.stagedAttachments
-        
         let dispatchGroup = DispatchGroup()
-        
+        var errors = [Error]()
         newAttachments.forEach { (attachment) in
-
-            if let photoAttachment = attachment as? RichPopupStagedImagePickerAttachment {
+            if #available(iOS 14.0, *), let photoAttachment = attachment as? RichPopupStagedPhotoPickerAttachment {
+                dispatchGroup.enter()
+                popupAttachmentsManager.addAttachment(
+                    with: photoAttachment.itemProvider,
+                    name: photoAttachment.name ?? "Image",
+                    preferredSize: photoAttachment.preferredSize) { (_,error) in
+                    if let error = error {
+                        errors.append(error)
+                    }
+                    dispatchGroup.leave()
+                }
+            }
+            else if let photoAttachment = attachment as? RichPopupStagedImagePickerAttachment {
                 dispatchGroup.enter()
                 popupAttachmentsManager.addAttachment(withUIImagePickerControllerInfoDictionary: photoAttachment.info,
                                                       name: photoAttachment.name ?? "Image",
@@ -140,14 +149,23 @@ class RichPopupAttachmentsManager: AGSLoadableBase {
             }
         }
         
+        if !errors.isEmpty {
+            UIApplication.shared.showError(
+                MultipleStagedPhotoAttachmentsError(total: newAttachments.count, errors: errors)
+            )
+        }
+        
         dispatchGroup.notify(queue: OperationQueue.current?.underlyingQueue ?? .main) { [weak self] in
-            
             guard let self = self else { return }
-            
             self.discardStagedAttachments()
-            
             completion()
         }
+    }
+    
+    fileprivate struct MultipleStagedPhotoAttachmentsError: LocalizedError {
+        let total: Int
+        let errors: [Error]
+        var errorDescription: String? { "Failed to create \(errors.count) of \(total) image attachments." }
     }
         
     func discardStagedAttachments() {

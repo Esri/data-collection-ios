@@ -14,13 +14,26 @@
 
 import ArcGIS
 
+@available(iOS 14.0, *)
 class RichPopupStagedPhotoPickerAttachment: RichPopupStagedAttachment {
+    
+    private(set) var itemProvider: NSItemProvider
+    
+    init?(itemProvider: NSItemProvider) {
+        guard itemProvider.hasRepresentationConforming(toTypeIdentifier: "public.image", fileOptions: NSItemProviderFileOptions(rawValue: 0)) else {
+            return nil
+        }
+        self.itemProvider = itemProvider
+        super.init(data: Data() /* will be inferred by SDK */, mimeType: "<will-be-inferred-by-SDK>", name: itemProvider.suggestedName)
+    }
     
     override var type: AGSPopupAttachmentType { return .image }
     
     override func generateThumbnail(withSize: Float, scaleMode: AGSImageScaleMode, completion: @escaping (UIImage?) -> Void) {
-        completion(
-            UIImage(data: attachmentData)
-        )
+        itemProvider.loadObject(ofClass: UIImage.self) { (image, error) in
+            if let image = image as? UIImage {
+                completion(image)
+            }
+        }
     }
 }
