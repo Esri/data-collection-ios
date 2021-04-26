@@ -197,12 +197,6 @@ extension RichPopupViewController: UIImagePickerControllerDelegate {
     }
 }
 
-fileprivate struct MultipleStagedPhotoAttachmentsError: LocalizedError {
-    let total: Int
-    let errors: [Error]
-    var errorDescription: String? { "Failed to create \(errors.count) of \(total) image attachments." }
-}
-
 fileprivate struct InvalidTypeIdentifier: LocalizedError {
     let typeIdentifiers: [String]?
     var errorDescription: String? {
@@ -217,71 +211,13 @@ fileprivate struct UnknownError: LocalizedError {
 @available(iOS 14.0, *)
 extension RichPopupViewController: PHPickerViewControllerDelegate {
     func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
+        guard !results.isEmpty else { return }
         guard !isProcessingNewAttachmentImage else { return }
         isProcessingNewAttachmentImage = true
-        
-        let dispatchGroup = DispatchGroup()
-        var errors = [Error]()
-        var attachments = [RichPopupStagedAttachment]()
-        for result in results {
-            // Ensure the result is an image.
-            guard result.itemProvider.canLoadObject(ofClass: UIImage.self) else {
-                errors.append(UnknownError())
-                return
-            }
-            // Get image type identifier
-            let id = result.itemProvider.registeredTypeIdentifiers.first { (id) -> Bool in
-                id.contains(".jpg") || id.contains(".jpeg") || id.contains(".png")
-            }
-            guard let typeIdentifier = id else {
-                errors.append(InvalidTypeIdentifier(typeIdentifiers: result.itemProvider.registeredTypeIdentifiers))
-                return
-            }
-            // Get the mime type
-            let mimeType: String
-            if typeIdentifier.contains(".jpg") || typeIdentifier.contains(".jpeg") {
-                mimeType = "image/jpeg"
-            }
-            else if typeIdentifier.contains(".png") {
-                mimeType = "image/png"
-            }
-            else {
-                mimeType = "application/octet-stream"
-            }
-            // Load the item provider data
-            dispatchGroup.enter()
-            result.itemProvider.loadDataRepresentation(forTypeIdentifier: typeIdentifier) { (data, error) in
-                if let error = error {
-                    errors.append(error)
-                }
-                else if let data = data {
-                    let newAttachment = RichPopupStagedPhotoPickerAttachment(
-                        data: data,
-                        mimeType: mimeType,
-                        name: result.itemProvider.suggestedName
-                    )
-                    if let preferredSize = UserDefaults.standard.preferredAttachmentSize {
-                        newAttachment.preferredSize = preferredSize
-                    }
-                    attachments.append(newAttachment)
-                }
-                dispatchGroup.leave()
-            }
-        }
-        // Finish
-        dispatchGroup.notify(queue: DispatchQueue.main) { [weak self] in
-            guard let self = self else { return }
-            picker.dismiss(animated: true) { [weak self] in
-                guard let self = self else { return }
-                self.isProcessingNewAttachmentImage = false
-                for attachment in attachments {
-                    self.attachmentsViewController.addAttachment(attachment)
-                }
-                if !errors.isEmpty {
-                    let error = MultipleStagedPhotoAttachmentsError(total: results.count, errors: errors)
-                    self.showError(error)
-                }
-            }
+        let attachments = results.compactMap { RichPopupStagedPhotoPickerAttachment(itemProvider: $0.itemProvider) }
+        picker.dismiss(animated: true) {
+            attachments.forEach { self.attachmentsViewController.addAttachment($0) }
+            self.isProcessingNewAttachmentImage = false
         }
     }
 }
