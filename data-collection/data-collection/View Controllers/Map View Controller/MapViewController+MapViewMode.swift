@@ -124,11 +124,14 @@ extension MapViewController {
         identifyResultsVC.popupChangedHandler = { [weak self] (richPopup: RichPopup?) in
             if let popup = richPopup {
                 self?.setCurrentPopup(popup: popup)
+                return self?.currentPopupManager
             }
             else {
                 self?.setSelectedPopups(popups: identifyResultsVC.selectedPopups)
+                return nil
             }
         }
+
         presentInFloatingPanel(identifyResultsVC, regularWidthInsets: adjustedFloatingPanelInsets())
         floatingPanelController?.view.alpha = 0.0
         floatingPanelController?.transitionDirection = .horizontal
@@ -141,7 +144,10 @@ extension MapViewController {
         if let richPopupViewController = storyboard.instantiateViewController(withIdentifier: "RichPopupViewController") as? RichPopupViewController {
             richPopupViewController.popupManager = currentPopupManager!
             richPopupViewController.setEditing(true, animated: false)
-            mapViewMode = .selectedFeature(visible: true)
+            adjustUIForEditing(true)
+
+            subscribeToEditingPublishers(richPopupViewController)
+            
             presentInFloatingPanel(richPopupViewController)
 
             floatingPanelController?.view.alpha = 0.0

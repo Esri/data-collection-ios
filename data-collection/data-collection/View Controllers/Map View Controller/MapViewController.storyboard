@@ -222,6 +222,7 @@
                         <outlet property="mapView" destination="Iie-Za-UAs" id="qSz-xf-Ger"/>
                         <outlet property="maskViewContainer" destination="673-08-WQO" id="sOa-1Y-1cv"/>
                         <outlet property="pinDropView" destination="JPL-Oj-pCs" id="3vt-tC-fGM"/>
+                        <outlet property="profileBarButtonItem" destination="qq2-IG-EgW" id="ruG-7T-W33"/>
                         <outlet property="reloadMapButton" destination="w1m-XM-YEC" id="Qsx-1T-Mmr"/>
                         <outlet property="selectView" destination="pcE-3a-4ld" id="WgX-fa-shE"/>
                         <outlet property="selectViewHeaderLabel" destination="mkq-dc-atb" id="5PB-la-eBs"/>
@@ -242,7 +243,7 @@
             <objects>
                 <viewController id="ZtZ-f6-rZp" customClass="MaskViewController" customModule="data_collection" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" userInteractionEnabled="NO" tag="1001" contentMode="scaleToFill" id="Q8n-bJ-QYu">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="724"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view userInteractionEnabled="NO" tag="1003" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DZZ-rh-s55">
@@ -281,7 +282,6 @@
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="5JK-vH-82G" customClass="AppContextAwareNavigationController" customModule="data_collection" customModuleProvider="target" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="n1T-JR-Wjg">
-                        <rect key="frame" x="0.0" y="44" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>

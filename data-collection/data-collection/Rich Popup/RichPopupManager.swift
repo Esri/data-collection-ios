@@ -59,7 +59,7 @@ class RichPopupManager: AGSPopupManager {
             }
         }
         
-        // Call cooresponding super class method.
+        // Call corresponding super class method.
         super.cancelEditing()
         
         // Then, discard any staged attachments (resetting the attachments to the condition before the editing session started).

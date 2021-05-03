@@ -37,7 +37,7 @@ class MapViewController: UIViewController {
     @IBOutlet weak var slideNotificationView: SlideNotificationView!
     @IBOutlet weak var compassView: CompassView!
     @IBOutlet weak var reloadMapButton: UIButton!
-    
+    @IBOutlet weak var profileBarButtonItem: UIBarButtonItem!
     @IBOutlet weak var relatedRecordHeaderLabel: UILabel!
     @IBOutlet weak var relatedRecordSubheaderLabel: UILabel!
     @IBOutlet weak var relatedRecordsNLabel: UILabel!
@@ -101,7 +101,21 @@ class MapViewController: UIViewController {
             name: .portalDidChange,
             object: nil
         )
-                
+        
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(didStartEditing(_:)),
+            name: .didStartEditing,
+            object: nil
+        )
+
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(didCancelEditing(_:)),
+            name: .didCancelEditing,
+            object: nil
+        )
+
         // Adjust location display for app location authorization status. If location authorized is undetermined, this will prompt the user for authorization.
         adjustForLocationAuthorizationStatus()
     }
@@ -229,7 +243,7 @@ class MapViewController: UIViewController {
     }
     
     private var popupEditing: Cancellable?
-    
+
     // MARK: Segues
     
     override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
@@ -263,15 +277,7 @@ class MapViewController: UIViewController {
                 assertionFailure("A rich popup view controller should not present if any of the above scenarios are not met.")
             }
             
-            popupEditing?.cancel()
-            popupEditing = destination.editsMade.sink { [weak self] (result) in
-                switch result {
-                case .failure(let error):
-                    self?.showError(error)
-                case .success(_):
-                    break
-                }
-            }
+            subscribeToEditingPublishers(destination)
         }
         else if let destination = segue.destination as? MaskViewController {
             maskViewController = destination
@@ -284,6 +290,29 @@ class MapViewController: UIViewController {
         }
     }
     
+    func adjustUIForEditing(_ isEditing: Bool) {
+        extrasButton.isEnabled = !isEditing
+        addFeatureButton.isEnabled = !isEditing
+        profileBarButtonItem.isEnabled = !isEditing
+        if mapViewMode == .editNewFeature && !isEditing {
+            mapViewMode = .selectedFeature(visible: true)
+        }
+    }
+    
+    @objc func didStartEditing(_ notification: NSNotification) {
+        adjustUIForEditing(true)
+        if let popupVivewController = notification.object as? RichPopupViewController {
+            subscribeToEditingPublishers(popupVivewController)
+        }
+    }
+    
+    @objc func didCancelEditing(_ notification: NSNotification) {
+        adjustUIForEditing(false)
+        if let popupVivewController = notification.object as? RichPopupViewController {
+            unsubscribeToEditingPublishers()
+        }
+    }
+
     // MARK:- Work Mode
     
     @objc func adjustForWorkMode() {
@@ -307,6 +336,24 @@ class MapViewController: UIViewController {
         if let error = appContext.portalSession.error {
             showError(error)
         }
+    }
+    
+    func subscribeToEditingPublishers(_ richPopupViewController: RichPopupViewController) {
+        popupEditing?.cancel()
+        popupEditing = richPopupViewController.editsMade.sink { [weak self] (result) in
+            switch result {
+            case .failure(let error):
+                self?.showError(error)
+            case .success(_):
+                break
+            }
+
+            self?.adjustUIForEditing(false)
+        }
+    }
+    
+    func unsubscribeToEditingPublishers() {
+        popupEditing?.cancel()
     }
 }
 

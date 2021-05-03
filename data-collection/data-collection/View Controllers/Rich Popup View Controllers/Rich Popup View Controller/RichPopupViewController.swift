@@ -34,7 +34,7 @@ class RichPopupViewController: SegmentedViewController {
     // MARK: Editing Subject
     
     let editsMade = PassthroughSubject<Result<RichPopup, Error>, Never>()
-    
+
     // MARK: Segmented View Controller
     
     // Returns an array of `SegmentedViewSegue` identifiers telling the segmented view controller which child view controllers to segment and embed.
@@ -167,9 +167,6 @@ class RichPopupViewController: SegmentedViewController {
 
     private func updateViewControllerUI(animated: Bool) {
         super.setEditing(popupManager.isEditing, animated: animated)
-//
-//        // Inform the view controller not to dismiss the view controller if editing.
-//        isModalInPresentation = self.popupManager.isEditing
         
         // Update toolbar items.
         conditionallyAddToolbarItems()
@@ -266,6 +263,8 @@ class RichPopupViewController: SegmentedViewController {
                 showError(CannotEditPopupError())
                 return
             }
+
+            NotificationCenter.default.post(name: .didStartEditing, object: self)
         }
         else if persist {
             
@@ -286,7 +285,6 @@ class RichPopupViewController: SegmentedViewController {
                 else {
                     self.editsMade.send(.success(self.popupManager.richPopup))
                 }
-                
             }
         }
         else {
@@ -310,6 +308,8 @@ class RichPopupViewController: SegmentedViewController {
                 else {
                     self.updateViewControllerUI(animated: animated)
                 }
+                
+                NotificationCenter.default.post(appContext.didCancelEditingNotification)
             }
         }
     }

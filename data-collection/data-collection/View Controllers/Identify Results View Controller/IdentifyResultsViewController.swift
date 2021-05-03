@@ -16,7 +16,7 @@ import ArcGIS
 import Combine
 
 class IdentifyResultsViewController: UITableViewController, FloatingPanelEmbeddable {
-    var popupChangedHandler: ((RichPopup?) -> Void)?
+    var popupChangedHandler: ((RichPopup?) -> RichPopupManager?)?
 
     var floatingPanelItem = FloatingPanelItem()
     
@@ -46,7 +46,7 @@ class IdentifyResultsViewController: UITableViewController, FloatingPanelEmbedda
         navigationController?.navigationBar.isHidden = true
         navigationController?.isToolbarHidden = true
         
-        popupChangedHandler?(nil)
+        _ = popupChangedHandler?(nil)
     }
 
     // MARK: - Table view data source
@@ -107,10 +107,10 @@ class IdentifyResultsViewController: UITableViewController, FloatingPanelEmbedda
         guard let indexPath = tableView.indexPathForSelectedRow else { return }
         tableView.deselectRow(at: indexPath, animated: false)
         let richPopup = selectedPopups[indexPath.row]
-        popupChangedHandler?(richPopup)
+        guard let popupManager = popupChangedHandler?(richPopup) else { return }
 
         guard let destination = segue.destination as? RichPopupViewController else { return }
-        destination.popupManager = RichPopupManager(richPopup: richPopup)
+        destination.popupManager = popupManager
 
         popupEditing?.cancel()
         popupEditing = destination.editsMade.sink { [weak self] (result) in

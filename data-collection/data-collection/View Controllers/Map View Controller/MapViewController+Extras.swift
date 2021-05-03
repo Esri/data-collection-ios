@@ -125,6 +125,7 @@ extension MapViewController: FloatingPanelControllerDelegate {
         }) { [weak self] (_) in
             self?.setSelectedPopups(popups: [])
             self?.dismissFloatingPanel()
+            self?.unsubscribeToEditingPublishers()
         }
     }
 }
