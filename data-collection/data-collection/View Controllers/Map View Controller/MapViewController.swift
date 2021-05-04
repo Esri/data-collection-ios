@@ -308,7 +308,7 @@ class MapViewController: UIViewController {
     
     @objc func didCancelEditing(_ notification: NSNotification) {
         adjustUIForEditing(false)
-        if let popupVivewController = notification.object as? RichPopupViewController {
+        if notification.object is RichPopupViewController {
             unsubscribeToEditingPublishers()
         }
     }
