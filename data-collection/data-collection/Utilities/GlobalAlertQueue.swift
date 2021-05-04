@@ -207,4 +207,15 @@ extension UIAlertController {
         alert.addAction(settings)
         return alert
     }
+    
+    static func signInAlert(_ message: String) -> UIAlertController {
+        let alert = UIAlertController(title: nil, message: message, preferredStyle: .alert)
+        let signIn = UIAlertAction(title: "Sign In", style: .default) { (_) in
+            appContext.signIn()
+        }
+        alert.addAction(.cancel())
+        alert.addAction(signIn)
+        alert.preferredAction = signIn
+        return alert
+    }
 }

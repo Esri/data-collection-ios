@@ -43,7 +43,11 @@ extension MapViewController {
             // If there's an error loading the map we want to inform the user and disable the map.
             if let error = error as NSError? {
                 if AGSServicesErrorCode(rawValue: error.code) == .tokenRequired, !appContext.portalSession.isSignedIn {
-                    showMessage(message: "You must sign in to access this resource.")
+                    showAlert(
+                        .signInAlert("You must sign in to access this resource."),
+                        animated: true,
+                        completion: nil
+                    )
                 }
                 else {
                     showError(error)
