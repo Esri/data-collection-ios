@@ -301,8 +301,8 @@ class MapViewController: UIViewController {
     
     @objc func didStartEditing(_ notification: NSNotification) {
         adjustUIForEditing(true)
-        if let popupVivewController = notification.object as? RichPopupViewController {
-            subscribeToEditingPublishers(popupVivewController)
+        if let popupViewController = notification.object as? RichPopupViewController {
+            subscribeToEditingPublishers(popupViewController)
         }
     }
     
