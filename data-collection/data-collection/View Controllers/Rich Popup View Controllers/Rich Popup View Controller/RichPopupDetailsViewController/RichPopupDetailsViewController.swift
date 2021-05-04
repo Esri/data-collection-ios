@@ -29,7 +29,7 @@ class RichPopupDetailsViewController: UITableViewController {
     }
     
     var popupManager: RichPopupManager!
-    
+
     var shouldLoadRichPopupRelatedRecords: Bool = true
     
     weak var delegate: RichPopupDetailsViewControllerDelegate?

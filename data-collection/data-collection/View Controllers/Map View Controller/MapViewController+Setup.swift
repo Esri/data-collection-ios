@@ -47,10 +47,4 @@ extension MapViewController {
 
         activityBarView = activity
     }
-    
-    func setupMapViewAttributionBarAutoLayoutConstraints() {
-        
-        featureDetailViewBottomConstraint = mapView.attributionTopAnchor.constraint(equalTo: smallPopupView.bottomAnchor, constant: 8)
-        featureDetailViewBottomConstraint.isActive = true
-    }
 }

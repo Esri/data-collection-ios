@@ -19,7 +19,9 @@ extension MapViewController: AGSGeoViewTouchDelegate {
     
     func geoView(_ geoView: AGSGeoView, didTapAtScreenPoint screenPoint: CGPoint, mapPoint: AGSPoint) {
         
-        guard mapViewMode == .defaultView || mapViewMode == .selectedFeature(featureLoaded: false) || mapViewMode == .selectedFeature(featureLoaded: true) else {
+        guard mapViewMode == .defaultView ||
+                mapViewMode == .selectedFeature(visible: false) ||
+                mapViewMode == .selectedFeature(visible: true) else {
             return
         }
         
@@ -27,17 +29,20 @@ extension MapViewController: AGSGeoViewTouchDelegate {
     }
     
     private func query(_ geoView: AGSGeoView, atScreenPoint screenPoint: CGPoint, mapPoint: AGSPoint) {
-
-        // Remove references to current pop-up and set the map view mode to default.
-        clearCurrentPopup()
+        
+        // Unselect all features and set the map view mode to default.
+        clearFeatureSelection()
         mapViewMode = .defaultView
-
+        
         // If an identify operation is running, cancel it.
         identifyOperation?.cancel()
         identifyOperation = nil
         
         // Identify layers for the geo view's tap point.
-        identifyOperation = geoView.identifyLayers(atScreenPoint: screenPoint, tolerance: 10, returnPopupsOnly: true, maximumResultsPerLayer: 5) { [weak self] (result, error) in
+        identifyOperation = geoView.identifyLayers(atScreenPoint: screenPoint,
+                                                   tolerance: 10,
+                                                   returnPopupsOnly: true,
+                                                   maximumResultsPerLayer: 50) { [weak self] (result, error) in
             
             guard let self = self else { return }
             
@@ -45,7 +50,7 @@ extension MapViewController: AGSGeoViewTouchDelegate {
             if let error = error {
                 print("[Error] identifying layers", error.localizedDescription)
                 self.slideNotificationView.showLabel(withNotificationMessage: "Could not identify features.", forDuration: 2.0)
-                self.clearCurrentPopup()
+                self.clearFeatureSelection()
                 self.mapViewMode = .defaultView
                 return
             }
@@ -53,35 +58,26 @@ extension MapViewController: AGSGeoViewTouchDelegate {
             assert(result != nil, "If there is no error, results must always be returned. Something very wrong happened.")
             
             let identifyResults = result!
-
-            // Find the first layer that is identifiable.
-            let firstIdentifiableResult = identifyResults.first(where: { (identifyLayerResult) -> Bool in
-                guard let layer = identifyLayerResult.layerContent as? AGSFeatureLayer else { return false }
-                return AppRules.isLayerIdentifiable(layer)
-            })
             
-            // Inform the user if the identify did not yeild any results.
-            guard let identifyResult = firstIdentifiableResult, identifyResult.popups.count > 0 else {
+            // Find identify results for all identifiable feature layers
+            // and return them as an array of RichPopups.
+            let richPopups = identifyResults.filter {
+                return $0.layerContent is AGSFeatureLayer
+            }
+            .flatMap { $0.popups.map { RichPopup(popup: $0) } }
+
+            // Inform the user if the identify did not yield any results.
+            guard richPopups.count > 0 else {
                 self.slideNotificationView.showLabel(withNotificationMessage: "Found no results.", forDuration: 2.0)
-                self.clearCurrentPopup()
+                self.clearFeatureSelection()
                 self.mapViewMode = .defaultView
                 return
             }
             
-            // Use the geometry engine to determine the nearest pop-up to the touch point.
-            if let nearest = identifyResult.popups.popupNearestTo(mapPoint: mapPoint) {
-                let richPopup = RichPopup(popup: nearest)
-                self.setCurrentPopup(popup: richPopup)
-            }
-            else {
-                self.clearCurrentPopup()
-            }
+            self.setSelectedPopups(popups: richPopups)
             
             // Set the map view mode to selected feature
-            self.mapViewMode = .selectedFeature(featureLoaded: false)
-            
-            // Load the new current pop up
-            self.refreshCurrentPopup()
+            self.mapViewMode = .selectedFeature(visible: true)
         }
     }
 }

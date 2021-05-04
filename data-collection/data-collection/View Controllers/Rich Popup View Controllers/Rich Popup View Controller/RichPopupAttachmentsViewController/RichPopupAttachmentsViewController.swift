@@ -107,4 +107,3 @@ class RichPopupAttachmentsViewController: UITableViewController {
         return sections[section]
     }
 }
-

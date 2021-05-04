@@ -94,7 +94,7 @@ extension MapViewController {
     
     private func addNewFeatureFor(featureLayer: AGSFeatureLayer) {
         
-        clearCurrentPopup()
+        clearFeatureSelection()
         
         guard
             let featureTable = featureLayer.featureTable as? AGSArcGISFeatureTable,
@@ -168,7 +168,9 @@ extension MapViewController {
             
             UIApplication.shared.hideProgressHUD()
             
-            self.performSegue(withIdentifier: "modallyPresentRelatedRecordsPopupViewController", sender: nil)
+            self.setSelectedPopups(popups: [newPopup])
+            setCurrentPopup(popup: newPopup)
+            mapViewMode = .editNewFeature
         }
         
         if shouldEnactCustomBehavior {
@@ -200,7 +202,7 @@ extension MapViewController {
     
     func prepareMapMaskViewForOfflineDownloadArea() {
         
-        clearCurrentPopup()
+        clearFeatureSelection()
         mapViewMode = .offlineMask
     }
     

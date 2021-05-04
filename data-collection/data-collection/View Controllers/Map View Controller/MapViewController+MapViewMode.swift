@@ -17,15 +17,22 @@ import UIKit
 extension MapViewController {
     
     func adjustForMapViewMode(from: MapViewMode?, to: MapViewMode) {
-                
-        let smallPopViewVisible: (Bool) -> UIViewAnimations = { [weak self] (visible) in
+        
+        let floatingPanelVisible: (Bool) -> UIViewAnimations = { [weak self] (visible) in
             return {
                 guard let self = self else { return }
-                self.smallPopupView.alpha = CGFloat(visible)
-                self.featureDetailViewBottomConstraint.constant = visible ? 8 : -156
+                // If we're showing a floating panel...
+                if visible {
+                    self.floatingPanelController?.view.alpha = 1.0
+                }
+                else {
+                    // Dismiss the floating panel controller.
+                    self.floatingPanelController?.view.alpha = 0.0
+                    self.dismissFloatingPanel()
+                }
             }
         }
-        
+
         let selectViewVisible: (Bool) -> UIViewAnimations = { [weak self] (visible) in
             return {
                 guard let self = self else { return }
@@ -44,41 +51,52 @@ extension MapViewController {
         let animations: [UIViewAnimations]
         
         switch to {
-            
+        
         case .defaultView:
             pinDropView.pinDropped = false
             animations = [ selectViewVisible(false),
-                           smallPopViewVisible(false),
+                           floatingPanelVisible(false),
                            mapViewVisible(true) ]
             hideMapMaskViewForOfflineDownloadArea()
-
+            
         case .disabled:
             pinDropView.pinDropped = false
             animations = [ selectViewVisible(false),
-                           smallPopViewVisible(false),
+                           floatingPanelVisible(false),
                            mapViewVisible(false) ]
             hideMapMaskViewForOfflineDownloadArea()
             
         case .selectingFeature:
             pinDropView.pinDropped = true
             animations = [ selectViewVisible(true),
-                           smallPopViewVisible(false),
+                           floatingPanelVisible(false),
                            mapViewVisible(true) ]
             hideMapMaskViewForOfflineDownloadArea()
             selectViewHeaderLabel.text = "Choose location"
             selectViewSubheaderLabel.text = "Pan & zoom map under pin"
             
-        case .selectedFeature(let loaded):
+        case .selectedFeature(let visible):
             pinDropView.pinDropped = false
             animations = [ selectViewVisible(false),
-                           smallPopViewVisible(loaded),
+                           floatingPanelVisible(visible),
                            mapViewVisible(true) ]
             hideMapMaskViewForOfflineDownloadArea()
+            if visible {
+                instantiateFloatingPanelForIdentifyResults()
+            }
             
+        case .editNewFeature:
+            pinDropView.pinDropped = false
+            animations = [ selectViewVisible(false),
+                           floatingPanelVisible(true),
+                           mapViewVisible(true) ]
+            hideMapMaskViewForOfflineDownloadArea()
+            instantiateFloatingPanelForNewFeature()
+
         case .offlineMask:
             pinDropView.pinDropped = false
             animations = [ selectViewVisible(true),
-                           smallPopViewVisible(false),
+                           floatingPanelVisible(false),
                            mapViewVisible(true) ]
             presentMapMaskViewForOfflineDownloadArea()
             selectViewHeaderLabel.text = "Choose extent"
@@ -88,6 +106,53 @@ extension MapViewController {
         UIView.animate(withDuration: 0.2) { [weak self] in
             for animation in animations { animation() }
             self?.view.layoutIfNeeded()
+        }
+    }
+
+    func instantiateFloatingPanelForIdentifyResults() {
+        // If we're showing a floating panel...
+        if identifyResultsViewController == nil {
+            let bundle = Bundle(for: IdentifyResultsViewController.self)
+            let storyboard = UIStoryboard(name: "IdentifyResultsViewController", bundle: bundle)
+            identifyResultsViewController = storyboard.instantiateInitialViewController() as? IdentifyResultsViewController
+        }
+        
+        guard let identifyResultsVC = identifyResultsViewController else { return }
+        
+        // Set the selected popups on the identify results view controller.
+        identifyResultsVC.selectedPopups = selectedPopups
+        identifyResultsVC.popupChangedHandler = { [weak self] (richPopup: RichPopup?) in
+            if let popup = richPopup {
+                self?.setCurrentPopup(popup: popup)
+                return self?.currentPopupManager
+            }
+            else {
+                self?.setSelectedPopups(popups: identifyResultsVC.selectedPopups)
+                return nil
+            }
+        }
+
+        presentInFloatingPanel(identifyResultsVC, regularWidthInsets: adjustedFloatingPanelInsets())
+        floatingPanelController?.view.alpha = 0.0
+        floatingPanelController?.transitionDirection = .horizontal
+        floatingPanelController?.view.layoutIfNeeded()
+    }
+
+    func instantiateFloatingPanelForNewFeature() {
+        let bundle = Bundle(for: RichPopupViewController.self)
+        let storyboard = UIStoryboard(name: "RichPopup", bundle: bundle)
+        if let richPopupViewController = storyboard.instantiateViewController(withIdentifier: "RichPopupViewController") as? RichPopupViewController {
+            richPopupViewController.popupManager = currentPopupManager!
+            richPopupViewController.setEditing(true, animated: false)
+            adjustUIForEditing(true)
+
+            subscribeToEditingPublishers(richPopupViewController)
+            
+            presentInFloatingPanel(richPopupViewController)
+
+            floatingPanelController?.view.alpha = 0.0
+            floatingPanelController?.transitionDirection = .horizontal
+            floatingPanelController?.view.layoutIfNeeded()
         }
     }
 }

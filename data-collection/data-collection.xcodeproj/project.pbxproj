@@ -22,7 +22,6 @@
 		9451EC5220D0705700792FFC /* CustomBehavior_IdentifyNeighborhood.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9451EC5120D0705700792FFC /* CustomBehavior_IdentifyNeighborhood.swift */; };
 		9458E2A5219B542700D18CEE /* HouseColors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9458E2A4219B542700D18CEE /* HouseColors.xcassets */; };
 		945B8ACD247874F90078D69A /* MapViewController+ProfileViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 945B8ACC247874F90078D69A /* MapViewController+ProfileViewControllerDelegate.swift */; };
-		945CEE7D20E2FAFE00CD3E0D /* MapViewController+SmallPopupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 945CEE7C20E2FAFE00CD3E0D /* MapViewController+SmallPopupView.swift */; };
 		945F450E21E681DE00F2DCBC /* SegmentedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 945F450D21E681DE00F2DCBC /* SegmentedViewController.swift */; };
 		945F451121E683C000F2DCBC /* RichPopupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 945F451021E683C000F2DCBC /* RichPopupViewController.swift */; };
 		945F451421E6878A00F2DCBC /* RichPopupDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 945F451321E6878A00F2DCBC /* RichPopupDetailsViewController.swift */; };
@@ -131,7 +130,6 @@
 		94D544CA207FC67B00ED0D04 /* AppIcon.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 94D544C8207FC67B00ED0D04 /* AppIcon.xcassets */; };
 		94D544D620852A5100ED0D04 /* SlideNotificationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94D544D120852A5100ED0D04 /* SlideNotificationView.swift */; };
 		94D544D720852A5100ED0D04 /* CompassView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94D544D220852A5100ED0D04 /* CompassView.swift */; };
-		94D544D820852A5100ED0D04 /* ShrinkingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94D544D320852A5100ED0D04 /* ShrinkingView.swift */; };
 		94D544D920852A5100ED0D04 /* PinDropView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94D544D420852A5100ED0D04 /* PinDropView.swift */; };
 		94D544DA20852A5100ED0D04 /* ActivityBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94D544D520852A5100ED0D04 /* ActivityBarView.swift */; };
 		94DDEA7C215426D300DA533C /* AppRules.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94DDEA7B215426D300DA533C /* AppRules.swift */; };
@@ -144,6 +142,8 @@
 		E41B13032421339A00FC2888 /* MapViewController+Extras.swift in Sources */ = {isa = PBXBuildFile; fileRef = E41B13022421339A00FC2888 /* MapViewController+Extras.swift */; };
 		E41B131424254D9000FC2888 /* ArcGISToolkit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E41B131024254CCD00FC2888 /* ArcGISToolkit.framework */; };
 		E41B131524254D9000FC2888 /* ArcGISToolkit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = E41B131024254CCD00FC2888 /* ArcGISToolkit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		E43E669025F960B7001AF48F /* IdentifyResultsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E43E668E25F960B7001AF48F /* IdentifyResultsViewController.swift */; };
+		E43E669425F9648F001AF48F /* IdentifyResultsViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E43E669325F9648F001AF48F /* IdentifyResultsViewController.storyboard */; };
 		E480B9A32421303600982756 /* LayerContentsTableViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E480B9A02421303600982756 /* LayerContentsTableViewController.storyboard */; };
 		E480B9A42421303600982756 /* LayerContentsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E480B9A12421303600982756 /* LayerContentsTableViewController.swift */; };
 		E480B9A52421303600982756 /* LayerContentsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E480B9A22421303600982756 /* LayerContentsViewController.swift */; };
@@ -243,7 +243,6 @@
 		9451EC5120D0705700792FFC /* CustomBehavior_IdentifyNeighborhood.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomBehavior_IdentifyNeighborhood.swift; sourceTree = "<group>"; };
 		9458E2A4219B542700D18CEE /* HouseColors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = HouseColors.xcassets; sourceTree = "<group>"; };
 		945B8ACC247874F90078D69A /* MapViewController+ProfileViewControllerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MapViewController+ProfileViewControllerDelegate.swift"; sourceTree = "<group>"; };
-		945CEE7C20E2FAFE00CD3E0D /* MapViewController+SmallPopupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MapViewController+SmallPopupView.swift"; sourceTree = "<group>"; };
 		945F450D21E681DE00F2DCBC /* SegmentedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SegmentedViewController.swift; sourceTree = "<group>"; };
 		945F451021E683C000F2DCBC /* RichPopupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RichPopupViewController.swift; sourceTree = "<group>"; };
 		945F451321E6878A00F2DCBC /* RichPopupDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RichPopupDetailsViewController.swift; sourceTree = "<group>"; };
@@ -352,7 +351,6 @@
 		94D544C8207FC67B00ED0D04 /* AppIcon.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = AppIcon.xcassets; path = "data-collection/AppIcon.xcassets"; sourceTree = SOURCE_ROOT; };
 		94D544D120852A5100ED0D04 /* SlideNotificationView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SlideNotificationView.swift; sourceTree = "<group>"; };
 		94D544D220852A5100ED0D04 /* CompassView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CompassView.swift; sourceTree = "<group>"; };
-		94D544D320852A5100ED0D04 /* ShrinkingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShrinkingView.swift; sourceTree = "<group>"; };
 		94D544D420852A5100ED0D04 /* PinDropView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PinDropView.swift; sourceTree = "<group>"; };
 		94D544D520852A5100ED0D04 /* ActivityBarView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivityBarView.swift; sourceTree = "<group>"; };
 		94DDEA7B215426D300DA533C /* AppRules.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppRules.swift; sourceTree = "<group>"; };
@@ -370,6 +368,8 @@
 		94FA8B44207BF2CD00972C75 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E41B13022421339A00FC2888 /* MapViewController+Extras.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MapViewController+Extras.swift"; sourceTree = "<group>"; };
 		E41B130A24254CCC00FC2888 /* ArcGISToolkit.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ArcGISToolkit.xcodeproj; path = "../arcgis-runtime-toolkit-ios/Toolkit/ArcGISToolkit.xcodeproj"; sourceTree = "<group>"; };
+		E43E668E25F960B7001AF48F /* IdentifyResultsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IdentifyResultsViewController.swift; sourceTree = "<group>"; };
+		E43E669325F9648F001AF48F /* IdentifyResultsViewController.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = IdentifyResultsViewController.storyboard; sourceTree = "<group>"; };
 		E480B9A02421303600982756 /* LayerContentsTableViewController.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LayerContentsTableViewController.storyboard; sourceTree = "<group>"; };
 		E480B9A12421303600982756 /* LayerContentsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LayerContentsTableViewController.swift; sourceTree = "<group>"; };
 		E480B9A22421303600982756 /* LayerContentsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LayerContentsViewController.swift; sourceTree = "<group>"; };
@@ -857,7 +857,6 @@
 				946569052087FBF700599E55 /* MapViewController+UserLocation.swift */,
 				9465690B2087FCCE00599E55 /* MapViewController+Setup.swift */,
 				946569282089066800599E55 /* MapViewController+Map.swift */,
-				945CEE7C20E2FAFE00CD3E0D /* MapViewController+SmallPopupView.swift */,
 				94D544BB207FC15D00ED0D04 /* MaskViewController.swift */,
 				E41B13022421339A00FC2888 /* MapViewController+Extras.swift */,
 				945B8ACC247874F90078D69A /* MapViewController+ProfileViewControllerDelegate.swift */,
@@ -870,7 +869,6 @@
 			children = (
 				94D544D120852A5100ED0D04 /* SlideNotificationView.swift */,
 				94D544D220852A5100ED0D04 /* CompassView.swift */,
-				94D544D320852A5100ED0D04 /* ShrinkingView.swift */,
 				94D544D420852A5100ED0D04 /* PinDropView.swift */,
 				94D544D520852A5100ED0D04 /* ActivityBarView.swift */,
 				9487942221F7CD47007BC15E /* StyledFirstResponderLabel.swift */,
@@ -956,6 +954,7 @@
 		94FA8B54207BF5DF00972C75 /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				E43E668D25F960B7001AF48F /* Identify Results View Controller */,
 				E4BA04A024B4E2A4000A1D43 /* Floating Panel View Controller */,
 				E480B99F2421303600982756 /* Layer Contents View Controllers */,
 				94682ADA246EFFEC005B733E /* Profile View Controller */,
@@ -981,6 +980,15 @@
 				E4F93A2E255C8ADE00298E30 /* ArcGIS.xcframework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		E43E668D25F960B7001AF48F /* Identify Results View Controller */ = {
+			isa = PBXGroup;
+			children = (
+				E43E668E25F960B7001AF48F /* IdentifyResultsViewController.swift */,
+				E43E669325F9648F001AF48F /* IdentifyResultsViewController.storyboard */,
+			);
+			path = "Identify Results View Controller";
 			sourceTree = "<group>";
 		};
 		E480B99F2421303600982756 /* Layer Contents View Controllers */ = {
@@ -1156,6 +1164,7 @@
 				946D20BA213093DE001BF5CC /* JobStatusViewController.storyboard in Resources */,
 				94B375BC207E8D5600691F2A /* AddressLocator.locb in Resources */,
 				9458E2A5219B542700D18CEE /* HouseColors.xcassets in Resources */,
+				E43E669425F9648F001AF48F /* IdentifyResultsViewController.storyboard in Resources */,
 				94B375BE207E8D5600691F2A /* AddressLocator.lox in Resources */,
 				94682ADE246F0088005B733E /* Profile.storyboard in Resources */,
 				94D544CA207FC67B00ED0D04 /* AppIcon.xcassets in Resources */,
@@ -1191,7 +1200,6 @@
 				94B3760C207EAE4700691F2A /* AppDelegate.swift in Sources */,
 				940DA97B2098E1C600AB4BF6 /* AGSArcGISFeatureTable+Query.swift in Sources */,
 				E4BA04A624B4E338000A1D43 /* FloatingPanelController.swift in Sources */,
-				94D544D820852A5100ED0D04 /* ShrinkingView.swift in Sources */,
 				946569022087FAE700599E55 /* MapViewController+MapViewMode.swift in Sources */,
 				948D85102151BAF500E2048F /* AGSPopup+RelatedRecords.swift in Sources */,
 				948D84F3215015A300E2048F /* UserDefaults+AGSJSONSerializable.swift in Sources */,
@@ -1245,9 +1253,9 @@
 				94C550F22212129D00DD7E40 /* StyledTextView.swift in Sources */,
 				94879444220227EB007BC15E /* RichPopupDetailsViewController+UITableViewDelegate.swift in Sources */,
 				9440D35C20DC2809005ED582 /* CustomBehavior_TreeSymbology.swift in Sources */,
-				945CEE7D20E2FAFE00CD3E0D /* MapViewController+SmallPopupView.swift in Sources */,
 				9465691A2088028E00599E55 /* AGSRelationshipInfo+Role.swift in Sources */,
 				945F454321E7D1CF00F2DCBC /* PopupAttributeTextViewCell.swift in Sources */,
+				E43E669025F960B7001AF48F /* IdentifyResultsViewController.swift in Sources */,
 				9416A19320BF3334001377ED /* Relationship.swift in Sources */,
 				940DA9722097825700AB4BF6 /* UILabel+EmptyString.swift in Sources */,
 				948D851E2151BFD900E2048F /* AGSArcGISFeatureTable+Popup.swift in Sources */,

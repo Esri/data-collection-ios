@@ -49,17 +49,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 extension AppDelegate {
     
     func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
-        // Handle OAuth callback from application(app,url,options) when the app's URL schema is called.
-        //
-        // See also AppSettings and AppContext.setupAndLoadPortal() to see how the AGSPortal is configured
-        // to handle OAuth and call back to this application.
+        // Handle OAuth callback from application(app,url,options) when the app's authentication URL schema is called.
         if let redirect = URLComponents(url: url, resolvingAgainstBaseURL: false),
-            redirect.scheme == OAuthConfig.components.scheme,
-            redirect.host == OAuthConfig.components.host {
-            
-            // Pass the OAuth callback through to the ArcGIS Runtime SDK's helper function.
-            AGSApplicationDelegate.shared().application(app, open: url, options: options)
-            
+           redirect.scheme == OAuthConfig.components.scheme,
+           redirect.host == OAuthConfig.components.host {
             appContext.portalSession.silentlyLoadCredentialRequiredPortalSession()
         }
         return true
