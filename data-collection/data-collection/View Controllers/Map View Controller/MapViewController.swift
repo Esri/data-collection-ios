@@ -297,6 +297,7 @@ class MapViewController: UIViewController {
         if mapViewMode == .editNewFeature && !isEditing {
             mapViewMode = .selectedFeature(visible: true)
         }
+        mapView.touchDelegate = isEditing ? nil : self
     }
     
     @objc func didStartEditing(_ notification: NSNotification) {

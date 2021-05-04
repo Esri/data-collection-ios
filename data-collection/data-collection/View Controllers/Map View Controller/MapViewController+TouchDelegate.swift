@@ -19,10 +19,9 @@ extension MapViewController: AGSGeoViewTouchDelegate {
     
     func geoView(_ geoView: AGSGeoView, didTapAtScreenPoint screenPoint: CGPoint, mapPoint: AGSPoint) {
         
-        guard (mapViewMode == .defaultView ||
+        guard mapViewMode == .defaultView ||
                 mapViewMode == .selectedFeature(visible: false) ||
-                mapViewMode == .selectedFeature(visible: true)) &&
-                !(currentPopupManager?.isEditing ?? false) else {
+                mapViewMode == .selectedFeature(visible: true) else {
             return
         }
         

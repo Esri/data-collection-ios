@@ -278,8 +278,6 @@ extension Notification.Name {
     static let workModeDidChange = Notification.Name("workModeDidChange")
     static let offlineMapDidChange = Notification.Name("offlineMapDidChange")
     static let locationAuthorizationDidChange = Notification.Name("locationAuthorizationDidChange")
-    static let didStartEditing = Notification.Name("didStartEditing")
-    static let didCancelEditing = Notification.Name("didCancelEditing")
 }
 
 extension AppContext {
@@ -311,22 +309,6 @@ extension AppContext {
     var locationAuthorizationNotification: Notification {
         Notification(
             name: .locationAuthorizationDidChange,
-            object: self,
-            userInfo: nil
-        )
-    }
-
-    var didStartEditingNotification: Notification {
-        Notification(
-            name: .didStartEditing,
-            object: self,
-            userInfo: nil
-        )
-    }
-
-    var didCancelEditingNotification: Notification {
-        Notification(
-            name: .didCancelEditing,
             object: self,
             userInfo: nil
         )

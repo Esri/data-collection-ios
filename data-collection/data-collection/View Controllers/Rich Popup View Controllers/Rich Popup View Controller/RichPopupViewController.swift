@@ -434,7 +434,35 @@ extension RichPopupViewController: FloatingPanelEmbeddable {
         let richPopup = popupManager.richPopup
         floatingPanelItem.title = richPopup.title
         floatingPanelItem.subtitle = nil
+        
+        richPopup.evaluateSubtitle { [weak floatingPanelItem] (subtitle) in
+            floatingPanelItem?.subtitle = subtitle
+        }
+
         currentFloatingPanelItem = floatingPanelItem
         return floatingPanelItem
+    }
+}
+
+extension Notification.Name {
+    static let didStartEditing = Notification.Name("didStartEditing")
+    static let didCancelEditing = Notification.Name("didCancelEditing")
+}
+
+extension AppContext {
+    var didStartEditingNotification: Notification {
+        Notification(
+            name: .didStartEditing,
+            object: self,
+            userInfo: nil
+        )
+    }
+
+    var didCancelEditingNotification: Notification {
+        Notification(
+            name: .didCancelEditing,
+            object: self,
+            userInfo: nil
+        )
     }
 }
