@@ -78,6 +78,9 @@ class LayerCell: UITableViewCell {
     @IBAction func visibilityChanged(_ sender: Any) {
         delegate?.visibilityChanged(self)
     }
+    
+    static let labelColor: UIColor = .label
+    static let dimmedColor: UIColor = .secondaryLabel
 }
 
 class LayerContentsTableViewController: UITableViewController, LayerCellDelegate {
@@ -189,7 +192,7 @@ class LayerContentsTableViewController: UITableViewController, LayerCellDelegate
         layerCell.showRowSeparator = (indexPath.row > 0) && configuration.showRowSeparator
         layerCell.nameLabel.text = rowItem.name
         let enabled = rowItem.isVisibilityToggleOn && (rowItem.isVisibleAtScale)
-        layerCell.nameLabel.textColor = enabled ? .black : .lightGray
+        layerCell.nameLabel.textColor = enabled ? LayerCell.labelColor : LayerCell.dimmedColor
         layerCell.accordionButton.isHidden = rowItem.accordion == .none
         layerCell.accordionButtonWidthConstraint.constant = !layerCell.accordionButton.isHidden ? layerCell.accordionButton.frame.height : 0.0
         layerCell.accordionButton.setImage(rowItem.accordion.image, for: .normal)
@@ -233,6 +236,6 @@ extension LayerContentsTableViewController {
         }
 
         configuration.isVisibilityToggleOn = layerCell.visibilitySwitch.isOn
-        layerCell.nameLabel.textColor = configuration.isVisibilityToggleOn ? .black : .lightGray
+        layerCell.nameLabel.textColor = configuration.isVisibilityToggleOn ? LayerCell.labelColor : LayerCell.dimmedColor
     }
 }
