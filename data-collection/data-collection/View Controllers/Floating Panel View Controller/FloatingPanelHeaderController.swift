@@ -35,7 +35,7 @@ internal class FloatingPanelHeaderController: UIViewController {
             
             // Set the applicable `FloatingPanelItem` properties on our controls.
             titleLabel.text = item.title
-            subtitleLabel.text = item.subtitle
+            setSubtitle(item.subtitle)
             setImage(from: item)
             closeButton.isHidden = item.closeButtonHidden
             
@@ -53,7 +53,7 @@ internal class FloatingPanelHeaderController: UIViewController {
                 },
                 item.observe(\.subtitle) { [weak self] (_, _) in
                     DispatchQueue.main.async {
-                        self?.subtitleLabel.text = item.subtitle
+                        self?.setSubtitle(item.subtitle)
                     }
                 },
                 item.observe(\.image) { [weak self] (_, _) in
@@ -96,5 +96,10 @@ internal class FloatingPanelHeaderController: UIViewController {
             imageView.isHidden = true
             subtitleSpacerView.isHidden = true
         }
+    }
+    
+    private func setSubtitle(_ subtitle: String?) {
+        subtitleLabel.text = subtitle
+        subtitleLabel.considerEmptyString()
     }
 }

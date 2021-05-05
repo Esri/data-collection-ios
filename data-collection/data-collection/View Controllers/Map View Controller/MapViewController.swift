@@ -23,14 +23,13 @@ class MapViewController: UIViewController {
     enum MapViewMode: Equatable {
         case defaultView
         case disabled
-        case selectedFeature(featureLoaded: Bool)
+        case selectedFeature(visible: Bool)
+        case editNewFeature
         case selectingFeature
         case offlineMask
     }
     
     @IBOutlet weak var mapView: AGSMapView!
-    @IBOutlet weak var smallPopupView: ShrinkingView!
-    @IBOutlet weak var popupsContainerView: UIView!
     @IBOutlet weak var addPopupRelatedRecordButton: UIButton!
     @IBOutlet weak var selectView: UIView!
     @IBOutlet weak var pinDropView: PinDropView!
@@ -38,7 +37,7 @@ class MapViewController: UIViewController {
     @IBOutlet weak var slideNotificationView: SlideNotificationView!
     @IBOutlet weak var compassView: CompassView!
     @IBOutlet weak var reloadMapButton: UIButton!
-    
+    @IBOutlet weak var profileBarButtonItem: UIBarButtonItem!
     @IBOutlet weak var relatedRecordHeaderLabel: UILabel!
     @IBOutlet weak var relatedRecordSubheaderLabel: UILabel!
     @IBOutlet weak var relatedRecordsNLabel: UILabel!
@@ -58,6 +57,8 @@ class MapViewController: UIViewController {
     
     var extrasNavigationController: UINavigationController?
     var layerContentsViewController: LayerContentsViewController?
+    
+    var identifyResultsViewController: IdentifyResultsViewController?
 
     var mapViewMode: MapViewMode = .defaultView {
         didSet {
@@ -74,12 +75,6 @@ class MapViewController: UIViewController {
         // Builds and constrains the activity view to the map view.
         setupActivityBarView()
         
-        // Ensure the map view attribution bar top auto layout constraint is attached to the small pop-up view.
-        setupMapViewAttributionBarAutoLayoutConstraints()
-        
-        // Set up the small pop-up view.
-        setupSmallPopupView()
-
         // Set initial map view mode.
         adjustForMapViewMode(from: nil, to: mapViewMode)
         
@@ -106,7 +101,21 @@ class MapViewController: UIViewController {
             name: .portalDidChange,
             object: nil
         )
-                
+        
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(didStartEditing(_:)),
+            name: .didStartEditing,
+            object: nil
+        )
+
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(didCancelEditing(_:)),
+            name: .didCancelEditing,
+            object: nil
+        )
+
         // Adjust location display for app location authorization status. If location authorized is undetermined, this will prompt the user for authorization.
         adjustForLocationAuthorizationStatus()
     }
@@ -190,27 +199,51 @@ class MapViewController: UIViewController {
     // MARK: Current Pop-Up
     
     private(set) var currentPopupManager: RichPopupManager?
+    private(set) var selectedPopups = [RichPopup]()
+
+    func setSelectedPopups(popups: [RichPopup]) {
+        // Clear existing selection
+        clearFeatureSelection()
+
+        selectedPopups = popups
+        
+        //Select the features on the map:
+        selectedPopups.forEach { (richPopup) in
+            if let feature = richPopup.feature,
+               let layer = feature.featureTable?.layer as? AGSFeatureLayer {
+                layer.select(feature)
+            }
+        }
+    }
 
     func setCurrentPopup(popup: RichPopup) {
         
         // Clear existing selection
-        (currentPopupManager?.popup.feature?.featureTable?.layer as? AGSFeatureLayer)?.clearSelection()
+        clearFeatureSelection()
         
         // Build new rich popup manager.
         currentPopupManager = RichPopupManager(richPopup: popup)
+
+        if let feature = currentPopupManager?.popup.feature {
+            (feature.featureTable?.layer as? AGSFeatureLayer)?.select(feature)
+        }
     }
     
-    func clearCurrentPopup() {
+    func clearFeatureSelection() {
         
         // Clear existing selection.
-        (currentPopupManager?.popup.feature?.featureTable?.layer as? AGSFeatureLayer)?.clearSelection()
+        mapView.map?.operationalLayers.forEach({ (layer) in
+            if let featureLayer = layer as? AGSFeatureLayer {
+                featureLayer.clearSelection()
+            }
+        })
         
         // Nullify current popup manager.
         currentPopupManager = nil
     }
     
     private var popupEditing: Cancellable?
-    
+
     // MARK: Segues
     
     override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
@@ -230,7 +263,7 @@ class MapViewController: UIViewController {
                 setCurrentPopup(popup: newPopup)
                 destination.popupManager = currentPopupManager!
                 destination.setEditing(true, animated: false)
-                mapViewMode = .selectedFeature(featureLoaded: false)
+                mapViewMode = .selectedFeature(visible: false)
             }
             else if let popupManager = EphemeralCache.shared.object(forKey: .newRelatedRecord) as? RichPopupManager {
                 destination.popupManager = popupManager
@@ -244,15 +277,7 @@ class MapViewController: UIViewController {
                 assertionFailure("A rich popup view controller should not present if any of the above scenarios are not met.")
             }
             
-            popupEditing?.cancel()
-            popupEditing = destination.editsMade.sink { [weak self] (result) in
-                switch result {
-                case .failure(let error):
-                    self?.showError(error)
-                case .success(_):
-                    self?.refreshCurrentPopup()
-                }
-            }
+            subscribeToEditingPublishers(destination)
         }
         else if let destination = segue.destination as? MaskViewController {
             maskViewController = destination
@@ -265,6 +290,30 @@ class MapViewController: UIViewController {
         }
     }
     
+    func adjustUIForEditing(_ isEditing: Bool) {
+        extrasButton.isEnabled = !isEditing
+        addFeatureButton.isEnabled = !isEditing
+        profileBarButtonItem.isEnabled = !isEditing
+        if mapViewMode == .editNewFeature && !isEditing {
+            mapViewMode = .selectedFeature(visible: true)
+        }
+        mapView.touchDelegate = isEditing ? nil : self
+    }
+    
+    @objc func didStartEditing(_ notification: NSNotification) {
+        adjustUIForEditing(true)
+        if let popupViewController = notification.object as? RichPopupViewController {
+            subscribeToEditingPublishers(popupViewController)
+        }
+    }
+    
+    @objc func didCancelEditing(_ notification: NSNotification) {
+        adjustUIForEditing(false)
+        if notification.object is RichPopupViewController {
+            unsubscribeToEditingPublishers()
+        }
+    }
+
     // MARK:- Work Mode
     
     @objc func adjustForWorkMode() {
@@ -288,6 +337,24 @@ class MapViewController: UIViewController {
         if let error = appContext.portalSession.error {
             showError(error)
         }
+    }
+    
+    func subscribeToEditingPublishers(_ richPopupViewController: RichPopupViewController) {
+        popupEditing?.cancel()
+        popupEditing = richPopupViewController.editsMade.sink { [weak self] (result) in
+            switch result {
+            case .failure(let error):
+                self?.showError(error)
+            case .success(_):
+                break
+            }
+
+            self?.adjustUIForEditing(false)
+        }
+    }
+    
+    func unsubscribeToEditingPublishers() {
+        popupEditing?.cancel()
     }
 }
 
