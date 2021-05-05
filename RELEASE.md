@@ -13,6 +13,7 @@
 - Fixes bug where `AddressLocator.onlineLocator` issues an authentication challenge amid creating a new feature.
 - Introduces support for iOS 14 PHPickerViewController.
 - Removes `SVProgressHUD` dependency, introduces `ProgressViewController` global presenter.
+- Introduces `ArcGIS` and `ArcGISToolkit` as Swift Package Manager dependencies.
 
 # Release 1.2.3
 
