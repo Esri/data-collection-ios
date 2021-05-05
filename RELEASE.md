@@ -13,7 +13,8 @@
 - Fixes bug where `AddressLocator.onlineLocator` issues an authentication challenge amid creating a new feature.
 - Introduces support for iOS 14 PHPickerViewController.
 - Removes `SVProgressHUD` dependency, introduces `ProgressViewController` global presenter.
-- Introduces `FloatingPanelController` for displaying information in a customizable panel which "floats" about the map.
+- Introduces `ArcGIS` and `ArcGISToolkit` as Swift Package Manager dependencies.
+- Introduces `FloatingPanelController` for displaying information in a customizable panel which "floats" above the map.
 - Moves the **Bookmarks** and **Layers** views into a `FloatingPanelController`.
 - Adds support for displaying multiple identify results from all identifiable layers in a map.
 - Adds Dark Mode support in the `RichPopupViewController`.
