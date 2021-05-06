@@ -16,7 +16,7 @@ import ArcGIS
 import PhotosUI
 
 extension RichPopupViewController {
-    func selectMedia() {
+    func selectMedia(view: UIView) {
         let actionSheet = UIAlertController(
             title: nil,
             message: "Select media",
@@ -45,6 +45,7 @@ extension RichPopupViewController {
             actionSheet.addAction(imagePicker)
         }
         actionSheet.addAction(.cancel())
+        actionSheet.popoverPresentationController?.sourceView = view
         present(actionSheet, animated: true, completion: nil)
     }
     

@@ -73,8 +73,8 @@ extension RichPopupAttachmentsViewController /* UITableViewDelegate */ {
         
         tableView.deselectRow(at: indexPath, animated: true)
         
-        if adjustedAttachmentsTableSection(for: indexPath.section) == .addAttachment {
-            delegate?.attachmentsViewControllerDidRequestAddAttachment(self)
+        if let addAttachmentsCell = tableView.cellForRow(at: indexPath) as? PopupAddAttachmentCell {
+            delegate?.attachmentsViewControllerDidRequestAddAttachment(self, source: addAttachmentsCell.accessoryView)
         }
         else if isEditing, let attachment = popupAttachmentsManager.attachment(at: indexPath.row) as? RichPopupStagedAttachment {
             delegate?.attachmentsViewController(self, selectedEditStagedAttachment: attachment)
