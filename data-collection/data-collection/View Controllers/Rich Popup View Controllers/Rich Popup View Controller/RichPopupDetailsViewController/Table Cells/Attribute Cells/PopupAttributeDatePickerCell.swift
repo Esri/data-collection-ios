@@ -32,6 +32,10 @@ class PopupAttributeDatePickerCell: UITableViewCell {
         super.setEditing(editing, animated: animated)
         datePicker.isHidden = !editing
         attributeValueLabel.isHidden = editing
+        if editing && value.raw == nil {
+            // set default value
+            pickerValueDidChange(datePicker)
+        }
     }
 }
 
