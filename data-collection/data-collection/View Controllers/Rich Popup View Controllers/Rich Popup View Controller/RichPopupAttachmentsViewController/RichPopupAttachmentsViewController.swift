@@ -16,7 +16,7 @@ import UIKit
 import ArcGIS
 
 protocol RichPopupAttachmentsViewControllerDelegate: AnyObject {
-    func attachmentsViewControllerDidRequestAddAttachment(_ attachmentsViewController: RichPopupAttachmentsViewController)
+    func attachmentsViewControllerDidRequestAddAttachment(_ attachmentsViewController: RichPopupAttachmentsViewController, source view: UIView?)
     func attachmentsViewController(_ attachmentsViewController: RichPopupAttachmentsViewController, selectedEditStagedAttachment attachment: RichPopupStagedAttachment)
     func attachmentsViewController(_ attachmentsViewController: RichPopupAttachmentsViewController, selectedViewAttachmentAtIndex index: Int)
 }
