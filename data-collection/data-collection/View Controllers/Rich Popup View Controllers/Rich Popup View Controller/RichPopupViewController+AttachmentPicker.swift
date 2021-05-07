@@ -212,13 +212,20 @@ fileprivate struct UnknownError: LocalizedError {
 @available(iOS 14.0, *)
 extension RichPopupViewController: PHPickerViewControllerDelegate {
     func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
-        guard !results.isEmpty else { return }
         guard !isProcessingNewAttachmentImage else { return }
         isProcessingNewAttachmentImage = true
-        let attachments = results.compactMap { RichPopupStagedPhotoPickerAttachment(itemProvider: $0.itemProvider) }
-        picker.dismiss(animated: true) {
-            attachments.forEach { self.attachmentsViewController.addAttachment($0) }
-            self.isProcessingNewAttachmentImage = false
+        if results.isEmpty {
+            // User canceled...
+            picker.dismiss(animated: true) {
+                self.isProcessingNewAttachmentImage = false
+            }
+        }
+        else {
+            let attachments = results.compactMap { RichPopupStagedPhotoPickerAttachment(itemProvider: $0.itemProvider) }
+            picker.dismiss(animated: true) {
+                attachments.forEach { self.attachmentsViewController.addAttachment($0) }
+                self.isProcessingNewAttachmentImage = false
+            }
         }
     }
 }
