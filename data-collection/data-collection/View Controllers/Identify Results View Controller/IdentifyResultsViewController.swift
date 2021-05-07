@@ -111,6 +111,7 @@ class IdentifyResultsViewController: UITableViewController, FloatingPanelEmbedda
 
         guard let destination = segue.destination as? RichPopupViewController else { return }
         destination.popupManager = popupManager
+        subtitles.removeObject(forKey: richPopup)
 
         popupEditing?.cancel()
         popupEditing = destination.editsMade.sink { [weak self] (result) in
