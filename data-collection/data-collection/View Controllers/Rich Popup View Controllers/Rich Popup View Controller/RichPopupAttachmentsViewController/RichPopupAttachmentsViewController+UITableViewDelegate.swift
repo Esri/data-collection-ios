@@ -56,12 +56,15 @@ extension RichPopupAttachmentsViewController /* UITableViewDelegate */ {
         if adjustedAttachmentsTableSection(for: indexPath.section) == .attachmentsList, editingStyle == .delete {
             
             // Delete Attachment
-            if popupAttachmentsManager.deleteAttachment(at: indexPath.row) {
-                
+            do {
+                try popupAttachmentsManager.deleteAttachment(at: indexPath.row)
                 // Update Table
                 tableView.performBatchUpdates({
                     tableView.deleteRows(at: [indexPath], with: .bottom)
                 }, completion: nil)
+            }
+            catch {
+                showError(error)
             }
         }
     }
@@ -70,8 +73,8 @@ extension RichPopupAttachmentsViewController /* UITableViewDelegate */ {
         
         tableView.deselectRow(at: indexPath, animated: true)
         
-        if adjustedAttachmentsTableSection(for: indexPath.section) == .addAttachment {
-            delegate?.attachmentsViewControllerDidRequestAddAttachment(self)
+        if let addAttachmentsCell = tableView.cellForRow(at: indexPath) as? PopupAddAttachmentCell {
+            delegate?.attachmentsViewControllerDidRequestAddAttachment(self, source: addAttachmentsCell.accessoryView)
         }
         else if isEditing, let attachment = popupAttachmentsManager.attachment(at: indexPath.row) as? RichPopupStagedAttachment {
             delegate?.attachmentsViewController(self, selectedEditStagedAttachment: attachment)

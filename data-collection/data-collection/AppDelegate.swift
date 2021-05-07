@@ -34,58 +34,33 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Configure default app colors.
         AppDelegate.setAppApperanceWithAppColors()
         
-        // Reset first reachability change status flag then start listening to reachability status changes.
-        appReachability.resetAndStartListening()
-        
         // Attempt to sign in from previously stored credentials.
-        appContext.signInCurrentPortalIfPossible()
+        appContext.portalSession.silentlyLoadCredentialRequiredPortalSession()
+        
+        // Load offline map, if one exists.
+        appContext.offlineMapManager.loadOfflineMobileMapPackage()
         
         return true
     }
-    
-    func applicationWillEnterForeground(_ application: UIApplication) {
-        // Reset first reachability change status flag then start listening to reachability status changes.
-        appReachability.resetAndStartListening()
-    }
-    
-    func applicationWillResignActive(_ application: UIApplication) {
-        // Stop listening to reachability status changes.
-        appReachability.stopListening()
-    }
-    
-    func applicationWillTerminate(_ application: UIApplication) {
-        // Stop listening to reachability status changes.
-        appReachability.stopListening()
-    }
 }
+
+// MARK:- OAuth
 
 extension AppDelegate {
     
-    // MARK: OAuth
     func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
-        // Handle OAuth callback from application(app,url,options) when the app's URL schema is called.
-        //
-        // See also AppSettings and AppContext.setupAndLoadPortal() to see how the AGSPortal is configured
-        // to handle OAuth and call back to this application.
+        // Handle OAuth callback from application(app,url,options) when the app's authentication URL schema is called.
         if let redirect = URLComponents(url: url, resolvingAgainstBaseURL: false),
-            redirect.scheme == OAuth.components.scheme,
-            redirect.host == OAuth.components.host {
-            
-            // Pass the OAuth callback through to the ArcGIS Runtime SDK's helper function.
-            AGSApplicationDelegate.shared().application(app, open: url, options: options)
-            
-            // See if we were called back with confirmation that we're authorized.
-            if redirect.hasParameter(named: "code") {
-                // If we were authenticated, there should now be a shared credential to use. Let's try it.
-                appContext.signInCurrentPortalIfPossible()
-            }
+           redirect.scheme == OAuthConfig.components.scheme,
+           redirect.host == OAuthConfig.components.host {
+            appContext.portalSession.silentlyLoadCredentialRequiredPortalSession()
         }
         return true
     }
     
     static func configCredentialCacheAutoSyncToKeychain() {
         AGSAuthenticationManager.shared().credentialCache.enableAutoSyncToKeychain(
-            withIdentifier: .keychainIdentifier,
+            withIdentifier: "\(Bundle.main.bundleIdentifier!).keychain",
             accessGroup: nil,
             acrossDevices: false
         )
@@ -95,13 +70,15 @@ extension AppDelegate {
         let oauthConfig = AGSOAuthConfiguration(
             portalURL: .basePortal,
             clientID: .clientID,
-            redirectURL: OAuth.redirectUrl
+            redirectURL: OAuthConfig.redirectUrl
         )
         AGSAuthenticationManager.shared().oAuthConfigurations.add(oauthConfig)
     }
 }
 
-extension AppDelegate {
+// MARK:- ArcGIS License
+
+private extension AppDelegate {
     
     /// License the ArcGIS application with the configured ArcGIS Runtime deployment license key.
     ///
@@ -114,5 +91,104 @@ extension AppDelegate {
             print("[Error: AGSArcGISRuntimeEnvironment] Error licensing app: \(error.localizedDescription)")
         }
         print("[ArcGIS Runtime License] \(AGSArcGISRuntimeEnvironment.license())")
+    }
+}
+
+extension AGSLicense {
+    open override var description: String {
+        guard self.licenseType != .developer else {
+            // We just return the type, since type and level would both be Developer, which is redundant
+            return "\(self.licenseType)"
+        }
+        
+        return "\(self.licenseLevel) [\(self.licenseType), \(self.statusAndExpiryDescription)]"
+    }
+    
+    private var statusAndExpiryDescription: String {
+        if let expirationDate = self.expiryNilledForLicenseLevel {
+            switch self.licenseStatus {
+            case .valid:
+                // Valid until some time in the future…
+                return "\(self.licenseStatus) Until \(expirationDate)"
+            case .loginRequired:
+                // Don't know what expiry is in this case, so we'll assume it's provided.
+                fallthrough
+            case .expired:
+                // Expired some time back…
+                return "\(self.licenseStatus) (Expired \(expirationDate))"
+            case .invalid:
+                // Not a valid license. Expiration means nothing.
+                return "\(self.licenseStatus)"
+            @unknown default:
+                fatalError("Unsupported case \(self).")
+            }
+        } else {
+            // No expiry…
+            switch self.licenseStatus {
+            case .valid:
+                return "\(self.licenseStatus) Indefinitely"
+            default:
+                return "\(self.licenseStatus)"
+            }
+        }
+    }
+    
+    private var expiryNilledForLicenseLevel: Date? {
+        if self.licenseLevel == .developer && self.expiry?.timeIntervalSince1970 == 0 ||
+            self.licenseLevel == .lite && (self.expiry ?? Date.distantFuture) == Date.distantFuture {
+            return nil
+        }
+        return self.expiry
+    }
+}
+
+extension AGSLicenseLevel : CustomStringConvertible {
+    public var description: String {
+        switch self {
+        case .developer:
+            return "Developer"
+        case .lite:
+            return "Lite"
+        case .basic:
+            return "Basic"
+        case .standard:
+            return "Standard"
+        case .advanced:
+            return "Advanced"
+        @unknown default:
+            fatalError("Unsupported case \(self).")
+        }
+    }
+}
+
+extension AGSLicenseStatus : CustomStringConvertible {
+    public var description: String {
+        switch self {
+        case .invalid:
+            return "Invalid"
+        case .valid:
+            return "Valid"
+        case .expired:
+            return "Expired"
+        case .loginRequired:
+            return "Login Required"
+        @unknown default:
+            fatalError("Unsupported case \(self).")
+        }
+    }
+}
+
+extension AGSLicenseType : CustomStringConvertible {
+    public var description: String {
+        switch self {
+        case .developer:
+            return "Developer (not suitable for production deployment)"
+        case .namedUser:
+            return "Named User"
+        case .licenseKey:
+            return "License Key"
+        @unknown default:
+            fatalError("Unsupported case \(self).")
+        }
     }
 }

@@ -31,6 +31,11 @@ class Relationship: AGSLoadableBase {
             return nil
         }
         
+        guard let feature = popup.geoElement as? AGSArcGISFeature,
+              feature.featureTable is AGSArcGISFeatureTable else {
+            return nil
+        }
+        
         self.relationshipInfo = info
         self.relatedTable = table
         self.popup = popup
@@ -58,40 +63,27 @@ class Relationship: AGSLoadableBase {
     
     override func doStartLoading(_ retrying: Bool) {
         
-        guard let feature = self.popup?.geoElement as? AGSArcGISFeature else {
-            loadDidFinishWithError(FeatureTableError.invalidFeature)
+        guard let feature = self.popup?.geoElement as? AGSArcGISFeature,
+              let featureTable = feature.featureTable as? AGSArcGISFeatureTable,
+              let info = self.relationshipInfo
+        else {
+            self.loadDidFinishWithError(MissingRelationship())
             return
         }
         
-        guard let featureTable = feature.featureTable as? AGSArcGISFeatureTable else {
-            loadDidFinishWithError(FeatureTableError.invalidFeatureTable)
-            return
-        }
-        
-        guard let info = self.relationshipInfo else {
-            loadDidFinishWithError(FeatureTableError.missingRelationshipInfos)
-            return
-        }
-        
-        cancelableQuery = featureTable.queryRelatedFeaturesAsPopups(forFeature: feature, relationship: info) { [weak self] (popupsResults, error) in
-            
-            guard let self = self else { return }
-            
-            guard error == nil else {
-                self.loadDidFinishWithError(error!)
-                return
-            }
-            
-            assert(popupsResults != nil, "Something went very wrong.")
-            
-            guard let popups = popupsResults else {
-                self.loadDidFinishWithError(NSError.unknown)
-                return
-            }
-            
-            self.processRecords(popups)
-            self.loadDidFinishWithError(nil)
-        }
+        cancelableQuery = featureTable.queryRelatedFeaturesAsPopups(
+            forFeature: feature,
+            relationship: info,
+            completion: { [weak self] (result) in
+                guard let self = self else { return }
+                switch result {
+                case .failure(let error):
+                    self.loadDidFinishWithError(error)
+                case .success(let popups):
+                    self.processRecords(popups)
+                    self.loadDidFinishWithError(nil)
+                }
+        })
     }
     
     override func doCancelLoading() {
@@ -100,7 +92,17 @@ class Relationship: AGSLoadableBase {
         cancelableQuery?.cancel()
         
         // Pass `userCancelled` error.
-        loadDidFinishWithError(NSError.userCancelled)
+        loadDidFinishWithError(CancelledError())
+    }
+    
+    // MARK: Errors
+    
+    struct MissingRelationship: LocalizedError {
+        var errorDescription: String? { "The relationship is missing." }
+    }
+    
+    struct CancelledError: LocalizedError {
+        var errorDescription: String? { "Cancelled loading relationship." }
     }
     
     // MARK: For Subclassing Eyes
@@ -131,11 +133,11 @@ class Relationship: AGSLoadableBase {
 extension Relationship {
     
     // MARK: Fetch and sort all related records for the many to one relationship.
-    // This is intended to be used by `ManyToOneRelationship`.
-    func queryAndSortAllRelatedPopups(_ completion: @escaping (Error?, [AGSPopup]?) -> Void) {
+    // This is intended to be used by `ManyToOneRelationship`.    
+    func queryAndSortAllRelatedPopups(_ completion: @escaping (Result<[AGSPopup], Error>) -> Void) {
         
         guard let featureTable = relatedTable else {
-            completion(NSError.unknown, nil)
+            completion(.failure(MissingRelationship()))
             return
         }
         
@@ -147,20 +149,13 @@ extension Relationship {
         else {
             sorted = nil
         }
-        
-        featureTable.queryAllFeaturesAsPopups(sorted: sorted) { (popups, error) in
-            
-            if let error = error {
-                completion(error, nil)
-                return
-            }
-            
-            guard let popups = popups else {
-                completion(NSError.unknown, nil)
-                return
-            }
-            
-            completion(nil, popups)
-        }
+
+        featureTable.queryAllFeaturesAsPopups(sorted: sorted, completion: completion)
+    }
+}
+
+extension Relationship {
+    struct UnknownError: LocalizedError {
+        var errorDescription: String? { "An unknown error occured." }
     }
 }

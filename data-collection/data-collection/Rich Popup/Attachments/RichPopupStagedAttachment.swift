@@ -16,18 +16,26 @@ import ArcGIS
 
 class RichPopupStagedAttachment: NSObject, RichPopupPreviewableAttachment {
     
-    let attachmentData: Data
+    struct AttachmentData {
+        let data: Data
+        let mimeType: String
+    }
     
-    let attachmentMimeType: String
-    
+    let attachmentData: AttachmentData
+        
     var name: String?
     
-    init(data: Data, mimeType: String, name: String?) {
-        
-        self.attachmentData = data
-        self.attachmentMimeType = mimeType
+    init(data: AttachmentData? = nil, name: String? = nil) {
+        if let data = data {
+            self.attachmentData = data
+        }
+        else {
+            self.attachmentData = AttachmentData(
+                data: Data(),
+                mimeType: "application/octet-stream"
+            )
+        }
         self.name = name
-        
         super.init()
     }
     

@@ -110,7 +110,7 @@ class PopupRelatedRecordCell: UITableViewCell {
                 
                 let titleLabel = UILabel()
                 titleLabel.numberOfLines = 1
-                titleLabel.textColor = .lightGray
+                titleLabel.textColor = .secondaryLabel
                 titleLabel.font = .tableCellTitle
                 titleLabel.adjustsFontForContentSizeCategory = true
                 titleLabel.setContentCompressionResistancePriority(.required, for: .vertical)
@@ -118,7 +118,7 @@ class PopupRelatedRecordCell: UITableViewCell {
                 
                 let valueLabel = UILabel()
                 valueLabel.numberOfLines = 0
-                valueLabel.textColor = .black
+                valueLabel.textColor = .label
                 valueLabel.font = .tableCellValue
                 valueLabel.adjustsFontForContentSizeCategory = true
                 valueLabel.setContentCompressionResistancePriority(.required, for: .vertical)
@@ -143,5 +143,24 @@ class PopupRelatedRecordCell: UITableViewCell {
                 last.value.removeFromSuperview()
             }
         }
+    }
+}
+
+extension UIFont {
+    
+    static var tableCellTitle: UIFont {
+        return UIFont.preferredFont(forTextStyle: .footnote)
+    }
+    
+    static var tableCellValue: UIFont {
+        return UIFont.preferredFont(forTextStyle: .body)
+    }
+    
+    static var drawerButtonHeader: UIFont {
+        return UIFont.preferredFont(forTextStyle: .body)
+    }
+    
+    static var drawerButtonSubheader: UIFont {
+        return UIFont.preferredFont(forTextStyle: .caption1)
     }
 }

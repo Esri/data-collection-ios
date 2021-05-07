@@ -23,14 +23,13 @@ class MapViewController: UIViewController {
     enum MapViewMode: Equatable {
         case defaultView
         case disabled
-        case selectedFeature(featureLoaded: Bool)
+        case selectedFeature(visible: Bool)
+        case editNewFeature
         case selectingFeature
         case offlineMask
     }
     
     @IBOutlet weak var mapView: AGSMapView!
-    @IBOutlet weak var smallPopupView: ShrinkingView!
-    @IBOutlet weak var popupsContainerView: UIView!
     @IBOutlet weak var addPopupRelatedRecordButton: UIButton!
     @IBOutlet weak var selectView: UIView!
     @IBOutlet weak var pinDropView: PinDropView!
@@ -38,7 +37,7 @@ class MapViewController: UIViewController {
     @IBOutlet weak var slideNotificationView: SlideNotificationView!
     @IBOutlet weak var compassView: CompassView!
     @IBOutlet weak var reloadMapButton: UIButton!
-    
+    @IBOutlet weak var profileBarButtonItem: UIBarButtonItem!
     @IBOutlet weak var relatedRecordHeaderLabel: UILabel!
     @IBOutlet weak var relatedRecordSubheaderLabel: UILabel!
     @IBOutlet weak var relatedRecordsNLabel: UILabel!
@@ -58,7 +57,8 @@ class MapViewController: UIViewController {
     
     var extrasNavigationController: UINavigationController?
     var layerContentsViewController: LayerContentsViewController?
-    var bookmarksViewController: BookmarksViewController?
+    
+    var identifyResultsViewController: IdentifyResultsViewController?
 
     var mapViewMode: MapViewMode = .defaultView {
         didSet {
@@ -75,24 +75,11 @@ class MapViewController: UIViewController {
         // Builds and constrains the activity view to the map view.
         setupActivityBarView()
         
-        // Ensure the map view attribution bar top auto layout constraint is attached to the small pop-up view.
-        setupMapViewAttributionBarAutoLayoutConstraints()
-        
-        // Set up the small pop-up view.
-        setupSmallPopupView()
-
         // Set initial map view mode.
         adjustForMapViewMode(from: nil, to: mapViewMode)
         
         // Associate the compass view to the map view.
         compassView.mapView = mapView
-        
-        NotificationCenter.default.addObserver(
-            self,
-            selector: #selector(adjustForCurrentMap),
-            name: .currentMapDidChange,
-            object: nil
-        )
         
         NotificationCenter.default.addObserver(
             self,
@@ -110,19 +97,27 @@ class MapViewController: UIViewController {
         
         NotificationCenter.default.addObserver(
             self,
-            selector: #selector(adjustForReachability),
-            name: .reachabilityDidChange,
+            selector: #selector(adjustForPortal),
+            name: .portalDidChange,
             object: nil
         )
         
-        // Load map from the app context.
-        appContext.loadOfflineMobileMapPackageAndSetMapForCurrentWorkMode()
-        
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(didStartEditing(_:)),
+            name: .didStartEditing,
+            object: nil
+        )
+
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(didCancelEditing(_:)),
+            name: .didCancelEditing,
+            object: nil
+        )
+
         // Adjust location display for app location authorization status. If location authorized is undetermined, this will prompt the user for authorization.
         adjustForLocationAuthorizationStatus()
-        
-        // If device is not reachable upon launch, inform the end-user.
-        displayInitialReachabilityMessage()
     }
         
     // MARK:- Extras
@@ -161,8 +156,11 @@ class MapViewController: UIViewController {
         
         assert(currentPopupManager != nil, "This function should not be reached if a popup is not currently selected.")
         
-        guard let manager = currentPopupManager, let relationships = manager.richPopup.relationships, let relationship = relationships.oneToMany.first else {
-            present(simpleAlertMessage: "Unable to add a new related record.")
+        guard let manager = currentPopupManager,
+              let relationships = manager.richPopup.relationships,
+              let relationship = relationships.oneToMany.first
+        else {
+            showError(UnknownError())
             return
         }
 
@@ -172,20 +170,20 @@ class MapViewController: UIViewController {
             relatedManager = try manager.buildRichPopupManagerForNewOneToManyRecord(for: relationship)
         }
         catch {
-            present(simpleAlertMessage: "Unable to add a new related record. \(error.localizedDescription)")
+            showError(error)
             return
         }
 
-        SVProgressHUD.show(withStatus: String(format: "Creating new %@.", (relatedManager.title ?? "related record")))
+        UIApplication.shared.showProgressHUD(
+            String(format: "Creating new %@.", (relatedManager.title ?? "related record"))
+        )
 
         relationships.load { [weak self] (error) in
-
-            SVProgressHUD.dismiss()
-
+            UIApplication.shared.hideProgressHUD()
             guard let self = self else { return }
-
-            guard error == nil else {
-                self.present(simpleAlertMessage: error!.localizedDescription)
+            
+            if let error = error {
+                self.showError(error)
                 return
             }
 
@@ -201,27 +199,51 @@ class MapViewController: UIViewController {
     // MARK: Current Pop-Up
     
     private(set) var currentPopupManager: RichPopupManager?
+    private(set) var selectedPopups = [RichPopup]()
+
+    func setSelectedPopups(popups: [RichPopup]) {
+        // Clear existing selection
+        clearFeatureSelection()
+
+        selectedPopups = popups
+        
+        //Select the features on the map:
+        selectedPopups.forEach { (richPopup) in
+            if let feature = richPopup.feature,
+               let layer = feature.featureTable?.layer as? AGSFeatureLayer {
+                layer.select(feature)
+            }
+        }
+    }
 
     func setCurrentPopup(popup: RichPopup) {
         
         // Clear existing selection
-        (currentPopupManager?.popup.feature?.featureTable?.layer as? AGSFeatureLayer)?.clearSelection()
+        clearFeatureSelection()
         
         // Build new rich popup manager.
         currentPopupManager = RichPopupManager(richPopup: popup)
+
+        if let feature = currentPopupManager?.popup.feature {
+            (feature.featureTable?.layer as? AGSFeatureLayer)?.select(feature)
+        }
     }
     
-    func clearCurrentPopup() {
+    func clearFeatureSelection() {
         
         // Clear existing selection.
-        (currentPopupManager?.popup.feature?.featureTable?.layer as? AGSFeatureLayer)?.clearSelection()
+        mapView.map?.operationalLayers.forEach({ (layer) in
+            if let featureLayer = layer as? AGSFeatureLayer {
+                featureLayer.clearSelection()
+            }
+        })
         
         // Nullify current popup manager.
         currentPopupManager = nil
     }
     
     private var popupEditing: Cancellable?
-    
+
     // MARK: Segues
     
     override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
@@ -241,7 +263,7 @@ class MapViewController: UIViewController {
                 setCurrentPopup(popup: newPopup)
                 destination.popupManager = currentPopupManager!
                 destination.setEditing(true, animated: false)
-                mapViewMode = .selectedFeature(featureLoaded: false)
+                mapViewMode = .selectedFeature(visible: false)
             }
             else if let popupManager = EphemeralCache.shared.object(forKey: .newRelatedRecord) as? RichPopupManager {
                 destination.popupManager = popupManager
@@ -255,10 +277,7 @@ class MapViewController: UIViewController {
                 assertionFailure("A rich popup view controller should not present if any of the above scenarios are not met.")
             }
             
-            popupEditing?.cancel()
-            popupEditing = destination.editsMade.sink { [weak self] (result) in
-                self?.refreshCurrentPopup()
-            }
+            subscribeToEditingPublishers(destination)
         }
         else if let destination = segue.destination as? MaskViewController {
             maskViewController = destination
@@ -267,44 +286,75 @@ class MapViewController: UIViewController {
             destination.delegate = self
         }
         else if let destination = segue.destination as? JobStatusViewController {
-            destination.jobConstruct = EphemeralCache.shared.object(forKey: .offlineMapJob) as? OfflineMapJobConstruct
-            destination.delegate = self
+            destination.job = EphemeralCache.shared.object(forKey: "OfflineMapJobID") as? OfflineMapJobManager.Job
         }
     }
     
-    // MARK:- Reachability
+    func adjustUIForEditing(_ isEditing: Bool) {
+        extrasButton.isEnabled = !isEditing
+        addFeatureButton.isEnabled = !isEditing
+        profileBarButtonItem.isEnabled = !isEditing
+        if mapViewMode == .editNewFeature && !isEditing {
+            mapViewMode = .selectedFeature(visible: true)
+        }
+        mapView.touchDelegate = isEditing ? nil : self
+    }
     
-    private func displayInitialReachabilityMessage() {
-        if !appReachability.isReachable {
-            displayReachabilityMessage(isReachable: false)
+    @objc func didStartEditing(_ notification: NSNotification) {
+        adjustUIForEditing(true)
+        if let popupViewController = notification.object as? RichPopupViewController {
+            subscribeToEditingPublishers(popupViewController)
         }
     }
     
-    private func displayReachabilityMessage(isReachable reachable: Bool = appReachability.isReachable) {
-        let connectionMessage = String(
-            format: "Device %@ connection to the network.", (reachable ? "gained" : "lost")
-        )
-        slideNotificationView.showLabel(withNotificationMessage: connectionMessage, forDuration: 6.0)
+    @objc func didCancelEditing(_ notification: NSNotification) {
+        adjustUIForEditing(false)
+        if notification.object is RichPopupViewController {
+            unsubscribeToEditingPublishers()
+        }
     }
-    
-    @objc
-    func adjustForReachability() {
-        displayReachabilityMessage()
-    }
-    
+
     // MARK:- Work Mode
     
     @objc func adjustForWorkMode() {
         let color: UIColor
-        if case WorkMode.online = appContext.workMode {
+        if case .online = appContext.workMode {
             color = .primary
             slideNotificationView.messageBackgroundColor = color.lighter
         }
-        else { // WorkMode.offline = appContext.workMode
+        else { // .offline = appContext.workMode
             color = .offline
             slideNotificationView.messageBackgroundColor = color.darker
         }
         activityBarView.colors = (color.lighter, color.darker)
+        
+        adjustForCurrentMap()
+    }
+    
+    // MARK:- Portal
+    
+    @objc func adjustForPortal() {
+        if let error = appContext.portalSession.error {
+            showError(error)
+        }
+    }
+    
+    func subscribeToEditingPublishers(_ richPopupViewController: RichPopupViewController) {
+        popupEditing?.cancel()
+        popupEditing = richPopupViewController.editsMade.sink { [weak self] (result) in
+            switch result {
+            case .failure(let error):
+                self?.showError(error)
+            case .success(_):
+                break
+            }
+
+            self?.adjustUIForEditing(false)
+        }
+    }
+    
+    func unsubscribeToEditingPublishers() {
+        popupEditing?.cancel()
     }
 }
 

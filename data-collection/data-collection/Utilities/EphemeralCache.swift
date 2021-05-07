@@ -24,7 +24,7 @@ class EphemeralCache {
     
     private var cache = NSCache<AnyObject, AnyObject>()
     
-    private var queue = DispatchQueue(label: "\(appBundleID).ephemeralCache", attributes: .concurrent)
+    private var queue = DispatchQueue(label: "\(Bundle.main.bundleIdentifier!).ephemeralCache", attributes: .concurrent)
     
     private init() { }
     

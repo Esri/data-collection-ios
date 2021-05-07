@@ -17,7 +17,7 @@ import ArcGIS
 
 extension AppContext {
     
-    private var visibleAreaDefaultsKey: String { return "VisibleAreaDefaultsKey.\(String.webMapItemID)" }
+    private var visibleAreaDefaultsKey: String { return "VisibleAreaDefaultsKey.\(PortalConfig.webMapItemID)" }
     
     /// The shared visible area `AGSViewpoint`.
     ///

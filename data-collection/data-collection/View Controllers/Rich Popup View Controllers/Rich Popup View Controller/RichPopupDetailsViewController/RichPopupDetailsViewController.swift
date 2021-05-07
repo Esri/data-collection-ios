@@ -29,7 +29,7 @@ class RichPopupDetailsViewController: UITableViewController {
     }
     
     var popupManager: RichPopupManager!
-    
+
     var shouldLoadRichPopupRelatedRecords: Bool = true
     
     weak var delegate: RichPopupDetailsViewControllerDelegate?
@@ -50,15 +50,16 @@ class RichPopupDetailsViewController: UITableViewController {
         
         // Reload the table view every time the view will appear.
         if shouldLoadRichPopupRelatedRecords {
-            
             // Load relationships before reloading table view.
             if let relationships = popupManager.richPopup.relationships {
-                
                 relationships.load { [weak self] (error) in
-                    
                     guard let self = self else { return }
-                    
-                    self.tableView.reloadData()
+                    if let error = error {
+                        self.showError(error)
+                    }
+                    else {
+                        self.tableView.reloadData()
+                    }
                 }
             }
         }

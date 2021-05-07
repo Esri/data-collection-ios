@@ -12,8 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import Foundation
-import UIKit.UIColor
+import UIKit
 
 // These colors are used throughout the application, when colors are generated at runtime.
 extension UIColor {

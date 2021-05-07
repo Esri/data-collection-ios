@@ -17,29 +17,6 @@ import ArcGIS
 
 class AppRules {
     
-    /// A rule imposed by the app determining if a layer can be identified.
-    ///
-    /// The rules determinig if a layer can identified include:
-    /// * Is the layer visible?
-    /// * Is the layer's underlying table's geometry of type point?
-    /// * Are pop-ups enabled on the layer's underlying table?
-    ///
-    /// - Parameters:
-    ///     - layer: The layer in question.
-    ///
-    /// - Returns: If the layer is identifiable or not.
-    
-    static func isLayerIdentifiable(_ layer: AGSFeatureLayer) -> Bool {
-        guard
-            layer.isVisible,
-            let featureTable = layer.featureTable,
-            featureTable.geometryType == .point,
-            featureTable.isPopupActuallyEnabled else {
-                return false
-        }
-        return true
-    }
-    
     /// A rule imposed by the app determining if a layer can be added to.
     ///
     /// The rules determinig if a layer can identified include:

@@ -13,6 +13,7 @@
 // limitations under the License.
 
 import ArcGIS
+import QuickLook
 
 protocol RichPopupAttachmentsManagerDelegate: AnyObject {
     func richPopupAttachmentsManager(_ manager: RichPopupAttachmentsManager, generatedThumbnailForAttachment attachment: RichPopupPreviewableAttachment)
@@ -27,11 +28,9 @@ class RichPopupAttachmentsManager: AGSLoadableBase {
     weak var delegate: RichPopupAttachmentsManagerDelegate?
     
     init?(richPopupManager: RichPopupManager) {
-        
+        guard richPopupManager.shouldShowAttachments || richPopupManager.shouldAllowEditAttachments else { return nil }
         guard let manager = richPopupManager.attachmentManager else { return nil }
-        
         self.popupManager = richPopupManager
-        
         self.popupAttachmentsManager = manager
     }
     
@@ -44,13 +43,12 @@ class RichPopupAttachmentsManager: AGSLoadableBase {
         if retrying { clear() }
         
         guard let popupManager = popupManager else {
-            loadDidFinishWithError(NSError.unknown)
+            loadDidFinishWithError(MissingRecordError())
             return
         }
         
         guard popupManager.shouldShowAttachments else {
-            loadDidFinishWithError(NSError.invalidOperation)
-            return
+            preconditionFailure("The `RichPopupAttachmentsManager` should not perform a load operation if showing attachments is not supported.")
         }
         
         cancelableFetch = popupAttachmentsManager.fetchAttachments { [weak self] (_, error) in
@@ -85,21 +83,24 @@ class RichPopupAttachmentsManager: AGSLoadableBase {
         return !stagedAttachments.isEmpty
     }
     
-    @discardableResult
-    func add(stagedAttachment: RichPopupStagedAttachment) -> Int {
+    func add(stagedAttachment: RichPopupStagedAttachment) throws {
+        
+        guard let popupManager = popupManager, popupManager.shouldAllowEditAttachments else {
+            throw InvalidOperation()
+        }
         
         stagedAttachments.append(stagedAttachment)
-        
-        return stagedAttachments.endIndex
     }
     
     
-    func deleteAttachment(at index: Int) -> Bool {
+    func deleteAttachment(at index: Int) throws {
         
-        assert(index < attachmentsCount, "Index \(index) out of range 0..<\(attachmentsCount).")
+        guard let popupManager = popupManager, popupManager.shouldAllowEditAttachments else {
+            throw InvalidOperation()
+        }
         
-        guard index < attachmentsCount else { return false }
-        
+        precondition(index < attachmentsCount, "Index \(index) out of range 0..<\(attachmentsCount).")
+                
         if index < fetchedAttachments.endIndex {
             let attachment = fetchedAttachments.remove(at: index)
             popupAttachmentsManager.deleteAttachment(attachment)
@@ -108,8 +109,6 @@ class RichPopupAttachmentsManager: AGSLoadableBase {
             let stagedIndex = index - fetchedAttachments.count
             stagedAttachments.remove(at: stagedIndex)
         }
-        
-        return true
     }
     
     // MARK: Popup Manager Lifecycle
@@ -118,16 +117,24 @@ class RichPopupAttachmentsManager: AGSLoadableBase {
     //
     
     func commitStagedAttachments(_ completion: @escaping () -> Void) {
-        
         // Add Staged Attachments
         let newAttachments = self.stagedAttachments
-        
         let dispatchGroup = DispatchGroup()
-        
+        var errors = [Error]()
         newAttachments.forEach { (attachment) in
-
-            if let photoAttachment = attachment as? RichPopupStagedPhotoAttachment {
-
+            if #available(iOS 14.0, *), let photoAttachment = attachment as? RichPopupStagedPhotoPickerAttachment {
+                dispatchGroup.enter()
+                popupAttachmentsManager.addAttachment(
+                    with: photoAttachment.itemProvider,
+                    name: photoAttachment.name ?? "Image",
+                    preferredSize: photoAttachment.preferredSize) { (_,error) in
+                    if let error = error {
+                        errors.append(error)
+                    }
+                    dispatchGroup.leave()
+                }
+            }
+            else if let photoAttachment = attachment as? RichPopupStagedImagePickerAttachment {
                 dispatchGroup.enter()
                 popupAttachmentsManager.addAttachment(withUIImagePickerControllerInfoDictionary: photoAttachment.info,
                                                       name: photoAttachment.name ?? "Image",
@@ -135,22 +142,30 @@ class RichPopupAttachmentsManager: AGSLoadableBase {
                                                       completion: { (_) in dispatchGroup.leave() })
             }
             else {
-                
-                popupAttachmentsManager.addAttachment(with: attachment.attachmentData,
+                popupAttachmentsManager.addAttachment(with: attachment.attachmentData.data,
                                                       name: attachment.name ?? "Attachment",
-                                                      contentType: attachment.attachmentMimeType,
+                                                      contentType: attachment.attachmentData.mimeType,
                                                       preferredSize: attachment.preferredSize)
             }
         }
         
+        if !errors.isEmpty {
+            UIApplication.shared.showError(
+                MultipleStagedPhotoAttachmentsError(total: newAttachments.count, errors: errors)
+            )
+        }
+        
         dispatchGroup.notify(queue: OperationQueue.current?.underlyingQueue ?? .main) { [weak self] in
-            
             guard let self = self else { return }
-            
             self.discardStagedAttachments()
-            
             completion()
         }
+    }
+    
+    fileprivate struct MultipleStagedPhotoAttachmentsError: LocalizedError {
+        let total: Int
+        let errors: [Error]
+        var errorDescription: String? { "Failed to create \(errors.count) of \(total) image attachments." }
     }
         
     func discardStagedAttachments() {
@@ -206,13 +221,13 @@ class RichPopupAttachmentsManager: AGSLoadableBase {
         if let attachment = attachment as? AGSPopupAttachment {
 
             guard self.fetchedAttachments.contains(attachment) else {
-                throw NSError.invalidOperation
+                throw InvalidOperation()
             }
         }
         else if let attachment = attachment as? RichPopupStagedAttachment {
             
             guard self.stagedAttachments.contains(attachment) else {
-                throw NSError.invalidOperation
+                throw InvalidOperation()
             }
         }
         else {
@@ -256,7 +271,7 @@ extension RichPopupAttachmentsManager {
     func loadAttachment(at index: Int) throws {
         
         guard let attachment = attachment(at: index) else {
-            throw NSError.invalidOperation
+            throw InvalidOperation()
         }
         
         if let attachment = attachment as? AGSLoadable {
@@ -310,5 +325,33 @@ extension RichPopupAttachmentsManager {
         }
         
         return IndexPath(row: row, section: section)
+    }
+}
+
+// MARK:- Popup Attachment Previewable
+
+// `AGSPopupAttachment` has automatic conformance to `RichPopupPreviewableAttachment`.
+extension AGSPopupAttachment: RichPopupPreviewableAttachment { }
+
+extension AGSPopupAttachment: QLPreviewItem {
+    
+    public var previewItemURL: URL? {
+        return fileURL
+    }
+    
+    public var previewItemTitle: String? {
+        return name
+    }
+}
+
+// MARK:- Error
+
+extension RichPopupAttachmentsManager {
+    struct InvalidOperation: LocalizedError {
+        var errorDescription: String? { "The operation you are trying to perform is not permitted." }
+    }
+    
+    struct MissingRecordError: LocalizedError {
+        var errorDescription: String? { "Missing record." }
     }
 }

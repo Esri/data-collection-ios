@@ -22,13 +22,13 @@ class SegmentedViewController: UIViewController {
     private let effectsSegmentedControlContainerView: UIVisualEffectView = {
         
         // Build visual effect view with blur view.
-        let visualEffect = UIBlurEffect(style: .extraLight)
+        let visualEffect = UIBlurEffect(style: .systemMaterial)
         let visualEffectView = UIVisualEffectView(effect: visualEffect)
         visualEffectView.translatesAutoresizingMaskIntoConstraints = false
         
         // Build 1pt spacer view.
         let spacer = UIView()
-        spacer.backgroundColor = UIColor(white: 0.75, alpha: 1.0)
+        spacer.backgroundColor = .systemFill
         spacer.translatesAutoresizingMaskIntoConstraints = false
         
         // Add and constrain spacer.
@@ -227,7 +227,9 @@ class SegmentedViewController: UIViewController {
             currentViewController = to
             
             // 6. Finish.
-            view.layoutIfNeeded()
+            if view.superview != nil {
+                view.layoutIfNeeded()
+            }
         }
     }
     

@@ -29,21 +29,41 @@ extension AGSArcGISFeatureTable {
     /// - Returns: Optionally nil `AGSCancelable` object. Maintaining a reference to this cancelable object allows the app to cancel the query in favor of a new query.
     
     @discardableResult
-    func queryRelatedFeatures(forFeature feature: AGSArcGISFeature, relationship: AGSRelationshipInfo, completion: @escaping ([AGSRelatedFeatureQueryResult]?, Error?)->()) -> AGSCancelable? {
+    func queryRelatedFeatures(forFeature feature: AGSArcGISFeature, relationship: AGSRelationshipInfo, completion: @escaping (Result<[AGSRelatedFeatureQueryResult], Error>) -> Void) -> AGSCancelable? {
         
         let parameters = AGSRelatedQueryParameters(relationshipInfo: relationship)
-        
+        let query: AGSCancelable
         if let serviceFeatureTable = self as? AGSServiceFeatureTable {
-            let fields = AGSQueryFeatureFields.loadAll
-            return serviceFeatureTable.queryRelatedFeatures(for: feature, parameters: parameters, queryFeatureFields: fields, completion: completion)
+            query = serviceFeatureTable.queryRelatedFeatures(
+                for: feature,
+                parameters: parameters,
+                queryFeatureFields: .loadAll,
+                completion: { (result, error) in
+                    if let error = error {
+                        completion(.failure(error))
+                    }
+                    else if let result = result {
+                        completion(.success(result))
+                    }
+            })
         }
         else if let geodatabaseFeatureTable = self as? AGSGeodatabaseFeatureTable {
-            return geodatabaseFeatureTable.queryRelatedFeatures(for: feature, parameters: parameters, completion: completion)
+            query = geodatabaseFeatureTable.queryRelatedFeatures(
+                for: feature,
+                parameters: parameters,
+                completion: { (result, error) in
+                    if let error = error {
+                        completion(.failure(error))
+                    }
+                    else if let result = result {
+                        completion(.success(result))
+                    }
+            })
         }
         else {
-            completion(nil, FeatureTableError.isNotArcGISFeatureTable)
-            return nil
+            preconditionFailure("Unsupported feature table type. Permitted types: AGSServiceFeatureTable, AGSGeodatabaseFeatureTable")
         }
+        return query
     }
     
     /// Query for related records converted to pop-ups for a specific table relationship regardless of whether working online (with a service feature table) or offline (with a geodatabase feature table).
@@ -60,26 +80,24 @@ extension AGSArcGISFeatureTable {
     /// - SeeAlso: `queryRelatedFeatures(forFeature feature: AGSArcGISFeature, relationship: AGSRelationshipInfo, completion: @escaping ([AGSRelatedFeatureQueryResult]?, Error?) -> ()) -> AGSCancelable?`
     
     @discardableResult
-    func queryRelatedFeaturesAsPopups(forFeature feature: AGSArcGISFeature, relationship: AGSRelationshipInfo, completion: @escaping ([AGSPopup]?, Error?)->()) -> AGSCancelable? {
-        
-        return queryRelatedFeatures(forFeature: feature, relationship: relationship) { (results, error) in
-            
-            guard error == nil else {
-                completion(nil, error!)
-                return
-            }
-            
-            guard let result = results?.first, let features = result.featureEnumerator().allObjects as? [AGSArcGISFeature] else {
-                completion(nil, FeatureTableError.queryResultsMissingFeatures)
-                return
-            }
-            
-            do {
-                let popups = try features.asPopups()
-                completion(popups, nil)
-            }
-            catch {
-                completion(nil, error)
+    func queryRelatedFeaturesAsPopups(forFeature feature: AGSArcGISFeature, relationship: AGSRelationshipInfo, completion: @escaping (Result<[AGSPopup], Error>) -> Void) -> AGSCancelable? {
+        queryRelatedFeatures(
+            forFeature: feature,
+            relationship: relationship) { (result) in
+            switch result {
+            case .failure(let error):
+                completion(.failure(error))
+            case .success(let results):
+                guard let features = results.first?.featureEnumerator().allObjects as? [AGSArcGISFeature] else {
+                    preconditionFailure("Query results are not supported feature types.")
+                }
+                do {
+                    let popups = try features.asPopups()
+                    completion(.success(popups))
+                }
+                catch {
+                    completion(.failure(error))
+                }
             }
         }
     }
@@ -95,27 +113,49 @@ extension AGSArcGISFeatureTable {
     /// - Returns: Optionally nil `AGSCancelable` object. Maintaining a reference to this cancelable object allows the app to cancel the query in favor of a new query.
     
     @discardableResult
-    func queryAllFeatures(sorted: AGSOrderBy? = nil, completion: @escaping (AGSFeatureQueryResult?, Error?) -> Void) -> AGSCancelable? {
+    func queryAllFeatures(sorted: AGSOrderBy? = nil, completion: @escaping (Result<AGSFeatureQueryResult, Error>) -> Void) -> AGSCancelable? {
         
         let queryParams = AGSQueryParameters.all()
         
         if let sort = sorted {
             queryParams.orderByFields.append(sort)
         }
-
+        
+        let query: AGSCancelable
+        
         // Online
         if let serviceFeatureTable = self as? AGSServiceFeatureTable {
-            return serviceFeatureTable.queryFeatures(with: queryParams, queryFeatureFields: .loadAll, completion: completion)
+            query = serviceFeatureTable.queryFeatures(
+                with: queryParams,
+                queryFeatureFields: .loadAll,
+                completion: { (result, error) in
+                    if let error = error {
+                        completion(.failure(error))
+                    }
+                    else if let result = result {
+                        completion(.success(result))
+                    }
+            })
         }
         // Offline
         else if let geodatabaseFeatureTable = self as? AGSGeodatabaseFeatureTable {
-            return geodatabaseFeatureTable.queryFeatures(with: queryParams, completion: completion)
+            query = geodatabaseFeatureTable.queryFeatures(
+                with: queryParams,
+                completion: { (result, error) in
+                    if let error = error {
+                        completion(.failure(error))
+                    }
+                    else if let result = result {
+                        completion(.success(result))
+                    }
+            })
         }
         // Unknown
         else {
-            completion(nil, FeatureTableError.isNotArcGISFeatureTable)
-            return nil
+            preconditionFailure("Unsupported feature table type. Permitted types: AGSServiceFeatureTable, AGSGeodatabaseFeatureTable")
         }
+        
+        return query
     }
     
     /// Query all features converted to pop-ups regardless of whether working online (with a service feature table) or offline (with a geodatabase feature table).
@@ -131,34 +171,35 @@ extension AGSArcGISFeatureTable {
     /// - SeeAlso: `func queryAllFeatures(sorted: AGSOrderBy? = nil, completion: @escaping (AGSFeatureQueryResult?, Error?) -> Void) -> AGSCancelable?`
     
     @discardableResult
-    func queryAllFeaturesAsPopups(sorted: AGSOrderBy? = nil, completion: @escaping ([AGSPopup]?, Error?) -> Void) -> AGSCancelable? {
-        
-        return self.queryAllFeatures(sorted: sorted) { (result, error) in
-            
-            guard error == nil else {
-                print("[Error: Service Feature Table Query]", error!.localizedDescription)
-                completion(nil, error!)
-                return
-            }
-            
-            guard let result = result else {
-                print("[Error: Service Feature Table Query] unknown error")
-                completion(nil, FeatureTableError.queryResultsMissingFeatures)
-                return
-            }
-            
-            guard let features = result.featureEnumerator().allObjects as? [AGSArcGISFeature] else {
-                completion(nil, FeatureTableError.queryResultsMissingFeatures)
-                return
-            }
-            
-            do {
-                let popups = try features.asPopups()
-                completion(popups, nil)
-            }
-            catch {
-                completion(nil, error)
+    func queryAllFeaturesAsPopups(sorted: AGSOrderBy? = nil, completion: @escaping (Result<[AGSPopup], Error>) -> Void) -> AGSCancelable? {
+        queryAllFeatures(sorted: sorted) { (result) in
+            switch result {
+            case .failure(let error):
+                completion(.failure(error))
+            case .success(let result):
+                guard let features = result.featureEnumerator().allObjects as? [AGSArcGISFeature] else {
+                    preconditionFailure("Query results are not supported feature types.")
+                }
+                do {
+                    let popups = try features.asPopups()
+                    completion(.success(popups))
+                }
+                catch {
+                    completion(.failure(error))
+                }
             }
         }
+    }
+}
+
+// MARK: Query Parameters
+
+private extension AGSQueryParameters {
+    
+    /// Return a new `AGSQueryParameters` with a `whereClause` requesting all features in the table.
+    static func all() -> AGSQueryParameters {
+        let query = AGSQueryParameters()
+        query.whereClause = "1 = 1"
+        return query
     }
 }

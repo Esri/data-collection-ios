@@ -45,6 +45,7 @@ class RichPopupEditStagedAttachmentViewController: UITableViewController, UIText
         if stagedAttachment.type != .image {
             tableView.reloadData()
         }
+        addToolbarItems()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -62,6 +63,22 @@ class RichPopupEditStagedAttachmentViewController: UITableViewController, UIText
         }
     }
     
+    private func addToolbarItems() {
+        var items: [UIBarButtonItem] = [UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)]
+        
+        let dismissButton = UIBarButtonItem(barButtonSystemItem: .done,
+                                                target: self,
+                                                action: #selector(userRequestsDismissViewController(_:)))
+        items.append(dismissButton)
+
+        toolbarItems = items
+        navigationController?.isToolbarHidden = items.isEmpty
+    }
+    
+    @objc func userRequestsDismissViewController(_ sender: AnyObject) {
+        navigationController?.popViewController(animated: true)
+    }
+
     // MARK: Staged Attachment
     
     var stagedAttachment: RichPopupStagedAttachment!

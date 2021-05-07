@@ -32,3 +32,26 @@ class RichPopup: AGSPopup {
         return Relationships(popup: self)
     }()
 }
+
+extension RichPopup {
+    func evaluateSubtitle(completion: @escaping (String) -> Void) {
+        evaluateExpressions { (expressions, error) in
+            if let expression = expressions?.first(where: { $0.popupExpression.title == "subtitle" }) {
+                let subtitle: String
+                switch expression.popupExpression.returnType {
+                case .number:
+                    let val = expression.result as! NSNumber
+                    subtitle = String(val.stringValue)
+                case .string:
+                    subtitle = String(expression.result as! NSString)
+                @unknown default:
+                    subtitle = ""
+                }
+                completion(subtitle)
+            }
+            else {
+                completion("")
+            }
+        }
+    }
+}
