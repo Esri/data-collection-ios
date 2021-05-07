@@ -1,5 +1,6 @@
 # Release 1.3
 
+- Certification for the 100.11.0 release of the ArcGIS Runtime SDK for iOS.
 - Introduces an improved `AppContext` state-based architecture and more clear separation of responsibility. This architecture achieves more stability and resolves some found Portal related edge cases. Consult [docs](./docs/README.md#app-context) for more information.
 - Dissolves `AppLocation` into sub-component of `AppContext`.
 - Dissolves `AppGlobals` into `AppContext`.
